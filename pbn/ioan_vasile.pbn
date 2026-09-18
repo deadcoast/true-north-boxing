@@ -1,0 +1,20 @@
+# NP_04B s24 - Arc 3 final; synthesis solved, seams remain
+BOSS Vasile_Ioan
+META style=BOXERPUNCHER element=rotating house=none slot=R5 arc=3 kit_swap_reset_ms=700 corner_intel=vey_calls_2s_early
+IDLE: measured_stance
+STRING F1 "FrostSuite": TELL(breath_subtle, 480ms) -> COUNTER_STATE(2s)
+STRING F2 "FrostJabs": TELL(breath_subtle, 450ms) -> JAB -> JAB -> STEP_OUT
+STRING G1 "GraniteAdvance" [phase>=2] [ARMORED]: TELL(double_breath, 1000ms) -> WALK_STRING(2_hooks)
+STRING G2 "GraniteHooks" [phase>=2]: TELL(hip_set, 500ms) -> L_HOOK -> R_HOOK
+STRING A1 "GaleClose" [phase>=3]: TELL(tempo_step, 450ms) -> RUSH(0.6m) -> MIXED_STRING(3)
+STRING A2 "GaleFinish" [phase>=3] [SPECIAL]: TELL(tempo_double, 700ms) -> JAB -> R_UPC -> L_HOOK
+SELECT: w(F1)=50, w(F2)=50 | phase==2: w(G1)=40 w(G2)=60 | phase==3: w(A1)=50 w(A2)=50
+INTERRUPT: F1,F2,G2,A1 during TELL -> stagger(700)
+BAIT: none "Sentiment did not correlate"
+PUNISH: player_3punch_string -> F1
+PUNISH: player_passive>5s -> A1
+PUNISH: player_rope_touch -> G2
+PHASE 2 @ clock>30: kit_swap granite; neutral_reset(700ms)
+PHASE 3 @ clock>60: kit_swap gale; neutral_reset(700ms)
+PHASE finale @ composure<10: fundamentals_only
+DESPERATION @ composure<25: hissatsu "The Mean"

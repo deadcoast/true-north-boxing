@@ -1,0 +1,19 @@
+# NP_04A s8 - Ascendant A R5; three borrowed dialects, each slightly wrong
+BOSS Vey_Anders
+META style=BOXERPUNCHER element=varies house=petrov_taken slot=R5 arc=1 pi_transfer=0.5 authored_loss=dual_math
+IDLE: neutral_stance_studied
+STRING P1S1 "MirrorCopy": TELL(glove_turn_no_silence, 500ms) -> COUNTER_STATE(2s)
+STRING P1S2 "FrostLineCopy": TELL(glove_turn, 450ms) -> JAB -> JAB -> STEP_OUT
+STRING P2S1 "PressureCopy" [phase>=2]: TELL(tempo_step_offbeat, 450ms) -> JAB -> LT_L_HOOK
+STRING P2S2 "SwarmCopy" [phase>=2] [SPECIAL]: TELL(tempo_double, 700ms) -> RUSH -> MIXED_STRING(3)
+STRING P3S1 "FreightCopy" [phase>=3]: TELL(shoulder_load_silent_corner, 600ms) -> R_HAY -> L_HOOK
+STRING P3S2 "IngotCopy" [phase>=3] [ARMORED]: TELL(double_breath_dry, 1000ms) -> WALK_STRING(2_hooks)
+SELECT: w(P1S1)=40, w(P1S2)=60 | phase==2: w(P2S1)=55 w(P2S2)=45 | phase==3: w(P3S1)=60 w(P3S2)=40
+INTERRUPT: P1S1,P1S2,P2S1,P3S1 during TELL -> stagger(700)
+BAIT: none "Nothing draws him; every style is a solved problem"
+PUNISH: player_3punch_string -> P1S1
+PUNISH: player_passive>5s -> P2S2
+PUNISH: player_rope_touch -> P3S1
+PHASE 2 @ composure<70: kit_swap swarmer_gale
+PHASE 3 @ composure<40: kit_swap slugger_granite
+DESPERATION @ composure<20: hissatsu "Thesis Defense"

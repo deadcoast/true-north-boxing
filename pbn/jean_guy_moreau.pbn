@@ -1,0 +1,14 @@
+# NP_04A s5 - Quebec Forge R4; the Subtle-tell slugger
+BOSS Moreau_JeanGuy
+META style=SLUGGER element=FROST house=moreau slot=R4 arc=1
+IDLE: forward_walk_glacial, guard_high, silent
+STRING S1 "ColdForge": TELL(frost_breath, 480ms) -> L_HOOK -> R_HOOK -> LT_R_HOOK
+STRING S2 "Quench" [SPECIAL]: TELL(frost_breath_long, 700ms) -> DELAY(300) -> R_OVERHAND
+STRING S3 "Ingot" [ARMORED]: TELL(double_breath, 1000ms) -> WALK_STRING(3_hooks)
+SELECT: w(S1)=50, w(S2)=30, w(S3)=20
+INTERRUPT: S1 during TELL -> stagger(800)
+BAIT: player_perfect_block_streak2 -> force S2
+PUNISH: player_rope_touch -> immediate S1
+PUNISH: player_hissatsu_arm_feint -> S2
+PHASE 2 @ composure<55: tighten_all_tells -60ms floor_respected; movement +10pct
+DESPERATION @ composure<25: hissatsu "Fevrier"

@@ -1,0 +1,14 @@
+# NP_04B... NP_04A s1 - Ascendant B, Survival Dual
+BOSS Vane_Cassidy
+META style=OUTBOXER element=GALE house=none slot=R3 arc=1
+IDLE: lateral_drift, guard_high, no_taunt
+STRING S1 "Sequence1": TELL(corner_call_S1, 700ms) -> JAB -> JAB -> R_STR
+STRING S2 "Sequence4": TELL(corner_call_S4, 700ms) -> STEP_BACK -> COUNTER_R_STR
+STRING S3 "Sequence7" [phase>=2]: TELL(corner_call_S7, 600ms) -> JAB -> L_HOOK -> R_STR
+SELECT: w(S1)=55, w(S2)=30, w(S3)=15
+INTERRUPT: S1,S3 during TELL -> stagger(800)
+BAIT: player_holds_center_4s -> force S1
+PUNISH: player_power_whiff -> immediate S2
+PUNISH: player_rope_backing -> S1 speed x1.1
+PHASE 2 @ composure<50: add S3; corner_call_volume -1_tier
+DESPERATION: none "B-squad is not issued supers"

@@ -1,0 +1,110 @@
+{
+ "file": "tam_nguyen_roy.pbn",
+ "meta": {
+  "style": "OUTBOXER",
+  "element": "GALE",
+  "house": "nguyen-roy",
+  "slot": "R2",
+  "arc": "1"
+ },
+ "idle": [
+  "angle_walk",
+  "guard_low_bait",
+  "tempo_shift@6s"
+ ],
+ "strings": {
+  "S1": {
+   "label": "BorrowedCoat",
+   "tags": [
+    "phase>=1"
+   ],
+   "tell": {
+    "motif": "fake_shoulder_load",
+    "ms": 800
+   },
+   "class": "normal",
+   "actions": [
+    "DELAY(300)",
+    "JAB"
+   ]
+  },
+  "S2": {
+   "label": "TwoBridge",
+   "tags": [],
+   "tell": {
+    "motif": "lead_foot_load",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "ANGLE_STEP",
+    "L_STR",
+    "R_STR"
+   ]
+  },
+  "S3": {
+   "label": "FarSpan",
+   "tags": [],
+   "tell": {
+    "motif": "lead_foot_load",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "ANGLE_STEP",
+    "STEP_R_STR"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 50,
+   "S2": 30,
+   "S3": 20
+  },
+  "reweights": [
+   "phase>=2: w(S1)=0 w(S2)+=25 w(S3)+=25"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S2",
+    "S3"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_reacts_to_fake_tell",
+   "force": "S2"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_3punch_string",
+   "response": "S3 counter_exit"
+  },
+  {
+   "trigger": "player_sprint_approach",
+   "response": "S2 widened_angle"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "clock>30",
+   "directives": [
+    "retire S1",
+    "true_pattern_only"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Pont Couvert",
+  "arm_only": null
+ },
+ "id": "NguyenRoy_Tam"
+}

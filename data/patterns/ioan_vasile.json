@@ -1,0 +1,176 @@
+{
+ "file": "ioan_vasile.pbn",
+ "meta": {
+  "style": "BOXERPUNCHER",
+  "element": "rotating",
+  "house": "none",
+  "slot": "R5",
+  "arc": "3",
+  "kit_swap_reset_ms": "700",
+  "corner_intel": "vey_calls_2s_early"
+ },
+ "idle": [
+  "measured_stance"
+ ],
+ "strings": {
+  "F1": {
+   "label": "FrostSuite",
+   "tags": [],
+   "tell": {
+    "motif": "breath_subtle",
+    "ms": 480
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_STATE(2s)"
+   ]
+  },
+  "F2": {
+   "label": "FrostJabs",
+   "tags": [],
+   "tell": {
+    "motif": "breath_subtle",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "JAB",
+    "STEP_OUT"
+   ]
+  },
+  "G1": {
+   "label": "GraniteAdvance",
+   "tags": [
+    "phase>=2",
+    "ARMORED"
+   ],
+   "tell": {
+    "motif": "double_breath",
+    "ms": 1000
+   },
+   "class": "ARMORED",
+   "actions": [
+    "WALK_STRING(2_hooks)"
+   ]
+  },
+  "G2": {
+   "label": "GraniteHooks",
+   "tags": [
+    "phase>=2"
+   ],
+   "tell": {
+    "motif": "hip_set",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "L_HOOK",
+    "R_HOOK"
+   ]
+  },
+  "A1": {
+   "label": "GaleClose",
+   "tags": [
+    "phase>=3"
+   ],
+   "tell": {
+    "motif": "tempo_step",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "RUSH(0.6m)",
+    "MIXED_STRING(3)"
+   ]
+  },
+  "A2": {
+   "label": "GaleFinish",
+   "tags": [
+    "phase>=3",
+    "SPECIAL"
+   ],
+   "tell": {
+    "motif": "tempo_double",
+    "ms": 700
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "JAB",
+    "R_UPC",
+    "L_HOOK"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "F1": 50,
+   "F2": 50
+  },
+  "reweights": [
+   "phase==2: w(G1)=40 w(G2)=60",
+   "phase==3: w(A1)=50 w(A2)=50"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "F1",
+    "F2",
+    "G2",
+    "A1"
+   ],
+   "response": "stagger(700)"
+  }
+ ],
+ "bait": [
+  {
+   "authored_absent": "Sentiment did not correlate"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_3punch_string",
+   "response": "F1"
+  },
+  {
+   "trigger": "player_passive>5s",
+   "response": "A1"
+  },
+  {
+   "trigger": "player_rope_touch",
+   "response": "G2"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "clock>30",
+   "directives": [
+    "kit_swap granite",
+    "neutral_reset(700ms)"
+   ]
+  },
+  {
+   "phase": "3",
+   "trigger": "clock>60",
+   "directives": [
+    "kit_swap gale",
+    "neutral_reset(700ms)"
+   ]
+  },
+  {
+   "phase": "finale",
+   "trigger": "composure<10",
+   "directives": [
+    "fundamentals_only"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "The Mean",
+  "arm_only": null
+ },
+ "id": "Vasile_Ioan"
+}

@@ -1,0 +1,14 @@
+# NP_04A s6 - Ascendant A R2; the metronome
+BOSS Okafor_Ada
+META style=SWARMER element=GALE house=okafor slot=R2 arc=1 metronome_ms=800 desync_s=3
+IDLE: advance_metronome, guard_tight
+STRING S1 "OnTheBeat": TELL(tempo_step, 400ms) -> JAB -> LT_L_HOOK
+STRING S2 "Downbeat": TELL(tempo_step, 400ms) -> JAB -> JAB -> R_UPC
+STRING S3 "SwarmProtocol" [SPECIAL]: TELL(tempo_double, 700ms) -> RUSH(0.6m) -> MIXED_STRING(4)
+SELECT: w(S1)=55, w(S2)=45 | punish_only: w(S3)=0
+INTERRUPT: S1,S2 during TELL -> stagger(800) + desync(3s)
+BAIT: none "The academy coached out her generosity; the Scout Book says so"
+PUNISH: player_passive>6s -> force_S3
+PUNISH: player_flagged_ngram_tier2 -> S2 targets_flagged_opening
+PHASE 2 @ composure<50: metronome 800ms->650ms; desync 3s->2s
+DESPERATION @ composure<25: hissatsu "Heat Advisory"

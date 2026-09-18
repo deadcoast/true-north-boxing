@@ -1,0 +1,14 @@
+# NP_04A s4 - Rink Crossovers R1
+BOSS Okafor_Carter
+META style=SWARMER element=GALE house=okafor slot=R1 arc=1
+IDLE: circle_fast, guard_mid, taunt@10s
+STRING S1 "Forecheck": TELL(stride_shing, 500ms) -> RUSH(0.8m) -> L_HOOK -> R_HOOK
+STRING S2 "Cycle": TELL(stride_shing, 450ms) -> LATERAL_ARC -> LT_L_HOOK
+STRING S3 "Slapshot": TELL(full_windup, 900ms) -> R_HAY
+SELECT: w(S1)=40, w(S2)=40, w(S3)=20 | segment_clock<30s: all_speed x1.12
+INTERRUPT: S1,S3 during TELL -> stagger(800)
+BAIT: player_taunt -> force S3
+PUNISH: player_static_guard_3s -> S2 to_body
+PUNISH: player_gassed -> w(S1)+=30
+PHASE 2 @ composure<50: S2 gains_second_body_hook
+DESPERATION @ composure<25: hissatsu "Empty Net"

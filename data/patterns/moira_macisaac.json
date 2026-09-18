@@ -1,0 +1,107 @@
+{
+ "file": "moira_macisaac.pbn",
+ "meta": {
+  "style": "SLUGGER",
+  "element": "TIMBER",
+  "house": "macisaac",
+  "slot": "R4",
+  "arc": "1"
+ },
+ "idle": [
+  "forward_walk_slow",
+  "guard_mid",
+  "herding_bias_ropes"
+ ],
+ "strings": {
+  "S1": {
+   "label": "SetTheNet",
+   "tags": [],
+   "tell": {
+    "motif": "shoulder_roll",
+    "ms": 550
+   },
+   "class": "normal",
+   "actions": [
+    "L_HOOK",
+    "R_HOOK",
+    "ADVANCE(40cm)"
+   ]
+  },
+  "S2": {
+   "label": "Haul",
+   "tags": [],
+   "tell": {
+    "motif": "net_haul",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "PULL_COUNTER_OVERHAND",
+    "DRAG_ROPEWARD(1m)"
+   ]
+  },
+  "S3": {
+   "label": "Gaff",
+   "tags": [
+    "zone==ROPES"
+   ],
+   "tell": {
+    "motif": "net_haul_low",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "LT_R_UPC"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 45,
+   "S2": 35,
+   "S3": 20
+  },
+  "reweights": [
+   "target_zone==ROPES: w(S3)+=25"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_holds_center_5s",
+   "force": "S2"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_straight_line_retreat",
+   "response": "S1 speed x1.15"
+  },
+  {
+   "trigger": "player_corner_entry",
+   "response": "immediate S3"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "player_ropes_time>20s",
+   "directives": [
+    "all_damage +10pct permanent"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Undertow",
+  "arm_only": null
+ },
+ "id": "MacIsaac_Moira"
+}

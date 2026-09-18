@@ -1,0 +1,14 @@
+# NP_04B s14 - Hollow Circuit R3; the mute fight (all tells visual by construction)
+BOSS HC9_Choir
+META style=SWARMER element=FROST house=unknown slot=R3 arc=2 blind_dual=true commentary_mute_on_hit=4s
+IDLE: advance_noiseless
+STRING S1 "Verse": TELL(shoulder_breath_visual, 450ms) -> JAB -> LT_L_HOOK
+STRING S2 "Refrain": TELL(shoulder_breath_visual, 450ms) -> JAB -> JAB -> R_UPC
+STRING S3 "Hymn" [ARMORED]: TELL(full_stop_visual, 1000ms) -> WALK_STRING(2_hooks)
+SELECT: w(S1)=45, w(S2)=40, w(S3)=15
+INTERRUPT: S1,S2 during TELL -> stagger(800)
+BAIT: none "Choir has no recorded voice and offers nothing"
+PUNISH: player_audio_assist_reliance -> swap_weights(S1,S2) 10s
+PUNISH: player_corner_entry -> S3
+PHASE 2 @ composure<50: S1,S2 tell -50ms floor_respected
+DESPERATION @ composure<25: hissatsu "Erased Name"

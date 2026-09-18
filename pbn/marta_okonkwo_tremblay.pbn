@@ -1,0 +1,14 @@
+# NP_04 s8.2 - Montreal Technique R2
+BOSS Marta_OkonkwoTremblay
+META style=OUTBOXER element=FROST house=tremblay slot=R2 arc=1
+IDLE: lateral_orbit, guard_high, footwork_audio_drops_when_arming
+STRING S1 "Mirror": TELL(glove_micro_turn_silence, 450ms) -> COUNTER_STATE(2.5s)
+STRING S2 "FrostLine": TELL(glove_micro_turn, 450ms) -> JAB -> JAB -> STEP_OUT
+STRING S3 "RetreatCutter": TELL(back_step_load, 500ms) -> BACK_STEP -> CHECK_HOOK
+SELECT: w(S1)=35, w(S2)=45, w(S3)=20 | player_passive>8s: w(S2)+=30
+INTERRUPT: S2 during TELL -> stagger(800)
+BAIT: trap_stance_hands_down -> force S1
+PUNISH: player_3punch_string -> S1 counter
+PUNISH: player_sprint_approach -> S3
+PHASE 2 @ composure<55: S1 duration +1s; S1 cooldown_after_use 6s
+DESPERATION @ composure<25: hissatsu "Premiere Neige"

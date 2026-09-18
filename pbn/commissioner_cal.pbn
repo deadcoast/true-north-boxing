@@ -1,0 +1,15 @@
+# NP_04B s17 - Arc 2 final; the sealed house at full power
+BOSS Commissioner_Cal
+META style=BOXERPUNCHER element=FROST house=sealed slot=R5 arc=2 corner_assist=whitlock_memory
+IDLE: charter_stance, guard_composed
+STRING S1 "Article12": TELL(breath_pause, 480ms) -> JAB -> R_STR -> STEP_IN
+STRING S2 "ScheduleC": TELL(breath_pause, 480ms) -> COUNTER_STATE(2s)
+STRING S3 "Amendment" [phase>=2]: TELL(breath_pause_long, 700ms) -> L_HOOK -> R_UPC
+SELECT: w(S1)=45, w(S2)=35, w(S3)=20 | phase==3: drift_toward_whitlock_named_strings
+INTERRUPT: S1,S3 during TELL -> stagger(800)
+BAIT: none "He is here to be recognized, never drawn"
+PUNISH: player_hissatsu_arm_feint -> immediate_counter
+PUNISH: player_passive>8s -> S1 pressure
+PHASE 2 @ composure<60: tells_louden +1_tier; corner_dialogue_active
+PHASE 3 @ composure<30: select_drift recognition_over_winning
+DESPERATION @ composure<20: hissatsu "The Commissioner's Due" + arm_only "[SEALED-SECRET]"

@@ -1,0 +1,15 @@
+# NP_04 s8.3 - True North R5 anchor; first Wall Gauge
+BOSS BigSorry_Sam
+META style=BOXERPUNCHER element=FROST house=tagaq slot=R5 arc=1 wall_gauge=100 gauge_reforms=60,30
+IDLE: walk_forward_calm, guard_advance
+STRING S1 "Snowbank": TELL(soft_exhale, 500ms) -> GUARD_ADVANCE -> HERD(40cm)
+STRING S2 "SorryEh": TELL(apology_audio, 550ms) -> COUNTER_ON_BLOCK -> R_STR
+STRING S3 "LongWinter" [phase>=3]: TELL(double_exhale, 600ms) -> CLINCH_ATTEMPT -> BODY_SERIES
+SELECT: w(S1)=50, w(S2)=35, w(S3)=15 | clock>60s: all_speed x1.1
+INTERRUPT: S1 during TELL -> stagger(800)
+BAIT: player_block_hold>2s -> force S2
+PUNISH: player_rope_touch -> S1 pressure
+PUNISH: player_jab_spam_on_gauge -> S2
+PHASE 2 @ clock>30: strength +5pct
+PHASE 3 @ clock>60: add S3; strength +10pct
+DESPERATION: none "He never panics; the fight ends only through the gauge"

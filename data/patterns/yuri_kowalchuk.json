@@ -1,0 +1,110 @@
+{
+ "file": "yuri_kowalchuk.pbn",
+ "meta": {
+  "style": "SLUGGER",
+  "element": "GRANITE",
+  "house": "kowalchuk",
+  "slot": "R4",
+  "arc": "1"
+ },
+ "idle": [
+  "circle_slow",
+  "guard_mid",
+  "taunt@8s"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Freight",
+   "tags": [],
+   "tell": {
+    "motif": "shoulder_load_corner_shout",
+    "ms": 600
+   },
+   "class": "normal",
+   "actions": [
+    "R_HAY",
+    "L_HOOK",
+    "pause(400)"
+   ]
+  },
+  "S2": {
+   "label": "Coupling",
+   "tags": [],
+   "tell": {
+    "motif": "step_stomp",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "STEP_R_STR",
+    "R_UPC"
+   ]
+  },
+  "S3": {
+   "label": "Derail",
+   "tags": [
+    "phase>=2"
+   ],
+   "tell": {
+    "motif": "snort_audio",
+    "ms": 700
+   },
+   "class": "normal",
+   "actions": [
+    "RUSH(1.2m)",
+    "CLINCH_ATTEMPT"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 50,
+   "S2": 30,
+   "S3": 20
+  },
+  "reweights": [
+   "after_hit_taken: w(S1)+=20 for 6s"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1"
+   ],
+   "response": "stagger(800) + tension_bonus"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_taunt",
+   "force": "S1"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_power_whiff",
+   "response": "immediate S2"
+  },
+  {
+   "trigger": "player_corner_entry",
+   "response": "S1 toward_corner"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<60",
+   "directives": [
+    "speed x1.1",
+    "tighten(S1, 500ms)",
+    "add S3"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Grain Elevator",
+  "arm_only": null
+ },
+ "id": "GrainKing_Yuri"
+}

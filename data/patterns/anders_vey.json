@@ -1,0 +1,166 @@
+{
+ "file": "anders_vey.pbn",
+ "meta": {
+  "style": "BOXERPUNCHER",
+  "element": "varies",
+  "house": "petrov_taken",
+  "slot": "R5",
+  "arc": "1",
+  "pi_transfer": "0.5",
+  "authored_loss": "dual_math"
+ },
+ "idle": [
+  "neutral_stance_studied"
+ ],
+ "strings": {
+  "P1S1": {
+   "label": "MirrorCopy",
+   "tags": [],
+   "tell": {
+    "motif": "glove_turn_no_silence",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_STATE(2s)"
+   ]
+  },
+  "P1S2": {
+   "label": "FrostLineCopy",
+   "tags": [],
+   "tell": {
+    "motif": "glove_turn",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "JAB",
+    "STEP_OUT"
+   ]
+  },
+  "P2S1": {
+   "label": "PressureCopy",
+   "tags": [
+    "phase>=2"
+   ],
+   "tell": {
+    "motif": "tempo_step_offbeat",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "LT_L_HOOK"
+   ]
+  },
+  "P2S2": {
+   "label": "SwarmCopy",
+   "tags": [
+    "phase>=2",
+    "SPECIAL"
+   ],
+   "tell": {
+    "motif": "tempo_double",
+    "ms": 700
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "RUSH",
+    "MIXED_STRING(3)"
+   ]
+  },
+  "P3S1": {
+   "label": "FreightCopy",
+   "tags": [
+    "phase>=3"
+   ],
+   "tell": {
+    "motif": "shoulder_load_silent_corner",
+    "ms": 600
+   },
+   "class": "normal",
+   "actions": [
+    "R_HAY",
+    "L_HOOK"
+   ]
+  },
+  "P3S2": {
+   "label": "IngotCopy",
+   "tags": [
+    "phase>=3",
+    "ARMORED"
+   ],
+   "tell": {
+    "motif": "double_breath_dry",
+    "ms": 1000
+   },
+   "class": "ARMORED",
+   "actions": [
+    "WALK_STRING(2_hooks)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "P1S1": 40,
+   "P1S2": 60
+  },
+  "reweights": [
+   "phase==2: w(P2S1)=55 w(P2S2)=45",
+   "phase==3: w(P3S1)=60 w(P3S2)=40"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "P1S1",
+    "P1S2",
+    "P2S1",
+    "P3S1"
+   ],
+   "response": "stagger(700)"
+  }
+ ],
+ "bait": [
+  {
+   "authored_absent": "Nothing draws him; every style is a solved problem"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_3punch_string",
+   "response": "P1S1"
+  },
+  {
+   "trigger": "player_passive>5s",
+   "response": "P2S2"
+  },
+  {
+   "trigger": "player_rope_touch",
+   "response": "P3S1"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<70",
+   "directives": [
+    "kit_swap swarmer_gale"
+   ]
+  },
+  {
+   "phase": "3",
+   "trigger": "composure<40",
+   "directives": [
+    "kit_swap slugger_granite"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<20",
+  "move": "Thesis Defense",
+  "arm_only": null
+ },
+ "id": "Vey_Anders"
+}

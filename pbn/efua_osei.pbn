@@ -1,0 +1,14 @@
+# NP_04A s7 - Halifax Osei R5; UNSANCTIONED
+BOSS Osei_Efua
+META style=SWARMER element=TIMBER house=osei slot=R5 arc=1 unsanctioned=true secret_power=0.7
+IDLE: shell_stance, advance_patient
+STRING S1 "Shell" [STATE=3]: TELL(wrap_glint, 500ms) -> COUNTER_STATE(3s)
+STRING S2 "Window": TELL(wrap_glint_fast, 450ms) -> SURGE(0.6m) -> L_HOOK -> R_HOOK -> LT_R_UPC
+STRING S3 "LockedDoor" [phase>=2]: TELL(double_glint, 600ms) -> GUARD_WALL_ADVANCE -> HERD(60cm)
+SELECT: w(S1)=45, w(S2)=40, w(S3)=15
+INTERRUPT: S2 during TELL -> stagger(800)
+BAIT: player_headhunt_streak3 -> force S1
+PUNISH: player_whiffed_body_shot -> immediate S2
+PUNISH: player_corner_entry -> S3
+PHASE 2 @ composure<50: S1 state 3s->4s; add S3
+DESPERATION @ composure<25: hissatsu "Deep Roots"

@@ -1,0 +1,115 @@
+{
+ "file": "commissioner_cal.pbn",
+ "meta": {
+  "style": "BOXERPUNCHER",
+  "element": "FROST",
+  "house": "sealed",
+  "slot": "R5",
+  "arc": "2",
+  "corner_assist": "whitlock_memory"
+ },
+ "idle": [
+  "charter_stance",
+  "guard_composed"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Article12",
+   "tags": [],
+   "tell": {
+    "motif": "breath_pause",
+    "ms": 480
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "R_STR",
+    "STEP_IN"
+   ]
+  },
+  "S2": {
+   "label": "ScheduleC",
+   "tags": [],
+   "tell": {
+    "motif": "breath_pause",
+    "ms": 480
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_STATE(2s)"
+   ]
+  },
+  "S3": {
+   "label": "Amendment",
+   "tags": [
+    "phase>=2"
+   ],
+   "tell": {
+    "motif": "breath_pause_long",
+    "ms": 700
+   },
+   "class": "normal",
+   "actions": [
+    "L_HOOK",
+    "R_UPC"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 45,
+   "S2": 35,
+   "S3": 20
+  },
+  "reweights": [
+   "phase==3: drift_toward_whitlock_named_strings"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S3"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "authored_absent": "He is here to be recognized, never drawn"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_hissatsu_arm_feint",
+   "response": "immediate_counter"
+  },
+  {
+   "trigger": "player_passive>8s",
+   "response": "S1 pressure"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<60",
+   "directives": [
+    "tells_louden +1_tier",
+    "corner_dialogue_active"
+   ]
+  },
+  {
+   "phase": "3",
+   "trigger": "composure<30",
+   "directives": [
+    "select_drift recognition_over_winning"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<20",
+  "move": "The Commissioner's Due",
+  "arm_only": "[SEALED-SECRET]"
+ },
+ "id": "Commissioner_Cal"
+}

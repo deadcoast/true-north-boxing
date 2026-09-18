@@ -1,0 +1,14 @@
+# NP_04A s3 - Deux-Ponts R2, decoy-seal club
+BOSS NguyenRoy_Tam
+META style=OUTBOXER element=GALE house=nguyen-roy slot=R2 arc=1
+IDLE: angle_walk, guard_low_bait, tempo_shift@6s
+STRING S1 "BorrowedCoat" [phase>=1]: TELL(fake_shoulder_load, 800ms) -> DELAY(300) -> JAB
+STRING S2 "TwoBridge": TELL(lead_foot_load, 450ms) -> ANGLE_STEP -> L_STR -> R_STR
+STRING S3 "FarSpan": TELL(lead_foot_load, 450ms) -> ANGLE_STEP -> STEP_R_STR
+SELECT: w(S1)=50, w(S2)=30, w(S3)=20 | phase>=2: w(S1)=0 w(S2)+=25 w(S3)+=25
+INTERRUPT: S2,S3 during TELL -> stagger(800)
+BAIT: player_reacts_to_fake_tell -> force S2
+PUNISH: player_3punch_string -> S3 counter_exit
+PUNISH: player_sprint_approach -> S2 widened_angle
+PHASE 2 @ clock>30: retire S1; true_pattern_only
+DESPERATION @ composure<25: hissatsu "Pont Couvert"

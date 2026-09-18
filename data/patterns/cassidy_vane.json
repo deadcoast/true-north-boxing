@@ -1,0 +1,107 @@
+{
+ "file": "cassidy_vane.pbn",
+ "meta": {
+  "style": "OUTBOXER",
+  "element": "GALE",
+  "house": "none",
+  "slot": "R3",
+  "arc": "1"
+ },
+ "idle": [
+  "lateral_drift",
+  "guard_high",
+  "no_taunt"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Sequence1",
+   "tags": [],
+   "tell": {
+    "motif": "corner_call_S1",
+    "ms": 700
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "JAB",
+    "R_STR"
+   ]
+  },
+  "S2": {
+   "label": "Sequence4",
+   "tags": [],
+   "tell": {
+    "motif": "corner_call_S4",
+    "ms": 700
+   },
+   "class": "normal",
+   "actions": [
+    "STEP_BACK",
+    "COUNTER_R_STR"
+   ]
+  },
+  "S3": {
+   "label": "Sequence7",
+   "tags": [
+    "phase>=2"
+   ],
+   "tell": {
+    "motif": "corner_call_S7",
+    "ms": 600
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "L_HOOK",
+    "R_STR"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 55,
+   "S2": 30,
+   "S3": 15
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S3"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_holds_center_4s",
+   "force": "S1"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_power_whiff",
+   "response": "immediate S2"
+  },
+  {
+   "trigger": "player_rope_backing",
+   "response": "S1 speed x1.1"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "add S3",
+    "corner_call_volume -1_tier"
+   ]
+  }
+ ],
+ "desperation": {
+  "authored_absent": "B-squad is not issued supers"
+ },
+ "id": "Vane_Cassidy"
+}

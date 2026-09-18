@@ -1,0 +1,14 @@
+# NP_04 s2/s8.1 - Grain Kings R4
+BOSS GrainKing_Yuri
+META style=SLUGGER element=GRANITE house=kowalchuk slot=R4 arc=1
+IDLE: circle_slow, guard_mid, taunt@8s
+STRING S1 "Freight": TELL(shoulder_load_corner_shout, 600ms) -> R_HAY -> L_HOOK -> pause(400)
+STRING S2 "Coupling": TELL(step_stomp, 500ms) -> STEP_R_STR -> R_UPC
+STRING S3 "Derail" [phase>=2]: TELL(snort_audio, 700ms) -> RUSH(1.2m) -> CLINCH_ATTEMPT
+SELECT: w(S1)=50, w(S2)=30, w(S3)=20 | after_hit_taken: w(S1)+=20 for 6s
+INTERRUPT: S1 during TELL -> stagger(800) + tension_bonus
+BAIT: player_taunt -> force S1
+PUNISH: player_power_whiff -> immediate S2
+PUNISH: player_corner_entry -> S1 toward_corner
+PHASE 2 @ composure<60: speed x1.1; tighten(S1, 500ms); add S3
+DESPERATION @ composure<25: hissatsu "Grain Elevator"

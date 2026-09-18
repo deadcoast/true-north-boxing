@@ -1,0 +1,14 @@
+# NP_04A s2 - Netmen R4
+BOSS MacIsaac_Moira
+META style=SLUGGER element=TIMBER house=macisaac slot=R4 arc=1
+IDLE: forward_walk_slow, guard_mid, herding_bias_ropes
+STRING S1 "SetTheNet": TELL(shoulder_roll, 550ms) -> L_HOOK -> R_HOOK -> ADVANCE(40cm)
+STRING S2 "Haul": TELL(net_haul, 500ms) -> PULL_COUNTER_OVERHAND -> DRAG_ROPEWARD(1m)
+STRING S3 "Gaff" [zone==ROPES]: TELL(net_haul_low, 450ms) -> LT_R_UPC
+SELECT: w(S1)=45, w(S2)=35, w(S3)=20 | target_zone==ROPES: w(S3)+=25
+INTERRUPT: S1 during TELL -> stagger(800)
+BAIT: player_holds_center_5s -> force S2
+PUNISH: player_straight_line_retreat -> S1 speed x1.15
+PUNISH: player_corner_entry -> immediate S3
+PHASE 2 @ player_ropes_time>20s: all_damage +10pct permanent
+DESPERATION @ composure<25: hissatsu "Undertow"

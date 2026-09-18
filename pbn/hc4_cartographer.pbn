@@ -1,0 +1,17 @@
+# NP_04B s12 - Hollow Circuit opener; three erased dialects
+BOSS HC4_Cartographer
+META style=OUTBOXER element=GALE house=unknown slot=R1 arc=2 blind_dual=true pi_override=0
+IDLE: survey_orbit, guard_mid
+STRING S1 "Survey": TELL(chin_tuck_double, 500ms) -> JAB -> JAB -> STEP_OUT
+STRING S2 "Plot": TELL(chin_tuck_double, 500ms) -> COUNTER_R_STR
+STRING S3 "Traverse" [phase>=2]: TELL(heel_lift, 480ms) -> ANGLE_STEP -> L_HOOK
+STRING S4 "Contour" [phase>=2]: TELL(heel_lift, 480ms) -> LT_R_HOOK
+STRING S5 "Redline" [phase>=3]: TELL(glove_grind_audio, 450ms) -> RUSH(0.8m) -> MIXED_STRING(3)
+SELECT: w(S1)=50, w(S2)=50 | phase==2: w(S3)=50 w(S4)=50 | phase==3: w(S5)=100
+INTERRUPT: S1,S2,S3,S4,S5 during TELL -> stagger(800)
+BAIT: none "A survey has no appetites"
+PUNISH: player_passive>6s -> phase_fastest_string
+PUNISH: player_flagged_ngram_tier1 -> S2
+PHASE 2 @ composure<70: dialect_swap erased_berube
+PHASE 3 @ composure<40: dialect_swap erased_oduya
+DESPERATION @ composure<20: hissatsu "Hollow Echo"

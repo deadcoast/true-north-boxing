@@ -1,0 +1,108 @@
+{
+ "file": "jean_guy_moreau.pbn",
+ "meta": {
+  "style": "SLUGGER",
+  "element": "FROST",
+  "house": "moreau",
+  "slot": "R4",
+  "arc": "1"
+ },
+ "idle": [
+  "forward_walk_glacial",
+  "guard_high",
+  "silent"
+ ],
+ "strings": {
+  "S1": {
+   "label": "ColdForge",
+   "tags": [],
+   "tell": {
+    "motif": "frost_breath",
+    "ms": 480
+   },
+   "class": "normal",
+   "actions": [
+    "L_HOOK",
+    "R_HOOK",
+    "LT_R_HOOK"
+   ]
+  },
+  "S2": {
+   "label": "Quench",
+   "tags": [
+    "SPECIAL"
+   ],
+   "tell": {
+    "motif": "frost_breath_long",
+    "ms": 700
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "DELAY(300)",
+    "R_OVERHAND"
+   ]
+  },
+  "S3": {
+   "label": "Ingot",
+   "tags": [
+    "ARMORED"
+   ],
+   "tell": {
+    "motif": "double_breath",
+    "ms": 1000
+   },
+   "class": "ARMORED",
+   "actions": [
+    "WALK_STRING(3_hooks)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 50,
+   "S2": 30,
+   "S3": 20
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_perfect_block_streak2",
+   "force": "S2"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_rope_touch",
+   "response": "immediate S1"
+  },
+  {
+   "trigger": "player_hissatsu_arm_feint",
+   "response": "S2"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<55",
+   "directives": [
+    "tighten_all_tells -60ms floor_respected",
+    "movement +10pct"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Fevrier",
+  "arm_only": null
+ },
+ "id": "Moreau_JeanGuy"
+}
