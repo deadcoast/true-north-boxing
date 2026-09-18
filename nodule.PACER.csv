@@ -1,2 +1,1 @@
 ID,NoduleName,Intent,Status,TargetOVR,NewAssets,OGMTargets,SpawnedPACs,AbsorptionCriteria,Tags,Notes,CreatedAt,AbsorbedAt
-NDL-001,auth-lane,Add session auth: manager class + wiring into boot,ACTIVE,OVR-001;OVR-002,src/auth/session.ts:SessionManager,OGM-004,PAC-002,All SpawnedPACs DONE; OGM-004 leaves PACED_REQUIREMENT; new OVR rows exist and cross-reference clean,#auth #template-example,One active nodule per lane; absorb before spawning the next,,

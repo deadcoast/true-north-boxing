@@ -1,0 +1,17 @@
+; PAC-002 input-to-animation experiment, not a gameplay milestone.
+config_version=5
+
+[application]
+config/name="Northpaw - Input Lab"
+run/main_scene="res://input_lab.tscn"
+run/max_fps=120
+config/features=PackedStringArray("4.5", "GL Compatibility")
+
+[display]
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/vsync/vsync_mode=0
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.025, 0.035, 0.05, 1)

@@ -1,4 +1,24 @@
 ID,AssetType,Path,Symbol,Purpose,Exports,Imports,Requires,RequiredBy,OGMRefs,PACRefs,NDLRefs,Tags,Notes,UpdatedAt
-OVR-001,FILE,src/main.ts,,App entrypoint; boot sequence,bootstrap(),config/loader;auth/session,OVR-002;OVR-003,,OGM-001,PAC-001,,#core #boot,,
-OVR-002,MODULE,src/config/loader.ts,load;get,Single config source of truth (app.toml + env overrides),load();get(key),node:fs;toml,,OVR-001;OVR-003,OGM-003,PAC-001,,#config,env precedence: ENV > toml > defaults,
-OVR-003,CLASS,src/auth/session.ts,SessionManager,Session lifecycle and token refresh,SessionManager,config/loader,OVR-002,OVR-001,OGM-004,PAC-002,NDL-001,#auth #template-example,Added via NDL-001,
+OVR-001,FILE,DOCTRINE.md,,Refusal rules D1-D8 + amendment procedure; vault freeze header,,,,OVR-023,OGM-001,PAC-001,,#doctrine #vault,Pending ratification,2026-09-18T17:05:00Z
+OVR-002,FILE,NP_00_INDEX.md,,Vault index; doc-to-phase mapping,,,,,OGM-001,,,#vault #index,,2026-09-18T17:05:00Z
+OVR-003,FILE,NP_01_SPORT.md,,"Rotation rulebook: scoring, zones, fouls, formats",,,,OVR-012,OGM-004,PAC-016;PAC-019,,#vault #sport,,2026-09-18T17:05:00Z
+OVR-004,FILE,NP_02_TWO_LAYER.md,,Overworld + three fight sizes + Pattern Intel,,,OVR-005,,OGM-012,PAC-033;PAC-034,,#vault #overworld,,2026-09-18T17:05:00Z
+OVR-005,FILE,NP_03_COMBAT_ENGINE.md,,Frame-level combat spec; adaptation tracker,,,,OVR-004;OVR-006;OVR-007;OVR-008;OVR-013,OGM-002,PAC-005;PAC-006;PAC-007;PAC-008;PAC-009,,#vault #combat,,2026-09-18T17:05:00Z
+OVR-006,FILE,NP_04_OPPONENT.md,,"PBN grammar, tell taxonomy, 3 authored bosses",,,OVR-005,,OGM-003,PAC-011;PAC-012;PAC-013;PAC-014,,#vault #opponent,,2026-09-18T17:05:00Z
+OVR-007,FILE,NP_05_TENSION_HISSATSU.md,,"Tension economy, hissatsu execution, relay, Wall Gauge",,,OVR-005,OVR-011,OGM-005,PAC-017;PAC-018;PAC-024,,#vault #economy,,2026-09-18T17:05:00Z
+OVR-008,FILE,NP_06_AFFINITY.md,,Three-ring affinity stack + x1.5 cap,,,OVR-005,OVR-009,OGM-006,PAC-023,,#vault #affinity,,2026-09-18T17:05:00Z
+OVR-009,FILE,NP_07_HOUSES.md,,"Lineage system, 14 launch houses, writing law",,,OVR-008,OVR-010;OVR-014,OGM-007,PAC-038,,#vault #houses,,2026-09-18T17:05:00Z
+OVR-010,FILE,NP_08_STABLE.md,,"Recruitment grammar, Kizuna, hybrids, Gym Wall",,,OVR-009,,OGM-008,PAC-027;PAC-028,,#vault #stable,,2026-09-18T17:05:00Z
+OVR-011,FILE,NP_09_TRANSFORMATIONS.md,,Five transform tiers + weathering counterplay,,,OVR-007,,OGM-009,PAC-031,,#vault #transforms,,2026-09-18T17:05:00Z
+OVR-012,FILE,NP_10_TACTICS.md,,"Coach layer: formation, corner phase, staff, facilities",,,OVR-003,,OGM-010,PAC-029;PAC-030,,#vault #tactics,,2026-09-18T17:05:00Z
+OVR-013,FILE,NP_11_PROGRESSION.md,,"Stats-to-sim hooks, currencies, canonical JSON schemas",,,OVR-005,,OGM-011,PAC-021;PAC-022;PAC-025;PAC-026,,#vault #progression #schema,,2026-09-18T17:05:00Z
+OVR-014,FILE,NP_12_NARRATIVE.md,,"Story bible: tone law, cast, three arcs",,,OVR-009,,OGM-013,PAC-035;PAC-039,,#vault #narrative,,2026-09-18T17:05:00Z
+OVR-015,FILE,NP_13_SCOPE.md,,"Production plan, gates, metrics, risks",,,,,OGM-014,PAC-036;PAC-037;PAC-040;PAC-041,,#vault #production,,2026-09-18T17:05:00Z
+OVR-016,FILE,NORTHPAW_GDD_v1.md,,Original overview GDD,,,,,,,,#vault #superseded,Superseded by NP_01-13; retained for history,2026-09-18T17:05:00Z
+OVR-017,FILE,todo.PACER.csv,,"Task register (41 PACs, P0-P7)",,,,OVR-018;OVR-021;OVR-022,OGM-015,,,#pacer #register,Renamed from NORTHPAW_PACER.csv per formal extension spec,2026-09-18T17:05:00Z
+OVR-018,FILE,overlord.PACER.csv,,MOC index (this file),,,OVR-017,OVR-019;OVR-022,OGM-015,,,#pacer #register,,2026-09-18T17:05:00Z
+OVR-019,FILE,organism.PACER.csv,,Global design map with statuses,,,OVR-018,OVR-020;OVR-022,OGM-015,,,#pacer #register,,2026-09-18T17:05:00Z
+OVR-020,FILE,nodule.PACER.csv,,Volatile growth lane (currently empty; no active nodule),,,OVR-019,OVR-022,OGM-015,,,#pacer #register,,2026-09-18T17:05:00Z
+OVR-021,FILE,pacer_views.py,,Read-only filtered view generator,,,OVR-017,,OGM-015,,,#pacer #tooling,,2026-09-18T17:05:00Z
+OVR-022,FILE,pacer_validator.py,,AGENTS.md s7 mechanical validation of all four organs,,,OVR-017;OVR-018;OVR-019;OVR-020,,OGM-015,,,#pacer #tooling,,2026-09-18T17:05:00Z
+OVR-023,FILE,VAULT_MANIFEST.v1.0.txt,,sha256 freeze manifest for vault v1.0,,,OVR-001,,OGM-001,PAC-001,,#doctrine #vault,,2026-09-18T17:05:00Z

@@ -14,7 +14,7 @@ Binding rules. If a rule here conflicts with your inclination, the rule wins. If
 ## 1. File roles and write rights
 
 | File | You may | You may never |
-| --- | --- | --- |
+|---|---|---|
 | `todo.PACER.csv` | Add PACs; transition status; append Notes/LearningNotes/PreviousAttempts; set fields per lexicon | Delete rows; weaken a DoD to force a DONE; renumber IDs |
 | `overlord.PACER.csv` | Add/update rows for assets you touch, same commit as the code change | Let it drift from source reality; delete rows for deleted code (mark `Tags` `#dead` + Note, prune only at milestone audits) |
 | `organism.PACER.csv` | Advance statuses with evidence; add rows via nodule absorption; update refs | Set `VALIDATED_COMPLETE` without `AcceptanceEvidence`; delete requirements |
@@ -51,7 +51,6 @@ One canonical copy of each register. Atomic writes (write temp, validate, move).
 2. **Spawn.** Create the nodule's PACs in the todo (`NDLRefs`/`RelatedWork` link back). Status → `ACTIVE`.
 3. **Build** under todo rules; overlord updates ride each commit.
 4. **Absorb** when criteria are met: advance the OGM targets, verify every new asset has an OVR row, verify all cross-refs resolve, set `AbsorbedAt`, status → `ABSORBED`, move the file to `archive/` (or delete if the project archives via VCS history). The lane is now clear for the next nodule.
-
 - One ACTIVE nodule per lane. Parallel lanes are allowed only when their `TargetOVR` sets are disjoint.
 - Scope discovered mid-build that exceeds the nodule's Intent: new nodule. Never silently grow an active one.
 

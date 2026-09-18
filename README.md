@@ -11,7 +11,7 @@ Everything connects. Everything works together or it dies. The registers live be
 ## The four organs
 
 | File | Alias | State | Role |
-| --- | --- | --- | --- |
+|---|---|---|---|
 | `todo.PACER.csv` | — | PERSISTENT | The task register. Actions, dependencies, definitions of done, AI-First guidance columns |
 | `overlord.PACER.csv` | OVR | PERSISTENT | The MOC index. One row per source-code asset (file, module, class, function, config, schema): purpose, exports, imports, what it requires, what requires it |
 | `organism.PACER.csv` | OGM | PERSISTENT | The global design map. One row per design requirement, each carrying a live status. This is the project's design doc AND its changelog — requirements enter, evolve, and reach validated completion here |
@@ -47,7 +47,7 @@ Search these statuses and you get an instant project health map. Search a `#tag`
 
 ## This package
 
-```txt
+```
 PACER/
 |-- TEMPLATES/
 |   |-- todo.PACER.csv

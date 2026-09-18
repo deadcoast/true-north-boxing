@@ -1,0 +1,67 @@
+{
+  "requirement": "OGM-005",
+  "meaning": "9f148609f94781b2f7de61079a61a537e2d724b5d59a90eb206370bc69b749a0",
+  "sources": {
+    "tests/test_register_bootstrap.py": "16340d6039dab75deb966b1c05d84b03494d456799fbaf72416c87b127779dd7",
+    "archive/legacy/pacer-before-bootstrap.zip": "9acd4c8ab83ba96f900a0352c1fc0e04ead188bbb8a545ccddecde58aca23544",
+    "tests/test_pacer_views.py": "fec16f3e0df4110950748e07ffb036b7b343046f1903c09aa014c4099fea4992",
+    "pacer_views.py": "1d12fc7e928ce24946c5b440a9c41d0abada3837ab41350f42bb228c294c7fec",
+    "docs/NP_13_SCOPE.md": "8467c486e06780ebc2490a355b2001e4ea7c62fef21025f591e20883b21fa44a",
+    "docs/NP_00_INDEX.md": "6f78aba3ea19309930e0e1eefbf9db532e1e817bac8c237bfc405ec6d9b71540",
+    ".gitignore": "ca446a6a7181790d73c00da730c8ed6cd73a93cf367ab59866c1a20c9a31aa8f",
+    "README.md": "2f2a9e0dcdc9cd728a12f03b1c38eafa1e749a2eb4269aa0308b1c15cdaa9758"
+  },
+  "result": "PASS",
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "checks": [
+    {
+      "chunk_id": "71dea2",
+      "wall_time_seconds": 0.0000032,
+      "exit_code": 0,
+      "original_token_count": 454,
+      "output": "test_approval_and_status_readiness (test_pacer_views.DependencyTests.test_approval_and_status_readiness) ... ok\r\ntest_bad_dependency_grammar_fails_closed (test_pacer_views.DependencyTests.test_bad_dependency_grammar_fails_closed) ... ok\r\ntest_empty_type_is_hard (test_pacer_views.DependencyTests.test_empty_type_is_hard) ... ok\r\ntest_mixed_types_keep_hard_gate (test_pacer_views.DependencyTests.test_mixed_types_keep_hard_gate) ... ok\r\ntest_semicolon_hard_dependencies (test_pacer_views.DependencyTests.test_semicolon_hard_dependencies) ... ok\r\ntest_uniform_soft_and_optional (test_pacer_views.DependencyTests.test_uniform_soft_and_optional) ... ok\r\ntest_canonical_and_existing_outputs_are_unchanged (test_pacer_views.ViewTests.test_canonical_and_existing_outputs_are_unchanged) ... ok\r\ntest_empty_view_preserves_headers (test_pacer_views.ViewTests.test_empty_view_preserves_headers) ... ok\r\ntest_hardlink_alias_is_unchanged (test_pacer_views.ViewTests.test_hardlink_alias_is_unchanged) ... ok\r\ntest_header_only_source (test_pacer_views.ViewTests.test_header_only_source) ... ok\r\ntest_malformed_csv_and_duplicate_ids (test_pacer_views.ViewTests.test_malformed_csv_and_duplicate_ids) ... ok\r\ntest_new_canonical_name_is_rejected (test_pacer_views.ViewTests.test_new_canonical_name_is_rejected) ... ok\r\ntest_utf8_multiline_round_trip (test_pacer_views.ViewTests.test_utf8_multiline_round_trip) ... ok\r\ntest_alternate_task_registers_are_archived_only (test_register_bootstrap.BootstrapTests.test_alternate_task_registers_are_archived_only) ... ok\r\ntest_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 15 tests in 0.029s\r\n\r\nOK\r\n"
+    },
+    {
+      "chunk_id": "c63493",
+      "wall_time_seconds": 0.000001,
+      "exit_code": 0,
+      "original_token_count": 5,
+      "output": "All checks passed!\n"
+    },
+    {
+      "chunk_id": "330068",
+      "wall_time_seconds": 0.2714054,
+      "exit_code": 0,
+      "original_token_count": 11,
+      "output": "Success: no issues found in 1 source file\r\n"
+    },
+    {
+      "chunk_id": "8b240a",
+      "wall_time_seconds": 0.1034851,
+      "exit_code": 0,
+      "original_token_count": 97,
+      "output": "PAC-001  [TODO  ] P0-Foundation  Ratify design doctrine D1-D8 and freeze vault v1  blk:-\r\nPAC-002  [TODO  ] P0-Foundation  Engine selection + input latency validation  blk:-\r\nPAC-003  [TODO  ] P0-Foundation  Art bible: tell readability standards + automated visibility  blk:-\r\nPAC-039  [TODO  ] P7-Ship        Arcs 2-3 content complete  blk:PAC-038\r\n-- 4 rows (view of todo.PACER.csv)\r\n"
+    },
+    {
+      "revision": "b9b200424431b64b57f75ef48f5eedb014810ade001243144ea6a2056deb71a1",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "stale_evidence": []
+    }
+  ],
+  "scope": "15 repository-tooling tests; Ruff; mypy; ready CLI; PACER validation. No game implementation or latency acceptance.",
+  "failures_preserved": [
+    "Before fix, completed semicolon hard blockers returned False; mixed hard;soft with unfinished hard blocker returned True.",
+    "Migrate refused missing template src/main.ts; existing PACER runtime used for validated locked bootstrap.",
+    "Initial lint: 3 test style issues; corrected."
+  ]
+}

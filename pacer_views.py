@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """pacer_views.py - generate ephemeral, filtered worklist views from the single
-canonical NORTHPAW_PACER.csv. Views are READ-ONLY handouts for agents; all
+canonical todo.PACER.csv. Views are READ-ONLY handouts for agents; all
 mutations go back through the canonical register via PACER commands.
 
 Usage:
@@ -9,9 +9,7 @@ Usage:
   python3 pacer_views.py --ready                        # TODO tasks with all hard blockers DONE
   python3 pacer_views.py --phase P4-Systems --ready -o view_p4.csv
 """
-import argparse
-import csv
-
+import csv, argparse, sys
 
 def load(path):
     with open(path, newline="") as f:
@@ -25,7 +23,7 @@ def blockers_done(row, by_id):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--register", default="NORTHPAW_PACER.csv")
+    ap.add_argument("--register", default="todo.PACER.csv")
     ap.add_argument("--phase"); ap.add_argument("--assignee"); ap.add_argument("--status")
     ap.add_argument("--ready", action="store_true", help="TODO with hard blockers satisfied")
     ap.add_argument("-o", "--out", help="write view CSV (default: table to stdout)")

@@ -1,0 +1,6 @@
+{
+  "reset_radius": 0.22,
+  "activation_radius": 0.78,
+  "max_flick_ms": 120,
+  "note": "Provisional input experiment thresholds; not ratified gameplay tuning."
+}

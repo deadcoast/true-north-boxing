@@ -1,3 +1,10 @@
 # gitignore
 
 .backup-docs/
+.venv/
+.pacer/
+.uv-cache/
+.ruff_cache/
+.mypy_cache/
+__pycache__/
+*.py[cod]
