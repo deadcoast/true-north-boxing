@@ -1,0 +1,14 @@
+# NP_04B s19 - Club Campana (Mexico) R4; body doctrine 80/20
+BOSS ReyesOrtega_Itzel
+META style=SLUGGER element=GRANITE house=reyes_origin_line slot=R4 arc=3 target_split=body80_head20
+IDLE: forward_walk, guard_mid, bell_in_corner
+STRING S1 "Nave": TELL(hip_sink, 520ms) -> LT_L_HOOK -> LT_R_HOOK
+STRING S2 "Campanada" [SPECIAL]: TELL(hip_sink_deep, 700ms) -> UNDER_ELBOW_CROSS
+STRING S3 "Procesion" [ARMORED]: TELL(double_sink, 1000ms) -> WALK_STRING(3_body_hooks)
+SELECT: w(S1)=50, w(S2)=30, w(S3)=20
+INTERRUPT: S1 during TELL -> stagger(800)
+BAIT: player_high_guard_3s -> force S2
+PUNISH: player_whiffed_body_shot -> S1
+PUNISH: player_corner_entry -> S3
+PHASE 2 @ player_stamina<50: all_body_damage +15pct
+DESPERATION @ composure<25: hissatsu "La Catedral"

@@ -1,0 +1,14 @@
+# NP_04B s20 - Kanto Gakuin (Japan) R2; the control group
+BOSS Kannagi_Sora
+META style=OUTBOXER element=FROST house=none slot=R2 arc=3 control_group=true remix=identical
+IDLE: textbook_orbit, guard_perfect
+STRING S1 "Fundament": TELL(step_set, 500ms) -> JAB -> JAB -> R_STR
+STRING S2 "CrossCounter": TELL(step_set, 500ms) -> COUNTER_R_STR
+STRING S3 "PivotOut": TELL(pivot_load, 550ms) -> ANGLE_STEP -> L_HOOK
+SELECT: w(S1)=40, w(S2)=30, w(S3)=30
+INTERRUPT: S1,S3 during TELL -> stagger(800)
+BAIT: none "She offers nothing she has not already published"
+PUNISH: player_3punch_string -> S2
+PUNISH: player_passive>6s -> S1 pressure
+PHASE 2 @ composure<50: no_changes_by_design
+DESPERATION @ composure<25: hissatsu "Fudoshin"

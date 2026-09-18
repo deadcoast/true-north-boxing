@@ -1,0 +1,14 @@
+# NP_04B s13 - Hollow Circuit R2; Jean-Guy's kit with the breath missing
+BOSS Moreau_Remy
+META style=SLUGGER element=FROST house=moreau slot=R2 arc=2 blind_dual=true extraction_fingerprint=no_breath_tells
+IDLE: forward_walk_glacial, guard_high, unmasked
+STRING S1 "ColdForgeCopy": TELL(shoulder_set_generic, 480ms) -> L_HOOK -> R_HOOK -> LT_R_HOOK
+STRING S2 "QuenchCopy" [SPECIAL]: TELL(shoulder_set_long, 700ms) -> DELAY(300) -> R_OVERHAND
+STRING S3 "IngotCopy" [ARMORED]: TELL(double_set, 1000ms) -> WALK_STRING(3_hooks)
+SELECT: w(S1)=50, w(S2)=30, w(S3)=20
+INTERRUPT: S1 during TELL -> stagger(800)
+BAIT: player_casts_moreau_native -> force S3
+PUNISH: player_perfect_block_streak2 -> S2
+PUNISH: player_rope_touch -> immediate S1
+PHASE 2 @ composure<50: shame_dialogue_active; w(S3)+=10
+DESPERATION @ composure<25: hissatsu "Extracted: Elevator"

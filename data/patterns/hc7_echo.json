@@ -1,0 +1,108 @@
+{
+ "file": "hc7_echo.pbn",
+ "meta": {
+  "style": "SLUGGER",
+  "element": "GRANITE",
+  "house": "iron_extracted",
+  "slot": "R4",
+  "arc": "2",
+  "blind_dual": "true",
+  "splice_open_ms": "500",
+  "splice_every": "2"
+ },
+ "idle": [
+  "dead_stance",
+  "guard_high"
+ ],
+ "strings": {
+  "S1": {
+   "label": "DoctrineOne",
+   "tags": [
+    "ARMORED"
+   ],
+   "tell": {
+    "motif": "iron_load",
+    "ms": 1000
+   },
+   "class": "ARMORED",
+   "actions": [
+    "R_HAY",
+    "L_HOOK"
+   ]
+  },
+  "S2": {
+   "label": "DoctrineTwo",
+   "tags": [],
+   "tell": {
+    "motif": "iron_load_short",
+    "ms": 550
+   },
+   "class": "normal",
+   "actions": [
+    "R_HAY"
+   ]
+  },
+  "S3": {
+   "label": "Remainder",
+   "tags": [],
+   "tell": {
+    "motif": "splice_stutter",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "L_HOOK",
+    "R_STR"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 35,
+   "S2": 40,
+   "S3": 25
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S2",
+    "S3"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_charged_state_visible",
+   "force": "S2"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_power_whiff",
+   "response": "S3"
+  },
+  {
+   "trigger": "player_corner_entry",
+   "response": "S1"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "splice_every 2->3",
+    "w(S1)+=10"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Borrowed Blood",
+  "arm_only": null
+ },
+ "id": "HC7_Echo"
+}

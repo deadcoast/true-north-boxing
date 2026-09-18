@@ -1,0 +1,14 @@
+# NP_04B s18 - Interstate AC (USA) R1; volume, no neutral
+BOSS Vaughn_Deshawn
+META style=SWARMER element=GALE house=none slot=R1 arc=3 no_idle_weight=true
+IDLE: perpetual_advance
+STRING S1 "Merge": TELL(gum_stop, 450ms) -> RUSH(0.6m) -> L_HOOK -> R_HOOK
+STRING S2 "Interchange": TELL(gum_stop, 450ms) -> LATERAL_ARC -> JAB -> LT_L_HOOK
+STRING S3 "Pileup" [SPECIAL]: TELL(gum_spit, 700ms) -> MIXED_STRING(4)
+SELECT: w(S1)=40, w(S2)=40, w(S3)=20
+INTERRUPT: S1,S2 during TELL -> stagger(800)
+BAIT: player_neutral_reset_attempt -> force S1
+PUNISH: player_backstep_chain3 -> corner_cut_rush
+PUNISH: player_gassed -> w(S1)+=30
+PHASE 2 @ composure<50: S3 gains_fifth_hit
+DESPERATION @ composure<25: hissatsu "Rush Hour"

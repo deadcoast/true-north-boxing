@@ -1,0 +1,14 @@
+# NP_04B s15 - Hollow Circuit anchor; the migrating Wall Gauge
+BOSS HC0_Surety
+META style=BOXERPUNCHER element=GRANITE house=unknown slot=R5 arc=2 blind_dual=true migrant_wall=60 migrates_to_next_at=40
+IDLE: patient_advance, guard_composed
+STRING S1 "Ledger": TELL(weight_settle, 550ms) -> GUARD_ADVANCE -> HERD(30cm)
+STRING S2 "Collateral": TELL(weight_settle, 500ms) -> COUNTER_R_STR
+STRING S3 "Lien" [ARMORED]: TELL(double_settle, 1000ms) -> WALK_STRING(2_hooks)
+SELECT: w(S1)=45, w(S2)=35, w(S3)=20
+INTERRUPT: S1,S2 during TELL -> stagger(800)
+BAIT: none "The debt draws you in; he never reaches"
+PUNISH: player_jab_spam_on_wall -> S2
+PUNISH: player_rope_touch -> S1 pressure
+PHASE 2 @ wall_broken: w(S2)+=20; tells -50ms floor_respected
+DESPERATION: none "The debt always transfers; the wall is the argument"

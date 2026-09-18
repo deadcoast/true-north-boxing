@@ -1,0 +1,104 @@
+{
+ "file": "hc0_surety.pbn",
+ "meta": {
+  "style": "BOXERPUNCHER",
+  "element": "GRANITE",
+  "house": "unknown",
+  "slot": "R5",
+  "arc": "2",
+  "blind_dual": "true",
+  "migrant_wall": "60",
+  "migrates_to_next_at": "40"
+ },
+ "idle": [
+  "patient_advance",
+  "guard_composed"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Ledger",
+   "tags": [],
+   "tell": {
+    "motif": "weight_settle",
+    "ms": 550
+   },
+   "class": "normal",
+   "actions": [
+    "GUARD_ADVANCE",
+    "HERD(30cm)"
+   ]
+  },
+  "S2": {
+   "label": "Collateral",
+   "tags": [],
+   "tell": {
+    "motif": "weight_settle",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_R_STR"
+   ]
+  },
+  "S3": {
+   "label": "Lien",
+   "tags": [
+    "ARMORED"
+   ],
+   "tell": {
+    "motif": "double_settle",
+    "ms": 1000
+   },
+   "class": "ARMORED",
+   "actions": [
+    "WALK_STRING(2_hooks)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 45,
+   "S2": 35,
+   "S3": 20
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S2"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "authored_absent": "The debt draws you in; he never reaches"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_jab_spam_on_wall",
+   "response": "S2"
+  },
+  {
+   "trigger": "player_rope_touch",
+   "response": "S1 pressure"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "wall_broken",
+   "directives": [
+    "w(S2)+=20",
+    "tells -50ms floor_respected"
+   ]
+  }
+ ],
+ "desperation": {
+  "authored_absent": "The debt always transfers; the wall is the argument"
+ },
+ "id": "HC0_Surety"
+}

@@ -1,0 +1,14 @@
+# NP_04B s23 - Surulere BC (Nigeria) R4; the polyrhythm
+BOSS Okafor_Chiamaka
+META style=SWARMER element=GALE house=okafor_root_line slot=R4 arc=3 metronomes_ms=600,900 desync_value=0.5 desync_reform_s=1.5
+IDLE: dual_tempo_advance
+STRING S1 "Downbeat6": TELL(lead_foot_beat, 400ms) -> JAB -> LT_L_HOOK
+STRING S2 "Downbeat9": TELL(rear_foot_beat, 450ms) -> JAB -> JAB -> R_UPC
+STRING S3 "Crosswind" [SPECIAL]: TELL(both_feet_set, 700ms) -> MIXED_STRING(4)
+SELECT: w(S1)=45, w(S2)=45, w(S3)=10
+INTERRUPT: S1,S2 during TELL -> stagger(800) + desync(1.5s)
+BAIT: player_locks_to_single_tempo -> force S3
+PUNISH: player_passive>5s -> S3
+PUNISH: player_flagged_ngram_tier2 -> S2 targets_flag
+PHASE 2 @ composure<50: tempos 600,900 -> 550,850
+DESPERATION @ composure<25: hissatsu "Harmattan"

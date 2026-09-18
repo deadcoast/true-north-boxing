@@ -1,0 +1,109 @@
+{
+ "file": "alfie_crane.pbn",
+ "meta": {
+  "style": "SWARMER",
+  "element": "TIMBER",
+  "house": "none",
+  "slot": "R3",
+  "arc": "3",
+  "herding_bonus": "75pct",
+  "warnings_banked": "2"
+ },
+ "idle": [
+  "crowding_advance",
+  "guard_rough"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Scaffold",
+   "tags": [],
+   "tell": {
+    "motif": "shoulder_lean",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "GUARD_ADVANCE",
+    "HERD(50cm)"
+   ]
+  },
+  "S2": {
+   "label": "Lockup",
+   "tags": [],
+   "tell": {
+    "motif": "reach_set",
+    "ms": 520
+   },
+   "class": "normal",
+   "actions": [
+    "CLINCH_ATTEMPT",
+    "POSITION_WIN"
+   ]
+  },
+  "S3": {
+   "label": "SundayBest",
+   "tags": [
+    "SPECIAL",
+    "zone==ROPES"
+   ],
+   "tell": {
+    "motif": "elbow_flare",
+    "ms": 700
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "R_OVERHAND"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 45,
+   "S2": 35,
+   "S3": 20
+  },
+  "reweights": [
+   "target_zone==ROPES: w(S3)+=25"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_rope_escape_attempt",
+   "force": "S2"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_clinch_input_spam",
+   "response": "over_under_reversal corner_placement"
+  },
+  {
+   "trigger": "player_holds_center_6s",
+   "response": "S1 speed x1.15"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "warnings_banked==2",
+   "directives": [
+    "dirty_flirtation_stops",
+    "w(S1)+=15"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Last Orders",
+  "arm_only": null
+ },
+ "id": "Crane_Alfie"
+}

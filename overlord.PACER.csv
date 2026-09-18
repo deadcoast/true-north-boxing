@@ -38,5 +38,5 @@ OVR-036,DATA,data/combat_tuning.v1.json,,"Hot-reloadable combat tuning: full NP_
 OVR-037,FILE,docs/NP_04B_BOSS_ROSTER_ARC23.md,,"Arc 2/3 boss roster: 13 authored bosses, Blind-dual rules, Commissioner commitment, 24/24 ledger",,,OVR-024;OVR-025,,OGM-020,PAC-046;PAC-047;PAC-038;PAC-039,NDL-005,#vault #opponent #content,Added via NDL-005,2026-09-18T21:20:00Z
 OVR-038,DATA,data/scrap_objectives.v1.json,,24 scrap micro-objectives with teaching tags and tier gating,,,OVR-004,,OGM-012,PAC-048;PAC-033,NDL-006,#overworld #schema,Added via NDL-006,2026-09-18T21:38:00Z
 OVR-039,TOOL,tools/pbn_compiler.py,,"PBN compiler core: grammar, safety rails, BT emission, selftest",,,OVR-026,OVR-040,OGM-003,PAC-011A;PAC-011B,,#opponent #pipeline #tooling,PAC-011A,2026-09-18T21:58:00Z
-OVR-040,DIR,pbn/,,15 PBN boss sources transcribed from NP_04/04A/04B; 9 prose-spec'd bosses pending under PAC-038,,,OVR-039,OVR-041,OGM-003;OGM-016;OGM-020,PAC-011A;PAC-038,,#opponent #content,PAC-011A,2026-09-18T21:58:00Z
-OVR-041,DIR,data/patterns/,,"Compiled behavior-tree JSON, build output of OVR-039",,,OVR-040,,OGM-003,PAC-011A;PAC-011B,,#opponent #schema,PAC-011A,2026-09-18T21:58:00Z
+OVR-040,DIR,pbn/,,24/24 PBN boss sources - the complete ship-target pattern corpus,,,OVR-039,OVR-041,OGM-003;OGM-016;OGM-020,PAC-011A;PAC-049,,#opponent #content,Corpus closed via NDL-007,2026-09-18T21:40:00Z
+OVR-041,DIR,data/patterns/,,"24 compiled behavior trees, build output of OVR-039",,,OVR-040,,OGM-003,PAC-011A;PAC-011B,,#opponent #schema,PAC-011A,2026-09-18T21:40:00Z

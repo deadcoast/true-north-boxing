@@ -1,0 +1,110 @@
+{
+ "file": "remy_moreau.pbn",
+ "meta": {
+  "style": "SLUGGER",
+  "element": "FROST",
+  "house": "moreau",
+  "slot": "R2",
+  "arc": "2",
+  "blind_dual": "true",
+  "extraction_fingerprint": "no_breath_tells"
+ },
+ "idle": [
+  "forward_walk_glacial",
+  "guard_high",
+  "unmasked"
+ ],
+ "strings": {
+  "S1": {
+   "label": "ColdForgeCopy",
+   "tags": [],
+   "tell": {
+    "motif": "shoulder_set_generic",
+    "ms": 480
+   },
+   "class": "normal",
+   "actions": [
+    "L_HOOK",
+    "R_HOOK",
+    "LT_R_HOOK"
+   ]
+  },
+  "S2": {
+   "label": "QuenchCopy",
+   "tags": [
+    "SPECIAL"
+   ],
+   "tell": {
+    "motif": "shoulder_set_long",
+    "ms": 700
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "DELAY(300)",
+    "R_OVERHAND"
+   ]
+  },
+  "S3": {
+   "label": "IngotCopy",
+   "tags": [
+    "ARMORED"
+   ],
+   "tell": {
+    "motif": "double_set",
+    "ms": 1000
+   },
+   "class": "ARMORED",
+   "actions": [
+    "WALK_STRING(3_hooks)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 50,
+   "S2": 30,
+   "S3": 20
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_casts_moreau_native",
+   "force": "S3"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_perfect_block_streak2",
+   "response": "S2"
+  },
+  {
+   "trigger": "player_rope_touch",
+   "response": "immediate S1"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "shame_dialogue_active",
+    "w(S3)+=10"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Extracted: Elevator",
+  "arm_only": null
+ },
+ "id": "Moreau_Remy"
+}

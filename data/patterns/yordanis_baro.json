@@ -1,0 +1,120 @@
+{
+ "file": "yordanis_baro.pbn",
+ "meta": {
+  "style": "OUTBOXER",
+  "element": "GALE",
+  "house": "petrov_root_system",
+  "slot": "R2",
+  "arc": "3",
+  "graduacion_requires": "examen_landed"
+ },
+ "idle": [
+  "professor_orbit",
+  "guard_textbook"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Leccion",
+   "tags": [],
+   "tell": {
+    "motif": "chalk_tap_audio",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "R_STR"
+   ]
+  },
+  "S2": {
+   "label": "Correccion",
+   "tags": [],
+   "tell": {
+    "motif": "chalk_tap_audio",
+    "ms": 480
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_L_HOOK"
+   ]
+  },
+  "S3": {
+   "label": "Examen",
+   "tags": [
+    "SPECIAL"
+   ],
+   "tell": {
+    "motif": "full_square_up",
+    "ms": 900
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "JAB",
+    "R_STR",
+    "L_HOOK",
+    "R_UPC"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 50,
+   "S2": 40,
+   "S3": 10
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S3"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_perfect_play_15s",
+   "force": "S3"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_power_whiff",
+   "response": "S2"
+  },
+  {
+   "trigger": "player_3punch_string",
+   "response": "S2"
+  },
+  {
+   "trigger": "player_rope_touch",
+   "response": "S1"
+  },
+  {
+   "trigger": "player_passive>6s",
+   "response": "S1 pressure"
+  },
+  {
+   "trigger": "player_flagged_ngram_tier1",
+   "response": "S2 targets_flag"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "corrections_narrated_faster",
+    "tells -40ms floor_respected"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Graduacion",
+  "arm_only": null
+ },
+ "id": "Baro_Yordanis"
+}

@@ -1,0 +1,14 @@
+# NP_04B s21 - Millwall BC (UK) R3; wins where it's ugly
+BOSS Crane_Alfie
+META style=SWARMER element=TIMBER house=none slot=R3 arc=3 herding_bonus=75pct warnings_banked=2
+IDLE: crowding_advance, guard_rough
+STRING S1 "Scaffold": TELL(shoulder_lean, 500ms) -> GUARD_ADVANCE -> HERD(50cm)
+STRING S2 "Lockup": TELL(reach_set, 520ms) -> CLINCH_ATTEMPT -> POSITION_WIN
+STRING S3 "SundayBest" [SPECIAL] [zone==ROPES]: TELL(elbow_flare, 700ms) -> R_OVERHAND
+SELECT: w(S1)=45, w(S2)=35, w(S3)=20 | target_zone==ROPES: w(S3)+=25
+INTERRUPT: S1 during TELL -> stagger(800)
+BAIT: player_rope_escape_attempt -> force S2
+PUNISH: player_clinch_input_spam -> over_under_reversal corner_placement
+PUNISH: player_holds_center_6s -> S1 speed x1.15
+PHASE 2 @ warnings_banked==2: dirty_flirtation_stops; w(S1)+=15
+DESPERATION @ composure<25: hissatsu "Last Orders"

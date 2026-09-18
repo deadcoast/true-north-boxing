@@ -1,0 +1,14 @@
+# NP_04B s16 - Hollow Circuit R4; Iron Doctrine, machine-spliced
+BOSS HC7_Echo
+META style=SLUGGER element=GRANITE house=iron_extracted slot=R4 arc=2 blind_dual=true splice_open_ms=500 splice_every=2
+IDLE: dead_stance, guard_high
+STRING S1 "DoctrineOne" [ARMORED]: TELL(iron_load, 1000ms) -> R_HAY -> L_HOOK
+STRING S2 "DoctrineTwo": TELL(iron_load_short, 550ms) -> R_HAY
+STRING S3 "Remainder": TELL(splice_stutter, 450ms) -> L_HOOK -> R_STR
+SELECT: w(S1)=35, w(S2)=40, w(S3)=25
+INTERRUPT: S2,S3 during TELL -> stagger(800)
+BAIT: player_charged_state_visible -> force S2
+PUNISH: player_power_whiff -> S3
+PUNISH: player_corner_entry -> S1
+PHASE 2 @ composure<50: splice_every 2->3; w(S1)+=10
+DESPERATION @ composure<25: hissatsu "Borrowed Blood"

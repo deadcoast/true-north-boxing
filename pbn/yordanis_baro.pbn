@@ -1,0 +1,17 @@
+# NP_04B s22 - Escuela Nacional (Cuba) R2; the correction
+BOSS Baro_Yordanis
+META style=OUTBOXER element=GALE house=petrov_root_system slot=R2 arc=3 graduacion_requires=examen_landed
+IDLE: professor_orbit, guard_textbook
+STRING S1 "Leccion": TELL(chalk_tap_audio, 500ms) -> JAB -> R_STR
+STRING S2 "Correccion": TELL(chalk_tap_audio, 480ms) -> COUNTER_L_HOOK
+STRING S3 "Examen" [SPECIAL]: TELL(full_square_up, 900ms) -> JAB -> R_STR -> L_HOOK -> R_UPC
+SELECT: w(S1)=50, w(S2)=40, w(S3)=10
+INTERRUPT: S1,S3 during TELL -> stagger(800)
+BAIT: player_perfect_play_15s -> force S3
+PUNISH: player_power_whiff -> S2
+PUNISH: player_3punch_string -> S2
+PUNISH: player_rope_touch -> S1
+PUNISH: player_passive>6s -> S1 pressure
+PUNISH: player_flagged_ngram_tier1 -> S2 targets_flag
+PHASE 2 @ composure<50: corrections_narrated_faster; tells -40ms floor_respected
+DESPERATION @ composure<25: hissatsu "Graduacion"
