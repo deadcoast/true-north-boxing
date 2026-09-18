@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bktskddxcrsub"
+
+[deps]
+
+files=["res://archive/nodule.NDL-003.PACER.NoduleName.translation", "res://archive/nodule.NDL-003.PACER.Intent.translation", "res://archive/nodule.NDL-003.PACER.Status.translation", "res://archive/nodule.NDL-003.PACER.TargetOVR.translation", "res://archive/nodule.NDL-003.PACER.NewAssets.translation", "res://archive/nodule.NDL-003.PACER.OGMTargets.translation", "res://archive/nodule.NDL-003.PACER.SpawnedPACs.translation", "res://archive/nodule.NDL-003.PACER.AbsorptionCriteria.translation", "res://archive/nodule.NDL-003.PACER.Tags.translation", "res://archive/nodule.NDL-003.PACER.Notes.translation", "res://archive/nodule.NDL-003.PACER.CreatedAt.translation", "res://archive/nodule.NDL-003.PACER.AbsorbedAt.translation"]
+
+source_file="res://archive/nodule.NDL-003.PACER.csv"
+dest_files=["res://archive/nodule.NDL-003.PACER.NoduleName.translation", "res://archive/nodule.NDL-003.PACER.Intent.translation", "res://archive/nodule.NDL-003.PACER.Status.translation", "res://archive/nodule.NDL-003.PACER.TargetOVR.translation", "res://archive/nodule.NDL-003.PACER.NewAssets.translation", "res://archive/nodule.NDL-003.PACER.OGMTargets.translation", "res://archive/nodule.NDL-003.PACER.SpawnedPACs.translation", "res://archive/nodule.NDL-003.PACER.AbsorptionCriteria.translation", "res://archive/nodule.NDL-003.PACER.Tags.translation", "res://archive/nodule.NDL-003.PACER.Notes.translation", "res://archive/nodule.NDL-003.PACER.CreatedAt.translation", "res://archive/nodule.NDL-003.PACER.AbsorbedAt.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

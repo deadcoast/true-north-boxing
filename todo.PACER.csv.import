@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://wbghxq6f21ou"
+
+[deps]
+
+files=["res://todo.PACER.Title.translation", "res://todo.PACER.Phase.translation", "res://todo.PACER.Status.translation", "res://todo.PACER.Priority.translation", "res://todo.PACER.Assignee.translation", "res://todo.PACER.DoD.translation", "res://todo.PACER.BlockedBy.translation", "res://todo.PACER.DependencyType.translation", "res://todo.PACER.DependencyReason.translation", "res://todo.PACER.UnblockingStrategy.translation", "res://todo.PACER.Context.translation", "res://todo.PACER.Instructions.translation", "res://todo.PACER.ExpectedOutput.translation", "res://todo.PACER.ValidationCriteria.translation", "res://todo.PACER.ErrorHandling.translation", "res://todo.PACER.PreviousAttempts.translation", "res://todo.PACER.RelatedWork.translation", "res://todo.PACER.LearningNotes.translation", "res://todo.PACER.Notes.translation", "res://todo.PACER.StartedAt.translation", "res://todo.PACER.DoneAt.translation"]
+
+source_file="res://todo.PACER.csv"
+dest_files=["res://todo.PACER.Title.translation", "res://todo.PACER.Phase.translation", "res://todo.PACER.Status.translation", "res://todo.PACER.Priority.translation", "res://todo.PACER.Assignee.translation", "res://todo.PACER.DoD.translation", "res://todo.PACER.BlockedBy.translation", "res://todo.PACER.DependencyType.translation", "res://todo.PACER.DependencyReason.translation", "res://todo.PACER.UnblockingStrategy.translation", "res://todo.PACER.Context.translation", "res://todo.PACER.Instructions.translation", "res://todo.PACER.ExpectedOutput.translation", "res://todo.PACER.ValidationCriteria.translation", "res://todo.PACER.ErrorHandling.translation", "res://todo.PACER.PreviousAttempts.translation", "res://todo.PACER.RelatedWork.translation", "res://todo.PACER.LearningNotes.translation", "res://todo.PACER.Notes.translation", "res://todo.PACER.StartedAt.translation", "res://todo.PACER.DoneAt.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

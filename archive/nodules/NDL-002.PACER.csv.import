@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bkp3mi0880fl6"
+
+[deps]
+
+files=["res://archive/nodules/NDL-002.PACER.NoduleName.translation", "res://archive/nodules/NDL-002.PACER.Intent.translation", "res://archive/nodules/NDL-002.PACER.Status.translation", "res://archive/nodules/NDL-002.PACER.TargetOVR.translation", "res://archive/nodules/NDL-002.PACER.NewAssets.translation", "res://archive/nodules/NDL-002.PACER.OGMTargets.translation", "res://archive/nodules/NDL-002.PACER.SpawnedPACs.translation", "res://archive/nodules/NDL-002.PACER.AbsorptionCriteria.translation", "res://archive/nodules/NDL-002.PACER.Notes.translation", "res://archive/nodules/NDL-002.PACER.CreatedAt.translation", "res://archive/nodules/NDL-002.PACER.AbsorbedAt.translation", "res://archive/nodules/NDL-002.PACER.Lane.translation", "res://archive/nodules/NDL-002.PACER.AcceptanceEvidence.translation", "res://archive/nodules/NDL-002.PACER.ContextPolicy.translation", "res://archive/nodules/NDL-002.PACER.UserRequest.translation"]
+
+source_file="res://archive/nodules/NDL-002.PACER.csv"
+dest_files=["res://archive/nodules/NDL-002.PACER.NoduleName.translation", "res://archive/nodules/NDL-002.PACER.Intent.translation", "res://archive/nodules/NDL-002.PACER.Status.translation", "res://archive/nodules/NDL-002.PACER.TargetOVR.translation", "res://archive/nodules/NDL-002.PACER.NewAssets.translation", "res://archive/nodules/NDL-002.PACER.OGMTargets.translation", "res://archive/nodules/NDL-002.PACER.SpawnedPACs.translation", "res://archive/nodules/NDL-002.PACER.AbsorptionCriteria.translation", "res://archive/nodules/NDL-002.PACER.Notes.translation", "res://archive/nodules/NDL-002.PACER.CreatedAt.translation", "res://archive/nodules/NDL-002.PACER.AbsorbedAt.translation", "res://archive/nodules/NDL-002.PACER.Lane.translation", "res://archive/nodules/NDL-002.PACER.AcceptanceEvidence.translation", "res://archive/nodules/NDL-002.PACER.ContextPolicy.translation", "res://archive/nodules/NDL-002.PACER.UserRequest.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

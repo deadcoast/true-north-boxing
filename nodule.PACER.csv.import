@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bnm273at50riu"
+
+[deps]
+
+files=["res://nodule.PACER.NoduleName.translation", "res://nodule.PACER.Intent.translation", "res://nodule.PACER.Status.translation", "res://nodule.PACER.TargetOVR.translation", "res://nodule.PACER.NewAssets.translation", "res://nodule.PACER.OGMTargets.translation", "res://nodule.PACER.SpawnedPACs.translation", "res://nodule.PACER.AbsorptionCriteria.translation", "res://nodule.PACER.Tags.translation", "res://nodule.PACER.Notes.translation", "res://nodule.PACER.CreatedAt.translation", "res://nodule.PACER.AbsorbedAt.translation"]
+
+source_file="res://nodule.PACER.csv"
+dest_files=["res://nodule.PACER.NoduleName.translation", "res://nodule.PACER.Intent.translation", "res://nodule.PACER.Status.translation", "res://nodule.PACER.TargetOVR.translation", "res://nodule.PACER.NewAssets.translation", "res://nodule.PACER.OGMTargets.translation", "res://nodule.PACER.SpawnedPACs.translation", "res://nodule.PACER.AbsorptionCriteria.translation", "res://nodule.PACER.Tags.translation", "res://nodule.PACER.Notes.translation", "res://nodule.PACER.CreatedAt.translation", "res://nodule.PACER.AbsorbedAt.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true
