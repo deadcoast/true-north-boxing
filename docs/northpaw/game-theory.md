@@ -1,6 +1,6 @@
 # INAZUMA ELEVEN: The Machine Under the Soccer
 
-```
+```txt
 research INAZUMA ELEVEN and layout the gameplay mechanics and progression systems. I LOVE THIS GAME. BUT I DONT LOVE SOCCER(FOOTBALL). So we are looking for gameplay mechanics over specific soccer gameplay. Im looking to see why i like the game so much if i have no interest in soccer, and how to recreate that feeling in a team style boxing game. Essentially i want to design an INAZUMA ELEVEN style game, but for north american boxing in canada, not soccer in japan.
 
 In order to do this, i we need to comprehensively research INAZUMA ELEVEN

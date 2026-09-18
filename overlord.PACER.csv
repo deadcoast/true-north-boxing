@@ -1,0 +1,4 @@
+ID,AssetType,Path,Symbol,Purpose,Exports,Imports,Requires,RequiredBy,OGMRefs,PACRefs,NDLRefs,Tags,Notes,UpdatedAt
+OVR-001,FILE,src/main.ts,,App entrypoint; boot sequence,bootstrap(),config/loader;auth/session,OVR-002;OVR-003,,OGM-001,PAC-001,,#core #boot,,
+OVR-002,MODULE,src/config/loader.ts,load;get,Single config source of truth (app.toml + env overrides),load();get(key),node:fs;toml,,OVR-001;OVR-003,OGM-003,PAC-001,,#config,env precedence: ENV > toml > defaults,
+OVR-003,CLASS,src/auth/session.ts,SessionManager,Session lifecycle and token refresh,SessionManager,config/loader,OVR-002,OVR-001,OGM-004,PAC-002,NDL-001,#auth #template-example,Added via NDL-001,
