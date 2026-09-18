@@ -81,7 +81,8 @@ Staff are collected like fighters ([[NP_08_STABLE]] channels; retired boxers, ri
 | **Hype** | Crowd heat builds 20% faster | *Raise the Roof*: convert crowd heat → +8 Tension (2) |
 | **Conditioning coach** | Team stamina regen +10% | *Loosen Up*: next fighter enters at 110 stamina cap (1) |
 | **The Professor** (rare) | PI gains ×2 during duals | *Chalk Talk*: grant the player 15 s of tell-highlight next segment (1) |
-Staff level via use; Lv3 unlocks a second passive. The head coach (story character, not collectible) provides The Talk (§4) and the club's tactic library growth.
+
+> Staff level via use; Lv3 unlocks a second passive. The head coach (story character, not collectible) provides The Talk (§4) and the club's tactic library growth.
 
 ## 7. CLUB FACILITIES (the gym progression tree)
 
