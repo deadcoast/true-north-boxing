@@ -9,7 +9,9 @@ Usage:
   python3 pacer_views.py --ready                        # TODO tasks with all hard blockers DONE
   python3 pacer_views.py --phase P4-Systems --ready -o view_p4.csv
 """
-import csv, argparse, sys
+import argparse
+import csv
+
 
 def load(path):
     with open(path, newline="") as f:

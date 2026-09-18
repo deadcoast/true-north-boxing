@@ -1,0 +1,11 @@
+[project]
+name = "true-north-boxing"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "mypy>=2.3.1",
+    "ruff>=0.16.8",
+    "sourcery>=1.46.0",
+]
