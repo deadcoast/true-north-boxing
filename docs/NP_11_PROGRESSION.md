@@ -18,7 +18,8 @@ The build-craft sandbox: stats and their exact sim hooks, the level curve, abili
 | **BLK** | Guard meter capacity 80→130; guard regen 4→9/s |
 | **STA** | Stamina pool 80→120; regen scaling; gassed-curve thresholds shift down 5 pts at 99 |
 | **HRT** | Standing-eight beat windows ±60→±140 ms; trailing-state buffs (+5% stats while down on DROPS at HRT 70+); Tension personal-contribution ×1.1 at 80+ |
-Soft caps: 70+ costs double board points; 90+ requires rarity tier 3 ([[§4]]). Stat totals by rarity keep early recruits viable: any fighter can reach tier 3.
+
+> Soft caps: 70+ costs double board points; 90+ requires rarity tier 3 ([[§4]]). Stat totals by rarity keep early recruits viable: any fighter can reach tier 3.
 
 ## 2. LEVELS & XP
 
@@ -56,7 +57,8 @@ Cosmetic-forward (gloves, wraps, robes, mouthguards) with small passive slots (�
 | **Beans** | per training slot (3–10) | Stat raises (+1 = 5 Beans, scaling), Forge events | Diegetic: an actual bean jar on the gym counter |
 | **Tension** | in-dual only | in-dual only | Never persists ([[NP_05_TENSION_HISSATSU]]) |
 | **Kizuna** | pairwise meters | thresholds only | Not spendable ([[NP_08_STABLE]] §5) |
-Faucet/sink audit runs per milestone ([[NP_13_SCOPE]] §6): target — a story-pace player affords 70% of desired sinks; completionists find Prestige/Beans the long tails.
+
+> Faucet/sink audit runs per milestone ([[NP_13_SCOPE]] §6): target — a story-pace player affords 70% of desired sinks; completionists find Prestige/Beans the long tails.
 
 ## 7. TRAINING MINIGAMES (Beans faucet; 3 slots/day; facility-tiered)
 
@@ -68,7 +70,8 @@ Faucet/sink audit runs per milestone ([[NP_13_SCOPE]] §6): target — a story-p
 | **Slip Bag** (T2) | Head-movement patterns: escalating slip strings | 4–8 |
 | **Net Haul** (harbour, unlocked via MacIsaac content) | Pull-timing; PWR-bean specialist | 5–8 |
 | **Shadow Rounds** (T3) | Free-form vs. ghost of any Scout Book pattern — the training loop and recon loop shake hands | 6–10 |
-Each minigame yields typed Beans (PWR/SPD/etc. bias by game); partner choice adds their stat flavor. Minigames are speedrun-friendly (input-skill = yield) and never mandatory (Beans also drip from quests).
+
+> Each minigame yields typed Beans (PWR/SPD/etc. bias by game); partner choice adds their stat flavor. Minigames are speedrun-friendly (input-skill = yield) and never mandatory (Beans also drip from quests).
 
 ## 8. TEACHABLE TECHNIQUES
 

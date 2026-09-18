@@ -29,7 +29,8 @@ Presented as the whiteboard in the Old Gym locker room (diegetic, like all menus
 | Tactician staff passive | +15% confidence globally; Scout Book expansions |
 | Attending rival duals (overworld events — watchable duals between NPC clubs, a real calendar activity) | Direct order/pattern observation; the *watching tape* fantasy; also where recruitment WITNESS conditions fire in reverse |
 | Story leaks | Authored intel beats |
-Counter-intelligence exists: some enemy coaches run **decoy seals** (their projection is deliberately poisoned — the confidence % lies). The tactician's Lv3 ability detects decoys. Information warfare stays shallow-but-present: one bluff layer, never recursive.
+
+> Counter-intelligence exists: some enemy coaches run **decoy seals** (their projection is deliberately poisoned — the confidence % lies). The tactician's Lv3 ability detects decoys. Information warfare stays shallow-but-present: one bluff layer, never recursive.
 
 ## 4. THE CORNER PHASE — 45 seconds, second-by-second
 
@@ -66,7 +67,8 @@ Diegetic scene: your fighter on the stool, staff working, the board out. All act
 | The Perfect Round | Next segment: team earns double Tension from all sources |
 | Switch-Up | Your fighter's style counts as advantaged on the triangle this segment regardless of truth (the tactical lie made flesh) |
 | Hostile Crowd | Enemy corner actions locked next corner phase |
-Choose your equipped Super pre-dual; enemy coaches have theirs, authored (§9).
+
+> Choose your equipped Super pre-dual; enemy coaches have theirs, authored (§9).
 
 ## 6. STAFF SYSTEM (3 dressed of 10-corps)
 
@@ -92,7 +94,8 @@ Facilities upgrade with story + HBP + Spirits; each tier is a visible renovation
 | Film Room | Scout Book capacity; PI grind rate +; decoy detection assist |
 | The Wall | Bond board slots, decoration sets, Forge event hosting ([[NP_08_STABLE]] §6) |
 | Front of House | Entrance presentation upgrades, crowd heat base +, Prestige from hosted duals |
-Final renovation (Arc 3): the gym hosts a televised dual — the condemned building on national broadcast, full circle.
+
+> Final renovation (Arc 3): the gym hosts a televised dual — the condemned building on national broadcast, full circle.
 
 ## 8. MANAGER MODE (auto-play)
 
