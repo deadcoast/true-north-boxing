@@ -22,8 +22,8 @@ OVR-020,FILE,nodule.PACER.csv,,Volatile growth lane (currently empty; no active 
 OVR-021,FILE,pacer_views.py,,Read-only filtered view generator,,,OVR-017,,OGM-015,,,#pacer #tooling,,2026-09-18T17:05:00Z
 OVR-022,FILE,pacer_validator.py,,AGENTS.md s7 mechanical validation of all four organs,,,OVR-017;OVR-018;OVR-019;OVR-020,,OGM-015,,,#pacer #tooling,,2026-09-18T17:05:00Z
 OVR-023,FILE,VAULT_MANIFEST.v1.0.txt,,sha256 freeze manifest for vault v1.0,,,OVR-001,,OGM-001,PAC-001,,#doctrine #vault,,2026-09-18T17:05:00Z
-OVR-024,FILE,NP_04A_BOSS_ROSTER_ARC1.md,,Arc 1 boss roster: 8 further authored PBN bosses + coverage audit + authored-loss structure,,,OVR-006,OVR-031,OGM-016,PAC-042,NDL-001,#vault #opponent #content,Added via NDL-001,2026-09-18T18:24:00Z
-OVR-025,FILE,NP_05A_HISSATSU_LIBRARY.md,,"Library law, distribution audit, notable mechanisms",,,OVR-007,OVR-029,OGM-017,PAC-043,NDL-002,#vault #economy #content,Added via NDL-002,2026-09-18T18:09:00Z
+OVR-024,FILE,NP_04A_BOSS_ROSTER_ARC1.md,,Arc 1 boss roster: 8 further authored PBN bosses + coverage audit + authored-loss structure,,,OVR-006,OVR-031;OVR-037,OGM-016,PAC-042,NDL-001,#vault #opponent #content,Added via NDL-001,2026-09-18T21:10:00Z
+OVR-025,FILE,NP_05A_HISSATSU_LIBRARY.md,,"Library law, distribution audit, notable mechanisms",,,OVR-007,OVR-029;OVR-037,OGM-017,PAC-043,NDL-002,#vault #economy #content,Added via NDL-002,2026-09-18T21:10:00Z
 OVR-026,DATA,data/hissatsu_library.v1.json,,80-move content DB in Hissatsu schema; build output,,,OVR-027,OVR-028,OGM-017,PAC-043,NDL-002,#economy #content #schema,Added via NDL-002,2026-09-18T17:44:00Z
 OVR-027,TOOL,tools/build_hissatsu_library.py,,Regenerable library builder; content edits live here,,,OVR-013,OVR-026,OGM-017,PAC-043,NDL-002,#pipeline #tooling,Added via NDL-002,2026-09-18T17:44:00Z
 OVR-028,TOOL,tools/hissatsu_audit.py,,Mechanized NP_13 s5 hissatsu gate; CI beside pacer_validator,,,OVR-026,,OGM-017,PAC-043,NDL-002,#pipeline #tooling,Added via NDL-002,2026-09-18T17:44:00Z
@@ -35,3 +35,4 @@ OVR-033,FILE,ENGINE_DECISION.md,,"Godot 4 decision record: fit, input path, risk
 OVR-034,PROJECT,latency_harness/project.godot,,"Godot 4 harness project: vsync off, agile event flushing",,,OVR-033,OVR-035,OGM-002,PAC-002B,,#engine #tooling,PAC-002 split work,2026-09-18T18:52:00Z
 OVR-035,MODULE,latency_harness/main.gd,,"Harness logic: flick detect, sector map (NP_03 s2.1), latency distribution, discrimination mode, CSV export",,,OVR-034,,OGM-002,PAC-002B,,#engine #tooling,PAC-002 split work,2026-09-18T18:52:00Z
 OVR-036,DATA,data/combat_tuning.v1.json,,"Hot-reloadable combat tuning: full NP_03 value set, engine-consumable",,,OVR-005,,OGM-002,PAC-005,,#combat #schema,PAC-002 split work,2026-09-18T18:52:00Z
+OVR-037,FILE,NP_04B_BOSS_ROSTER_ARC23.md,,"Arc 2/3 boss roster: 13 authored bosses, Blind-dual rules, Commissioner commitment, 24/24 ledger",,,OVR-024;OVR-025,,OGM-020,PAC-046;PAC-047;PAC-038;PAC-039,NDL-005,#vault #opponent #content,Added via NDL-005,2026-09-18T21:10:00Z
