@@ -2,6 +2,29 @@
 
 You are an agent reading this because a PACER repository governs the project you are about to work on. This file tells you what PACER is. `AGENTS.md` tells you how to operate inside it. Read both before touching anything.
 
+## Project Northpaw development
+
+The gameplay documents describe the game; `todo.PACER.csv` is the canonical task
+register. The current design inventory is in `overlord.PACER.csv`. Supplied root
+vault documents and the earlier `docs/` vault are retained with their source history.
+All operational task updates go through PACER; archived copies are historical.
+
+**Engine decision: Godot 4**, selected by the user. The existing input experiment
+uses Godot 4.5.1. See [prototype instructions](prototype/README.md) for launch and
+headless verification commands. Physical input-to-screen latency is unmeasured;
+PAC-002 remains open until its original acceptance criteria are met.
+
+```powershell
+uv run --no-sync --locked python pacer_views.py --ready
+uv run --no-sync --locked python pacer_validator.py
+uv run --no-sync --locked python -m unittest discover -s tests -v
+```
+
+Worklist exports must use a new filename: `python pacer_views.py --out view.csv`.
+Original and conflicting registers are preserved in `archive/legacy/`. The prior
+tooling task's collided identity is recovered as PAC-043; PAC-042 retains the
+supplied boss-roster meaning. Its historical evidence filename is unchanged.
+
 ## What PACER is
 
 PACER is the project's central nervous system, built for agents. It converts what the user asks for in natural language into structured, cross-referenced development data: what the source code contains, what connects where, what requires what, what exports and imports what, and what state every piece is in. It replaces bloated design markdown and loose JSON with row-addressable CSV — you never load a document, you load a query result. `grep` an ID or a `#tag` and you receive exactly the rows that matter, with references that cascade outward only as far as you follow them. That is the anti-context-bloat contract: rigid IDs, rigid columns, targeted retrieval.

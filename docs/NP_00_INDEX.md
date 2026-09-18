@@ -18,4 +18,4 @@ Working title placeholder. 13 dedicated system documents, wikilinked.
 | 12 | [[NP_12_NARRATIVE]] | Tone law, premise, cast, Arc 1 beat sheet, Hollow Circuit, Arc 3, rival parade, themes |
 | 13 | [[NP_13_SCOPE]] | Ship targets, phase plan w/ milestone builds, vertical slice, pipeline gates, metric suite, risk register |
 
-Register: NORTHPAW_PACER.csv (P1↔03, P2↔04, P3↔01/05, P4↔06/07/11, P5↔08/09/10, P6↔02/12, P7↔13).
+Register: todo.PACER.csv (P1↔03, P2↔04, P3↔01/05, P4↔06/07/11, P5↔08/09/10, P6↔02/12, P7↔13).

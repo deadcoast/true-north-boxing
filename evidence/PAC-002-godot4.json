@@ -1,0 +1,51 @@
+{
+  "task": "PAC-002",
+  "requirement": "OGM-018",
+  "meaning": "9e754a96dc4c0c26ad97f5612eab391adc3570efb55b1c31406a87295eb4adf1",
+  "sources": {
+    "docs/NP_03_COMBAT_ENGINE.md": "39f092742e3d02d3c2a59a5e81648e34d6acf5d37cdaf74748eeb8164da309f5",
+    "prototype/input_lab.gd": "49537370bd11d2d30b3440bdedf9d044b5ac998036ea4e1cbb5d969ad18fbdc3",
+    "prototype/input_tuning.json": "cf1f456f328d12b3283fcef150e66a177d7cf63d0d99227a9ea6592d082b22ee",
+    "prototype/flick_recognizer.gd": "303e1911986aaa9a2484034ccb548aadafaa47399b40348e9f48fada390da59b",
+    "prototype/.gitignore": "9aeb366480742e2a82cdbb8033c3dd77ad70b5fe85af4d3ac2eb332f06599864",
+    "prototype/README.md": "ff6913a8a4bf8df1e666238ada345b133a4ca44dcb5fd066e9549f31fcbd9045",
+    "prototype/tests/test_input.gd": "8eaf91a9e8893a62c41a466b7081d5ef0dcf608261f2d894ed56903d9994dc08",
+    "prototype/input_lab.tscn": "3d02aa04d456e75ac01d5b2b1b97f9a7c49aee3e13cf17dbc03459df0a7fbc42",
+    "prototype/project.godot": "0e3dc723dea39a175a39f5e43885f9f337696ec78b3fd74059a7c44de2a37643"
+  },
+  "result": "PARTIAL",
+  "engine_decision": {
+    "selection": "Godot 4",
+    "authority": "USER",
+    "original_user_wording": "Godot 4"
+  },
+  "tested_engine": "4.5.1.stable.official.f62fdbde1",
+  "verified_at": "2026-09-18 18:59:52 UTC",
+  "command": [
+    "C:\\Program Files\\Godot_v4.5.1-stable_win64.exe\\Godot_v4.5.1-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "prototype",
+    "--log-file",
+    "input-tests.log",
+    "--script",
+    "tests/test_input.gd"
+  ],
+  "exit_code": 0,
+  "summary": {
+    "checks": 836,
+    "failures": [],
+    "hardware_latency_measured": false,
+    "scope": "Synthetic vectors and headless Godot event-to-animation wiring only",
+    "suite": "northpaw_input",
+    "synthetic_direction_samples": 800
+  },
+  "output": "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org\r\n\r\nERROR: Failed to read the root certificate store.\r\n   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2548)\r\nINPUT LAB: right stick or QWE / A D / ZXC. Return stick to neutral before each flick. F5 reloads tuning.\r\n{\"animation_trigger_us\":353966,\"device\":8,\"direction\":\"UP_RIGHT\",\"event_delivered_us\":353907,\"physical_to_visible_latency_ms\":null,\"software_event_to_trigger_us\":59}\r\n{\"animation_trigger_us\":403974,\"device\":9,\"direction\":\"LEFT\",\"event_delivered_us\":403918,\"physical_to_visible_latency_ms\":null,\"software_event_to_trigger_us\":56}\r\n{\"animation_trigger_us\":437382,\"device\":-1,\"direction\":\"UP\",\"event_delivered_us\":437314,\"physical_to_visible_latency_ms\":null,\"software_event_to_trigger_us\":68}\r\n{\"checks\":836,\"failures\":[],\"hardware_latency_measured\":false,\"scope\":\"Synthetic vectors and headless Godot event-to-animation wiring only\",\"suite\":\"northpaw_input\",\"synthetic_direction_samples\":800}\r\n",
+  "remaining": [
+    "Target PC/controller/display declaration",
+    "High-speed physical flick to first visible animation measurement <=50ms at 120fps",
+    "Measured physical controller direction discrimination >=99% across eight vectors"
+  ],
+  "environment_note": "Godot reports a root certificate store read error. The synthetic suite reports zero failures; this is not a clean engine log or hardware acceptance.",
+  "historical_evidence": "evidence/PAC-002-headless.json is unchanged; its original OGM-006 identity predates replacement by the current affinity requirement. Current input requirement: OGM-018."
+}

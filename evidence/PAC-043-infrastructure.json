@@ -1,0 +1,99 @@
+{
+  "task": "PAC-043",
+  "requirement": "OGM-015",
+  "meaning": "4b48d617f3af6508ee5e1a88f94f213d158c5008012522d0fd7c0b05d45e40a2",
+  "sources": {
+    "pacer_validator.py": "0ff6be291b190bd37b543cf5cda9f483f92782b2301a8404932706a561c20376",
+    "tests/test_pacer_validator.py": "ff39bd18c8fa21aff3d6a1a8d95df6d421f6508ba818ed571c6c71f60ac8527b",
+    "pacer_views.py": "d4781d769229293e9a508212b774e594b42ce057fa0a8bb10a1b1b5e5dc41e50"
+  },
+  "result": "PASS",
+  "verified_at": "2026-09-18 19:01:13 UTC",
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "scope": "Register reconciliation and Python tooling only. No gameplay or physical-input acceptance.",
+  "checks": [
+    {
+      "command": ".venv\\Scripts\\python.exe -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "output": "test_archive_filename_must_match_its_id (test_pacer_validator.ValidatorTests.test_archive_filename_must_match_its_id) ... ok\r\ntest_canonical_archived_nodule_resolves_reciprocal_references (test_pacer_validator.ValidatorTests.test_canonical_archived_nodule_resolves_reciprocal_references) ... ok\r\ntest_duplicate_live_and_archived_id_is_rejected (test_pacer_validator.ValidatorTests.test_duplicate_live_and_archived_id_is_rejected) ... ok\r\ntest_external_source_path_is_rejected (test_pacer_validator.ValidatorTests.test_external_source_path_is_rejected) ... ok\r\ntest_ragged_and_duplicate_headers_fail_closed (test_pacer_validator.ValidatorTests.test_ragged_and_duplicate_headers_fail_closed) ... ok\r\ntest_semicolon_cycle_is_detected (test_pacer_validator.ValidatorTests.test_semicolon_cycle_is_detected) ... ok\r\ntest_semicolon_mixed_dependencies_enforce_hard_gate (test_pacer_validator.ValidatorTests.test_semicolon_mixed_dependencies_enforce_hard_gate) ... ok\r\ntest_valid_utf8_repository (test_pacer_validator.ValidatorTests.test_valid_utf8_repository) ... ok\r\ntest_approval_and_status_readiness (test_pacer_views.DependencyTests.test_approval_and_status_readiness) ... ok\r\ntest_bad_dependency_grammar_fails_closed (test_pacer_views.DependencyTests.test_bad_dependency_grammar_fails_closed) ... ok\r\ntest_empty_type_is_hard (test_pacer_views.DependencyTests.test_empty_type_is_hard) ... ok\r\ntest_mixed_types_keep_hard_gate (test_pacer_views.DependencyTests.test_mixed_types_keep_hard_gate) ... ok\r\ntest_semicolon_hard_dependencies (test_pacer_views.DependencyTests.test_semicolon_hard_dependencies) ... ok\r\ntest_uniform_soft_and_optional (test_pacer_views.DependencyTests.test_uniform_soft_and_optional) ... ok\r\ntest_canonical_and_existing_outputs_are_unchanged (test_pacer_views.ViewTests.test_canonical_and_existing_outputs_are_unchanged) ... ok\r\ntest_empty_view_preserves_headers (test_pacer_views.ViewTests.test_empty_view_preserves_headers) ... ok\r\ntest_hardlink_alias_is_unchanged (test_pacer_views.ViewTests.test_hardlink_alias_is_unchanged) ... ok\r\ntest_header_only_source (test_pacer_views.ViewTests.test_header_only_source) ... ok\r\ntest_malformed_csv_and_duplicate_ids (test_pacer_views.ViewTests.test_malformed_csv_and_duplicate_ids) ... ok\r\ntest_new_canonical_name_is_rejected (test_pacer_views.ViewTests.test_new_canonical_name_is_rejected) ... ok\r\ntest_utf8_multiline_round_trip (test_pacer_views.ViewTests.test_utf8_multiline_round_trip) ... ok\r\ntest_alternate_task_registers_are_archived_only (test_register_bootstrap.BootstrapTests.test_alternate_task_registers_are_archived_only) ... ok\r\ntest_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 23 tests in 0.900s\r\n\r\nOK\r\n"
+    },
+    {
+      "command": ".venv\\Scripts\\python.exe -m ruff check pacer_views.py pacer_validator.py tests",
+      "exit_code": 0,
+      "output": "All checks passed!\n"
+    },
+    {
+      "command": ".venv\\Scripts\\python.exe -m mypy pacer_views.py pacer_validator.py",
+      "exit_code": 0,
+      "output": "Success: no issues found in 2 source files\r\n"
+    }
+  ],
+  "standalone_validation": {
+    "command": [
+      ".venv/Scripts/python.exe",
+      "pacer_validator.py"
+    ],
+    "exit_code": 0,
+    "output": "PACER VALIDATOR :: AGENTS.md s7\r\n==========================================================\r\n  [ OK ]  parse / columns / unique IDs       \r\n  [ OK ]  todo: lifecycle + dependency gate  \r\n  [ OK ]  overlord: edge symmetry + paths    \r\n  [ OK ]  organism: status + evidence gate   \r\n  [ OK ]  nodule: lifecycle + lane exclusivity \r\n  [ OK ]  cross-file: reference resolution   \r\n==========================================================\r\n  rows :: todo 43 | overlord 62 | organism 18 | nodule 4   checks run :: 1408\r\n  VERDICT :: GREEN - registers commit-safe\r\n"
+  },
+  "pacer_validation": {
+    "revision": "be6bdb1d530acbcb89435f6ef09f3f316797314976a5cb8b79a12bb745511418",
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "stale_evidence": []
+  },
+  "pre_fix_failures": [
+    "Worklist test import failed because is_ready was missing.",
+    "Ten roadmap blocker subtests failed due comma delimiters.",
+    "Local validator rejected unresolved OGM-016/PAC-042; PACER migration rejected unresolved OVR-027."
+  ],
+  "reconciliation": {
+    "revision": "2c240a753f7baba7630edd7fe011886002a8e7a453d568dc92d9036af52f8cf3",
+    "validation": {
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    "identity_aliases_for_historical_tooling": {
+      "OVR-004": "OVR-052",
+      "OVR-006": "OVR-053",
+      "OVR-011": "OVR-021",
+      "OVR-014": "OVR-054",
+      "OGM-005": "OGM-017",
+      "PAC-042": "PAC-043"
+    },
+    "preserved_sha256": {
+      "todo.PACER.csv": "0514bedb30a56c725181ba0ffcbd9b2ddd69c679566e7691a24efe529500a4eb",
+      "overlord.PACER.csv": "961dd09ef92e91b306044efc5cac74e732c762ef2430639f7fefd93d55de72e5",
+      "organism.PACER.csv": "78dc1473374497d5341a1423993d0a9e4e4073f38d9622aa025894d22eac37dd",
+      "nodule.PACER.csv": "8eec4cc45cf15122eb72e760f9059e3928afd6bfdceaf4a9a4669153461bf277",
+      "archive/nodules/NDL-002.PACER.csv": "b6e5f5ef6c5bba420dc434ee1b1d943049a0e945d2f763c2fc66bc6741979af9",
+      "todo.PACER (1).csv": "6d1241efafc2d71d7f9159c233ba5afec9bf64c3eeb23a0604f0e2cfc07cbea9",
+      "archive/nodule.NDL-001.PACER.csv": "8eec4cc45cf15122eb72e760f9059e3928afd6bfdceaf4a9a4669153461bf277",
+      "evidence/PAC-042.json": "64c6dbf77797743b95ca4e1cac6f34142c2b04a87c845a7e27fb71260218e1b6",
+      "evidence/PAC-002-headless.json": "2454f89c1e60b09ac29deeed44c2ef1f5ab1cdbaa0a9bc1f54cdbd4435812df0",
+      "pacer_views.py": "37e5abaf9b5f3c266b94ff552edddd536fba316af15265303e51ecc51f8ecde4",
+      "pacer_validator.py": "d427df48bc204ea2703d9b64c3f6f60aaa9e48b264093e9f88cd84d91da82f98",
+      "DOCTRINE.md": "899981175acc5d251dbaa108fcc458277e164dfa0c6396b241850a06512ae99e",
+      "VAULT_MANIFEST.v1.1.txt": "14b87940ad43566bf67ef1100c78ff4802fc0925724456ffde02f339ea00226e"
+    },
+    "task_count": 43,
+    "note": "Existing canonical task meanings and root gameplay docs preserved; only the missing boss row adopted from supplement. Conflicting ratification claim archived, not assumed."
+  },
+  "notes": [
+    "Original 41 game IDs, DoDs, instructions, validation criteria and normalized blockers verified against the exact pre-bootstrap archive.",
+    "New boss authoring PAC-042 retained. Earlier tooling task recovered as PAC-043 with historical identity mapping; earlier input OGM-006 recovered as OGM-018.",
+    "Only missing boss row was adopted from the supplemental todo; its conflicting doctrine-ratification claim was preserved in raw archives and not promoted to canonical DONE.",
+    "Root and docs vault register pointers now use todo.PACER.csv. The supplied frozen manifests remain historical; doctrine ratification is still REVIEW.",
+    "Old evidence/PAC-042.json and evidence/PAC-002-headless.json retained unchanged; fresh reports use current identities."
+  ]
+}

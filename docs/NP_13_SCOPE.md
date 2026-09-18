@@ -1,7 +1,7 @@
 # NP-13 — SCOPE & PHASE BREAKDOWN: Production Plan
 
 **Project Northpaw design vault · Doc 13/13**
-Related: all docs · Register: `NORTHPAW_PACER.csv` (41 tasks, P0–P7)
+Related: all docs · Register: `todo.PACER.csv` (41 tasks, P0–P7)
 
 The build plan: what ships, in what order, proven by what milestones, measured how, and where the risks live. Written to be executable by a small team with heavy AI-agent assistance (content pipelines are designed data-first throughout the vault for exactly this reason).
 
@@ -83,4 +83,4 @@ New districts as recruit ecosystems ([[NP_08_STABLE]] §9) · house packs (towar
 
 ## 9. REGISTER LINKAGE
 
-`NORTHPAW_PACER.csv` remains the operational source of truth; this doc is its rationale. Register maintenance per the PACER field rules: ≤3 DOING per agent, dependency gates enforced, LearningNotes accumulated per phase. Doc-to-PAC mapping: P1↔NP-03, P2↔NP-04, P3↔NP-01/05, P4↔NP-06/07/11, P5↔NP-08/09/10, P6↔NP-02/12, P7↔NP-13 targets. When a vault doc changes, its mapped PACs get a Note line same-day — the vault and the register are not allowed to drift.
+`todo.PACER.csv` remains the operational source of truth; this doc is its rationale. Register maintenance per the PACER field rules: ≤3 DOING per agent, dependency gates enforced, LearningNotes accumulated per phase. Doc-to-PAC mapping: P1↔NP-03, P2↔NP-04, P3↔NP-01/05, P4↔NP-06/07/11, P5↔NP-08/09/10, P6↔NP-02/12, P7↔NP-13 targets. When a vault doc changes, its mapped PACs get a Note line same-day — the vault and the register are not allowed to drift.

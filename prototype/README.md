@@ -1,10 +1,9 @@
 # PAC-002 input experiment
 
-Provisional candidate: locally installed **Godot 4.5.1**, GDScript, compatibility
-renderer, 120 FPS cap, VSync off. This choice lets the existing engine run an
-input-to-animation experiment without installing a toolchain. Final engine
-selection still depends on the original latency gate. This is a diagnostic scene,
-not the P1 Two Hands build.
+Engine selected by the user: **Godot 4**. The current experiment runs on the
+locally installed **Godot 4.5.1**, using GDScript, the compatibility renderer,
+a 120 FPS cap and VSync off. Engine selection is settled; the original physical
+latency gate remains open. This is a diagnostic scene, not the P1 Two Hands build.
 
 ```powershell
 $godot = 'C:\Program Files\Godot_v4.5.1-stable_win64.exe\Godot_v4.5.1-stable_win64_console.exe'
@@ -38,6 +37,11 @@ of physical flick onset versus first visible motion, the <=50 ms gate at 120 FPS
 and >=99% measured direction discrimination across eight vectors. Record engine,
 renderer, refresh/VSync settings, capture rate, sample count and the raw results.
 No passing hardware result is present in this repository yet.
+
+The current synthetic verification is recorded in
+[`evidence/PAC-002-godot4.json`](../evidence/PAC-002-godot4.json).
+The older headless report is retained as historical evidence; its requirement ID
+predates register reconciliation. The current input requirement is OGM-018.
 
 NP-03 defines ten punches but leaves hand selection for an exactly vertical stick
 gesture ambiguous. This experiment emits eight direction names; final punch/hand

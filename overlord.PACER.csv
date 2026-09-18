@@ -1,19 +1,19 @@
 ID,AssetType,Path,Symbol,Purpose,Exports,Imports,Requires,RequiredBy,OGMRefs,PACRefs,NDLRefs,Tags,Notes,UpdatedAt
 OVR-001,FILE,DOCTRINE.md,,Refusal rules D1-D8 + amendment procedure; vault freeze header,,,,OVR-023,OGM-001,PAC-001,,#doctrine #vault,Pending ratification,2026-09-18T17:05:00Z
-OVR-002,FILE,NP_00_INDEX.md,,Vault index; doc-to-phase mapping,,,,,OGM-001,,,#vault #index,,2026-09-18T17:05:00Z
+OVR-002,FILE,NP_00_INDEX.md,,Vault index; doc-to-phase mapping,,,,,OGM-001,,,#vault #index,04A + 05A + 07A + 12A rows added 2026-09-18,2026-09-18T18:24:00Z
 OVR-003,FILE,NP_01_SPORT.md,,"Rotation rulebook: scoring, zones, fouls, formats",,,,OVR-012,OGM-004,PAC-016;PAC-019,,#vault #sport,,2026-09-18T17:05:00Z
 OVR-004,FILE,NP_02_TWO_LAYER.md,,Overworld + three fight sizes + Pattern Intel,,,OVR-005,,OGM-012,PAC-033;PAC-034,,#vault #overworld,,2026-09-18T17:05:00Z
-OVR-005,FILE,NP_03_COMBAT_ENGINE.md,,Frame-level combat spec; adaptation tracker,,,,OVR-004;OVR-006;OVR-007;OVR-008;OVR-013,OGM-002,PAC-005;PAC-006;PAC-007;PAC-008;PAC-009,,#vault #combat,,2026-09-18T17:05:00Z
-OVR-006,FILE,NP_04_OPPONENT.md,,"PBN grammar, tell taxonomy, 3 authored bosses",,,OVR-005,,OGM-003,PAC-011;PAC-012;PAC-013;PAC-014,,#vault #opponent,,2026-09-18T17:05:00Z
-OVR-007,FILE,NP_05_TENSION_HISSATSU.md,,"Tension economy, hissatsu execution, relay, Wall Gauge",,,OVR-005,OVR-011,OGM-005,PAC-017;PAC-018;PAC-024,,#vault #economy,,2026-09-18T17:05:00Z
+OVR-005,FILE,NP_03_COMBAT_ENGINE.md,,Frame-level combat spec; adaptation tracker,,,,OVR-004;OVR-006;OVR-007;OVR-008;OVR-013;OVR-033;OVR-036,OGM-002,PAC-005;PAC-006;PAC-007;PAC-008;PAC-009,,#vault #combat,,2026-09-18T17:05:00Z
+OVR-006,FILE,NP_04_OPPONENT.md,,"PBN grammar, tell taxonomy, 3 authored bosses",,,OVR-005,OVR-024,OGM-003,PAC-011;PAC-012;PAC-013;PAC-014,,#vault #opponent,,2026-09-18T17:26:00Z
+OVR-007,FILE,NP_05_TENSION_HISSATSU.md,,"Tension economy, hissatsu execution, relay, Wall Gauge",,,OVR-005,OVR-011;OVR-025,OGM-005,PAC-017;PAC-018;PAC-024,,#vault #economy,,2026-09-18T17:44:00Z
 OVR-008,FILE,NP_06_AFFINITY.md,,Three-ring affinity stack + x1.5 cap,,,OVR-005,OVR-009,OGM-006,PAC-023,,#vault #affinity,,2026-09-18T17:05:00Z
-OVR-009,FILE,NP_07_HOUSES.md,,"Lineage system, 14 launch houses, writing law",,,OVR-008,OVR-010;OVR-014,OGM-007,PAC-038,,#vault #houses,,2026-09-18T17:05:00Z
+OVR-009,FILE,NP_07_HOUSES.md,,"Lineage system, 14 launch houses, writing law",,,OVR-008,OVR-010;OVR-014;OVR-029,OGM-007,PAC-038,,#vault #houses,,2026-09-18T18:09:00Z
 OVR-010,FILE,NP_08_STABLE.md,,"Recruitment grammar, Kizuna, hybrids, Gym Wall",,,OVR-009,,OGM-008,PAC-027;PAC-028,,#vault #stable,,2026-09-18T17:05:00Z
 OVR-011,FILE,NP_09_TRANSFORMATIONS.md,,Five transform tiers + weathering counterplay,,,OVR-007,,OGM-009,PAC-031,,#vault #transforms,,2026-09-18T17:05:00Z
 OVR-012,FILE,NP_10_TACTICS.md,,"Coach layer: formation, corner phase, staff, facilities",,,OVR-003,,OGM-010,PAC-029;PAC-030,,#vault #tactics,,2026-09-18T17:05:00Z
-OVR-013,FILE,NP_11_PROGRESSION.md,,"Stats-to-sim hooks, currencies, canonical JSON schemas",,,OVR-005,,OGM-011,PAC-021;PAC-022;PAC-025;PAC-026,,#vault #progression #schema,,2026-09-18T17:05:00Z
-OVR-014,FILE,NP_12_NARRATIVE.md,,"Story bible: tone law, cast, three arcs",,,OVR-009,,OGM-013,PAC-035;PAC-039,,#vault #narrative,,2026-09-18T17:05:00Z
-OVR-015,FILE,NP_13_SCOPE.md,,"Production plan, gates, metrics, risks",,,,,OGM-014,PAC-036;PAC-037;PAC-040;PAC-041,,#vault #production,,2026-09-18T17:05:00Z
+OVR-013,FILE,NP_11_PROGRESSION.md,,"Stats-to-sim hooks, currencies, canonical JSON schemas",,,OVR-005,OVR-027,OGM-011,PAC-021;PAC-022;PAC-025;PAC-026,,#vault #progression #schema,,2026-09-18T17:44:00Z
+OVR-014,FILE,NP_12_NARRATIVE.md,,"Story bible: tone law, cast, three arcs",,,OVR-009,OVR-031,OGM-013,PAC-035;PAC-039,,#vault #narrative,,2026-09-18T18:24:00Z
+OVR-015,FILE,NP_13_SCOPE.md,,"Production plan, gates, metrics, risks",,,,OVR-032,OGM-014,PAC-036;PAC-037;PAC-040;PAC-041,,#vault #production,,2026-09-18T17:05:00Z
 OVR-016,FILE,NORTHPAW_GDD_v1.md,,Original overview GDD,,,,,,,,#vault #superseded,Superseded by NP_01-13; retained for history,2026-09-18T17:05:00Z
 OVR-017,FILE,todo.PACER.csv,,"Task register (41 PACs, P0-P7)",,,,OVR-018;OVR-021;OVR-022,OGM-015,,,#pacer #register,Renamed from NORTHPAW_PACER.csv per formal extension spec,2026-09-18T17:05:00Z
 OVR-018,FILE,overlord.PACER.csv,,MOC index (this file),,,OVR-017,OVR-019;OVR-022,OGM-015,,,#pacer #register,,2026-09-18T17:05:00Z
@@ -22,3 +22,16 @@ OVR-020,FILE,nodule.PACER.csv,,Volatile growth lane (currently empty; no active 
 OVR-021,FILE,pacer_views.py,,Read-only filtered view generator,,,OVR-017,,OGM-015,,,#pacer #tooling,,2026-09-18T17:05:00Z
 OVR-022,FILE,pacer_validator.py,,AGENTS.md s7 mechanical validation of all four organs,,,OVR-017;OVR-018;OVR-019;OVR-020,,OGM-015,,,#pacer #tooling,,2026-09-18T17:05:00Z
 OVR-023,FILE,VAULT_MANIFEST.v1.0.txt,,sha256 freeze manifest for vault v1.0,,,OVR-001,,OGM-001,PAC-001,,#doctrine #vault,,2026-09-18T17:05:00Z
+OVR-024,FILE,NP_04A_BOSS_ROSTER_ARC1.md,,Arc 1 boss roster: 8 further authored PBN bosses + coverage audit + authored-loss structure,,,OVR-006,OVR-031,OGM-016,PAC-042,NDL-001,#vault #opponent #content,Added via NDL-001,2026-09-18T18:24:00Z
+OVR-025,FILE,NP_05A_HISSATSU_LIBRARY.md,,"Library law, distribution audit, notable mechanisms",,,OVR-007,OVR-029,OGM-017,PAC-043,NDL-002,#vault #economy #content,Added via NDL-002,2026-09-18T18:09:00Z
+OVR-026,DATA,data/hissatsu_library.v1.json,,80-move content DB in Hissatsu schema; build output,,,OVR-027,OVR-028,OGM-017,PAC-043,NDL-002,#economy #content #schema,Added via NDL-002,2026-09-18T17:44:00Z
+OVR-027,TOOL,tools/build_hissatsu_library.py,,Regenerable library builder; content edits live here,,,OVR-013,OVR-026,OGM-017,PAC-043,NDL-002,#pipeline #tooling,Added via NDL-002,2026-09-18T17:44:00Z
+OVR-028,TOOL,tools/hissatsu_audit.py,,Mechanized NP_13 s5 hissatsu gate; CI beside pacer_validator,,,OVR-026,,OGM-017,PAC-043,NDL-002,#pipeline #tooling,Added via NDL-002,2026-09-18T17:44:00Z
+OVR-029,FILE,NP_07A_HOUSE_QUESTLINES.md,,"14 house questlines: SECRET gates, blessing grammar, feud mutations",,,OVR-009;OVR-025,OVR-030,OGM-018,PAC-044,NDL-003,#vault #houses #narrative,Added via NDL-003,2026-09-18T18:09:00Z
+OVR-030,DATA,data/feud_graph.v1.json,,"Launch feud graph, 12 edges with mutation paths; consumed by house-ring math and recruitment",,,OVR-029,,OGM-018,PAC-044;PAC-023;PAC-027,NDL-003,#houses #schema,Added via NDL-003,2026-09-18T18:09:00Z
+OVR-031,FILE,NP_12A_EP01_SCRIPT.md,,"Episode 1 full script: 6 scenes, PLAY direction, FR-CA flags, scene-gate checklist",,,OVR-014;OVR-024,OVR-032,OGM-019,PAC-045;PAC-035;PAC-036,NDL-004,#vault #narrative #vs,Added via NDL-004,2026-09-18T18:24:00Z
+OVR-032,FILE,VS_SCOPE.md,,"Frozen vertical-slice scope: layer coverage, MV/stretch cut-line, cut authority",,,OVR-015;OVR-031,,OGM-019,PAC-004;PAC-036,,#production #vs,PAC-004 deliverable,2026-09-18T18:30:00Z
+OVR-033,FILE,ENGINE_DECISION.md,,"Godot 4 decision record: fit, input path, risks, validation protocol",,,OVR-005,OVR-034,OGM-002,PAC-002A;PAC-002B,,#engine #production,PAC-002 split work,2026-09-18T18:52:00Z
+OVR-034,PROJECT,latency_harness/project.godot,,"Godot 4 harness project: vsync off, agile event flushing",,,OVR-033,OVR-035,OGM-002,PAC-002B,,#engine #tooling,PAC-002 split work,2026-09-18T18:52:00Z
+OVR-035,MODULE,latency_harness/main.gd,,"Harness logic: flick detect, sector map (NP_03 s2.1), latency distribution, discrimination mode, CSV export",,,OVR-034,,OGM-002,PAC-002B,,#engine #tooling,PAC-002 split work,2026-09-18T18:52:00Z
+OVR-036,DATA,data/combat_tuning.v1.json,,"Hot-reloadable combat tuning: full NP_03 value set, engine-consumable",,,OVR-005,,OGM-002,PAC-005,,#combat #schema,PAC-002 split work,2026-09-18T18:52:00Z
