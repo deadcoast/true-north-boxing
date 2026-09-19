@@ -42,6 +42,14 @@ var stick_best := Vector2.ZERO
 var lb_held := false
 var slip_ms := 0.0
 var slip_dir := 0
+var weave_ms := 0.0
+var lean_ms := 0.0
+var pinned_p_ms := 0.0            # continuous corner time -> TRAP at 3000
+var pinned_b_ms := 0.0
+var trapped_p := false
+var trapped_b := false
+var p_vel := Vector3.ZERO         # for boss cut-off prediction
+var p_last := Vector3.ZERO
 var block_press_ms := 999999.0     # ms since RT pressed (perfect-block window)
 var pending: Dictionary = {}       # player punch in startup
 var counter_ms := 0.0              # open counter window
@@ -219,6 +227,18 @@ func _end_dual() -> void:
 
 func _feed(t: String) -> void: feed.text = t
 
+func _zone(pos: Vector3) -> String:
+	if absf(pos.x) > 2.9 and absf(pos.z) > 2.9: return "CORNER"
+	if maxf(absf(pos.x), absf(pos.z)) > 3.1: return "ROPES"
+	if Vector2(pos.x, pos.z).length() < 1.85: return "CENTER"
+	return "MID"
+
+func _zone_mult(pos: Vector3) -> float:
+	match _zone(pos):
+		"CORNER": return float(T["zones"]["CORNER"]["dmg_mult"])
+		"ROPES":  return float(T["zones"]["ROPES"]["dmg_mult"])
+	return 1.0
+
 # ============================== INPUT =====================================
 func _poll_stick() -> Vector2:
 	var best := Vector2.ZERO
@@ -320,6 +340,7 @@ func _land_on_boss() -> void:
 		_feed("AURORA BOREALIS BREAKER!")
 	if pd["counter"]: dmg *= float(T["counter_mults"]["counter"])
 	if pd["flash"]: dmg *= float(T["counter_mults"]["flash"])
+	dmg *= _zone_mult(boss.position)
 	# boss defense: base + tracker ramp (defense only, D3) - suppressed during tells (interrupt!)
 	var tier := _flag_tier()
 	var defend := 0.30 + minf(float(T["adaptation_tracker"]["ramp_cap_pct"]) / 100.0,
@@ -337,21 +358,51 @@ func _land_on_boss() -> void:
 		get_tree().create_timer(0.7 * 0.6, true, false, true).timeout.connect(func(): Engine.time_scale = 1.0)
 		_feed("INTERRUPT! string broken - flash window open")
 	B["comp"] -= dmg
+	# herding: every landed punch walks him back 10cm (haymaker class 20cm)
+	var push := 0.2 if pd["row"] in ["R_HOOKERCUT", "L_HOOKERCUT", "R_FLARED"] else 0.1
+	boss.position += (boss.position - player.position).normalized() * push
+	boss.position.x = clampf(boss.position.x, -3.5, 3.5)
+	boss.position.z = clampf(boss.position.z, -3.5, 3.5)
 	if tier == 0 and not pd["hissatsu"]:
 		var earn := 3.0 if pd["counter"] else 1.5
+		if _zone(boss.position) == "CENTER" and _zone(player.position) == "CENTER":
+			earn += 2.0                     # center-ring exchange bonus (NP_01 s4)
 		tension = minf(100.0, tension + earn); contributed += earn
 	ep_p += 2
 	_bump(boss, 0.12); _hitstop(pd)
 	if B["comp"] <= 0.0: _drop(false)
 
 func _boss_land(dmg_mult: float, is_desp: bool) -> void:
-	var row: Dictionary = T["punch_matrix"][bpending.get("row", "R_STRAIGHT")]
+	var brow: String = bpending.get("row", "R_STRAIGHT")
+	var row: Dictionary = T["punch_matrix"][brow]
 	bpending = {}
 	var dmg: float = float(row["dmg"]) * (float(B["stats"]["PWR"]) / 50.0) * dmg_mult
-	# player defense: explicit states beat everything
+	dmg *= _zone_mult(player.position)
+	var wide := 1.4 if trapped_p else 1.0     # trapped fighter reads wider (desperation)
+	var is_upc := brow in ["R_UPPERCUT", "L_UPPERCUT"]
+	var is_hook := brow in ["R_HOOK", "L_HOOK", "R_HOOKERCUT", "L_HOOKERCUT"]
+	# spatial dodges: slip beats straights/hooks, loses to uppercuts; lean beats hooks;
+	# weave beats straights/hooks and repositions around him
 	if slip_ms > 0.0:
-		counter_ms = float(T["counter_windows_ms"]["slip"]["base"])
-		_feed("slipped it - counter window!")
+		if is_upc:
+			P["comp"] -= dmg * 1.5            # uppercut through the slip (mistime tax)
+			_bump(player, 0.15); _feed("UPPERCUT through the slip!")
+			if P["comp"] <= 0.0: _drop(true)
+			return
+		counter_ms = float(T["counter_windows_ms"]["slip"]["base"]) * wide
+		_feed("slipped it - counter window!" + ("  [trapped read: wider]" if trapped_p else ""))
+		return
+	if lean_ms > 0.0 and is_hook:
+		counter_ms = float(T["counter_windows_ms"]["perfect_block"]["base"]) * 0.8 * wide
+		player.position += (player.position - boss.position).normalized() * 0.2
+		_feed("leaned back under the hook")
+		return
+	if weave_ms > 0.0 and not is_upc:
+		counter_ms = float(T["counter_windows_ms"]["weave"]["base"] if T["counter_windows_ms"].has("weave") else 450.0) * wide
+		var lat := (player.position - boss.position).cross(Vector3.UP).normalized()
+		player.position += lat * 0.5 - (player.position - boss.position).normalized() * 0.1
+		pinned_p_ms = 0.0; trapped_p = false
+		_feed("weaved through - repositioned" + ("  [trap escaped]" if trapped_p else ""))
 		return
 	if _blocking():
 		if block_press_ms <= float(T["guard"]["perfect_block_window_ms"]):
@@ -366,6 +417,9 @@ func _boss_land(dmg_mult: float, is_desp: bool) -> void:
 		return
 	P["comp"] -= dmg * (1.5 if P["guard_open_ms"] > 0.0 else 1.0)
 	ep_b += 2
+	player.position += (player.position - boss.position).normalized() * 0.12   # herded back
+	player.position.x = clampf(player.position.x, -3.5, 3.5)
+	player.position.z = clampf(player.position.z, -3.5, 3.5)
 	_bump(player, 0.12)
 	if P["comp"] <= 0.0: _drop(true)
 
@@ -514,18 +568,37 @@ func _process(delta: float) -> void:
 		_eight_tick(dt_ms); _hud(); return
 	if paused_for_eight: _hud(); return
 	clock = maxf(0.0, clock - delta)
-	# movement (player) + face-off
-	var mv := _move_vec()
+	# movement (player) + face-off; feet planted during any dodge
+	var mv := _move_vec() if (slip_ms <= 0.0 and weave_ms <= 0.0 and lean_ms <= 0.0) else Vector2.ZERO
 	var spd := lerpf(2.2, 3.4, P["stats"]["SPD"] / 99.0) * float(_gassed(P)["foot_speed"])
 	var fwd: Vector3 = (boss.position - player.position).normalized()
 	var right := fwd.cross(Vector3.UP)
 	player.position += (-right * mv.x - fwd * mv.y) * spd * delta * (0.7 if mv.y > 0 else 1.0)
 	player.position.x = clampf(player.position.x, -3.5, 3.5)
 	player.position.z = clampf(player.position.z, -3.5, 3.5)
-	# boss keeps range
+	p_vel = (player.position - p_last) / maxf(delta, 0.001); p_last = player.position
+	# boss ring generalship: keeps range AND cuts the escape angle (intercepts your motion)
 	var dist := boss.position.distance_to(player.position)
 	if dist > 2.1 and bstate != "ACTING":
-		boss.position += (player.position - boss.position).normalized() * 1.2 * delta
+		var intercept: Vector3 = player.position + p_vel * 0.35
+		boss.position += (intercept - boss.position).normalized() * 1.2 * delta
+		boss.position.x = clampf(boss.position.x, -3.5, 3.5)
+		boss.position.z = clampf(boss.position.z, -3.5, 3.5)
+	# corner trap timers (3s pinned = TRAP, NP_01 s4)
+	if _zone(player.position) == "CORNER" and dist < 2.6:
+		pinned_p_ms += dt_ms
+		if pinned_p_ms >= 3000.0 and not trapped_p:
+			trapped_p = true; _feed("CORNER TRAP - damage x1.5, guard bleeding, but your reads are WIDER. Weave out!")
+	else:
+		pinned_p_ms = 0.0; trapped_p = false
+	if _zone(boss.position) == "CORNER" and dist < 2.6:
+		pinned_b_ms += dt_ms
+		if pinned_b_ms >= 3000.0 and not trapped_b:
+			trapped_b = true; _feed("HE'S TRAPPED IN THE CORNER - x1.5 window, finish it!")
+	else:
+		pinned_b_ms = 0.0; trapped_b = false
+	weave_ms = maxf(0.0, weave_ms - dt_ms)
+	lean_ms = maxf(0.0, lean_ms - dt_ms)
 	# camera: Punch-Out rig - behind/above player, boss centered
 	var back: Vector3 = (player.position - boss.position).normalized()
 	cam.position = player.position + back * 1.8 + Vector3(0, 1.5, 0)
@@ -542,7 +615,8 @@ func _process(delta: float) -> void:
 			if F["guard_open_ms"] <= 0.0: F["guard"] = float(T["guard"]["break_refill"])
 	if _blocking():
 		block_press_ms += dt_ms
-		P["guard"] = maxf(0.0, P["guard"] - T["guard"]["hold_decay_per_s"] * delta)
+		var decay: float = float(T["guard"]["hold_decay_per_s"]) * (float(T["zones"]["CORNER"]["guard_decay_mult"]) if _zone(player.position) == "CORNER" else 1.0)
+		P["guard"] = maxf(0.0, P["guard"] - decay * delta)
 	else:
 		block_press_ms = 0.0
 		P["guard"] = minf(P["guard_max"], P["guard"] + T["guard"]["regen_per_s"] * delta)
@@ -599,7 +673,10 @@ func _bar(v: float, vmax: float, w: int) -> String:
 	return "[" + "#".repeat(n) + "-".repeat(w - n) + "]"
 
 func _hud() -> void:
+	var zp := _zone(player.position)
+	var zb := _zone(boss.position)
 	hud.text = "TRUE NORTH BOXING :: greybox   R%d/3  %s vs %s   clock %5.1f   DROPS %d-%d   EP %d-%d\n" % [seg_idx + 1, _pname(), BOSSES[boss_idx], clock, drops_p, drops_b, ep_p, ep_b] \
+		+ "ZONE you:%s%s  him:%s%s\n" % [zp, " TRAPPED" if trapped_p else "", zb, " TRAPPED" if trapped_b else ""] \
 		+ "YOU   stam %s  chin %s  guard %s%s\n" % [_bar(P["stamina"],100,14), _bar(P["comp"],P["comp_max"],14), _bar(P["guard"],P["guard_max"],10), "  OPEN!" if P["guard_open_ms"]>0 else ""] \
 		+ "BOSS  chin %s   phase %d%s\n" % [_bar(B["comp"],B["comp_max"],14), bphase, "   << TELL - HIT HIM NOW" if bstate=="TELL" else ""] \
 		+ "TENSION %s %3.0f  %s%s%s" % [_bar(tension,100,16), tension, "ABB READY (LB + haymaker flick)" if tension>=100 else "", "   counter!" if counter_ms>0 else "", "   FLASH!" if flash_ms>0 else ""]
@@ -607,8 +684,10 @@ func _hud() -> void:
 func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventKey and e.pressed and not e.echo:
 		if e.keycode in PUNCH_KEYS: _throw(PUNCH_KEYS[e.keycode])
-		elif e.keycode == KEY_Q: slip_ms = 260.0; slip_dir = -1
-		elif e.keycode == KEY_E: slip_ms = 260.0; slip_dir = 1
+		elif e.keycode == KEY_Q: _do_slip(-1)
+		elif e.keycode == KEY_E: _do_slip(1)
+		elif e.keycode == KEY_V: _do_weave()
+		elif e.keycode == KEY_B: _do_lean()
 		elif e.keycode == KEY_R:
 			T = _json("res://combat_tuning.v1.json"); _feed("tuning hot-reloaded")
 		elif e.keycode == KEY_F5:
@@ -617,9 +696,29 @@ func _unhandled_input(e: InputEvent) -> void:
 			_load_boss(e.keycode - KEY_1)
 			Engine.time_scale = 1.0; paused_for_eight = false; _reset_fighters()
 			_feed("NOW FIGHTING: " + BOSSES[boss_idx])
-	# pad slips: LT + LS lateral
-	if e is InputEventJoypadMotion and e.axis == JOY_AXIS_LEFT_X and absf(e.axis_value) > 0.7 and _body_mod():
-		slip_ms = 260.0; slip_dir = 1 if e.axis_value > 0.0 else -1
+	# pad head movement: LT + LS lateral = slip, LT + LS forward = weave, LT + LS back = lean
+	if e is InputEventJoypadMotion and _body_mod():
+		if e.axis == JOY_AXIS_LEFT_X and absf(e.axis_value) > 0.7:
+			_do_slip(1 if e.axis_value > 0.0 else -1)
+		elif e.axis == JOY_AXIS_LEFT_Y and e.axis_value < -0.7:
+			_do_weave()
+		elif e.axis == JOY_AXIS_LEFT_Y and e.axis_value > 0.7:
+			_do_lean()
+
+func _do_slip(dir: int) -> void:
+	if slip_ms > 0.0 or weave_ms > 0.0 or lean_ms > 0.0 or paused_for_eight: return
+	slip_ms = 260.0; slip_dir = dir
+	var lat := (boss.position - player.position).cross(Vector3.UP).normalized()
+	player.position += lat * 0.35 * dir       # the head MOVES - spatial dodge
+
+func _do_weave() -> void:
+	if weave_ms > 0.0 or slip_ms > 0.0 or paused_for_eight: return
+	weave_ms = 400.0
+
+func _do_lean() -> void:
+	if lean_ms > 0.0 or slip_ms > 0.0 or paused_for_eight: return
+	lean_ms = 300.0
+	P["stamina"] = maxf(0.0, P["stamina"] - 5.0)
 
 
 # ============================== SMOKE =====================================
@@ -749,8 +848,62 @@ func _smoke_tick() -> void:
 			drops_p = 2; drops_b = 1; ep_p = 40; ep_b = 22
 			_end_segment("smoke-forced")
 			_sr("dual verdict on drops", mode == "OVER" and "MILLBROOK WINS" in feed.text)
+			mode = "FIGHT"; paused_for_eight = false
 			smoke_stage = 12
 		12:
+			# zone classification + corner damage multiplier (deterministic path)
+			var zc := _zone(Vector3(0, 0, 1.0)) == "CENTER" and _zone(Vector3(2.0, 0, 0)) == "MID" \
+				and _zone(Vector3(3.3, 0, 0)) == "ROPES" and _zone(Vector3(3.3, 0, 3.3)) == "CORNER"
+			_sr("zone classification (4 zones)", zc)
+			slip_ms = 0.0; weave_ms = 0.0; lean_ms = 0.0; trapped_p = false
+			P["comp"] = P["comp_max"]; player.position = Vector3(0, 0, 1.0)
+			bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
+			var d_center: float = P["comp_max"] - P["comp"]
+			P["comp"] = P["comp_max"]; player.position = Vector3(3.3, 0, 3.3)
+			bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
+			var d_corner: float = P["comp_max"] - P["comp"]
+			_sr("corner damage x1.5 vs center", absf(d_corner / maxf(0.01, d_center) - 1.5) < 0.05,
+				"%.1f/%.1f" % [d_corner, d_center])
+			smoke_stage = 13
+		13:
+			# trap arming + widened trapped reads
+			player.position = Vector3(3.3, 0, 3.3); boss.position = Vector3(2.2, 0, 2.2)
+			pinned_p_ms = 3100.0; trapped_p = true
+			P["comp"] = P["comp_max"]
+			_do_slip(1); bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
+			var base_w: float = float(T["counter_windows_ms"]["slip"]["base"])
+			_sr("trapped slip window x1.4", absf(counter_ms - base_w * 1.4) < 1.0, "%.0fms" % counter_ms)
+			slip_ms = 0.0; counter_ms = 0.0
+			smoke_stage = 14
+		14:
+			# herding both ways
+			trapped_p = false; pinned_p_ms = 0.0
+			player.position = Vector3(0, 0, 0.9); boss.position = Vector3(0, 0, -0.9)
+			var bz0: float = boss.position.z
+			P["busy_ms"] = 0.0; tokens = []; flags = {}; bstate = "IDLE"
+			for i in range(6):
+				P["busy_ms"] = 0.0
+				_throw("L_STRAIGHT" if i % 2 == 0 else "R_HOOK"); pending["ms"] = 0.0; _land_on_boss()
+				if boss.position.z != bz0: break
+			_sr("landed punches herd him back", boss.position.z < bz0, "%.2f -> %.2f" % [bz0, boss.position.z])
+			var pz0: float = player.position.z
+			P["comp"] = P["comp_max"]; slip_ms = 0.0; weave_ms = 0.0; lean_ms = 0.0
+			bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
+			_sr("his punches herd you back", player.position.z > pz0, "%.2f -> %.2f" % [pz0, player.position.z])
+			smoke_stage = 15
+		15:
+			# dodge matrix: slip evades straight, loses to uppercut; weave clears trap
+			P["comp"] = P["comp_max"]; counter_ms = 0.0
+			_do_slip(1); bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
+			_sr("slip evades the straight", P["comp"] == P["comp_max"] and counter_ms > 0.0)
+			P["comp"] = P["comp_max"]; counter_ms = 0.0; slip_ms = 0.0
+			_do_slip(1); bpending = {"row": "R_UPPERCUT"}; _boss_land(1.0, false)
+			_sr("uppercut punishes the slip x1.5", P["comp"] < P["comp_max"])
+			slip_ms = 0.0; trapped_p = true; pinned_p_ms = 3200.0
+			_do_weave(); bpending = {"row": "R_HOOK"}; _boss_land(1.0, false)
+			_sr("weave evades + escapes the trap", not trapped_p and pinned_p_ms == 0.0)
+			smoke_stage = 16
+		16:
 			var fails := 0
 			for r in smoke_results:
 				if not r[1]: fails += 1

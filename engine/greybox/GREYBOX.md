@@ -26,9 +26,21 @@ the whole dual; bank 25+ in your segment and the next fighter enters
 CHARGED - 10s surge, hissatsu arms at 50. Drops + EP score the dual;
 verdict card at the end. F5 starts a fresh dual.
 
+## Phase 3 in the build: RING GEOGRAPHY + SPATIAL DODGES
+The space is mechanical now. Zones (CENTER / MID / ROPES / CORNER) drive
+damage - x1.25 on the ropes, x1.5 in the corner, +2 Tension on center-ring
+exchanges. Every landed punch herds the other man 10-20cm; the boss
+intercepts your escape angle instead of chasing your position, so circling
+out is a read, never a free walk. Three seconds pinned in a corner arms
+CORNER TRAP: guard bleeds double, damage peaks, and your counter reads
+widen x1.4 - the desperation window. Head movement is spatial: slips
+displace you 35cm laterally (uppercuts punish them x1.5), lean-back beats
+hooks and gives ground, weave (V, or LT+forward) arcs you around him and
+is the trap escape. HUD reads both fighters' zones live.
+
 ## Verification status (agent-run, headless Godot 4.3, this container)
 - Boots clean; zero script errors across 3600-frame soaks vs all 4 bosses.
-- Smoke suite 25/25 GREEN per boss (combat 17 + dual layer 8) (run it yourself: add `-- smoke` to the
+- Smoke suite 33/33 GREEN per boss (combat 17 + dual 8 + geography/dodges 8) (run it yourself: add `-- smoke` to the
   command): tracker flagging + narration, stamina drain, tell interrupt +
   flash window + tension pay, DROP + 50pct composure reset, player drop ->
   standing-eight -> rise + regen halt, guard break -> 40 refill, hissatsu
