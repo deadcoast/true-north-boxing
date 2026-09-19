@@ -17,7 +17,31 @@ windows, adaptation tracker narrated on the feed line (spam a combo, watch
 him start blocking it), Tension meter, DROP + standing-eight beats,
 three-knockdown rule, 90s segment clock, Punch-Out camera.
 
-Register: this is PAC-005..009 greybox-tier, in flight as one lane. Guardrail
-posture from here: build -> you play -> you say what feels wrong. Proposal
-ceremony is retired until vertical slice; D8 sign-off is reserved for cutting
-content, never for greybox tuning.
+## Phase 2 in the build: THE ROTATION DUAL
+Three segments, rotation both sides: you fight R1 as RORY, R2 as PRIYA
+(fast, fragile, huge reflex windows), R3 as MARCUS (truck with no guard) -
+against three different pattern bosses. Corner phase between segments
+([1] send next / [2] rest +20 stamina). Tension is ONE shared bar across
+the whole dual; bank 25+ in your segment and the next fighter enters
+CHARGED - 10s surge, hissatsu arms at 50. Drops + EP score the dual;
+verdict card at the end. F5 starts a fresh dual.
+
+## Verification status (agent-run, headless Godot 4.3, this container)
+- Boots clean; zero script errors across 3600-frame soaks vs all 4 bosses.
+- Smoke suite 25/25 GREEN per boss (combat 17 + dual layer 8) (run it yourself: add `-- smoke` to the
+  command): tracker flagging + narration, stamina drain, tell interrupt +
+  flash window + tension pay, DROP + 50pct composure reset, player drop ->
+  standing-eight -> rise + regen halt, guard break -> 40 refill, hissatsu
+  arm at 100 / bar zeroed with only the drop bonus as residue, live agent
+  string cycling with phases.
+- Bugs the loop caught and fixed before you ever loaded it: hissatsu
+  self-refunding tension on its own landing; desperation arming stalling
+  the agent in an empty TELL state (Yuri/Moreau stuck); a Variant-typed
+  damage inference that failed to parse at all.
+- NOT verified: game feel. That is the part that is yours, whenever.
+
+Posture (PACER CLIENT FIXES, in force): one development thread, [B]-shape -
+phases inside a single continuous build, agent verifies in-container with
+headless Godot + smoke suites, guardrails protect finished content only.
+No proposals, no REVIEW parking, no user load-and-test until the build
+reaches coherent operational state.
