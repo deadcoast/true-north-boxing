@@ -69,6 +69,10 @@ class Tracker:
         self.ramp, self.cap = c["defense_ramp_per_tier_pct"] / 100.0, c["ramp_cap_pct"] / 100.0
         self.decay_ms, self.flags = c["decay_clear_s"] * 1000, {}   # gram -> [tier, ms_since_seen]
     def push(self, token):
+        """Returns list of flag EVENTS this push caused: [(gram, new_tier)] on new
+        flag or tier-up. Correct per-segment flag counting hangs off this return
+        (codex REQ-02c finding: distinct-grams-per-fight was the wrong measure)."""
+        events = []
         self.window.append(token)
         if len(self.window) > self.n: self.window.pop(0)
         for size in (2, 3):
@@ -77,9 +81,12 @@ class Tracker:
                 cnt = sum(1 for i in range(len(self.window) - size + 1)
                           if tuple(self.window[i:i+size]) == gram)
                 if cnt >= self.flag_at:
-                    tier = min(3, self.flags.get(gram, [0, 0])[0] + (0 if gram in self.flags else 1))
-                    if gram in self.flags: tier = min(3, self.flags[gram][0] + 1)
+                    prev = self.flags.get(gram, [0, 0])[0]
+                    tier = min(3, prev + 1)
+                    if tier > prev:
+                        events.append((gram, tier))
                     self.flags[gram] = [tier, 0]
+        return events
     def tick(self):
         for g in list(self.flags):
             self.flags[g][1] += TICK_MS

@@ -154,7 +154,7 @@ BOSS Okafor_Ada
   PUNISH: player_passive>6s -> force S3
   PUNISH: player_flagged_ngram (adaptation tier>=2) -> S2 targets the flagged opening
   PHASE 2 @ composure<50%: metronome 800ms -> 650ms; desync duration 3s -> 2s
-  DESPERATION @ composure<25%: hissatsu "Pressure Cooker" overdriven (house native, +2 Tension denial on hit)
+  DESPERATION @ composure<25%: hissatsu "Heat Advisory" overdriven (house native, +2 Tension denial on hit; Pressure Cooker failed the 1200ms desperation cinematic floor at compile - PAC-011A)
 ```
 
 Her BAIT line is authored empty and the Scout Book says why: Ascendant coaches out generosity. Against her brother Carter's chirping warmth, the roster itself argues the game's thesis.

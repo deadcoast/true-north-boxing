@@ -19,8 +19,8 @@ The harness run: `latency_log.csv` from `%APPDATA%\Godot\app_userdata\Northpaw L
 
 | Recorded run | Samples | Software p95 | Software p99 | Raw evidence |
 | --- | --- | --- | --- | --- |
-| Discrimination run | 200/200 prompted directions correct | 1.093 ms | 1.480 ms | [CSV](evidence/PAC-010-20260918/latency_log.csv), [summary](evidence/PAC-010-20260918/summary.json) |
-| Repeated-input run | 600/600 directions captured and exported; timing window is the latest 500 | 0.564 ms | 0.725 ms | [CSV](evidence/PAC-010-continuation/soak-latency-log.csv), [unrounded samples](evidence/PAC-010-continuation/soak-10.json) |
+| Discrimination run | 200/200 prompted directions correct | 1.093 ms | 1.480 ms | [CSV](../evidence/PAC-010-20260918/latency_log.csv), [summary](../evidence/PAC-010-20260918/summary.json) |
+| Repeated-input run | 600/600 directions captured and exported; timing window is the latest 500 | 0.564 ms | 0.725 ms | [CSV](../evidence/PAC-010-continuation/soak-latency-log.csv), [unrounded samples](../evidence/PAC-010-continuation/soak-10.json) |
 
 Both ran in rendered Godot 4.7.2 through Godot AI 3.2.1, with a 120 FPS cap and
 VSync off. CSV timing values are rounded to two decimals. These measurements
@@ -35,7 +35,7 @@ emitted the earlier physical flicks. Further tests found 12/16 misclassification
 with deliberately staggered axes, lost same-frame pulses, held-Tab resets, and
 slow excursions accepted as flicks. Resolve these capture issues before using
 the harness for acceptance. The implementer owns that work; no user-run test is
-requested. [Full findings and reproductions](evidence/PAC-010-playtest-continuation.md).
+requested. [Full findings and reproductions](../evidence/PAC-010-playtest-continuation.md).
 
 **DEFAULT:** deferred. P1 build work proceeds; only the P1 *exit* milestone waits on it.
 
@@ -60,7 +60,7 @@ c) tune/investigate — proposal only.**
   explicit fight-outcome check before being treated as a win rate.
 - **b) Stamina:** investigate why the tested models spend 0% of their time
   gassed, then propose changes if the behavior persists with representative
-  actions. [NP_13 §6](docs/NP_13_SCOPE.md) requires gassed states to be **present
+  actions. [NP_13 §6](NP_13_SCOPE.md) requires gassed states to be **present
   but <15% of segment time**. The current simulator checks only an inclusive
   upper bound (`<=15%`), so its OK at zero does not establish the design target.
   Verify action tempo, modifier use and stamina accounting before increasing
@@ -74,15 +74,15 @@ c) tune/investigate — proposal only.**
   then sweep threshold/window values if the correctly measured result remains
   outside 1–3. Preserve defense-only adaptation and narration.
 
-Evidence: [Vane, 120 seeds/tier](evidence/PAC-010-continuation/vane-metrics-120.txt),
-[Vaughn, 120 seeds/tier](evidence/PAC-010-continuation/vaughn-metrics-120.txt),
-and [metric implementation](tools/sim_run.py). These are 720 simulated fights,
+Evidence: [Vane, 120 seeds/tier](../evidence/PAC-010-continuation/vane-metrics-120.txt),
+[Vaughn, 120 seeds/tier](../evidence/PAC-010-continuation/vaughn-metrics-120.txt),
+and [metric implementation](../tools/sim_run.py). These are 720 simulated fights,
 not human playtests. Likewise, the 3.61x/4.43x skilled/novice mean counter-rate
 ratios do not establish the required human p90/p10 spread.
 
 Prepare reviewable proposals after aligning the measurements; no sweep or
 numeric tuning change is claimed here. The requisition's explicit approval
-requirement remains in force. [D8](docs/DOCTRINE.md) specifically protects against
+requirement remains in force. [D8](DOCTRINE.md) specifically protects against
 feature removal or simplification without design review; these findings do not
 authorize cutting systems.
 
