@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "EVAL_COMPILE_ERROR: Game eval failed to compile \u2014 likely a GDScript syntax/parse error. The parse error text is in the editor's Output/Debugger panel; it is not capturable from the running game. Check your eval code's syntax."
+    }
+  ],
+  "structuredContent": {
+    "error": {
+      "code": "EVAL_COMPILE_ERROR",
+      "message": "Game eval failed to compile \u2014 likely a GDScript syntax/parse error. The parse error text is in the editor's Output/Debugger panel; it is not capturable from the running game. Check your eval code's syntax.",
+      "data": {}
+    }
+  },
+  "isError": true
+}

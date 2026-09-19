@@ -1,0 +1,25 @@
+{
+  "latency_rows": 600,
+  "direction_matches": 600,
+  "summary_rows": [
+    [
+      "SUMMARY",
+      "p50",
+      "0.41",
+      ""
+    ],
+    [
+      "SUMMARY",
+      "p95",
+      "0.56",
+      ""
+    ],
+    [
+      "SUMMARY",
+      "p99",
+      "0.72",
+      ""
+    ]
+  ],
+  "prior_log_preserved": true
+}

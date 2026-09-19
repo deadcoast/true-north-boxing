@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"hud\":\"NORTHPAW LATENCY HARNESS :: PAC-002B      mode: LATENCY   [TAB switch, ESC quit+save]\\npad: connected\\n\\nsoftware-path latency  (poll-detect -> apply -> present request)\\n  samples  500   p50   0.41 ms   p95   0.56 ms   p99   0.72 ms\\n  PASS bar: p95 <= 50 ms   ->  PASS\\n\\ndiscrimination  0/0  (0.0%)   PASS bar: >=99% over 200\\n\\nwhite square = punch-start flash (film pad+screen at 240fps for full-chain)\",\"log_path\":\"C:/Users/ryanf/AppData/Roaming/Godot/app_userdata/Northpaw Latency Harness/latency_log.csv\"},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "hud": "NORTHPAW LATENCY HARNESS :: PAC-002B      mode: LATENCY   [TAB switch, ESC quit+save]\npad: connected\n\nsoftware-path latency  (poll-detect -> apply -> present request)\n  samples  500   p50   0.41 ms   p95   0.56 ms   p99   0.72 ms\n  PASS bar: p95 <= 50 ms   ->  PASS\n\ndiscrimination  0/0  (0.0%)   PASS bar: >=99% over 200\n\nwhite square = punch-start flash (film pad+screen at 240fps for full-chain)",
+      "log_path": "C:/Users/ryanf/AppData/Roaming/Godot/app_userdata/Northpaw Latency Harness/latency_log.csv"
+    },
+    "source": "game"
+  },
+  "isError": false
+}

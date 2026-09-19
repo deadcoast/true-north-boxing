@@ -1,0 +1,106 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"results\":[{\"fps_cap\":30.0,\"frames\":[{\"remaining\":0.0,\"ticks_us\":6715477.0,\"visible\":false},{\"remaining\":2.0,\"ticks_us\":6748819.0,\"visible\":true},{\"remaining\":1.0,\"ticks_us\":6782050.0,\"visible\":true},{\"remaining\":0.0,\"ticks_us\":6815181.0,\"visible\":false},{\"remaining\":0.0,\"ticks_us\":6848469.0,\"visible\":false}]},{\"fps_cap\":60.0,\"frames\":[{\"remaining\":0.0,\"ticks_us\":6998534.0,\"visible\":false},{\"remaining\":2.0,\"ticks_us\":7015494.0,\"visible\":true},{\"remaining\":1.0,\"ticks_us\":7031950.0,\"visible\":true},{\"remaining\":0.0,\"ticks_us\":7048364.0,\"visible\":false},{\"remaining\":0.0,\"ticks_us\":7065257.0,\"visible\":false}]},{\"fps_cap\":120.0,\"frames\":[{\"remaining\":0.0,\"ticks_us\":7140100.0,\"visible\":false},{\"remaining\":2.0,\"ticks_us\":7148705.0,\"visible\":true},{\"remaining\":1.0,\"ticks_us\":7157169.0,\"visible\":true},{\"remaining\":0.0,\"ticks_us\":7165190.0,\"visible\":false},{\"remaining\":0.0,\"ticks_us\":7173396.0,\"visible\":false}]}]},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "results": [
+        {
+          "fps_cap": 30.0,
+          "frames": [
+            {
+              "remaining": 0.0,
+              "ticks_us": 6715477.0,
+              "visible": false
+            },
+            {
+              "remaining": 2.0,
+              "ticks_us": 6748819.0,
+              "visible": true
+            },
+            {
+              "remaining": 1.0,
+              "ticks_us": 6782050.0,
+              "visible": true
+            },
+            {
+              "remaining": 0.0,
+              "ticks_us": 6815181.0,
+              "visible": false
+            },
+            {
+              "remaining": 0.0,
+              "ticks_us": 6848469.0,
+              "visible": false
+            }
+          ]
+        },
+        {
+          "fps_cap": 60.0,
+          "frames": [
+            {
+              "remaining": 0.0,
+              "ticks_us": 6998534.0,
+              "visible": false
+            },
+            {
+              "remaining": 2.0,
+              "ticks_us": 7015494.0,
+              "visible": true
+            },
+            {
+              "remaining": 1.0,
+              "ticks_us": 7031950.0,
+              "visible": true
+            },
+            {
+              "remaining": 0.0,
+              "ticks_us": 7048364.0,
+              "visible": false
+            },
+            {
+              "remaining": 0.0,
+              "ticks_us": 7065257.0,
+              "visible": false
+            }
+          ]
+        },
+        {
+          "fps_cap": 120.0,
+          "frames": [
+            {
+              "remaining": 0.0,
+              "ticks_us": 7140100.0,
+              "visible": false
+            },
+            {
+              "remaining": 2.0,
+              "ticks_us": 7148705.0,
+              "visible": true
+            },
+            {
+              "remaining": 1.0,
+              "ticks_us": 7157169.0,
+              "visible": true
+            },
+            {
+              "remaining": 0.0,
+              "ticks_us": 7165190.0,
+              "visible": false
+            },
+            {
+              "remaining": 0.0,
+              "ticks_us": 7173396.0,
+              "visible": false
+            }
+          ]
+        }
+      ]
+    },
+    "source": "game"
+  },
+  "isError": false
+}

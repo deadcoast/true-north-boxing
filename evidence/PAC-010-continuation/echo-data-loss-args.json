@@ -1,0 +1,6 @@
+{
+  "op": "game_eval",
+  "params": {
+    "code": "var scene = get_tree().current_scene\nEngine.max_fps = 120\nvar key = InputEventKey.new()\nkey.keycode = KEY_TAB\nkey.pressed = true\nInput.parse_input_event(key)\nawait get_tree().process_frame\nvar angles = [-108.0,-144.0,180.0,144.0,108.0,72.0,36.0,0.0,-36.0,-72.0]\nvar angle = deg_to_rad(angles[scene.prompt_idx])\nvar vector = Vector2(cos(angle),-sin(angle))*0.95\nfor values in [vector,Vector2.ZERO]:\n\tfor axis in [JOY_AXIS_RIGHT_X,JOY_AXIS_RIGHT_Y]:\n\t\tvar event = InputEventJoypadMotion.new()\n\t\tevent.device = 0\n\t\tevent.axis = axis\n\t\tevent.axis_value = values.x if axis == JOY_AXIS_RIGHT_X else values.y\n\t\tInput.parse_input_event(event)\n\tfor frame in range(3):\n\t\tawait get_tree().process_frame\nvar before = {\"mode\":scene.mode,\"hits\":scene.discrim_hits,\"total\":scene.discrim_total}\nkey = InputEventKey.new()\nkey.keycode = KEY_TAB\nkey.pressed = true\nkey.echo = true\nInput.parse_input_event(key)\nawait get_tree().process_frame\nvar after = {\"mode\":scene.mode,\"hits\":scene.discrim_hits,\"total\":scene.discrim_total}\nkey = InputEventKey.new()\nkey.keycode = KEY_TAB\nkey.pressed = false\nInput.parse_input_event(key)\nreturn {\"before_repeat\":before,\"after_repeat\":after,\"scope\":\"One successful prompt followed by a held-Tab repeat event\"}\n"
+  }
+}

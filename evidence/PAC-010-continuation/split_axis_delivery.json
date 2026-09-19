@@ -1,0 +1,163 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"cases\":[{\"expected\":\"R_FLARED\",\"first_axis\":\"x\",\"intended_angle\":36.0,\"passed\":false,\"rows\":[\"LATENCY,R_HOOK,0.32\"]},{\"expected\":\"R_FLARED\",\"first_axis\":\"y\",\"intended_angle\":36.0,\"passed\":true,\"rows\":[\"LATENCY,R_FLARED,0.32\"]},{\"expected\":\"R_FLARED\",\"first_axis\":\"x\",\"intended_angle\":45.0,\"passed\":false,\"rows\":[\"LATENCY,R_HOOK,0.33\"]},{\"expected\":\"R_FLARED\",\"first_axis\":\"y\",\"intended_angle\":45.0,\"passed\":false,\"rows\":[\"LATENCY,R_STRAIGHT,0.43\"]},{\"expected\":\"R_HOOKERCUT\",\"first_axis\":\"x\",\"intended_angle\":-36.0,\"passed\":false,\"rows\":[\"LATENCY,R_HOOK,0.35\"]},{\"expected\":\"R_HOOKERCUT\",\"first_axis\":\"y\",\"intended_angle\":-36.0,\"passed\":true,\"rows\":[\"LATENCY,R_HOOKERCUT,0.39\"]},{\"expected\":\"R_HOOKERCUT\",\"first_axis\":\"x\",\"intended_angle\":-45.0,\"passed\":false,\"rows\":[\"LATENCY,R_HOOK,0.31\"]},{\"expected\":\"R_HOOKERCUT\",\"first_axis\":\"y\",\"intended_angle\":-45.0,\"passed\":false,\"rows\":[\"LATENCY,L_UPPERCUT,0.37\"]},{\"expected\":\"L_FLARED\",\"first_axis\":\"x\",\"intended_angle\":144.0,\"passed\":false,\"rows\":[\"LATENCY,L_HOOK,0.33\"]},{\"expected\":\"L_FLARED\",\"first_axis\":\"y\",\"intended_angle\":144.0,\"passed\":true,\"rows\":[\"LATENCY,L_FLARED,0.43\"]},{\"expected\":\"L_FLARED\",\"first_axis\":\"x\",\"intended_angle\":135.0,\"passed\":false,\"rows\":[\"LATENCY,L_HOOK,0.43\"]},{\"expected\":\"L_FLARED\",\"first_axis\":\"y\",\"intended_angle\":135.0,\"passed\":false,\"rows\":[\"LATENCY,R_STRAIGHT,0.59\"]},{\"expected\":\"L_HOOKERCUT\",\"first_axis\":\"x\",\"intended_angle\":-144.0,\"passed\":false,\"rows\":[\"LATENCY,L_HOOK,0.35\"]},{\"expected\":\"L_HOOKERCUT\",\"first_axis\":\"y\",\"intended_angle\":-144.0,\"passed\":true,\"rows\":[\"LATENCY,L_HOOKERCUT,0.31\"]},{\"expected\":\"L_HOOKERCUT\",\"first_axis\":\"x\",\"intended_angle\":-135.0,\"passed\":false,\"rows\":[\"LATENCY,L_HOOK,0.32\"]},{\"expected\":\"L_HOOKERCUT\",\"first_axis\":\"y\",\"intended_angle\":-135.0,\"passed\":false,\"rows\":[\"LATENCY,L_UPPERCUT,0.32\"]}],\"passed\":4.0,\"scope\":\"Axis events deliberately separated by two render frames\",\"total\":16.0},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "cases": [
+        {
+          "expected": "R_FLARED",
+          "first_axis": "x",
+          "intended_angle": 36.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,R_HOOK,0.32"
+          ]
+        },
+        {
+          "expected": "R_FLARED",
+          "first_axis": "y",
+          "intended_angle": 36.0,
+          "passed": true,
+          "rows": [
+            "LATENCY,R_FLARED,0.32"
+          ]
+        },
+        {
+          "expected": "R_FLARED",
+          "first_axis": "x",
+          "intended_angle": 45.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,R_HOOK,0.33"
+          ]
+        },
+        {
+          "expected": "R_FLARED",
+          "first_axis": "y",
+          "intended_angle": 45.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,R_STRAIGHT,0.43"
+          ]
+        },
+        {
+          "expected": "R_HOOKERCUT",
+          "first_axis": "x",
+          "intended_angle": -36.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,R_HOOK,0.35"
+          ]
+        },
+        {
+          "expected": "R_HOOKERCUT",
+          "first_axis": "y",
+          "intended_angle": -36.0,
+          "passed": true,
+          "rows": [
+            "LATENCY,R_HOOKERCUT,0.39"
+          ]
+        },
+        {
+          "expected": "R_HOOKERCUT",
+          "first_axis": "x",
+          "intended_angle": -45.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,R_HOOK,0.31"
+          ]
+        },
+        {
+          "expected": "R_HOOKERCUT",
+          "first_axis": "y",
+          "intended_angle": -45.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,L_UPPERCUT,0.37"
+          ]
+        },
+        {
+          "expected": "L_FLARED",
+          "first_axis": "x",
+          "intended_angle": 144.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,L_HOOK,0.33"
+          ]
+        },
+        {
+          "expected": "L_FLARED",
+          "first_axis": "y",
+          "intended_angle": 144.0,
+          "passed": true,
+          "rows": [
+            "LATENCY,L_FLARED,0.43"
+          ]
+        },
+        {
+          "expected": "L_FLARED",
+          "first_axis": "x",
+          "intended_angle": 135.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,L_HOOK,0.43"
+          ]
+        },
+        {
+          "expected": "L_FLARED",
+          "first_axis": "y",
+          "intended_angle": 135.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,R_STRAIGHT,0.59"
+          ]
+        },
+        {
+          "expected": "L_HOOKERCUT",
+          "first_axis": "x",
+          "intended_angle": -144.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,L_HOOK,0.35"
+          ]
+        },
+        {
+          "expected": "L_HOOKERCUT",
+          "first_axis": "y",
+          "intended_angle": -144.0,
+          "passed": true,
+          "rows": [
+            "LATENCY,L_HOOKERCUT,0.31"
+          ]
+        },
+        {
+          "expected": "L_HOOKERCUT",
+          "first_axis": "x",
+          "intended_angle": -135.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,L_HOOK,0.32"
+          ]
+        },
+        {
+          "expected": "L_HOOKERCUT",
+          "first_axis": "y",
+          "intended_angle": -135.0,
+          "passed": false,
+          "rows": [
+            "LATENCY,L_UPPERCUT,0.32"
+          ]
+        }
+      ],
+      "passed": 4.0,
+      "scope": "Axis events deliberately separated by two render frames",
+      "total": 16.0
+    },
+    "source": "game"
+  },
+  "isError": false
+}

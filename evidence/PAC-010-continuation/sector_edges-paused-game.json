@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "EVAL_GAME_NOT_READY: The game helper is registered but its main loop is not advancing \u2014 the game window may be backgrounded or the game may be frozen. Focus the game window (or relaunch it) and retry."
+    }
+  ],
+  "structuredContent": {
+    "error": {
+      "code": "EVAL_GAME_NOT_READY",
+      "message": "The game helper is registered but its main loop is not advancing \u2014 the game window may be backgrounded or the game may be frozen. Focus the game window (or relaunch it) and retry.",
+      "data": {}
+    }
+  },
+  "isError": true
+}

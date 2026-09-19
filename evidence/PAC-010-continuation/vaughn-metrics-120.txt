@@ -1,0 +1,12 @@
+SIM METRICS :: NP_13 s6 bands  vs deshawn_vaughn  (n=120/skill tier, seed-deterministic)
+==========================================================================
+  novice   counter-rate 0.029   gassed   0.0%   flags/fight 0.8   win   0.0%   ttfd n=1
+  median   counter-rate 0.062   gassed   0.0%   flags/fight 0.5   win   0.0%   ttfd n=5
+  skilled  counter-rate 0.129   gassed   0.0%   flags/fight 0.1   win   2.5%   ttfd n=33
+--------------------------------------------------------------------------
+  [WARN]  time-to-first-DROP p50, novice (s)               23.4   band 60-180
+  [ OK ]  counter-rate spread (skilled/novice)            4.43x   band >=3.0
+  [ OK ]  gassed-state time, median tier (%)                0.0   band <=15.0
+  [WARN]  adaptation flags per fight, median tier           0.5   band 1.0-3.0
+==========================================================================
+  VERDICT :: FINDINGS - out-of-band values are tuning work, reported honestly

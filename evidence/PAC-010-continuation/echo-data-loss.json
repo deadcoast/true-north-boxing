@@ -1,0 +1,25 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"after_repeat\":{\"hits\":0.0,\"mode\":\"LATENCY\",\"total\":0.0},\"before_repeat\":{\"hits\":1.0,\"mode\":\"DISCRIM\",\"total\":1.0},\"scope\":\"One successful prompt followed by a held-Tab repeat event\"},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "after_repeat": {
+        "hits": 0.0,
+        "mode": "LATENCY",
+        "total": 0.0
+      },
+      "before_repeat": {
+        "hits": 1.0,
+        "mode": "DISCRIM",
+        "total": 1.0
+      },
+      "scope": "One successful prompt followed by a held-Tab repeat event"
+    },
+    "source": "game"
+  },
+  "isError": false
+}

@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"same_frame_pulse_samples\":0.0,\"scope\":\"Identical press and release values; only event spacing changed\",\"three_frame_pulse_samples\":1.0},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "same_frame_pulse_samples": 0.0,
+      "scope": "Identical press and release values; only event spacing changed",
+      "three_frame_pulse_samples": 1.0
+    },
+    "source": "game"
+  },
+  "isError": false
+}

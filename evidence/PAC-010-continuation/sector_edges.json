@@ -1,0 +1,258 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"cases\":[{\"angle_deg\":-125.5,\"expected\":\"L_UPPERCUT\",\"passed\":true,\"rows\":[\"LATENCY,L_UPPERCUT,0.48\"]},{\"angle_deg\":-108.0,\"expected\":\"L_UPPERCUT\",\"passed\":true,\"rows\":[\"LATENCY,L_UPPERCUT,0.34\"]},{\"angle_deg\":-90.5,\"expected\":\"L_UPPERCUT\",\"passed\":true,\"rows\":[\"LATENCY,L_UPPERCUT,0.30\"]},{\"angle_deg\":-161.5,\"expected\":\"L_HOOKERCUT\",\"passed\":true,\"rows\":[\"LATENCY,L_HOOKERCUT,0.30\"]},{\"angle_deg\":-144.0,\"expected\":\"L_HOOKERCUT\",\"passed\":true,\"rows\":[\"LATENCY,L_HOOKERCUT,0.29\"]},{\"angle_deg\":-126.5,\"expected\":\"L_HOOKERCUT\",\"passed\":true,\"rows\":[\"LATENCY,L_HOOKERCUT,0.31\"]},{\"angle_deg\":162.5,\"expected\":\"L_HOOK\",\"passed\":true,\"rows\":[\"LATENCY,L_HOOK,0.36\"]},{\"angle_deg\":180.0,\"expected\":\"L_HOOK\",\"passed\":true,\"rows\":[\"LATENCY,L_HOOK,0.31\"]},{\"angle_deg\":197.5,\"expected\":\"L_HOOK\",\"passed\":true,\"rows\":[\"LATENCY,L_HOOK,0.33\"]},{\"angle_deg\":126.5,\"expected\":\"L_FLARED\",\"passed\":true,\"rows\":[\"LATENCY,L_FLARED,0.31\"]},{\"angle_deg\":144.0,\"expected\":\"L_FLARED\",\"passed\":true,\"rows\":[\"LATENCY,L_FLARED,0.31\"]},{\"angle_deg\":161.5,\"expected\":\"L_FLARED\",\"passed\":true,\"rows\":[\"LATENCY,L_FLARED,0.31\"]},{\"angle_deg\":90.5,\"expected\":\"L_STRAIGHT\",\"passed\":true,\"rows\":[\"LATENCY,L_STRAIGHT,0.31\"]},{\"angle_deg\":108.0,\"expected\":\"L_STRAIGHT\",\"passed\":true,\"rows\":[\"LATENCY,L_STRAIGHT,0.33\"]},{\"angle_deg\":125.5,\"expected\":\"L_STRAIGHT\",\"passed\":true,\"rows\":[\"LATENCY,L_STRAIGHT,0.34\"]},{\"angle_deg\":54.5,\"expected\":\"R_STRAIGHT\",\"passed\":true,\"rows\":[\"LATENCY,R_STRAIGHT,0.37\"]},{\"angle_deg\":72.0,\"expected\":\"R_STRAIGHT\",\"passed\":true,\"rows\":[\"LATENCY,R_STRAIGHT,0.34\"]},{\"angle_deg\":89.5,\"expected\":\"R_STRAIGHT\",\"passed\":true,\"rows\":[\"LATENCY,R_STRAIGHT,0.42\"]},{\"angle_deg\":18.5,\"expected\":\"R_FLARED\",\"passed\":true,\"rows\":[\"LATENCY,R_FLARED,0.41\"]},{\"angle_deg\":36.0,\"expected\":\"R_FLARED\",\"passed\":true,\"rows\":[\"LATENCY,R_FLARED,0.35\"]},{\"angle_deg\":53.5,\"expected\":\"R_FLARED\",\"passed\":true,\"rows\":[\"LATENCY,R_FLARED,0.31\"]},{\"angle_deg\":-17.5,\"expected\":\"R_HOOK\",\"passed\":true,\"rows\":[\"LATENCY,R_HOOK,0.33\"]},{\"angle_deg\":0.0,\"expected\":\"R_HOOK\",\"passed\":true,\"rows\":[\"LATENCY,R_HOOK,0.33\"]},{\"angle_deg\":17.5,\"expected\":\"R_HOOK\",\"passed\":true,\"rows\":[\"LATENCY,R_HOOK,0.37\"]},{\"angle_deg\":-53.5,\"expected\":\"R_HOOKERCUT\",\"passed\":true,\"rows\":[\"LATENCY,R_HOOKERCUT,0.30\"]},{\"angle_deg\":-36.0,\"expected\":\"R_HOOKERCUT\",\"passed\":true,\"rows\":[\"LATENCY,R_HOOKERCUT,0.30\"]},{\"angle_deg\":-18.5,\"expected\":\"R_HOOKERCUT\",\"passed\":true,\"rows\":[\"LATENCY,R_HOOKERCUT,0.35\"]},{\"angle_deg\":-89.5,\"expected\":\"R_UPPERCUT\",\"passed\":true,\"rows\":[\"LATENCY,R_UPPERCUT,0.30\"]},{\"angle_deg\":-72.0,\"expected\":\"R_UPPERCUT\",\"passed\":true,\"rows\":[\"LATENCY,R_UPPERCUT,0.39\"]},{\"angle_deg\":-54.5,\"expected\":\"R_UPPERCUT\",\"passed\":true,\"rows\":[\"LATENCY,R_UPPERCUT,0.40\"]}],\"passed\":30.0,\"total\":30.0},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "cases": [
+        {
+          "angle_deg": -125.5,
+          "expected": "L_UPPERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_UPPERCUT,0.48"
+          ]
+        },
+        {
+          "angle_deg": -108.0,
+          "expected": "L_UPPERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_UPPERCUT,0.34"
+          ]
+        },
+        {
+          "angle_deg": -90.5,
+          "expected": "L_UPPERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_UPPERCUT,0.30"
+          ]
+        },
+        {
+          "angle_deg": -161.5,
+          "expected": "L_HOOKERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_HOOKERCUT,0.30"
+          ]
+        },
+        {
+          "angle_deg": -144.0,
+          "expected": "L_HOOKERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_HOOKERCUT,0.29"
+          ]
+        },
+        {
+          "angle_deg": -126.5,
+          "expected": "L_HOOKERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_HOOKERCUT,0.31"
+          ]
+        },
+        {
+          "angle_deg": 162.5,
+          "expected": "L_HOOK",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_HOOK,0.36"
+          ]
+        },
+        {
+          "angle_deg": 180.0,
+          "expected": "L_HOOK",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_HOOK,0.31"
+          ]
+        },
+        {
+          "angle_deg": 197.5,
+          "expected": "L_HOOK",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_HOOK,0.33"
+          ]
+        },
+        {
+          "angle_deg": 126.5,
+          "expected": "L_FLARED",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_FLARED,0.31"
+          ]
+        },
+        {
+          "angle_deg": 144.0,
+          "expected": "L_FLARED",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_FLARED,0.31"
+          ]
+        },
+        {
+          "angle_deg": 161.5,
+          "expected": "L_FLARED",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_FLARED,0.31"
+          ]
+        },
+        {
+          "angle_deg": 90.5,
+          "expected": "L_STRAIGHT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_STRAIGHT,0.31"
+          ]
+        },
+        {
+          "angle_deg": 108.0,
+          "expected": "L_STRAIGHT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_STRAIGHT,0.33"
+          ]
+        },
+        {
+          "angle_deg": 125.5,
+          "expected": "L_STRAIGHT",
+          "passed": true,
+          "rows": [
+            "LATENCY,L_STRAIGHT,0.34"
+          ]
+        },
+        {
+          "angle_deg": 54.5,
+          "expected": "R_STRAIGHT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_STRAIGHT,0.37"
+          ]
+        },
+        {
+          "angle_deg": 72.0,
+          "expected": "R_STRAIGHT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_STRAIGHT,0.34"
+          ]
+        },
+        {
+          "angle_deg": 89.5,
+          "expected": "R_STRAIGHT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_STRAIGHT,0.42"
+          ]
+        },
+        {
+          "angle_deg": 18.5,
+          "expected": "R_FLARED",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_FLARED,0.41"
+          ]
+        },
+        {
+          "angle_deg": 36.0,
+          "expected": "R_FLARED",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_FLARED,0.35"
+          ]
+        },
+        {
+          "angle_deg": 53.5,
+          "expected": "R_FLARED",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_FLARED,0.31"
+          ]
+        },
+        {
+          "angle_deg": -17.5,
+          "expected": "R_HOOK",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_HOOK,0.33"
+          ]
+        },
+        {
+          "angle_deg": 0.0,
+          "expected": "R_HOOK",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_HOOK,0.33"
+          ]
+        },
+        {
+          "angle_deg": 17.5,
+          "expected": "R_HOOK",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_HOOK,0.37"
+          ]
+        },
+        {
+          "angle_deg": -53.5,
+          "expected": "R_HOOKERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_HOOKERCUT,0.30"
+          ]
+        },
+        {
+          "angle_deg": -36.0,
+          "expected": "R_HOOKERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_HOOKERCUT,0.30"
+          ]
+        },
+        {
+          "angle_deg": -18.5,
+          "expected": "R_HOOKERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_HOOKERCUT,0.35"
+          ]
+        },
+        {
+          "angle_deg": -89.5,
+          "expected": "R_UPPERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_UPPERCUT,0.30"
+          ]
+        },
+        {
+          "angle_deg": -72.0,
+          "expected": "R_UPPERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_UPPERCUT,0.39"
+          ]
+        },
+        {
+          "angle_deg": -54.5,
+          "expected": "R_UPPERCUT",
+          "passed": true,
+          "rows": [
+            "LATENCY,R_UPPERCUT,0.40"
+          ]
+        }
+      ],
+      "passed": 30.0,
+      "total": 30.0
+    },
+    "source": "game"
+  },
+  "isError": false
+}

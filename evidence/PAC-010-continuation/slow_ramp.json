@@ -1,0 +1,20 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"elapsed_ms\":1358.0,\"rows\":[\"LATENCY,R_HOOK,0.32\"],\"samples\":1.0,\"scope\":\"Slow continuous stick excursion rather than a quick flick\"},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "elapsed_ms": 1358.0,
+      "rows": [
+        "LATENCY,R_HOOK,0.32"
+      ],
+      "samples": 1.0,
+      "scope": "Slow continuous stick excursion rather than a quick flick"
+    },
+    "source": "game"
+  },
+  "isError": false
+}

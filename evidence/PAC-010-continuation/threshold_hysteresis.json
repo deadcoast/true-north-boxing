@@ -1,0 +1,44 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"activation\":[{\"activation\":0.599,\"samples\":0.0},{\"activation\":0.6,\"samples\":1.0},{\"activation\":0.601,\"samples\":1.0}],\"hysteresis_counts\":[1.0,1.0,1.0,1.0,2.0,2.0],\"hysteresis_expected\":[1.0,1.0,1.0,1.0,2.0,2.0]},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "activation": [
+        {
+          "activation": 0.599,
+          "samples": 0.0
+        },
+        {
+          "activation": 0.6,
+          "samples": 1.0
+        },
+        {
+          "activation": 0.601,
+          "samples": 1.0
+        }
+      ],
+      "hysteresis_counts": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0
+      ],
+      "hysteresis_expected": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0
+      ]
+    },
+    "source": "game"
+  },
+  "isError": false
+}

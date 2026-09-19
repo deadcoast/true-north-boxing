@@ -1,0 +1,41 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"source\":\"editor\",\"lines\":[{\"function\":\"GDScript::reload\",\"level\":\"warn\",\"line\":80,\"path\":\"res://main.gd\",\"source\":\"editor\",\"text\":\"GDScript::reload: The local variable \\\"name\\\" is shadowing an already-declared property in the base class \\\"Node\\\".\"},{\"function\":\"GDScript::reload\",\"level\":\"warn\",\"line\":90,\"path\":\"res://main.gd\",\"source\":\"editor\",\"text\":\"GDScript::reload: The local function parameter \\\"name\\\" is shadowing an already-declared property in the base class \\\"Node\\\".\"}],\"total_count\":2,\"returned_count\":2,\"offset\":0,\"limit\":8,\"has_more\":false,\"run_id\":\"\",\"is_running\":false,\"dropped_count\":0,\"stale_run_id\":false,\"next_cursor\":0,\"appended_total\":0}"
+    }
+  ],
+  "structuredContent": {
+    "source": "editor",
+    "lines": [
+      {
+        "function": "GDScript::reload",
+        "level": "warn",
+        "line": 80,
+        "path": "res://main.gd",
+        "source": "editor",
+        "text": "GDScript::reload: The local variable \"name\" is shadowing an already-declared property in the base class \"Node\"."
+      },
+      {
+        "function": "GDScript::reload",
+        "level": "warn",
+        "line": 90,
+        "path": "res://main.gd",
+        "source": "editor",
+        "text": "GDScript::reload: The local function parameter \"name\" is shadowing an already-declared property in the base class \"Node\"."
+      }
+    ],
+    "total_count": 2,
+    "returned_count": 2,
+    "offset": 0,
+    "limit": 8,
+    "has_more": false,
+    "run_id": "",
+    "is_running": false,
+    "dropped_count": 0,
+    "stale_run_id": false,
+    "next_cursor": 0,
+    "appended_total": 0
+  },
+  "isError": false
+}

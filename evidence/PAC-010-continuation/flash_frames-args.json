@@ -1,0 +1,7 @@
+{
+  "op": "game_eval",
+  "session_id": "latency-harness@e303",
+  "params": {
+    "code": "var tree = get_tree()\nvar scene = tree.current_scene\nEngine.max_fps = 120\nvar set_vector = func(v: Vector2):\n\tfor axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:\n\t\tvar event = InputEventJoypadMotion.new()\n\t\tevent.device = 0\n\t\tevent.axis = axis\n\t\tevent.axis_value = v.x if axis == JOY_AXIS_RIGHT_X else v.y\n\t\tInput.parse_input_event(event)\nvar wait_frames = func(count: int):\n\tfor frame in range(count):\n\t\tawait tree.process_frame\nset_vector.call(Vector2.ZERO)\nawait wait_frames.call(3)\nvar results = []\nfor fps in [30,60,120]:\n\tEngine.max_fps = fps\n\tawait wait_frames.call(3)\n\tset_vector.call(Vector2(0.95,0.0))\n\tvar frames = []\n\tfor frame in range(5):\n\t\tawait RenderingServer.frame_post_draw\n\t\tframes.append({\"visible\":scene.flash.visible,\"remaining\":scene.flash_frames,\"ticks_us\":Time.get_ticks_usec()})\n\tset_vector.call(Vector2.ZERO)\n\tawait wait_frames.call(3)\n\tresults.append({\"fps_cap\":fps,\"frames\":frames})\nEngine.max_fps = 120\nreturn {\"results\":results}\n"
+  }
+}

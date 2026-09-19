@@ -1,0 +1,35 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"scope\":\"One initial Tab keydown followed by OS-style key-repeat events\",\"states\":[{\"echo\":false,\"hits\":0.0,\"mode\":\"DISCRIM\",\"total\":0.0},{\"echo\":true,\"hits\":0.0,\"mode\":\"LATENCY\",\"total\":0.0},{\"echo\":true,\"hits\":0.0,\"mode\":\"DISCRIM\",\"total\":0.0}]},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "scope": "One initial Tab keydown followed by OS-style key-repeat events",
+      "states": [
+        {
+          "echo": false,
+          "hits": 0.0,
+          "mode": "DISCRIM",
+          "total": 0.0
+        },
+        {
+          "echo": true,
+          "hits": 0.0,
+          "mode": "LATENCY",
+          "total": 0.0
+        },
+        {
+          "echo": true,
+          "hits": 0.0,
+          "mode": "DISCRIM",
+          "total": 0.0
+        }
+      ]
+    },
+    "source": "game"
+  },
+  "isError": false
+}

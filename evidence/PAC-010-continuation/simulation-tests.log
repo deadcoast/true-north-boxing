@@ -1,0 +1,18 @@
+  [ OK ]  stamina 71 -> full-speed row
+  [ OK ]  stamina 41 -> 0.90 row
+  [ OK ]  stamina 16 -> 0.75 row
+  [ OK ]  stamina 5  -> danger row, comp regen 0
+  [ OK ]  composure pool = CHN*2
+  [ OK ]  wobble at <35% pool
+  [ OK ]  no wobble at >35% pool
+  [ OK ]  guard capacity BLK0 ~80 / BLK99 =130
+  [ OK ]  guard refills to 40 after OPEN elapses
+  [ OK ]  hit at low composure -> DROP
+  [ OK ]  counter mult applies x1.6
+  [ OK ]  ropes x1.25 / corner x1.5 zone mods
+  [ OK ]  2-gram flagged at 3rd occurrence
+  [ OK ]  defense bonus +25%/tier capped 85%
+  [ OK ]  flag tier decays after 8s quiet
+  [ OK ]  block chip = 15% of full damage
+------------------------------------------------------
+  14/14 gates green

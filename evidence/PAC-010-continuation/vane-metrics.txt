@@ -1,0 +1,12 @@
+SIM METRICS :: NP_13 s6 bands  vs cassidy_vane  (n=20/skill tier, seed-deterministic)
+==========================================================================
+  novice   counter-rate 0.062   gassed   0.0%   flags/fight 0.9   win   0.0%   ttfd n=2
+  median   counter-rate 0.123   gassed   0.0%   flags/fight 0.7   win   0.0%   ttfd n=10
+  skilled  counter-rate 0.186   gassed   0.0%   flags/fight 0.4   win  40.0%   ttfd n=17
+--------------------------------------------------------------------------
+  [WARN]  time-to-first-DROP p50, novice (s)               28.0   band 60-180
+  [WARN]  counter-rate spread (skilled/novice)            2.99x   band >=3.0
+  [ OK ]  gassed-state time, median tier (%)                0.0   band <=15.0
+  [WARN]  adaptation flags per fight, median tier           0.7   band 1.0-3.0
+==========================================================================
+  VERDICT :: FINDINGS - out-of-band values are tuning work, reported honestly

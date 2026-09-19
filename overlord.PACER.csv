@@ -32,15 +32,70 @@ OVR-030,DATA,data/feud_graph.v1.json,,"Launch feud graph, 12 edges with mutation
 OVR-031,FILE,docs/NP_12A_EP01_SCRIPT.md,,"Episode 1 full script: 6 scenes, PLAY direction, FR-CA flags, scene-gate checklist",,,OVR-014;OVR-024,OVR-032,OGM-019,PAC-045;PAC-035;PAC-036,NDL-004,#vault #narrative #vs,Added via NDL-004,2026-09-18T21:20:00Z
 OVR-032,FILE,docs/VS_SCOPE.md,,"Frozen vertical-slice scope: layer coverage, MV/stretch cut-line, cut authority",,,OVR-015;OVR-031,,OGM-019,PAC-004;PAC-036,,#production #vs,PAC-004 deliverable,2026-09-18T21:20:00Z
 OVR-033,FILE,docs/ENGINE_DECISION.md,,"Godot 4 decision record: fit, input path, risks, validation protocol",,,OVR-005,OVR-034,OGM-002,PAC-002A;PAC-002B,,#engine #production,PAC-002 split work,2026-09-18T21:20:00Z
-OVR-034,PROJECT,engine/latency_harness/project.godot,,"Godot 4 harness project: vsync off, agile event flushing",,,OVR-033,OVR-035,OGM-002,PAC-002B,,#engine #tooling,PAC-002 split work,2026-09-18T21:20:00Z
-OVR-035,MODULE,engine/latency_harness/main.gd,,"Harness logic: flick detect, sector map (NP_03 s2.1), latency distribution, discrimination mode, CSV export",,,OVR-034,,OGM-002,PAC-002B,,#engine #tooling,PAC-002 split work,2026-09-18T21:20:00Z
+OVR-034,PROJECT,engine/latency_harness/project.godot,,"Godot 4 harness project: vsync off, agile event flushing",,,OVR-033,OVR-035;OVR-047,OGM-002,PAC-002B,NDL-009,#engine #tooling,PAC-002 split work,2026-09-18T21:20:00Z
+OVR-035,MODULE,engine/latency_harness/main.gd,,"Harness logic: flick detect, sector map (NP_03 s2.1), latency distribution, discrimination mode, CSV export",,,OVR-034,OVR-047,OGM-002,PAC-002B,NDL-009,#engine #tooling,PAC-002 split work,2026-09-18T21:20:00Z
 OVR-036,DATA,data/combat_tuning.v1.json,,"Hot-reloadable combat tuning: full NP_03 value set, engine-consumable",,,OVR-005,OVR-042,OGM-002,PAC-005,,#combat #schema,PAC-002 split work,2026-09-18T18:52:00Z
 OVR-037,FILE,docs/NP_04B_BOSS_ROSTER_ARC23.md,,"Arc 2/3 boss roster: 13 authored bosses, Blind-dual rules, Commissioner commitment, 24/24 ledger",,,OVR-024;OVR-025,,OGM-020,PAC-046;PAC-047;PAC-038;PAC-039,NDL-005,#vault #opponent #content,Added via NDL-005,2026-09-18T21:20:00Z
 OVR-038,DATA,data/scrap_objectives.v1.json,,24 scrap micro-objectives with teaching tags and tier gating,,,OVR-004,,OGM-012,PAC-048;PAC-033,NDL-006,#overworld #schema,Added via NDL-006,2026-09-18T21:38:00Z
 OVR-039,TOOL,tools/pbn_compiler.py,,"PBN compiler core: grammar, safety rails, BT emission, selftest",,,OVR-026,OVR-040,OGM-003,PAC-011A;PAC-011B,,#opponent #pipeline #tooling,PAC-011A,2026-09-18T21:58:00Z
 OVR-040,DIR,pbn/,,24/24 PBN boss sources - the complete ship-target pattern corpus,,,OVR-039,OVR-041,OGM-003;OGM-016;OGM-020,PAC-011A;PAC-049,,#opponent #content,Corpus closed via NDL-007,2026-09-18T21:40:00Z
 OVR-041,DIR,data/patterns/,,"24 compiled behavior trees, build output of OVR-039",,,OVR-040,OVR-043,OGM-003,PAC-011A;PAC-011B,,#opponent #schema,PAC-011A,2026-09-18T21:40:00Z
-OVR-042,MODULE,sim/engine.py,,"Reference state machines: pools, guard, exchange, standing-eight, tracker",,,OVR-036,OVR-043;OVR-045,OGM-002,PAC-050,,#combat #reference,Added via NDL-008,2026-09-18T22:18:00Z
-OVR-043,MODULE,sim/agents.py,,PatternAgent (drives compiled patterns) + parameterized PlayerModel,,,OVR-042;OVR-041,OVR-044,OGM-002,PAC-050,,#combat #reference,Added via NDL-008,2026-09-18T22:18:00Z
-OVR-044,TOOL,tools/sim_run.py,,"NP_13 s6 metric harness over simulated fights, band verdicts",,,OVR-043,,OGM-002,PAC-050,,#combat #tooling,Added via NDL-008,2026-09-18T22:18:00Z
-OVR-045,TOOL,tools/sim_test.py,,14 unit gates locking the sim to NP_03 spec numbers,,,OVR-042,,OGM-002,PAC-050,,#combat #tooling,Added via NDL-008,2026-09-18T22:18:00Z
+OVR-042,MODULE,sim/engine.py,,"Reference state machines: pools, guard, exchange, standing-eight, tracker",,,OVR-036,OVR-043;OVR-045;OVR-047,OGM-002,PAC-050,NDL-009,#combat #reference,Added via NDL-008,2026-09-18T22:18:00Z
+OVR-043,MODULE,sim/agents.py,,PatternAgent (drives compiled patterns) + parameterized PlayerModel,,,OVR-042;OVR-041,OVR-044;OVR-047,OGM-002,PAC-050,NDL-009,#combat #reference,Added via NDL-008,2026-09-18T22:18:00Z
+OVR-044,TOOL,tools/sim_run.py,,"NP_13 s6 metric harness over simulated fights, band verdicts",,,OVR-043,OVR-047,OGM-002,PAC-050,NDL-009,#combat #tooling,Added via NDL-008,2026-09-18T22:18:00Z
+OVR-045,TOOL,tools/sim_test.py,,14 unit gates locking the sim to NP_03 spec numbers,,,OVR-042,OVR-047,OGM-002,PAC-050,NDL-009,#combat #tooling,Added via NDL-008,2026-09-18T22:18:00Z
+OVR-046,FILE,tools/godot_mcp.py,,Local MCP client used for live Godot playtesting.,,,,,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:08:03.199170Z
+OVR-047,FILE,evidence/PAC-010-playtest-continuation.md,,Continued live Godot test results and simulation findings.,,,OVR-034;OVR-035;OVR-042;OVR-043;OVR-044;OVR-045;OVR-048;OVR-049;OVR-050;OVR-051;OVR-052;OVR-053;OVR-054;OVR-055;OVR-056;OVR-057;OVR-058;OVR-059;OVR-060;OVR-061;OVR-062;OVR-063;OVR-064;OVR-065;OVR-066;OVR-067;OVR-068;OVR-069;OVR-070;OVR-071;OVR-072;OVR-073;OVR-074;OVR-075;OVR-076;OVR-077;OVR-078;OVR-079;OVR-080;OVR-081;OVR-082;OVR-083;OVR-084;OVR-085;OVR-086;OVR-087;OVR-088;OVR-089;OVR-090;OVR-091;OVR-092;OVR-093;OVR-094;OVR-095;OVR-096;OVR-097;OVR-098;OVR-099;OVR-100,,,PAC-010,NDL-009,#engine #tooling,"30/30 sector edge samples; 600/600 soak inputs; axis ordering, subframe loss, held-Tab reset and slow-excursion findings. See raw artifacts and separate reference simulation findings.",2026-09-19T00:17:41.824734Z
+OVR-048,FILE,evidence/PAC-010-continuation/compile-error-log.json,,Continued PAC-010 testing: compile-error-log.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-049,FILE,evidence/PAC-010-continuation/echo-data-loss-args.json,,Continued PAC-010 testing: echo-data-loss-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-050,FILE,evidence/PAC-010-continuation/echo-data-loss.json,,Continued PAC-010 testing: echo-data-loss.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-051,FILE,evidence/PAC-010-continuation/echo-repro-launch.json,,Continued PAC-010 testing: echo-repro-launch.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-052,FILE,evidence/PAC-010-continuation/export-verification.json,,Continued PAC-010 testing: export-verification.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-053,FILE,evidence/PAC-010-continuation/final-editor-state.json,,Continued PAC-010 testing: final-editor-state.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-054,FILE,evidence/PAC-010-continuation/final-stop.json,,Continued PAC-010 testing: final-stop.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-055,FILE,evidence/PAC-010-continuation/flash_frames-args.json,,Continued PAC-010 testing: flash_frames-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-056,FILE,evidence/PAC-010-continuation/flash_frames.json,,Continued PAC-010 testing: flash_frames.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-057,FILE,evidence/PAC-010-continuation/key_repeat-args.json,,Continued PAC-010 testing: key_repeat-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-058,FILE,evidence/PAC-010-continuation/key_repeat.json,,Continued PAC-010 testing: key_repeat.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-059,FILE,evidence/PAC-010-continuation/launch.json,,Continued PAC-010 testing: launch.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-060,FILE,evidence/PAC-010-continuation/matrix-console.jsonl,,Continued PAC-010 testing: matrix-console.jsonl,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-061,FILE,evidence/PAC-010-continuation/matrix-stop.json,,Continued PAC-010 testing: matrix-stop.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-062,FILE,evidence/PAC-010-continuation/pacer-before.log,,Continued PAC-010 testing: pacer-before.log,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-063,FILE,evidence/PAC-010-continuation/prior-latency-log.csv,,Continued PAC-010 testing: prior-latency-log.csv,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-064,FILE,evidence/PAC-010-continuation/restart-run.json,,Continued PAC-010 testing: restart-run.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-065,FILE,evidence/PAC-010-continuation/restart-stop.json,,Continued PAC-010 testing: restart-stop.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-066,FILE,evidence/PAC-010-continuation/sector_edges-args.json,,Continued PAC-010 testing: sector_edges-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-067,FILE,evidence/PAC-010-continuation/sector_edges-compile-failure-args.json,,Continued PAC-010 testing: sector_edges-compile-failure-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-068,FILE,evidence/PAC-010-continuation/sector_edges-compile-failure.json,,Continued PAC-010 testing: sector_edges-compile-failure.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-069,FILE,evidence/PAC-010-continuation/sector_edges-paused-game.json,,Continued PAC-010 testing: sector_edges-paused-game.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-070,FILE,evidence/PAC-010-continuation/sector_edges.json,,Continued PAC-010 testing: sector_edges.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-071,FILE,evidence/PAC-010-continuation/simulation-tests.log,,Continued PAC-010 testing: simulation-tests.log,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-072,FILE,evidence/PAC-010-continuation/slow_ramp-args.json,,Continued PAC-010 testing: slow_ramp-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-073,FILE,evidence/PAC-010-continuation/slow_ramp.json,,Continued PAC-010 testing: slow_ramp.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-074,FILE,evidence/PAC-010-continuation/soak-1.json,,Continued PAC-010 testing: soak-1.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-075,FILE,evidence/PAC-010-continuation/soak-10.json,,Continued PAC-010 testing: soak-10.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-076,FILE,evidence/PAC-010-continuation/soak-2.json,,Continued PAC-010 testing: soak-2.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-077,FILE,evidence/PAC-010-continuation/soak-3.json,,Continued PAC-010 testing: soak-3.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-078,FILE,evidence/PAC-010-continuation/soak-4.json,,Continued PAC-010 testing: soak-4.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-079,FILE,evidence/PAC-010-continuation/soak-5.json,,Continued PAC-010 testing: soak-5.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-080,FILE,evidence/PAC-010-continuation/soak-6.json,,Continued PAC-010 testing: soak-6.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-081,FILE,evidence/PAC-010-continuation/soak-7.json,,Continued PAC-010 testing: soak-7.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-082,FILE,evidence/PAC-010-continuation/soak-8.json,,Continued PAC-010 testing: soak-8.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-083,FILE,evidence/PAC-010-continuation/soak-9.json,,Continued PAC-010 testing: soak-9.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-084,FILE,evidence/PAC-010-continuation/soak-args.json,,Continued PAC-010 testing: soak-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-085,FILE,evidence/PAC-010-continuation/soak-final-state.json,,Continued PAC-010 testing: soak-final-state.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-086,FILE,evidence/PAC-010-continuation/soak-latency-log.csv,,Continued PAC-010 testing: soak-latency-log.csv,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-087,FILE,evidence/PAC-010-continuation/soak-launch.json,,Continued PAC-010 testing: soak-launch.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-088,FILE,evidence/PAC-010-continuation/soak-save.json,,Continued PAC-010 testing: soak-save.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-089,FILE,evidence/PAC-010-continuation/soak-screen-1.png,,Continued PAC-010 testing: soak-screen-1.png,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-090,FILE,evidence/PAC-010-continuation/soak-screen.json,,Continued PAC-010 testing: soak-screen.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-091,FILE,evidence/PAC-010-continuation/split_axis_delivery-args.json,,Continued PAC-010 testing: split_axis_delivery-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-092,FILE,evidence/PAC-010-continuation/split_axis_delivery.json,,Continued PAC-010 testing: split_axis_delivery.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-093,FILE,evidence/PAC-010-continuation/subframe_pulse-args.json,,Continued PAC-010 testing: subframe_pulse-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-094,FILE,evidence/PAC-010-continuation/subframe_pulse.json,,Continued PAC-010 testing: subframe_pulse.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-095,FILE,evidence/PAC-010-continuation/summary.json,,Continued PAC-010 testing: summary.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-096,FILE,evidence/PAC-010-continuation/threshold_hysteresis-args.json,,Continued PAC-010 testing: threshold_hysteresis-args.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-097,FILE,evidence/PAC-010-continuation/threshold_hysteresis.json,,Continued PAC-010 testing: threshold_hysteresis.json,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-098,FILE,evidence/PAC-010-continuation/vane-metrics-120.txt,,Continued PAC-010 testing: vane-metrics-120.txt,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-099,FILE,evidence/PAC-010-continuation/vane-metrics.txt,,Continued PAC-010 testing: vane-metrics.txt,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z
+OVR-100,FILE,evidence/PAC-010-continuation/vaughn-metrics-120.txt,,Continued PAC-010 testing: vaughn-metrics-120.txt,,,,OVR-047,,PAC-010,NDL-009,#engine #tooling,,2026-09-19T00:17:41.824734Z

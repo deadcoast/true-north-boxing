@@ -1,0 +1,7 @@
+{
+  "op": "game_eval",
+  "session_id": "latency-harness@e303",
+  "params": {
+    "code": "var tree = get_tree()\nvar scene = tree.current_scene\nEngine.max_fps = 120\nvar set_vector = func(v: Vector2):\n    for axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:\n        var event = InputEventJoypadMotion.new()\n        event.device = 0\n        event.axis = axis\n        event.axis_value = v.x if axis == JOY_AXIS_RIGHT_X else v.y\n        Input.parse_input_event(event)\nvar wait_frames = func(count: int):\n    for frame in range(count):\n        await tree.process_frame\nset_vector.call(Vector2.ZERO)\nawait wait_frames.call(3)\nvar angles = [-108.0,-144.0,180.0,144.0,108.0,72.0,36.0,0.0,-36.0,-72.0]\nvar names = [\"L_UPPERCUT\",\"L_HOOKERCUT\",\"L_HOOK\",\"L_FLARED\",\"L_STRAIGHT\",\"R_STRAIGHT\",\"R_FLARED\",\"R_HOOK\",\"R_HOOKERCUT\",\"R_UPPERCUT\"]\nvar results = []\nvar passed = 0\nfor index in range(10):\n    for offset in [-17.5,0.0,17.5]:\n        var before = scene.log_rows.size()\n        var angle = deg_to_rad(angles[index] + offset)\n        set_vector.call(Vector2(cos(angle), -sin(angle)) * 0.95)\n        await wait_frames.call(3)\n        set_vector.call(Vector2.ZERO)\n        await wait_frames.call(3)\n        var rows = scene.log_rows.slice(before)\n        var ok = rows.size() == 1 and rows[0].split(\",\")[1] == names[index]\n        passed += int(ok)\n        results.append({\"angle_deg\":angles[index]+offset,\"expected\":names[index],\"rows\":rows,\"passed\":ok})\nreturn {\"passed\":passed,\"total\":30,\"cases\":results}\n"
+  }
+}
