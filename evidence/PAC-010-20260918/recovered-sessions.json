@@ -1,0 +1,32 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"sessions\":[{\"session_id\":\"latency-harness@e303\",\"name\":\"latency_harness\",\"godot_version\":\"4.7.2-stable (official)\",\"project_path\":\"C:/Users/ryanf/github/_games/true-north-boxing/engine/latency_harness/\",\"plugin_version\":\"3.2.1\",\"server_version\":\"3.2.1\",\"protocol_version\":1,\"current_scene\":\"res://main.tscn\",\"play_state\":\"stopped\",\"readiness\":\"ready\",\"editor_pid\":28324,\"server_launch_mode\":\"uvx\",\"connected_at\":\"2026-09-18T22:06:57.265577+00:00\",\"last_seen\":\"2026-09-18T22:07:17.171326+00:00\",\"is_active\":true}],\"count\":1,\"exclude_domains\":[]}"
+    }
+  ],
+  "structuredContent": {
+    "sessions": [
+      {
+        "session_id": "latency-harness@e303",
+        "name": "latency_harness",
+        "godot_version": "4.7.2-stable (official)",
+        "project_path": "C:/Users/ryanf/github/_games/true-north-boxing/engine/latency_harness/",
+        "plugin_version": "3.2.1",
+        "server_version": "3.2.1",
+        "protocol_version": 1,
+        "current_scene": "res://main.tscn",
+        "play_state": "stopped",
+        "readiness": "ready",
+        "editor_pid": 28324,
+        "server_launch_mode": "uvx",
+        "connected_at": "2026-09-18T22:06:57.265577+00:00",
+        "last_seen": "2026-09-18T22:07:17.171326+00:00",
+        "is_active": true
+      }
+    ],
+    "count": 1,
+    "exclude_domains": []
+  },
+  "isError": false
+}

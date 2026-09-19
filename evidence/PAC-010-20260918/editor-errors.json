@@ -1,0 +1,193 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"source\":\"editor\",\"lines\":[{\"details\":{\"children\":[{\"label\":\"<GDScript Error>\",\"line\":80,\"path\":\"res://main.gd\",\"text\":\"SHADOWED_VARIABLE_BASE_CLASS\"},{\"label\":\"<GDScript Source>\",\"line\":80,\"path\":\"res://main.gd\",\"text\":\"main.gd:80 @ GDScript::reload()\"}],\"debugger_tab\":\"Errors\",\"error_type_name\":\"warning\",\"frames\":[],\"message\":\"GDScript::reload: The local variable \\\"name\\\" is shadowing an already-declared property in the base class \\\"Node\\\".\",\"resolved\":{\"function\":\"GDScript::reload\",\"line\":80,\"path\":\"res://main.gd\"},\"source\":{\"function\":\"GDScript::reload\",\"line\":80,\"path\":\"res://main.gd\"},\"time\":\"0:00:00:806\"},\"function\":\"GDScript::reload\",\"level\":\"warn\",\"line\":80,\"path\":\"res://main.gd\",\"source\":\"editor\",\"text\":\"GDScript::reload: The local variable \\\"name\\\" is shadowing an already-declared property in the base class \\\"Node\\\".\"},{\"details\":{\"children\":[{\"label\":\"<GDScript Error>\",\"line\":90,\"path\":\"res://main.gd\",\"text\":\"SHADOWED_VARIABLE_BASE_CLASS\"},{\"label\":\"<GDScript Source>\",\"line\":90,\"path\":\"res://main.gd\",\"text\":\"main.gd:90 @ GDScript::reload()\"}],\"debugger_tab\":\"Errors\",\"error_type_name\":\"warning\",\"frames\":[],\"message\":\"GDScript::reload: The local function parameter \\\"name\\\" is shadowing an already-declared property in the base class \\\"Node\\\".\",\"resolved\":{\"function\":\"GDScript::reload\",\"line\":90,\"path\":\"res://main.gd\"},\"source\":{\"function\":\"GDScript::reload\",\"line\":90,\"path\":\"res://main.gd\"},\"time\":\"0:00:00:806\"},\"function\":\"GDScript::reload\",\"level\":\"warn\",\"line\":90,\"path\":\"res://main.gd\",\"source\":\"editor\",\"text\":\"GDScript::reload: The local function parameter \\\"name\\\" is shadowing an already-declared property in the base class \\\"Node\\\".\"},{\"details\":{\"children\":[{\"label\":\"<C++ Source>\",\"line\":0,\"path\":\"\",\"text\":\"scene/main/node.h:559 @ get_tree()\"},{\"label\":\"<Stack Trace>\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\",\"text\":\"-9223372004508301805.gd:35 @ _mcp_run_3()\"}],\"debugger_tab\":\"Errors\",\"error_type_name\":\"error\",\"frames\":[{\"function\":\"_mcp_run_3\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\"}],\"message\":\"-9223372004508301805.gd:35 @ _mcp_run_3(): Parameter \\\"data.tree\\\" is null.\",\"resolved\":{\"function\":\"-9223372004508301805.gd:35 @ _mcp_run_3()\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\"},\"source\":{\"function\":\"-9223372004508301805.gd:35 @ _mcp_run_3()\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\"},\"time\":\"0:02:18:271\"},\"function\":\"-9223372004508301805.gd:35 @ _mcp_run_3()\",\"level\":\"error\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\",\"source\":\"editor\",\"text\":\"-9223372004508301805.gd:35 @ _mcp_run_3(): Parameter \\\"data.tree\\\" is null.\"},{\"details\":{\"children\":[{\"label\":\"<GDScript Source>\",\"line\":0,\"path\":\"\",\"text\":\"gdscript://-9223372004508301805.gd:35 @ _mcp_run_3()\"},{\"label\":\"<Stack Trace>\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\",\"text\":\"-9223372004508301805.gd:35 @ _mcp_run_3()\"}],\"debugger_tab\":\"Errors\",\"error_type_name\":\"error\",\"frames\":[{\"function\":\"_mcp_run_3\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\"}],\"message\":\"-9223372004508301805.gd:35 @ _mcp_run_3(): Invalid access to property or key 'process_frame' on a base object of type 'null instance'.\",\"resolved\":{\"function\":\"-9223372004508301805.gd:35 @ _mcp_run_3()\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\"},\"source\":{\"function\":\"-9223372004508301805.gd:35 @ _mcp_run_3()\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\"},\"time\":\"0:02:18:271\"},\"function\":\"-9223372004508301805.gd:35 @ _mcp_run_3()\",\"level\":\"error\",\"line\":35,\"path\":\"gdscript://-9223372004508301805.gd\",\"source\":\"editor\",\"text\":\"-9223372004508301805.gd:35 @ _mcp_run_3(): Invalid access to property or key 'process_frame' on a base object of type 'null instance'.\"}],\"total_count\":4,\"returned_count\":4,\"offset\":0,\"limit\":15,\"has_more\":false,\"run_id\":\"\",\"is_running\":false,\"dropped_count\":0,\"stale_run_id\":false,\"next_cursor\":0,\"appended_total\":0}"
+    }
+  ],
+  "structuredContent": {
+    "source": "editor",
+    "lines": [
+      {
+        "details": {
+          "children": [
+            {
+              "label": "<GDScript Error>",
+              "line": 80,
+              "path": "res://main.gd",
+              "text": "SHADOWED_VARIABLE_BASE_CLASS"
+            },
+            {
+              "label": "<GDScript Source>",
+              "line": 80,
+              "path": "res://main.gd",
+              "text": "main.gd:80 @ GDScript::reload()"
+            }
+          ],
+          "debugger_tab": "Errors",
+          "error_type_name": "warning",
+          "frames": [],
+          "message": "GDScript::reload: The local variable \"name\" is shadowing an already-declared property in the base class \"Node\".",
+          "resolved": {
+            "function": "GDScript::reload",
+            "line": 80,
+            "path": "res://main.gd"
+          },
+          "source": {
+            "function": "GDScript::reload",
+            "line": 80,
+            "path": "res://main.gd"
+          },
+          "time": "0:00:00:806"
+        },
+        "function": "GDScript::reload",
+        "level": "warn",
+        "line": 80,
+        "path": "res://main.gd",
+        "source": "editor",
+        "text": "GDScript::reload: The local variable \"name\" is shadowing an already-declared property in the base class \"Node\"."
+      },
+      {
+        "details": {
+          "children": [
+            {
+              "label": "<GDScript Error>",
+              "line": 90,
+              "path": "res://main.gd",
+              "text": "SHADOWED_VARIABLE_BASE_CLASS"
+            },
+            {
+              "label": "<GDScript Source>",
+              "line": 90,
+              "path": "res://main.gd",
+              "text": "main.gd:90 @ GDScript::reload()"
+            }
+          ],
+          "debugger_tab": "Errors",
+          "error_type_name": "warning",
+          "frames": [],
+          "message": "GDScript::reload: The local function parameter \"name\" is shadowing an already-declared property in the base class \"Node\".",
+          "resolved": {
+            "function": "GDScript::reload",
+            "line": 90,
+            "path": "res://main.gd"
+          },
+          "source": {
+            "function": "GDScript::reload",
+            "line": 90,
+            "path": "res://main.gd"
+          },
+          "time": "0:00:00:806"
+        },
+        "function": "GDScript::reload",
+        "level": "warn",
+        "line": 90,
+        "path": "res://main.gd",
+        "source": "editor",
+        "text": "GDScript::reload: The local function parameter \"name\" is shadowing an already-declared property in the base class \"Node\"."
+      },
+      {
+        "details": {
+          "children": [
+            {
+              "label": "<C++ Source>",
+              "line": 0,
+              "path": "",
+              "text": "scene/main/node.h:559 @ get_tree()"
+            },
+            {
+              "label": "<Stack Trace>",
+              "line": 35,
+              "path": "gdscript://-9223372004508301805.gd",
+              "text": "-9223372004508301805.gd:35 @ _mcp_run_3()"
+            }
+          ],
+          "debugger_tab": "Errors",
+          "error_type_name": "error",
+          "frames": [
+            {
+              "function": "_mcp_run_3",
+              "line": 35,
+              "path": "gdscript://-9223372004508301805.gd"
+            }
+          ],
+          "message": "-9223372004508301805.gd:35 @ _mcp_run_3(): Parameter \"data.tree\" is null.",
+          "resolved": {
+            "function": "-9223372004508301805.gd:35 @ _mcp_run_3()",
+            "line": 35,
+            "path": "gdscript://-9223372004508301805.gd"
+          },
+          "source": {
+            "function": "-9223372004508301805.gd:35 @ _mcp_run_3()",
+            "line": 35,
+            "path": "gdscript://-9223372004508301805.gd"
+          },
+          "time": "0:02:18:271"
+        },
+        "function": "-9223372004508301805.gd:35 @ _mcp_run_3()",
+        "level": "error",
+        "line": 35,
+        "path": "gdscript://-9223372004508301805.gd",
+        "source": "editor",
+        "text": "-9223372004508301805.gd:35 @ _mcp_run_3(): Parameter \"data.tree\" is null."
+      },
+      {
+        "details": {
+          "children": [
+            {
+              "label": "<GDScript Source>",
+              "line": 0,
+              "path": "",
+              "text": "gdscript://-9223372004508301805.gd:35 @ _mcp_run_3()"
+            },
+            {
+              "label": "<Stack Trace>",
+              "line": 35,
+              "path": "gdscript://-9223372004508301805.gd",
+              "text": "-9223372004508301805.gd:35 @ _mcp_run_3()"
+            }
+          ],
+          "debugger_tab": "Errors",
+          "error_type_name": "error",
+          "frames": [
+            {
+              "function": "_mcp_run_3",
+              "line": 35,
+              "path": "gdscript://-9223372004508301805.gd"
+            }
+          ],
+          "message": "-9223372004508301805.gd:35 @ _mcp_run_3(): Invalid access to property or key 'process_frame' on a base object of type 'null instance'.",
+          "resolved": {
+            "function": "-9223372004508301805.gd:35 @ _mcp_run_3()",
+            "line": 35,
+            "path": "gdscript://-9223372004508301805.gd"
+          },
+          "source": {
+            "function": "-9223372004508301805.gd:35 @ _mcp_run_3()",
+            "line": 35,
+            "path": "gdscript://-9223372004508301805.gd"
+          },
+          "time": "0:02:18:271"
+        },
+        "function": "-9223372004508301805.gd:35 @ _mcp_run_3()",
+        "level": "error",
+        "line": 35,
+        "path": "gdscript://-9223372004508301805.gd",
+        "source": "editor",
+        "text": "-9223372004508301805.gd:35 @ _mcp_run_3(): Invalid access to property or key 'process_frame' on a base object of type 'null instance'."
+      }
+    ],
+    "total_count": 4,
+    "returned_count": 4,
+    "offset": 0,
+    "limit": 15,
+    "has_more": false,
+    "run_id": "",
+    "is_running": false,
+    "dropped_count": 0,
+    "stale_run_id": false,
+    "next_cursor": 0,
+    "appended_total": 0
+  },
+  "isError": false
+}

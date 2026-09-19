@@ -1,0 +1,6 @@
+{
+  "op": "game_eval",
+  "params": {
+    "code": "var scene = get_tree().current_scene\nEngine.max_fps = 120\nvar checkpoints = []\nfor value in [0.0, 0.59, 0.95, 0.95, 0.0, 0.95, 0.0]:\n\tvar event = InputEventJoypadMotion.new()\n\tevent.device = 0\n\tevent.axis = JOY_AXIS_RIGHT_X\n\tevent.axis_value = value\n\tInput.parse_input_event(event)\n\tfor frame in range(10):\n\t\tawait get_tree().process_frame\n\tcheckpoints.append(scene.samples.size())\nreturn {\"sample_counts\":checkpoints,\"expected\":[0,0,1,1,1,2,2],\"passed\":checkpoints==[0,0,1,1,1,2,2],\"scope\":\"MCP-injected input threshold, hold suppression and neutral rearming\"}\n"
+  }
+}

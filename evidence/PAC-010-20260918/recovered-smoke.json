@@ -1,0 +1,34 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"expected\":[0.0,0.0,1.0,1.0,1.0,2.0,2.0],\"passed\":true,\"sample_counts\":[0.0,0.0,1.0,1.0,1.0,2.0,2.0],\"scope\":\"MCP-injected input threshold, hold suppression and neutral rearming\"},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "expected": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0
+      ],
+      "passed": true,
+      "sample_counts": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        2.0,
+        2.0
+      ],
+      "scope": "MCP-injected input threshold, hold suppression and neutral rearming"
+    },
+    "source": "game"
+  },
+  "isError": false
+}

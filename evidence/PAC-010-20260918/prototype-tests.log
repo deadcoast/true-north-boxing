@@ -1,0 +1,7 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+INPUT LAB: right stick or QWE / A D / ZXC. Return stick to neutral before each flick. F5 reloads tuning.
+{"animation_trigger_us":100196,"device":8,"direction":"UP_RIGHT","event_delivered_us":100146,"physical_to_visible_latency_ms":null,"software_event_to_trigger_us":50}
+{"animation_trigger_us":150315,"device":9,"direction":"LEFT","event_delivered_us":150274,"physical_to_visible_latency_ms":null,"software_event_to_trigger_us":41}
+{"animation_trigger_us":183527,"device":-1,"direction":"UP","event_delivered_us":183492,"physical_to_visible_latency_ms":null,"software_event_to_trigger_us":35}
+{"checks":836,"failures":[],"hardware_latency_measured":false,"scope":"Synthetic vectors and headless Godot event-to-animation wiring only","suite":"northpaw_input","synthetic_direction_samples":800}

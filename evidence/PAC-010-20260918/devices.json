@@ -1,0 +1,67 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"fps\":3622.0,\"frames\":149264.0,\"pads\":[{\"axes\":[0.0,0.0,0.0,0.0,0.0,0.0],\"device\":0.0,\"name\":\"XInput Controller\"},{\"axes\":[0.0,0.0,0.0,0.0,0.0,0.0],\"device\":1.0,\"name\":\"Controller (Razer Wolverine V3 Pro for Xbox)\"},{\"axes\":[0.0,0.0,0.0,0.0,0.0,0.0],\"device\":2.0,\"name\":\"Controller (Razer Wolverine V3 Pro for Xbox)\"},{\"axes\":[0.0,0.0,0.0,0.0,0.0,0.0],\"device\":3.0,\"name\":\"Keychron K2 HE\"}],\"samples\":0.0},\"source\":\"game\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "fps": 3622.0,
+      "frames": 149264.0,
+      "pads": [
+        {
+          "axes": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "device": 0.0,
+          "name": "XInput Controller"
+        },
+        {
+          "axes": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "device": 1.0,
+          "name": "Controller (Razer Wolverine V3 Pro for Xbox)"
+        },
+        {
+          "axes": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "device": 2.0,
+          "name": "Controller (Razer Wolverine V3 Pro for Xbox)"
+        },
+        {
+          "axes": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "device": 3.0,
+          "name": "Keychron K2 HE"
+        }
+      ],
+      "samples": 0.0
+    },
+    "source": "game"
+  },
+  "isError": false
+}

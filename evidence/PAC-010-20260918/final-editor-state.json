@@ -1,0 +1,32 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"current_scene\":\"res://main.tscn\",\"game_capture_ready\":false,\"game_status\":{\"active\":false,\"editor_log_cursor\":0,\"elapsed_msec\":0,\"helper_expected\":true,\"helper_live\":false,\"ready\":false,\"ready_wait_msec\":20000,\"run_started_msec\":48995,\"run_token\":1,\"session_active\":false,\"status\":\"stopped\"},\"godot_version\":\"4.7.2-stable (official)\",\"helper_live\":false,\"is_playing\":false,\"project_name\":\"Northpaw Latency Harness\",\"readiness\":\"ready\",\"session_active\":false}"
+    }
+  ],
+  "structuredContent": {
+    "current_scene": "res://main.tscn",
+    "game_capture_ready": false,
+    "game_status": {
+      "active": false,
+      "editor_log_cursor": 0,
+      "elapsed_msec": 0,
+      "helper_expected": true,
+      "helper_live": false,
+      "ready": false,
+      "ready_wait_msec": 20000,
+      "run_started_msec": 48995,
+      "run_token": 1,
+      "session_active": false,
+      "status": "stopped"
+    },
+    "godot_version": "4.7.2-stable (official)",
+    "helper_live": false,
+    "is_playing": false,
+    "project_name": "Northpaw Latency Harness",
+    "readiness": "ready",
+    "session_active": false
+  },
+  "isError": false
+}

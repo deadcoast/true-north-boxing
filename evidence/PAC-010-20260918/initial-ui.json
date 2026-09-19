@@ -1,0 +1,73 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"elements\":[{\"disabled\":false,\"global_rect\":{\"position\":{\"x\":24.0,\"y\":24.0},\"size\":{\"x\":878.0,\"y\":307.0}},\"name\":\"@Label@2\",\"path\":\"/Main/@Label@2\",\"rect\":{\"position\":{\"x\":24.0,\"y\":24.0},\"size\":{\"x\":878.0,\"y\":307.0}},\"text\":\"NORTHPAW LATENCY HARNESS :: PAC-002B      mode: LATENCY   [TAB switch, ESC quit+save]\\npad: connected\\n\\nsoftware-path latency  (poll-detect -> apply -> present request)\\n  samples    0   p50   0.00 ms   p95   0.00 ms   p99   0.00 ms\\n  PASS bar: p95 <= 50 ms   ->  need >=30 samples\\n\\ndiscrimination  0/0  (0.0%)   PASS bar: >=99% over 200\\n\\nwhite square = punch-start flash (film pad+screen at 240fps for full-chain)\",\"type\":\"Label\",\"visible\":true},{\"disabled\":false,\"global_rect\":{\"position\":{\"x\":24.0,\"y\":320.0},\"size\":{\"x\":1.0,\"y\":67.0}},\"name\":\"@Label@3\",\"path\":\"/Main/@Label@3\",\"rect\":{\"position\":{\"x\":24.0,\"y\":320.0},\"size\":{\"x\":1.0,\"y\":67.0}},\"text\":\"\",\"type\":\"Label\",\"visible\":true}],\"op\":\"get_ui_elements\",\"root\":\"/Main\",\"source\":\"game\",\"total_count\":2.0}"
+    }
+  ],
+  "structuredContent": {
+    "elements": [
+      {
+        "disabled": false,
+        "global_rect": {
+          "position": {
+            "x": 24.0,
+            "y": 24.0
+          },
+          "size": {
+            "x": 878.0,
+            "y": 307.0
+          }
+        },
+        "name": "@Label@2",
+        "path": "/Main/@Label@2",
+        "rect": {
+          "position": {
+            "x": 24.0,
+            "y": 24.0
+          },
+          "size": {
+            "x": 878.0,
+            "y": 307.0
+          }
+        },
+        "text": "NORTHPAW LATENCY HARNESS :: PAC-002B      mode: LATENCY   [TAB switch, ESC quit+save]\npad: connected\n\nsoftware-path latency  (poll-detect -> apply -> present request)\n  samples    0   p50   0.00 ms   p95   0.00 ms   p99   0.00 ms\n  PASS bar: p95 <= 50 ms   ->  need >=30 samples\n\ndiscrimination  0/0  (0.0%)   PASS bar: >=99% over 200\n\nwhite square = punch-start flash (film pad+screen at 240fps for full-chain)",
+        "type": "Label",
+        "visible": true
+      },
+      {
+        "disabled": false,
+        "global_rect": {
+          "position": {
+            "x": 24.0,
+            "y": 320.0
+          },
+          "size": {
+            "x": 1.0,
+            "y": 67.0
+          }
+        },
+        "name": "@Label@3",
+        "path": "/Main/@Label@3",
+        "rect": {
+          "position": {
+            "x": 24.0,
+            "y": 320.0
+          },
+          "size": {
+            "x": 1.0,
+            "y": 67.0
+          }
+        },
+        "text": "",
+        "type": "Label",
+        "visible": true
+      }
+    ],
+    "op": "get_ui_elements",
+    "root": "/Main",
+    "source": "game",
+    "total_count": 2.0
+  },
+  "isError": false
+}

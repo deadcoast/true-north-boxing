@@ -1,0 +1,136 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 616.64 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+MCP | plugin loaded
+MCP | connected to server
+MCP | adopted external server owner_pid=0 (live v3.2.1, WS 9500, plugin v3.2.1)
+WARNING: MCP | JSON parse error on line 0: Unexpected character in C:\Users\ryanf\AppData\Roaming/Zed/settings.json
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _read_file_text (res://addons/godot_ai/clients/_json_strategy.gd:457)
+       [1] _read_or_init (res://addons/godot_ai/clients/_json_strategy.gd:470)
+       [2] check_status_details (res://addons/godot_ai/clients/_json_strategy.gd:141)
+       [3] _dispatch_check_status_with_cli_path_details (res://addons/godot_ai/client_configurator.gd:779)
+       [4] check_status_details_for_url_with_cli_path (res://addons/godot_ai/client_configurator.gd:551)
+       [5] _run_client_status_refresh_worker (res://addons/godot_ai/mcp_dock.gd:3248)
+MCP | [event] scene_changed -> res://main.tscn
+MCP | [recv] get_editor_state({})
+MCP | [send] get_editor_state -> ok
+MCP | [recv] run_project({"autosave":false,"mode":"main"})
+MCP | [debug] game capture pending run token 1 (run r38919-1)
+MCP | [defer] run_project (request 34a294ca5b76454fbf09ee90898f5267)
+MCP | [event] play_state_changed -> playing
+MCP | [debug] <- mcp:hello from game_helper (run r38919-1)
+MCP | [recv] game_command({"op":"get_ui_elements","params":{"include_disabled":true,"include_hidden":false,"max_depth":10.0}})
+MCP | [debug] -> mcp:game_command get_ui_elements (649e1decce044333aefd4dcf1aa5cebd)
+MCP | [defer] game_command (request 649e1decce044333aefd4dcf1aa5cebd)
+MCP | [debug] <- mcp:game_command_response (649e1decce044333aefd4dcf1aa5cebd)
+MCP | [recv] take_screenshot({"max_resolution":640.0,"source":"game"})
+MCP | [debug] -> mcp:take_screenshot (76cb69c40114404aaf9b68722441313c)
+MCP | [defer] take_screenshot (request 76cb69c40114404aaf9b68722441313c)
+MCP | [debug] <- mcp:screenshot_response (76cb69c40114404aaf9b68722441313c)
+MCP | [recv] game_eval({"code":"var pads = []\nfor device in Input.get_connected_joypads():\n\tvar axes = []\n\tfor axis in range(6):\n\t\taxes.append(Input.get_joy_axis(device, axis))\n\tpads.append({\"device\": device, \"name\": Input.get_joy_name(device), \"axes\": axes})\nreturn {\"pads\":pads,\"fps\":Engine.get_frames_per_second(),\"frames\":Engine.get_process_frames(),\"samples\":get_tree().current_scene.samples.size()}"})
+MCP | [debug] -> mcp:eval_liveness (084529390047493f9d8ac4a575f47931)
+MCP | [defer] game_eval (request 084529390047493f9d8ac4a575f47931)
+MCP | [debug] -> mcp:eval (084529390047493f9d8ac4a575f47931)
+MCP | [debug] <- mcp:eval_ack (084529390047493f9d8ac4a575f47931)
+MCP | [debug] <- mcp:eval_compiled (084529390047493f9d8ac4a575f47931)
+MCP | [debug] <- mcp:eval_response (084529390047493f9d8ac4a575f47931)
+MCP | [recv] game_eval({"code":"var scene = get_tree().current_scene\nvar results = []\nfor device in [1, 2, 3, 0]:\n\tvar before = scene.samples.size()\n\tfor value in [0.0, 0.95, 0.0]:\n\t\tvar event = InputEventJoypadMotion.new()\n\t\tevent.device = device\n\t\tevent.axis = JOY_AXIS_RIGHT_X\n\t\tevent.axis_value = value\n\t\tInput.parse_input_event(event)\n\t\tfor frame in range(5):\n\t\t\tawait get_tree().process_frame\n\tresults.append({\"device\":device,\"new_samples\":scene.samples.size()-before})\nreturn {\"results\":results,\"log_rows\":scene.log_rows}\n"})
+MCP | [debug] -> mcp:eval_liveness (4b334da108be429192d2331fc547bbb1)
+MCP | [defer] game_eval (request 4b334da108be429192d2331fc547bbb1)
+MCP | [debug] -> mcp:eval (4b334da108be429192d2331fc547bbb1)
+MCP | [debug] <- mcp:eval_ack (4b334da108be429192d2331fc547bbb1)
+MCP | [debug] <- mcp:eval_compiled (4b334da108be429192d2331fc547bbb1)
+MCP | [debug] <- mcp:eval_response (4b334da108be429192d2331fc547bbb1)
+MCP | [recv] game_eval({"code":"var scene = get_tree().current_scene\nEngine.max_fps = 120\nvar key = InputEventKey.new()\nkey.keycode = KEY_TAB\nkey.pressed = true\nInput.parse_input_event(key)\nawait get_tree().process_frame\nkey = InputEventKey.new()\nkey.keycode = KEY_TAB\nkey.pressed = false\nInput.parse_input_event(key)\nvar mode_after_tab = scene.mode\nvar angles = [-108.0, -144.0, 180.0, 144.0, 108.0, 72.0, 36.0, 0.0, -36.0, -72.0]\nvar counts = [0,0,0,0,0,0,0,0,0,0]\nvar first_log_row = scene.log_rows.size()\nvar first_sample = scene.samples.size()\nfor trial in range(200):\n\tvar target = scene.prompt_idx\n\tcounts[target] += 1\n\tvar angle = deg_to_rad(angles[target])\n\tvar vector = Vector2(cos(angle), -sin(angle)) * 0.95\n\tfor values in [Vector2.ZERO, vector, Vector2.ZERO]:\n\t\tfor axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:\n\t\t\tvar event = InputEventJoypadMotion.new()\n\t\t\tevent.device = 0\n\t\t\tevent.axis = axis\n\t\t\tevent.axis_value = values.x if axis == JOY_AXIS_RIGHT_X else values.y\n\t\t\tInput.parse_input_event(event)\n\t\tfor frame in range(3):\n\t\t\tawait get_tree().process_frame\nreturn {\"scope\":\"MCP-injected joypad events; device 0; rendered software path only\", \"max_fps\":Engine.max_fps,\"mode_after_tab\":mode_after_tab,\"prompt_coverage\":counts,\"trials\":200,\"new_samples\":scene.samples.size()-first_sample,\"discrim_hits\":scene.discrim_hits,\"discrim_total\":scene.discrim_total,\"p50_ms\":scene._pct(0.50),\"p95_ms\":scene._pct(0.95),\"p99_ms\":scene._pct(0.99),\"samples_ms\":scene.samples.slice(first_sample),\"log_rows\":scene.log_rows.slice(first_log_row)}\n"})
+MCP | [debug] -> mcp:eval_liveness (64aa3cb7db154a94b690a1bdb8d2bec9)
+MCP | [defer] game_eval (request 64aa3cb7db154a94b690a1bdb8d2bec9)
+MCP | [debug] -> mcp:eval (64aa3cb7db154a94b690a1bdb8d2bec9)
+MCP | [debug] <- mcp:eval_ack (64aa3cb7db154a94b690a1bdb8d2bec9)
+MCP | [debug] <- mcp:eval_compiled (64aa3cb7db154a94b690a1bdb8d2bec9)
+MCP | [debug] <- mcp:eval_error (64aa3cb7db154a94b690a1bdb8d2bec9): Eval exceeded 8s and was aborted — the code likely awaits something that never completes (a signal that never fires, a timer on a paused tree) or loops forever. Check logs_read(source='game').
+MCP | [debug] debugger break (pre_live=false can_debug=false)
+MCP | [recv] take_screenshot({"max_resolution":640.0,"source":"game"})
+MCP | [debug] -> mcp:take_screenshot (8b549729ed6e4e54a24fd922fe2b460f)
+MCP | [defer] take_screenshot (request 8b549729ed6e4e54a24fd922fe2b460f)
+MCP | [debug] <- mcp:screenshot_response (8b549729ed6e4e54a24fd922fe2b460f)
+MCP | [recv] get_logs({"count":15.0,"include_details":true,"offset":0.0,"source":"editor"})
+MCP | [send] get_logs -> ok
+MCP | [recv] stop_project({})
+MCP | [defer] stop_project (request 35fb3c9e599d49328f3cff5b9ecbee6a)
+MCP | [event] play_state_changed -> stopped
+MCP | [recv] run_project({"autosave":false,"mode":"main"})
+MCP | [debug] game capture pending run token 2 (run r217698-2)
+MCP | [defer] run_project (request 21d71b6543b64933bb946f1d7d0c3945)
+MCP | [event] play_state_changed -> playing
+MCP | [debug] <- mcp:hello from game_helper (run r217698-2)
+MCP | [recv] game_eval({"code":"var scene = get_tree().current_scene\nEngine.max_fps = 120\nvar key = InputEventKey.new()\nkey.keycode = KEY_TAB\nkey.pressed = true\nInput.parse_input_event(key)\nawait get_tree().process_frame\nkey = InputEventKey.new()\nkey.keycode = KEY_TAB\nkey.pressed = false\nInput.parse_input_event(key)\nvar mode_after_tab = scene.mode\nvar angles = [-108.0, -144.0, 180.0, 144.0, 108.0, 72.0, 36.0, 0.0, -36.0, -72.0]\nvar counts = [0,0,0,0,0,0,0,0,0,0]\nvar first_log_row = scene.log_rows.size()\nvar first_sample = scene.samples.size()\nfor trial in range(40):\n\tvar target = scene.prompt_idx\n\tcounts[target] += 1\n\tvar angle = deg_to_rad(angles[target])\n\tvar vector = Vector2(cos(angle), -sin(angle)) * 0.95\n\tfor values in [Vector2.ZERO, vector, Vector2.ZERO]:\n\t\tfor axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:\n\t\t\tvar event = InputEventJoypadMotion.new()\n\t\t\tevent.device = 0\n\t\t\tevent.axis = axis\n\t\t\tevent.axis_value = values.x if axis == JOY_AXIS_RIGHT_X else values.y\n\t\t\tInput.parse_input_event(event)\n\t\tfor frame in range(3):\n\t\t\tawait get_tree().process_frame\nreturn {\"scope\":\"MCP-injected joypad events; device 0; rendered software path only\", \"max_fps\":Engine.max_fps,\"mode_after_tab\":mode_after_tab,\"prompt_coverage\":counts,\"trials\":40,\"new_samples\":scene.samples.size()-first_sample,\"discrim_hits\":scene.discrim_hits,\"discrim_total\":scene.discrim_total,\"p50_ms\":scene._pct(0.50),\"p95_ms\":scene._pct(0.95),\"p99_ms\":scene._pct(0.99),\"samples_ms\":scene.samples.slice(first_sample),\"log_rows\":scene.log_rows.slice(first_log_row)}\n"})
+MCP | [debug] -> mcp:eval_liveness (ec1c216603a8407cbe93071fef7a0174)
+MCP | [defer] game_eval (request ec1c216603a8407cbe93071fef7a0174)
+MCP | [debug] -> mcp:eval (ec1c216603a8407cbe93071fef7a0174)
+MCP | [debug] <- mcp:eval_ack (ec1c216603a8407cbe93071fef7a0174)
+MCP | [debug] <- mcp:eval_compiled (ec1c216603a8407cbe93071fef7a0174)
+MCP | [debug] <- mcp:eval_response (ec1c216603a8407cbe93071fef7a0174)
+MCP | [recv] game_eval({"code":"var scene = get_tree().current_scene\nEngine.max_fps = 120\nvar mode_after_tab = scene.mode\nvar angles = [-108.0, -144.0, 180.0, 144.0, 108.0, 72.0, 36.0, 0.0, -36.0, -72.0]\nvar counts = [0,0,0,0,0,0,0,0,0,0]\nvar first_log_row = scene.log_rows.size()\nvar first_sample = scene.samples.size()\nfor trial in range(40):\n\tvar target = scene.prompt_idx\n\tcounts[target] += 1\n\tvar angle = deg_to_rad(angles[target])\n\tvar vector = Vector2(cos(angle), -sin(angle)) * 0.95\n\tfor values in [Vector2.ZERO, vector, Vector2.ZERO]:\n\t\tfor axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:\n\t\t\tvar event = InputEventJoypadMotion.new()\n\t\t\tevent.device = 0\n\t\t\tevent.axis = axis\n\t\t\tevent.axis_value = values.x if axis == JOY_AXIS_RIGHT_X else values.y\n\t\t\tInput.parse_input_event(event)\n\t\tfor frame in range(3):\n\t\t\tawait get_tree().process_frame\nreturn {\"scope\":\"MCP-injected joypad events; device 0; rendered software path only\", \"max_fps\":Engine.max_fps,\"mode_after_tab\":mode_after_tab,\"prompt_coverage\":counts,\"trials\":40,\"new_samples\":scene.samples.size()-first_sample,\"discrim_hits\":scene.discrim_hits,\"discrim_total\":scene.discrim_total,\"p50_ms\":scene._pct(0.50),\"p95_ms\":scene._pct(0.95),\"p99_ms\":scene._pct(0.99),\"samples_ms\":scene.samples.slice(first_sample),\"log_rows\":scene.log_rows.slice(first_log_row)}\n"})
+MCP | [debug] -> mcp:eval_liveness (26252c31c742452fa5eec1adbfff81e5)
+MCP | [defer] game_eval (request 26252c31c742452fa5eec1adbfff81e5)
+MCP | [debug] -> mcp:eval (26252c31c742452fa5eec1adbfff81e5)
+MCP | [debug] <- mcp:eval_ack (26252c31c742452fa5eec1adbfff81e5)
+MCP | [debug] <- mcp:eval_compiled (26252c31c742452fa5eec1adbfff81e5)
+MCP | [debug] <- mcp:eval_response (26252c31c742452fa5eec1adbfff81e5)
+MCP | [recv] game_eval({"code":"var scene = get_tree().current_scene\nEngine.max_fps = 120\nvar mode_after_tab = scene.mode\nvar angles = [-108.0, -144.0, 180.0, 144.0, 108.0, 72.0, 36.0, 0.0, -36.0, -72.0]\nvar counts = [0,0,0,0,0,0,0,0,0,0]\nvar first_log_row = scene.log_rows.size()\nvar first_sample = scene.samples.size()\nfor trial in range(40):\n\tvar target = scene.prompt_idx\n\tcounts[target] += 1\n\tvar angle = deg_to_rad(angles[target])\n\tvar vector = Vector2(cos(angle), -sin(angle)) * 0.95\n\tfor values in [Vector2.ZERO, vector, Vector2.ZERO]:\n\t\tfor axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:\n\t\t\tvar event = InputEventJoypadMotion.new()\n\t\t\tevent.device = 0\n\t\t\tevent.axis = axis\n\t\t\tevent.axis_value = values.x if axis == JOY_AXIS_RIGHT_X else values.y\n\t\t\tInput.parse_input_event(event)\n\t\tfor frame in range(3):\n\t\t\tawait get_tree().process_frame\nreturn {\"scope\":\"MCP-injected joypad events; device 0; rendered software path only\", \"max_fps\":Engine.max_fps,\"mode_after_tab\":mode_after_tab,\"prompt_coverage\":counts,\"trials\":40,\"new_samples\":scene.samples.size()-first_sample,\"discrim_hits\":scene.discrim_hits,\"discrim_total\":scene.discrim_total,\"p50_ms\":scene._pct(0.50),\"p95_ms\":scene._pct(0.95),\"p99_ms\":scene._pct(0.99),\"samples_ms\":scene.samples.slice(first_sample),\"log_rows\":scene.log_rows.slice(first_log_row)}\n"})
+MCP | [debug] -> mcp:eval_liveness (502b5769a6af45499f4b6d2e30168d66)
+MCP | [defer] game_eval (request 502b5769a6af45499f4b6d2e30168d66)
+MCP | [debug] -> mcp:eval (502b5769a6af45499f4b6d2e30168d66)
+MCP | [debug] <- mcp:eval_ack (502b5769a6af45499f4b6d2e30168d66)
+MCP | [debug] <- mcp:eval_compiled (502b5769a6af45499f4b6d2e30168d66)
+MCP | [debug] <- mcp:eval_response (502b5769a6af45499f4b6d2e30168d66)
+MCP | [recv] game_eval({"code":"var scene = get_tree().current_scene\nEngine.max_fps = 120\nvar mode_after_tab = scene.mode\nvar angles = [-108.0, -144.0, 180.0, 144.0, 108.0, 72.0, 36.0, 0.0, -36.0, -72.0]\nvar counts = [0,0,0,0,0,0,0,0,0,0]\nvar first_log_row = scene.log_rows.size()\nvar first_sample = scene.samples.size()\nfor trial in range(40):\n\tvar target = scene.prompt_idx\n\tcounts[target] += 1\n\tvar angle = deg_to_rad(angles[target])\n\tvar vector = Vector2(cos(angle), -sin(angle)) * 0.95\n\tfor values in [Vector2.ZERO, vector, Vector2.ZERO]:\n\t\tfor axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:\n\t\t\tvar event = InputEventJoypadMotion.new()\n\t\t\tevent.device = 0\n\t\t\tevent.axis = axis\n\t\t\tevent.axis_value = values.x if axis == JOY_AXIS_RIGHT_X else values.y\n\t\t\tInput.parse_input_event(event)\n\t\tfor frame in range(3):\n\t\t\tawait get_tree().process_frame\nreturn {\"scope\":\"MCP-injected joypad events; device 0; rendered software path only\", \"max_fps\":Engine.max_fps,\"mode_after_tab\":mode_after_tab,\"prompt_coverage\":counts,\"trials\":40,\"new_samples\":scene.samples.size()-first_sample,\"discrim_hits\":scene.discrim_hits,\"discrim_total\":scene.discrim_total,\"p50_ms\":scene._pct(0.50),\"p95_ms\":scene._pct(0.95),\"p99_ms\":scene._pct(0.99),\"samples_ms\":scene.samples.slice(first_sample),\"log_rows\":scene.log_rows.slice(first_log_row)}\n"})
+MCP | [debug] -> mcp:eval_liveness (15ef4b3f3a3a4036a6d6e84ecd52b774)
+MCP | [defer] game_eval (request 15ef4b3f3a3a4036a6d6e84ecd52b774)
+MCP | [debug] -> mcp:eval (15ef4b3f3a3a4036a6d6e84ecd52b774)
+MCP | [debug] <- mcp:eval_ack (15ef4b3f3a3a4036a6d6e84ecd52b774)
+MCP | [debug] <- mcp:eval_compiled (15ef4b3f3a3a4036a6d6e84ecd52b774)
+MCP | [debug] <- mcp:eval_response (15ef4b3f3a3a4036a6d6e84ecd52b774)
+MCP | [recv] game_eval({"code":"var scene = get_tree().current_scene\nEngine.max_fps = 120\nvar mode_after_tab = scene.mode\nvar angles = [-108.0, -144.0, 180.0, 144.0, 108.0, 72.0, 36.0, 0.0, -36.0, -72.0]\nvar counts = [0,0,0,0,0,0,0,0,0,0]\nvar first_log_row = scene.log_rows.size()\nvar first_sample = scene.samples.size()\nfor trial in range(40):\n\tvar target = scene.prompt_idx\n\tcounts[target] += 1\n\tvar angle = deg_to_rad(angles[target])\n\tvar vector = Vector2(cos(angle), -sin(angle)) * 0.95\n\tfor values in [Vector2.ZERO, vector, Vector2.ZERO]:\n\t\tfor axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:\n\t\t\tvar event = InputEventJoypadMotion.new()\n\t\t\tevent.device = 0\n\t\t\tevent.axis = axis\n\t\t\tevent.axis_value = values.x if axis == JOY_AXIS_RIGHT_X else values.y\n\t\t\tInput.parse_input_event(event)\n\t\tfor frame in range(3):\n\t\t\tawait get_tree().process_frame\nreturn {\"scope\":\"MCP-injected joypad events; device 0; rendered software path only\", \"max_fps\":Engine.max_fps,\"mode_after_tab\":mode_after_tab,\"prompt_coverage\":counts,\"trials\":40,\"new_samples\":scene.samples.size()-first_sample,\"discrim_hits\":scene.discrim_hits,\"discrim_total\":scene.discrim_total,\"p50_ms\":scene._pct(0.50),\"p95_ms\":scene._pct(0.95),\"p99_ms\":scene._pct(0.99),\"samples_ms\":scene.samples.slice(first_sample),\"log_rows\":scene.log_rows.slice(first_log_row)}\n"})
+MCP | [debug] -> mcp:eval_liveness (13356361606747a98229e45ca8d05f40)
+MCP | [defer] game_eval (request 13356361606747a98229e45ca8d05f40)
+MCP | [debug] -> mcp:eval (13356361606747a98229e45ca8d05f40)
+MCP | [debug] <- mcp:eval_ack (13356361606747a98229e45ca8d05f40)
+MCP | [debug] <- mcp:eval_compiled (13356361606747a98229e45ca8d05f40)
+MCP | [debug] <- mcp:eval_response (13356361606747a98229e45ca8d05f40)
+MCP | [recv] game_eval({"code":"return {\"log_path\":ProjectSettings.globalize_path(\"user://latency_log.csv\"),\"samples\":get_tree().current_scene.samples.size()}"})
+MCP | [debug] -> mcp:eval_liveness (a93e092143cf4a77b734fda005e4b0fd)
+MCP | [defer] game_eval (request a93e092143cf4a77b734fda005e4b0fd)
+MCP | [debug] -> mcp:eval (a93e092143cf4a77b734fda005e4b0fd)
+MCP | [debug] <- mcp:eval_ack (a93e092143cf4a77b734fda005e4b0fd)
+MCP | [debug] <- mcp:eval_compiled (a93e092143cf4a77b734fda005e4b0fd)
+MCP | [debug] <- mcp:eval_response (a93e092143cf4a77b734fda005e4b0fd)
+MCP | [recv] take_screenshot({"max_resolution":640.0,"source":"game"})
+MCP | [debug] -> mcp:take_screenshot (dc3ade053f1241bab02b7ae063db95b8)
+MCP | [defer] take_screenshot (request dc3ade053f1241bab02b7ae063db95b8)
+MCP | [debug] <- mcp:screenshot_response (dc3ade053f1241bab02b7ae063db95b8)
+MCP | [recv] game_command({"op":"input_key","params":{"echo":false,"key":"Escape","pressed":true}})
+MCP | [debug] -> mcp:game_command input_key (f289f2a8242d46d8b2ab1b6acc3d217b)
+MCP | [defer] game_command (request f289f2a8242d46d8b2ab1b6acc3d217b)
+MCP | [debug] <- mcp:game_command_response (f289f2a8242d46d8b2ab1b6acc3d217b)
+MCP | [event] play_state_changed -> stopped
+MCP | [recv] get_editor_state({})
+MCP | [send] get_editor_state -> ok
+MCP | pre-warming godot-ai==4.1.0 server package for the post-update restart
+MCP | self-update release signature verified (rsa-4096/sha256)
+MCP | self-update checksum verified (sha256 cc367f39a1d318a2b601562f755174a2ccb1181d62f456762c159c2bb9e36453)
+MCP | update runner disabling old plugin
+MCP | plugin unloaded
+MCP | update runner enabling new plugin
+MCP | v3 bridge verifying and staging the signed v4 tree
+MCP | v3 bridge activating canonical v4 tree
+MCP | v3 bridge handing verified tree to in-editor activation
+MCP | v3 bridge: Update swap failed: swap: cannot move live tree C:/Users/ryanf/github/_games/true-north-boxing/engine/latency_harness/addons/godot_ai to C:/Users/ryanf/github/_games/true-north-boxing/engine/latency_harness/addons/.godot_ai_update/backup/3.2.1: Failed
+ERROR: MCP | Update swap failed: swap: cannot move live tree C:/Users/ryanf/github/_games/true-north-boxing/engine/latency_harness/addons/godot_ai to C:/Users/ryanf/github/_games/true-north-boxing/engine/latency_harness/addons/.godot_ai_update/backup/3.2.1: Failed
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _show_failure (gdscript://-9223368747077525754.gd:372)
+       [1] _enable (gdscript://-9223368747077525754.gd:223)
+       [2] _scan_completed (gdscript://-9223368747077525754.gd:195)

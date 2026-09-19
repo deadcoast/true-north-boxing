@@ -1,0 +1,341 @@
+test_archive_filename_must_match_its_id (test_pacer_validator.ValidatorTests.test_archive_filename_must_match_its_id) ... FAIL
+test_canonical_archived_nodule_resolves_reciprocal_references (test_pacer_validator.ValidatorTests.test_canonical_archived_nodule_resolves_reciprocal_references) ... FAIL
+test_duplicate_live_and_archived_id_is_rejected (test_pacer_validator.ValidatorTests.test_duplicate_live_and_archived_id_is_rejected) ... FAIL
+test_external_source_path_is_rejected (test_pacer_validator.ValidatorTests.test_external_source_path_is_rejected) ... FAIL
+test_ragged_and_duplicate_headers_fail_closed (test_pacer_validator.ValidatorTests.test_ragged_and_duplicate_headers_fail_closed) ... FAIL
+test_semicolon_cycle_is_detected (test_pacer_validator.ValidatorTests.test_semicolon_cycle_is_detected) ... FAIL
+test_semicolon_mixed_dependencies_enforce_hard_gate (test_pacer_validator.ValidatorTests.test_semicolon_mixed_dependencies_enforce_hard_gate) ... FAIL
+test_valid_utf8_repository (test_pacer_validator.ValidatorTests.test_valid_utf8_repository) ... FAIL
+test_pacer_views (unittest.loader._FailedTest.test_pacer_views) ... ERROR
+test_alternate_task_registers_are_archived_only (test_register_bootstrap.BootstrapTests.test_alternate_task_registers_are_archived_only) ... ok
+test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) ... 
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-002') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-005') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-008') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-010') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-011') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-013') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-015') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-020') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-024') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-026') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-031') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-032') ... FAIL
+  test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-036') ... FAIL
+
+======================================================================
+ERROR: test_pacer_views (unittest.loader._FailedTest.test_pacer_views)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_pacer_views
+Traceback (most recent call last):
+  File "C:\Python314\Lib\unittest\loader.py", line 426, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "C:\Python314\Lib\unittest\loader.py", line 367, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_views.py", line 11, in <module>
+    from pacer_views import blockers_done, is_ready, load, main
+ModuleNotFoundError: No module named 'pacer_views'
+
+
+======================================================================
+FAIL: test_archive_filename_must_match_its_id (test_pacer_validator.ValidatorTests.test_archive_filename_must_match_its_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_validator.py", line 128, in test_archive_filename_must_match_its_id
+    self.assertEqual(result.returncode, 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_canonical_archived_nodule_resolves_reciprocal_references (test_pacer_validator.ValidatorTests.test_canonical_archived_nodule_resolves_reciprocal_references)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_validator.py", line 113, in test_canonical_archived_nodule_resolves_reciprocal_references
+    self.assertEqual(self.run_validator().returncode, 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_duplicate_live_and_archived_id_is_rejected (test_pacer_validator.ValidatorTests.test_duplicate_live_and_archived_id_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_validator.py", line 122, in test_duplicate_live_and_archived_id_is_rejected
+    self.assertEqual(result.returncode, 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_external_source_path_is_rejected (test_pacer_validator.ValidatorTests.test_external_source_path_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_validator.py", line 144, in test_external_source_path_is_rejected
+    self.assertEqual(result.returncode, 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_ragged_and_duplicate_headers_fail_closed (test_pacer_validator.ValidatorTests.test_ragged_and_duplicate_headers_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_validator.py", line 138, in test_ragged_and_duplicate_headers_fail_closed
+    self.assertEqual(result.returncode, 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_semicolon_cycle_is_detected (test_pacer_validator.ValidatorTests.test_semicolon_cycle_is_detected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_validator.py", line 152, in test_semicolon_cycle_is_detected
+    self.assertEqual(result.returncode, 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_semicolon_mixed_dependencies_enforce_hard_gate (test_pacer_validator.ValidatorTests.test_semicolon_mixed_dependencies_enforce_hard_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_validator.py", line 100, in test_semicolon_mixed_dependencies_enforce_hard_gate
+    self.assertEqual(result.returncode, 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_valid_utf8_repository (test_pacer_validator.ValidatorTests.test_valid_utf8_repository)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_pacer_validator.py", line 88, in test_valid_utf8_repository
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : C:\Users\ryanf\github\_games\true-north-boxing\.venv\Scripts\python.exe: can't open file 'C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\pacer_validator.py': [Errno 2] No such file or directory
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-002')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 35, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(row[field], original[field])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'hard' != ''
+- hard
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-005')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-002A' != 'PAC-002'
+- PAC-002A
+?        -
++ PAC-002
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-008')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-006,PAC-007' != 'PAC-006;PAC-007'
+- PAC-006,PAC-007
+?        ^
++ PAC-006;PAC-007
+?        ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-010')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-005,PAC-006,PAC-007,PAC-008,PAC-009,PAC-002B' != 'PAC-005;PAC-006;PAC-007;PAC-008;PAC-009'
+- PAC-005,PAC-006,PAC-007,PAC-008,PAC-009,PAC-002B
+?        ^       ^       ^       ^       ---------
++ PAC-005;PAC-006;PAC-007;PAC-008;PAC-009
+?        ^       ^       ^       ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-011')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-011A,PAC-011B' != 'PAC-010'
+- PAC-011A,PAC-011B
++ PAC-010
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-013')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-011,PAC-012' != 'PAC-011;PAC-012'
+- PAC-011,PAC-012
+?        ^
++ PAC-011;PAC-012
+?        ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-015')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-013,PAC-014' != 'PAC-013;PAC-014'
+- PAC-013,PAC-014
+?        ^
++ PAC-013;PAC-014
+?        ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-020')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-016,PAC-017,PAC-018,PAC-019' != 'PAC-016;PAC-017;PAC-018;PAC-019'
+- PAC-016,PAC-017,PAC-018,PAC-019
+?        ^       ^       ^
++ PAC-016;PAC-017;PAC-018;PAC-019
+?        ^       ^       ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-024')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-018,PAC-023' != 'PAC-018;PAC-023'
+- PAC-018,PAC-023
+?        ^
++ PAC-018;PAC-023
+?        ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-026')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-021,PAC-022,PAC-023,PAC-024,PAC-025' != 'PAC-021;PAC-022;PAC-023;PAC-024;PAC-025'
+- PAC-021,PAC-022,PAC-023,PAC-024,PAC-025
+?        ^       ^       ^       ^
++ PAC-021;PAC-022;PAC-023;PAC-024;PAC-025
+?        ^       ^       ^       ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-031')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-024,PAC-028' != 'PAC-024;PAC-028'
+- PAC-024,PAC-028
+?        ^
++ PAC-024;PAC-028
+?        ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-032')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-027,PAC-028,PAC-029,PAC-030,PAC-031' != 'PAC-027;PAC-028;PAC-029;PAC-030;PAC-031'
+- PAC-027,PAC-028,PAC-029,PAC-030,PAC-031
+?        ^       ^       ^       ^
++ PAC-027;PAC-028;PAC-029;PAC-030;PAC-031
+?        ^       ^       ^       ^
+
+
+======================================================================
+FAIL: test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) (task='PAC-036')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ryanf\github\_games\true-north-boxing\tests\test_register_bootstrap.py", line 36, in test_original_task_ids_meaning_and_blockers_are_preserved
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        row["BlockedBy"], original["BlockedBy"].replace(",", ";")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: 'PAC-032,PAC-033,PAC-034,PAC-035' != 'PAC-032;PAC-033;PAC-034;PAC-035'
+- PAC-032,PAC-033,PAC-034,PAC-035
+?        ^       ^       ^
++ PAC-032;PAC-033;PAC-034;PAC-035
+?        ^       ^       ^
+
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.304s
+
+FAILED (failures=21, errors=1)

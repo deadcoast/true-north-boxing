@@ -1,0 +1,14 @@
+PACER VALIDATOR :: AGENTS.md s7
+==========================================================
+  [ OK ]  parse / columns / unique IDs       
+  [ OK ]  todo: lifecycle + dependency gate  
+  [FAIL]  overlord: edge symmetry + paths    +3 violation(s)
+  [ OK ]  organism: status + evidence gate   
+  [ OK ]  nodule: lifecycle + lane exclusivity 
+  [ OK ]  cross-file: reference resolution   
+==========================================================
+  rows :: todo 53 | overlord 312 | organism 20 | nodule 8   checks run :: 1837
+  VERDICT :: RED - 3 violation(s)
+    overlord  OVR-026   path missing on disk: data/hissatsu_library.v2.json
+    overlord  OVR-038   path missing on disk: data/scrap_objectives.v1.json
+    overlord  OVR-039   path missing on disk: tools/pbn_compiler.py

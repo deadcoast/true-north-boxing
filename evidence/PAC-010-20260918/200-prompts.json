@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "EVAL_HUNG: Eval exceeded 8s and was aborted \u2014 the code likely awaits something that never completes (a signal that never fires, a timer on a paused tree) or loops forever. Check logs_read(source='game')."
+    }
+  ],
+  "structuredContent": {
+    "error": {
+      "code": "EVAL_HUNG",
+      "message": "Eval exceeded 8s and was aborted \u2014 the code likely awaits something that never completes (a signal that never fires, a timer on a paused tree) or loops forever. Check logs_read(source='game').",
+      "data": {}
+    }
+  },
+  "isError": true
+}

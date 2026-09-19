@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"readiness_after\":\"ready\",\"reason\":\"Play/stop is a runtime action\",\"stopped\":true,\"undoable\":false,\"was_running\":true}"
+    }
+  ],
+  "structuredContent": {
+    "readiness_after": "ready",
+    "reason": "Play/stop is a runtime action",
+    "stopped": true,
+    "undoable": false,
+    "was_running": true
+  },
+  "isError": false
+}
