@@ -1,0 +1,114 @@
+{
+ "file": "sam_tagaq.pbn",
+ "meta": {
+  "style": "BOXERPUNCHER",
+  "element": "FROST",
+  "house": "tagaq",
+  "slot": "R5",
+  "arc": "1",
+  "wall_gauge": "100",
+  "gauge_reforms": "60,30"
+ },
+ "idle": [
+  "walk_forward_calm",
+  "guard_advance"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Snowbank",
+   "tags": [],
+   "tell": {
+    "motif": "soft_exhale",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "GUARD_ADVANCE",
+    "HERD(40cm)"
+   ]
+  },
+  "S2": {
+   "label": "SorryEh",
+   "tags": [],
+   "tell": {
+    "motif": "apology_audio",
+    "ms": 550
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_ON_BLOCK",
+    "R_STR"
+   ]
+  },
+  "S3": {
+   "label": "LongWinter",
+   "tags": [
+    "phase>=3"
+   ],
+   "tell": {
+    "motif": "double_exhale",
+    "ms": 600
+   },
+   "class": "normal",
+   "actions": [
+    "CLINCH_ATTEMPT",
+    "BODY_SERIES"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 50,
+   "S2": 35,
+   "S3": 15
+  },
+  "reweights": [
+   "clock>60s: all_speed x1.1"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_block_hold>2s",
+   "force": "S2"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_rope_touch",
+   "response": "S1 pressure"
+  },
+  {
+   "trigger": "player_jab_spam_on_gauge",
+   "response": "S2"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "clock>30",
+   "directives": [
+    "strength +5pct"
+   ]
+  },
+  {
+   "phase": "3",
+   "trigger": "clock>60",
+   "directives": [
+    "add S3",
+    "strength +10pct"
+   ]
+  }
+ ],
+ "desperation": {
+  "authored_absent": "He never panics; the fight ends only through the gauge"
+ },
+ "id": "BigSorry_Sam"
+}

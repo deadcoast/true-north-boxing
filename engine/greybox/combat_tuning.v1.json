@@ -1,0 +1,93 @@
+{
+ "schema": "CombatTuning/NP_03/v1.0",
+ "vault": "v1.5",
+ "owner": "combat designer - hot-reloadable, nothing here hardcoded (NP_03 s12)",
+ "punch_matrix": {
+  "L_STRAIGHT":  {"startup_ms": 160, "recovery_ms": 220, "dmg": 6,  "stamina": 2, "guard_dmg": 4},
+  "L_FLARED":    {"startup_ms": 300, "recovery_ms": 380, "dmg": 13, "stamina": 6, "guard_dmg": 8},
+  "L_HOOK":      {"startup_ms": 260, "recovery_ms": 340, "dmg": 12, "stamina": 5, "guard_dmg": 7},
+  "L_HOOKERCUT": {"startup_ms": 320, "recovery_ms": 400, "dmg": 13, "stamina": 6, "guard_dmg": 9},
+  "L_UPPERCUT":  {"startup_ms": 340, "recovery_ms": 420, "dmg": 15, "stamina": 7, "guard_dmg": 12},
+  "R_STRAIGHT":  {"startup_ms": 220, "recovery_ms": 300, "dmg": 10, "stamina": 4, "guard_dmg": 6},
+  "R_FLARED":    {"startup_ms": 300, "recovery_ms": 380, "dmg": 13, "stamina": 6, "guard_dmg": 8},
+  "R_HOOK":      {"startup_ms": 260, "recovery_ms": 340, "dmg": 12, "stamina": 5, "guard_dmg": 7},
+  "R_HOOKERCUT": {"startup_ms": 320, "recovery_ms": 400, "dmg": 13, "stamina": 6, "guard_dmg": 9},
+  "R_UPPERCUT":  {"startup_ms": 340, "recovery_ms": 420, "dmg": 15, "stamina": 7, "guard_dmg": 12}
+ },
+ "modifiers": {
+  "BODY":      {"dmg_mult": 0.8, "target": "torso", "enemy_stamina_drain": 6, "guard_ignore_pct": 20},
+  "POWER":     {"dmg_mult": 1.5, "startup_mult": 1.4, "whiff_open_ms": 300, "stamina_mult": 2.0},
+  "HAYMAKER":  {"dmg_mult": 2.2, "startup_mult": 1.9, "pullback_min_ms": 150, "stagger": true},
+  "STEPPING":  {"dmg_mult": 1.2, "range_bonus_m": 0.5, "telegraph_mult": 1.3},
+  "BLOCK_PUNCH": {"startup_mult": 1.15}
+ },
+ "flick_detection": {"on_threshold": 0.6, "off_threshold": 0.25, "sectors_per_hand": 5, "sector_deg": 36},
+ "stamina": {
+  "pool_base": 100,
+  "regen_neutral_per_s": 4, "regen_active_per_s": 1, "corner_restore": 30,
+  "gassed_curve": [
+   {"above": 70, "hand_speed": 1.00, "foot_speed": 1.00, "dmg": 1.00, "composure_regen": 1.00},
+   {"above": 40, "hand_speed": 0.90, "foot_speed": 0.90, "dmg": 0.90, "composure_regen": 0.75},
+   {"above": 15, "hand_speed": 0.75, "foot_speed": 0.70, "dmg": 0.75, "composure_regen": 0.40},
+   {"above": 0,  "hand_speed": 0.55, "foot_speed": 0.50, "dmg": 0.55, "composure_regen": 0.00}
+  ]
+ },
+ "composure": {
+  "pool_formula": "CHN*2", "regen_per_s": 3, "regen_halt_after_count_s": 10,
+  "wobble_below_pct": 35, "wobble_move_mult": 0.7,
+  "post_count_reset_pct": 50, "flash_bypass_pct": 25
+ },
+ "guard": {
+  "capacity_by_BLK": {"min": 80, "max": 130},
+  "hold_decay_per_s": 2, "regen_per_s": 6, "chip_pct": 15,
+  "break_open_ms": 600, "break_open_dmg_mult": 1.5, "break_refill": 40,
+  "perfect_block_window_ms": 150,
+  "autotrack_pct_by_RFX": {"rfx30": 70, "rfx90": 95}
+ },
+ "counter_windows_ms": {
+  "perfect_block": {"base": 500, "rfx90": 650},
+  "slip":          {"base": 400, "rfx90": 550},
+  "duck":          {"base": 350, "rfx90": 480},
+  "weave":         {"base": 450, "rfx90": 600},
+  "range_step":    {"base": 300, "rfx90": 420},
+  "flash":         {"base": 700, "time_scale": 0.6, "extend_per_hit_ms": 200, "max_extends": 3}
+ },
+ "counter_mults": {"counter": 1.6, "flash": 2.0},
+ "defense": {
+  "slip_window_ms": 260, "slip_whiff_dmg_mult": 1.2,
+  "duck_vs_uppercut_dmg_mult": 1.5,
+  "weave_ms": 400, "weave_lateral_cm": 30,
+  "leanback_stamina": 5, "leanback_ground_loss_cm": 20
+ },
+ "movement": {
+  "foot_speed_ms_by_SPD": {"min": 2.2, "max": 3.4},
+  "backpedal_mult": 0.7, "sprint_step_m": 0.8, "sprint_step_stamina": 4,
+  "herding_push_cm_per_hit": 10
+ },
+ "zones": {
+  "CENTER":  {"radius_ft": 6,  "exchange_tension_bonus": 2},
+  "ROPES":   {"band_ft": 2, "dmg_mult": 1.25, "composure_threshold_mod": -15},
+  "CORNER":  {"quad_ft": 4, "dmg_mult": 1.5, "guard_decay_mult": 2.0,
+              "trap_arm_s": 3, "trapped_flash_window_mult": 1.4}
+ },
+ "clinch": {"duel_s": 2.0, "referee_break_s": 4, "reset_stamina_bonus": 5, "position_herd_cm": 50},
+ "feint": {"cancel_within_ms": 80, "stamina": 1, "enemy_guard_drain": 1},
+ "standing_eight": {
+  "beats": 3, "time_scale": 0.3,
+  "beat_window_ms_by_HRT": {"hrt30": 60, "hrt90": 140},
+  "survive_vuln_s": 10, "crowd_surge_tension": 8
+ },
+ "adaptation_tracker": {
+  "window_tokens": 12, "ngram_sizes": [2, 3], "flag_at_count": 3,
+  "defense_ramp_per_tier_pct": 25, "ramp_cap_pct": 85,
+  "decay_clear_s": 8, "flagged_tension_earn": 0,
+  "modifies": "DEFENSE_ONLY - doctrinal (D3), narrated always"
+ },
+ "hit_feel": {
+  "hitstop_ms": {"normal": 40, "power": 70, "counter": 120, "flash_or_hissatsu": 200}
+ },
+ "camera": {
+  "chase_behind_m": 1.8, "above_head_m": 0.6, "pitch_deg": 12, "fov_deg": 55,
+  "player_frame_height_pct": 35, "windup_alpha_pct": 40
+ }
+}
