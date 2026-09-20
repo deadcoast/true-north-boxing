@@ -1,0 +1,60 @@
+{
+ "schema": "Affinity/NP_06/v1.0",
+ "vault": "v1.3",
+ "notes": "The three rings as data. style.packages are the NP_06 s1.2 parameter packages written as the sim edits they name; style.advantage / element / house are the matchup effects; cap is s4. A key the sim does not know is carried and ignored.",
+ "style": {
+  "beats": {"SWARMER": "OUTBOXER", "OUTBOXER": "SLUGGER", "SLUGGER": "SWARMER"},
+  "neutral": ["BOXERPUNCHER"],
+  "labels": {"SWARMER": "SWARMER", "OUTBOXER": "OUT-BOXER", "SLUGGER": "SLUGGER", "BOXERPUNCHER": "BOXER-PUNCHER"},
+  "why": {
+   "SWARMER>OUTBOXER": "constant pressure denies the range game",
+   "OUTBOXER>SLUGGER": "movement and jabs make power irrelevant",
+   "SLUGGER>SWARMER": "walking into a puncher's phone booth ends badly"
+  },
+  "advantage": {"ep_mult": 1.10, "counter_window_plus_ms": 50},
+  "inside_range_m": 1.3,
+  "packages": {
+   "SWARMER": {
+    "inside_hook_upper_stamina_mult": 0.8,
+    "clinch_window_mult": 1.25,
+    "herd_mult": 1.5,
+    "reach_mult": 0.9,
+    "guard_cap_mult": 0.9
+   },
+   "OUTBOXER": {
+    "straight_reach_mult": 1.12,
+    "move_stamina_mult": 0.85,
+    "backpedal_mult": 0.85,
+    "power_dmg_mult": 0.9,
+    "weave_arc_mult": 0.9
+   },
+   "SLUGGER": {
+    "power_shred_mult": 1.3,
+    "comp_pool_mult": 1.15,
+    "ropes_dmg_mult": 1.1,
+    "startup_mult": 1.1,
+    "slip_window_mult": 0.85
+   },
+   "BOXERPUNCHER": {}
+  }
+ },
+ "element": {
+  "beats": {"FROST": "GALE", "GALE": "GRANITE", "GRANITE": "TIMBER", "TIMBER": "FROST"},
+  "why": {
+   "FROST>GALE": "deep cold stills any storm",
+   "GALE>GRANITE": "wind erodes stone to sand",
+   "GRANITE>TIMBER": "stone splits and crushes timber",
+   "TIMBER>FROST": "living timber survives the longest winter"
+  },
+  "same_element_spike": 1.30,
+  "beats_hissatsu_mult": 1.10,
+  "beats_cost_mult": 0.90,
+  "beaten_wall_plus_s": 1.0,
+  "colors": {"FROST": [0.78, 0.90, 1.0], "GALE": [0.82, 0.84, 0.88], "GRANITE": [0.80, 0.62, 0.36], "TIMBER": [0.36, 0.48, 0.28]}
+ },
+ "house": {
+  "feud_tension_mult": 1.25,
+  "native_effect_mult": 1.10
+ },
+ "cap": 1.5
+}

@@ -1,0 +1,194 @@
+{
+ "schema": "Tactics/NP_10/v1.0",
+ "source": "NP_01 s5/s7/s9, NP_10 s4-s6, NP_05 s6",
+ "corner": {
+  "seconds": 45,
+  "actions": 2,
+  "swap_first_free": true,
+  "swap_cost": 15,
+  "overrun_stamina_pct": 80,
+  "card_seconds": 4,
+  "save_bar_bonus": 5,
+  "charged_surge_s": 10,
+  "charged_stat_pct": 10,
+  "full_relay_chain": 3,
+  "full_relay_t4_cost": 75
+ },
+ "special": [
+  {
+   "id": "body_doctrine",
+   "name": "Body Doctrine",
+   "cost": 10,
+   "effect": {
+    "body_drain_mult": 2.0
+   },
+   "text": "All your body shots drain double enemy stamina"
+  },
+  {
+   "id": "high_guard_order",
+   "name": "High Guard Order",
+   "cost": 10,
+   "effect": {
+    "guard_decay_mult": 0.5
+   },
+   "text": "Your fighter's guard decay halved"
+  },
+  {
+   "id": "cut_the_ring",
+   "name": "Cut the Ring",
+   "cost": 10,
+   "effect": {
+    "herd_mult": 2.0,
+    "sprint_free": true
+   },
+   "text": "Herding push +100%; sprint-step free"
+  },
+  {
+   "id": "feint_storm",
+   "name": "Feint Storm",
+   "cost": 10,
+   "effect": {
+    "feint_free": true,
+    "punish_suppress_s": 30
+   },
+   "text": "Feints cost 0; enemy PUNISH hooks suppressed 30s"
+  },
+  {
+   "id": "ice_the_clock",
+   "name": "Ice the Clock",
+   "cost": 15,
+   "effect": {
+    "clock_mult_leading": 0.8
+   },
+   "text": "Segment clock x0.8 for you while leading on EP"
+  },
+  {
+   "id": "read_the_corner",
+   "name": "Read the Corner",
+   "cost": 15,
+   "effect": {
+    "tell_loud_mult": 1.25
+   },
+   "text": "Enemy tell tier loudened one step this segment"
+  },
+  {
+   "id": "open_season",
+   "name": "Open Season",
+   "cost": 15,
+   "effect": {
+    "counter_window_plus_ms": 100,
+    "guard_cap_mult": 0.8
+   },
+   "text": "Your counter windows +100ms; your guard capacity -20%"
+  },
+  {
+   "id": "second_wind_call",
+   "name": "Second Wind Call",
+   "cost": 20,
+   "effect": {
+    "stamina_plus": 40
+   },
+   "text": "Fighter stamina +40 instantly"
+  }
+ ],
+ "super": [
+  {
+   "id": "iron_resolve",
+   "name": "Iron Resolve",
+   "effect": {
+    "no_drop_s": 30
+   },
+   "text": "Next fighter cannot be DROPPED for 30s (wobbles instead)"
+  },
+  {
+   "id": "perfect_round",
+   "name": "The Perfect Round",
+   "effect": {
+    "tension_earn_mult": 2.0
+   },
+   "text": "Next segment: team earns double Tension from all sources"
+  },
+  {
+   "id": "switch_up",
+   "name": "Switch-Up",
+   "effect": {
+    "style_advantaged": true
+   },
+   "text": "Your fighter counts as advantaged on the triangle this segment (EP +10%, counter windows +50ms)"
+  },
+  {
+   "id": "hostile_crowd",
+   "name": "Hostile Crowd",
+   "effect": {
+    "enemy_corner_lock": true
+   },
+   "text": "Enemy corner actions locked next corner phase"
+  }
+ ],
+ "staff_active": [
+  {
+   "id": "patch_job",
+   "role": "Cutman",
+   "name": "Patch Job",
+   "charges": 2,
+   "effect": {
+    "composure_plus": 30
+   },
+   "text": "Restore 30 composure + clear a story-cut"
+  },
+  {
+   "id": "the_reveal",
+   "role": "Tactician",
+   "name": "The Reveal",
+   "charges": 1,
+   "effect": {
+    "reveal_next": true
+   },
+   "text": "Expose the enemy's next slot outright"
+  },
+  {
+   "id": "raise_the_roof",
+   "role": "Hype",
+   "name": "Raise the Roof",
+   "charges": 2,
+   "effect": {
+    "tension_plus": 8
+   },
+   "text": "Convert crowd heat -> +8 Tension"
+  },
+  {
+   "id": "loosen_up",
+   "role": "Conditioning coach",
+   "name": "Loosen Up",
+   "charges": 1,
+   "effect": {
+    "stamina_cap": 110
+   },
+   "text": "Next fighter enters at 110 stamina cap"
+  },
+  {
+   "id": "chalk_talk",
+   "role": "The Professor",
+   "name": "Chalk Talk",
+   "charges": 1,
+   "effect": {
+    "tell_highlight_s": 15
+   },
+   "text": "15s of tell-highlight next segment"
+  }
+ ],
+ "equipped": {
+  "special": [
+   "body_doctrine",
+   "open_season",
+   "second_wind_call"
+  ],
+  "super": "iron_resolve",
+  "staff": [
+   "patch_job",
+   "raise_the_roof",
+   "loosen_up"
+  ]
+ },
+ "notes": "Launch library subset (8 of 12 specials listed in NP_10 s5; the other 4 are unnamed there). The Talk (personality reads) needs fighter personality data (NP_08) and is not in this file. Enemy coach corner actions (NP_10 s9) do not exist yet, so Hostile Crowd records its lock and has nothing to lock."
+}
