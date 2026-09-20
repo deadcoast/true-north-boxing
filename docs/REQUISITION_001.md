@@ -60,7 +60,7 @@ c) tune/investigate — proposal only.**
   explicit fight-outcome check before being treated as a win rate.
 - **b) Stamina:** investigate why the tested models spend 0% of their time
   gassed, then propose changes if the behavior persists with representative
-  actions. [NP_13 §6](NP_13_SCOPE.md) requires gassed states to be **present
+  actions. [NP_13 §6](NP_docs/NP_13_SCOPE.md) requires gassed states to be **present
   but <15% of segment time**. The current simulator checks only an inclusive
   upper bound (`<=15%`), so its OK at zero does not establish the design target.
   Verify action tempo, modifier use and stamina accounting before increasing
