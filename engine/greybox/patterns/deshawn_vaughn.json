@@ -1,0 +1,106 @@
+{
+ "file": "deshawn_vaughn.pbn",
+ "meta": {
+  "style": "SWARMER",
+  "element": "GALE",
+  "house": "none",
+  "slot": "R1",
+  "arc": "3",
+  "no_idle_weight": "true"
+ },
+ "idle": [
+  "perpetual_advance"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Merge",
+   "tags": [],
+   "tell": {
+    "motif": "gum_stop",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "RUSH(0.6m)",
+    "L_HOOK",
+    "R_HOOK"
+   ]
+  },
+  "S2": {
+   "label": "Interchange",
+   "tags": [],
+   "tell": {
+    "motif": "gum_stop",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "LATERAL_ARC",
+    "JAB",
+    "LT_L_HOOK"
+   ]
+  },
+  "S3": {
+   "label": "Pileup",
+   "tags": [
+    "SPECIAL"
+   ],
+   "tell": {
+    "motif": "gum_spit",
+    "ms": 700
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "MIXED_STRING(4)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 40,
+   "S2": 40,
+   "S3": 20
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S2"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_neutral_reset_attempt",
+   "force": "S1"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_backstep_chain3",
+   "response": "corner_cut_rush"
+  },
+  {
+   "trigger": "player_gassed",
+   "response": "w(S1)+=30"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "S3 gains_fifth_hit"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Rush Hour",
+  "arm_only": null
+ },
+ "id": "Vaughn_Deshawn"
+}

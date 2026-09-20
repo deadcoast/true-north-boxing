@@ -1,0 +1,110 @@
+{
+ "file": "efua_osei.pbn",
+ "meta": {
+  "style": "SWARMER",
+  "element": "TIMBER",
+  "house": "osei",
+  "slot": "R5",
+  "arc": "1",
+  "unsanctioned": "true",
+  "secret_power": "0.7"
+ },
+ "idle": [
+  "shell_stance",
+  "advance_patient"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Shell",
+   "tags": [
+    "STATE=3"
+   ],
+   "tell": {
+    "motif": "wrap_glint",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_STATE(3s)"
+   ]
+  },
+  "S2": {
+   "label": "Window",
+   "tags": [],
+   "tell": {
+    "motif": "wrap_glint_fast",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "SURGE(0.6m)",
+    "L_HOOK",
+    "R_HOOK",
+    "LT_R_UPC"
+   ]
+  },
+  "S3": {
+   "label": "LockedDoor",
+   "tags": [
+    "phase>=2"
+   ],
+   "tell": {
+    "motif": "double_glint",
+    "ms": 600
+   },
+   "class": "normal",
+   "actions": [
+    "GUARD_WALL_ADVANCE",
+    "HERD(60cm)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 45,
+   "S2": 40,
+   "S3": 15
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S2"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_headhunt_streak3",
+   "force": "S1"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_whiffed_body_shot",
+   "response": "immediate S2"
+  },
+  {
+   "trigger": "player_corner_entry",
+   "response": "S3"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "S1 state 3s->4s",
+    "add S3"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Deep Roots",
+  "arm_only": null
+ },
+ "id": "Osei_Efua"
+}

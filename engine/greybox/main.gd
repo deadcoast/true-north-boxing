@@ -1,121 +1,79 @@
 extends Node3D
-# TRUE NORTH BOXING - greybox combat engine. Shapes in a ring, real systems.
-# The whole NP_03 vertical playable: FNC stick punching, block/slip, stamina/
-# composure/guard, counter + flash windows, PBN boss (compiled patterns),
-# interrupts, adaptation tracker (narrated), Tension + one hissatsu, DROP +
-# standing-eight, 90s segment loop. All numbers from combat_tuning.v1.json.
+const TNBSim := preload("res://sim/core.gd")
+const TNBClock := preload("res://sim/clock.gd")
+const TNBTests := preload("res://sim/tests.gd")
+# TRUE NORTH BOXING - greybox presentation layer over TNBSim (sim/core.gd).
+# This file owns shapes, camera, HUD, FX, and the turning of device input into
+# one intent dictionary per 120Hz tick. It owns NO combat rules: every number
+# lives in sim/core.gd + combat_tuning.v1.json. The sim runs behind a
+# render-independent fixed-step accumulator (sim/clock.gd); the capsules are
+# drawn at the interpolated position between the last two sim ticks.
 #
-# PAD: LS move | RS flick punch (angle = punch) | LT+LS slip | LT+punch body
+# PAD: LS move | RS flick punch (angle = punch) | LT+LS slip/weave/lean | LT+punch body
 #      RB power | RT block | LB hold + haymaker-flick at 100 Tension = A.B.B.
+#      L3 sprint-step | R3 clinch | A = beat tap (count / clinch cue) / send (corner) | X = rest (corner) | DPAD-UP taunt
 # KEYS: WASD move | J jab, K cross, U/I hooks, O uppercut | Space block
-#       Q/E slip | Shift power | C body | H hissatsu-arm
-# META: 1-4 switch boss (Vane/Yuri/Moreau/Sam) | R reload tuning | F5 restart
-#       ENTER during count = rise beat
+#       Q/E slip | V weave | B lean | T taunt | Shift power | C body | H hissatsu-arm
+#       Ctrl sprint-step | G clinch | ENTER beat tap | 1/2 corner pick (CORNER only) | F8 audio-assist cue toggle
+# META: F1-F4 switch boss (Vane/Yuri/Moreau/Sam) | F6/F7 prev/next of all 24 | R reload tuning | F5 new dual
+# TESTS (headless): godot --headless --path . -- smoke boss=N | determinism | geometry
+# DEMO: godot --path . -- demo   (self-playing scripted fighter; the presentation soak)
 
-const BOSSES := ["cassidy_vane", "yuri_kowalchuk", "jean_guy_moreau", "sam_tagaq"]
 const PUNCH_KEYS := {KEY_J: "L_STRAIGHT", KEY_K: "R_STRAIGHT", KEY_U: "L_HOOK",
 					 KEY_I: "R_HOOK", KEY_O: "R_UPPERCUT"}
 const SECTORS := ["L_UPPERCUT","L_HOOKERCUT","L_HOOK","L_FLARED","L_STRAIGHT",
 				  "R_STRAIGHT","R_FLARED","R_HOOK","R_HOOKERCUT","R_UPPERCUT"]
+const COLORS := {"RORY": Color(0.25, 0.55, 0.9), "PRIYA": Color(0.3, 0.8, 0.75), "MARCUS": Color(0.9, 0.6, 0.2)}
+const BOSS_COLOR := Color(0.85, 0.3, 0.25)
 
-var T: Dictionary            # combat tuning
-var boss_idx := 0
-var pattern: Dictionary
+var sim: TNBSim
+var clock := TNBClock.new()
+var prev_p := Vector2.ZERO
+var prev_b := Vector2.ZERO
 
 # world
 var player: Node3D
 var boss: Node3D
 var cam: Camera3D
 var hud: Label
-var feed: Label              # commentary / tracker narration line
+var feed: Label
 var flashrect: ColorRect
+var tell_tween: Tween
 
-# fighter state (dictionaries; port of sim/engine.py)
-var P: Dictionary
-var B: Dictionary
-
-# player input state
+# edge-triggered intent, captured by _unhandled_input, consumed by the next tick
+var q_punch := ""
+var q_dodge := ""
+var q_taunt := false
+var q_corner := 0
+var q_sprint := false
+var q_clinch := false
+var audio_assist := false
+# right-stick flick classifier (harness logic, in ticks)
 var armed := true
-var t_below_off := 0.0
-var stick_capture := 0
-var stick_best := Vector2.ZERO
-var lb_held := false
-var slip_ms := 0.0
-var slip_dir := 0
-var weave_ms := 0.0
-var lean_ms := 0.0
-var pinned_p_ms := 0.0            # continuous corner time -> TRAP at 3000
-var pinned_b_ms := 0.0
-var trapped_p := false
-var trapped_b := false
-var p_vel := Vector3.ZERO         # for boss cut-off prediction
-var p_last := Vector3.ZERO
-var block_press_ms := 999999.0     # ms since RT pressed (perfect-block window)
-var pending: Dictionary = {}       # player punch in startup
-var counter_ms := 0.0              # open counter window
-var flash_ms := 0.0                # flash-counter slow-time window
-
-# boss agent
-var bstate := "IDLE"
-var btimer := 0.0
-var bstring := ""
-var bqueue: Array = []
-var bphase := 1
-var bdesp_used := false
-var bpending: Dictionary = {}
-
-# tracker (player offense)
-var tokens: Array = []
-var flags := {}                    # gram(str) -> [tier, ms]
-
-# match state - segment
-var clock := 90.0
-var drops_p := 0
-var drops_b := 0
-var tension := 0.0
-# dual layer (mini-dual: 3 segments, rotation both sides, NP_01 s8)
-var mode := "FIGHT"                # FIGHT | CORNER | OVER
-var seg_idx := 0                   # 0..2
-var ep_p := 0
-var ep_b := 0
-var contributed := 0.0             # player-side tension earned this segment (relay)
-var charged := false               # next fighter enters CHARGED
-var charge_ms := 0.0               # entrance surge active
-var hiss_threshold := 100.0
-const LINEUP_P := [
-	{"name": "RORY",   "stats": {"PWR":45,"SPD":50,"CHN":45,"RFX":50,"BLK":45,"STA":50,"HRT":99}, "color": Color(0.25,0.55,0.9)},
-	{"name": "PRIYA",  "stats": {"PWR":35,"SPD":60,"CHN":40,"RFX":70,"BLK":50,"STA":55,"HRT":60}, "color": Color(0.3,0.8,0.75)},
-	{"name": "MARCUS", "stats": {"PWR":70,"SPD":40,"CHN":65,"RFX":35,"BLK":40,"STA":55,"HRT":70}, "color": Color(0.9,0.6,0.2)},
-]
-var eight := {}                    # standing-eight overlay state
-var paused_for_eight := false
-
-# smoke harness (agent verification, headless): godot --headless --path . -- smoke
-var smoke := false
-var smoke_stage := 0
-var smoke_frames := 0
-var smoke_results: Array = []
-var smoke_auto_rise := false
+var below_tick := 0
+var capture := 0
+var best := Vector2.ZERO
+var demo_log: Array = []           # -- demo: the scripted player drives the scene (attract mode / soak)
 
 func _ready() -> void:
-	smoke = "smoke" in OS.get_cmdline_user_args()
-	if smoke: seed(12345)
-	T = _json("res://combat_tuning.v1.json")
-	for a in OS.get_cmdline_user_args():
-		if a.begins_with("boss="): boss_idx = clampi(int(a.split("=")[1]), 0, BOSSES.size() - 1)
-	_load_boss(boss_idx)
+	var args := OS.get_cmdline_user_args()
+	var boss_idx := 0
+	for a in args:
+		if a.begins_with("boss="): boss_idx = clampi(int(a.split("=")[1]), 0, TNBSim.BOSSES.size() - 1)
+	for m in ["smoke", "determinism", "geometry"]:
+		if m in args:
+			var code := TNBTests.new().run(m, boss_idx)
+			get_tree().quit(code)
+			return
+	if "demo" in args: demo_log = TNBTests.new().build_log(120 * 600, 777)
+	var content := TNBSim.load_content()
+	sim = TNBSim.new()
+	sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, TNBSim.LINEUP_MILLBROOK, boss_idx, int(Time.get_ticks_usec() % 2147483647))
 	_build_world()
-	_reset_fighters()
-	_feed("SEGMENT START - " + BOSSES[boss_idx] + "   (keys 1-4 switch boss, R reloads tuning)")
+	prev_p = sim.P["pos"]; prev_b = sim.B["pos"]
+	_consume_events()
 
-func _json(p: String) -> Dictionary:
-	return JSON.parse_string(FileAccess.get_file_as_string(p))
-
-func _load_boss(i: int) -> void:
-	boss_idx = i
-	pattern = _json("res://patterns/%s.json" % BOSSES[i])
-	bstate = "IDLE"; btimer = 600.0; bqueue = []; bphase = 1; bdesp_used = false; bpending = {}
-
+# ============================== WORLD =====================================
 func _mk_box(size: Vector3, color: Color, pos: Vector3) -> MeshInstance3D:
 	var m := MeshInstance3D.new()
 	var box := BoxMesh.new(); box.size = size
@@ -130,7 +88,11 @@ func _mk_capsule(color: Color, pos: Vector3) -> Node3D:
 	var mat := StandardMaterial3D.new(); mat.albedo_color = color
 	cap.material = mat; m.mesh = cap; m.position = Vector3(0, 0.9, 0)
 	root.add_child(m); root.set_meta("mesh", m); root.set_meta("mat", mat)
-	root.set_meta("base_color", color)
+	var head := MeshInstance3D.new()
+	var sph := SphereMesh.new(); sph.radius = 0.18; sph.height = 0.36
+	var hmat := StandardMaterial3D.new(); hmat.albedo_color = color.lightened(0.35)
+	sph.material = hmat; head.mesh = sph; head.position = Vector3(0, TNBSim.HEAD_H, 0)
+	root.add_child(head); root.set_meta("head", head)
 	return root
 
 func _build_world() -> void:
@@ -139,120 +101,40 @@ func _build_world() -> void:
 	e.background_mode = Environment.BG_COLOR; e.background_color = Color(0.09, 0.09, 0.11)
 	e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	e.ambient_light_color = Color(0.5, 0.5, 0.55); env.environment = e; add_child(env)
-	_mk_box(Vector3(7.4, 0.2, 7.4), Color(0.22, 0.24, 0.28), Vector3(0, -0.1, 0))   # canvas 24ft~7.3m
+	_mk_box(Vector3(7.4, 0.2, 7.4), Color(0.22, 0.24, 0.28), Vector3(0, -0.1, 0))
+	_mk_box(Vector3(3.7, 0.01, 3.7), Color(0.26, 0.28, 0.33), Vector3(0, 0.005, 0))          # center-ring disc hint
 	for c in [Vector3(-3.7,0.9,-3.7), Vector3(3.7,0.9,-3.7), Vector3(-3.7,0.9,3.7), Vector3(3.7,0.9,3.7)]:
-		_mk_box(Vector3(0.15, 1.8, 0.15), Color(0.55, 0.15, 0.15), c)               # posts
-	for h in [0.5, 0.95, 1.4]:                                                       # ropes
+		_mk_box(Vector3(0.15, 1.8, 0.15), Color(0.55, 0.15, 0.15), c)
+	for h in [0.5, 0.95, 1.4]:
 		_mk_box(Vector3(7.4, 0.04, 0.04), Color(0.7,0.7,0.75), Vector3(0, h, -3.7))
 		_mk_box(Vector3(7.4, 0.04, 0.04), Color(0.7,0.7,0.75), Vector3(0, h,  3.7))
 		_mk_box(Vector3(0.04, 0.04, 7.4), Color(0.7,0.7,0.75), Vector3(-3.7, h, 0))
 		_mk_box(Vector3(0.04, 0.04, 7.4), Color(0.7,0.7,0.75), Vector3( 3.7, h, 0))
-	player = _mk_capsule(Color(0.25, 0.55, 0.9), Vector3(0, 0, 1.1))
-	boss  = _mk_capsule(Color(0.85, 0.3, 0.25), Vector3(0, 0, -1.1))
+	player = _mk_capsule(COLORS["RORY"], Vector3(0, 0, 1.0))
+	boss = _mk_capsule(BOSS_COLOR, Vector3(0, 0, -1.0))
 	cam = Camera3D.new(); cam.fov = 55.0; add_child(cam)
 	var ui := CanvasLayer.new(); add_child(ui)
 	hud = Label.new(); hud.position = Vector2(20, 14)
 	hud.add_theme_font_size_override("font_size", 17); ui.add_child(hud)
-	feed = Label.new(); feed.position = Vector2(20, 660)
+	feed = Label.new(); feed.position = Vector2(20, 640); feed.size = Vector2(1240, 70)
+	feed.autowrap_mode = TextServer.AUTOWRAP_WORD
 	feed.add_theme_font_size_override("font_size", 18)
 	feed.add_theme_color_override("font_color", Color(1, 0.9, 0.5)); ui.add_child(feed)
 	flashrect = ColorRect.new(); flashrect.color = Color(1,1,1,0)
 	flashrect.size = Vector2(1280, 720); ui.add_child(flashrect)
 
-func _fresh(stats: Dictionary) -> Dictionary:
-	var g: Dictionary = T["guard"]["capacity_by_BLK"]
-	return {"stats": stats, "stamina": 100.0,
-		"comp_max": stats["CHN"] * 2.0, "comp": stats["CHN"] * 2.0,
-		"guard_max": lerpf(g["min"], g["max"], stats["BLK"] / 99.0),
-		"guard": lerpf(g["min"], g["max"], stats["BLK"] / 99.0),
-		"guard_open_ms": 0.0, "busy_ms": 0.0, "no_regen_ms": 0.0, "drops": 0}
-
-func _reset_fighters() -> void:
-	# full dual reset
-	seg_idx = 0; drops_p = 0; drops_b = 0; ep_p = 0; ep_b = 0
-	tension = 0.0; charged = false; mode = "FIGHT"
-	_load_segment()
-
-func _pname() -> String: return LINEUP_P[seg_idx]["name"]
-
-func _load_segment() -> void:
-	var f: Dictionary = LINEUP_P[seg_idx]
-	P = _fresh(f["stats"])
-	var mat: StandardMaterial3D = player.get_meta("mat")
-	mat.albedo_color = f["color"]; player.set_meta("base_color", f["color"])
-	_load_boss((boss_idx + seg_idx) % BOSSES.size())
-	B = _fresh({"PWR":60,"SPD":55,"CHN":60,"RFX":55,"BLK":55,"STA":60,"HRT":60})
-	var bmat: StandardMaterial3D = boss.get_meta("mat")
-	bmat.albedo_color = boss.get_meta("base_color")
-	clock = 90.0; contributed = 0.0
-	tokens = []; flags = {}; pending = {}; bpending = {}
-	counter_ms = 0.0; flash_ms = 0.0; hiss_threshold = 100.0; charge_ms = 0.0
-	if charged:
-		charge_ms = 10000.0; hiss_threshold = 50.0; charged = false
-		_feed("R%d: %s enters CHARGED - surge 10s, hissatsu at 50! vs %s" % [seg_idx + 1, _pname(), BOSSES[boss_idx]])
-	else:
-		_feed("R%d: %s vs %s" % [seg_idx + 1, _pname(), BOSSES[boss_idx]])
-	player.position = Vector3(0, 0, 1.1); boss.position = Vector3(0, 0, -1.1)
-	paused_for_eight = false; mode = "FIGHT"
-	Engine.time_scale = 1.0
-
-func _end_segment(why: String) -> void:
-	Engine.time_scale = 1.0
-	paused_for_eight = false; pending = {}; bpending = {}
-	charged = contributed >= 25.0
-	if seg_idx >= 2 or drops_p >= 3 or drops_b >= 3:
-		_end_dual(); return
-	mode = "CORNER"
-	_feed(("SEGMENT R%d (%s): DROPS %d-%d  EP %d-%d  banked %.0f tension" +
-		("  >> RELAY CHARGED for %s!" if charged else "") +
-		"\nCORNER (45s feel, skippable): [1] send %s  [2] rest +20 stamina next fighter") %
-		[seg_idx + 1, why, drops_p, drops_b, ep_p, ep_b, contributed,
-		 LINEUP_P[seg_idx + 1]["name"] if charged else "",
-		 LINEUP_P[seg_idx + 1]["name"]])
-
-func _corner_pick(opt: int) -> void:
-	seg_idx += 1
-	_load_segment()
-	if opt == 2:
-		P["stamina"] = minf(120.0, P["stamina"] + 20.0)
-		_feed(feed.text + "   (rested: +20 stamina)")
-
-func _end_dual() -> void:
-	mode = "OVER"
-	var verdict := "DRAW"
-	if drops_p > drops_b: verdict = "MILLBROOK WINS"
-	elif drops_b > drops_p: verdict = "ASCENDANT WINS"
-	elif ep_p != ep_b: verdict = ("MILLBROOK" if ep_p > ep_b else "ASCENDANT") + " WINS ON EP"
-	_feed("DUAL OVER :: %s   DROPS %d-%d   EP %d-%d   [F5 = new dual]" % [verdict, drops_p, drops_b, ep_p, ep_b])
-
-func _feed(t: String) -> void: feed.text = t
-
-func _zone(pos: Vector3) -> String:
-	if absf(pos.x) > 2.9 and absf(pos.z) > 2.9: return "CORNER"
-	if maxf(absf(pos.x), absf(pos.z)) > 3.1: return "ROPES"
-	if Vector2(pos.x, pos.z).length() < 1.85: return "CENTER"
-	return "MID"
-
-func _zone_mult(pos: Vector3) -> float:
-	match _zone(pos):
-		"CORNER": return float(T["zones"]["CORNER"]["dmg_mult"])
-		"ROPES":  return float(T["zones"]["ROPES"]["dmg_mult"])
-	return 1.0
-
 # ============================== INPUT =====================================
 func _poll_stick() -> Vector2:
-	var best := Vector2.ZERO
+	var v := Vector2.ZERO
 	for dev in Input.get_connected_joypads():
-		var v := Vector2(Input.get_joy_axis(dev, JOY_AXIS_RIGHT_X),
-						 Input.get_joy_axis(dev, JOY_AXIS_RIGHT_Y))
-		if v.length() > best.length(): best = v
-	return best
+		var s := Vector2(Input.get_joy_axis(dev, JOY_AXIS_RIGHT_X), Input.get_joy_axis(dev, JOY_AXIS_RIGHT_Y))
+		if s.length() > v.length(): v = s
+	return v
 
 func _move_vec() -> Vector2:
 	var v := Vector2.ZERO
 	for dev in Input.get_connected_joypads():
-		var lv := Vector2(Input.get_joy_axis(dev, JOY_AXIS_LEFT_X),
-						  Input.get_joy_axis(dev, JOY_AXIS_LEFT_Y))
+		var lv := Vector2(Input.get_joy_axis(dev, JOY_AXIS_LEFT_X), Input.get_joy_axis(dev, JOY_AXIS_LEFT_Y))
 		if lv.length() > v.length(): v = lv
 	if v.length() < 0.2: v = Vector2.ZERO
 	v.x += float(Input.is_key_pressed(KEY_D)) - float(Input.is_key_pressed(KEY_A))
@@ -264,16 +146,10 @@ func _trigger(axis: int, key: int) -> bool:
 		if Input.get_joy_axis(dev, axis) > 0.5: return true
 	return Input.is_key_pressed(key)
 
-func _blocking() -> bool: return _trigger(JOY_AXIS_TRIGGER_RIGHT, KEY_SPACE)
-func _body_mod() -> bool: return _trigger(JOY_AXIS_TRIGGER_LEFT, KEY_C)
-func _power_mod() -> bool:
+func _button(btn: int, key: int) -> bool:
 	for dev in Input.get_connected_joypads():
-		if Input.is_joy_button_pressed(dev, JOY_BUTTON_RIGHT_SHOULDER): return true
-	return Input.is_key_pressed(KEY_SHIFT)
-func _lb() -> bool:
-	for dev in Input.get_connected_joypads():
-		if Input.is_joy_button_pressed(dev, JOY_BUTTON_LEFT_SHOULDER): return true
-	return Input.is_key_pressed(KEY_H)
+		if Input.is_joy_button_pressed(dev, btn): return true
+	return Input.is_key_pressed(key)
 
 func _sector(v: Vector2) -> int:
 	var ang := rad_to_deg(atan2(-v.y, v.x))
@@ -282,173 +158,145 @@ func _sector(v: Vector2) -> int:
 		return clampi(int(floor((la + 90.0) / 36.0)), 0, 4)
 	return 5 + (4 - clampi(int(floor((ang + 90.0) / 36.0)), 0, 4))
 
-# ============================== COMBAT ====================================
-func _throw(row_name: String) -> void:
-	if P["busy_ms"] > 0 or paused_for_eight: return
-	var row: Dictionary = T["punch_matrix"][row_name]
-	var mods: Array = []
-	if _power_mod(): mods.append("POWER")
-	if _body_mod(): mods.append("BODY")
-	var hiss := lb_held and tension >= hiss_threshold and row_name in ["R_HOOKERCUT", "L_HOOKERCUT"]
-	pending = {"row": row_name, "ms": float(row["startup_ms"]) * (1.4 if "POWER" in mods else 1.0),
-			   "mods": mods, "hissatsu": hiss,
-			   "counter": counter_ms > 0.0, "flash": flash_ms > 0.0}
-	P["busy_ms"] = pending["ms"] + float(row["recovery_ms"])
-	P["stamina"] = maxf(0.0, P["stamina"] - float(row["stamina"]) * (2.0 if "POWER" in mods else 1.0))
-	_track(row_name)
+func _intent() -> Dictionary:
+	if demo_log.size() > 0: return demo_log[sim.tick % demo_log.size()]
+	var inp := {"move": _move_vec(), "block": _trigger(JOY_AXIS_TRIGGER_RIGHT, KEY_SPACE),
+		"body": _trigger(JOY_AXIS_TRIGGER_LEFT, KEY_C), "power": _button(JOY_BUTTON_RIGHT_SHOULDER, KEY_SHIFT),
+		"lb": _button(JOY_BUTTON_LEFT_SHOULDER, KEY_H), "rise": _button(JOY_BUTTON_A, KEY_ENTER), "audio_assist": audio_assist}
+	# right-stick flick -> punch (harness classifier: fast crossing + 4-tick peak capture)
+	var v := _poll_stick(); var mag := v.length()
+	if mag <= 0.25: below_tick = sim.tick
+	if capture > 0:
+		capture -= 1
+		if mag > best.length(): best = v
+		if capture == 0: q_punch = SECTORS[_sector(best)]
+	elif armed and mag >= 0.6:
+		armed = false
+		if sim.tick - below_tick <= 18: capture = 4; best = v
+	elif not armed and mag <= 0.25:
+		armed = true
+	if q_punch != "": inp["punch"] = q_punch; q_punch = ""
+	if q_dodge != "": inp["dodge"] = q_dodge; q_dodge = ""
+	if q_taunt: inp["taunt"] = true; q_taunt = false
+	if q_corner > 0: inp["corner"] = q_corner; q_corner = 0
+	if q_sprint: inp["sprint"] = true; q_sprint = false
+	if q_clinch: inp["clinch"] = true; q_clinch = false
+	return inp
 
-func _track(row_name: String) -> void:
-	tokens.append(row_name)
-	if tokens.size() > int(T["adaptation_tracker"]["window_tokens"]): tokens.pop_front()
-	for size in [2, 3]:
-		if tokens.size() >= size:
-			var gram := ",".join(tokens.slice(tokens.size() - size))
-			var cnt := 0
-			for i in range(tokens.size() - size + 1):
-				if ",".join(tokens.slice(i, i + size)) == gram: cnt += 1
-			if cnt >= int(T["adaptation_tracker"]["flag_at_count"]):
-				var prev: int = flags.get(gram, [0, 0.0])[0]
-				flags[gram] = [mini(3, prev + 1), 0.0]
-				if prev == 0:
-					_feed("COMMENTARY: He's leaning on that %s - %s is timing it now!" %
-						  [gram.replace(",", " > "), pattern.get("id", "the boss")])
+func _unhandled_input(e: InputEvent) -> void:
+	if e is InputEventKey and e.pressed and not e.echo:
+		if e.keycode in PUNCH_KEYS: q_punch = PUNCH_KEYS[e.keycode]
+		elif e.keycode == KEY_Q: q_dodge = "SLIP_L"
+		elif e.keycode == KEY_E: q_dodge = "SLIP_R"
+		elif e.keycode == KEY_V: q_dodge = "WEAVE_R"
+		elif e.keycode == KEY_B: q_dodge = "LEAN"
+		elif e.keycode == KEY_T: q_taunt = true
+		elif e.keycode == KEY_CTRL: q_sprint = true
+		elif e.keycode == KEY_G: q_clinch = true
+		elif e.keycode == KEY_F8: audio_assist = not audio_assist; feed.text = "audio-assist tell cue: " + ("ON" if audio_assist else "OFF")
+		elif e.keycode == KEY_1 and sim.mode == "CORNER": q_corner = 1
+		elif e.keycode == KEY_2 and sim.mode == "CORNER": q_corner = 2
+		elif e.keycode == KEY_R:
+			sim.T = TNBSim.load_content()["tuning"]; feed.text = "tuning hot-reloaded"
+		elif e.keycode == KEY_F5: sim.new_dual()
+		elif e.keycode >= KEY_F1 and e.keycode <= KEY_F4: sim.switch_boss(e.keycode - KEY_F1)
+		elif e.keycode == KEY_F6: sim.switch_boss((sim._first_boss + TNBSim.BOSSES.size() - 1) % TNBSim.BOSSES.size())
+		elif e.keycode == KEY_F7: sim.switch_boss((sim._first_boss + 1) % TNBSim.BOSSES.size())
+	if e is InputEventJoypadButton and e.pressed:
+		if e.button_index == JOY_BUTTON_DPAD_UP: q_taunt = true
+		elif e.button_index == JOY_BUTTON_LEFT_STICK: q_sprint = true
+		elif e.button_index == JOY_BUTTON_RIGHT_STICK: q_clinch = true
+		elif e.button_index == JOY_BUTTON_A and sim.mode == "CORNER": q_corner = 1
+		elif e.button_index == JOY_BUTTON_X and sim.mode == "CORNER": q_corner = 2
+	if e is InputEventJoypadMotion and _trigger(JOY_AXIS_TRIGGER_LEFT, KEY_C):
+		if e.axis == JOY_AXIS_LEFT_X and absf(e.axis_value) > 0.7: q_dodge = "SLIP_R" if e.axis_value > 0.0 else "SLIP_L"
+		elif e.axis == JOY_AXIS_LEFT_Y and e.axis_value < -0.7: q_dodge = "WEAVE_R"
+		elif e.axis == JOY_AXIS_LEFT_Y and e.axis_value > 0.7: q_dodge = "LEAN"
 
-func _flag_tier() -> int:
-	for size in [3, 2]:
-		if tokens.size() >= size:
-			var g := ",".join(tokens.slice(tokens.size() - size))
-			if g in flags: return flags[g][0]
-	return 0
+# ============================== LOOP ======================================
+func _process(delta: float) -> void:
+	if sim == null: return
+	var n := clock.advance(delta)
+	for i in n:
+		prev_p = sim.P["pos"]; prev_b = sim.B["pos"]
+		sim.step(_intent())
+		_consume_events()
+	_render(clock.alpha())
+	_hud()
 
-func _gassed(f: Dictionary) -> Dictionary:
-	for row in T["stamina"]["gassed_curve"]:
-		if f["stamina"] > float(row["above"]): return row
-	return T["stamina"]["gassed_curve"][-1]
+func _to3(v: Vector2) -> Vector3: return Vector3(v.x, 0.0, v.y)
 
-func _land_on_boss() -> void:
-	var pd: Dictionary = pending; pending = {}
-	if player.position.distance_to(boss.position) > 2.6:
-		return                                         # whiffed on range
-	var row: Dictionary = T["punch_matrix"][pd["row"]]
-	var dmg: float = float(row["dmg"]) * (float(P["stats"]["PWR"]) / 50.0) * float(_gassed(P)["dmg"])
-	if charge_ms > 0.0: dmg *= 1.1
-	if "POWER" in pd["mods"]: dmg *= float(T["modifiers"]["POWER"]["dmg_mult"])
-	if pd["hissatsu"]:
-		tension = 0.0; dmg *= 2.5
-		_flash(0.9); Engine.time_scale = 0.35
-		get_tree().create_timer(0.5, true, false, true).timeout.connect(func(): Engine.time_scale = 1.0)
-		_feed("AURORA BOREALIS BREAKER!")
-	if pd["counter"]: dmg *= float(T["counter_mults"]["counter"])
-	if pd["flash"]: dmg *= float(T["counter_mults"]["flash"])
-	dmg *= _zone_mult(boss.position)
-	# boss defense: base + tracker ramp (defense only, D3) - suppressed during tells (interrupt!)
-	var tier := _flag_tier()
-	var defend := 0.30 + minf(float(T["adaptation_tracker"]["ramp_cap_pct"]) / 100.0,
-							  tier * float(T["adaptation_tracker"]["defense_ramp_per_tier_pct"]) / 100.0)
-	if bstate == "TELL": defend = 0.05
-	if randf() < defend and not pd["hissatsu"]:
-		_feed("blocked / slipped" + ("  [pattern read: flagged sequence]" if tier > 0 else ""))
-		return
-	if bstate == "TELL":                               # INTERRUPT: stagger + flash window
-		bstate = "IDLE"; btimer = 800.0; bqueue = []
-		flash_ms = float(T["counter_windows_ms"]["flash"]["base"])
-		if not pd["hissatsu"]:
-			tension = minf(100.0, tension + 5.0); contributed += 5.0
-		Engine.time_scale = 0.6
-		get_tree().create_timer(0.7 * 0.6, true, false, true).timeout.connect(func(): Engine.time_scale = 1.0)
-		_feed("INTERRUPT! string broken - flash window open")
-	B["comp"] -= dmg
-	# herding: every landed punch walks him back 10cm (haymaker class 20cm)
-	var push := 0.2 if pd["row"] in ["R_HOOKERCUT", "L_HOOKERCUT", "R_FLARED"] else 0.1
-	boss.position += (boss.position - player.position).normalized() * push
-	boss.position.x = clampf(boss.position.x, -3.5, 3.5)
-	boss.position.z = clampf(boss.position.z, -3.5, 3.5)
-	if tier == 0 and not pd["hissatsu"]:
-		var earn := 3.0 if pd["counter"] else 1.5
-		if _zone(boss.position) == "CENTER" and _zone(player.position) == "CENTER":
-			earn += 2.0                     # center-ring exchange bonus (NP_01 s4)
-		tension = minf(100.0, tension + earn); contributed += earn
-	ep_p += 2
-	_bump(boss, 0.12); _hitstop(pd)
-	if B["comp"] <= 0.0: _drop(false)
+func _render(alpha: float) -> void:
+	player.position = _to3(prev_p.lerp(sim.P["pos"], alpha))
+	boss.position = _to3(prev_b.lerp(sim.B["pos"], alpha))
+	_pose(player, sim.P, sim.B)
+	_pose(boss, sim.B, sim.P)
+	var pmat: StandardMaterial3D = player.get_meta("mat")
+	pmat.albedo_color = COLORS.get(sim.pname(), COLORS["RORY"])
+	var back: Vector3 = (player.position - boss.position).normalized()
+	if back.length() < 0.5: back = Vector3(0, 0, 1)
+	cam.position = player.position + back * 1.8 + Vector3(0, 1.5, 0)
+	var target := boss.position + Vector3(0, 1.2, 0)
+	if Vector2(target.x - cam.position.x, target.z - cam.position.z).length() > 0.05:
+		cam.look_at(target)
 
-func _boss_land(dmg_mult: float, is_desp: bool) -> void:
-	var brow: String = bpending.get("row", "R_STRAIGHT")
-	var row: Dictionary = T["punch_matrix"][brow]
-	bpending = {}
-	var dmg: float = float(row["dmg"]) * (float(B["stats"]["PWR"]) / 50.0) * dmg_mult
-	dmg *= _zone_mult(player.position)
-	var wide := 1.4 if trapped_p else 1.0     # trapped fighter reads wider (desperation)
-	var is_upc := brow in ["R_UPPERCUT", "L_UPPERCUT"]
-	var is_hook := brow in ["R_HOOK", "L_HOOK", "R_HOOKERCUT", "L_HOOKERCUT"]
-	# spatial dodges: slip beats straights/hooks, loses to uppercuts; lean beats hooks;
-	# weave beats straights/hooks and repositions around him
-	if slip_ms > 0.0:
-		if is_upc:
-			P["comp"] -= dmg * 1.5            # uppercut through the slip (mistime tax)
-			_bump(player, 0.15); _feed("UPPERCUT through the slip!")
-			if P["comp"] <= 0.0: _drop(true)
-			return
-		counter_ms = float(T["counter_windows_ms"]["slip"]["base"]) * wide
-		_feed("slipped it - counter window!" + ("  [trapped read: wider]" if trapped_p else ""))
-		return
-	if lean_ms > 0.0 and is_hook:
-		counter_ms = float(T["counter_windows_ms"]["perfect_block"]["base"]) * 0.8 * wide
-		player.position += (player.position - boss.position).normalized() * 0.2
-		_feed("leaned back under the hook")
-		return
-	if weave_ms > 0.0 and not is_upc:
-		counter_ms = float(T["counter_windows_ms"]["weave"]["base"] if T["counter_windows_ms"].has("weave") else 450.0) * wide
-		var lat := (player.position - boss.position).cross(Vector3.UP).normalized()
-		player.position += lat * 0.5 - (player.position - boss.position).normalized() * 0.1
-		pinned_p_ms = 0.0; trapped_p = false
-		_feed("weaved through - repositioned" + ("  [trap escaped]" if trapped_p else ""))
-		return
-	if _blocking():
-		if block_press_ms <= float(T["guard"]["perfect_block_window_ms"]):
-			counter_ms = float(T["counter_windows_ms"]["perfect_block"]["base"])
-			_feed("PERFECT BLOCK - counter window!")
-			return
-		P["guard"] -= float(row["guard_dmg"])
-		P["comp"] -= dmg * float(T["guard"]["chip_pct"]) / 100.0
-		if P["guard"] <= 0.0:
-			P["guard_open_ms"] = float(T["guard"]["break_open_ms"])
-			_feed("GUARD BREAK - you're OPEN")
-		return
-	P["comp"] -= dmg * (1.5 if P["guard_open_ms"] > 0.0 else 1.0)
-	ep_b += 2
-	player.position += (player.position - boss.position).normalized() * 0.12   # herded back
-	player.position.x = clampf(player.position.x, -3.5, 3.5)
-	player.position.z = clampf(player.position.z, -3.5, 3.5)
-	_bump(player, 0.12)
-	if P["comp"] <= 0.0: _drop(true)
+func _pose(n: Node3D, F: Dictionary, other: Dictionary) -> void:
+	# the head sphere sits where the sim says the head is: dodges are visible, not implied
+	var head: MeshInstance3D = n.get_meta("head")
+	var mesh: MeshInstance3D = n.get_meta("mesh")
+	var fwd: Vector2 = (other["pos"] - F["pos"]).normalized()
+	var right := Vector2(fwd.y, -fwd.x)
+	var lat := 0.0; var h := TNBSim.HEAD_H; var back := 0.0
+	if F["dodge"] != "":
+		var d: Dictionary = TNBSim.DODGE[F["dodge"]]
+		lat = float(d["lat"]) * float(F["dodge_dir"]); h = float(d["h"]); back = float(d["back"])
+	var off: Vector2 = right * lat - fwd * back
+	head.position = Vector3(off.x, h, off.y)
+	mesh.scale = Vector3(1, 0.85, 1) if F["dodge"] == "DUCK" or F["dodge"] == "WEAVE" else Vector3.ONE
+	if F["blocking"]: mesh.scale = Vector3(1.08, 1.0, 1.08)
+	if F["guard_open_t"] > 0: mesh.scale = Vector3(0.92, 1.0, 0.92)
 
-func _drop(player_down: bool) -> void:
-	Engine.time_scale = 1.0
-	if player_down:
-		drops_b += 1; P["drops"] += 1
-		if P["drops"] >= 3:
-			_end_segment("three knockdowns - segment KO against " + _pname()); return
-		paused_for_eight = true
-		eight = {"beats_left": 3, "window_ms": lerpf(60, 140, (P["stats"]["HRT"] - 30) / 60.0) * 4.0,
-				 "timer": 1200.0}
-		_feed("DOWN! Standing-eight: press ENTER as the count lands (%d beats)" % eight["beats_left"])
-	else:
-		drops_p += 1; B["drops"] += 1
-		tension = minf(100.0, tension + 10.0)
-		B["comp"] = B["comp_max"] * 0.5
-		_bump(boss, 0.5)
-		_flash(0.5)
-		_feed("DROP SCORED! %d-%d" % [drops_p, drops_b])
-		if B["drops"] >= 3:
-			_end_segment("SEGMENT KO by " + _pname())
+var fx_counts := {}
 
-func _hitstop(pd: Dictionary) -> void:
-	var ms: int = T["hit_feel"]["hitstop_ms"]["flash_or_hissatsu"] if (pd.get("flash", false) or pd.get("hissatsu", false)) \
-		else (T["hit_feel"]["hitstop_ms"]["counter"] if pd.get("counter", false) else T["hit_feel"]["hitstop_ms"]["normal"])
-	Engine.time_scale = 0.05
-	get_tree().create_timer(ms / 1000.0 * 0.05, true, false, true).timeout.connect(func():
-		if not paused_for_eight: Engine.time_scale = 1.0 if flash_ms <= 0 else 0.6)
+func _exit_tree() -> void:
+	if sim != null and demo_log.size() > 0:
+		print("DEMO SOAK :: %d ticks, mode=%s R%d %s vs %s, score %d-%d, fx %s" % [sim.tick, sim.mode, sim.seg_idx + 1, sim.pname(), sim.boss_name, sim.score_p, sim.score_b, JSON.stringify(fx_counts)])
+
+func _consume_events() -> void:
+	for ev in sim.events:
+		fx_counts[ev["kind"]] = int(fx_counts.get(ev["kind"], 0)) + 1
+		match ev["kind"]:
+			"feed": feed.text = ev["text"]
+			"hit":
+				var target: Node3D = boss if ev["on"] == "B" else player
+				_bump(target, 0.12)
+				if ev.get("counter", false) or ev.get("flash", false):
+					_flash(0.2); cam.fov = 52.0
+					get_tree().create_tween().tween_property(cam, "fov", 55.0, 0.25)
+			"drop":
+				_flash(0.5); _bump(boss if ev["who"] == "B" else player, 0.5)
+			"hissatsu": _flash(0.9)
+			"tell": _tell_fx(int(ev["ticks"]) / float(TNBSim.TICK_HZ), bool(ev["loud"]))
+			"recover", "interrupt":
+				var mat: StandardMaterial3D = boss.get_meta("mat"); mat.albedo_color = BOSS_COLOR
+				if tell_tween: tell_tween.kill()
+				var mesh: MeshInstance3D = boss.get_meta("mesh"); mesh.scale = Vector3.ONE
+			"perfect_block": _flash(0.12)
+			"clinch":
+				var pm: MeshInstance3D = player.get_meta("mesh"); pm.scale = Vector3(1.1, 0.97, 1.1)
+				var bm: MeshInstance3D = boss.get_meta("mesh"); bm.scale = Vector3(1.1, 0.97, 1.1)
+			"clinch_beat": _flash(0.1)
+			"clinch_end":
+				var pm2: MeshInstance3D = player.get_meta("mesh"); pm2.scale = Vector3.ONE
+				var bm2: MeshInstance3D = boss.get_meta("mesh"); bm2.scale = Vector3.ONE
+				_flash(0.25 if ev["winner"] == "P" else 0.15)
+			"warning", "referee":
+				flashrect.color = Color(1, 0.3, 0.2, 0.35)
+				get_tree().create_tween().tween_property(flashrect, "color:a", 0.0, 0.5)
+			"stance":
+				var mat2: StandardMaterial3D = boss.get_meta("mat")
+				mat2.albedo_color = BOSS_COLOR.darkened(0.35) if ev["hands_down"] else BOSS_COLOR
+	sim.events.clear()
 
 func _bump(n: Node3D, amt: float) -> void:
 	var mesh: MeshInstance3D = n.get_meta("mesh")
@@ -459,454 +307,39 @@ func _flash(a: float) -> void:
 	flashrect.color.a = a
 	get_tree().create_tween().tween_property(flashrect, "color:a", 0.0, 0.35)
 
-# ============================== BOSS AGENT ================================
-func _phase_ok(sname: String) -> bool:
-	for t in pattern["strings"][sname]["tags"]:
-		if str(t).begins_with("phase>="):
-			return bphase >= int(str(t).split(">=")[1])
-	return true
-
-func _boss_step(dt_ms: float) -> void:
-	# phase triggers
-	for ph in pattern.get("phases", []):
-		var trig: String = ph["trigger"]
-		if "composure<" in trig:
-			var n := float(trig.split("composure<")[1].split(" ")[0].replace(":", ""))
-			if B["comp"] <= B["comp_max"] * n / 100.0: bphase = maxi(bphase, int(ph["phase"]) if str(ph["phase"]).is_valid_int() else bphase + 1)
-		elif "clock>" in trig:
-			var n2 := float(trig.split("clock>")[1].rstrip("s").split(" ")[0].replace(":", ""))
-			if (90.0 - clock) > n2: bphase = maxi(bphase, int(ph["phase"]) if str(ph["phase"]).is_valid_int() else bphase + 1)
-	var d: Dictionary = pattern.get("desperation") if pattern.get("desperation") != null else {}
-	if not bdesp_used and d.has("move") and B["comp"] <= B["comp_max"] * 0.25:
-		bdesp_used = true
-		bstate = "TELL"; bstring = ""; btimer = 1200.0
-		_tell_fx(1200.0, true)
-		_feed("!! DESPERATION ARMING: " + str(d["move"]) + " - interrupt or survive it")
-		bqueue = [{"row": "R_HOOKERCUT", "mult": 2.2}]
-		return
-	btimer -= dt_ms
-	if btimer > 0.0: return
-	match bstate:
-		"IDLE", "RECOVER":
-			var w: Dictionary = {}
-			for k in pattern["select"]["weights"]:
-				if _phase_ok(k) and int(pattern["select"]["weights"][k]) > 0:
-					w[k] = int(pattern["select"]["weights"][k])
-			for k in pattern["strings"]:
-				if not k in w and _phase_ok(k): w[k] = 15
-			var total := 0
-			for k in w:
-				total += w[k]
-			var r := randf() * total
-			for k in w:
-				r -= w[k]
-				if r <= 0.0: bstring = k; break
-			var s: Dictionary = pattern["strings"][bstring]
-			bstate = "TELL"; btimer = float(s["tell"]["ms"])
-			_tell_fx(btimer, s["class"] != "normal")
-		"TELL":
-			if bstring == "":               # desperation arming: queue was set directly
-				bstate = "ACTING"; btimer = 0.0
-				return
-			var s2: Dictionary = pattern["strings"][bstring]
-			bqueue = []
-			for a in s2["actions"]:
-				var verb: String = str(a).split("(")[0].split(" ")[0]
-				if verb in ["JAB","L_STR","R_STR","L_HOOK","R_HOOK","R_UPC","L_UPC","R_HAY","R_OVERHAND",
-							"CHECK_HOOK","LT_L_HOOK","LT_R_HOOK","LT_R_UPC","COUNTER_R_STR","COUNTER_L_HOOK",
-							"STEP_R_STR","PULL_COUNTER_OVERHAND","UNDER_ELBOW_CROSS"]:
-					bqueue.append({"row": _map_row(verb), "mult": 1.0})
-			bstate = "ACTING"; btimer = 0.0
-		"ACTING":
-			if bqueue.is_empty():
-				bstate = "RECOVER"; btimer = randf_range(500, 900)
-				var mat: StandardMaterial3D = boss.get_meta("mat")
-				mat.albedo_color = boss.get_meta("base_color")
-				return
-			var atk: Dictionary = bqueue.pop_front()
-			bpending = atk
-			var row: Dictionary = T["punch_matrix"][atk["row"]]
-			# lunge toward player
-			var dirv: Vector3 = (player.position - boss.position).normalized()
-			boss.position += dirv * 0.25
-			_boss_land(float(atk.get("mult", 1.0)) * float(_gassed(B)["dmg"]), false)
-			btimer = float(row["recovery_ms"]) * 0.7
-
-func _map_row(verb: String) -> String:
-	match verb:
-		"JAB", "L_STR": return "L_STRAIGHT"
-		"R_STR", "COUNTER_R_STR", "STEP_R_STR", "UNDER_ELBOW_CROSS": return "R_STRAIGHT"
-		"L_HOOK", "CHECK_HOOK", "LT_L_HOOK", "COUNTER_L_HOOK": return "L_HOOK"
-		"R_HOOK", "LT_R_HOOK": return "R_HOOK"
-		"R_UPC", "LT_R_UPC": return "R_UPPERCUT"
-		"L_UPC": return "L_UPPERCUT"
-		"R_HAY": return "R_HOOKERCUT"
-		"R_OVERHAND", "PULL_COUNTER_OVERHAND": return "R_FLARED"
-	return "R_STRAIGHT"
-
-func _tell_fx(ms: float, loud: bool) -> void:
+func _tell_fx(secs: float, loud: bool) -> void:
 	var mat: StandardMaterial3D = boss.get_meta("mat")
 	mat.albedo_color = Color(1.0, 0.85, 0.2) if loud else Color(1.0, 0.6, 0.2)
 	var mesh: MeshInstance3D = boss.get_meta("mesh")
-	var tw := get_tree().create_tween()
-	tw.tween_property(mesh, "scale", Vector3(1.15, 1.05, 1.15), ms / 2000.0)
-	tw.tween_property(mesh, "scale", Vector3.ONE, ms / 2000.0)
+	if tell_tween: tell_tween.kill()
+	tell_tween = get_tree().create_tween()
+	tell_tween.tween_property(mesh, "scale", Vector3(1.15, 1.05, 1.15), secs * 0.5)
+	tell_tween.tween_property(mesh, "scale", Vector3.ONE, secs * 0.5)
 
-# ============================== LOOP ======================================
-func _process(delta: float) -> void:
-	var dt_ms := delta * 1000.0
-	if mode == "CORNER":
-		if Input.is_key_pressed(KEY_1) or Input.is_joy_button_pressed(0, JOY_BUTTON_A): _corner_pick(1)
-		elif Input.is_key_pressed(KEY_2) or Input.is_joy_button_pressed(0, JOY_BUTTON_X): _corner_pick(2)
-		if smoke: _smoke_tick()
-		_hud(); return
-	if mode == "OVER":
-		if smoke: _smoke_tick()
-		_hud(); return
-	if charge_ms > 0.0: charge_ms -= dt_ms
-	if paused_for_eight and eight.has("beats_left"):
-		_eight_tick(dt_ms); _hud(); return
-	if paused_for_eight: _hud(); return
-	clock = maxf(0.0, clock - delta)
-	# movement (player) + face-off; feet planted during any dodge
-	var mv := _move_vec() if (slip_ms <= 0.0 and weave_ms <= 0.0 and lean_ms <= 0.0) else Vector2.ZERO
-	var spd := lerpf(2.2, 3.4, P["stats"]["SPD"] / 99.0) * float(_gassed(P)["foot_speed"])
-	var fwd: Vector3 = (boss.position - player.position).normalized()
-	var right := fwd.cross(Vector3.UP)
-	player.position += (-right * mv.x - fwd * mv.y) * spd * delta * (0.7 if mv.y > 0 else 1.0)
-	player.position.x = clampf(player.position.x, -3.5, 3.5)
-	player.position.z = clampf(player.position.z, -3.5, 3.5)
-	p_vel = (player.position - p_last) / maxf(delta, 0.001); p_last = player.position
-	# boss ring generalship: keeps range AND cuts the escape angle (intercepts your motion)
-	var dist := boss.position.distance_to(player.position)
-	if dist > 2.1 and bstate != "ACTING":
-		var intercept: Vector3 = player.position + p_vel * 0.35
-		boss.position += (intercept - boss.position).normalized() * 1.2 * delta
-		boss.position.x = clampf(boss.position.x, -3.5, 3.5)
-		boss.position.z = clampf(boss.position.z, -3.5, 3.5)
-	# corner trap timers (3s pinned = TRAP, NP_01 s4)
-	if _zone(player.position) == "CORNER" and dist < 2.6:
-		pinned_p_ms += dt_ms
-		if pinned_p_ms >= 3000.0 and not trapped_p:
-			trapped_p = true; _feed("CORNER TRAP - damage x1.5, guard bleeding, but your reads are WIDER. Weave out!")
-	else:
-		pinned_p_ms = 0.0; trapped_p = false
-	if _zone(boss.position) == "CORNER" and dist < 2.6:
-		pinned_b_ms += dt_ms
-		if pinned_b_ms >= 3000.0 and not trapped_b:
-			trapped_b = true; _feed("HE'S TRAPPED IN THE CORNER - x1.5 window, finish it!")
-	else:
-		pinned_b_ms = 0.0; trapped_b = false
-	weave_ms = maxf(0.0, weave_ms - dt_ms)
-	lean_ms = maxf(0.0, lean_ms - dt_ms)
-	# camera: Punch-Out rig - behind/above player, boss centered
-	var back: Vector3 = (player.position - boss.position).normalized()
-	cam.position = player.position + back * 1.8 + Vector3(0, 1.5, 0)
-	cam.look_at(boss.position + Vector3(0, 1.2, 0))
-	# timers + regen
-	for F in [P, B]:
-		var acting: bool = F["busy_ms"] > 0.0
-		F["busy_ms"] = maxf(0.0, F["busy_ms"] - dt_ms)
-		F["stamina"] = minf(100.0, F["stamina"] + (T["stamina"]["regen_active_per_s"] if acting else T["stamina"]["regen_neutral_per_s"]) * delta)
-		if F["no_regen_ms"] > 0.0: F["no_regen_ms"] -= dt_ms
-		else: F["comp"] = minf(F["comp_max"], F["comp"] + T["composure"]["regen_per_s"] * delta)
-		if F["guard_open_ms"] > 0.0:
-			F["guard_open_ms"] -= dt_ms
-			if F["guard_open_ms"] <= 0.0: F["guard"] = float(T["guard"]["break_refill"])
-	if _blocking():
-		block_press_ms += dt_ms
-		var decay: float = float(T["guard"]["hold_decay_per_s"]) * (float(T["zones"]["CORNER"]["guard_decay_mult"]) if _zone(player.position) == "CORNER" else 1.0)
-		P["guard"] = maxf(0.0, P["guard"] - decay * delta)
-	else:
-		block_press_ms = 0.0
-		P["guard"] = minf(P["guard_max"], P["guard"] + T["guard"]["regen_per_s"] * delta)
-	slip_ms = maxf(0.0, slip_ms - dt_ms)
-	counter_ms = maxf(0.0, counter_ms - dt_ms)
-	if flash_ms > 0.0:
-		flash_ms -= dt_ms
-		if flash_ms <= 0.0: Engine.time_scale = 1.0
-	# stick punch detection (harness logic, fixed version)
-	lb_held = _lb()
-	var v := _poll_stick()
-	var mag := v.length()
-	if mag <= 0.25: t_below_off = Time.get_ticks_msec()
-	if stick_capture > 0:
-		stick_capture -= 1
-		if mag > stick_best.length(): stick_best = v
-		if stick_capture == 0: _throw(SECTORS[_sector(stick_best)])
-	elif armed and mag >= 0.6:
-		armed = false
-		if Time.get_ticks_msec() - t_below_off <= 150:
-			stick_capture = 2; stick_best = v
-	elif not armed and mag <= 0.25:
-		armed = true
-	# player punch impact
-	if not pending.is_empty():
-		pending["ms"] -= dt_ms
-		if pending["ms"] <= 0.0: _land_on_boss()
-	# boss
-	_boss_step(dt_ms)
-	if clock <= 0.0 and mode == "FIGHT":
-		_end_segment("clock")
-	_hud()
-	if smoke: _smoke_tick()
-
-func _eight_tick(dt_ms: float) -> void:
-	eight["timer"] -= dt_ms
-	if eight["timer"] <= -eight["window_ms"]:
-		_feed("COUNTED OUT. F5 to rematch."); eight = {}; return
-	if smoke_auto_rise or Input.is_key_pressed(KEY_ENTER) or Input.is_joy_button_pressed(0, JOY_BUTTON_A):
-		if absf(eight["timer"]) <= eight["window_ms"]:
-			eight["beats_left"] -= 1
-			if eight["beats_left"] <= 0:
-				paused_for_eight = false; eight = {}
-				P["comp"] = P["comp_max"] * 0.5
-				P["no_regen_ms"] = 10000.0
-				tension = minf(100.0, tension + 8.0)
-				_feed("UP AT EIGHT! Crowd surge +8 Tension - composure regen halted 10s")
-				return
-			eight["timer"] = 1200.0
-			_feed("beat! %d to go" % eight["beats_left"])
-
+# ============================== HUD =======================================
 func _bar(v: float, vmax: float, w: int) -> String:
 	var n := int(clampf(v / vmax, 0.0, 1.0) * w)
 	return "[" + "#".repeat(n) + "-".repeat(w - n) + "]"
 
 func _hud() -> void:
-	var zp := _zone(player.position)
-	var zb := _zone(boss.position)
-	hud.text = "TRUE NORTH BOXING :: greybox   R%d/3  %s vs %s   clock %5.1f   DROPS %d-%d   EP %d-%d\n" % [seg_idx + 1, _pname(), BOSSES[boss_idx], clock, drops_p, drops_b, ep_p, ep_b] \
-		+ "ZONE you:%s%s  him:%s%s\n" % [zp, " TRAPPED" if trapped_p else "", zb, " TRAPPED" if trapped_b else ""] \
-		+ "YOU   stam %s  chin %s  guard %s%s\n" % [_bar(P["stamina"],100,14), _bar(P["comp"],P["comp_max"],14), _bar(P["guard"],P["guard_max"],10), "  OPEN!" if P["guard_open_ms"]>0 else ""] \
-		+ "BOSS  chin %s   phase %d%s\n" % [_bar(B["comp"],B["comp_max"],14), bphase, "   << TELL - HIT HIM NOW" if bstate=="TELL" else ""] \
-		+ "TENSION %s %3.0f  %s%s%s" % [_bar(tension,100,16), tension, "ABB READY (LB + haymaker flick)" if tension>=100 else "", "   counter!" if counter_ms>0 else "", "   FLASH!" if flash_ms>0 else ""]
-
-func _unhandled_input(e: InputEvent) -> void:
-	if e is InputEventKey and e.pressed and not e.echo:
-		if e.keycode in PUNCH_KEYS: _throw(PUNCH_KEYS[e.keycode])
-		elif e.keycode == KEY_Q: _do_slip(-1)
-		elif e.keycode == KEY_E: _do_slip(1)
-		elif e.keycode == KEY_V: _do_weave()
-		elif e.keycode == KEY_B: _do_lean()
-		elif e.keycode == KEY_R:
-			T = _json("res://combat_tuning.v1.json"); _feed("tuning hot-reloaded")
-		elif e.keycode == KEY_F5:
-			Engine.time_scale = 1.0; paused_for_eight = false; _reset_fighters(); _feed("REMATCH")
-		elif e.keycode >= KEY_1 and e.keycode <= KEY_4:
-			_load_boss(e.keycode - KEY_1)
-			Engine.time_scale = 1.0; paused_for_eight = false; _reset_fighters()
-			_feed("NOW FIGHTING: " + BOSSES[boss_idx])
-	# pad head movement: LT + LS lateral = slip, LT + LS forward = weave, LT + LS back = lean
-	if e is InputEventJoypadMotion and _body_mod():
-		if e.axis == JOY_AXIS_LEFT_X and absf(e.axis_value) > 0.7:
-			_do_slip(1 if e.axis_value > 0.0 else -1)
-		elif e.axis == JOY_AXIS_LEFT_Y and e.axis_value < -0.7:
-			_do_weave()
-		elif e.axis == JOY_AXIS_LEFT_Y and e.axis_value > 0.7:
-			_do_lean()
-
-func _do_slip(dir: int) -> void:
-	if slip_ms > 0.0 or weave_ms > 0.0 or lean_ms > 0.0 or paused_for_eight: return
-	slip_ms = 260.0; slip_dir = dir
-	var lat := (boss.position - player.position).cross(Vector3.UP).normalized()
-	player.position += lat * 0.35 * dir       # the head MOVES - spatial dodge
-
-func _do_weave() -> void:
-	if weave_ms > 0.0 or slip_ms > 0.0 or paused_for_eight: return
-	weave_ms = 400.0
-
-func _do_lean() -> void:
-	if lean_ms > 0.0 or slip_ms > 0.0 or paused_for_eight: return
-	lean_ms = 300.0
-	P["stamina"] = maxf(0.0, P["stamina"] - 5.0)
-
-
-# ============================== SMOKE =====================================
-func _sr(name: String, ok: bool, detail: String = "") -> void:
-	smoke_results.append([name, ok, detail])
-	print("  [%s]  %-38s %s" % [" OK " if ok else "FAIL", name, detail])
-
-func _smoke_tick() -> void:
-	smoke_frames += 1
-	match smoke_stage:
-		0:
-			if smoke_frames < 5: return
-			print("SMOKE :: greybox systems, boss=" + BOSSES[boss_idx])
-			_sr("tuning+pattern loaded", not T.is_empty() and not pattern.is_empty())
-			_sr("world built", player != null and boss != null and cam != null)
-			smoke_stage = 1
-		1:
-			# tracker: 4x same jab must flag the 2-gram and narrate
-			boss.position = player.position + Vector3(0, 0, -1.5)
-			for i in range(4):
-				P["busy_ms"] = 0.0
-				_throw("L_STRAIGHT")
-				pending["ms"] = 0.0
-				_land_on_boss()
-			_sr("tracker flags repeat 2-gram", _flag_tier() >= 1, "tier=%d" % _flag_tier())
-			_sr("stamina drains on punches", P["stamina"] < 100.0, "%.1f" % P["stamina"])
-			smoke_stage = 2
-		2:
-			# interrupt: force a tell, land during it (retry through the 5pct evade roll)
-			var comp_before: float = B["comp"]
-			for i in range(8):
-				bstate = "TELL"; bstring = pattern["strings"].keys()[0]; btimer = 500.0
-				P["busy_ms"] = 0.0; tokens = []; flags = {}
-				_throw("R_STRAIGHT"); pending["ms"] = 0.0; _land_on_boss()
-				if bstate != "TELL": break
-			_sr("interrupt breaks tell", bstate != "TELL", "state=" + bstate)
-			_sr("interrupt opens flash window", flash_ms > 0.0, "%.0fms" % flash_ms)
-			_sr("interrupt pays tension", tension > 0.0, "%.1f" % tension)
-			_sr("boss took damage", B["comp"] < comp_before)
-			Engine.time_scale = 1.0
-			smoke_stage = 3
-		3:
-			# drop the boss: force low composure, land until the drop registers
-			bstate = "IDLE"
-			var d0 := drops_p
-			for i in range(12):
-				B["comp"] = 1.0
-				P["busy_ms"] = 0.0; tokens = []; flags = {}
-				_throw("R_UPPERCUT"); pending["ms"] = 0.0; _land_on_boss()
-				if drops_p > d0: break
-			_sr("DROP scored at composure<=0", drops_p == d0 + 1, "%d-%d" % [drops_p, drops_b])
-			_sr("post-drop composure reset 50pct", absf(B["comp"] - B["comp_max"] * 0.5) < 1.0)
-			smoke_stage = 4
-		4:
-			# player drop -> standing-eight -> auto-rise -> crowd surge
-			P["comp"] = 0.5
-			bpending = {"row": "R_HOOKERCUT"}
-			var t0: float = tension
-			_boss_land(1.0, false)
-			_sr("player drop triggers eight-count", paused_for_eight and eight.has("beats_left"))
-			smoke_auto_rise = true
-			smoke_stage = 5
-		5:
-			if paused_for_eight: return       # _eight_tick auto-rising
-			_sr("standing-eight rise works", P["comp"] > 0.0 and P["no_regen_ms"] > 0.0,
-				"comp=%.1f halt=%.0fms" % [P["comp"], P["no_regen_ms"]])
-			smoke_stage = 6
-		6:
-			# guard: hold-block chip + break/refill
-			P["guard"] = 1.0
-			block_press_ms = 9999.0
-			# simulate a blocked hit via _boss_land with blocking forced through guard math
-			P["guard"] -= 20.0
-			if P["guard"] <= 0.0: P["guard_open_ms"] = float(T["guard"]["break_open_ms"])
-			_sr("guard break opens", P["guard_open_ms"] > 0.0)
-			P["guard_open_ms"] = 1.0    # let tick refill next frame
-			smoke_stage = 7
-		7:
-			_sr("guard refills after break", P["guard"] >= float(T["guard"]["break_refill"]) - 1.0,
-				"%.1f" % P["guard"])
-			# ABB: full bar + lb + haymaker
-			tension = 100.0; lb_held = true
-			P["busy_ms"] = 0.0; tokens = []; flags = {}
-			pending = {}
-			B["comp"] = B["comp_max"]      # healthy target: isolate cast cost from drop bonus
-			var dpre := drops_p
-			_throw("R_HOOKERCUT")
-			var was_hiss: bool = pending.get("hissatsu", false)
-			pending["ms"] = 0.0; _land_on_boss()
-			var expect: float = 10.0 if drops_p > dpre else 0.0
-			_sr("hissatsu arms at 100 tension", was_hiss)
-			_sr("hissatsu bar = cast zero + drop bonus only", tension == expect,
-				"%.0f (expected %.0f)" % [tension, expect])
-			Engine.time_scale = 1.0
-			smoke_stage = 8
-		8:
-			# boss agent runs strings on its own over time
-			smoke_stage = 9; smoke_frames = 0
-			paused_for_eight = false
-		9:
-			if smoke_frames < 240: return     # ~4s of live agent
-			_sr("boss agent cycles strings", bstate != "" and (bstring != "" or bstate == "IDLE"),
-				"state=%s string=%s phase=%d" % [bstate, bstring, bphase])
-			smoke_stage = 10
-		10:
-			# dual layer: bank relay tension, then force segment end
-			contributed = 30.0
-			var t_persist := 42.0
-			tension = t_persist
-			paused_for_eight = false
-			_end_segment("smoke-forced")
-			_sr("segment end enters CORNER", mode == "CORNER")
-			_sr("relay CHARGED at >=25 contributed", charged)
-			_corner_pick(1)
-			_sr("rotation loads next fighter", _pname() == "PRIYA", _pname())
-			_sr("tension persists across segments", tension == t_persist, "%.0f" % tension)
-			_sr("CHARGED surge + hissatsu discount", charge_ms > 0.0 and hiss_threshold == 50.0,
-				"%.0fms thr=%.0f" % [charge_ms, hiss_threshold])
-			smoke_stage = 11
-		11:
-			# run seg2 to the corner without relay bank, then into seg3 and force the verdict
-			contributed = 0.0
-			_end_segment("smoke-forced")
-			_sr("no relay under 25 contributed", not charged)
-			_corner_pick(2)
-			_sr("seg3 loads MARCUS", _pname() == "MARCUS", _pname())
-			drops_p = 2; drops_b = 1; ep_p = 40; ep_b = 22
-			_end_segment("smoke-forced")
-			_sr("dual verdict on drops", mode == "OVER" and "MILLBROOK WINS" in feed.text)
-			mode = "FIGHT"; paused_for_eight = false
-			smoke_stage = 12
-		12:
-			# zone classification + corner damage multiplier (deterministic path)
-			var zc := _zone(Vector3(0, 0, 1.0)) == "CENTER" and _zone(Vector3(2.0, 0, 0)) == "MID" \
-				and _zone(Vector3(3.3, 0, 0)) == "ROPES" and _zone(Vector3(3.3, 0, 3.3)) == "CORNER"
-			_sr("zone classification (4 zones)", zc)
-			slip_ms = 0.0; weave_ms = 0.0; lean_ms = 0.0; trapped_p = false
-			P["comp"] = P["comp_max"]; player.position = Vector3(0, 0, 1.0)
-			bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
-			var d_center: float = P["comp_max"] - P["comp"]
-			P["comp"] = P["comp_max"]; player.position = Vector3(3.3, 0, 3.3)
-			bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
-			var d_corner: float = P["comp_max"] - P["comp"]
-			_sr("corner damage x1.5 vs center", absf(d_corner / maxf(0.01, d_center) - 1.5) < 0.05,
-				"%.1f/%.1f" % [d_corner, d_center])
-			smoke_stage = 13
-		13:
-			# trap arming + widened trapped reads
-			player.position = Vector3(3.3, 0, 3.3); boss.position = Vector3(2.2, 0, 2.2)
-			pinned_p_ms = 3100.0; trapped_p = true
-			P["comp"] = P["comp_max"]
-			_do_slip(1); bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
-			var base_w: float = float(T["counter_windows_ms"]["slip"]["base"])
-			_sr("trapped slip window x1.4", absf(counter_ms - base_w * 1.4) < 1.0, "%.0fms" % counter_ms)
-			slip_ms = 0.0; counter_ms = 0.0
-			smoke_stage = 14
-		14:
-			# herding both ways
-			trapped_p = false; pinned_p_ms = 0.0
-			player.position = Vector3(0, 0, 0.9); boss.position = Vector3(0, 0, -0.9)
-			var bz0: float = boss.position.z
-			P["busy_ms"] = 0.0; tokens = []; flags = {}; bstate = "IDLE"
-			for i in range(6):
-				P["busy_ms"] = 0.0
-				_throw("L_STRAIGHT" if i % 2 == 0 else "R_HOOK"); pending["ms"] = 0.0; _land_on_boss()
-				if boss.position.z != bz0: break
-			_sr("landed punches herd him back", boss.position.z < bz0, "%.2f -> %.2f" % [bz0, boss.position.z])
-			var pz0: float = player.position.z
-			P["comp"] = P["comp_max"]; slip_ms = 0.0; weave_ms = 0.0; lean_ms = 0.0
-			bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
-			_sr("his punches herd you back", player.position.z > pz0, "%.2f -> %.2f" % [pz0, player.position.z])
-			smoke_stage = 15
-		15:
-			# dodge matrix: slip evades straight, loses to uppercut; weave clears trap
-			P["comp"] = P["comp_max"]; counter_ms = 0.0
-			_do_slip(1); bpending = {"row": "R_STRAIGHT"}; _boss_land(1.0, false)
-			_sr("slip evades the straight", P["comp"] == P["comp_max"] and counter_ms > 0.0)
-			P["comp"] = P["comp_max"]; counter_ms = 0.0; slip_ms = 0.0
-			_do_slip(1); bpending = {"row": "R_UPPERCUT"}; _boss_land(1.0, false)
-			_sr("uppercut punishes the slip x1.5", P["comp"] < P["comp_max"])
-			slip_ms = 0.0; trapped_p = true; pinned_p_ms = 3200.0
-			_do_weave(); bpending = {"row": "R_HOOK"}; _boss_land(1.0, false)
-			_sr("weave evades + escapes the trap", not trapped_p and pinned_p_ms == 0.0)
-			smoke_stage = 16
-		16:
-			var fails := 0
-			for r in smoke_results:
-				if not r[1]: fails += 1
-			print("SMOKE VERDICT :: %s (%d/%d)" % ["GREEN" if fails == 0 else "RED",
-				smoke_results.size() - fails, smoke_results.size()])
-			get_tree().quit(0 if fails == 0 else 1)
+	var P: Dictionary = sim.P; var B: Dictionary = sim.B
+	var zp := sim.zone(P["pos"]); var zb := sim.zone(B["pos"])
+	var head := "TRUE NORTH BOXING :: greybox v6 (sim core 120Hz)   R%d/3  %s vs %s   clock %5.1f   SCORE %d-%d (drops %d-%d)   EP %d-%d" % \
+		[sim.seg_idx + 1, sim.pname(), sim.boss_name, sim.clock_t / float(TNBSim.TICK_HZ), sim.score_p, sim.score_b, sim.drops_p, sim.drops_b, sim.ep_p, sim.ep_b]
+	var mode_line := ""
+	match sim.mode:
+		"EIGHT": mode_line = "\n>>> STANDING EIGHT: ENTER / A on the beat  (%d to go)" % int(sim.eight.get("beats_left", 0))
+		"CORNER": mode_line = "\n>>> CORNER: [1] send next   [2] rest (+20 stamina)"
+		"OVER": mode_line = "\n>>> DUAL OVER - F5 new dual, F1-F4 pick boss"
+	if sim.clinch.size() > 0:
+		var cue: bool = absi(int(sim.clinch["timer_t"])) <= int(sim.clinch["window_t"])
+		mode_line += "\n>>> CLINCH: tap ENTER / A on the cue %s  beats %d/%d  (hold C/LT on the resolve = reset to center)" % ["[ NOW ]" if cue else "[ .. ]", int(sim.clinch["beats"]), int(sim.clinch["need"])]
+	var bug := ""
+	if sim.bwarnings > 0: bug += "   REF WARN x%d (him)" % sim.bwarnings
+	if sim.pwarnings > 0: bug += "   holding calls x%d (you)" % sim.pwarnings
+	if audio_assist: bug += "   [audio-assist cue ON]"
+	hud.text = head + bug + mode_line + "\n" \
+		+ "ZONE you:%s%s  him:%s%s   dist %.2fm   tick %d%s\n" % [zp, " TRAPPED" if sim.trapped_p else "", zb, " TRAPPED" if sim.trapped_b else "", P["pos"].distance_to(B["pos"]), sim.tick, "  [HITSTOP]" if sim.freeze_t > 0 else ""] \
+		+ "YOU   stam %s  chin %s  guard %s%s   %s\n" % [_bar(P["stamina"], 100, 14), _bar(P["comp"], P["comp_max"], 14), _bar(P["guard"], P["guard_max"], 10), "  OPEN!" if P["guard_open_t"] > 0 else "", P["dodge"] if P["dodge"] != "" else ""] \
+		+ "BOSS  chin %s   phase %d   %s%s%s\n" % [_bar(B["comp"], B["comp_max"], 14), sim.bphase, "TELL" if sim.bstate == "FAKE" else sim.bstate, "  << TELL - HIT HIM NOW" if (sim.bstate == "TELL" or sim.bstate == "FAKE") else ("  hands DOWN" if sim.hands_down_t > 0 else ""), ("  [" + B["dodge"] + "]") if B["dodge"] != "" else ("  [GUARD]" if (B["blocking"] or B["guard_t"] > 0) else "")] \
+		+ "TENSION %s %3.0f  %s%s%s" % [_bar(sim.tension, 100, 16), sim.tension, "ABB READY (LB + haymaker flick)" if sim.tension >= sim.hiss_threshold else "", "   counter!" if P["counter_t"] > 0 else "", "   FLASH!" if P["flash_t"] > 0 else ""]

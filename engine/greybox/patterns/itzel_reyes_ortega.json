@@ -1,0 +1,106 @@
+{
+ "file": "itzel_reyes_ortega.pbn",
+ "meta": {
+  "style": "SLUGGER",
+  "element": "GRANITE",
+  "house": "reyes_origin_line",
+  "slot": "R4",
+  "arc": "3",
+  "target_split": "body80_head20"
+ },
+ "idle": [
+  "forward_walk",
+  "guard_mid",
+  "bell_in_corner"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Nave",
+   "tags": [],
+   "tell": {
+    "motif": "hip_sink",
+    "ms": 520
+   },
+   "class": "normal",
+   "actions": [
+    "LT_L_HOOK",
+    "LT_R_HOOK"
+   ]
+  },
+  "S2": {
+   "label": "Campanada",
+   "tags": [
+    "SPECIAL"
+   ],
+   "tell": {
+    "motif": "hip_sink_deep",
+    "ms": 700
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "UNDER_ELBOW_CROSS"
+   ]
+  },
+  "S3": {
+   "label": "Procesion",
+   "tags": [
+    "ARMORED"
+   ],
+   "tell": {
+    "motif": "double_sink",
+    "ms": 1000
+   },
+   "class": "ARMORED",
+   "actions": [
+    "WALK_STRING(3_body_hooks)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 50,
+   "S2": 30,
+   "S3": 20
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_high_guard_3s",
+   "force": "S2"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_whiffed_body_shot",
+   "response": "S1"
+  },
+  {
+   "trigger": "player_corner_entry",
+   "response": "S3"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "player_stamina<50",
+   "directives": [
+    "all_body_damage +15pct"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "La Catedral",
+  "arm_only": null
+ },
+ "id": "ReyesOrtega_Itzel"
+}

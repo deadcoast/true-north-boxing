@@ -1,0 +1,147 @@
+{
+ "file": "hc4_cartographer.pbn",
+ "meta": {
+  "style": "OUTBOXER",
+  "element": "GALE",
+  "house": "unknown",
+  "slot": "R1",
+  "arc": "2",
+  "blind_dual": "true",
+  "pi_override": "0"
+ },
+ "idle": [
+  "survey_orbit",
+  "guard_mid"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Survey",
+   "tags": [],
+   "tell": {
+    "motif": "chin_tuck_double",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "JAB",
+    "STEP_OUT"
+   ]
+  },
+  "S2": {
+   "label": "Plot",
+   "tags": [],
+   "tell": {
+    "motif": "chin_tuck_double",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_R_STR"
+   ]
+  },
+  "S3": {
+   "label": "Traverse",
+   "tags": [
+    "phase>=2"
+   ],
+   "tell": {
+    "motif": "heel_lift",
+    "ms": 480
+   },
+   "class": "normal",
+   "actions": [
+    "ANGLE_STEP",
+    "L_HOOK"
+   ]
+  },
+  "S4": {
+   "label": "Contour",
+   "tags": [
+    "phase>=2"
+   ],
+   "tell": {
+    "motif": "heel_lift",
+    "ms": 480
+   },
+   "class": "normal",
+   "actions": [
+    "LT_R_HOOK"
+   ]
+  },
+  "S5": {
+   "label": "Redline",
+   "tags": [
+    "phase>=3"
+   ],
+   "tell": {
+    "motif": "glove_grind_audio",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "RUSH(0.8m)",
+    "MIXED_STRING(3)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 50,
+   "S2": 50
+  },
+  "reweights": [
+   "phase==2: w(S3)=50 w(S4)=50",
+   "phase==3: w(S5)=100"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "authored_absent": "A survey has no appetites"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_passive>6s",
+   "response": "phase_fastest_string"
+  },
+  {
+   "trigger": "player_flagged_ngram_tier1",
+   "response": "S2"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<70",
+   "directives": [
+    "dialect_swap erased_berube"
+   ]
+  },
+  {
+   "phase": "3",
+   "trigger": "composure<40",
+   "directives": [
+    "dialect_swap erased_oduya"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<20",
+  "move": "Hollow Echo",
+  "arm_only": null
+ },
+ "id": "HC4_Cartographer"
+}

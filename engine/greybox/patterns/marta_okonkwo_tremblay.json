@@ -1,0 +1,106 @@
+{
+ "file": "marta_okonkwo_tremblay.pbn",
+ "meta": {
+  "style": "OUTBOXER",
+  "element": "FROST",
+  "house": "tremblay",
+  "slot": "R2",
+  "arc": "1"
+ },
+ "idle": [
+  "lateral_orbit",
+  "guard_high",
+  "footwork_audio_drops_when_arming"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Mirror",
+   "tags": [],
+   "tell": {
+    "motif": "glove_micro_turn_silence",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "COUNTER_STATE(2.5s)"
+   ]
+  },
+  "S2": {
+   "label": "FrostLine",
+   "tags": [],
+   "tell": {
+    "motif": "glove_micro_turn",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "JAB",
+    "STEP_OUT"
+   ]
+  },
+  "S3": {
+   "label": "RetreatCutter",
+   "tags": [],
+   "tell": {
+    "motif": "back_step_load",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "BACK_STEP",
+    "CHECK_HOOK"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 35,
+   "S2": 45,
+   "S3": 20
+  },
+  "reweights": [
+   "player_passive>8s: w(S2)+=30"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S2"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "trap_stance_hands_down",
+   "force": "S1"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_3punch_string",
+   "response": "S1 counter"
+  },
+  {
+   "trigger": "player_sprint_approach",
+   "response": "S3"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<55",
+   "directives": [
+    "S1 duration +1s",
+    "S1 cooldown_after_use 6s"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Premiere Neige",
+  "arm_only": null
+ },
+ "id": "Marta_OkonkwoTremblay"
+}

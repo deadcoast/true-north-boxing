@@ -1,0 +1,105 @@
+{
+ "file": "hc9_choir.pbn",
+ "meta": {
+  "style": "SWARMER",
+  "element": "FROST",
+  "house": "unknown",
+  "slot": "R3",
+  "arc": "2",
+  "blind_dual": "true",
+  "commentary_mute_on_hit": "4s"
+ },
+ "idle": [
+  "advance_noiseless"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Verse",
+   "tags": [],
+   "tell": {
+    "motif": "shoulder_breath_visual",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "LT_L_HOOK"
+   ]
+  },
+  "S2": {
+   "label": "Refrain",
+   "tags": [],
+   "tell": {
+    "motif": "shoulder_breath_visual",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "JAB",
+    "R_UPC"
+   ]
+  },
+  "S3": {
+   "label": "Hymn",
+   "tags": [
+    "ARMORED"
+   ],
+   "tell": {
+    "motif": "full_stop_visual",
+    "ms": 1000
+   },
+   "class": "ARMORED",
+   "actions": [
+    "WALK_STRING(2_hooks)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 45,
+   "S2": 40,
+   "S3": 15
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S2"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "authored_absent": "Choir has no recorded voice and offers nothing"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_audio_assist_reliance",
+   "response": "swap_weights(S1,S2) 10s"
+  },
+  {
+   "trigger": "player_corner_entry",
+   "response": "S3"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "S1,S2 tell -50ms floor_respected"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Erased Name",
+  "arm_only": null
+ },
+ "id": "HC9_Choir"
+}

@@ -1,0 +1,106 @@
+{
+ "file": "carter_okafor.pbn",
+ "meta": {
+  "style": "SWARMER",
+  "element": "GALE",
+  "house": "okafor",
+  "slot": "R1",
+  "arc": "1"
+ },
+ "idle": [
+  "circle_fast",
+  "guard_mid",
+  "taunt@10s"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Forecheck",
+   "tags": [],
+   "tell": {
+    "motif": "stride_shing",
+    "ms": 500
+   },
+   "class": "normal",
+   "actions": [
+    "RUSH(0.8m)",
+    "L_HOOK",
+    "R_HOOK"
+   ]
+  },
+  "S2": {
+   "label": "Cycle",
+   "tags": [],
+   "tell": {
+    "motif": "stride_shing",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "LATERAL_ARC",
+    "LT_L_HOOK"
+   ]
+  },
+  "S3": {
+   "label": "Slapshot",
+   "tags": [],
+   "tell": {
+    "motif": "full_windup",
+    "ms": 900
+   },
+   "class": "normal",
+   "actions": [
+    "R_HAY"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 40,
+   "S2": 40,
+   "S3": 20
+  },
+  "reweights": [
+   "segment_clock<30s: all_speed x1.12"
+  ]
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S3"
+   ],
+   "response": "stagger(800)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_taunt",
+   "force": "S3"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_static_guard_3s",
+   "response": "S2 to_body"
+  },
+  {
+   "trigger": "player_gassed",
+   "response": "w(S1)+=30"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "S2 gains_second_body_hook"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Empty Net",
+  "arm_only": null
+ },
+ "id": "Okafor_Carter"
+}

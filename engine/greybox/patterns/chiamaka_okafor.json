@@ -1,0 +1,107 @@
+{
+ "file": "chiamaka_okafor.pbn",
+ "meta": {
+  "style": "SWARMER",
+  "element": "GALE",
+  "house": "okafor_root_line",
+  "slot": "R4",
+  "arc": "3",
+  "metronomes_ms": "600,900",
+  "desync_value": "0.5",
+  "desync_reform_s": "1.5"
+ },
+ "idle": [
+  "dual_tempo_advance"
+ ],
+ "strings": {
+  "S1": {
+   "label": "Downbeat6",
+   "tags": [],
+   "tell": {
+    "motif": "lead_foot_beat",
+    "ms": 400
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "LT_L_HOOK"
+   ]
+  },
+  "S2": {
+   "label": "Downbeat9",
+   "tags": [],
+   "tell": {
+    "motif": "rear_foot_beat",
+    "ms": 450
+   },
+   "class": "normal",
+   "actions": [
+    "JAB",
+    "JAB",
+    "R_UPC"
+   ]
+  },
+  "S3": {
+   "label": "Crosswind",
+   "tags": [
+    "SPECIAL"
+   ],
+   "tell": {
+    "motif": "both_feet_set",
+    "ms": 700
+   },
+   "class": "SPECIAL",
+   "actions": [
+    "MIXED_STRING(4)"
+   ]
+  }
+ },
+ "select": {
+  "weights": {
+   "S1": 45,
+   "S2": 45,
+   "S3": 10
+  },
+  "reweights": []
+ },
+ "interrupt": [
+  {
+   "strings": [
+    "S1",
+    "S2"
+   ],
+   "response": "stagger(800) + desync(1.5s)"
+  }
+ ],
+ "bait": [
+  {
+   "trigger": "player_locks_to_single_tempo",
+   "force": "S3"
+  }
+ ],
+ "punish": [
+  {
+   "trigger": "player_passive>5s",
+   "response": "S3"
+  },
+  {
+   "trigger": "player_flagged_ngram_tier2",
+   "response": "S2 targets_flag"
+  }
+ ],
+ "phases": [
+  {
+   "phase": "2",
+   "trigger": "composure<50",
+   "directives": [
+    "tempos 600,900 -> 550,850"
+   ]
+  }
+ ],
+ "desperation": {
+  "trigger": "composure<25",
+  "move": "Harmattan",
+  "arm_only": null
+ },
+ "id": "Okafor_Chiamaka"
+}

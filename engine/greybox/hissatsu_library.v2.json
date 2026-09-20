@@ -1,0 +1,3471 @@
+{
+ "schema": "Hissatsu/NP_11-s9/v1.0",
+ "library": "v2",
+ "count": 87,
+ "moves": [
+  {
+   "id": "HIS-001",
+   "name": "Aurora Borealis Breaker",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1800,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.5,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "ROPES",
+      "meters": 1.0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "arena_freeze_vfx",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_frost",
+   "source": "protagonist_line",
+   "secret": false,
+   "notes": "Rory's line signature; Ep1 flashback shows the 1976 original"
+  },
+  {
+   "id": "HIS-002",
+   "name": "First Snap",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 900,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "foot_freeze_slow",
+      "seconds": 1.5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_frost",
+   "source": "generic",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-003",
+   "name": "Chinook Rush",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.8,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "forward_glide",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_gale",
+   "source": "generic",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-004",
+   "name": "Grain Elevator",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "GRANITE",
+   "house_id": "kowalchuk",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.0,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 40
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": false,
+   "notes": "Yuri's desperation"
+  },
+  {
+   "id": "HIS-005",
+   "name": "Premiere Neige",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": "tremblay",
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1200,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 5
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "auto_slip",
+      "seconds": 5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": false,
+   "notes": "Marta's desperation"
+  },
+  {
+   "id": "HIS-006",
+   "name": "Sorry Eh",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "FROST",
+   "house_id": "tagaq",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "STATE",
+     "params": {
+      "name": "counter_stance",
+      "seconds": 2.5
+     }
+    },
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.0,
+      "composure_bypass_pct": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_frost",
+   "source": "personal:sam",
+   "secret": false,
+   "notes": "Sam's apologized counter"
+  },
+  {
+   "id": "HIS-007",
+   "name": "Net-Hauler's Yank",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "TIMBER",
+   "house_id": "macisaac",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1600,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.9,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "ROPES",
+      "meters": 1.0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_timber",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-008",
+   "name": "Liver Line",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GRANITE",
+   "house_id": "reyes",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.6,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BURN",
+     "params": {
+      "stamina": 25
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": false,
+   "notes": "Body finisher; LT-flagged"
+  },
+  {
+   "id": "HIS-009",
+   "name": "Pressure Cooker",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "GALE",
+   "house_id": "okafor",
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1000,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.4,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "bonus_tension_on_counter",
+      "value": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-010",
+   "name": "Long Winter",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": "whitecloud",
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 4
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "stamina_regen_x2",
+      "seconds": 4
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-011",
+   "name": "Timberfall",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "TIMBER",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.1,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "beats_duck_reads",
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_timber",
+   "source": "taught:coach_questline",
+   "secret": false,
+   "notes": "Delayed-timing uppercut"
+  },
+  {
+   "id": "HIS-012",
+   "name": "Black Ice",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 900,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.1,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "tell_jam_audio",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_frost",
+   "source": "taught",
+   "secret": false,
+   "notes": "Rare by design; tell-jam is vicious"
+  },
+  {
+   "id": "HIS-013",
+   "name": "Thunder Bay",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1700,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "range_plus",
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_gale",
+   "source": "shop:hbp_t3",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-014",
+   "name": "Shield Wall",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "GRANITE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1200,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 20,
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_granite",
+   "source": "board:anchor",
+   "secret": false,
+   "notes": "20-pt mini Wall Gauge, one reform"
+  },
+  {
+   "id": "HIS-015",
+   "name": "Two Rivers",
+   "tier": "T3",
+   "family": "ARC",
+   "element": "DUAL",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 50,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 2200,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.4,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "afterimage_partner",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "interruptible only during afterimage windup (Loud)"
+   },
+   "duo_variant": null,
+   "hybrid_parents": [
+    "nguyen-roy",
+    "delacroix-cardinal"
+   ],
+   "camera_script_id": "cam_arc_t3",
+   "vfx_set": "vfx_dual",
+   "source": "hybrid:forge",
+   "secret": false,
+   "notes": "Hybrid exemplar"
+  },
+  {
+   "id": "HIS-016",
+   "name": "Relay: North Star",
+   "tier": "T3",
+   "family": "RISE",
+   "element": "ANY",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 50,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 2400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult_per_chain_link": 0.8,
+      "base": 1.6
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "interruptible only during afterimage windup (Loud)"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t3",
+   "vfx_set": "vfx_any",
+   "source": "full_relay_exclusive",
+   "secret": false,
+   "notes": "FULL RELAY only; dmg scales with chain"
+  },
+  {
+   "id": "HIS-017",
+   "name": "Undertow",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "TIMBER",
+   "house_id": "macisaac",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1600,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.0,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "ROPES",
+      "meters": 1.5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_timber",
+   "source": "native",
+   "secret": false,
+   "notes": "Moira's pull-counter desperation"
+  },
+  {
+   "id": "HIS-018",
+   "name": "Pont Couvert",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GALE",
+   "house_id": "nguyen-roy",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.8,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "angle_exit",
+      "seconds": 1
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": false,
+   "notes": "Tam's desperation"
+  },
+  {
+   "id": "HIS-019",
+   "name": "Empty Net",
+   "tier": "T1",
+   "family": "PISTON",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.7,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BURN",
+     "params": {
+      "stamina": 15
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t1",
+   "vfx_set": "vfx_gale",
+   "source": "personal:carter",
+   "secret": false,
+   "notes": "Carter's third-period rush"
+  },
+  {
+   "id": "HIS-020",
+   "name": "Fevrier",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "FROST",
+   "house_id": "moreau",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1700,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "arena_frost_creep",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": false,
+   "notes": "Jean-Guy's desperation"
+  },
+  {
+   "id": "HIS-021",
+   "name": "Deep Roots",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "TIMBER",
+   "house_id": "osei",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 30
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "counter_stance",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_timber",
+   "source": "native",
+   "secret": true,
+   "notes": "Osei SECRET; shares the house trait's name deliberately. Efua casts it UNSANCTIONED at 70% with a stumble"
+  },
+  {
+   "id": "HIS-022",
+   "name": "Thesis Defense",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 5
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "counter_state",
+      "seconds": 5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_frost",
+   "source": "personal:anders",
+   "secret": false,
+   "notes": "Anders' desperation; breakable per NP_05 s9"
+  },
+  {
+   "id": "HIS-023",
+   "name": "Miroir d'Hiver",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "FROST",
+   "house_id": "tremblay",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "STATE",
+     "params": {
+      "name": "mirror_counter",
+      "seconds": 2
+     }
+    },
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.0,
+      "composure_bypass_pct": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": false,
+   "notes": "The doctrine's teaching counter"
+  },
+  {
+   "id": "HIS-024",
+   "name": "Verglas",
+   "tier": "T1",
+   "family": "PISTON",
+   "element": "FROST",
+   "house_id": "tremblay",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1600,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.8,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "foot_freeze_slow",
+      "seconds": 2.5
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "tell_jam_visual",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t1",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: the 1998 dual's unanswered question, taught only past the feud quest"
+  },
+  {
+   "id": "HIS-025",
+   "name": "Full Load",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "GRANITE",
+   "house_id": "kowalchuk",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1700,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.4,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 25
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-026",
+   "name": "Harvest Moon",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "GRANITE",
+   "house_id": "kowalchuk",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1800,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.6,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 50
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "CORNER",
+      "meters": 0.5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "dodge-only; perfect-defense weathering applies"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: armored rising finisher; the patriarch's barn-lesson scene"
+  },
+  {
+   "id": "HIS-027",
+   "name": "Heat Advisory",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GALE",
+   "house_id": "okafor",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.7,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BURN",
+     "params": {
+      "stamina": 20
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": false,
+   "notes": "Pressure line body flurry"
+  },
+  {
+   "id": "HIS-028",
+   "name": "Eye of the Storm",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "GALE",
+   "house_id": "okafor",
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 4
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "counter_window_plus_100ms",
+      "seconds": 4
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: stillness inside the swarm"
+  },
+  {
+   "id": "HIS-029",
+   "name": "Body Bank",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "GRANITE",
+   "house_id": "reyes",
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1000,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BURN",
+     "params": {
+      "stamina": 8
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": false,
+   "notes": "Deposits now, withdrawals later"
+  },
+  {
+   "id": "HIS-030",
+   "name": "La Campana",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GRANITE",
+   "house_id": "reyes",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1600,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.0,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BURN",
+     "params": {
+      "stamina": 35
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "wobble_on_gassed_target",
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: the bell only rings for a drained body - lethal vs <40 stamina"
+  },
+  {
+   "id": "HIS-031",
+   "name": "Rogue Wave",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "TIMBER",
+   "house_id": "macisaac",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1800,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.5,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "CORNER",
+      "meters": 1.0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "dodge-only; perfect-defense weathering applies"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_timber",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: the wave nobody reads twice; armored"
+  },
+  {
+   "id": "HIS-032",
+   "name": "First Light",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "FROST",
+   "house_id": "whitecloud",
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1000,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "stamina_regen_x1_5",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-033",
+   "name": "Polaris",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": "whitecloud",
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 15,
+      "seconds": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "all_stats_r4r5_plus5",
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: seven generations of holding the north; strongest in late slots"
+  },
+  {
+   "id": "HIS-034",
+   "name": "Still Water",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "FROST",
+   "house_id": "tagaq",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "STATE",
+     "params": {
+      "name": "counter_stance",
+      "seconds": 3
+     }
+    },
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.8,
+      "composure_bypass_pct": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": false,
+   "notes": "The patience line's foundation"
+  },
+  {
+   "id": "HIS-035",
+   "name": "Northern Silence",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": "tagaq",
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 6
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "enemy_tension_earn_minus25pct",
+      "seconds": 6
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: the quiet that starves a crowd"
+  },
+  {
+   "id": "HIS-036",
+   "name": "Deux Ponts",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "GALE",
+   "house_id": "nguyen-roy",
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1000,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "angle_exit",
+      "seconds": 0.8
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-037",
+   "name": "Third Bridge",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GALE",
+   "house_id": "nguyen-roy",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1600,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.1,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "afterimage_self",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: the bridge that isn't on any map; dual-house footwork fused"
+  },
+  {
+   "id": "HIS-038",
+   "name": "System Jab",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "GRANITE",
+   "house_id": "petrov",
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 900,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 10
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": false,
+   "notes": "The amateur system's first page; Petrov gifts it freely"
+  },
+  {
+   "id": "HIS-039",
+   "name": "Amateur Classic",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GRANITE",
+   "house_id": "petrov",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.8,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "ep_plus_on_clean",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-040",
+   "name": "Perfect Score",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "GRANITE",
+   "house_id": "petrov",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1700,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "tension_plus_on_hit",
+      "value": 5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_granite",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: the 10-9 round distilled; Anders never learned it - Vey took him first"
+  },
+  {
+   "id": "HIS-041",
+   "name": "Shell Game",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "TIMBER",
+   "house_id": "osei",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "STATE",
+     "params": {
+      "name": "shell_counter",
+      "seconds": 2.5
+     }
+    },
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.7,
+      "composure_bypass_pct": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_timber",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-042",
+   "name": "Through the Window",
+   "tier": "T1",
+   "family": "PISTON",
+   "element": "TIMBER",
+   "house_id": "osei",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.9,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "ROPES",
+      "meters": 0.5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t1",
+   "vfx_set": "vfx_timber",
+   "source": "native",
+   "secret": false,
+   "notes": "The surge Efua built her theft on"
+  },
+  {
+   "id": "HIS-043",
+   "name": "River Read",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GALE",
+   "house_id": "delacroix-cardinal",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "STATE",
+     "params": {
+      "name": "counter_stance",
+      "seconds": 2
+     }
+    },
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.9,
+      "composure_bypass_pct": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-044",
+   "name": "Red River Turn",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "GALE",
+   "house_id": "delacroix-cardinal",
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1000,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "angle_exit",
+      "seconds": 0.8
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-045",
+   "name": "The Forks",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "GALE",
+   "house_id": "delacroix-cardinal",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1700,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "two_hit_echo",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_gale",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: where two currents meet, written with the house's consultants per NP_07 s9"
+  },
+  {
+   "id": "HIS-046",
+   "name": "Iron Doctrine",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "GRANITE",
+   "house_id": "iron",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1800,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.6,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 60
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "dodge-only; perfect-defense weathering applies"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_granite",
+   "source": "native:archive_find",
+   "secret": true,
+   "notes": "SECRET and sole survivor of the lineage; findable only through Scout Book archaeology (NP_07 s5)"
+  },
+  {
+   "id": "HIS-047",
+   "name": "Tempered Edge",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "FROST",
+   "house_id": "moreau",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.0,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 30
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-048",
+   "name": "Le Gel Noir",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "FROST",
+   "house_id": "moreau",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1800,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.4,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "tell_jam_audio",
+      "seconds": 2
+     }
+    },
+    {
+     "type": "BURN",
+     "params": {
+      "stamina": 20
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "dodge-only; perfect-defense weathering applies"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_frost",
+   "source": "native",
+   "secret": true,
+   "notes": "SECRET: black frost; the technique the Commissioner comes to Quebec for"
+  },
+  {
+   "id": "HIS-049",
+   "name": "[SEALED-NATIVE-1]",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "FROST",
+   "house_id": "sealed",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "REDACTED",
+     "params": {}
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_frost",
+   "source": "native:arc2_unseal",
+   "secret": false,
+   "notes": "Reserved id; unsealing ADDs per NP_07 s7 no-invalidation rule"
+  },
+  {
+   "id": "HIS-050",
+   "name": "[SEALED-NATIVE-2]",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "FROST",
+   "house_id": "sealed",
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "REDACTED",
+     "params": {}
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_frost",
+   "source": "native:arc2_unseal",
+   "secret": false,
+   "notes": "Reserved id"
+  },
+  {
+   "id": "HIS-051",
+   "name": "[SEALED-SECRET]",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": "sealed",
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "REDACTED",
+     "params": {}
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_frost",
+   "source": "native:arc3",
+   "secret": true,
+   "notes": "Reserved id; the Awakening gate (NP_09 s6)"
+  },
+  {
+   "id": "HIS-052",
+   "name": "Marginalia",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 900,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "scout_book_note_on_hit",
+      "value": 1
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_gale",
+   "source": "personal:priya",
+   "secret": false,
+   "notes": "Priya's counter-jab; landing it annotates the opponent's Scout Book page - tactician-in-ring made mechanical"
+  },
+  {
+   "id": "HIS-053",
+   "name": "Prodigal",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "TIMBER",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1600,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "ROPES",
+      "meters": 0.8
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_timber",
+   "source": "personal:dex",
+   "secret": false,
+   "notes": "Dex's refusal of the Net-Hauler line, which is itself a pull-counter - the house style leaking through denial"
+  },
+  {
+   "id": "HIS-054",
+   "name": "Freelance",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.9,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "counter_stance",
+      "seconds": 1.5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_gale",
+   "source": "personal:vane_arc3",
+   "secret": false,
+   "notes": "Cassidy's first move issued by nobody; Arc 3 remix content"
+  },
+  {
+   "id": "HIS-055",
+   "name": "Cornerstone",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "GRANITE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 900,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 12
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_granite",
+   "source": "shop:hbp_t1",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-056",
+   "name": "Gust Step",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 900,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "angle_exit",
+      "seconds": 0.6
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_gale",
+   "source": "shop:hbp_t1",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-057",
+   "name": "Sapling",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "TIMBER",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 900,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "guard_regen_plus",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_timber",
+   "source": "shop:hbp_t1",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-058",
+   "name": "Snowblind",
+   "tier": "T1",
+   "family": "PISTON",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.6,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "tell_jam_visual",
+      "seconds": 1.5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t1",
+   "vfx_set": "vfx_frost",
+   "source": "shop:hbp_t2",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-059",
+   "name": "Landslide",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "GRANITE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1700,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "ROPES",
+      "meters": 0.7
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_granite",
+   "source": "shop:hbp_t2",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-060",
+   "name": "Root Bind",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "TIMBER",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.7,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "foot_slow",
+      "seconds": 2
+     }
+    },
+    {
+     "type": "BURN",
+     "params": {
+      "stamina": 10
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_timber",
+   "source": "shop:hbp_t2",
+   "secret": false,
+   "notes": "LT body hook line"
+  },
+  {
+   "id": "HIS-061",
+   "name": "White Squall",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.9,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 0.5,
+      "hits": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_frost",
+   "source": "shop:hbp_t3",
+   "secret": false,
+   "notes": "Three-hit flurry"
+  },
+  {
+   "id": "HIS-062",
+   "name": "Updraft",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.0,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "beats_duck_reads",
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_gale",
+   "source": "shop:hbp_t2",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-063",
+   "name": "Palisade",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "TIMBER",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1200,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 4
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "guard_regen_x2",
+      "seconds": 4
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_timber",
+   "source": "board:anchor",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-064",
+   "name": "Windbreak",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1200,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 3
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "move_speed_plus15",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_gale",
+   "source": "board:anchor",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-065",
+   "name": "Eight Count Answer",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "GRANITE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1600,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "tension_plus_if_post_count",
+      "value": 8
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_granite",
+   "source": "taught:whitlock",
+   "secret": false,
+   "notes": "Whitlock teaches it only after your first survived standing-eight; the legacy Inheritance thread starts here"
+  },
+  {
+   "id": "HIS-066",
+   "name": "Roadwork",
+   "tier": "T0",
+   "family": "PISTON",
+   "element": "TIMBER",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 10,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 900,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.1,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "BUFF",
+     "params": {
+      "name": "stamina_regen_x1_5",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t0",
+   "vfx_set": "vfx_timber",
+   "source": "taught:conditioning_staff",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-067",
+   "name": "Overtime",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "GRANITE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1700,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.0,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DMG",
+     "params": {
+      "mult_bonus_final_30s": 0.5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_granite",
+   "source": "shop:hbp_t3",
+   "secret": false,
+   "notes": "Clock-scaled power"
+  },
+  {
+   "id": "HIS-068",
+   "name": "Portage",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "TIMBER",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.8,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "CENTER",
+      "meters": 1.0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_timber",
+   "source": "quest:harbour",
+   "secret": false,
+   "notes": "Carries the fight back to open water - anti-corner tool"
+  },
+  {
+   "id": "HIS-069",
+   "name": "Breakup",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.1,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 35
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_frost",
+   "source": "quest:rink_district",
+   "secret": false,
+   "notes": "Spring ice gives way; the bridge-the-town quest reward"
+  },
+  {
+   "id": "HIS-070",
+   "name": "Relay: Coast to Coast",
+   "tier": "T3",
+   "family": "HAYMAKER",
+   "element": "ANY",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 50,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 2200,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.6,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "DISPLACE",
+     "params": {
+      "toward": "ROPES",
+      "meters": 1.2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "interruptible only during afterimage windup (Loud)"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t3",
+   "vfx_set": "vfx_any",
+   "source": "relay:charged",
+   "secret": false,
+   "notes": "CHARGED-state relay finisher"
+  },
+  {
+   "id": "HIS-071",
+   "name": "Relay: Aurora Chain",
+   "tier": "T3",
+   "family": "ARC",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 50,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 2300,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.2,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "arena_freeze_vfx",
+      "seconds": 2
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "afterimage_partner",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "interruptible only during afterimage windup (Loud)"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t3",
+   "vfx_set": "vfx_frost",
+   "source": "relay:charged",
+   "secret": false,
+   "notes": ""
+  },
+  {
+   "id": "HIS-072",
+   "name": "Double Overtime",
+   "tier": "T3",
+   "family": "RISE",
+   "element": "ANY",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 50,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 2400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.8,
+      "composure_bypass_pct": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "interruptible only during afterimage windup (Loud)"
+   },
+   "duo_variant": "sync_500ms",
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t3",
+   "vfx_set": "vfx_any",
+   "source": "duo:2v2_festival",
+   "secret": false,
+   "notes": "True simultaneous duo (both inputs within 500ms); festival exclusive"
+  },
+  {
+   "id": "HIS-073",
+   "name": "Two-Hand Winter",
+   "tier": "T3",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 50,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 2000,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 30,
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": "sync_500ms",
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t3",
+   "vfx_set": "vfx_frost",
+   "source": "duo:2v2_festival",
+   "secret": false,
+   "notes": "Duo wall; the only shared gauge in the game"
+  },
+  {
+   "id": "HIS-074",
+   "name": "Grain & Snow",
+   "tier": "T3",
+   "family": "HAYMAKER",
+   "element": "DUAL",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 50,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 2300,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.5,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 40
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "auto_slip",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "interruptible only during afterimage windup (Loud)"
+   },
+   "duo_variant": null,
+   "hybrid_parents": [
+    "kowalchuk",
+    "tremblay"
+   ],
+   "camera_script_id": "cam_haymaker_t3",
+   "vfx_set": "vfx_dual",
+   "source": "hybrid:forge",
+   "secret": false,
+   "notes": "Hybrid exemplar: Kowalchuk load inside Tremblay counter-timing"
+  },
+  {
+   "id": "HIS-075",
+   "name": "Hollow Echo",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.9,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "copies_last_player_hissatsu_vfx",
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_frost",
+   "source": "syndicate:extracted",
+   "secret": false,
+   "notes": "Extracted technique; casts with a hollow audio signature - the love is missing and the mix says so"
+  },
+  {
+   "id": "HIS-076",
+   "name": "Extracted: Elevator",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "GRANITE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.8,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 36
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_granite",
+   "source": "syndicate:extracted",
+   "secret": false,
+   "notes": "Grain Elevator at 90% and cost +5, permanently ineligible for home bonus - counterfeit lineage priced in the math"
+  },
+  {
+   "id": "HIS-077",
+   "name": "Migrant Wall",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "GRANITE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 60,
+      "seconds": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "gauge_migrates_to_teammate_on_break",
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_granite",
+   "source": "syndicate:boss",
+   "secret": false,
+   "notes": "The Arc 2 anchor mechanic as a technique; boss-only"
+  },
+  {
+   "id": "HIS-078",
+   "name": "Erased Name",
+   "tier": "T1",
+   "family": "PISTON",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1300,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 1.7,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "suppress_commentary_ids",
+      "seconds": 4
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t1",
+   "vfx_set": "vfx_frost",
+   "source": "syndicate:extracted",
+   "secret": false,
+   "notes": "Commentary loses the caster's name for 4s; the erasure thesis, audible"
+  },
+  {
+   "id": "HIS-079",
+   "name": "Borrowed Blood",
+   "tier": "T3",
+   "family": "ARC",
+   "element": "DUAL",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 50,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 2200,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.3,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "steals_charged_state",
+      "seconds": 0
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "interruptible only during afterimage windup (Loud)"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t3",
+   "vfx_set": "vfx_dual",
+   "source": "syndicate:boss",
+   "secret": false,
+   "notes": "Steals the player's CHARGED relay on hit; boss-only, the relay economy inverted"
+  },
+  {
+   "id": "HIS-080",
+   "name": "The Commissioner's Due",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 45,
+      "seconds": 0
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "enemy_hissatsu_cost_plus10",
+      "seconds": 5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_frost",
+   "source": "syndicate:finale",
+   "secret": false,
+   "notes": "Arc 2 finale boss-only; taxes the elevated arts themselves"
+  },
+  {
+   "id": "HIS-081",
+   "name": "Rush Hour",
+   "tier": "T1",
+   "family": "PISTON",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 0.5,
+      "hits": 5
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "guard_regen_minus1",
+      "seconds": 3
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 500,
+    "negation": "perfect slip full evade; block 70%"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_piston_t1",
+   "vfx_set": "vfx_gale",
+   "source": "worlds:boss_vaughn",
+   "secret": false,
+   "notes": "Vaughn's 5-hit volume string; each hit slows guard recovery"
+  },
+  {
+   "id": "HIS-082",
+   "name": "La Catedral",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GRANITE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1600,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 0.7,
+      "hits": 3,
+      "target": "body"
+     }
+    },
+    {
+     "type": "BURN",
+     "params": {
+      "stamina": 24
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_granite",
+   "source": "worlds:boss_itzel",
+   "secret": false,
+   "notes": "Three-station body series; the gassed-curve fight"
+  },
+  {
+   "id": "HIS-083",
+   "name": "Fudoshin",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "FROST",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1400,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 4
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "counter_on_break_attempt",
+      "seconds": 4
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_frost",
+   "source": "worlds:boss_kannagi",
+   "secret": false,
+   "notes": "Immovable-mind wall; punishes the impatient break"
+  },
+  {
+   "id": "HIS-084",
+   "name": "Last Orders",
+   "tier": "T1",
+   "family": "HAYMAKER",
+   "element": "TIMBER",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1800,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.6,
+      "zone_req": "ROPES"
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_haymaker_t1",
+   "vfx_set": "vfx_timber",
+   "source": "worlds:boss_crane",
+   "secret": false,
+   "notes": "Rope-zone only; whiffs harmlessly in open ring - zone denial IS the counter"
+  },
+  {
+   "id": "HIS-085",
+   "name": "Graduacion",
+   "tier": "T1",
+   "family": "RISE",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1700,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 2.4,
+      "composure_bypass_pct": 0
+     }
+    },
+    {
+     "type": "SHRED",
+     "params": {
+      "guard": 30
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_rise_t1",
+   "vfx_set": "vfx_gale",
+   "source": "worlds:boss_baro",
+   "secret": false,
+   "notes": "Castable only after his Examen lands - the player controls whether this move exists"
+  },
+  {
+   "id": "HIS-086",
+   "name": "Harmattan",
+   "tier": "T1",
+   "family": "ARC",
+   "element": "GALE",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 35,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "DMG",
+     "params": {
+      "mult": 0.6,
+      "hits": 4
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "tell_jam_visual",
+      "seconds": 2
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": true,
+    "window_ms": 700,
+    "negation": "perfect WALL negates; perfect slip 40% chip; block 60% + heavy shred"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_arc_t1",
+   "vfx_set": "vfx_gale",
+   "source": "worlds:boss_chiamaka",
+   "secret": false,
+   "notes": "Dust-wind flurry; visual tell-jam"
+  },
+  {
+   "id": "HIS-087",
+   "name": "The Mean",
+   "tier": "T2",
+   "family": "WALL",
+   "element": "ANY",
+   "house_id": null,
+   "style_req": null,
+   "tension_cost": 25,
+   "private_meter_cost": null,
+   "startup_cinematic_ms": 1500,
+   "effect": [
+    {
+     "type": "WALL",
+     "params": {
+      "points": 0,
+      "seconds": 5
+     }
+    },
+    {
+     "type": "STATE",
+     "params": {
+      "name": "averages_incoming_damage_over_duration",
+      "seconds": 5
+     }
+    }
+   ],
+   "counter_profile": {
+    "interruptible": false,
+    "window_ms": 0,
+    "negation": "wait out, or any T1+ breaks at cost parity"
+   },
+   "duo_variant": null,
+   "hybrid_parents": null,
+   "camera_script_id": "cam_wall_t2",
+   "vfx_set": "vfx_any",
+   "source": "worlds:boss_vasile",
+   "secret": false,
+   "notes": "Element-null; burst play feeds it, steady play starves it"
+  }
+ ]
+}
