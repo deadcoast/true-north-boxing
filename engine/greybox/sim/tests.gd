@@ -1,6 +1,7 @@
 extends RefCounted
 const TNBSim := preload("res://sim/core.gd")
 const TNBClock := preload("res://sim/clock.gd")
+const TNBProfile := preload("res://sim/profile.gd")
 # Executable proofs for NP_14 (C1-C7). Drives TNBSim directly: no Nodes, no
 # frames, no wall clock. Every assertion names the claim it serves.
 #   godot --headless --path engine/greybox -- smoke boss=N
@@ -22,10 +23,11 @@ func _verdict(label: String) -> int:
 	print("%s VERDICT :: %s (%d/%d)" % [label, "GREEN" if fails == 0 else "RED", results.size() - fails, results.size()])
 	return 0 if fails == 0 else 1
 
-func make_sim(boss_idx: int, seed_v: int, lineup: Array = TNBSim.LINEUP_MILLBROOK, fmt_id: String = "") -> TNBSim:
+func make_sim(boss_idx: int, seed_v: int, lineup: Array = TNBSim.LINEUP_MILLBROOK, fmt_id: String = "", ledger: Dictionary = {}) -> TNBSim:
 	if content.is_empty(): content = TNBSim.load_content()
 	var s := TNBSim.new()
-	s.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, seed_v, content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id)
+	s.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, seed_v, content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id, content.get("bouts", {}), content.get("scraps", {}),
+		content.get("pattern_intel", {}), ledger)
 	return s
 
 func play_clinch(s: TNBSim, mode: String, want_reset: bool = false) -> void:
@@ -1560,6 +1562,254 @@ func smoke(boss_idx: int) -> int:
 	_sr("profile on the count: RORY (HRT 99) rises on every beat; in the scramble an RFX 99 card taps all four cues and wins the position (beats %d)" % count_events(cl.events, "clinch_beat"),
 		ri_down and ri.mode == "FIGHT" and count_events(ri.events, "eight_beat") == 3 and count_events(cl.events, "clinch_beat") == 4 and cl.clinch.is_empty())
 
+	# ================= PAC-063: scraps and spars (NP_02 z2) ==========
+	var scrap := func(oid: String, boss_i: int = 1, param_s: String = "") -> TNBSim:
+		var sc := make_sim(boss_i, 7); sc.start_scrap(oid, boss_i, param_s); quiet(sc); place(sc, 1.4); sc.P["comp"] = sc.P["comp_max"]; sc.bsurvival_used = true
+		return sc
+	var met := func(sim: TNBSim) -> bool: return sim.obj.size() > 0 and bool(sim.obj["met"])
+	var failed := func(sim: TNBSim) -> bool: return sim.obj.size() > 0 and bool(sim.obj["failed"])
+	var jab := func(sim: TNBSim, zrow: String = "L_STRAIGHT", extra: Dictionary = {}) -> void: thaw(sim); place(sim, 1.4); throw_clean(sim, zrow, extra); sim.step({})
+	# the data and the rules of the size
+	var forms: Dictionary = content["bouts"]["objective_forms"]
+	var data_ok := true
+	for o in content["scraps"]["objectives"]:
+		if not forms.has(str(o["id"])) or not (str(forms[str(o["id"])].get("kind", "")) in ["count", "survive", "finisher", "constraint", "state", "first_blood", "ladder", "streak"]): data_ok = false
+	var sr: TNBSim = scrap.call("SCR-01"); sr.tension = 0.0; sr._earn_tension(10.0)
+	var s24_yuri := make_sim(1, 7); var s24_vane := make_sim(0, 7)
+	var avail_ok: bool = s24_yuri.objective_available("SCR-24", 1) and not s24_vane.objective_available("SCR-24", 0) and not s24_vane.start_scrap("SCR-24", 0) and count_events(s24_vane.events, "bout_refused") == 1 and s24_vane.bout.is_empty()
+	_sr("scrap rules: 24 objectives with a known form each; a 30s cap, no Tension (10 earned -> 0), no corner; SCR-24 needs a coached NPC - offered on Yuri, refused on Vane",
+		data_ok and content["scraps"]["objectives"].size() == 24 and sr.bout["kind"] == "scrap" and sr.clock_t == TNBSim.ms(30000) and sr.tension == 0.0 and sr.coach.is_empty() and sr.mode == "FIGHT" and avail_ok)
+	# the cap: judged on EP
+	var cap_w: TNBSim = scrap.call("SCR-05"); cap_w.ep_p = 6; run_ticks(cap_w, TNBSim.ms(30000) + 1)
+	var cap_l: TNBSim = scrap.call("SCR-05"); cap_l.ep_b = 6; run_ticks(cap_l, TNBSim.ms(30000) + 1)
+	_sr("the cap: 30s without the objective is judged on EP - %s / %s" % [str(cap_w.feed), str(cap_l.feed)],
+		cap_w.mode == "OVER" and count_events(cap_w.events, "bout_end", {"rung": "ep"}) == 1 and "SCRAP WON on EP" in str(cap_w.feed) and cap_l.mode == "OVER" and "SCRAP LOST on EP" in str(cap_l.feed))
+	# count forms fire at their count, never early
+	var z1: TNBSim = scrap.call("SCR-01"); jab.call(z1, "R_HOOK", {"body": true}); jab.call(z1, "R_HOOK", {"body": true}); var s1_early: bool = not met.call(z1) and int(z1.obj["count"]) == 2 and z1.mode == "FIGHT"
+	jab.call(z1, "L_HOOK", {"body": true})
+	var z4: TNBSim = scrap.call("SCR-04"); jab.call(z4); var s4_early: bool = not met.call(z4)
+	thaw(z4); place(z4, 1.4); z4.P["busy_t"] = 0; z4.P["cmd"] = {}; z4.P["counter_t"] = 60; z4.step({"punch": "R_STRAIGHT"}); clear_defense(z4.B); land(z4); z4.step({})
+	var s21: TNBSim = scrap.call("SCR-21")
+	for zi in 3:
+		thaw(s21); place(s21, 1.4); s21.P["busy_t"] = 0; s21.P["cmd"] = {}; s21.P["counter_t"] = 60; s21.step({"punch": "R_STRAIGHT"}); clear_defense(s21.B); land(s21); s21.step({})
+	var z3: TNBSim = scrap.call("SCR-03"); thaw(z3); z3.P["pos"] = Vector2(0.0, 2.6); z3.B["pos"] = Vector2(0.0, 1.2); throw_clean(z3, "L_STRAIGHT"); z3.step({}); var s3_off: bool = not met.call(z3)
+	jab.call(z3)
+	_sr("count forms: SCR-01 three body shots (2 not enough, the third ends it WON), SCR-04 a counter (a plain hit is not), SCR-21 three counters, SCR-03 one CENTER exchange (an off-center hit is not)",
+		s1_early and met.call(z1) and z1.mode == "OVER" and count_events(z1.events, "bout_end", {"rung": "objective"}) == 1 and s4_early and met.call(z4) and met.call(s21) and s3_off and met.call(z3))
+	var s5: TNBSim = scrap.call("SCR-05"); var s5_n := 0
+	while not met.call(s5) and s5_n < 40:
+		thaw(s5); place(s5, 1.4); s5.B["blocking"] = true; s5.B["guard_t"] = 999; s5.P["busy_t"] = 0; s5.P["cmd"] = {}
+		s5.step({"punch": "R_HOOKERCUT", "power": true}); s5.B["dodge"] = ""; s5.B["dodge_plan"] = []; s5.B["dodge_at"] = 0; s5.B["blocking"] = true; land(s5); s5.step({}); s5_n += 1
+	var s13: TNBSim = scrap.call("SCR-13")
+	for zi in 2:
+		thaw(s13); place(s13, 1.4); s13.P["blocking"] = true; s13.P["block_t"] = 1; boss_lands(s13, "R_STRAIGHT"); s13.step({})
+	var s13_first: bool = met.call(s13)
+	var s14: TNBSim = scrap.call("SCR-14"); thaw(s14); place(s14, 0.5); s14._start_clinch("B", 0.5, 2); play_clinch(s14, "sides"); s14.step({})
+	var s15: TNBSim = scrap.call("SCR-15"); jab.call(s15); var s15_near: bool = not met.call(s15)
+	thaw(s15); place(s15, 2.15); throw_clean(s15, "R_STRAIGHT"); s15.step({})
+	_sr("count forms: SCR-05 a guard break (%d power haymakers into his guard), SCR-13 two perfect blocks in a row, SCR-14 the scramble won, SCR-15 a stepping punch (from 2.15m the lunge makes the reach; from 1.4m it is not one)" % s5_n,
+		met.call(s5) and s13_first and count_events(s13.events, "sensor", {"name": "player_perfect_block_streak2"}) == 1 and met.call(s14) and s15_near and met.call(s15))
+	var z2: TNBSim = scrap.call("SCR-02")
+	for zi in 2:
+		thaw(z2); place(z2, 1.4); z2.P["dodge"] = "SLIP"; z2.P["dodge_t"] = 999; z2.P["dodge_dir"] = 1; boss_lands(z2, "R_STRAIGHT"); z2.step({})
+		if zi == 0: clear_defense(z2.P)
+	var s2_one: bool = int(z2.obj["count"]) == 2 or met.call(z2)
+	var s2b: TNBSim = scrap.call("SCR-02"); thaw(s2b); place(s2b, 2.6); clear_defense(s2b.P); boss_lands(s2b, "R_STRAIGHT"); s2b.step({})   # a whiff from range is not a slip
+	var s9: TNBSim = scrap.call("SCR-09"); var s17: TNBSim = scrap.call("SCR-17")
+	var force_tell := func(sim: TNBSim, loud: bool) -> void:
+		var sname := ""
+		for zk in sim.pattern["strings"]:
+			if (str(sim.pattern["strings"][zk].get("class", "normal")) != "normal") == loud: sname = str(zk)
+		thaw(sim); place(sim, 1.4); sim.bstate = "TELL"; sim.bstring = sname; sim.btimer = 1 << 30; sim.P["busy_t"] = 0; sim.P["cmd"] = {}
+		sim.step({"punch": "L_STRAIGHT"}); clear_defense(sim.B); land(sim); sim.step({})
+	var s9b: TNBSim = scrap.call("SCR-09", 4)                                        # Ada has a loud S3 and normal strings
+	force_tell.call(s9b, false); var s9_normal: bool = not met.call(s9b)
+	force_tell.call(s9b, true)
+	var s17b: TNBSim = scrap.call("SCR-17", 4)
+	force_tell.call(s17b, false); var s17_wrong_order: bool = int(s17b.obj["ladder_i"]) == 0
+	force_tell.call(s17b, true); var s17_half: bool = int(s17b.obj["ladder_i"]) == 1 and not met.call(s17b)
+	force_tell.call(s17b, false)
+	_sr("count forms: SCR-02 two misses drawn by slips (a whiff from range is not one), SCR-09 an interrupt of a Loud tell (a normal tell's is not), SCR-17 the ladder Loud then Standard (Standard first does not count)",
+		met.call(z2) and not met.call(s2b) and int(s2b.obj["count"]) == 0 and s9_normal and met.call(s9b) and s17_wrong_order and s17_half and met.call(s17b))
+	# survive, state, first blood, streak, the corner escape, the House read, the coach shout
+	var s6: TNBSim = scrap.call("SCR-06"); run_ticks(s6, TNBSim.ms(20000) - 1); var s6_early: bool = not met.call(s6) and s6.mode == "FIGHT"; s6.step({})
+	var s6b: TNBSim = scrap.call("SCR-06"); clear_defense(s6b.P); s6b.P["comp"] = 0.5; boss_lands(s6b, "R_HOOKERCUT"); s6b.step({})
+	var s10: TNBSim = scrap.call("SCR-10"); thaw(s10); s10.B["pos"] = Vector2(3.2, 3.2); s10.P["pos"] = Vector2(2.1, 2.1); run_ticks(s10, TNBSim.ms(3000) - 1); var s10_early: bool = not met.call(s10); s10.step({})
+	var s12: TNBSim = scrap.call("SCR-12"); jab.call(s12)
+	var s12b: TNBSim = scrap.call("SCR-12"); clear_defense(s12b.P); boss_lands(s12b, "R_STRAIGHT"); s12b.step({})
+	var s18: TNBSim = scrap.call("SCR-18")
+	for zi in 3: jab.call(s18)
+	s18._ev("flag", {"gram": "test"}); s18.step({}); var s18_reset: bool = int(s18.obj["count"]) == 0
+	for zrow in ["L_STRAIGHT", "R_HOOK", "R_UPPERCUT", "L_HOOK", "R_STRAIGHT"]: jab.call(s18, zrow)      # varied: three jabs in a row is a real flag
+	var s16: TNBSim = scrap.call("SCR-16"); thaw(s16); s16.P["pos"] = Vector2(3.2, 3.2); s16.B["pos"] = Vector2(2.0, 2.0); s16.step({}); s16.step({"block": true}); s16.step({})
+	s16.P["pos"] = Vector2(0.5, 0.5); s16.step({}); var s16_blocked: bool = not met.call(s16)
+	s16.P["pos"] = Vector2(3.2, 3.2); s16.step({}); s16.step({}); s16.P["pos"] = Vector2(0.5, 0.5); s16.step({})
+	var s20: TNBSim = scrap.call("SCR-20"); boss_desperation(s20); s20.P["busy_t"] = 0; s20.P["cmd"] = {}; s20.step({"punch": "L_STRAIGHT"}); clear_defense(s20.B); land(s20); s20.step({})
+	var s20b: TNBSim = scrap.call("SCR-20", 1, "tremblay"); boss_desperation(s20b); s20b.P["busy_t"] = 0; s20b.P["cmd"] = {}; s20b.step({"punch": "L_STRAIGHT"}); clear_defense(s20b.B); land(s20b); s20b.step({})
+	var s24 := make_sim(1, 7); s24.start_scrap("SCR-24", 1); s24.hooks_enabled = false; s24.coach_on = false; place(s24, 1.6); s24.bstate = "IDLE"; s24.btimer = 1
+	var n24 := 0
+	while int(s24.obj["count"]) < 1 and n24 < 3600 and s24.mode == "FIGHT": s24.step({}); n24 += 1
+	var s24_seen: int = s24.obj["count"]
+	if s24.mode == "FIGHT": s24._ev("tell", {"ticks": 60, "loud": false, "string": "S1", "shout": true}); s24.step({})
+	_sr("SCR-06 survive 20s (met on the tick, not before; a DROP fails it), SCR-10 corner him 3s (not at 2.99), SCR-12 first blood both ways, SCR-18 five hits reset by a flag, SCR-16 the corner left unblocked (not after a block), SCR-20 the House read (Grain Elevator is Kowalchuk's: met for kowalchuk, not for tremblay), SCR-24 his coach shouts (%d heard live)" % s24_seen,
+		s6_early and met.call(s6) and failed.call(s6b) and s10_early and met.call(s10) and met.call(s12) and failed.call(s12b) and s18_reset and met.call(s18) and s16_blocked and met.call(s16)
+		and s20.obj["param"] == "kowalchuk" and met.call(s20) and not met.call(s20b) and s24_seen >= 1 and (met.call(s24) or s24.mode == "OVER"))
+	# finishers and constraints
+	var s7: TNBSim = scrap.call("SCR-07"); s7.B["comp"] = 0.5; jab.call(s7, "R_UPPERCUT")
+	var s7b: TNBSim = scrap.call("SCR-07"); s7b.B["comp"] = 0.5; jab.call(s7b, "R_HOOK")
+	var s22: TNBSim = scrap.call("SCR-22"); s22.B["comp"] = 0.5; jab.call(s22, "R_HOOK", {"body": true})
+	var s22b: TNBSim = scrap.call("SCR-22"); s22b.B["comp"] = 0.5; jab.call(s22b, "R_HOOK")
+	var s8: TNBSim = scrap.call("SCR-08")
+	for zrw in ["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_HOOK", "R_UPPERCUT"]: jab.call(s8, zrw)
+	var s8_five: bool = int(s8.obj["count"]) == 5 and not met.call(s8)
+	jab.call(s8, "R_HOOKERCUT")
+	var s8b: TNBSim = scrap.call("SCR-08"); jab.call(s8b, "L_STRAIGHT"); jab.call(s8b, "L_STRAIGHT")
+	var s11: TNBSim = scrap.call("SCR-11"); s11.step({"block": true}); s11.step({})
+	var s11b: TNBSim = scrap.call("SCR-11"); s11b.ep_p = 4; run_ticks(s11b, TNBSim.ms(30000) + 1)
+	var s19: TNBSim = scrap.call("SCR-19"); jab.call(s19, "L_HOOK"); var s19_left: bool = not failed.call(s19); jab.call(s19, "R_STRAIGHT")
+	var s23: TNBSim = scrap.call("SCR-23"); thaw(s23); s23.step({"move": Vector2(0, 1)}); s23.step({})
+	var s23b: TNBSim = scrap.call("SCR-23"); thaw(s23b); s23b.step({"move": Vector2(0, -1)}); s23b.step({"move": Vector2(1, 0)}); s23b.step({})
+	_sr("finishers: SCR-07 the drop off an uppercut (a hook fails it), SCR-22 off a body shot (a head shot fails it); constraints: SCR-08 six different punches (a repeat fails), SCR-11 a block press fails and the cap wins on EP, SCR-19 a right hand fails (left hands hold), SCR-23 a step back fails (forward and lateral hold)",
+		met.call(s7) and failed.call(s7b) and met.call(s22) and failed.call(s22b) and s8_five and met.call(s8) and failed.call(s8b) and failed.call(s11) and s11.mode == "OVER" and s11b.mode == "OVER" and "SCRAP WON on EP" in str(s11b.feed) and s19_left and failed.call(s19) and failed.call(s23) and not failed.call(s23b))
+	# the spar: one 90s segment, the personal meter at 50, transforms locked, lab flags, no corner
+	var sp := make_sim(1, 7); sp.start_spar(1, ["tell_highlight", "infinite_stamina"]); quiet(sp); place(sp, 1.4)
+	sp._earn_tension(60.0); var sp_cap: float = sp.tension
+	var t4_locked: bool = not sp.castable({"tier": "T4", "effect": [], "name": "x"}) and sp.castable({"tier": "T1", "effect": [], "name": "y"})
+	sp.P["busy_t"] = 0; sp.P["cmd"] = {}; sp.step({"punch": "R_HOOKERCUT", "power": true}); clear_defense(sp.B); land(sp); sp.step({})
+	var sp_stam: float = sp.P["stamina"]
+	sp.bstate = "IDLE"; sp.btimer = 1; sp.events.clear(); run_ticks(sp, 600); var sp_hl: bool = count_events(sp.events, "tell", {"highlight": true}) >= 1 and count_events(sp.events, "tell", {"highlight": false}) == 0
+	freeze_boss(sp); sp.ep_p = sp.ep_b + 3; run_ticks(sp, TNBSim.ms(90000) + 2)
+	_sr("spar: the meter caps at 50 (60 earned -> %.0f), T4 is locked and T1 is not, infinite stamina holds 100 through a power haymaker (%.0f), tell-highlight outlines every tell, no corner, the 90s end is judged on drops then EP - %s" % [sp_cap, sp_stam, str(sp.feed)],
+		sp.bout["kind"] == "spar" and sp.clock_t <= 0 and absf(sp_cap - 50.0) < 0.01 and t4_locked and absf(sp_stam - 100.0) < 0.01 and sp_hl and sp.coach.is_empty() and sp.mode == "OVER" and "SPAR: MILLBROOK WINS on EP" in str(sp.feed))
+	# Ep1 by name, and the way back to the dual
+	var e2 := make_sim(0, 7); var e2_ok := e2.start_ep1("scrap_2")
+	var e2_card: bool = e2_ok and e2.boss_label == "MARCUS" and e2.boss_name == "yuri_kowalchuk" and e2.B["style"] == "SLUGGER" and absf(e2.B["comp_max"] - 65.0 * 2.0 * 1.15) < 0.01 and e2.obj["id"] == "SCR-06" and "MARCUS" in str(e2.bout["label"])
+	var e1 := make_sim(0, 7); e1.start_ep1("scrap_1"); var e1_card: bool = e1.boss_label == "CHALLENGER" and e1.obj["id"] == "SCR-01" and e1.boss_name == "carter_okafor"
+	var e3 := make_sim(0, 7); e3.start_ep1("scrap_3"); var e3_card: bool = e3.boss_label == "JUNE" and e3.B["style"] == "SWARMER" and e3.obj["id"] == "SCR-03"
+	var pt := make_sim(0, 7); pt.start_ep1("priya_trial"); quiet(pt); place(pt, 1.4)
+	var pt_card: bool = pt.bout["kind"] == "spar" and pt.boss_label == "PRIYA" and pt.B["style"] == "OUTBOXER" and int(pt.B["stats"]["RFX"]) == 70 and "tell_highlight" in pt.lab and pt.obj["kind"] == "segment_end"
+	run_ticks(pt, TNBSim.ms(90000) + 2)
+	var pt_end: bool = pt.mode == "OVER" and bool(pt.obj["met"]) and count_events(pt.events, "bout_end", {"met": true}) == 1
+	pt.end_bout()
+	_sr("Ep1 by name: SCRAP 1 vs the bike-rack CHALLENGER (SCR-01), SCRAP 2 vs MARCUS on a Slugger's strings (SCR-06, his chin from his card), SCRAP 3 vs JUNE (SCR-03), the PRIYA TRIAL as a tell-highlight spar met by going the distance; end_bout returns to the mini-dual",
+		e1_card and e2_card and e3_card and pt_card and pt_end and pt.bout.is_empty() and pt.fmt.get("id", "") == "mini" and pt.mode == "FIGHT" and pt.segments() == 3 and pt.boss_name == "cassidy_vane")
+
+	# ================= PAC-064: Pattern Intel (NP_02 z3) =============
+	var pid: Dictionary = content["pattern_intel"]
+	var pi_ledger := func(arg: String) -> Dictionary: return TNBSim.parse_pi_arg(arg, pid)
+	var pi_win_scrap := func(sim: TNBSim, oid: String, bi: int) -> void: sim.start_scrap(oid, bi); sim.obj["met"] = true; sim.obj["why"] = "objective"; sim._end_bout()
+	# the data, the dialect keys, the seed parser
+	var pia := make_sim(1, 7)
+	var pi_rungs_ok: bool = int(pid["rungs"]["scraps"]["1"]) == 3 and int(pid["rungs"]["scraps"]["2"]) == 6 and int(pid["rungs"]["spars"]["1"]) == 1 and int(pid["rungs"]["spars"]["2"]) == 3 and int(pid["rungs"]["segments"]["2"]) == 1
+	var pi_habits_ok := true
+	for pi_bn in TNBSim.BOSSES:
+		if not pid["habits"].has(pia.dialect_of(str(pi_bn))): pi_habits_ok = false
+	var pi_keys_ok: bool = pia.dialect_of("yuri_kowalchuk") == "kowalchuk" and pia.dialect_of("ada_okafor") == "okafor" and pia.dialect_of("cassidy_vane") == "cassidy_vane" and pia.dialect_of("hc7_echo") == "iron" \
+		and pia.dialect_of("carter_okafor", content["bouts"]["ep1"]["scrap_1"]["card"]) == "school"
+	var pi_seed: Dictionary = pi_ledger.call("kowalchuk:2,yuri_kowalchuk:3,okafor:1")
+	var pi_seed_ok: bool = int(pi_seed["dialects"]["kowalchuk"]["scraps"]) == 6 and int(pi_seed["bosses"]["yuri_kowalchuk"]["beaten"]) == 1 and int(pi_seed["dialects"]["okafor"]["scraps"]) == 3
+	_sr("PI data: the rungs as NP_02 s3's table (3 scraps or 1 spar -> 1; 6 / 3 / a dual segment -> 2), every dialect of the 24 with an authored habit; the dialect key is his House, his own id without one (Vane), the card's when it names one (the school); a fresh ledger is PI 0 vs %s; `-- pi=` seeds a ledger" % pia.bdialect,
+		pi_rungs_ok and pi_habits_ok and pi_keys_ok and pia.pi_vs() == 0 and pia.pi.get("dialects", {}).is_empty() and pi_seed_ok)
+	# the scrap track: won scraps at the count and not one short; a lost scrap pays nothing
+	var pib := make_sim(1, 7)
+	for pi_i in 2: pi_win_scrap.call(pib, "SCR-01", 1)
+	var pi_two: bool = pib.pi_level("kowalchuk") == 0 and count_events(pib.events, "pi") == 0 and int(pib.pi["dialects"]["kowalchuk"]["scraps"]) == 2
+	pi_win_scrap.call(pib, "SCR-01", 1)
+	var pi_three: bool = pib.pi_level("kowalchuk") == 1 and count_events(pib.events, "pi", {"level": 1, "source": "scraps"}) == 1
+	for pi_i in 2: pi_win_scrap.call(pib, "SCR-01", 1)
+	var pi_five: bool = pib.pi_level("kowalchuk") == 1
+	pi_win_scrap.call(pib, "SCR-01", 1)
+	var pi_six: bool = pib.pi_level("kowalchuk") == 2 and count_events(pib.events, "pi", {"level": 2}) == 1
+	pi_win_scrap.call(pib, "SCR-01", 1)
+	var pi_seven: bool = pib.pi_level("kowalchuk") == 2 and count_events(pib.events, "pi") == 2
+	var pic := make_sim(1, 7); pic.start_scrap("SCR-11", 1); pic.obj["failed"] = true; pic.obj["why"] = "you blocked"; pic._end_bout()
+	var pi_lost: bool = pic.pi.get("dialects", {}).get("kowalchuk", {}).get("scraps", 0) == 0
+	pic.start_scrap("SCR-05", 1); quiet(pic); place(pic, 1.4); pic.ep_b = 4; run_ticks(pic, TNBSim.ms(30000) + 1)
+	var pi_cap_lost: bool = pic.mode == "OVER" and pic.pi.get("dialects", {}).get("kowalchuk", {}).get("scraps", 0) == 0
+	pic.start_scrap("SCR-05", 1); quiet(pic); place(pic, 1.4); pic.ep_p = 4; run_ticks(pic, TNBSim.ms(30000) + 1)
+	var pi_cap_won: bool = pic.mode == "OVER" and int(pic.pi.get("dialects", {}).get("kowalchuk", {}).get("scraps", 0)) == 1
+	var pie: TNBSim = scrap.call("SCR-01")                                                # the real path: three body shots, the verdict, the count
+	for pi_i in 3: jab.call(pie, "R_HOOK", {"body": true})
+	var pi_real: bool = pie.mode == "OVER" and count_events(pie.events, "pi_count", {"dialect": "kowalchuk", "source": "scraps", "count": 1}) == 1
+	_sr("the scrap track: two won scraps vs Kowalchuk leave PI 0, the third is PI 1, the sixth PI 2 (not the fifth), a seventh crosses nothing; a scrap lost on a constraint or at the cap pays nothing, one won at the cap on EP pays one; the real path (three body shots) counts one",
+		pi_two and pi_three and pi_five and pi_six and pi_seven and pi_lost and pi_cap_lost and pi_cap_won and pi_real)
+	# the spar track and the dual segment
+	var pif := make_sim(1, 7)
+	pif.start_spar(1); pif._end_bout()
+	var pi_spar1: bool = pif.pi_level("kowalchuk") == 1 and count_events(pif.events, "pi", {"level": 1, "source": "spars"}) == 1
+	pif.start_spar(1); pif._end_bout()
+	var pi_spar2: bool = pif.pi_level("kowalchuk") == 1
+	pif.start_spar(1); pif.P["drops"] = 3; pif._end_bout()                                 # counted out in the lab: the lesson still counts
+	var pi_spar3: bool = pif.pi_level("kowalchuk") == 2 and count_events(pif.events, "pi", {"level": 2, "source": "spars"}) == 1
+	var pig := make_sim(1, 7); quiet(pig); pig.ep_b = 6; pig._end_segment("clock")
+	var pi_seg: bool = pig.pi_level("kowalchuk") == 2 and count_events(pig.events, "pi", {"level": 2, "was": 0, "source": "segments"}) == 1 and pig.pi.get("bosses", {}).get("yuri_kowalchuk", {}).get("beaten", 0) == 0
+	_sr("the spar track: one spar to its end vs Kowalchuk is PI 1, the third PI 2 (a count-out still counts - the lab is the lesson); one dual segment fought and lost is PI 2 at once and marks nobody beaten",
+		pi_spar1 and pi_spar2 and pi_spar3 and pi_seg)
+	# the boss track: beaten once, his page
+	var pih := make_sim(1, 7); quiet(pih); pih.ep_p = 6; pih._end_segment("clock")
+	var pi_page: Dictionary = pih.scout_page("yuri_kowalchuk")
+	var pi_beat: bool = int(pih.pi["bosses"]["yuri_kowalchuk"]["beaten"]) == 1 and pih.pi_boss("yuri_kowalchuk") == 3 and count_events(pih.events, "scout_book", {"boss": "yuri_kowalchuk"}) == 1 \
+		and pi_page["tells"].size() == pih.patterns["yuri_kowalchuk"]["strings"].size() and "S1" in pi_page["strings"] and pi_page["phases"].size() >= 1 and pi_page["corner_tell"] != "" and pi_page["desperation"] != "" and pih.scout_page("moira_macisaac").is_empty()
+	var pii := make_sim(1, 7); quiet(pii); pii.B["drops"] = 3; pii.ep_b = 6; pii._end_segment("SEGMENT KO")
+	var pi_ko: bool = int(pii.pi["bosses"]["yuri_kowalchuk"]["beaten"]) == 1
+	var pij := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("yuri_kowalchuk:3"))
+	var pik := make_sim(19, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("yuri_kowalchuk:3"))
+	_sr("the boss track: a segment won vs Yuri on EP marks him beaten - PI 3, his Scout Book page (his %d tells, strings, phase notes, the desperation, his corner's tell); his KO marks it too; Moira has no page and a ledger with Yuri beaten is PI 3 vs Yuri and PI 0 vs Moira" % pi_page.get("tells", []).size(),
+		pi_beat and pi_ko and pij.pi_vs() == 3 and pik.pi_vs() == 0)
+	# the effects: +10% on the tell against that dialect only, the cue, no wider at PI 3, no other window touched
+	var pil := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("kowalchuk:2")); quiet(pil); thaw(pil); pil.events.clear()
+	var pil0 := make_sim(1, 7); quiet(pil0); thaw(pil0); pil0.events.clear()
+	var pil1 := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("kowalchuk:1")); quiet(pil1); thaw(pil1); pil1.events.clear()
+	var pil3 := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("yuri_kowalchuk:3")); quiet(pil3); thaw(pil3); pil3.events.clear()
+	var pim := make_sim(4, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("kowalchuk:2")); quiet(pim); thaw(pim); pim.events.clear()   # Ada: an Okafor
+	pil._force_string("S1", 1.0, false); pil0._force_string("S1", 1.0, false); pil1._force_string("S1", 1.0, false); pil3._force_string("S1", 1.0, false); pim._force_string("S1", 1.0, false)
+	var pi_s1: int = TNBSim.ms(float(pil.pattern["strings"]["S1"]["tell"]["ms"]))
+	var pi_a1: int = TNBSim.ms(float(pim.pattern["strings"]["S1"]["tell"]["ms"]))
+	var pi_wider: bool = pil.btimer == int(pi_s1 * 1.1) and pil0.btimer == pi_s1 and pil1.btimer == pi_s1 and pil3.btimer == int(pi_s1 * 1.1) and pim.btimer == pi_a1
+	var pi_cue: bool = count_events(pil.events, "tell", {"cue": true}) == 1 and count_events(pil0.events, "tell", {"cue": false}) == 1 and count_events(pil1.events, "tell", {"cue": false}) == 1 and count_events(pim.events, "tell", {"cue": false}) == 1
+	var pi_windows: bool = pil3._window("slip") == pil0._window("slip") and pil3._window("flash") == pil0._window("flash") and pil3._window("perfect_block") == pil0._window("perfect_block") and pil3._window("duck") == pil0._window("duck") and absf(pil3._tell_mult() - 1.1) < 0.001
+	var pin := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("kowalchuk:2")); pin.hooks_enabled = false; pin.coach_on = false; place(pin, 1.6); pin.bstate = "IDLE"; pin.btimer = 1; pin.events.clear()
+	var pi_nat := 0
+	while count_events(pin.events, "tell") == 0 and pi_nat < 1200: pin.step({}); pi_nat += 1
+	var pi_natural_ok := false
+	for pi_e in pin.events:
+		if pi_e["kind"] == "tell" and not pi_e.get("fake", false):
+			pi_natural_ok = int(pi_e["ticks"]) == int(TNBSim.ms(float(pin.pattern["strings"][str(pi_e["string"])]["tell"]["ms"])) * 1.1) and bool(pi_e["cue"]); break
+	_sr("PI 2 vs Kowalchuk: Yuri's S1 tell %d -> %d ticks (+10%%), his tell event carries the cue; PI 0 and PI 1 leave it at %d with no cue; Ada's (an Okafor) stays %d on the same ledger; PI 3 is no wider than PI 2; his own selected tell comes at +10%% too; the slip / duck / perfect-block / flash windows are untouched at PI 3" % [pi_s1, int(pi_s1 * 1.1), pi_s1, pi_a1],
+		pi_wider and pi_cue and pi_windows and pi_natural_ok)
+	# the commentary at PI 1, silent at PI 0; the emphasized line at PI 2; the fallback habit
+	var pio1 := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("kowalchuk:1"))
+	var pio0 := make_sim(1, 7)
+	var pio2 := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("kowalchuk:2"))
+	var pi_comm: bool = count_events(pio1.events, "commentary", {"dialect": "kowalchuk", "level": 1, "cue": false}) == 1 and count_events(pio0.events, "commentary") == 0 and count_events(pio2.events, "commentary", {"level": 2, "cue": true}) == 1
+	var pi_text_ok := false
+	for pi_e in pio1.events:
+		if pi_e["kind"] == "commentary": pi_text_ok = str(pi_e["text"]) == str(pid["habits"]["kowalchuk"])
+	var pi_fallback: String = pio0.pi_habit("nobody")
+	_sr("the commentator calls the Kowalchuk habit before the segment at PI 1 (the authored line), says nothing at PI 0, and at PI 2 the line carries the cue; a dialect with no authored line falls back to his most-weighted tell's motif (%s)" % pi_fallback,
+		pi_comm and pi_text_ok and pi_fallback.begins_with("Watch the") and "Nobody" in pi_fallback)
+	# the profile reads more of a dialect it knows
+	var pi_reads := func(ledger: Dictionary) -> int:
+		var pi_ps := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", ledger); quiet(pi_ps); pi_ps.delegated = true; pi_ps.auto = TNBProfile.fresh_memory(); place(pi_ps, 1.6)
+		var n := 0
+		for pi_k in 300:
+			pi_ps.tick += 1; pi_ps.bstate = "TELL"; pi_ps.bstring = "S1"; pi_ps.btimer = 60; pi_ps.tell_start_tick = pi_ps.tick; pi_ps.auto["plan"] = ""
+			TNBProfile.intent(pi_ps, {})
+			if str(pi_ps.auto["plan"]) != "": n += 1
+		return n
+	var pi_r0: int = pi_reads.call({}); var pi_r3: int = pi_reads.call(pi_ledger.call("yuri_kowalchuk:3")); var pi_r2: int = pi_reads.call(pi_ledger.call("kowalchuk:2"))
+	var pip := make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("yuri_kowalchuk:3"))
+	_sr("the profile reads more of a dialect it knows: of 300 tells RORY (RFX 50) reads %d at PI 0, %d at PI 2, %d at PI 3 (read bonus %.2f at 3, 0 at 0)" % [pi_r0, pi_r2, pi_r3, pip.pi_read_bonus()],
+		pi_r2 - pi_r0 >= 12 and pi_r3 - pi_r0 >= 30 and absf(pip.pi_read_bonus() - float(pid["profile_read_bonus"]["3"])) < 0.001 and absf(pia.pi_read_bonus()) < 0.001)
+	# the ledger rides with the sim: Ep1's scrap 1 pays the school dialect, end_bout / new_dual keep it, and it hashes
+	var piq := make_sim(0, 7); piq.start_ep1("scrap_1")
+	var pi_school: bool = piq.bdialect == "school"
+	piq.obj["met"] = true; piq._end_bout(); piq.end_bout(); piq.new_dual()
+	var pi_kept: bool = int(piq.pi["dialects"]["school"]["scraps"]) == 1 and piq.bout.is_empty()
+	var pir_a := make_sim(1, 99, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("kowalchuk:2")); var pir_b := make_sim(1, 99, TNBSim.LINEUP_MILLBROOK, "", pi_ledger.call("kowalchuk:2")); var pir_c := make_sim(1, 99)
+	_sr("the ledger rides with the sim: SCRAP 1 vs the bike-rack CHALLENGER pays the school dialect, end_bout and new_dual keep it, and two sims differ in hash by the ledger alone",
+		pi_school and pi_kept and pir_a.hash_state() == pir_b.hash_state() and pir_a.hash_state() != pir_c.hash_state())
+
 	# ---- PUNISH / BAIT from pattern data ----
 	var rc := s.response_coverage(s.patterns)
 	_sr("punish-response grammar resolves for every hook (24 patterns)", rc["unknown"].is_empty(),
@@ -1573,9 +1823,9 @@ func smoke(boss_idx: int) -> int:
 	match plan["kind"]:
 		"force":
 			var full_t := TNBSim.ms(float(s.pattern["strings"][plan["string"]]["tell"]["ms"]))
-			answered = s.bstate == "TELL" and s.bstring == plan["string"] and s.btimer < full_t \
-				and s.btimer == maxi(1, int(full_t * float(plan["scale"])))
-			detail = "%s -> %s tell %d/%d ticks (x%.2f)" % [pu["trigger"], s.bstring, s.btimer, full_t, float(plan["scale"])]
+			answered = s.bstate == "TELL" and s.bstring == plan["string"] and s.btimer < int(full_t * s._tell_mult()) \
+				and s.btimer == maxi(1, int(full_t * float(plan["scale"]) * s._tell_mult()))          # PI 2 vs his dialect (earned in the flow above) widens the tell x1.1
+			detail = "%s -> %s tell %d/%d ticks (x%.2f, PI %d tell x%.2f)" % [pu["trigger"], s.bstring, s.btimer, full_t, float(plan["scale"]), s.pi_vs(), s._tell_mult()]
 		"actions":
 			answered = s.bstate == "ACTING" and s.bqueue.size() >= 1
 			detail = "%s -> %d immediate actions" % [pu["trigger"], s.bqueue.size()]
@@ -1596,7 +1846,7 @@ func smoke(boss_idx: int) -> int:
 		if b.has("trigger") and b.has("force"):
 			s._fire_event(str(b["trigger"]))
 			baited = s.bstate == "TELL" and s.bstring == b["force"]
-			bait_full = baited and s.btimer == TNBSim.ms(float(s.pattern["strings"][s.bstring]["tell"]["ms"]))
+			bait_full = baited and s.btimer == maxi(1, int(TNBSim.ms(float(s.pattern["strings"][s.bstring]["tell"]["ms"])) * 1.0 * s._tell_mult()))
 			break
 		elif b.has("authored_absent"):
 			baited = true; bait_full = true
@@ -1768,6 +2018,31 @@ func determinism() -> int:
 	var db := make_sim(1, 12345); db.delegate_all = true; db.new_dual()
 	var hdb := run_log(db, log_auto, 60)
 	_sr("a delegated dual on a fight-key-less log: the profile lands %d and the corners still turn (%d segment ends); every hash identical twice" % [hits_auto, segs_auto], hits_auto >= 5 and segs_auto >= 1 and hda == hdb and hda.size() > 0, "%d hashes" % hda.size())
+	# a scrap on the profile: the objective judged from events, twice, identically
+	var sc_a := make_sim(1, 2024); sc_a.start_scrap("SCR-06", 1); sc_a.delegate_all = true; sc_a.new_dual(); sc_a.events.clear()
+	var hsa: Array = []
+	for i in 3700:
+		sc_a.step({})
+		if i % 50 == 0: hsa.append(sc_a.hash_state())
+	var sc_b := make_sim(1, 2024); sc_b.start_scrap("SCR-06", 1); sc_b.delegate_all = true; sc_b.new_dual()
+	var hsb: Array = []
+	for i in 3700:
+		sc_b.step({})
+		if i % 50 == 0: hsb.append(sc_b.hash_state())
+	_sr("a scrap (survive 20s) on the profile against the live Yuri ends %s and hashes identically twice" % ("met" if bool(sc_a.obj.get("met", false)) else ("failed: " + str(sc_a.obj.get("why", ""))) if bool(sc_a.obj.get("failed", false)) else "at the cap"), sc_a.mode == "OVER" and hsa == hsb and hsa.size() > 0, "%d hashes" % hsa.size())
+	# Pattern Intel live: the delegated dual again with PI 2 vs Kowalchuk (his tells +10%, the profile reading more) and the ledger ticking as segments end
+	var pi_seed: Dictionary = TNBSim.parse_pi_arg("kowalchuk:2", content.get("pattern_intel", {}))
+	var pa := make_sim(1, 12345, TNBSim.LINEUP_MILLBROOK, "", pi_seed); pa.delegate_all = true; pa.new_dual(); pa.events.clear()
+	var hpa := run_log(pa, log_auto, 60)
+	var pi_ticks := 0; var pi_cues := 0; var pi_comm := 0
+	for e_p in pa.events:
+		if e_p["kind"] == "pi_count": pi_ticks += 1
+		elif e_p["kind"] == "tell" and bool(e_p.get("cue", false)): pi_cues += 1
+		elif e_p["kind"] == "commentary": pi_comm += 1
+	var pb := make_sim(1, 12345, TNBSim.LINEUP_MILLBROOK, "", pi_seed); pb.delegate_all = true; pb.new_dual()
+	var hpb := run_log(pb, log_auto, 60)
+	_sr("the delegated dual with a PI 2 ledger vs Kowalchuk: %d emphasized tells, %d commentary calls, the ledger ticked %d times as segments ended (now %s); every hash identical twice and different from the ledger-less run" % [pi_cues, pi_comm, pi_ticks, JSON.stringify(pa.pi.get("bosses", {}))],
+		pi_cues >= 1 and pi_comm >= 1 and pi_ticks >= 1 and hpa == hpb and hpa.size() > 0 and hpa != hda, "%d hashes" % hpa.size())
 	return _verdict("DETERMINISM")
 
 # --------------------------------------------------------------- GEOMETRY ----

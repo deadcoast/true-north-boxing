@@ -8,6 +8,7 @@ extends RefCounted
 # at load; geometry (C2) replaces dodge tables; hitstop/slow-time are sim state.
 
 const TNBProfile := preload("res://sim/profile.gd")   # the fighter who plays without you (NP_10 s8)
+const TNBObjectives := preload("res://sim/objectives.gd")   # the scrap's micro-objective, judged from events (NP_02 s2.1)
 
 const TICK_HZ := 120
 const DT := 1.0 / 120.0
@@ -187,6 +188,23 @@ var lb_block_t := 0                  # LB + RT held: the WALL motion (400ms)
 var feint_log: Array = []            # [tick, row] of recent feints (10s window)
 var feint_wise: Dictionary = {}      # row -> tick until which he stops reacting to that feint
 
+# PAC-063: scraps and spars (NP_02 s2) - the two smaller sizes on the same sim
+var BOUTS: Dictionary = {}           # data/bouts.v1.json
+var SCRAPS: Dictionary = {}          # data/scrap_objectives.v1.json, by id
+var bout: Dictionary = {}            # {} = a dual; {"kind": "scrap"|"spar", "objective", "param", "card", "label", "flags"}
+var dual_fmt: Dictionary = {}        # the dual's format, kept while a bout runs
+var obj: Dictionary = {}             # the objective record (TNBObjectives)
+var lab: Array = []                  # spar lab flags live this bout
+var bout_cap_t := 0                  # the scrap's cap in ticks (elapsed = cap - clock)
+var boss_label := ""                 # the name on the card (an NPC's, or the boss's)
+var backstep_ev_t := 0
+
+# PAC-064: Pattern Intel (NP_02 s3) - the recon ledger the sim reads and ticks
+var PI: Dictionary = {}              # data/pattern_intel.v1.json
+var pi: Dictionary = {"dialects": {}, "bosses": {}}   # the ledger: per dialect {scraps, spars, segments}, per boss {beaten}; rides with the save, hashed
+var bdialect := ""                   # this opponent's dialect key (his House, his own id, or the card's)
+var pi_log: Array = []               # every rung crossed this session (presentation + the Scout Book shelf)
+
 # PAC-062: manager mode (NP_10 s8) - a segment played by the card's own profile
 var delegated := false               # this segment is the profile's: the fight keys of the intent are ignored, the corner keys are not
 var delegate_next := false           # chosen in the corner for the next segment
@@ -272,10 +290,20 @@ static func load_content(base: String = "res://") -> Dictionary:
 	for m in raw.get("moves", []): lib[str(m["name"])] = m
 	return {"tuning": load_json(base + "combat_tuning.v1.json"), "patterns": pats, "library": lib, "tactics": load_json(base + "tactics.v1.json"),
 		"affinity": load_json(base + "affinity.v1.json"), "feuds": load_json(base + "feud_graph.v1.json").get("edges", []),
-		"coaches": load_json(base + "coaches.v1.json"), "formats": load_json(base + "formats.v1.json")}
+		"coaches": load_json(base + "coaches.v1.json"), "formats": load_json(base + "formats.v1.json"),
+		"bouts": load_json(base + "bouts.v1.json"), "scraps": load_json(base + "scrap_objectives.v1.json"),
+		"pattern_intel": load_json(base + "pattern_intel.v1.json")}
 
-func setup(tuning: Dictionary, pats: Dictionary, names: Array, lineup_p: Array, first_boss: int, seed_v: int, lib: Dictionary = {}, tac: Dictionary = {}, aff_d: Dictionary = {}, feuds: Array = [], coaches: Dictionary = {}, formats: Dictionary = {}, fmt_id: String = "") -> void:
-	T = tuning; patterns = pats; boss_names = names; library = lib; TAC = tac; AFF = aff_d; FEUDS = feuds; COACHES = coaches; FMT = formats
+func setup(tuning: Dictionary, pats: Dictionary, names: Array, lineup_p: Array, first_boss: int, seed_v: int, lib: Dictionary = {}, tac: Dictionary = {}, aff_d: Dictionary = {}, feuds: Array = [], coaches: Dictionary = {}, formats: Dictionary = {}, fmt_id: String = "", bouts_d: Dictionary = {}, scraps_d: Dictionary = {}, pi_d: Dictionary = {}, pi_ledger: Dictionary = {}) -> void:
+	T = tuning; patterns = pats; boss_names = names; library = lib; TAC = tac; AFF = aff_d; FEUDS = feuds; COACHES = coaches; FMT = formats; BOUTS = bouts_d
+	SCRAPS = {}
+	for o in scraps_d.get("objectives", []): SCRAPS[str(o["id"])] = o
+	PI = pi_d
+	pi = pi_ledger.duplicate(true) if pi_ledger.size() > 0 else {"dialects": {}, "bosses": {}}
+	if not pi.has("dialects"): pi["dialects"] = {}
+	if not pi.has("bosses"): pi["bosses"] = {}
+	pi_log = []
+	bout = {}; obj = {}; lab = []
 	var fid := fmt_id if fmt_id != "" else str(FMT.get("default", "mini"))
 	fmt = FMT.get("formats", {}).get(fid, {"label": "Mini-dual", "segments": 3, "dressed": 4, "enemy_dressed": 4, "repeat_slots": false, "condition_carries": true, "sudden_death": true, "blind": false, "segment_s": 90}).duplicate(true)
 	fmt["id"] = fid
@@ -317,6 +345,15 @@ func _reset_dual(first_boss: int) -> void:
 	_first_boss = first_boss
 	_build_lineup()
 	_pick_coach(); _build_enemy_lineup()
+	if bout.size() > 0: coach = {}                                     # no corners in a scrap or a spar (NP_02 s2)
+	obj = {}; lab = []
+	if bout.size() > 0:
+		lab = bout.get("flags", []).duplicate()
+		var oid := str(bout.get("objective", ""))
+		if str(bout["kind"]) == "scrap":
+			obj = TNBObjectives.fresh(oid, BOUTS["objective_forms"][oid], str(SCRAPS[oid]["prompt"]), str(bout.get("param", "")))
+		elif oid == "SEGMENT_END":
+			obj = TNBObjectives.fresh(oid, {"kind": "segment_end"}, "reach segment end", "")
 	_load_segment()
 
 var _first_boss := 0
@@ -340,6 +377,13 @@ func _load_segment() -> void:
 	B = _fresh({"PWR": 60, "SPD": 55, "CHN": 60, "RFX": 55, "BLK": 55, "STA": 60, "HRT": 60}, Vector2(0, -1.0))
 	var bm: Dictionary = pattern.get("meta", {})
 	_dress(B, str(bm.get("style", "BOXERPUNCHER")), str(bm.get("element", "NONE")), str(bm.get("house", "none")))
+	boss_label = boss_name
+	if bout.size() > 0 and bout.get("card", {}).size() > 0:              # an NPC's card on a stand-in pattern's strings
+		var oc: Dictionary = bout["card"]
+		B = _fresh(oc.get("stats", {"PWR": 60, "SPD": 55, "CHN": 60, "RFX": 55, "BLK": 55, "STA": 60, "HRT": 60}), Vector2(0, -1.0))
+		_dress(B, str(oc.get("style", bm.get("style", "BOXERPUNCHER"))), str(oc.get("element", bm.get("element", "NONE"))), str(oc.get("house", bm.get("house", "none"))))
+		boss_label = str(oc.get("name", boss_name))
+	bdialect = dialect_of(boss_name, bout.get("card", {}) if bout.size() > 0 else {})
 	bstate = "IDLE"; btimer = ms(600); bqueue = []; bphase = 1; bdesp_used = false; bpending = {}
 	contributed = 0.0
 	tokens = []; flags = {}
@@ -361,6 +405,11 @@ func _load_segment() -> void:
 	sensors = _parse_sensors(pattern)
 	seg_score0 = [score_p, score_b, ep_p, ep_b]; clock_acc = 0.0; ep_frac = 0.0; ep_frac_b = 0.0
 	clock_t = (1 << 30) if r6 else ms(float(fmt.get("segment_s", 90)) * 1000.0)
+	bout_cap_t = clock_t
+	if bout.size() > 0:
+		tension = 0.0; contributed = 0.0
+		_ev("bout_start", {"kind": bout["kind"], "label": bout["label"], "objective": str(bout.get("objective", "")), "prompt": TNBObjectives.describe(obj), "flags": lab, "opponent": boss_label})
+		_say("%s vs %s%s :: %s" % [str(bout["label"]), boss_label, "  [" + ", ".join(PackedStringArray(lab)) + "]" if lab.size() > 0 else "", TNBObjectives.describe(obj) if obj.size() > 0 else "full segment, drops and EP"])
 	# s6: a fighter who re-enters carries the condition he left with (R6, repeat slots); the corner's restores land on top
 	if bool(fmt.get("condition_carries", true)):
 		if condition.has(str(f["name"])):
@@ -397,7 +446,12 @@ func _load_segment() -> void:
 	if bcharged:
 		B["charge_t"] = ms(float(TAC.get("corner", {}).get("charged_surge_s", 10)) * 1000.0); bcharged = false
 		_say("%s enters CHARGED - their relay chain %d" % [boss_name, brelay_chain])
+	if bout.size() > 0 and "tell_highlight" in lab: tell_highlight_t = 1 << 30      # the lab flag outlives the corner's timers
+	backstep_ev_t = -1000
 	_matchup()
+	if pi_vs() >= 1:                                                              # NP_02 s3: PI 1 is the commentator's call before the segment
+		_ev("commentary", {"dialect": bdialect, "level": pi_vs(), "text": pi_habit(bdialect), "cue": pi_cue(), "page": pi_vs() >= 3})
+		_say("COMMENTARY (PI %d vs %s): %s" % [pi_vs(), bdialect.capitalize(), pi_habit(bdialect)])
 	delegated = delegate_all or delegate_next; delegate_next = false
 	auto = TNBProfile.fresh_memory(); auto_stats = {"punches": 0, "feints": 0, "dodges": 0, "blocks": 0, "tell_jabs": 0, "casts": 0, "grabs": 0, "sprints": 0, "body": 0, "power": 0, "rows": {}, "dist_sum": 0.0, "dist_n": 0}
 	if delegated: _ev("delegated", {"who": f["name"], "seg": seg_idx + 1}); _say("%s plays this one on their own - the corner is still yours (Tension at %d%%)" % [f["name"], int(TAC.get("corner", {}).get("delegated_tension_pct", 85))])
@@ -674,7 +728,7 @@ func _matchup() -> void:
 		"p": [P["style"], P["element"], P["house"]], "b": [B["style"], B["element"], B["house"]]}
 	_ev("matchup", {"p_style": P["style"], "p_element": P["element"], "p_house": P["house"], "b_style": B["style"], "b_element": B["element"], "b_house": B["house"],
 		"style_adv": style_adv, "element_adv": element_adv, "feud": feud, "line": aff["line"]})
-	_say("MATCHUP %s (%s/%s) vs %s (%s/%s) :: %s" % [pname(), labels.get(P["style"], P["style"]), P["element"], boss_name, labels.get(B["style"], B["style"]), B["element"], aff["line"]])
+	_say("MATCHUP %s (%s/%s) vs %s (%s/%s) :: %s" % [pname(), labels.get(P["style"], P["style"]), P["element"], boss_label, labels.get(B["style"], B["style"]), B["element"], aff["line"]])
 
 func _style_adv(k: String) -> bool:
 	# the triangle's truth, plus Switch-Up's lie for the player (NP_10 s5); the lie never removes his truth
@@ -746,6 +800,7 @@ func _ev(kind: String, data: Dictionary = {}) -> void:
 	var d := data.duplicate()
 	d["kind"] = kind; d["tick"] = tick
 	events.append(d)
+	if obj.size() > 0 and bout.size() > 0 and not obj["met"] and not obj["failed"]: TNBObjectives.on_event(self, obj, d)   # the scrap's judge hears every event as it happens
 
 # ============================ GEOMETRY (C2) ================================
 func _punch_family(row: String) -> String:
@@ -890,10 +945,13 @@ func _try_execute_cmd() -> bool:
 		return true
 	var st_cost := float(row["stamina"]) * (2.0 if "POWER" in c["mods"] else 1.0)
 	var fam_c := _punch_family(c["row"])
+	var reach_c := float(GEO[fam_c]["reach"]) * float(P["pkg"].get("reach_mult", 1.0)) * (float(P["pkg"].get("straight_reach_mult", 1.0)) if fam_c == "STRAIGHT" else 1.0)
+	var stepping: bool = P["pos"].distance_to(B["pos"]) > reach_c - LUNGE_P - 0.05     # only the step makes it reach
+	_ev("punch", {"row": c["row"], "mods": c["mods"].duplicate(), "stepping": stepping})
 	if (fam_c == "HOOK" or fam_c == "UPPERCUT") and P["pos"].distance_to(B["pos"]) <= float(AFF.get("style", {}).get("inside_range_m", 1.3)):
 		st_cost *= float(P["pkg"].get("inside_hook_upper_stamina_mult", 1.0))         # the swarmer's phone booth (s1.2)
 	P["pending"] = {"row": c["row"], "t": startup, "startup": startup, "mods": c["mods"], "hissatsu": hiss,
-		"counter": P["counter_t"] > 0, "flash": P["flash_t"] > 0, "stamina_cost": st_cost, "read": "none"}
+		"counter": P["counter_t"] > 0, "flash": P["flash_t"] > 0, "stamina_cost": st_cost, "read": "none", "stepping": stepping}
 	P["counter_t"] = 0                                     # window spent by the attempt
 	P["busy_t"] = startup + ms(float(row["recovery_ms"]))
 	P["stamina"] = maxf(0.0, P["stamina"] - st_cost)
@@ -1014,7 +1072,7 @@ func _land_player_punch() -> void:
 		_comp_damage("B", dmg * float(T["guard"]["chip_pct"]) / 100.0, src)
 		if B["guard"] <= 0.0:
 			B["guard_open_t"] = ms(float(T["guard"]["break_open_ms"])); B["guard_t"] = 0; wall_broken = true
-			_say("HIS GUARD IS BROKEN")
+			_say("HIS GUARD IS BROKEN"); _ev("guard_break", {"who": "B"})
 		_ev("block", {"by": "B"})
 		_counter_state_trigger()
 		return
@@ -1026,7 +1084,8 @@ func _land_player_punch() -> void:
 		bstate = "IDLE"; btimer = ms(800); bqueue = []
 		P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"]))
 		if not pd["hissatsu"]: _earn_tension(float(T.get("tension", {}).get("interrupt", 5)))
-		_say("INTERRUPT! string broken - flash window open"); _ev("interrupt", {})
+		_say("INTERRUPT! string broken - flash window open")
+		_ev("interrupt", {"loud": bstring != "" and pattern["strings"].has(bstring) and str(pattern["strings"][bstring].get("class", "normal")) != "normal", "string": bstring})
 	if B["guard_open_t"] > 0: dmg *= float(T["guard"]["break_open_dmg_mult"])
 	if cast.size() > 0 and cast["who"] == "B" and src["jab"]: _interrupt_cast("P")
 	dmg = _comp_damage("B", dmg, src)
@@ -1047,7 +1106,8 @@ func _land_player_punch() -> void:
 		if buffs["P"].has("ep_plus_on_clean"): ep_p += 1
 	var stop: Dictionary = T["hit_feel"]["hitstop_ms"]
 	freeze_t = maxi(freeze_t, ms(float(stop["flash_or_hissatsu"] if (pd["flash"] or pd["hissatsu"]) else (stop["counter"] if pd["counter"] else stop["normal"]))))
-	_ev("hit", {"on": "B", "dmg": dmg, "counter": pd["counter"], "flash": pd["flash"], "hissatsu": pd["hissatsu"], "body": body})
+	_ev("hit", {"on": "B", "dmg": dmg, "counter": pd["counter"], "flash": pd["flash"], "hissatsu": pd["hissatsu"], "body": body,
+		"row": pd["row"], "foul": pf != "", "center": zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER", "stepping": pd.get("stepping", false)})
 	if pd["counter"] and not pd["hissatsu"]: _say("FLASH COUNTER x2!" if pd["flash"] else "COUNTER x1.6!")
 	if B["comp"] <= 0.0: _drop(false, pd["flash"])
 
@@ -1125,7 +1185,7 @@ func _land_boss_punch(mult: float) -> void:
 		_comp_damage("P", dmg * float(T["guard"]["chip_pct"]) / 100.0, {"counter": mult > 1.0, "flash": false, "power": false, "body": body, "hissatsu": false, "jab": _punch_family(brow) == "STRAIGHT"})
 		if P["counter_state_t"] > 0: P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"])); P["counter_state_t"] = 0
 		if P["guard"] <= 0.0:
-			P["guard_open_t"] = ms(float(T["guard"]["break_open_ms"])); _say("GUARD BREAK - you're OPEN")
+			P["guard_open_t"] = ms(float(T["guard"]["break_open_ms"])); _say("GUARD BREAK - you're OPEN"); _ev("guard_break", {"who": "P"})
 		_ev("block", {"by": "P"})
 		return
 	if P["guard_open_t"] > 0: dmg *= float(T["guard"]["break_open_dmg_mult"])
@@ -1160,7 +1220,7 @@ func _drop(player_down: bool, flash: bool = false) -> void:
 		drops_b += 1; P["drops"] += 1; score_b += 1
 		_earn_tension_b(float(T.get("tension", {}).get("drop", 10)))
 		_ev("drop", {"who": "P"})
-		if r6: _say("GOLDEN DROP - %s is down" % pname()); _end_dual(); return
+		if r6: _say("GOLDEN DROP - %s is down" % pname()); _pi_tick("segments", bdialect); _end_dual(); return
 		if P["drops"] >= 3:
 			_segment_ko(false, "three knockdowns"); return
 		mode = "EIGHT"
@@ -1180,7 +1240,7 @@ func _drop(player_down: bool, flash: bool = false) -> void:
 		B["no_regen_t"] = ms(float(T["composure"]["regen_halt_after_count_s"]) * 1000.0)
 		_ev("drop", {"who": "B", "flash": flash})
 		_say("%s %d-%d" % ["FLASH DROP! (2 pts)" if flash else "DROP SCORED!", score_p, score_b])
-		if r6: _say("GOLDEN DROP - %s is down" % boss_name); _end_dual(); return
+		if r6: _say("GOLDEN DROP - %s is down" % boss_name); _pi_tick("segments", bdialect); _pi_beaten(boss_name); _end_dual(); return
 		if B["drops"] >= 3: _segment_ko(true, "three knockdowns")
 
 func _segment_ko(player_scored: bool, why: String) -> void:
@@ -1244,6 +1304,10 @@ func _end_segment(why: String) -> void:
 	elif bcontributed < 10.0: brelay_chain = 0
 	bcontributed = 0.0
 	_ev("seg_end", {"why": why, "won": won, "charged": charged, "chain": relay_chain})
+	if bout.is_empty():                                       # NP_02 s3: a dual segment fought reaches PI 2 on the dialect; a segment won marks a named boss beaten
+		_pi_tick("segments", bdialect)
+		if won or B["drops"] >= 3: _pi_beaten(boss_name)
+	if obj.size() > 0 and str(obj["kind"]) == "segment_end" and why == "clock" and P["drops"] < 3: obj["met"] = true; obj["why"] = "went the distance"
 	if seg_idx >= segments() - 1 or r6:
 		_end_dual(); return
 	mode = "CARD"; card_t = ms(float(TAC.get("corner", {}).get("card_seconds", 4)) * 1000.0)
@@ -1389,6 +1453,7 @@ func corner_action(a: Dictionary) -> bool:
 	return true
 
 func _end_dual() -> void:
+	if bout.size() > 0: _end_bout(); return
 	# NP_01 s3.3: most DROPS (the score) wins; equal -> segment wins -> counter hits -> the Golden DROP
 	var v := "DRAW"; var rung := "score"
 	if score_p > score_b: v = "MILLBROOK WINS"
@@ -1427,6 +1492,191 @@ func _start_r6() -> void:
 
 func new_dual() -> void:
 	_reset_dual(_first_boss)
+
+# ============================ PATTERN INTEL (NP_02 s3) ====================
+func dialect_of(name: String, card: Dictionary = {}) -> String:
+	# his House's tell dialect (NP_07 s4); his own when he has none; a bout card may name one (NP_12A: the school's, a mockup's)
+	if card.size() > 0 and str(card.get("dialect", "")) != "": return str(card["dialect"])
+	var h := house_key(str(patterns.get(name, {}).get("meta", {}).get("house", "none")))
+	return h if h != "none" else name
+
+func pi_level(dialect: String) -> int:
+	# the dialect track: each source has its own rungs, exactly as the table reads (3 scraps or 1 spar -> 1; 6 / 3 / a segment -> 2)
+	var rec: Dictionary = pi.get("dialects", {}).get(dialect, {})
+	var lvl := 0
+	for src in PI.get("rungs", {}):
+		var have := int(rec.get(src, 0))
+		for rung in PI["rungs"][src]:
+			if have >= int(PI["rungs"][src][rung]): lvl = maxi(lvl, int(rung))
+	return lvl
+
+func pi_boss(name: String) -> int:
+	# the boss track: a named boss beaten once is PI 3 - his page
+	return 3 if int(pi.get("bosses", {}).get(name, {}).get("beaten", 0)) > 0 else 0
+
+func pi_vs() -> int:
+	# the effective level against this opponent: the dialect track or the boss track, whichever is higher (an NPC card has no boss track)
+	var lvl := pi_level(bdialect)
+	if bout.is_empty() or bout.get("card", {}).is_empty(): lvl = maxi(lvl, pi_boss(boss_name))
+	return lvl
+
+func pi_cue() -> bool:
+	return pi_vs() >= 2 and bool(PI.get("effects", {}).get("2", {}).get("tell_cue_emphasis", true))
+
+func _tell_mult() -> float:
+	# the interrupt window is the tell (NP_04 s4); PI 2 makes it 10% longer against that dialect and nothing else is widened
+	var m := float(tactic_fx.get("tell_loud_mult", 1.0))
+	if pi_vs() >= 2: m *= float(PI.get("effects", {}).get("2", {}).get("interrupt_window_mult", 1.1))
+	return m
+
+func pi_read_bonus() -> float:
+	# the profile reads more of a dialect it knows (NP_02 s3: "your recon makes your AI teammates smarter")
+	return float(PI.get("profile_read_bonus", {}).get(str(pi_vs()), 0.0))
+
+func pi_habit(dialect: String) -> String:
+	# the commentator's line: authored per dialect, else the motif of his most-weighted string
+	var h: Dictionary = PI.get("habits", {})
+	if h.has(dialect): return str(h[dialect])
+	var best := ""; var best_w := -1
+	for k in pattern.get("strings", {}):
+		var w := int(pattern.get("select", {}).get("weights", {}).get(k, 15))
+		if w > best_w: best_w = w; best = str(pattern["strings"][k].get("tell", {}).get("motif", ""))
+	return str(PI.get("habit_fallback", "Watch the {motif}")).replace("{motif}", best.replace("_", " ")).replace("{dialect}", dialect.capitalize())
+
+func _pi_tick(src: String, dialect: String) -> void:
+	# one count on the dialect track; a rung crossed is an event
+	if PI.is_empty() or dialect == "": return
+	var before := pi_level(dialect)
+	if not pi["dialects"].has(dialect): pi["dialects"][dialect] = {"scraps": 0, "spars": 0, "segments": 0}
+	pi["dialects"][dialect][src] = int(pi["dialects"][dialect].get(src, 0)) + 1
+	var after := pi_level(dialect)
+	_ev("pi_count", {"dialect": dialect, "source": src, "count": int(pi["dialects"][dialect][src]), "level": after})
+	if after > before:
+		var lbl := str(PI.get("effects", {}).get(str(after), {}).get("label", ""))
+		pi_log.append("PI %d vs %s (%s)" % [after, dialect.capitalize(), src])
+		_ev("pi", {"dialect": dialect, "level": after, "was": before, "source": src, "label": lbl})
+		_say("PATTERN INTEL %d vs the %s dialect - %s" % [after, dialect.capitalize(), lbl])
+
+func _pi_beaten(name: String) -> void:
+	# a named boss beaten once: PI 3 for him, his page in the Scout Book
+	if PI.is_empty() or not patterns.has(name): return
+	var n := int(pi["bosses"].get(name, {}).get("beaten", 0))
+	pi["bosses"][name] = {"beaten": n + 1}
+	if n == 0:
+		pi_log.append("PI 3 vs %s (beaten)" % name)
+		_ev("scout_book", {"boss": name, "page": scout_page(name)})
+		_say("SCOUT BOOK: %s's page is yours, %s" % [name, str(PI.get("page_handwriting", "in the tactician's hand"))])
+
+func scout_page(name: String) -> Dictionary:
+	# PI 3: the pattern page from the pattern itself - tell list, string names, phase notes, the hooks, the corner's tell
+	if pi_boss(name) < 3: return {}
+	var pat: Dictionary = patterns.get(name, {})
+	var tells: Array = []
+	for k in pat.get("strings", {}):
+		var s: Dictionary = pat["strings"][k]
+		tells.append({"string": str(k), "class": str(s.get("class", "normal")), "tell_ms": int(s.get("tell", {}).get("ms", 0)), "motif": str(s.get("tell", {}).get("motif", "")).replace("_", " "), "actions": pat["strings"][k].get("actions", []).size()})
+	var phases: Array = []
+	for ph in pat.get("phases", []):
+		phases.append("phase %s at %s: %s" % [str(ph.get("phase", "")), str(ph.get("trigger", "")), ", ".join(PackedStringArray(ph.get("directives", [])))])
+	var hooks: Array = []
+	for hk in pat.get("punish", []): hooks.append("punishes " + str(hk.get("trigger", "")))
+	for hk in pat.get("bait", []):
+		if hk.has("trigger"): hooks.append("baited by " + str(hk.get("trigger", "")))
+	var cid := str(COACHES.get("coach_of", {}).get(name, COACHES.get("default", "journeyman")))
+	var crec: Dictionary = COACHES.get("coaches", {}).get(cid, {})
+	var bm: Dictionary = pat.get("meta", {})
+	return {"boss": name, "dialect": dialect_of(name), "house": house_key(str(bm.get("house", "none"))), "style": style_key(str(bm.get("style", ""))), "element": element_key(str(bm.get("element", ""))),
+		"tells": tells, "strings": pat.get("strings", {}).keys(), "phases": phases, "hooks": hooks, "desperation": str(pat.get("desperation", {}).get("move", "")),
+		"corner": str(crec.get("label", cid)), "corner_tell": str(COACHES.get("tells", {}).get(str(crec.get("tell", "none")), "")), "hand": str(PI.get("page_handwriting", ""))}
+
+static func parse_pi_arg(s: String, pi_d: Dictionary) -> Dictionary:
+	# `-- pi=kowalchuk:2,yuri_kowalchuk:3` -> a ledger: a dialect at a level (its scrap rung), a boss beaten for 3
+	var out := {"dialects": {}, "bosses": {}}
+	for part in s.split(","):
+		if not ":" in part: continue
+		var kv := part.split(":")
+		var key := str(kv[0]).strip_edges(); var lvl := clampi(int(kv[1]), 0, 3)
+		if key == "": continue
+		if lvl >= 3: out["bosses"][key] = {"beaten": 1}
+		elif lvl >= 1: out["dialects"][key] = {"scraps": int(pi_d.get("rungs", {}).get("scraps", {}).get(str(lvl), 3 * lvl)), "spars": 0, "segments": 0}
+	return out
+
+# ============================ SCRAPS AND SPARS (NP_02 s2) =================
+func objective_available(id: String, boss_idx: int) -> bool:
+	# a form that needs something the opponent does not have (a coached NPC's corner shout) is not offered
+	var form: Dictionary = BOUTS.get("objective_forms", {}).get(id, {})
+	if form.is_empty() or not SCRAPS.has(id): return false
+	if str(form.get("requires", "")) == "coached_npc":
+		var pat: Dictionary = patterns.get(boss_names[boss_idx], {})
+		for k in pat.get("strings", {}):
+			if "shout" in str(pat["strings"][k].get("tell", {}).get("motif", "")): return true
+		return false
+	return true
+
+func _bout_format(kind: String) -> Dictionary:
+	var secs := float(BOUTS.get("scrap", {}).get("time_cap_s", 30)) if kind == "scrap" else float(BOUTS.get("spar", {}).get("segment_s", 90))
+	return {"id": kind, "label": "Scrap" if kind == "scrap" else "Spar", "segments": 1, "dressed": 1, "enemy_dressed": 1, "repeat_slots": false, "condition_carries": false, "sudden_death": false, "blind": false, "segment_s": secs}
+
+func start_scrap(objective_id: String, boss_idx: int, param: String = "", card: Dictionary = {}, label: String = "") -> bool:
+	# NP_02 s2.1: one micro-objective, full sim, a hard 30s cap, no Tension meter
+	if not objective_available(objective_id, boss_idx):
+		_ev("bout_refused", {"objective": objective_id, "why": "not available against this opponent"}); return false
+	if bout.is_empty(): dual_fmt = fmt.duplicate(true)
+	var form: Dictionary = BOUTS["objective_forms"][objective_id]
+	var prm := param
+	if str(form.get("param", "")) == "dialect" and prm == "": prm = house_key(str(patterns.get(boss_names[boss_idx], {}).get("meta", {}).get("house", "none")))
+	bout = {"kind": "scrap", "objective": objective_id, "param": prm, "card": card.duplicate(true), "label": label if label != "" else "SCRAP - " + str(SCRAPS[objective_id]["prompt"]), "flags": []}
+	fmt = _bout_format("scrap"); _first_boss = boss_idx
+	_reset_dual(boss_idx)
+	return true
+
+func start_spar(boss_idx: int, flags: Array = [], card: Dictionary = {}, objective: String = "", label: String = "") -> bool:
+	# NP_02 s2.2: one 90s segment, full EP and DROPs, the personal meter at 50, lab flags
+	if bout.is_empty(): dual_fmt = fmt.duplicate(true)
+	bout = {"kind": "spar", "objective": objective, "param": "", "card": card.duplicate(true), "label": label if label != "" else "SPAR", "flags": flags.duplicate()}
+	fmt = _bout_format("spar"); _first_boss = boss_idx
+	_reset_dual(boss_idx)
+	return true
+
+func start_ep1(id: String) -> bool:
+	# NP_12A: SCRAP 1-3 and the Priya trial, by name, on their stand-in patterns
+	var rec: Dictionary = BOUTS.get("ep1", {}).get(id, {})
+	if rec.is_empty(): return false
+	var bi := boss_names.find(str(rec.get("opponent", "")))
+	if bi < 0: return false
+	if str(rec.get("kind", "scrap")) == "spar": return start_spar(bi, rec.get("flags", []), rec.get("card", {}), str(rec.get("objective", "")), str(rec.get("label", id)))
+	return start_scrap(str(rec["objective"]), bi, "", rec.get("card", {}), str(rec.get("label", id)))
+
+func end_bout() -> void:
+	# back to the dual the greybox was running
+	if bout.is_empty(): return
+	bout = {}; obj = {}; lab = []
+	if dual_fmt.size() > 0: fmt = dual_fmt.duplicate(true)
+	_reset_dual(_first_boss)
+
+func _end_bout() -> void:
+	# the verdict (NP_02 s2.1-s2.2): a scrap on its objective, then the cap on EP; a spar on drops, then EP
+	mode = "OVER"
+	var v := ""; var rung := ""
+	if str(bout["kind"]) == "scrap":
+		if obj.size() > 0 and obj["met"]: v = "SCRAP WON - %s" % str(obj["why"]); rung = "objective"
+		elif obj.size() > 0 and obj["failed"]: v = "SCRAP LOST - %s" % str(obj["why"]); rung = "objective_failed"
+		elif P["drops"] >= 3: v = "SCRAP LOST - counted out"; rung = "ko"
+		elif B["drops"] >= 3: v = "SCRAP WON - he could not continue"; rung = "ko"
+		elif ep_p > ep_b: v = "SCRAP WON on EP at the cap (%d-%d)" % [ep_p, ep_b]; rung = "ep"
+		elif ep_b > ep_p: v = "SCRAP LOST on EP at the cap (%d-%d)" % [ep_p, ep_b]; rung = "ep"
+		else: v = "SCRAP DRAWN at the cap (%d-%d)" % [ep_p, ep_b]; rung = "ep"
+	else:
+		if score_p != score_b: v = "SPAR: %s WINS on drops %d-%d" % ["MILLBROOK" if score_p > score_b else "THEY", score_p, score_b]; rung = "score"
+		elif ep_p != ep_b: v = "SPAR: %s WINS on EP %d-%d" % ["MILLBROOK" if ep_p > ep_b else "THEY", ep_p, ep_b]; rung = "ep"
+		else: v = "SPAR DRAWN %d-%d, EP %d-%d" % [score_p, score_b, ep_p, ep_b]; rung = "draw"
+		if obj.size() > 0: v += "  |  %s: %s" % [str(obj["prompt"]), "met" if obj["met"] else ("failed - " + str(obj["why"]) if obj["failed"] else "not met")]
+	# NP_02 s3: the sizes pay Pattern Intel - a scrap won counts one on the dialect, a spar fought to its end counts one
+	if str(bout["kind"]) == "scrap":
+		if rung == "objective" or (rung == "ko" and B["drops"] >= 3) or (rung == "ep" and ep_p > ep_b): _pi_tick("scraps", bdialect)
+	else: _pi_tick("spars", bdialect)
+	_ev("bout_end", {"kind": bout["kind"], "verdict": v, "rung": rung, "objective": str(bout.get("objective", "")), "met": obj.get("met", false) if obj.size() > 0 else false})
+	_say("%s :: %s   EP %d-%d   drops %d-%d" % [str(bout["label"]), v, ep_p, ep_b, drops_p, drops_b])
 
 func switch_boss(i: int) -> void:
 	_first_boss = clampi(i, 0, boss_names.size() - 1)
@@ -1482,9 +1732,9 @@ func _phase_ok(sname: String) -> bool:
 
 func _force_string(sname: String, tell_scale: float, loud: bool, opts: Dictionary = {}) -> void:
 	bstring = sname; bstate = "TELL"; bforce_opts = opts
-	btimer = maxi(1, int(ms(float(pattern["strings"][sname]["tell"]["ms"])) * tell_scale * float(tactic_fx.get("tell_loud_mult", 1.0))))
+	btimer = maxi(1, int(ms(float(pattern["strings"][sname]["tell"]["ms"])) * tell_scale * _tell_mult()))
 	tell_start_tick = tick; tell_reacted = false
-	_ev("tell", {"ticks": btimer, "loud": loud, "string": sname, "jammed": states["P"].has("tell_jam_audio") or states["P"].has("tell_jam_visual"), "highlight": tell_highlight_t > 0})
+	_ev("tell", {"ticks": btimer, "loud": loud, "string": sname, "jammed": states["P"].has("tell_jam_audio") or states["P"].has("tell_jam_visual"), "highlight": tell_highlight_t > 0, "cue": pi_cue()})
 
 func _has_bait(key: String) -> bool:
 	for b in pattern.get("bait", []):
@@ -1836,6 +2086,7 @@ func castable(mv: Dictionary) -> bool:
 	for e in mv["effect"]:
 		if str(e["type"]) == "REDACTED": return false           # sealed: the motion executes as its normal punch
 	if str(mv["tier"]) == "T3" and not t3_unlocked: return false
+	if str(mv["tier"]) == "T4" and bout.size() > 0 and str(bout["kind"]) == "spar": return false   # s2.2: transforms locked in spars
 	return true
 
 func hiss_cost(mv: Dictionary) -> float:
@@ -2157,7 +2408,9 @@ func _earn_tension(v: float) -> void:
 	v *= float(tactic_fx.get("tension_earn_mult", 1.0))
 	if aff.get("feud", false): v *= float(AFF.get("house", {}).get("feud_tension_mult", 1.25))   # NP_06 s3: feuds are Tension geysers
 	if delegated: v *= float(TAC.get("corner", {}).get("delegated_tension_pct", 85)) / 100.0   # NP_10 s8: AI segments earn 85%
-	tension = minf(100.0, tension + v); contributed += v
+	if bout.size() > 0 and str(bout["kind"]) == "scrap": return                                  # NP_02 s2.1: scraps run no meter
+	var cap := float(BOUTS.get("spar", {}).get("tension_cap", 50)) if (bout.size() > 0 and str(bout["kind"]) == "spar") else 100.0   # s2.2: the personal meter at 50
+	tension = minf(cap, tension + v); contributed += v
 
 func _wall_tick() -> void:
 	for k in ["P", "B"]:
@@ -2303,11 +2556,12 @@ func _boss_step() -> void:
 			# Tam's borrowed clothes: in phase 1 some tells are performances with nothing behind them
 			if _has_bait("reacts_to_fake_tell") and bphase == 1 and rng.randf() < 0.35:
 				bstate = "FAKE"; bforce_opts = {}; btimer = ms(float(s["tell"]["ms"]))
-				_ev("tell", {"ticks": btimer, "loud": s["class"] != "normal", "string": bstring, "fake": true})
+				_ev("tell", {"ticks": btimer, "loud": s["class"] != "normal", "string": bstring, "fake": true, "cue": pi_cue()})
 				return
-			bstate = "TELL"; bforce_opts = {}; btimer = int(ms(float(s["tell"]["ms"])) * float(tactic_fx.get("tell_loud_mult", 1.0)))
+			bstate = "TELL"; bforce_opts = {}; btimer = int(ms(float(s["tell"]["ms"])) * _tell_mult())
 			tell_start_tick = tick; tell_reacted = false
-			_ev("tell", {"ticks": btimer, "loud": s["class"] != "normal", "string": bstring, "jammed": states["P"].has("tell_jam_audio") or states["P"].has("tell_jam_visual"), "highlight": tell_highlight_t > 0})
+			_ev("tell", {"ticks": btimer, "loud": s["class"] != "normal", "string": bstring, "jammed": states["P"].has("tell_jam_audio") or states["P"].has("tell_jam_visual"), "highlight": tell_highlight_t > 0,
+				"shout": "shout" in str(s.get("tell", {}).get("motif", "")), "cue": pi_cue()})
 		"FAKE":
 			bstate = "RECOVER"; btimer = ms(300); bstring = ""
 			_ev("recover", {})
@@ -2332,6 +2586,18 @@ func _boss_step() -> void:
 
 # ============================ STEP =========================================
 func step(inp: Dictionary) -> void:
+	_step_inner(inp)
+	if bout.size() > 0 and mode != "OVER":
+		if "infinite_stamina" in lab: P["stamina"] = 100.0                  # the combo lab
+		if obj.size() > 0:
+			if mode == "FIGHT" and not obj["met"] and not obj["failed"]: TNBObjectives.check(self, obj)
+			if (obj["met"] or obj["failed"]) and str(bout["kind"]) == "scrap":
+				_ev("objective", {"id": str(obj["id"]), "met": obj["met"], "why": str(obj["why"])})
+				_say("OBJECTIVE %s - %s" % ["MET" if obj["met"] else "FAILED", str(obj["why"])])
+				P["pending"] = {}; bpending = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
+				_end_bout()
+
+func _step_inner(inp: Dictionary) -> void:
 	tick += 1
 	if delegated and (mode == "FIGHT" or mode == "EIGHT"):
 		inp = TNBProfile.intent(self, inp)                  # the card plays; the corner keys pass through
@@ -2449,6 +2715,7 @@ func step(inp: Dictionary) -> void:
 	var dodging: bool = P["dodge_t"] > 0
 	var block_now: bool = inp.get("block", false)
 	var block_edge: bool = block_now and not block_prev
+	if block_edge: _ev("block_press", {})
 	block_prev = block_now
 	P["blocking"] = block_now and not dodging
 	if P["blocking"]:
@@ -2488,12 +2755,14 @@ func step(inp: Dictionary) -> void:
 		sprint_cd = ms(400)
 		var toward := sdir.dot(fwd)
 		_ev("sprint", {"toward": toward})
+		if toward < -0.5: _ev("backstep", {"sprint": true}); backstep_ev_t = tick
 		if toward > 0.5 and dist0 > 1.4: _fire_event("player_sprint_approach")
 		if toward < -0.5:
 			backstep_ticks.append(tick)
 			while backstep_ticks.size() > 0 and tick - int(backstep_ticks[0]) > ms(4000): backstep_ticks.pop_front()
 			if backstep_ticks.size() >= 3:
 				backstep_ticks = []; _fire_event("player_backstep_chain3")
+	if mv.y > 0.2 and tick - backstep_ev_t > 20: _ev("backstep", {"sprint": false}); backstep_ev_t = tick   # a backward step, once per 20 ticks
 	p_vel = (P["pos"] - before) / DT
 	# straight-line retreat: backing without an angle, 1.2m of it
 	if mv.y > 0.7 and absf(mv.x) < 0.3: retreat_d += (P["pos"] - before).length()
@@ -2602,5 +2871,7 @@ func hash_state() -> int:
 		btension, bcontributed, bcharged, brelay_chain, btactic_fx, bpending_fx, btactic_cd, bsuper_used, bswaps_used, bno_drop_t,
 		enemy_lock, player_lock, bflash_conceded, bdrop_conceded, blineup, breserves, coach.get("id", ""),
 		condition, bcondition, seg_wins_p, seg_wins_b, counters_p, counters_b, r6, fmt.get("id", ""), lineup.map(func(f): return str(f["name"])),
-		delegated, delegate_next, delegate_all, auto, rng.state]
+		delegated, delegate_next, delegate_all, auto,
+		bout.get("kind", ""), bout.get("objective", ""), obj.get("count", 0), obj.get("met", false), obj.get("failed", false), obj.get("streak", 0), obj.get("ladder_i", 0), lab, bout_cap_t,
+		pi, bdialect, rng.state]
 	return v.hash()

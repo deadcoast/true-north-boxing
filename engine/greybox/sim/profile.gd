@@ -3,7 +3,8 @@
 # pad produces - and rolls on the sim's own RNG, so a delegated segment hashes like any other.
 # The card's style archetype sets the range and the mix (NP_06 s1.2), its stats set how well it
 # reads (RFX), rises (HRT) and taps (RFX); it reads his tells, his casts and the scramble cue the
-# way a fighter would. No Pattern Intel yet (NP_02 s3): it does not know his strings by name.
+# way a fighter would. Pattern Intel (NP_02 s3) lifts its read of a dialect it knows: the sim's
+# pi_read_bonus() (data) is added to the read roll - "your recon makes your AI teammates smarter".
 extends RefCounted
 
 # preferred distance band by style: the swarmer's phone booth, the out-boxer's jab range, the slugger's mid
@@ -72,7 +73,7 @@ static func intent(s, ext: Dictionary) -> Dictionary:
 		m["tell_tick"] = s.tell_start_tick
 		var loud: bool = false
 		if s.bstring != "" and s.pattern["strings"].has(s.bstring): loud = str(s.pattern["strings"][s.bstring].get("class", "normal")) != "normal"
-		var p_read := 0.3 + 0.5 * rfx + (0.15 if loud else 0.0)
+		var p_read := 0.3 + 0.5 * rfx + (0.15 if loud else 0.0) + float(s.pi_read_bonus())
 		if s.rng.randf() < p_read:
 			var roll: float = s.rng.randf()
 			if roll < float(INTERRUPT_PREF[style]) and d <= 2.0 and int(s.btimer) > 30 and idle: m["plan"] = "jab"

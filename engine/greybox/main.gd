@@ -2,6 +2,7 @@ extends Node3D
 const TNBSim := preload("res://sim/core.gd")
 const TNBClock := preload("res://sim/clock.gd")
 const TNBTests := preload("res://sim/tests.gd")
+const TNBObjectives := preload("res://sim/objectives.gd")
 # TRUE NORTH BOXING - greybox presentation layer over TNBSim (sim/core.gd).
 # This file owns shapes, camera, HUD, FX, and the turning of device input into
 # one intent dictionary per 120Hz tick. It owns NO combat rules: every number
@@ -68,6 +69,12 @@ var matchup_until := 0             # the matchup card (NP_06 s5) stays on the HU
 var matchup_text := ""
 var matchups_shown := 0
 var fmt_id := ""                   # -- format=sanctioned|mini|iron|blind|gauntlet (F9 cycles); "" = the data's default (mini)
+const EP1_CYCLE := ["scrap_1", "scrap_2", "scrap_3", "priya_trial", ""]   # F10: Ep1's bouts by name, then back to the dual
+var ep1_i := -1
+var scr_i := -1                    # F11: the next scrap objective on the current boss
+var pi_arg := ""                   # -- pi=dialect:level,boss:3 (PAC-064)
+var pi_toast := ""                 # the last rung crossed, on the HUD for a few seconds
+var pi_toast_until := 0
 const FORMAT_CYCLE := ["mini", "sanctioned", "iron", "blind", "gauntlet"]
 var content: Dictionary = {}
 
@@ -92,14 +99,24 @@ func _ready() -> void:
 	for a in args:
 		if a.begins_with("format="): fmt_id = a.split("=")[1]
 	var auto_dual := "auto" in args or "demo" in args           # manager mode from the bell; the demo is the profile playing (the log keeps the corners)
+	for a in args:                                        # -- pi=kowalchuk:2,yuri_kowalchuk:3 seeds the recon ledger (NP_02 s3)
+		if a.begins_with("pi="): pi_arg = a.split("=")[1]
 	var lineup: Array = roster_for(fmt_id if fmt_id != "" else "mini")
 	if "demo" in args:
 		demo_log = TNBTests.new().build_log(120 * 600, 777)
 		if lineup.size() > 1: lineup[1]["hissatsu"] = "Relay: North Star"   # the demo shows the T3 afterimage
 	content = TNBSim.load_content()
 	sim = TNBSim.new()
-	sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id)
+	sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id, content.get("bouts", {}), content.get("scraps", {}),
+		content.get("pattern_intel", {}), TNBSim.parse_pi_arg(pi_arg, content.get("pattern_intel", {})))
 	if auto_dual: sim.delegate_all = true; sim.new_dual()
+	var flags: Array = []
+	for a in args:
+		if a.begins_with("flags="): flags = Array(a.split("=")[1].split(","))
+	for a in args:                                        # the smaller sizes (NP_02 s2): -- scrap=SCR-01 | -- spar | -- ep1=scrap_2
+		if a.begins_with("scrap="): sim.start_scrap(a.split("=")[1], boss_idx)
+		elif a == "spar": sim.start_spar(boss_idx, flags)
+		elif a.begins_with("ep1="): sim.start_ep1(a.split("=")[1])
 	_build_world()
 	if "seg2" in args:                                   # demo aid: jump to a CHARGED R2 with a full bar (the T3 afterimage)
 		sim.contributed = 30.0; sim._end_segment("demo"); sim.corner_pick(0); sim.corner_pick(0); sim.tension = 100.0; demo_seg2 = true
@@ -248,12 +265,34 @@ func _unhandled_input(e: InputEvent) -> void:
 		elif e.keycode >= KEY_F1 and e.keycode <= KEY_F4: sim.switch_boss(e.keycode - KEY_F1)
 		elif e.keycode == KEY_F6: sim.switch_boss((sim._first_boss + TNBSim.BOSSES.size() - 1) % TNBSim.BOSSES.size())
 		elif e.keycode == KEY_F7: sim.switch_boss((sim._first_boss + 1) % TNBSim.BOSSES.size())
+		elif e.keycode == KEY_F10:                                            # Ep1's bouts by name, then the dual again
+			ep1_i = (ep1_i + 1) % EP1_CYCLE.size()
+			if EP1_CYCLE[ep1_i] == "": sim.end_bout(); feed.text = "back to the dual"
+			else: sim.start_ep1(EP1_CYCLE[ep1_i])
+			prev_p = sim.P["pos"]; prev_b = sim.B["pos"]
+		elif e.keycode == KEY_F11:                                            # the next scrap objective on this boss
+			var ids: Array = sim.SCRAPS.keys(); ids.sort()
+			for tries in ids.size():
+				scr_i = (scr_i + 1) % ids.size()
+				if sim.start_scrap(str(ids[scr_i]), sim._first_boss): break
+			prev_p = sim.P["pos"]; prev_b = sim.B["pos"]
+		elif e.keycode == KEY_F12:                                            # the Scout Book: his page at PI 3, else where the ledger stands (NP_02 s3)
+			var pg: Dictionary = sim.scout_page(sim.boss_name)
+			if pg.is_empty():
+				var rec: Dictionary = sim.pi.get("dialects", {}).get(sim.bdialect, {})
+				feed.text = "SCOUT BOOK: no page for %s yet (beat him in a dual segment) - PI %d vs the %s dialect: scraps %d, spars %d, segments %d" % [sim.boss_name, sim.pi_vs(), sim.bdialect.capitalize(), int(rec.get("scraps", 0)), int(rec.get("spars", 0)), int(rec.get("segments", 0))]
+			else:
+				var tl: Array = []
+				for t in pg["tells"]: tl.append("%s %s %dms (%s)" % [str(t["string"]), str(t["class"]), int(t["tell_ms"]), str(t["motif"])])
+				feed.text = "SCOUT BOOK %s (%s / %s / House %s), %s :: TELLS %s :: %s :: %s :: desperation %s :: corner %s - %s" % [pg["boss"], pg["style"], pg["element"], str(pg["house"]).capitalize(), pg["hand"], " | ".join(PackedStringArray(tl)), " | ".join(PackedStringArray(pg["phases"])) if pg["phases"].size() > 0 else "one phase", " | ".join(PackedStringArray(pg["hooks"])), pg["desperation"], pg["corner"], pg["corner_tell"]]
 		elif e.keycode == KEY_F9:                                             # cycle the dual format (NP_01 s2/s8)
 			var cur := fmt_id if fmt_id != "" else "mini"
 			fmt_id = FORMAT_CYCLE[(FORMAT_CYCLE.find(cur) + 1) % FORMAT_CYCLE.size()]
 			var first: int = sim._first_boss
+			var ledger: Dictionary = sim.pi
 			sim = TNBSim.new()
-			sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, roster_for(fmt_id), first, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id)
+			sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, roster_for(fmt_id), first, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id, content.get("bouts", {}), content.get("scraps", {}),
+				content.get("pattern_intel", {}), ledger)
 			prev_p = sim.P["pos"]; prev_b = sim.B["pos"]; ghosts_spawned = 0
 			feed.text = "FORMAT: %s - %d segments, %d dressed%s" % [str(sim.fmt.get("label", fmt_id)), sim.segments(), sim.dressed.size(), "  (repeat slots, condition carries)" if sim.fmt.get("repeat_slots", false) else ""]
 	if e is InputEventJoypadButton and e.pressed:
@@ -334,7 +373,7 @@ var fx_counts := {}
 
 func _exit_tree() -> void:
 	if sim != null and demo_log.size() > 0:
-		print("DEMO SOAK :: %d ticks, mode=%s R%d %s vs %s, score %d-%d, ghosts %d, matchup cards %d, auto %s, fx %s" % [sim.tick, sim.mode, sim.seg_idx + 1, sim.pname(), sim.boss_name, sim.score_p, sim.score_b, ghosts_spawned, matchups_shown, JSON.stringify(sim.auto_stats) if sim.delegated else "off", JSON.stringify(fx_counts)])
+		print("DEMO SOAK :: %d ticks, mode=%s R%d %s vs %s, score %d-%d, ghosts %d, matchup cards %d, auto %s, PI %s, fx %s" % [sim.tick, sim.mode, sim.seg_idx + 1, sim.pname(), sim.boss_name, sim.score_p, sim.score_b, ghosts_spawned, matchups_shown, JSON.stringify(sim.auto_stats) if sim.delegated else "off", JSON.stringify(sim.pi_log), JSON.stringify(fx_counts)])
 
 func _consume_events() -> void:
 	for ev in sim.events:
@@ -359,7 +398,16 @@ func _consume_events() -> void:
 			"drop":
 				_flash(0.5); _bump(boss if ev["who"] == "B" else player, 0.5)
 			"hissatsu": _flash(0.9)
-			"tell": _tell_fx(int(ev["ticks"]) / float(TNBSim.TICK_HZ), bool(ev["loud"]))
+			"tell": _tell_fx(int(ev["ticks"]) / float(TNBSim.TICK_HZ), bool(ev["loud"]), bool(ev.get("cue", false)))
+			"commentary":
+				matchup_text += "\n    COMMENTARY (PI %d): %s%s" % [int(ev["level"]), str(ev["text"]), "   [tells emphasized, interrupt windows +10%]" if bool(ev.get("cue", false)) else ""]
+				matchup_until = sim.tick + TNBSim.ms(4500)
+			"pi":
+				pi_toast = "PATTERN INTEL %d vs %s - %s" % [int(ev["level"]), str(ev["dialect"]).capitalize(), str(ev["label"])]
+				pi_toast_until = sim.tick + TNBSim.ms(5000); _flash(0.15)
+			"scout_book":
+				pi_toast = "SCOUT BOOK: %s's page - F12 reads it" % str(ev["boss"])
+				pi_toast_until = sim.tick + TNBSim.ms(5000); _flash(0.2)
 			"recover", "interrupt":
 				var mat: StandardMaterial3D = boss.get_meta("mat"); mat.albedo_color = _base_color("B")
 				if tell_tween: tell_tween.kill()
@@ -430,13 +478,15 @@ func _flash(a: float) -> void:
 	flashrect.color.a = a
 	get_tree().create_tween().tween_property(flashrect, "color:a", 0.0, 0.35)
 
-func _tell_fx(secs: float, loud: bool) -> void:
+func _tell_fx(secs: float, loud: bool, cue: bool = false) -> void:
+	# PI 2 (NP_02 s3): the cue is emphasized - the greybox shows it as a brighter colour and a bigger swell
 	var mat: StandardMaterial3D = boss.get_meta("mat")
 	mat.albedo_color = Color(1.0, 0.85, 0.2) if loud else Color(1.0, 0.6, 0.2)
+	if cue: mat.albedo_color = mat.albedo_color.lightened(0.35)
 	var mesh: MeshInstance3D = boss.get_meta("mesh")
 	if tell_tween: tell_tween.kill()
 	tell_tween = get_tree().create_tween()
-	tell_tween.tween_property(mesh, "scale", Vector3(1.15, 1.05, 1.15), secs * 0.5)
+	tell_tween.tween_property(mesh, "scale", Vector3(1.25, 1.08, 1.25) if cue else Vector3(1.15, 1.05, 1.15), secs * 0.5)
 	tell_tween.tween_property(mesh, "scale", Vector3.ONE, secs * 0.5)
 
 # ============================== HUD =======================================
@@ -505,14 +555,18 @@ func _hud() -> void:
 	var P: Dictionary = sim.P; var B: Dictionary = sim.B
 	var zp := sim.zone(P["pos"]); var zb := sim.zone(B["pos"])
 	var head := "TRUE NORTH BOXING :: greybox v6 (sim core 120Hz)   %s %s/%d  %s vs %s   clock %s   SCORE %d-%d (drops %d-%d)   segs %d-%d   EP %d-%d" % \
-		[str(sim.fmt.get("label", "")), "GOLDEN DROP" if sim.r6 else "R%d" % (sim.seg_idx + 1), sim.segments(), sim.pname(), sim.boss_name, "no clock" if sim.r6 else "%5.1f" % (sim.clock_t / float(TNBSim.TICK_HZ)), sim.score_p, sim.score_b, sim.drops_p, sim.drops_b, sim.seg_wins_p, sim.seg_wins_b, sim.ep_p, sim.ep_b]
+		[str(sim.fmt.get("label", "")), "GOLDEN DROP" if sim.r6 else "R%d" % (sim.seg_idx + 1), sim.segments(), sim.pname(), sim.boss_label, "no clock" if sim.r6 else "%5.1f" % (sim.clock_t / float(TNBSim.TICK_HZ)), sim.score_p, sim.score_b, sim.drops_p, sim.drops_b, sim.seg_wins_p, sim.seg_wins_b, sim.ep_p, sim.ep_b]
+	if sim.bout.size() > 0:
+		head += "\n>>> %s vs %s%s   %s   [F10 next Ep1 bout / dual, F11 next objective, F5 again]" % [str(sim.bout["label"]), sim.boss_label, ("  [" + ", ".join(PackedStringArray(sim.lab)) + "]") if sim.lab.size() > 0 else "",
+			("OBJECTIVE: " + TNBObjectives.describe(sim.obj)) if sim.obj.size() > 0 else "full segment: drops and EP, the meter at 50"]
 	var mode_line := ""
 	match sim.mode:
 		"EIGHT": mode_line = "\n>>> STANDING EIGHT: ENTER / A on the beat  (%d to go)" % int(sim.eight.get("beats_left", 0))
 		"CARD": mode_line = "\n>>> %s (%.1fs, ENTER/1 to skip)" % ["TIED ON THE LADDER - GOLDEN DROP: any dressed fighter, condition carried, no clock, first DROP wins" if sim.r6 else "SEGMENT CARD", sim.card_t / float(TNBSim.TICK_HZ)]
 		"CORNER": mode_line = _corner_menu() + _their_corner()
-		"OVER": mode_line = "\n>>> DUAL OVER - F5 new dual, F1-F4 pick boss, F9 format"
+		"OVER": mode_line = "\n>>> %s - F5 again, F1-F4 pick boss, F9 format, F10 Ep1 bouts" % ("BOUT OVER" if sim.bout.size() > 0 else "DUAL OVER")
 	if sim.mode == "FIGHT" and sim.tick < matchup_until and matchup_text != "": mode_line += "\n" + matchup_text
+	if sim.tick < pi_toast_until and pi_toast != "": mode_line += "\n>>> " + pi_toast
 	if sim.clinch.size() > 0:
 		var ci: int = sim.clinch["i"]
 		var cue_txt := "done"
@@ -532,6 +586,7 @@ func _hud() -> void:
 	if sim.brelay_chain > 0: bug += "   THEIR RELAY %s" % "|".repeat(sim.brelay_chain)
 	if B["charge_t"] > 0: bug += "   HE IS CHARGED %.1fs" % (B["charge_t"] / float(TNBSim.TICK_HZ))
 	if sim.player_lock > 0: bug += "   [CROWD ON YOU next corner]"
+	if sim.pi_vs() > 0: bug += "   PI %d vs %s%s" % [sim.pi_vs(), sim.bdialect.capitalize(), " [page]" if sim.pi_vs() >= 3 else ""]
 	if sim.delegated: bug += "   [AUTO: %s plays - punches %d, feints %d, reads %d, casts %d]" % [sim.pname(), int(sim.auto_stats.get("punches", 0)), int(sim.auto_stats.get("feints", 0)), int(sim.auto_stats.get("tell_jabs", 0)) + int(sim.auto_stats.get("dodges", 0)) + int(sim.auto_stats.get("blocks", 0)), int(sim.auto_stats.get("casts", 0))]
 	if sim.btactic_fx.size() > 0: bug += "   his tactics: " + ",".join(PackedStringArray(sim.btactic_fx.keys()))
 	if sim.bwarnings > 0: bug += "   REF WARN x%d (him)" % sim.bwarnings

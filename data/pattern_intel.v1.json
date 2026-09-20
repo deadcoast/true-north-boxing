@@ -1,0 +1,48 @@
+{
+ "schema": "PatternIntel/NP_02-s3/v1.0",
+ "vault": "v1.3",
+ "notes": "The recon system as data (NP_02 s3). A ledger of Pattern Intel (PI 0-3) per House dialect and per named boss rides with the sim: the dialect of an opponent is his House (house_key of the pattern META), his own id when he has no House, or the dialect a bout card names. The dialect track is earned by the sizes - each source has its own rungs, exactly as the table reads (3 scraps or 1 spar -> PI 1; 6 scraps, 3 spars or 1 dual segment -> PI 2); the boss track is PI 3, a named boss beaten once (a dual segment won against him). The effective PI against an opponent is the higher of the two. PI never widens a read: PI 2's +10% is on the tell (the interrupt window) and nothing else; the counter windows stay skill-gated.",
+ "dialect_key": "house | own id | card.dialect",
+ "rungs": {
+  "scraps": {"1": 3, "2": 6},
+  "spars": {"1": 1, "2": 3},
+  "segments": {"2": 1}
+ },
+ "counts": {
+  "scrap": "a scrap WON against the dialect (objective met, his KO, or EP at the cap) counts one",
+  "spar": "a spar fought to its end against the dialect counts one, whatever the result (the lab is the lesson)",
+  "segment": "a dual segment fought to its end against the dialect counts one, win or lose",
+  "beaten": "a dual segment won against a named boss (EP majority or his KO) marks him beaten: PI 3 for him"
+ },
+ "effects": {
+  "1": {"commentary": true, "label": "the colour commentator calls the dialect's habit before the segment"},
+  "2": {"tell_cue_emphasis": true, "interrupt_window_mult": 1.1, "label": "his tell cue is emphasized; the interrupt window is 10% longer against that dialect"},
+  "3": {"scout_book_page": true, "label": "his pattern page in the Scout Book: tells, strings, phases, the corner's tell"}
+ },
+ "profile_read_bonus": {"0": 0.0, "1": 0.0, "2": 0.1, "3": 0.2},
+ "habits": {
+  "kowalchuk": "Watch the shoulder - the Kowalchuks load up from the hips, and the corner shouts it",
+  "okafor": "Watch the feet - the Okafors set a tempo step before the string; when it doubles, it's the special",
+  "moreau": "Watch the breath - the Moreaus exhale frost before they throw; the long breath is the big one",
+  "tremblay": "Watch the glove - a Tremblay turns it a hair before the shot, and steps back to load",
+  "macisaac": "Watch the shoulder roll - the MacIsaacs haul the net before they swing",
+  "tagaq": "Listen for the exhale - a Tagaq breathes out soft before he leads, and says sorry before the second",
+  "osei": "Watch the wraps - the Oseis flash a glint before the hands come",
+  "petrov": "Listen - the Petrov line taps the chalk and turns the glove; the silence before the shot is the tell",
+  "reyes": "Watch the hips - the Reyes line sinks before it throws; the deep sink is the special",
+  "nguyen-roy": "Watch the lead foot - Tam loads it before the shot; the shoulder load is a fake",
+  "iron": "Watch the load - the Iron extract winds the whole frame; the short wind is the real one",
+  "sealed": "Listen for the breath - the Commissioner stops breathing before he throws",
+  "alfie_crane": "Watch the shoulder lean and the reach - Alfie leans before he closes",
+  "cassidy_vane": "Listen to her corner - every string of hers has its call before it comes",
+  "deshawn_vaughn": "Watch the gum - he stops chewing before he throws",
+  "ioan_vasile": "Watch the breath and the hips - Vasile breathes before the form and sets the hip before the guard",
+  "sora_kannagi": "Watch the step set and the pivot - Sora loads on the pivot",
+  "hc0_surety": "Watch the weight settle - Surety sits into the shot",
+  "hc4_cartographer": "Watch the chin tuck and the heel - two tucks, then the heel lifts",
+  "hc9_choir": "Watch the shoulder and the breath - the Choir stops dead before the armored one",
+  "school": "Watch the stride - the school kids step in with a shing before they swing"
+ },
+ "habit_fallback": "Watch the {motif} - {dialect} shows it before every string",
+ "page_handwriting": "in the tactician's hand"
+}

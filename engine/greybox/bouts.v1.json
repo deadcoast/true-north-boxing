@@ -1,0 +1,53 @@
+{
+ "schema": "Bouts/NP_02-s2/v1.0",
+ "vault": "v1.3",
+ "notes": "The two smaller sizes (NP_02 s2.1-s2.2) as data. A SCRAP is one micro-objective from data/scrap_objectives.v1.json over a hard 30s cap with no Tension meter: objective met = win, a constraint broken = loss, the cap = judged on EP. A SPAR is one 90s segment with full EP and DROPs, the personal meter capped at 50 (hissatsu practicable, transforms locked) and lab flags. Opponents are boss patterns; a stand-in pattern by style carries an NPC card's strings when the card is not a boss (the greybox has no assembler). Ep1's bouts run by name.",
+ "scrap": {"time_cap_s": 30, "cap_reached": "judged on EP", "tension": "none", "corner": false},
+ "spar": {"segment_s": 90, "tension_cap": 50, "transforms": "locked", "corner": false,
+  "lab_flags": {
+   "infinite_stamina": "the combo lab: your stamina never drops",
+   "tell_highlight": "his tells outlined (Scout Book knowledge as UI); XP -50%",
+   "mirror": "fight a copy of your own fighter (not in the greybox: the boss agent runs patterns, not profiles)"
+  }},
+ "stand_in": {"SWARMER": "ada_okafor", "OUTBOXER": "cassidy_vane", "SLUGGER": "yuri_kowalchuk", "BOXERPUNCHER": "sam_tagaq"},
+ "ep1": {
+  "scrap_1": {"kind": "scrap", "label": "SCRAP 1 - the bike racks", "objective": "SCR-01", "opponent": "carter_okafor",
+   "card": {"name": "CHALLENGER", "style": "BOXERPUNCHER", "element": "GALE", "house": "none", "dialect": "school", "stats": {"PWR": 40, "SPD": 50, "CHN": 45, "RFX": 45, "BLK": 45, "STA": 50, "HRT": 50}},
+   "script": "NP_12A scene 3: land 3 body shots (LT modifier taught); +2 Prestige, first PI tick vs the school dialect (the card names it: dialect \"school\")"},
+  "scrap_2": {"kind": "scrap", "label": "SCRAP 2 - MARCUS HALLORAN", "objective": "SCR-06", "opponent": "yuri_kowalchuk",
+   "card": {"name": "MARCUS", "style": "SLUGGER", "element": "GRANITE", "house": "none", "stats": {"PWR": 70, "SPD": 40, "CHN": 65, "RFX": 35, "BLK": 40, "STA": 55, "HRT": 70}},
+   "script": "NP_12A scene 4: BEAT_IN(scrap) - survive 20s; he hits like a truck with Loud tells (a Slugger primer)"},
+  "scrap_3": {"kind": "scrap", "label": "SCRAP 3 - JUNE PARK", "objective": "SCR-03", "opponent": "ada_okafor",
+   "card": {"name": "JUNE", "style": "SWARMER", "element": "FROST", "house": "none", "stats": {"PWR": 30, "SPD": 75, "CHN": 35, "RFX": 60, "BLK": 20, "STA": 60, "HRT": 70}},
+   "script": "NP_12A scene 4: win one exchange in center ring (a Swarmer seed with no guard at all)"},
+  "priya_trial": {"kind": "spar", "label": "SPAR - PRIYA TRIAL", "objective": "SEGMENT_END", "opponent": "cassidy_vane", "flags": ["tell_highlight"],
+   "card": {"name": "PRIYA", "style": "OUTBOXER", "element": "GALE", "house": "none", "stats": {"PWR": 35, "SPD": 60, "CHN": 40, "RFX": 70, "BLK": 50, "STA": 55, "HRT": 60}},
+   "script": "NP_12A scene 3: she fights as an Out-Boxer, RFX-high / PWR-low, tell-highlight ON; objective: reach segment end - her EP lead is authored beatable"}
+ },
+ "objective_forms": {
+  "SCR-01": {"kind": "count", "event": "body_hit", "need": 3},
+  "SCR-02": {"kind": "count", "event": "made_miss", "need": 2},
+  "SCR-03": {"kind": "count", "event": "center_hit", "need": 1},
+  "SCR-04": {"kind": "count", "event": "counter_hit", "need": 1},
+  "SCR-05": {"kind": "count", "event": "guard_break", "need": 1},
+  "SCR-06": {"kind": "survive", "seconds": 20},
+  "SCR-07": {"kind": "finisher", "family": "UPPERCUT"},
+  "SCR-08": {"kind": "constraint", "rule": "no_repeat_punch", "need": 6},
+  "SCR-09": {"kind": "count", "event": "interrupt_loud", "need": 1},
+  "SCR-10": {"kind": "state", "flag": "trapped_b"},
+  "SCR-11": {"kind": "constraint", "rule": "no_block"},
+  "SCR-12": {"kind": "first_blood"},
+  "SCR-13": {"kind": "count", "event": "perfect_block_pair", "need": 1},
+  "SCR-14": {"kind": "count", "event": "clinch_won", "need": 1},
+  "SCR-15": {"kind": "count", "event": "stepping_hit", "need": 1},
+  "SCR-16": {"kind": "count", "event": "corner_escape_unblocked", "need": 1},
+  "SCR-17": {"kind": "ladder", "events": ["interrupt_loud", "interrupt_normal"]},
+  "SCR-18": {"kind": "streak", "event": "hit", "reset_on": "flag", "need": 5},
+  "SCR-19": {"kind": "constraint", "rule": "left_hands_only"},
+  "SCR-20": {"kind": "count", "event": "native_cast_interrupted", "need": 1, "param": "dialect"},
+  "SCR-21": {"kind": "count", "event": "counter_hit", "need": 3},
+  "SCR-22": {"kind": "finisher", "body": true},
+  "SCR-23": {"kind": "constraint", "rule": "no_backstep"},
+  "SCR-24": {"kind": "count", "event": "coach_shout", "need": 2, "requires": "coached_npc"}
+ }
+}

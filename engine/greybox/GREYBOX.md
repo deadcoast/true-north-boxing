@@ -20,6 +20,13 @@ KEYS: WASD | J/K jab/cross, U/I hooks, O uppercut | Space block | Q/E slip L/R
 META: F1-F4 boss (Vane/Yuri/Moreau/Sam) | F6/F7 prev/next of ALL 24 bosses
       R reload tuning | F5 new dual | F9 cycle the format (mini / sanctioned /
       iron / blind / gauntlet); `-- format=sanctioned` from the command line
+      F10 = Ep1's bouts by name (SCRAP 1, 2, 3, the PRIYA TRIAL, then the
+      dual again) | F11 = the next scrap objective on this boss | F5 = again
+      `-- scrap=SCR-06 boss=1` | `-- spar flags=tell_highlight,infinite_stamina`
+      `-- ep1=scrap_2`  (each also works with `demo`: the profile plays it)
+      F12 = the Scout Book: his page at PI 3, else where the recon ledger
+      stands vs his dialect | `-- pi=kowalchuk:2,yuri_kowalchuk:3` seeds the
+      ledger (a dialect at a level, a boss beaten for 3)
 DEMO: `godot --path engine/greybox -- demo boss=7` - your card's own profile
       plays the fight (manager mode, PAC-062) while a scripted log works the
       corners: the attract mode, and the presentation soak.
@@ -412,6 +419,74 @@ bug. Every phase-trigger form is executable now: 13/13.
   segments, mid-segment hand-over (delegation is a corner call, as NP_10
   frames it), and the profile's numbers are first-draft design values.
 
+## PAC-063 in the build: THE SNACK AND THE MEAL (scraps and spars, NP_02 s2)
+- The two smaller sizes run on the same sim, as data in `bouts.v1.json`
+  (vault copy `data/bouts.v1.json`) with the 24 objectives from
+  `data/scrap_objectives.v1.json`. A SCRAP is one micro-objective over a
+  hard 30s cap with no Tension meter and no corner: the objective met ends
+  it WON, a constraint broken ends it LOST, the cap is judged on EP, a
+  count-out or three knockdowns ends it either way. A SPAR is one 90s
+  segment with full EP and drops, the personal meter capped at 50,
+  transforms locked, no corner, and lab flags: tell-highlight (every tell
+  outlined - Priya's binders as UI) and infinite stamina (the combo lab).
+- Every objective is judged from the sim's own events by `sim/objectives.gd`:
+  counts (body shots, misses drawn by a dodge, the CENTER exchange, counters,
+  a guard break, two perfect blocks in a row, the scramble won, a stepping
+  punch - one only the lunge makes reach, an interrupt of a Loud tell, a
+  House native's wind-up broken, his coach's shout), the ladder (a Loud
+  tell then a Standard one), the streak (five hits with no tracker flag
+  between), survive 20s, corner him 3s (his CORNER TRAP), first blood both
+  ways, the finishers (the dropping punch must be an uppercut / a body
+  shot), the corner left without a block, and the constraints that fail on
+  the spot (the same punch twice, a block press, a right hand, a step back)
+  and win at the cap on EP. SCR-24 needs a coached NPC: offered against Yuri
+  (his corner shouts FREIGHT), refused against a corner that does not.
+- Ep1 by name (NP_12A): SCRAP 1 at the bike racks (land 3 body shots vs a
+  CHALLENGER), SCRAP 2 vs MARCUS HALLORAN (survive 20s - his card on a
+  Slugger's strings, Loud tells and all), SCRAP 3 vs JUNE PARK (win one
+  exchange in center ring - a Swarmer seed with no guard), and the PRIYA
+  TRIAL (a tell-highlight spar vs her out-boxer card; the objective is to
+  go the distance). An NPC card rides a stand-in pattern's strings by style
+  (the greybox has no assembler). F10 cycles them and returns to the dual.
+- `-- demo` with any of these plays it on the profile (PAC-062): the
+  attract mode can run a scrap.
+- Not in this pass: rewards (XP, Prestige, PI ticks, Spirits, bonds) - the
+  bout ends with its verdict and an event, the economy is NP_02 s4's; the
+  mirror spar (the boss agent runs patterns, not profiles); assembler
+  fillers; the "exchange win" as last-clean-hit-before-disengage (the
+  CENTER exchange is the sim's existing rule); the 2s camera-swing budget.
+
+## PAC-064 in the build: THE RECON LEDGER (Pattern Intel, NP_02 s3)
+- Pattern Intel is a ledger the sim carries (`pattern_intel.v1.json`, vault
+  copy `data/pattern_intel.v1.json`): PI 0-3 per House dialect and per named
+  boss. The dialect of an opponent is his House (the ring key from the
+  pattern META), his own id when he has none (Vane, Alfie, the Hollow
+  Circuit), or the dialect a bout card names (Ep1's CHALLENGER: "school").
+  The ledger is handed in at setup, rides across bouts, duals and F9
+  rebuilds, and is in the state hash.
+- Earned exactly as NP_02 s3's table reads - each source has its own rungs:
+  3 scraps won vs the dialect or 1 spar fought to its end -> PI 1; 6 scraps,
+  3 spars or 1 dual segment fought -> PI 2; a named boss beaten once (a dual
+  segment won against him, on EP or by his KO) -> PI 3 for him. The
+  effective level against an opponent is the higher of his dialect's track
+  and his own. A scrap lost pays nothing; a spar counted out still counts
+  (the lab is the lesson).
+- Effects: PI 1 the colour commentator calls the dialect's habit before the
+  segment (an authored line per dialect, else his most-weighted tell's
+  motif); PI 2 his tell event carries the emphasized cue (the greybox draws
+  it brighter and bigger) and the interrupt window - the tell itself - is 10%
+  longer against that dialect and no other; PI 3 his Scout Book page (tells,
+  strings, phase notes, hooks, the desperation, his corner's tell) as data,
+  F12 reads it. PI never widens a read: the slip / duck / perfect-block /
+  flash windows are untouched at PI 3, and PI 3 is no wider than PI 2.
+- The profile reads PI (PAC-062's open line): its tell-read roll rises by
+  the data's bonus against a dialect it knows - "your recon makes your AI
+  teammates smarter" is one added term, and the gate measures it.
+- Not in this pass: the scout questline route to PI 3, the Film Room's
+  grind-rate bonus and the tactician's richer pages (NP_10 s7), decoy
+  seals; the Scout Book as a menu (the page is an event and a query); the
+  rest of the reward economy (XP / Prestige / Spirits / bonds).
+
 ## Verification (agent-run, headless Godot 4.3, this container)
 ```
 godot --headless --path engine/greybox -- smoke boss=N   # N = 0..23
@@ -420,7 +495,7 @@ godot --headless --path engine/greybox -- geometry
 godot --headless --path engine/greybox --quit-after 3600 -- demo
 python3 pbn_compiler.py --margins
 ```
-- SMOKE: 197/197 GREEN on every one of the 24 bosses (4,728 assertions).
+- SMOKE: 214/214 GREEN on every one of the 24 bosses (5,136 assertions).
   Covers: C3 buffer (same-tick / 3-ticks-early fires / 8-ticks-early
   expires / buffered through hitstop), C2 reach, C7 tracker flag -> read
   probability up with boss offense byte-identical, interrupt + flash +
@@ -511,12 +586,38 @@ python3 pbn_compiler.py --margins
   landing; every archetype against a live Yuri reading 15+ tells, breaking
   a string, landing 11+, in the swarmer < slugger < out-boxer spacing
   order; the count risen on every beat at HRT 99; all four cues tapped at
-  RFX 99), and static coverage: 39/39
+  RFX 99), the PAC-063 gates (the 24 objectives with a known form each,
+  the 30s cap, no meter, no corner, SCR-24 offered / refused by the
+  opponent's corner; the cap judged on EP both ways; every form fired at
+  its count and never early - 3 body shots at the third, a counter, three
+  counters, the CENTER exchange and not the off-center hit, the guard
+  break, two perfect blocks, the scramble, the stepping punch from 2.15m
+  and not from 1.4m, two slipped misses and not a whiff from range, the
+  Loud interrupt and not a Standard one, the ladder in order, survive 20s
+  on the tick and a drop failing it, the trap at 3s and not 2.99, first
+  blood both ways, the flag-reset streak, the unblocked corner escape,
+  the House read for kowalchuk and not tremblay, the coach shout; the
+  finishers right and wrong; the four constraints broken and holding, the
+  cap paying the held one; the spar's 50 cap, T4 lock, infinite stamina,
+  outlined tells, no corner and the EP verdict; Ep1's four bouts by name
+  with their cards, the trial gone the distance, end_bout back to the
+  mini), the PAC-064 gates (the rungs as the table reads and every dialect
+  of the 24 with an authored habit; the dialect key by House / own id /
+  card; the scrap track at the count and not one short, a lost scrap paying
+  nothing, the cap won on EP paying one, the real path counting; the spar
+  track and the dual segment to PI 2 at once; the boss track - beaten on EP
+  or by KO, his page, Moira without one; PI 2's +10% on Yuri's tell and not
+  on Ada's, the cue, PI 3 no wider, his selected tell at +10%, the other
+  windows untouched; the commentary at PI 1 and not PI 0, the cue on the
+  line at PI 2, the fallback habit; the profile reading 172 / 199 / 228 of
+  300 tells at PI 0 / 2 / 3; the ledger paid by SCRAP 1 vs the school,
+  kept through end_bout and new_dual, and in the hash), and static
+  coverage: 39/39
   action verbs, 53/53 punish responses, 13/13 phase-trigger forms, 7/7
   effect types, 36/36 states, 14/14 buffs. Every entry in tactics.v1.json
   (8 specials, 4 supers, 5 staff actives) has a gate above; every key in
   affinity.v1.json has one.
-- DETERMINISM: 16/16 GREEN. One 24,000-tick scripted input log run three
+- DETERMINISM: 18/18 GREEN. One 24,000-tick scripted input log run three
   times (twice tick-by-tick, once through the jittered 7-40ms frame loop
   the game uses): all 400 state hashes identical, every hash bit-exact
   over positions, pools, timers, queues, flags, the corner's state and the
@@ -531,7 +632,11 @@ python3 pbn_compiler.py --margins
   through five segments to a verdict and hashes identically twice. The
   mini log stripped of every fight key runs a fully delegated dual - the
   profile lands 64 and the corners still turn - and hashes identically
-  twice.
+  twice. A scrap (survive 20s) on the profile against the live Yuri runs
+  to its end and hashes identically twice. The delegated dual again with a
+  PI 2 ledger vs Kowalchuk - 31 emphasized tells, the commentary, the
+  ledger ticking as segments end - hashes identically twice and differs
+  from the ledger-less run.
 - GEOMETRY: 5/5 GREEN. The emergent dodge table (measured with the style
   packages off - they scale reach and the weave and are gated in the smoke)
   matches the consensus rows in all four orientations (boss->player,
