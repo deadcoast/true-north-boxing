@@ -1,4 +1,5 @@
 # TNB GREYBOX - proof of engine
+
 Run (no editor): `godot --path .\engine\greybox`
 
 Blue capsule = you. Red capsule = the boss, driven by the real compiled PBN
@@ -18,6 +19,7 @@ him start blocking it), Tension meter, DROP + standing-eight beats,
 three-knockdown rule, 90s segment clock, Punch-Out camera.
 
 ## Verification status (agent-run, headless Godot 4.3, this container)
+
 - Boots clean; zero script errors across 1800-frame soaks vs all 4 bosses.
 - Smoke suite 17/17 GREEN per boss (run it yourself: add `-- smoke` to the
   command): tracker flagging + narration, stamina drain, tell interrupt +

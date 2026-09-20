@@ -1,4 +1,5 @@
 # TNB GREYBOX v6 - the engine foundation (NP_14)
+
 Run (no editor): `godot --path .\engine\greybox`
 
 Blue capsule = you (head sphere shows where the sim says your head is - a
@@ -24,12 +25,14 @@ DEMO: `godot --path engine/greybox -- demo boss=7` - a scripted fighter plays
       inside the first half minute.
 
 ## What changed in v6: the sim is a thing of its own
+
 `sim/core.gd` (TNBSim) is the whole fight: pure, no Nodes, no wall clock,
 seeded RNG, fixed 120Hz ticks driven by one intent dictionary per tick.
 `main.gd` only draws it, samples the pad, and plays FX off the sim's event
 list. `sim/clock.gd` is the one place render time meets sim time (fixed-step
 accumulator + interpolation alpha). `sim/tests.gd` drives the sim directly.
 Consequences you can feel:
+
 - Frame data is real: a 160ms jab is 19 ticks at every frame rate.
 - Hitstop is sim state (the freeze counter), not an engine time-scale hack;
   a punch pressed during hitstop is buffered, never eaten.
@@ -61,13 +64,15 @@ Consequences you can feel:
   (one beat of forgiveness gone, NP_03 s9); the third is the KO.
 
 ## PAC-054 in the build: EVERY HOOK IS LIVE
+
 The eleven behaviour sensors the patterns ask for exist now, each with a
 gate that proves it fires at its threshold and never early:
+
 - locks_to_single_tempo (Chiamaka): six punch intervals within 15% of
   their median at a real cadence; five are not enough. Vary your rhythm.
 - neutral_reset_attempt (Deshawn): a full second out past engagement, not
   leading, not closing - he closes it for you (Turnpike has no neutral).
-- casts_<house>_native (Remy): your fighter's hissatsu carries its house
+- casts_`<house>`_native (Remy): your fighter's hissatsu carries its house
   from the library; cast a Moreau native at a Moreau and Ingot comes.
   RORY carries Aurora Borealis Breaker, PRIYA Marginalia, MARCUS Chinook Rush, JUNE First Snap.
 - trap_stance_hands_down (Marta): refuse to lead for 3s and she drops her
@@ -95,6 +100,7 @@ both ways. Alfie's META banks exactly two and his phase 2
 bug. Every phase-trigger form is executable now: 13/13.
 
 ## PAC-055 in the build: THE RULES RUN BOTH WAYS
+
 - Fouls are geometry, like everything else. A BODY punch that still reaches
   a LEANING torso lands on the belt line the lean lifted toward it: LOW
   BLOW. A looping punch (overhand, haymaker) that lands on a DUCKING or
@@ -119,6 +125,7 @@ bug. Every phase-trigger form is executable now: 13/13.
   anyway. Wobbled fighters move at 70% - yours too.
 
 ## PAC-056 in the build: THE SPELLBOOK IS DATA
+
 - Every one of the 87 library moves executes from its record: startup
   cinematic (0.9-2.4s, the caster locked and closing half a metre) -> effect
   block -> aftermath. Effect types DMG / DISPLACE / STATE / BUFF / SHRED /
@@ -158,6 +165,7 @@ bug. Every phase-trigger form is executable now: 13/13.
   work the same way scaled down (Shield Wall 20, one reform).
 
 ## PAC-057 in the build: THE MIND GAME (feints, NP_03 s8)
+
 - Tap a punch and let go inside 80ms (10 ticks; key release, or the stick
   coming back after a flick) and it is a FEINT: no punch, the punch's own
   stamina comes back, 1 stamina goes, you recover in 150ms. The 11th tick is
@@ -169,11 +177,12 @@ bug. Every phase-trigger form is executable now: 13/13.
   one (he cancels the read and keeps his hands); another row still draws;
   ten seconds later the first works again. Feints are tracker tokens too
   (F_R_HOOK), so a feint-heavy rhythm gets flagged like any other pattern.
-- Sensors: player_feint and player_feint_<family> fire for the pattern hooks
+- Sensors: player_feint and player_feint_`<family>` fire for the pattern hooks
   to bind (none of the 24 bind them yet; NP_04 s6's feint(Sx) string
   variants are the boss-side counterpart and are not in this pass).
 
 ## PAC-058 in the build: THE STOOL AND THE RELAY (NP_10 s4-s6, NP_05 s6)
+
 - A segment ends into a 4s broadcast CARD (who took it, EP both ways, the
   Tension carried and what this fighter banked, RELAY CHARGED + chain when
   it applies). 1 / A skips it. Then the CORNER: 45s on the clock, TWO
@@ -217,6 +226,7 @@ bug. Every phase-trigger form is executable now: 13/13.
   delegation.
 
 ## PAC-059 in the build: THE THREE RINGS (NP_06)
+
 - Every fighter carries STYLE / ELEMENT / HOUSE: the four Millbrook cards in
   `sim/core.gd` (RORY boxer-puncher/FROST/no-name, PRIYA out-boxer/GALE,
   MARCUS slugger/GRANITE, JUNE swarmer/FROST) and all 24 bosses from their
@@ -266,6 +276,7 @@ bug. Every phase-trigger form is executable now: 13/13.
   confirms them.
 
 ## PAC-060 in the build: THE OTHER MIND (the enemy coach, NP_10 s9)
+
 - Every rival club has a corner, and it is data in `coaches.v1.json` (vault
   copy `data/coaches.v1.json`): an order archetype (NP_10 s2), swap
   aggressiveness, scouting confidence, decoy use (carried, no projection
@@ -324,6 +335,7 @@ bug. Every phase-trigger form is executable now: 13/13.
   YOUR corner (he acts first, on scouting), coach tells as Scout Book pages.
 
 ## PAC-061 in the build: THE RULEBOOK'S SHAPES (dual formats, NP_01 s2/s3.3/s6/s8)
+
 - The dual's shape is data in `formats.v1.json` (vault copy
   `data/formats.v1.json`): segments, dressed each side, repeat slots,
   condition carry, sudden death, blind. Five records: the SANCTIONED dual
@@ -372,13 +384,15 @@ bug. Every phase-trigger form is executable now: 13/13.
   still reads his own scouting number).
 
 ## Verification (agent-run, headless Godot 4.3, this container)
-```
+
+```ps1
 godot --headless --path engine/greybox -- smoke boss=N   # N = 0..23
 godot --headless --path engine/greybox -- determinism
 godot --headless --path engine/greybox -- geometry
 godot --headless --path engine/greybox --quit-after 3600 -- demo
 python3 pbn_compiler.py --margins
 ```
+
 - SMOKE: 189/189 GREEN on every one of the 24 bosses (4,536 assertions).
   Covers: C3 buffer (same-tick / 3-ticks-early fires / 8-ticks-early
   expires / buffered through hitstop), C2 reach, C7 tracker flag -> read

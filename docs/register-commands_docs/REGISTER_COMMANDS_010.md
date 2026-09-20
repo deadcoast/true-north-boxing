@@ -1,8 +1,10 @@
 # REGISTER COMMANDS 010 — for the applying writer
+
 **From: @claude · 2026-09-20 · Re: PAC-061 dual formats (greybox v6, NP_14 C15)**
 Same rule as 001–009: commands + row payloads against the live register, never a whole-organ overwrite.
 
 ## Commands
+
 1. **Setfield PAC-061 Status DONE** (row payload below replaces the TODO row from 009).
 2. **Add PAC-062** (row below) — Status TODO. Manager mode (NP_10 §8): a player-side AI profile per style archetype driving your fighter from the same intent dictionary (swarmer pressure, out-boxer range, slugger power, boxer-puncher flex; the card's stats, equipped technique and the tracker's read of the boss), delegation per segment from the corner, the 85 % Tension rate for AI segments, the demo/soak switching from the random log to the profile. With both corners and every format in the sim, the last piece of NP_10 the engine lacks is the fighter who plays without you. Alternatives: boss-side `feint(Sx)` (NP_04 §6); dialect familiarity (NP_02 §3); the Exhibition 2v2 (NP_01 §8, simultaneous).
 3. **Add DATA row** for `data/formats.v1.json` (DATA, Path `data/formats.v1.json`, Summary "Formats/NP_01-s2-s8/v1.0: sanctioned / mini / iron / blind / gauntlet — segments, dressed each side, repeat slots, condition carry, sudden death, blind; the ladder; the Golden DROP", Tags #format #rules #data, Linked PAC-061). `engine/greybox/formats.v1.json` is the greybox's copy.
@@ -13,6 +15,7 @@ Same rule as 001–009: commands + row payloads against the live register, never
 8. **PAC-052 (tuning sweeps)** unchanged, still TODO, still proposal-only. **PAC-002B** stays @p1-implementer. NDL-009 untouched.
 
 ## PAC-061 row (CSV-ready, todo columns)
+
 ID: PAC-061 | Title: Dual formats (NP_01 s2/s3.3/s6/s8) — five formats as data, condition carry, segment wins by EP, the ladder to the Golden DROP | Phase: P1-CombatCore | Status: DONE | Priority: med | Assignee: @claude
 DoD: A format record as data (segments, dressed each side, repeat slots, condition carry, sudden death, blind) with five records — sanctioned (5 segments, 5 + 3 both sides), mini (3, 3 + 1), iron (5 slots from 3 dressed, repeat), blind (sanctioned, no reveals), gauntlet (one fighter, five segments); slots drawn from the dressed cards on both sides with the coach's archetype generalised to any slot count; the corner's swap rules generalised (reserves + not-yet-fought slots; anyone dressed in repeat formats and R6; the Gauntlet refuses); condition carries for any fighter who re-enters, both sides, with the corner's restores landing on the carried numbers; segment wins by EP majority; the ladder score -> segment wins -> counter hits -> Golden DROP (any dressed, free pick, condition carried, no clock, first DROP wins; his corner picks on condition then rings); blind refuses The Reveal and hides his slot; F9 / `-- format=` in the greybox; smoke gates for the records and rosters, the sanctioned corner and five-segment flow, EP-majority segment wins, both ladder rungs, the Golden DROP both ways, the Iron dual's carried R4 with Patch Job / Second Wind / Loosen Up, the Gauntlet, the Blind dual; a sanctioned-format determinism log
 BlockedBy: PAC-060 | DependencyType: soft | RelatedWork: NP_01 s2 s3 s6 s7 s8; NP_10 s4; NP_14 C15; data/formats.v1.json
@@ -21,6 +24,7 @@ LearningNotes: Condition carry was one dictionary and two lines once the fighter
 StartedAt: 2026-09-20T08:50:00Z | DoneAt: 2026-09-20T10:40:00Z
 
 ## PAC-062 row (CSV-ready, todo columns)
+
 ID: PAC-062 | Title: Manager mode (NP_10 s8) — a player-side AI profile per style archetype, delegation per segment, the 85% Tension rate | Phase: P1-CombatCore | Status: TODO | Priority: med | Assignee: @claude
 DoD: A fighter profile drives your card from the same intent dictionary the pad produces (no sim changes for it): range and tempo by style archetype (swarmer pressure and clinch, out-boxer range and back-steps, slugger power and ropes, boxer-puncher flex), the card's stats and equipped technique, the tracker's read of the boss's tells and strings, corner defaults; any segment can be delegated from the corner (and a whole dual), the player keeps the corners; AI segments earn Tension at 85%; the demo/soak runs the profile instead of the random log and the attract mode looks like boxing; smoke gates per archetype behaviour against a control, the 85% rate, delegation flow; determinism coverage of a delegated dual
 BlockedBy: PAC-061 | DependencyType: soft | RelatedWork: NP_10 s8; NP_03; NP_04 s4 (tells); NP_14

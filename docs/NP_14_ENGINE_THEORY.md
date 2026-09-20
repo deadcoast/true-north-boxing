@@ -1,4 +1,5 @@
 # NP-14 — ENGINE THEORY: Provable Claims and Use Cases
+
 **Project Northpaw design vault · Foundation of `engine/greybox/sim/core.gd` · PCUC discipline: every claim names its test, and the test has been run**
 
 The greybox v1–v5 proved the design. This document is the foundation the engine is rebuilt on (greybox v6): each section states a claim, the mathematics or mechanism behind it, where the industry ceiling sits and why, the executable test in this repo, and **the result of running it**. A claim without a test is not in this document; a claim whose test has not been run is marked as such.
@@ -8,6 +9,7 @@ Status legend: **PROVEN** = test run in-container, GREEN, reproduction command b
 ---
 
 ## C1 — Deterministic fixed-tick simulation — PROVEN
+
 **Claim.** A combat simulation advanced in fixed ticks (120 Hz, Δt = 1/120 s) from an input log, using no wall-clock reads and a seeded RNG, produces identical state for identical input logs regardless of render frame rate.
 **Why it matters.** Frame data (a 160 ms jab is 19.2 ticks; the engine rounds to 19) only *means* something when the tick is the unit. Determinism is the precondition for replays, golden-master regression tests, and rollback netcode — the architecture every serious fighting game since GGPO runs on: simulate from inputs, never from time ([GGPO](https://en.wikipedia.org/wiki/GGPO), [rollback architectures](https://www.snapnet.dev/blog/netcode-architectures-part-2-rollback/), [determinism requirements](https://docs.coherence.io/manual/advanced-topics/competitive-games/determinism-prediction-rollback)).
 **Mechanism.** `TNBSim.step(intent)` is the only way time passes. `TNBClock` (`sim/clock.gd`) turns frame deltas into a tick count and an interpolation alpha; `main.gd` draws between the last two ticks. Every ms constant in `combat_tuning.v1.json` becomes ticks at load (`ms()`), so no float time survives into the fight.
@@ -16,11 +18,12 @@ Status legend: **PROVEN** = test run in-container, GREEN, reproduction command b
 **Result.** 8/8. 400/400 hashes identical across all three runs; the log is shown to exercise both offenses, counters, flash windows, interrupts, drops, eight-counts, segment ends, evasions, blocks, clinch scrambles, sprint-steps and sensors; seed 54321 diverges.
 
 ## C2 — Geometric hit resolution replaces dodge tables — PROVEN (table) / MODEL (some cells)
+
 **Claim.** Resolving punches by geometry — a punch is a region in the attacker's frame (reach, lateral window, height band); a defender's head is a point displaced by the active dodge — reproduces the sourced head-movement consensus as an *emergent* table, with no dodge×punch lookup anywhere in the code.
 **The regions** (attacker frame, right hand; the left hand mirrors the lateral window). Distance *d* along the line of attack, lateral *l* along the attacker's right, height *h*:
 
 | Punch | reach (m) | lateral window l | height band h |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Straight | 2.05 | [−0.18, 0.18] | [1.35, 1.80] |
 | Overhand (flared) | 2.00 | [−0.25, 0.25] | [1.10, 1.85] |
 | Hook | 1.90 | [−0.15, 0.50] | [1.35, 1.75] |
@@ -33,7 +36,7 @@ Status legend: **PROVEN** = test run in-container, GREEN, reproduction command b
 **The emergent table** (inside spacing 1.55 m; H = hit, · = miss; ◇ = MODEL cell, no source found either way):
 
 | dodge \ punch | STR | FLA | HOK | HKC | UPC |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | none | H | H | H | H | H |
 | slip-away (from the punching hand) | · | · | · ◇ | · ◇ | · ◇ |
 | slip-into | · | · | H ◇ | H ◇ | · ◇ |
@@ -50,12 +53,14 @@ Sourced rows hold: slips beat straights; the duck beats straights and eats the u
 **Result.** 5/5. 0 mismatches in 4 × 45 cells; 0 of 400 reads would eat the punch.
 
 ## C3 — Input buffering removes dropped inputs without adding latency — PROVEN
+
 **Claim.** A punch command issued while the fighter is busy is queued with a 6-tick (50 ms) life and executes on the first legal tick; a command issued while free executes on the *same* tick; a command pressed during hitstop is queued, never eaten. Net added latency for a free fighter: zero.
 **Why.** Every modern fighting game buffers ([input buffering](https://supersmashbros.fandom.com/wiki/Input_Buffering), [why buffers exist](https://www.wayline.io/blog/input-buffering-responsive-game-feel), [the leniency debate](https://www.wayline.io/blog/lenient-input-buffers-ruining-fighting-games)); the debate is window length, and 3–8 frames at 60 Hz is the observed band. 6 ticks at 120 Hz sits at the tight end on purpose: FNC's grammar is expressive, and a long buffer would let flicks queue into unintended strings.
 **Test.** `-- smoke` stages "C3": free fighter executes same tick; issued 3 ticks before recovery ends → fires on the recovery-end tick; issued 8 ticks before → expires unexecuted; pressed during hitstop → executes on the first unfrozen tick.
 **Result.** 4/4 on all 24 bosses. The hitstop case was a real bug: v5 and the first v6 core both dropped inputs during the freeze.
 
 ## C4 — Tell floors sit above human choice reaction time by a computed margin — PROVEN (design margin)
+
 **Claim.** Every pattern tell exceeds the expected human choice-RT for its decision by a margin the compiler prints. Hick–Hyman: RT = a + b·log₂(n+1) ([Hick's law](https://en.wikipedia.org/wiki/Hick%27s_law), [Proctor & Schneider 2018](https://pubmed.ncbi.nlm.nih.gov/28434379/)), with a = 225 ms (simple visual RT band 200–250 ms) and b = 150 ms/bit (classic slope). A tell asks a 3-way choice (block / slip / interrupt) → n = 3 → RT ≈ 525 ms; a known pattern collapses it toward n = 1 → RT ≈ 375 ms.
 **Consequence.** The 400 ms normal floor clears the known-pattern read by 25 ms and sits 125 ms *under* a cold 3-way decision — normal strings are meant to be read by pattern knowledge (Doctrine D2). The 700 ms SPECIAL floor clears the cold read by 175 ms; the 1000 ms ARMORED floor by 475 ms. The floors encode a pedagogy, and the numbers now say so.
 **Ceiling.** Hick–Hyman is a population model; individual variance is large and expert compression is real. The claim is about design margins, never about any single player.
@@ -63,32 +68,37 @@ Sourced rows hold: slips beat straights; the duck beats straights and eats the u
 **Result.** GREEN over 80 strings / 24 patterns; worst SPECIAL +175 ms (Ada Okafor S3), worst ARMORED +475 ms (Anders Vey P3S2).
 
 ## C5 — Hitstop and slow-time live inside the simulation — PROVEN
+
 **Claim.** Hitstop (frozen ticks on impact) and flash-window slow-time (0.6× rate on the boss's decision timers) are simulation state, never engine clock manipulation. Determinism survives them and replays reproduce feel exactly.
 **Test.** `-- smoke`: a landed hit queues freeze ticks; a frozen tick advances no clock. `-- determinism`: the log contains counters, interrupts and flash windows, and the hashes still match.
 **Result.** GREEN. `Engine.time_scale` is no longer touched anywhere.
 
 ## C6 — One resolution function for both fighters — PROVEN
+
 **Claim.** The boss's defense is a dodge *choice* (a read, with probability shaped by the adaptation tracker and by tell state), scheduled so the dodge is live on the impact tick and resolved through the same geometry as the player's. There is no separate "boss defend roll". Counter windows lower the read probability to a quarter; a flash window to 2 %; a hissatsu to zero: fear is a number applied to a real mechanic.
 **Test.** `-- geometry` runs the table in both directions and checks read validity and read timing; `-- smoke` checks `read_prob()` ordering (counter < neutral < flagged).
 **Result.** GREEN. The first core fired the dodge at punch startup, so slow punches always found the head back in place — the timing assertion caught it.
 
 ## C7 — Adaptation modifies defense only (Doctrine D3), mechanized — PROVEN
+
 **Claim.** The tracker's flags raise the boss's read probability and nothing else; boss offense is the compiled pattern at all times.
 **Test.** `-- smoke`: four repeated jabs flag the 2-gram; `read_prob(tier)` rises (0.30 → 0.55); the SELECT weights and every string's tell are byte-identical before and after the flag (punish cooldowns pre-armed so no punish reweight can confound it).
 **Result.** GREEN on all 24 bosses.
 
 ## C8 — The engine executes every verb the compiler emits — PROVEN (verbs, responses) / PARTIAL (triggers)
+
 **Claim.** A compiled pattern is executable in full: every action verb, every punish response and every phase trigger form resolves to sim behaviour, or the smoke names what does not.
 **Mechanism.** `parse_action()` is a small VM: punches (with hand, body, counter multipliers), movement (RUSH/SURGE/ADVANCE/HERD/STEP_IN/GUARD_ADVANCE/GUARD_WALL_ADVANCE/STEP_OUT/STEP_BACK/BACK_STEP/ANGLE_STEP/LATERAL_ARC/POSITION_WIN), timing (DELAY/pause), traps (COUNTER_STATE/COUNTER_ON_BLOCK — a punch into the waiting guard is answered at once), grappling (CLINCH_ATTEMPT/DRAG_ROPEWARD — hold both fighters, drag toward the nearest rope), composites (WALK_STRING/MIXED_STRING/BODY_SERIES). `_parse_response()` is the punish grammar. Sensors the hooks ask for (passive>Ns, holds_center_Ns, guard hold Ns, perfect_play_Ns) are parsed from the pattern itself.
 **Test.** `-- smoke`: static coverage over all 24 patterns (`verb_coverage`, `response_coverage`, `phase_coverage`) plus live checks of COUNTER_STATE, CLINCH and the composite expansions.
 **Result.** 39/39 verbs, 53/53 responses, 13/13 phase-trigger forms (the `warnings_banked==N` form arrived with the referee model in C9).
 
 ## C9 — Every hook is live: sensors fire at their threshold and never early — PROVEN
+
 **Claim.** Each behaviour a pattern hook names is a measurable event in the sim with an explicit threshold, and the smoke proves two things per sensor: it fires on the step the threshold is met, and it has not fired on the step before (or under the contrasting behaviour). A hook whose sensor cannot be defined this way stays inert; none remain.
 **Mechanisms** (threshold in parentheses; the authored intent in NP_04):
 
 | sensor | what is measured | fires when | contrast that never fires |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `locks_to_single_tempo` (Chiamaka) | the last 6 punch intervals | all within 15 % of their median, median ≤ 1.5 s | five equal intervals; a varied cadence |
 | `neutral_reset_attempt` (Deshawn) | ticks out past engagement (+0.5 m) without leading or closing | 120 consecutive ticks | the 119th tick |
 | `casts_<house>_native` (Rémy) | the cast hissatsu's `house_id` in the library vs the pattern's META `house` | equal at cast | Aurora Borealis Breaker (no house) |
@@ -107,6 +117,7 @@ Sourced rows hold: slips beat straights; the duck beats straights and eats the u
 **Result.** GREEN on all 24 bosses (95/95 each); determinism 9/9. The soak caught one real bug in PAC-054: two bodies dragged into the same corner collapsed to one point (no facing; the camera's look_at failed) — the sim now keeps bodies 0.7 m apart and peels a double-cornered pair toward center. PAC-055's first run caught a test-side collision: the event payload key `kind` was overwritten by the event kind itself, so foul kinds were invisible to the filter — renamed, and the pass proved the fix.
 
 ## C10 — The spellbook is data: every library effect executes from its record — PROVEN
+
 **Claim.** Each of the 87 moves in `data/hissatsu_library.v2.json` runs through one pipeline — startup cinematic → effect block → aftermath (NP_05 §5) — with a handler for every effect type (DMG, DISPLACE, STATE, BUFF, SHRED, WALL, BURN; REDACTED = authored-absent), every named state (36) and every named buff (14); the counter profile's `window_ms`, `interruptible` and negation string are the rules of engagement, not a designer's tag; every boss desperation casts by name; the Wall Gauge (§8) is the same gauge for bosses and for the player's T2 walls.
 **Mechanism.** The motion is the spellbook (§4): LB + the family's punch row (HAYMAKER→hookercut, ARC→hook, PISTON→straight, RISE→uppercut) or LB+RT held 400 ms for WALL; cost is the tier's Tension, halved for the first cast of a CHARGED entrance, with T3 gated on the unlock and North Star scaling with the relay chain (base 1.6 + 0.8/link). The caster is locked for the cinematic and closes 0.5 m; a jab-class punch inside `window_ms` cancels an interruptible cast (50 % refund, +5 Tension and a flash window to the interrupter). At resolve the defender's answer is read from the profile: a timed WALL negates (any T1+ breaks it at cost parity); a dodge that the C2 geometry says evades the family's row chips to the profile's slip multiplier (40 %, or a full evade for PISTON); a block takes the profile's block multiplier (60 %, PISTON 70 %, "dodge-only" 100 % unless the block is perfect) plus a heavy shred; composure bypass goes through a block untouched. A defender out of reach + 0.3 m is missed. States and buffs resolve before packets, then packets in data order. The gauge (§8): only counters ×1.0, power ×0.8, body ×0.6 and hissatsu ×1.5 chip it, composure is shielded while it stands, a break is TRUE OPEN 8 s at ×1.25, reforms follow the pattern's META `gauge_reforms`, three breaks end it; HC-0's `migrates_to_next_at` carries the remainder to the next boss.
 **Ceiling and why.** Data-driven supers are common; data-driven *counterplay* is not — most action games hard-code "this super is unblockable" per move. Reading the negation string as rules means a designer can author a move's whole counterplay in one line and the smoke will hold it to it.
@@ -114,12 +125,14 @@ Sourced rows hold: slips beat straights; the duck beats straights and eats the u
 **Result.** GREEN on all 24 bosses (124/124 each); determinism 10/10. Bugs the gates caught: the boss's read-side auto-slip resolved before its wall (a walled punch was reported as slipped); buffs declared after a DMG packet in data order never applied to that packet (states/buffs now resolve first); the survival grab fired inside the cinematic of a wobbled caster; anchors' gauges shielded the generic drop tests (correct behaviour — the tests now strip the gauge for those stages and test it on its own).
 
 ## C11 — Feints: the mind game is measurable — PROVEN
+
 **Claim.** A punch input released within 80 ms of its startup is a feint (NP_03 §8): no punch, the punch's stamina refunded, 1 stamina spent, a 150 ms recovery. The read the boss committed to the press stands — a dodge he scheduled still runs, a guard commit becomes a 400 ms flinch — and a drawn feint costs him 1 guard and 10 cm of ground. A feint never interrupts a cast. Feints are tracker tokens, and three identical feints inside 10 s make him stop reacting to that one (he cancels the read and keeps his hands) until 10 s pass.
 **Why the edge is 80 ms.** The boss reads at the press (C6) and schedules his dodge with a lead of startup − dodge/2, which for every hook-class punch (≥ 260 ms startup) falls after the 80 ms decision — so a feint is decided before his body moves and the commitment is his, not the player's. A jab's read lands earlier, so a feinted jab draws less: the grammar rewards feinting the slow punches, which is the boxing of it.
 **Test.** `-- smoke` PAC-057 stage: release at 10 ticks feints, at 11 the hook goes; over 30 seeds the read is drawn (dodges run to completion, guards flinch for 400 ms), every drawn feint drains exactly 1 guard and nothing lands; the fourth identical feint in 10 s draws nothing while another row still draws and the first draws again after 10 s; a feinted jab inside a cast's window leaves the cast running; four feinted hooks flag `F_R_HOOK` in the tracker; a drawn feint herds 10 cm and fires `player_feint` / `player_feint_hook`. `-- determinism` asserts the log feints and that some draw the read.
 **Result.** GREEN on all 24 bosses (130/130 each); determinism 11/11 (44 feints in the log, 22 drawn).
 
 ## C12 — The corner is data and the relay is arithmetic — PROVEN
+
 **Claim.** A segment ends into a 4 s broadcast card (NP_01 §7: EP totals, segment winner, Tension carried) and then a 45 s corner phase with a budget of two actions (NP_10 §4), where every choice — swap, special tactic, super, staff active, save the bar — is a record in `data/tactics.v1.json` whose `effect` keys are consumed by the sim on the next segment; the corner clock does not wait, and running it out sends the fighter at 80 % stamina (NP_01 §5). The relay (NP_05 §6) is integer arithmetic on the score bug: a segment that banks ≥ 25 Tension links the chain, < 10 breaks it, a lost segment with ≥ 10 keeps it; a CHARGED entrance is a 10 s surge (+10 % feet), the first cast at half cost and T3 unlocked; chain ≥ 3 is FULL RELAY (T4 at 75, the element trail on T3); a T3 cast from R2 on names the previous fighter as the afterimage.
 **Mechanism.** `_end_segment` computes the chain and the segment winner, emits `seg_card` and enters CARD (4 s, skippable); CARD enters CORNER with `{t: 45 s, actions_left: 2}`; `corner_action({kind, id|arg})` is the whole menu — swap (reserve or any not-yet-fought slot into the next slot; first free per `swap_first_free`, then `swap_cost`), tactic (equipped, not on its one-corner cooldown, priced in Tension, effect keys staged into `pending_fx`), super (once per dual, free), staff (per-dual charges; `tension_plus` and `reveal_next` resolve on the spot, the rest are staged), save the bar (a flag). `_load_segment` moves `pending_fx` into `tactic_fx`, applies the entrance effects (stamina cap, stamina/composure plus, guard cap, no-drop / punish-suppress / tell-highlight timers, the overrun) and the fight code reads the rest where it happens: body drain, guard decay, herding, sprint cost, feint cost, counter windows, tell length, the clock (Ice the Clock runs it at 1/0.8 while you lead on EP), Tension earn, EP on clean hits (Switch-Up). Iron Resolve turns a knockdown into a wobble at 1 composure for 30 s. The chain, the surge timer, the corner state, cooldowns, charges and the staged effects are all in the state hash, so the corner is as deterministic as the fight.
 **Ceiling and why.** Team-sport games with a corner phase (Inazuma's manager layer is the model) hard-code each tactic; here a tactic is a line of data and the smoke measures its effect on the next segment, so the launch library of twelve can be authored without touching the sim.
@@ -127,6 +140,7 @@ Sourced rows hold: slips beat straights; the duck beats straights and eats the u
 **Result.** GREEN on all 24 bosses (155/155 each, 3,720 assertions); determinism 12/12; geometry 5/5; a 16,000-frame presentation soak through KO → card → corner (two actions, three refusals, the menu drawn) → tactics live → R2, and a `-- demo seg2` soak (the aid has the scripted fighter cast North Star) that spawned the T3 afterimage ghost — two casts, two ghosts per 3,000-tick run, three runs — all with zero errors. Bugs the gates caught: the event payload key `action` collided with the event `kind` the same way `foul` had (refusals were invisible to the filter); the card timed out one tick early; the scripted determinism log sent every corner instantly (corner presses are now every 40 ticks, so the log takes actions); a hook herds 0.1 m, not the 0.2 m the first Cut the Ring gate assumed (the gate now measures the control).
 
 ## C13 — The three rings are data, and the disadvantaged side is never debuffed — PROVEN
+
 **Claim.** Every fighter carries style / element / house (NP_06); the matchup is computed once at segment load from `data/affinity.v1.json` and `data/feud_graph.v1.json` and read by the fight where each effect lives. Ring 1: the triangle's advantaged side scores +10 % EP on clean hits and reads +50 ms on every counter window; the other side is unchanged; a boxer-puncher is never advantaged. The §1.2 style packages are live for both fighters. Ring 2: the caster's element over the target's makes the hissatsu ×1.10 and 10 % cheaper; a same-element move is a ×1.30 spike; the beaten side's timed walls stand +1 s. Ring 3: a FEUD edge earns Tension ×1.25; a house native thrown by its own blood is ×1.10. The product of the hissatsu multipliers is clamped at ×1.5 (§4).
 **Mechanism.** `_dress` puts the three keys and the style's package on the fighter record (composure pool and guard capacity applied there); `_matchup` emits the card. The advantage is one predicate, `_style_adv(k)`: the triangle's truth for either side, or Switch-Up's lie for the player — so the lie can never double a true edge or remove his. EP goes through `_score_ep` (a 0.2 fraction per clean hit that lands every fifth), windows through `_window` (base × trap width × the slugger's slip tax + the extras every window shares). `hiss_mult(who)` is read while the cast still knows its move and travels into every numeric packet (DMG, SHRED, BURN, DISPLACE, WALL points); the wall's seconds are extended at the WALL packet. Packages are read at the point of use: reach in `resolve_geometry` (the attacker's), the weave in `_head_world` (the dodger's), stamina at the throw, shred and ropes damage at the landing, herding on the push, the clinch windows at the scramble, the back-step and sprint in movement. The matchup, both EP fractions and the fighters' packages are in the state hash.
 **Why the packages run on bosses too.** Every pattern's META already names a style; a slugger boss whose chin is not 15 % deeper would be a slugger in the commentary only. The geometry table (C2) is measured with the packages off, because the table is the bare arc geometry; the packages scale reach and the weave and are gated on their own.
@@ -134,6 +148,7 @@ Sourced rows hold: slips beat straights; the duck beats straights and eats the u
 **Result.** GREEN on all 24 bosses (169/169 each, 4,056 assertions); determinism 13/13; geometry 5/5. A 16,000-frame presentation soak with the rings live ran R1 → R2 → R3 (June swapped in from the corner) with three matchup cards, two afterimages and zero errors. What the gates surfaced: the first swarmer run failed the generic uppercut check because a swarmer's uppercut reaches 1.575 m and the test stood at 1.6 (the test moved to 1.4); Alfie's foul gate assumed the post-hit spacing of a neutral herd; and the native house bonus fired on every boss desperation from the first run, because the library already names the house of every native — Heat Advisory at ×1.43 is the doc's own worked number.
 
 ## C14 — The other mind: the rival corner is data, and both teams run the same economy — PROVEN
+
 **Claim.** Every rival club's corner is a record in `data/coaches.v1.json` (NP_10 §9): an order archetype (§2), swap aggressiveness, scouting confidence, a tactic library, a Super with its trigger, a priority for its two actions, and one tell. The enemy seals an order from four dressed fighters by the archetype (R1 fixed as the boss asked for); his corner resolves when yours opens, on scouting rather than on your choices, with two actions at your prices — the Super once per dual on its trigger, a swap judged on the rings (NP_06 §5) against the card he expects, a tactic from his library — paid from his own Tension bar. Hostile Crowd locks a corner on either side; The Reveal names his slot after his swap. Both teams earn on the NP_05 §2 table (canon: a plain clean hit pays nothing; counters 3, flash 5, perfect block or successful slip 2, interrupt 5, drop 10, segment win 5, the CENTER exchange 2, the KO trickle), with the feud's ×1.25 and each side's Perfect Round; his desperation pays its tier from his bar and is never blocked by it; 25 banked sends his next fighter out CHARGED.
 **Mechanism.** `_pick_coach` keys the record by the R1 boss's club; `_build_enemy_lineup` orders the other three by pattern `meta.slot` under the archetype; `_enemy_corner` runs at `_open_corner` in the record's priority (`_coach_super` / `_coach_swap` / `_coach_tactic`), staging effect keys into `bpending_fx` exactly as the player's corner stages into `pending_fx`; `_load_segment` applies them to the boss (stamina cap/plus, composure, guard cap, `bno_drop_t`, the lock on your next corner) and the fight reads the rest where it happens (`btactic_fx`: his body drain on you, his herding, the clock while he leads, his triangle lie, his Tension multiplier). `_earn_tension_b` mirrors `_earn_tension`; the enemy bar, chain, staged effects, cooldowns, lineup, reserves, locks and trigger flags are in the state hash. The tells are decisions the rules make observable: the Academy's `counter_picks` fires on the swap it always takes; True North's `never_swaps` fires when a better card existed and he sat on it; the Grain Kings' on the Super after a FLASH DROP; Ascendant B's on the R3 tactic; Montréal's on Ice the Clock while leading; the Hollow Circuit's on the first-corner crowd.
 **Why the coach acts first.** Order sealing (NP_01 §7) hides both slots; a corner that reacted to your visible choices would be reading your cards. Acting on scouting confidence keeps the information game the one NP_10 §3 describes, and lets The Reveal be honest: it shows the slot after his decision.
@@ -141,17 +156,20 @@ Sourced rows hold: slips beat straights; the duck beats straights and eats the u
 **Result.** GREEN on all 24 bosses (180/180 each, 4,320 assertions); determinism 14/14 (his bar reached 84 in the log; every hash identical); geometry 5/5; 16,000-frame soaks on Vane and Yuri with the rival corner live, zero errors. What the gates caught: the event payload key `kind` collided with the event kind a third time (`coach_action`; renamed `action`); the earlier smoke's live-boss stages left the player down and a later stage counted him out once the coach's RNG draws shifted the boss's strings (the VM stage now resets the fight state first — the smoke was leaning on a lucky RNG path); a coach whose two actions are Super + swap never reached the tactic his tell promised (priority is data now: Montréal takes tactic before swap).
 
 ## C15 — The dual's shapes are data: five formats, condition carried, the ladder to the Golden DROP — PROVEN
+
 **Claim.** The dual's format is a record in `data/formats.v1.json` (NP_01 §2, §8): segments, dressed each side, repeat slots, condition carry, sudden death, blind. The sanctioned dual runs five segments with five slots and three reserves on both sides; the mini three with one reserve; the Iron dual five slots from three dressed (repeat slots); the Gauntlet one fighter five times; the Blind dual is sanctioned with no reveals. Slots are drawn from the dressed cards (reserves sit out, starters in order, a short roster repeats), the enemy's by his corner's archetype for any slot count. A fighter who re-enters carries the stamina, guard and composure he left with (§6) and the corner's restores land on those numbers. Segment wins are EP majority (§3.2). The dual is decided by the score, then segment wins, then counter hits, then the Golden DROP (§3.3): any dressed fighter, the pick free, condition carried, no clock, the first DROP wins.
 **Mechanism.** `_build_lineup` and `_build_enemy_lineup` take the format's counts (`_standard_order` generalises the archetype to k slots: the lowest roles open, the two highest close when there are four or more to fill, one when fewer). `_end_segment` records `condition[name]` for both sides and tallies segment wins by EP; `_load_segment` restores a re-entering fighter before the corner's effects (stamina cap min, overrun min, plus values on top). `_end_dual` walks the ladder; a tie with sudden death calls `_start_r6`, which appends an R6 slot on both sides (the freshest dressed fighter by composure fraction as the default) and hands the normal card → corner → send flow the pick; `_load_segment` in R6 sets no clock and `_drop` ends the dual on the first knockdown. The player's swap and the coach's swap open to the whole roster in repeat formats and in R6 (a card takes the slot; nothing is exchanged), and the coach scores the R6 pick on condition first (×4 of the composure fraction) and the rings second. Blind refuses The Reveal and blanks the corner's slot name; the matchup card at the bell is unchanged. Format id, lineup names, conditions, segment wins, counters and the R6 flag are in the state hash.
 **Test.** `-- smoke` PAC-061 stage: 9 assertions — the five records with both rosters and orders for each (the sanctioned STANDARD order `[vane, carter, ada, sam, vey]` with three on the bench; the Iron dual's `[vane, yuri, moreau, vane, yuri]` and `[RORY, PRIYA, MARCUS, RORY, PRIYA]`; the Gauntlet's five RORYs against five); the sanctioned corner offering six swaps, a free reserve swap then a paid slot swap, five segments to a verdict with the +5 per EP win; a DROP scored while losing the exchanges giving the segment and its +5 to the other side; equal score decided on segment wins and equal segments on counters; three drawn segments into the Golden DROP with the card naming the freshest, the free pick from anyone dressed, PRIYA entering as she left R2 (40 / 30 / 30), no clock, his pick by condition, the first DROP ending it, and the same the other way; the Iron dual's corner before R4 offering everyone else, Patch Job and Second Wind landing on RORY's carried 20 / 40, Vane carrying too, Loosen Up raising the ceiling without topping up; the Gauntlet's refused swap and carried stamina into R2 and R3; the Blind dual's refused reveal with its charge kept and the hidden slot. `-- determinism` adds a 66,000-tick sanctioned-format log through five segments to a verdict, hashed identically twice.
 **Result.** GREEN on all 24 bosses (189/189 each, 4,536 assertions); determinism 15/15; geometry 5/5; 16,000-frame soaks of the sanctioned, Iron, Gauntlet and Blind formats into their second or third segment with zero errors. Canon corrections the pass made: segment wins had been decided by the drops in the segment with EP as the tiebreak; the dual had broken ties on total EP (the ladder's second and third rungs are segment wins and counter hits; the earlier register row that said "EP" was wrong). The gates surfaced one assumption of their own: the flow stage's "Tension persists" check assumed no segment win; it now pays the +5 when the segment was taken on EP.
 
 ## Scoring canon (correction)
+
 Greybox v1–v5 ended a dual on any three drops. NP_01 §3 says otherwise: DROP 1, FLASH DROP 2, SEGMENT KO 3 (three knockdowns in one segment, or a failed count), cumulative across the dual, most points wins, EP breaks ties; a KO forfeits the loser's remaining time and the winner shadowboxes it out for +1 Tension per 10 s. v6 implements the canon and the smoke asserts it (DROP +1, FLASH DROP +2, third drop = KO +3 with the dual continuing into the corner). The second knockdown in a segment removes one beat of standing-eight forgiveness (NP_03 §9).
 
 ---
 
 ## What this pass does NOT claim
+
 - No cross-platform determinism (float math is engine-native).
 - No netcode. The architecture admits rollback; it does not ship it.
 - No human-validated tuning. C4 is design margin, not playtest data. The random scripted fighter of the determinism log gets dropped roughly every 20 s and drops the boss about as often — a coverage log, not a balance statement.
@@ -167,7 +185,8 @@ Greybox v1–v5 ended a dual on any three drops. NP_01 §3 says otherwise: DROP 
 - Hissatsu geometry uses the family's punch row for the dodge check; a move's own reach/arc is not modelled beyond `range_plus`. Duo variants, hybrid parents, camera scripts and VFX sets are carried as data and not executed. `all_stats_r4r5_plus5` is a no-op in the 3-segment mini-dual (R4/R5 do not exist there). `scout_book_note_on_hit` and `copies_last_player_hissatsu_vfx` are events only (meta-progression and presentation).
 
 ## Reproduction
-```
+
+```ps1
 godot --headless --path engine/greybox -- smoke boss=5       # Alfie: referee ladder
 godot --headless --path engine/greybox -- determinism
 godot --headless --path engine/greybox -- geometry
@@ -176,4 +195,5 @@ godot --headless --path engine/greybox --quit-after 3600 -- demo
 godot --headless --path engine/greybox --quit-after 3600 -- demo seg2 boss=0   # CHARGED R2, full bar: the afterimage
 python3 pbn_compiler.py --margins
 ```
+
 Results above: Godot 4.3-stable headless, 2026-09-18/19, this container.

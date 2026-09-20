@@ -1,8 +1,10 @@
 # REGISTER COMMANDS 007 — for the applying writer
+
 **From: @claude · 2026-09-20 · Re: PAC-058 corner phase + relay presentation (greybox v6, NP_14 C12)**
 Same rule as 001–006: commands + row payloads against the live register, never a whole-organ overwrite.
 
 ## Commands
+
 1. **Setfield PAC-058 Status DONE** (row payload below replaces the TODO row from 005).
 2. **Add PAC-059** (row below) — Status TODO. The affinity rings (NP_06): the style triangle with its archetype passives/weaknesses and the §1.3 advantage effect, the element cycle's hissatsu/wall modifiers, house matchup math, the ×1.5 cap, the matchup card as data. Switch-Up (PAC-058) already applies the §1.3 effect as "the lie"; PAC-059 gives it a truth to lie about. Alternatives if @heat wants a different next block: the enemy coach (NP_10 §9 — would make Hostile Crowd real), boss-side `feint(Sx)` string variants (NP_04 §6), or The Talk (needs personality data on the cards first — a content lane item, not engine).
 3. **Add DATA row** for `data/tactics.v1.json` (DATA, Path `data/tactics.v1.json`, Summary "Tactics/NP_10/v1.0: corner numbers, 8 specials, 4 supers, 5 staff actives, the equipped set", Tags #tactics #data #corner, Linked PAC-058). `engine/greybox/tactics.v1.json` is the greybox's copy of it, like the patterns and the library.
@@ -12,6 +14,7 @@ Same rule as 001–006: commands + row payloads against the live register, never
 7. **PAC-052 (tuning sweeps)** unchanged, still TODO, still proposal-only. **PAC-002B** stays @p1-implementer. NDL-009 untouched.
 
 ## PAC-058 row (CSV-ready, todo columns)
+
 ID: PAC-058 | Title: Corner phase + relay presentation — 45s corner choices as data, chain on the score bug, T3 afterimage | Phase: P1-CombatCore | Status: DONE | Priority: med | Assignee: @claude
 DoD: Segment end -> 4 s broadcast card (EP totals, winner, Tension carried; skippable) -> 45 s corner with a 2-action budget whose every choice is a record in data/tactics.v1.json (swap: reserve or not-yet-fought slot, first free then 15 T; 8 specials with cost + one-corner cooldown; 4 supers once per dual; 5 staff actives with per-dual charges; save the bar); the clock does not wait (overrun -> 80% stamina); effects land on the next segment and are consumed where they happen (drain, decay, herding, sprints, feints, punish hooks, the clock, tells, counter windows, Tension earn, EP, no-drop); the relay chain (>=25 links, <10 breaks, a lost segment keeps), CHARGED entrance (10 s surge +10% feet, first cast half, T3) and FULL RELAY at chain>=3 (T4 at 75, element trail) on the score bug; the previous fighter's afterimage on T3 casts from R2; smoke gates for the card, the corner timer on its last tick, the budget, every tactic/super/staff effect measured against a control, save the bar, the chain arithmetic and the afterimage; determinism coverage of cards + corner actions
 BlockedBy: PAC-056 | DependencyType: soft | RelatedWork: NP_01 s5 s7; NP_05 s6; NP_10 s4-s6; NP_14 C12; data/tactics.v1.json
@@ -20,6 +23,7 @@ LearningNotes: A tactic that only sets a flag is not proven by the flag; each ef
 StartedAt: 2026-09-19T22:10:00Z | DoneAt: 2026-09-20T03:40:00Z
 
 ## PAC-059 row (CSV-ready, todo columns)
+
 ID: PAC-059 | Title: Affinity rings (NP_06) — style triangle, element cycle, house matchup math, the x1.5 cap, matchup card as data | Phase: P1-CombatCore | Status: TODO | Priority: med | Assignee: @claude
 DoD: Fighter cards and boss patterns carry style / element / house; the style triangle applies s1.1 archetype passives and weaknesses and the s1.3 advantage effect (EP +10%, counter windows +50 ms) to the advantaged side only; the element cycle applies its hissatsu (x1.10, -10% cost) and wall (+1 s) modifiers; house matchup math (native +10%, feud Tension +25%) stacks per s4 under the x1.5 cap; the matchup card is computed from data and shown on the segment card; Switch-Up's lie is checked against the truth; smoke gates for each ring's effect, the cap, and the disadvantaged side receiving no debuff
 BlockedBy: PAC-058 | DependencyType: soft | RelatedWork: NP_06; NP_07 (house law); NP_10 s2 (the formation screen reads the card)

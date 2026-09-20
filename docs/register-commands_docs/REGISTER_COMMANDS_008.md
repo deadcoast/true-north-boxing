@@ -1,8 +1,10 @@
 # REGISTER COMMANDS 008 — for the applying writer
+
 **From: @claude · 2026-09-20 · Re: PAC-059 affinity rings (greybox v6, NP_14 C13)**
 Same rule as 001–007: commands + row payloads against the live register, never a whole-organ overwrite.
 
 ## Commands
+
 1. **Setfield PAC-059 Status DONE** (row payload below replaces the TODO row from 007).
 2. **Add PAC-060** (row below) — Status TODO. The enemy coach (NP_10 §9): coach data per club (order archetype, swap aggressiveness, tactic library, Super, decoy usage, a tell), an enemy corner that runs the same corner VM on the boss side between segments, Hostile Crowd locking it, The Reveal exposing its next slot, the coach's tell as Scout Book content. It closes the tactics loop the rings just armed: a coach who swaps on the triangle is the first opponent of the matchup card. Alternatives: boss-side `feint(Sx)` string variants (NP_04 §6); manager mode (NP_10 §8) on the scripted fighter; dialect familiarity (NP_02 §3).
 3. **Add DATA row** for `data/affinity.v1.json` (DATA, Path `data/affinity.v1.json`, Summary "Affinity/NP_06/v1.0: the triangle, the element cycle, the s1.2 style packages as sim edits, advantage effects, house math, the x1.5 cap, element tints", Tags #affinity #data #rings, Linked PAC-059). `engine/greybox/affinity.v1.json` and `engine/greybox/feud_graph.v1.json` are the greybox's copies, like the patterns and the library.
@@ -13,14 +15,16 @@ Same rule as 001–007: commands + row payloads against the live register, never
 8. **PAC-052 (tuning sweeps)** unchanged, still TODO, still proposal-only. **PAC-002B** stays @p1-implementer. NDL-009 untouched.
 
 ## PAC-059 row (CSV-ready, todo columns)
+
 ID: PAC-059 | Title: Affinity rings (NP_06) — style triangle + packages, element cycle, house matchup math, the x1.5 cap, matchup card as data | Phase: P1-CombatCore | Status: DONE | Priority: med | Assignee: @claude
 DoD: Fighter cards and all 24 patterns carry style / element / house (lineage qualifiers resolve to the house); the triangle applies the s1.3 advantage (EP +10%, counter windows +50 ms) to the advantaged side only, a boxer-puncher never; the s1.2 packages run on both fighters (13 edits, 8 with a boss analogue); the element cycle applies x1.10 / -10% cost / x1.30 same-element spike to every numeric hissatsu packet and +1 s to the beaten side's timed walls; FEUD edges earn Tension x1.25 and a house native thrown by its blood is x1.10; the product clamps at x1.5; the matchup card (both stacks, the edge per ring, the reason line, the feud banner) fires at every segment load and is drawn for the opening 3 s; Switch-Up is the lie checked against the truth; smoke gates per ring, for the cap, for no debuff on the disadvantaged side, for every package edit against a control and for the boss-side edits; determinism coverage of matchup cards
 BlockedBy: PAC-058 | DependencyType: soft | RelatedWork: NP_06; NP_07 s6-s8; NP_14 C13; data/affinity.v1.json; data/feud_graph.v1.json
 Notes: 2026-09-20: SMOKE 169/169 GREEN x 24 bosses (4,056 assertions; +14, and 9 earlier gates now compute expectations with the rings); DETERMINISM 13/13 (matchup cards with a ring live, 400/400 hashes); GEOMETRY 5/5 (the bare table measured with packages off); MARGINS GREEN; sim_test 14/14; 16,000-frame soak R1 -> R2 -> R3 with three matchup cards and zero errors. Bugs the gates caught: a swarmer's uppercut reaches 1.575 m so the generic uppercut check standing at 1.6 m missed (test moved to 1.4); Alfie's herd x1.5 pushed the player out of his shortened reach between two foul checks (test re-places); the native bonus fired on every boss desperation from the first run because the library names the house of every native (Heat Advisory x1.43 is NP_06's own worked number)
-LearningNotes: Rings that only add multipliers still change every absolute number downstream, so the earlier gates had to learn to compute their expectations from the sim's own predicates (hiss_mult, _beats, _style_adv) instead of literals; that is the right shape anyway - a gate that knows the rule survives the next ring. The one-predicate advantage (_style_adv) made Switch-Up's lie fall out correctly for free
+LearningNotes: Rings that only add multipliers still change every absolute number downstream, so the earlier gates had to learn to compute their expectations from the sim's own predicates (hiss_mult, _beats,_style_adv) instead of literals; that is the right shape anyway - a gate that knows the rule survives the next ring. The one-predicate advantage (_style_adv) made Switch-Up's lie fall out correctly for free
 StartedAt: 2026-09-20T04:20:00Z | DoneAt: 2026-09-20T06:10:00Z
 
 ## PAC-060 row (CSV-ready, todo columns)
+
 ID: PAC-060 | Title: The enemy coach (NP_10 s9) — coach data, the enemy corner on the boss side, Hostile Crowd and The Reveal made real | Phase: P1-CombatCore | Status: TODO | Priority: med | Assignee: @claude
 DoD: A coach record per club (order archetype, swap aggressiveness, tactic library, Super, decoy usage, tell) as data; between segments the enemy corner runs the same corner VM against the boss lineup (swaps among the dual's remaining bosses on the triangle and the element, tactics with boss-side effect consumers, the Super once per dual); Hostile Crowd locks it for one corner; The Reveal exposes its next slot; the coach's tell fires as a sensor/event the Scout Book can bind; smoke gates for each coach decision against its data, the lock, the reveal, and determinism coverage of enemy corner actions
 BlockedBy: PAC-059 | DependencyType: soft | RelatedWork: NP_10 s2 s5 s9; NP_06 s5; NP_14

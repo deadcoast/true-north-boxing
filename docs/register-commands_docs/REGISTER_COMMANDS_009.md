@@ -1,8 +1,10 @@
 # REGISTER COMMANDS 009 — for the applying writer
+
 **From: @claude · 2026-09-20 · Re: PAC-060 the enemy coach (greybox v6, NP_14 C14)**
 Same rule as 001–008: commands + row payloads against the live register, never a whole-organ overwrite.
 
 ## Commands
+
 1. **Setfield PAC-060 Status DONE** (row payload below replaces the TODO row from 008).
 2. **Add PAC-061** (row below) — Status TODO. Dual formats (NP_01 §2, §4, §8): the sanctioned 5-segment dual with 3 reserves, the tiebreak ladder and the R6 Golden DROP with condition carrying, the Iron dual (3 dressed, repeat slots, condition carries), Gauntlet and Mini as data. Now that both sides have a lineup and a corner, the format is the last piece of the rulebook the sim does not run — and condition carrying is what makes Patch Job and Second Wind pay for real. Alternatives: boss-side `feint(Sx)` (NP_04 §6); manager mode on the scripted fighter (NP_10 §8); dialect familiarity (NP_02 §3).
 3. **Add DATA row** for `data/coaches.v1.json` (DATA, Path `data/coaches.v1.json`, Summary "Coaches/NP_10-s9/v1.0: 8 rival corners (archetype, swap aggressiveness, scouting, decoys, library, Super + trigger, priority, one tell), the boss→club map, the ring weights the coach swaps on", Tags #coach #tactics #data, Linked PAC-060). `engine/greybox/coaches.v1.json` is the greybox's copy.
@@ -14,6 +16,7 @@ Same rule as 001–008: commands + row payloads against the live register, never
 9. **PAC-052 (tuning sweeps)** unchanged, still TODO, still proposal-only. **PAC-002B** stays @p1-implementer. NDL-009 untouched.
 
 ## PAC-060 row (CSV-ready, todo columns)
+
 ID: PAC-060 | Title: The enemy coach (NP_10 s9) — coach data, the rival corner on the boss side, both teams on one Tension economy, Hostile Crowd and The Reveal made real | Phase: P1-CombatCore | Status: DONE | Priority: med | Assignee: @claude
 DoD: A coach record per club as data (archetype, swap aggressiveness, scouting, decoys carried, library, Super + trigger, priority, one tell) keyed by the R1 boss's club; the enemy seals a 4-dressed order by the archetype with R1 fixed; the rival corner resolves when yours opens with two actions at your prices (Super on its trigger once per dual, a swap judged on the rings against the card he expects, a tactic from his library) paid from his own bar; his effects land on his fighter (body drain, herding, the clock while he leads, Iron Resolve, Perfect Round, Switch-Up, stamina/composure/guard); Hostile Crowd locks the next corner on either side; The Reveal names the post-swap slot; both teams earn on the NP_05 s2 table from the tuning file (feud x1.25 both ways, each side's Perfect Round, the desperation paid from his bar and never blocked, 25 banked = his CHARGED entrance); every tell is an observable event; smoke gates for the data and the sealed orders, each corner's decision against its record, the locks, the reveal, both bars source by source; determinism coverage of rival corner actions
 BlockedBy: PAC-059 | DependencyType: soft | RelatedWork: NP_10 s2 s5 s9; NP_05 s1-s2; NP_01 s7; NP_14 C14; data/coaches.v1.json; data/combat_tuning.v1.json tension
@@ -22,7 +25,8 @@ LearningNotes: The rival corner reused the corner VM's shape but not its consume
 StartedAt: 2026-09-20T06:20:00Z | DoneAt: 2026-09-20T08:40:00Z
 
 ## PAC-061 row (CSV-ready, todo columns)
+
 ID: PAC-061 | Title: Dual formats (NP_01 s2/s4/s8) — the 5-segment sanctioned dual, tiebreak ladder + R6 Golden DROP with condition carrying, Iron dual, Gauntlet, Mini as data | Phase: P1-CombatCore | Status: TODO | Priority: med | Assignee: @claude
 DoD: A format record as data (segments, dressed, reserves, repeat slots, condition carry, sudden death); the sim runs the sanctioned 5-segment dual with 3 reserves on both sides (the corner's swap rules generalised), the tiebreak ladder (segment wins, then EP, then R6), the R6 Golden DROP with any dressed fighter and stamina/guard/composure carried, the Iron dual's 3 dressed with repeat slots and condition carrying, the Gauntlet and the Mini; the score bug and the segment card follow the format; smoke gates for the ladder, R6, condition carry (Patch Job and Second Wind paying for real), the Iron dual's repeat slots, and determinism coverage of a 5-segment log
 BlockedBy: PAC-060 | DependencyType: soft | RelatedWork: NP_01 s2 s4 s8; NP_10 s4; NP_14
-Notes: The mini-dual is hard-wired at 3 segments today (seg_idx >= 2 ends the dual, four dressed each side, one reserve); the enemy lineup builder and the coach's swap logic already take slot counts from the arrays, so the format is mostly the dual-flow and the R6 rules. Condition carrying needs the fighter record to persist across segments instead of _fresh() every load
+Notes: The mini-dual is hard-wired at 3 segments today (seg_idx >= 2 ends the dual, four dressed each side, one reserve); the enemy lineup builder and the coach's swap logic already take slot counts from the arrays, so the format is mostly the dual-flow and the R6 rules. Condition carrying needs the fighter record to persist across segments instead of_fresh() every load

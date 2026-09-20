@@ -1,4 +1,5 @@
 # NP-05A — HISSATSU LIBRARY v1: The Full Eighty
+
 **Project Northpaw design vault · Expansion of [[NP_05_TENSION_HISSATSU]] §10 · Vault v1.2**
 Related: [[NP_05_TENSION_HISSATSU]] · [[NP_07_HOUSES]] §4 · [[NP_11_PROGRESSION]] §9 · [[NP_04A_BOSS_ROSTER_ARC1]]
 
@@ -7,6 +8,7 @@ The ship-target library ([[NP_13_SCOPE]] §1: 80 hissatsu), delivered as data. C
 ---
 
 ## 1. LIBRARY LAW (enforced by the audit, every rebuild)
+
 1. **Count is exactly 80.** Growth past it is a PACER task with a doctrine note, never a drive-by append.
 2. **Canon is never removed.** Every move named in [[NP_05_TENSION_HISSATSU]] §10 and every [[NP_04A_BOSS_ROSTER_ARC1]] desperation resolves to a library row — the §10 "+8 more" placeholder is now retired, replaced by real entries.
 3. **House quotas per [[NP_07_HOUSES]] §4:** every house holds 2–4 natives with exactly one SECRET. Iron, the dead lineage, holds exactly its one SECRET (archive-findable). All 14 houses covered; 14 SECRETs total.
@@ -16,8 +18,9 @@ The ship-target library ([[NP_13_SCOPE]] §1: 80 hissatsu), delivered as data. C
 7. **Sealed-house rows are reserved ids with redacted payloads** — the only redaction the audit permits, honoring the [[NP_07_HOUSES]] §7 no-invalidation rule: the ids exist now so Arc 2's unsealing ADDs content without renumbering anything.
 
 ## 2. DISTRIBUTION (audited, current build)
+
 | Axis | Spread |
-|---|---|
+| --- | --- |
 | Tiers | T0 13 · T1 47 · T2 12 · T3 8 |
 | Elements | FROST 27 · GALE 17 · GRANITE 17 · TIMBER 13 · DUAL/ANY 6 |
 | Sources | native 39 · shop 10 · personal 6 · syndicate 6 · taught 4 · board 3 · quest 2 · hybrid 2 · relay 2 · duo 2 · other 3 |
@@ -25,6 +28,7 @@ The ship-target library ([[NP_13_SCOPE]] §1: 80 hissatsu), delivered as data. C
 FROST runs heaviest by design — the protagonist line, three Frost-biased houses, and the Arc 2 syndicate all draw from it; the audit floor (≥12 per element) keeps the other three viable for full off-element builds.
 
 ## 3. NOTABLE MECHANISMS (what the data encodes beyond numbers)
+
 - **The teaching house gifts first.** Petrov's *System Jab* is flagged freely giftable — the one house whose economy is generosity — while its SECRET, *Perfect Score*, carries the line "Anders never learned it; Vey took him first": the library states the Arc 3 rematch stakes in a data row.
 - **Efua's stolen SECRET.** *Deep Roots* is a normal library entry; her 70%-with-stumble cast lives in her PBN ([[NP_04A_BOSS_ROSTER_ARC1]] §7), never in the move — UNSANCTIONED status modifies the *caster*, so the move heals to 100% the moment her blessing quest resolves, with zero data migration.
 - **The syndicate set prices counterfeit lineage.** *Extracted: Elevator* is Grain Elevator at 90% power, +5 cost, permanently home-bonus-ineligible; *Hollow Echo* casts with the love audibly missing from the mix; *Borrowed Blood* steals a CHARGED relay state — the Arc 2 thesis argued entirely inside the economy.
@@ -33,4 +37,5 @@ FROST runs heaviest by design — the protagonist line, three Frost-biased house
 - **Anti-corner tooling exists on purpose.** *Portage* displaces both fighters toward CENTER — the trapped player's paid exit, priced as a full T1.
 
 ## 4. PIPELINE
+
 Builder → JSON → audit is the model for every P7 content class ([[NP_13_SCOPE]] §3): schema-frozen, regenerable, mechanically gated, human-reviewed at the gate verdict. Implementation of effects lands under PAC-024's scope (which this library now feeds at 80/24 authored-to-quality-bar); compile-level validation of effect tags arrives with the engine work. The audit runs in CI beside `pacer_validator.py` from this point on.

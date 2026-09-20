@@ -1,4 +1,5 @@
 # NP-04A — ARC 1 BOSS ROSTER: The Remaining Eight
+
 **Project Northpaw design vault · Expansion of [[NP_04_OPPONENT]] · Vault v1.1**
 Related: [[NP_04_OPPONENT]] (grammar, taxonomy, template) · [[NP_07_HOUSES]] · [[NP_10_TACTICS]] · [[NP_12_NARRATIVE]] §4
 
@@ -9,6 +10,7 @@ Arc 1 named roster after this doc: **11 of the 24 ship-target bosses** (NP_13 §
 ---
 
 ## 1. CASSIDY VANE — Ascendant B-Squad, R3 Pivot *(Survival Dual, Ep 2)*
+
 Out-Boxer · Gale · **No house** — academy product, and the game's first quiet look at what Vey builds. *Philosophy: "You're a checkbox on my transfer application."*
 
 **Tells (Loud, audio):** her corner. An Ascendant assistant coach reads string codes off a tablet — "Sequence Four!" — and Cassidy executes. The player's first audio-channel lesson: hear the code, know the punch. Her own body barely telegraphs; the institution telegraphs for her.
@@ -35,6 +37,7 @@ Her desperation slot is empty on purpose: Ascendant doesn't spend hissatsu budge
 ---
 
 ## 2. MOIRA "UNDERTOW" MacISAAC — Cape Breton Netmen, R4 Hammer *(Regionals pool)*
+
 Slugger · Timber · House MacIsaac — Dex's older cousin, the heir who stayed. *Philosophy: "The sea doesn't chase anybody. It pulls."*
 
 **Tells (Standard, visual-body):** the net-haul — shoulders roll back like taking up a line before every pull-counter. On the ropes her tell tier drops to Subtle (home water).
@@ -59,6 +62,7 @@ BOSS MacIsaac_Moira
 ---
 
 ## 3. TAM NGUYEN-ROY — Gatineau Deux-Ponts, R2 Second *(Regionals — the decoy-seal club)*
+
 Out-Boxer · Gale · House Nguyen-Roy, dual-lineage footwork. *Philosophy: "You studied the wrong fight. I made sure of it."*
 
 Coach Wray's club runs decoy seals ([[NP_10_TACTICS]] §3), and Tam carries the deception into the ring: his opening 20 seconds are borrowed clothes.
@@ -86,6 +90,7 @@ BOSS NguyenRoy_Tam
 ---
 
 ## 4. CARTER "ZAMBONI" OKAFOR — Rink District Crossovers, R1 Opener *(Regionals bridge dual)*
+
 Swarmer · Gale · House Okafor — the sibling who plays hockey first and boxes because his house won't let him quit. *Philosophy: "Third period legs win first period fights."*
 
 **Tells (Standard, audio):** the skate-blade *shing* seeded in [[NP_04_OPPONENT]] §3 — he drags his rear foot like a crossover stride before direction changes. On ice he'd be silent; on canvas it sings.
@@ -110,6 +115,7 @@ BOSS Okafor_Carter
 ---
 
 ## 5. JEAN-GUY MOREAU — Québec City Forge, R4 Hammer *(Provincials quarterfinal)*
+
 Slugger · Frost · House Moreau — cold-forge hooks, the villain-adjacent house whose Arc 2 turn is seeded here. *Philosophy: "Cold iron doesn't argue."*
 
 The inverse of Yuri, by design: Arc 1's sluggers taught Loud; Jean-Guy is a **Subtle-tell slugger**, the first proof that power and quiet can share a body. Placed after the player has PI literacy to survive it.
@@ -137,6 +143,7 @@ BOSS Moreau_JeanGuy
 ---
 
 ## 6. ADA OKAFOR — Toronto Ascendant A-Squad, R2 Second *(Nationals semifinal)*
+
 Swarmer · Gale · House Okafor — the sibling who took the scholarship. *Philosophy: "Pressure is a scholarship. I pay it forward."*
 
 House Okafor's pressure line, drilled to academy metronome. Her tell is **the beat itself**: she attacks on a fixed 800 ms tempo, and once the player hears it, every entry is readable. Breaking her rhythm is the fight.
@@ -164,6 +171,7 @@ Her BAIT line is authored empty and the Scout Book says why: Ascendant coaches o
 ---
 
 ## 7. EFUA "SHELLS" OSEI — Halifax Osei Club, R5 Anchor *(Provincials semifinal)*
+
 Swarmer · Timber · House Osei — **UNSANCTIONED** ([[NP_07_HOUSES]] §5): the forbidden daughter who stole the family style through a window. *Philosophy: "They locked the door. I learned the window."*
 
 **Tells (Subtle, visual-gear):** a glint off her mother's old hand-wraps — taken without blessing — as her shoulder rolls into the shell. Her shell posture is the fight's puzzle: head shots skate off it; body work cracks it.
@@ -193,6 +201,7 @@ Her desperation is the characterization: a stolen secret technique, incomplete, 
 ---
 
 ## 8. ANDERS VEY — Toronto Ascendant A-Squad, R5 Anchor *(Nationals final — the authored loss)*
+
 Boxer-Puncher · element varies by phase · **formerly House Petrov** — the teaching house's heir, mentorship-adopted by Director Vey. The game's warmest mechanic ([[NP_07_HOUSES]] §5) used coldly, on purpose, seeded two arcs early. *Philosophy: "Every style is a solved problem."*
 
 **The gimmick:** three phases, three borrowed house dialects — synthesis without lineage, fought before Arc 2 names it. Each phase performs a real house's tell channel *slightly wrong*, and player PI in those houses transfers at half value: studying real families literally pays off against the counterfeit.
@@ -227,8 +236,9 @@ BOSS Vey_Anders
 ---
 
 ## 9. ROSTER LEDGER (Arc 1 complete)
+
 | # | Boss | Club | Slot | Style/Elem | House | Beat |
-|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- |
 | 1 | Cassidy Vane | Ascendant B | R3 | Out-Boxer/Gale | none | Survival Dual |
 | 2 | Yuri Kowalchuk | Grain Kings | R4 | Slugger/Granite | Kowalchuk | Regionals |
 | 3 | Moira MacIsaac | Netmen | R4 | Slugger/Timber | MacIsaac | Regionals |

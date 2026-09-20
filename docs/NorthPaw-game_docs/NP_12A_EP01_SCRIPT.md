@@ -1,4 +1,5 @@
 # NP-12A — EPISODE 1: "THE LETTER" — Full Script (Vertical Slice)
+
 **Project Northpaw design vault · PAC-035 beats 1–2 · Vault v1.4**
 Related: [[NP_12_NARRATIVE]] §4 · [[NP_04A_BOSS_ROSTER_ARC1]] §1 · [[NP_02_TWO_LAYER]] · [[NP_01_SPORT]] §8 · [[NP_13_SCOPE]] §2
 
@@ -24,6 +25,7 @@ Runtime target: 12–15 min of scripted content threading 45–60 min of play ([
 
 **[PLAY — FLASHBACK SEGMENT, 90 s]**
 Player controls the 1976 fighter at full power: all stats 90+, full verb set live, *Aurora Borealis Breaker* equipped, Tension at 80.
+
 - Opponent: assembler slugger, Loud tells, generous windows — a confidence sandbox. Objectives surface as period broadcast captions, taught in order: land a jab (RS-left flick) → slip and counter → perfect block → LB-arm + HAYMAKER motion at full bar.
 - The ABB cast: arena frosts, crowd sound peaks, DROP — flip board turns to 5.
 - Freeze on the raised glove. Tape damage eats the frame from the edges in.
@@ -171,6 +173,7 @@ He almost smiles. Cut to black on the wall — letter, carbon, four cards, and a
 ---
 
 ## PRODUCTION NOTES (scene-gate checklist, [[NP_13_SCOPE]] §5)
+
 - **Tone law audit:** stakes at minute one; sincerity unwinking; comedy character-borne (Priya's regulation pedantry, June's "Again"); no rule spoken that the commentary pair can't say in a sentence.
 - **FR-CA flags:** 6 authored-divergent lines/devices (letter, Priya's RDS idiom, Danielle throughout, observer). Danielle Ferland is the parity flagship for the whole series.
 - **Cast ledger:** +4 named (Gord, Danielle — series fixtures; Marcus, June — assembler-backed walk-ons). Vey appears, no dialogue. All other speakers established.

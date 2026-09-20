@@ -1,4 +1,5 @@
 # NP-03 — COMBAT ENGINE: "The Hands"
+
 **Project Northpaw design vault · Doc 3/13**
 Related: [[NP_04_OPPONENT]] · [[NP_05_TENSION_HISSATSU]] · [[NP_06_AFFINITY]] · [[NP_11_PROGRESSION]]
 
@@ -18,8 +19,9 @@ The Fight Night Champion verb set under the Punch-Out camera. This is the frame-
 ## 2. INPUT MATRIX — complete
 
 ### 2.1 Punch matrix (RS = right stick; stick side = hand)
+
 | RS direction (right half) | Punch | Startup (ms) | Recovery (ms) | Base dmg | Stamina cost | Guard dmg |
-|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- |
 | Up | R Straight (cross) | 220 | 300 | 10 | 4 | 6 |
 | Up-out (up-right) | R Flared Straight / Overhand | 300 | 380 | 13 | 6 | 8 |
 | Out (right) | R Hook | 260 | 340 | 12 | 5 | 7 |
@@ -28,8 +30,9 @@ The Fight Night Champion verb set under the Punch-Out camera. This is the frame-
 *(Mirror for left half → jab (L straight, 160/220 ms, dmg 6, cost 2), L hook, etc. The jab is deliberately the fastest, cheapest verb in the game — everything is built on it.)*
 
 ### 2.2 Modifiers (stack multiplicatively)
+
 | Modifier | Input | Effect |
-|---|---|---|
+| --- | --- | --- |
 | **Body** | LT + punch | Target torso: dmg ×0.8 to composure but drains opponent stamina (−6 per clean body hit); ignores 20% of guard |
 | **Power** | RB + punch | Dmg ×1.5, startup +40%, whiff/blocked leaves 300 ms punishable OPEN frames, stamina ×2 |
 | **Haymaker** | RS pull-back ≥150 ms → forward flick | Dmg ×2.2, startup +90% with full-body telegraph, stagger chance; the highest-risk normal in the game. Also the T1+ hissatsu motion base ([[NP_05_TENSION_HISSATSU]] §4) |
@@ -37,8 +40,9 @@ The Fight Night Champion verb set under the Punch-Out camera. This is the frame-
 | **Block-punch** | punch while RT held | Startup +15%, exits block instantly — the fast defense→offense hinge |
 
 ### 2.3 Defense
+
 | Verb | Input | Rules |
-|---|---|---|
+| --- | --- | --- |
 | **Block** | RT hold | Auto-guard seeks incoming punch (tracking quality = RFX curve). Absorbs: chip 15% of dmg through; guard meter −(punch guard dmg) |
 | **Slip L/R** | LT + LS left/right | 260 ms evade window; feet planted (no movement during); success = 0 damage; whiffed slip = eat full punch +20% (mistime tax) |
 | **Duck** | LT + LS down | Beats straights/hooks; loses to uppercuts (uppercut vs. duck: dmg ×1.5 — the rock-paper-scissors under head movement) |
@@ -46,11 +50,13 @@ The Fight Night Champion verb set under the Punch-Out camera. This is the frame-
 | **Lean-back** | LT + LS back | Beats hooks at range; heavy stamina (−5); loses ground 20 cm |
 
 ### 2.4 Movement
+
 LS free movement; SPD sets foot speed (2.2–3.4 m/s across stat range). **Sprint-step** (LS click): quick 0.8 m burst, −4 stamina, the ring-cutting tool. Backpedal speed = 70% of forward.
 
 ### 2.5 Other
+
 | Verb | Input |
-|---|---|
+| --- | --- |
 | Hissatsu arm | LB hold (see [[NP_05_TENSION_HISSATSU]] §4) |
 | Clinch initiate | Both sticks click at 0-range |
 | Taunt / relay signal | D-pad (taunts bait AI patterns — some bosses have taunt-triggered strings, [[NP_04_OPPONENT]] §5) |
@@ -64,14 +70,16 @@ LS free movement; SPD sets foot speed (2.2–3.4 m/s across stat range). **Sprin
 Two health-like pools per fighter, both visible:
 
 **STAMINA (0–100):** the universal currency. Drains on every action (§2 tables), on absorbed body shots, and passively during power states. Regenerates +4/s while in neutral (no punch, no block), +1/s otherwise. Corner phase restores +30 (cutman modifies). Effects of low stamina — the "gassed" curve:
+
 | Stamina | Hand speed | Foot speed | Damage dealt | Composure regen |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | >70 | 100% | 100% | 100% | 100% |
 | 40–70 | 90% | 90% | 90% | 75% |
 | 15–40 | 75% | 70% | 75% | 40% |
 | <15 | 55% | 50% | 55% | 0% (the danger zone — commentary flags it) |
 
 **COMPOSURE (hidden pool = CHN × 2, i.e. 2–198):** the knockdown resource. Damage reduces it; it regenerates +3/s when not being hit (halted 10 s after surviving a count). Thresholds:
+
 - Composure < 35%: **WOBBLE** state — movement −30%, visible stagger animation (the opponent's cue to swarm; yours too).
 - Composure ≤ 0 on a hit: **DROP**. Composure resets to 50% of max after a survived count.
 - **Flash rule:** a counter hit landing during the attacker's flash-counter window applies dmg ×2 directly and bypasses 25% of remaining composure — flash DROPS are real and earn 2 points ([[NP_01_SPORT]] §3.1).
@@ -85,6 +93,7 @@ zone/style/element mods per [[NP_01_SPORT]] §4 and [[NP_06_AFFINITY]]; counter_
 ## 4. GUARD MODEL
 
 **Guard meter (0–100, capacity & regen from BLK):**
+
 - Decays −2/s while RT held (holding is priced) and −(guard dmg) per absorbed punch.
 - Regen +6/s while guard down and in neutral.
 - At 0: **GUARD BREAK** — 600 ms OPEN state (dmg taken ×1.5, cannot block), meter refills to 40 after.
@@ -99,7 +108,7 @@ zone/style/element mods per [[NP_01_SPORT]] §4 and [[NP_06_AFFINITY]]; counter_
 Every successful defensive action opens a **counter window** — a period where the player's next punch gains counter_mod and premium Tension:
 
 | Defensive action | Window opened | Width (base / at RFX 90) |
-|---|---|---|
+| --- | --- | --- |
 | Perfect block | 500 ms | 500 / 650 ms |
 | Successful slip | 400 ms | 400 / 550 ms |
 | Successful duck | 350 ms | 350 / 480 ms |
@@ -126,13 +135,16 @@ Trigger: both fighters at 0-range with clinch input, or automatic after a wobble
 ---
 
 ## 8. FEINTS & THE MIND GAME
+
 - **Feint** = punch input released within 80 ms of startup: costs 1 stamina, no punch, triggers opponent defensive reads. Against pattern bosses, specific feints bait specific strings ([[NP_04_OPPONENT]] §5 bait tags). Against the guard tracker, feints drain enemy guard −1.
 - Feint spam is adaptation-tracked like punches (§10) — three identical feints in 10 s stop drawing reactions.
 
 ---
 
 ## 9. THE STANDING-EIGHT CHECK (the penalty-kick moment)
+
 On a DROP against the player: time drops to ×0.3, referee count audio, screen vignettes. A **rhythm ring** contracts toward center; the player must tap in the true-beat window. Structure:
+
 - 3 beats to pass (rise at the count of eight). HRT stat widens beat windows (±60 ms at HRT 30 → ±140 ms at HRT 90).
 - Each successive DROP in the same segment removes one beat of forgiveness (drop 2: perfect+good only; drop 3: auto-KO — the three-knockdown rule).
 - Passing: rise animation, 10 s vulnerability (composure regen halted), crowd surge +8 team Tension ([[NP_05_TENSION_HISSATSU]] §2 — surviving is *worth meter*; the comeback engine's ignition).
@@ -144,6 +156,7 @@ On a DROP against the player: time drops to ×0.3, referee count audio, screen v
 The system that prices player repetition without ever making *opponents* unreadable.
 
 **Algorithm (per segment, per player fighter):**
+
 1. Maintain a rolling window of the last **12 offensive tokens** (token = punch type + level [head/body] + modifier class).
 2. Compute n-gram repetition scores for 2-grams and 3-grams within the window.
 3. Any n-gram occurring ≥3 times in-window is **flagged**. Flagged sequences:
@@ -158,6 +171,7 @@ The system that prices player repetition without ever making *opponents* unreada
 ---
 
 ## 11. HIT REACTIONS & GAME FEEL BUDGETS
+
 - Hit-stop: 40 ms normal, 70 ms power, 120 ms counter, 200 ms flash/hissatsu.
 - Screen shake reserved: power hits (small), DROP (large), hissatsu (scripted).
 - Audio: punch-weight tiers (jab snap → haymaker detonation); tell audio channel is *ducked-under* everything (readability over spectacle, Doctrine D2).
@@ -166,4 +180,5 @@ The system that prices player repetition without ever making *opponents* unreada
 ---
 
 ## 12. TUNING TABLE OWNERSHIP
+
 Every number in this doc lives in `combat_tuning.json` (hot-reload). Ownership: combat designer. Changes gated by the playtest metric suite ([[NP_13_SCOPE]] §6): time-to-first-DROP distribution, counter-rate percentile curves, gassed-state frequency.
