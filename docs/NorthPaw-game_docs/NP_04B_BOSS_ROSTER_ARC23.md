@@ -48,7 +48,7 @@ Fights the Moreau kit with the extraction's fingerprints: Jean-Guy's exact strin
 Swarmer · Frost · house UNKNOWN. *Philosophy: silence — Choir has no recorded voice.*
 The audio-channel horror fight. Casts **"Erased Name"** (library) on hit: commentary loses the ability to say names for 4 s — the teaching channel, Arc 1's constant companion, goes intermittently mute. Gord and Danielle audibly fighting it is the scene.
 
-```
+```bash
 BOSS HC9_Choir
   IDLE: advance_noiseless (footwork audio stripped - the Marta silence, weaponized full-time)
   STRING S1 "Verse":   TELL(shoulder_breath_visual, 450ms) -> JAB -> LT_L_HOOK
