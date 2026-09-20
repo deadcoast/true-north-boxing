@@ -1,9 +1,8 @@
 # PROJECT NORTHPAW — Design Vault Index
-
 Working title placeholder. 13 dedicated system documents, wikilinked.
 
 | # | Doc | Covers |
-| --- | ----- | -------- |
+|---|-----|--------|
 | 01 | [[NP_01_SPORT]] | Rotation Team Boxing: full rulebook, scoring, zones, fouls, formats, glossary |
 | 02 | [[NP_02_TWO_LAYER]] | Harbourline overworld, scrap/spar/dual specs, Pattern Intel recon, pacing math |
 | 03 | [[NP_03_COMBAT_ENGINE]] | Camera, full input matrix w/ frame data, damage/composure/guard/stamina models, counters, clinch, standing-eight, adaptation tracker |
@@ -22,6 +21,6 @@ Working title placeholder. 13 dedicated system documents, wikilinked.
 | 12 | [[NP_12_NARRATIVE]] | Tone law, premise, cast, Arc 1 beat sheet, Hollow Circuit, Arc 3, rival parade, themes |
 | 12A | [[NP_12A_EP01_SCRIPT]] | Episode 1 full script (VS narrative content): 6 scenes, PLAY blocks, FR-CA flags, scene-gate checklist |
 | 13 | [[NP_13_SCOPE]] | Ship targets, phase plan w/ milestone builds, vertical slice, pipeline gates, metric suite, risk register |
-| 14 | [[NP_14_ENGINE_THEORY]] | Engine foundation as provable claims C1–C13 (deterministic 120Hz sim, geometric hit resolution, input buffer, Hick–Hyman tell margins, sim-state hitstop, one resolution function, defense-only adaptation, action VM, live sensors + clinch scramble + referee, the hissatsu effect VM + Wall Gauge, feints, the data-driven corner + relay arithmetic, the three affinity rings as data); each claim names its headless test and the result of running it |
+| 14 | [[NP_14_ENGINE_THEORY]] | Engine foundation as provable claims C1–C16 (deterministic 120Hz sim, geometric hit resolution, input buffer, Hick–Hyman tell margins, sim-state hitstop, one resolution function, defense-only adaptation, action VM, live sensors + clinch scramble + referee, the hissatsu effect VM + Wall Gauge, feints, the data-driven corner + relay arithmetic, the three affinity rings as data, the rival corner as data with both teams on one economy, the dual formats with condition carry and the ladder to the Golden DROP, manager mode as a pure profile on the pad's intent); each claim names its headless test and the result of running it |
 
 Register: NORTHPAW_PACER.csv (P1↔03, P2↔04, P3↔01/05, P4↔06/07/11, P5↔08/09/10, P6↔02/12, P7↔13).
