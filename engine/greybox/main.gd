@@ -91,6 +91,7 @@ func _ready() -> void:
 			return
 	for a in args:
 		if a.begins_with("format="): fmt_id = a.split("=")[1]
+	var auto_dual := "auto" in args or "demo" in args           # manager mode from the bell; the demo is the profile playing (the log keeps the corners)
 	var lineup: Array = roster_for(fmt_id if fmt_id != "" else "mini")
 	if "demo" in args:
 		demo_log = TNBTests.new().build_log(120 * 600, 777)
@@ -98,6 +99,7 @@ func _ready() -> void:
 	content = TNBSim.load_content()
 	sim = TNBSim.new()
 	sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id)
+	if auto_dual: sim.delegate_all = true; sim.new_dual()
 	_build_world()
 	if "seg2" in args:                                   # demo aid: jump to a CHARGED R2 with a full bar (the T3 afterimage)
 		sim.contributed = 30.0; sim._end_segment("demo"); sim.corner_pick(0); sim.corner_pick(0); sim.tension = 100.0; demo_seg2 = true
@@ -238,6 +240,8 @@ func _unhandled_input(e: InputEvent) -> void:
 		elif sim.mode == "CORNER" and e.keycode >= KEY_6 and e.keycode <= KEY_8: q_action = _staff_action(e.keycode - KEY_6)
 		elif sim.mode == "CORNER" and e.keycode == KEY_9: q_action = {"kind": "save_bar"}
 		elif sim.mode == "CORNER" and e.keycode == KEY_0: q_action = _swap_action()
+		elif sim.mode == "CORNER" and e.keycode == KEY_M: q_action = {"kind": "delegate_all" if e.shift_pressed else "delegate"}
+		elif sim.mode == "CORNER" and e.keycode == KEY_N: q_action = {"kind": "hands_on"}
 		elif e.keycode == KEY_R:
 			sim.T = TNBSim.load_content()["tuning"]; feed.text = "tuning hot-reloaded"
 		elif e.keycode == KEY_F5: sim.new_dual()
@@ -330,7 +334,7 @@ var fx_counts := {}
 
 func _exit_tree() -> void:
 	if sim != null and demo_log.size() > 0:
-		print("DEMO SOAK :: %d ticks, mode=%s R%d %s vs %s, score %d-%d, ghosts %d, matchup cards %d, fx %s" % [sim.tick, sim.mode, sim.seg_idx + 1, sim.pname(), sim.boss_name, sim.score_p, sim.score_b, ghosts_spawned, matchups_shown, JSON.stringify(fx_counts)])
+		print("DEMO SOAK :: %d ticks, mode=%s R%d %s vs %s, score %d-%d, ghosts %d, matchup cards %d, auto %s, fx %s" % [sim.tick, sim.mode, sim.seg_idx + 1, sim.pname(), sim.boss_name, sim.score_p, sim.score_b, ghosts_spawned, matchups_shown, JSON.stringify(sim.auto_stats) if sim.delegated else "off", JSON.stringify(fx_counts)])
 
 func _consume_events() -> void:
 	for ev in sim.events:
@@ -455,6 +459,7 @@ func _corner_menu() -> String:
 	for st in o["staff"]:
 		out += "\n   [%d] %s x%d - %s" % [i, st["name"], int(st["charges"]), st["text"]]; i += 1
 	out += "\n   [9] SAVE THE BAR%s      [0/X] %s %s (%s)" % ["  [set]" if not o["save_bar"] else "", "PICK" if sim.r6 else "SWAP", ", ".join(PackedStringArray(o["swap"])) if o["swap"].size() > 0 else "-", "free" if int(o["swap_cost"]) == 0 else "%d T" % int(o["swap_cost"])]
+	out += "\n   [M] let %s play the next segment (free; Tension at %d%%)   [Shift+M] the rest of the dual   [N] hands on%s" % [sim.lineup[sim._up_slot()]["name"], int(sim.TAC.get("corner", {}).get("delegated_tension_pct", 85)), "   >> next: THEIRS" if (sim.delegate_next or sim.delegate_all) else "   >> next: YOURS"]
 	return out
 
 func _hiss_line() -> String:
@@ -527,6 +532,7 @@ func _hud() -> void:
 	if sim.brelay_chain > 0: bug += "   THEIR RELAY %s" % "|".repeat(sim.brelay_chain)
 	if B["charge_t"] > 0: bug += "   HE IS CHARGED %.1fs" % (B["charge_t"] / float(TNBSim.TICK_HZ))
 	if sim.player_lock > 0: bug += "   [CROWD ON YOU next corner]"
+	if sim.delegated: bug += "   [AUTO: %s plays - punches %d, feints %d, reads %d, casts %d]" % [sim.pname(), int(sim.auto_stats.get("punches", 0)), int(sim.auto_stats.get("feints", 0)), int(sim.auto_stats.get("tell_jabs", 0)) + int(sim.auto_stats.get("dodges", 0)) + int(sim.auto_stats.get("blocks", 0)), int(sim.auto_stats.get("casts", 0))]
 	if sim.btactic_fx.size() > 0: bug += "   his tactics: " + ",".join(PackedStringArray(sim.btactic_fx.keys()))
 	if sim.bwarnings > 0: bug += "   REF WARN x%d (him)" % sim.bwarnings
 	if sim.pwarnings > 0: bug += "   REF WARN x%d (you)" % sim.pwarnings

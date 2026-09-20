@@ -12,7 +12,8 @@
   "charged_surge_s": 10,
   "charged_stat_pct": 10,
   "full_relay_chain": 3,
-  "full_relay_t4_cost": 75
+  "full_relay_t4_cost": 75,
+  "delegated_tension_pct": 85
  },
  "special": [
   {

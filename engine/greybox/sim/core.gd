@@ -7,6 +7,8 @@ extends RefCounted
 # directly. Every ms constant from combat_tuning.v1.json is converted to ticks
 # at load; geometry (C2) replaces dodge tables; hitstop/slow-time are sim state.
 
+const TNBProfile := preload("res://sim/profile.gd")   # the fighter who plays without you (NP_10 s8)
+
 const TICK_HZ := 120
 const DT := 1.0 / 120.0
 const RING_HALF := 3.5
@@ -185,6 +187,13 @@ var lb_block_t := 0                  # LB + RT held: the WALL motion (400ms)
 var feint_log: Array = []            # [tick, row] of recent feints (10s window)
 var feint_wise: Dictionary = {}      # row -> tick until which he stops reacting to that feint
 
+# PAC-062: manager mode (NP_10 s8) - a segment played by the card's own profile
+var delegated := false               # this segment is the profile's: the fight keys of the intent are ignored, the corner keys are not
+var delegate_next := false           # chosen in the corner for the next segment
+var delegate_all := false            # the whole dual (the pure manager fantasy)
+var auto: Dictionary = {}            # the profile's memory (hashed with everything else)
+var auto_stats: Dictionary = {}      # what the profile did this segment (punches, feints, dodges, blocks, jabs at tells) - presentation and gates
+
 # PAC-061: dual formats (NP_01 s2 / s3.3 / s6 / s8)
 var FMT: Dictionary = {}             # data/formats.v1.json
 var fmt: Dictionary = {}             # this dual's format record
@@ -304,6 +313,7 @@ func _reset_dual(first_boss: int) -> void:
 	btactic_fx = {}; bpending_fx = {}; btactic_cd = {}; bsuper_used = false; bswaps_used = 0
 	enemy_lock = 0; player_lock = 0; bflash_conceded = false; bdrop_conceded = false; coach_log = []
 	condition = {}; bcondition = {}; seg_wins_p = 0; seg_wins_b = 0; counters_p = 0; counters_b = 0; r6 = false
+	delegate_next = false
 	_first_boss = first_boss
 	_build_lineup()
 	_pick_coach(); _build_enemy_lineup()
@@ -388,6 +398,9 @@ func _load_segment() -> void:
 		B["charge_t"] = ms(float(TAC.get("corner", {}).get("charged_surge_s", 10)) * 1000.0); bcharged = false
 		_say("%s enters CHARGED - their relay chain %d" % [boss_name, brelay_chain])
 	_matchup()
+	delegated = delegate_all or delegate_next; delegate_next = false
+	auto = TNBProfile.fresh_memory(); auto_stats = {"punches": 0, "feints": 0, "dodges": 0, "blocks": 0, "tell_jabs": 0, "casts": 0, "grabs": 0, "sprints": 0, "body": 0, "power": 0, "rows": {}, "dist_sum": 0.0, "dist_n": 0}
+	if delegated: _ev("delegated", {"who": f["name"], "seg": seg_idx + 1}); _say("%s plays this one on their own - the corner is still yours (Tension at %d%%)" % [f["name"], int(TAC.get("corner", {}).get("delegated_tension_pct", 85))])
 	if charged:
 		P["charge_t"] = ms(float(TAC.get("corner", {}).get("charged_surge_s", 10)) * 1000.0); charged = false
 		_say("R%d: %s enters CHARGED - surge %ds, first hissatsu half cost, T3 unlocked!%s vs %s" % [seg_idx + 1, f["name"], int(TAC.get("corner", {}).get("charged_surge_s", 10)), "  FULL RELAY!" if full_relay else "", boss_name])
@@ -1297,6 +1310,11 @@ func corner_action(a: Dictionary) -> bool:
 	# NP_10 s4: two actions per corner; each kind has its own price
 	if mode != "CORNER": return false
 	var kind := str(a.get("kind", ""))
+	if kind == "delegate" or kind == "delegate_all" or kind == "hands_on":       # NP_10 s8: who plays the next segment is a call, not an action
+		delegate_next = kind == "delegate"; delegate_all = kind == "delegate_all"
+		_ev("corner_action", {"action": kind, "arg": "", "left": corner["actions_left"]})
+		_say("%s" % ["%s will play the next segment on their own" % lineup[_up_slot()]["name"] if kind == "delegate" else ("the rest of the dual is theirs - you keep the corners" if kind == "delegate_all" else "hands on: you play the next segment")])
+		return true
 	if int(corner["actions_left"]) <= 0: _corner_refuse(kind, "locked out by the crowd" if corner.get("locked", false) else "no actions left"); return false
 	var c: Dictionary = TAC.get("corner", {})
 	var eq: Dictionary = TAC.get("equipped", {})
@@ -2138,6 +2156,7 @@ func _earn_tension(v: float) -> void:
 	if states["P"].has("enemy_tension_earn_minus25pct"): v *= 0.75
 	v *= float(tactic_fx.get("tension_earn_mult", 1.0))
 	if aff.get("feud", false): v *= float(AFF.get("house", {}).get("feud_tension_mult", 1.25))   # NP_06 s3: feuds are Tension geysers
+	if delegated: v *= float(TAC.get("corner", {}).get("delegated_tension_pct", 85)) / 100.0   # NP_10 s8: AI segments earn 85%
 	tension = minf(100.0, tension + v); contributed += v
 
 func _wall_tick() -> void:
@@ -2314,6 +2333,21 @@ func _boss_step() -> void:
 # ============================ STEP =========================================
 func step(inp: Dictionary) -> void:
 	tick += 1
+	if delegated and (mode == "FIGHT" or mode == "EIGHT"):
+		inp = TNBProfile.intent(self, inp)                  # the card plays; the corner keys pass through
+		if inp.has("punch"):
+			auto_stats["punches"] += 1
+			auto_stats["rows"][str(inp["punch"])] = int(auto_stats["rows"].get(str(inp["punch"]), 0)) + 1
+			if inp.get("body", false): auto_stats["body"] += 1
+			if inp.get("power", false): auto_stats["power"] += 1
+		if mode == "FIGHT": auto_stats["dist_sum"] = float(auto_stats["dist_sum"]) + P["pos"].distance_to(B["pos"]); auto_stats["dist_n"] += 1
+		if inp.has("dodge"): auto_stats["dodges"] += 1
+		if inp.get("block", false) and not block_prev: auto_stats["blocks"] += 1
+		if inp.has("punch") and (bstate == "TELL" or bstate == "FAKE"): auto_stats["tell_jabs"] += 1
+		if inp.get("punch_release", false): auto_stats["feints"] += 1
+		if inp.get("lb", false) and inp.has("punch"): auto_stats["casts"] += 1
+		if inp.get("clinch", false): auto_stats["grabs"] += 1
+		if inp.get("sprint", false): auto_stats["sprints"] += 1
 	if mode == "CARD":
 		card_t -= 1
 		if int(inp.get("corner", 0)) > 0 or card_t <= 0: _open_corner()
@@ -2567,5 +2601,6 @@ func hash_state() -> int:
 		full_relay, no_drop_t, punish_suppress_t, tell_highlight_t, stamina_cap, ep_frac, ep_frac_b, aff,
 		btension, bcontributed, bcharged, brelay_chain, btactic_fx, bpending_fx, btactic_cd, bsuper_used, bswaps_used, bno_drop_t,
 		enemy_lock, player_lock, bflash_conceded, bdrop_conceded, blineup, breserves, coach.get("id", ""),
-		condition, bcondition, seg_wins_p, seg_wins_b, counters_p, counters_b, r6, fmt.get("id", ""), lineup.map(func(f): return str(f["name"])), rng.state]
+		condition, bcondition, seg_wins_p, seg_wins_b, counters_p, counters_b, r6, fmt.get("id", ""), lineup.map(func(f): return str(f["name"])),
+		delegated, delegate_next, delegate_all, auto, rng.state]
 	return v.hash()

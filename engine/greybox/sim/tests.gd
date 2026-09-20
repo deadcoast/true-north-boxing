@@ -1491,6 +1491,75 @@ func smoke(boss_idx: int) -> int:
 	_sr("Blind dual: The Reveal is refused (charge kept), the corner shows '?' for his slot, and the matchup card still names him at the bell",
 		not bl_rv and count_events(bl.events, "reveal") == 0 and int(bl.staff_charges.get("the_reveal", 0)) == 1 and bl_open and count_events(bl.events, "matchup") == 1 and bl.mode == "FIGHT")
 
+	# ================= PAC-062: manager mode (NP_10 s8) - the card plays without you ==========
+	var auto_sim := func(boss_i: int, seed_v: int, style: String, frozen: bool) -> TNBSim:
+		var lu_a: Array = TNBSim.LINEUP_MILLBROOK.duplicate(true); lu_a[0]["style"] = style
+		var sa := make_sim(boss_i, seed_v, lu_a); sa.delegate_all = true; sa.new_dual()
+		if frozen: quiet(sa); place(sa, 1.4)
+		return sa
+	var share := func(st: Dictionary, rows: Array) -> float:
+		var nq := 0
+		for rw in rows: nq += int(st["rows"].get(rw, 0))
+		return float(nq) / maxf(1.0, float(st["punches"]))
+	var mean_d := func(st: Dictionary) -> float: return float(st["dist_sum"]) / maxf(1.0, float(st["dist_n"]))
+	# delegation is a corner call, free, per segment or for the rest of the dual; a delegated segment ignores your fight keys, never your corner keys
+	var dg := make_sim(0, 7); quiet(dg); to_corner.call(dg, 0.0)
+	var dg_left0: int = dg.corner["actions_left"]
+	var dg_ok := dg.corner_action({"kind": "delegate"})
+	var dg_free: bool = int(dg.corner["actions_left"]) == dg_left0 and dg.delegate_next and not dg.delegate_all
+	dg.step({"corner": 1}); var dg_r2: bool = dg.delegated and count_events(dg.events, "delegated", {"who": "PRIYA"}) == 1
+	quiet(dg); place(dg, 3.0); dg.events.clear(); dg.step({"punch": "R_STRAIGHT"})
+	var dg_ignored: bool = dg.P["cmd"].is_empty() and dg.P["pending"].is_empty() and int(dg.auto_stats["punches"]) == 0
+	to_corner.call(dg, 0.0); var dg_r3_hands: bool = false
+	dg.corner_action({"kind": "delegate_all"}); dg.step({"corner": 1}); dg_r3_hands = dg.delegated and dg.delegate_all
+	var dh := make_sim(0, 7); quiet(dh); dh.delegate_all = true; to_corner.call(dh, 0.0); dh.corner_action({"kind": "hands_on"}); dh.step({"corner": 1})
+	_sr("delegation: a free corner call - 'delegate' hands PRIYA R2 (the card plays, your punch is ignored at the bell, the corner keys still open the corner), 'delegate_all' the rest, 'hands_on' takes it back",
+		dg_ok and dg_free and dg_r2 and dg_ignored and dg_r3_hands and not dh.delegated and not dh.delegate_all)
+	# AI segments earn 85%; a held bar is held by the profile too
+	var d85 := make_sim(1, 7); quiet(d85); d85.delegate_all = true; d85.new_dual(); d85.tension = 0.0; d85._earn_tension(10.0)
+	var dn := make_sim(1, 7); quiet(dn); dn.tension = 0.0; dn._earn_tension(10.0)
+	var dsb: TNBSim = auto_sim.call(1, 7, "BOXERPUNCHER", true); dsb.save_bar = true; dsb.tension = 100.0; dsb.B["comp"] = 5.0
+	run_ticks(dsb, TNBSim.ms(10000))
+	var dcast: TNBSim = auto_sim.call(1, 7, "BOXERPUNCHER", true); dcast.tension = 100.0; dcast.B["comp"] = 5.0; dcast.B["guard_open_t"] = 1 << 20
+	run_ticks(dcast, TNBSim.ms(10000))
+	_sr("AI segments earn 85%% (10 -> 8.5; 10 hands-on); the profile casts into an open wobbled boss with a full bar (%d casts in 10s) and never spends a held bar (%d)" % [int(dcast.auto_stats["casts"]), int(dsb.auto_stats["casts"])],
+		absf(d85.tension - 8.5) < 0.01 and absf(dn.tension - 10.0) < 0.01 and int(dcast.auto_stats["casts"]) >= 1 and count_events(dcast.events, "cast", {"who": "P"}) >= 1 and int(dsb.auto_stats["casts"]) == 0 and count_events(dsb.events, "cast", {"who": "P"}) == 0)
+	# the archetypes hold their bands and throw their mixes (30s against a frozen Yuri, seed 7)
+	var sw_a: TNBSim = auto_sim.call(1, 7, "SWARMER", true); run_ticks(sw_a, 3600); var sw_st: Dictionary = sw_a.auto_stats
+	var ob_a: TNBSim = auto_sim.call(1, 7, "OUTBOXER", true); run_ticks(ob_a, 3600); var ob_st: Dictionary = ob_a.auto_stats
+	var sl_a: TNBSim = auto_sim.call(1, 7, "SLUGGER", true); run_ticks(sl_a, 3600); var sl_st: Dictionary = sl_a.auto_stats
+	var bp_a: TNBSim = auto_sim.call(1, 7, "BOXERPUNCHER", true); run_ticks(bp_a, 3600); var bp_st: Dictionary = bp_a.auto_stats
+	var sw_hu: float = share.call(sw_st, ["L_HOOK", "R_HOOK", "R_UPPERCUT"]); var ob_str: float = share.call(ob_st, ["L_STRAIGHT", "R_STRAIGHT"]); var sl_hay: float = share.call(sl_st, ["R_HOOKERCUT"])
+	var bp_max := 0.0
+	for fam_rows in [["L_STRAIGHT", "R_STRAIGHT"], ["L_HOOK", "R_HOOK"], ["R_UPPERCUT"], ["R_HOOKERCUT"]]: bp_max = maxf(bp_max, share.call(bp_st, fam_rows))
+	_sr("profile SWARMER: lives at %.2fm (the phone booth), %.0f%% hooks and uppercuts, %.0f%% to the body, %d punches, %d landed" % [mean_d.call(sw_st), sw_hu * 100.0, float(sw_st["body"]) / maxf(1.0, float(sw_st["punches"])) * 100.0, int(sw_st["punches"]), count_events(sw_a.events, "hit", {"on": "B"})],
+		mean_d.call(sw_st) <= 1.35 and sw_hu >= 0.5 and float(sw_st["body"]) / maxf(1.0, float(sw_st["punches"])) >= 0.1 and int(sw_st["punches"]) >= 15 and count_events(sw_a.events, "hit", {"on": "B"}) >= 5)
+	_sr("profile OUT-BOXER: holds %.2fm (jab range), %.0f%% straights, %d feints, %d punches, %d landed" % [mean_d.call(ob_st), ob_str * 100.0, int(ob_st["feints"]), int(ob_st["punches"]), count_events(ob_a.events, "hit", {"on": "B"})],
+		mean_d.call(ob_st) >= 1.75 and ob_str >= 0.6 and int(ob_st["feints"]) >= 2 and int(ob_st["punches"]) >= 15 and count_events(ob_a.events, "hit", {"on": "B"}) >= 5)
+	_sr("profile SLUGGER: %.2fm, %.0f%% power punches, %.0f%% haymakers, %d punches, %d landed" % [mean_d.call(sl_st), float(sl_st["power"]) / maxf(1.0, float(sl_st["punches"])) * 100.0, sl_hay * 100.0, int(sl_st["punches"]), count_events(sl_a.events, "hit", {"on": "B"})],
+		mean_d.call(sl_st) >= 1.4 and mean_d.call(sl_st) <= 1.8 and float(sl_st["power"]) / maxf(1.0, float(sl_st["punches"])) >= 0.25 and sl_hay >= 0.15 and int(sl_st["punches"]) >= 15 and count_events(sl_a.events, "hit", {"on": "B"}) >= 5)
+	_sr("profile BOXER-PUNCHER: %.2fm, no family over %.0f%%, %d punches, %d landed" % [mean_d.call(bp_st), bp_max * 100.0, int(bp_st["punches"]), count_events(bp_a.events, "hit", {"on": "B"})],
+		mean_d.call(bp_st) >= 1.45 and mean_d.call(bp_st) <= 1.95 and bp_max <= 0.6 and int(bp_st["punches"]) >= 15 and count_events(bp_a.events, "hit", {"on": "B"}) >= 5)
+	# against the live boss: it reads tells (jabs them, slips them, blocks them), lands, and its spacing keeps the archetypes' order
+	var live: Dictionary = {}
+	for sty in ["SWARMER", "OUTBOXER", "SLUGGER", "BOXERPUNCHER"]:
+		var lv: TNBSim = auto_sim.call(1, 7, sty, false); run_ticks(lv, 3600)
+		live[sty] = {"d": mean_d.call(lv.auto_stats), "reads": int(lv.auto_stats["tell_jabs"]) + int(lv.auto_stats["dodges"]) + int(lv.auto_stats["blocks"]), "hits": count_events(lv.events, "hit", {"on": "B"}), "interrupts": count_events(lv.events, "interrupt")}
+	var live_ok := true
+	for sty in live:
+		if int(live[sty]["reads"]) < 5 or int(live[sty]["hits"]) < 5 or int(live[sty]["interrupts"]) < 1: live_ok = false
+	_sr("profile vs a live Yuri, 30s each: every archetype reads his tells (jab / slip / block %s), breaks a string, lands (%s); spacing swarmer %.2f < slugger %.2f < out-boxer %.2f" % [JSON.stringify([live["SWARMER"]["reads"], live["OUTBOXER"]["reads"], live["SLUGGER"]["reads"], live["BOXERPUNCHER"]["reads"]]), JSON.stringify([live["SWARMER"]["hits"], live["OUTBOXER"]["hits"], live["SLUGGER"]["hits"], live["BOXERPUNCHER"]["hits"]]), live["SWARMER"]["d"], live["SLUGGER"]["d"], live["OUTBOXER"]["d"]],
+		live_ok and float(live["SWARMER"]["d"]) < float(live["SLUGGER"]["d"]) and float(live["SLUGGER"]["d"]) < float(live["OUTBOXER"]["d"]))
+	# the count and the scramble: it rises on the beat (HRT 99) and taps the cue (RFX 99)
+	var ri: TNBSim = auto_sim.call(1, 7, "BOXERPUNCHER", true); clear_defense(ri.P); ri.P["comp"] = 0.5; boss_lands(ri, "R_HOOKERCUT")
+	var ri_down: bool = ri.mode == "EIGHT"
+	run_ticks(ri, TNBSim.ms(6000))
+	var lu_rfx: Array = TNBSim.LINEUP_MILLBROOK.duplicate(true); lu_rfx[0]["stats"]["RFX"] = 99
+	var cl := make_sim(1, 7, lu_rfx); cl.delegate_all = true; cl.new_dual(); quiet(cl); place(cl, 0.5); cl.events.clear()
+	cl._start_clinch("B", 0.5, 2); run_ticks(cl, cl.clinch_t + 3)
+	_sr("profile on the count: RORY (HRT 99) rises on every beat; in the scramble an RFX 99 card taps all four cues and wins the position (beats %d)" % count_events(cl.events, "clinch_beat"),
+		ri_down and ri.mode == "FIGHT" and count_events(ri.events, "eight_beat") == 3 and count_events(cl.events, "clinch_beat") == 4 and cl.clinch.is_empty())
+
 	# ---- PUNISH / BAIT from pattern data ----
 	var rc := s.response_coverage(s.patterns)
 	_sr("punish-response grammar resolves for every hook (24 patterns)", rc["unknown"].is_empty(),
@@ -1683,6 +1752,22 @@ func determinism() -> int:
 	var f5b := make_sim(0, 999, TNBSim.LINEUP_MILLBROOK_8, "sanctioned")
 	var h5b := run_log(f5b, log5, 600)
 	_sr("sanctioned-format log (%d ticks) runs five segments to a verdict (segment ends %d, verdicts %d, Golden DROPs %d) and hashes identically twice" % [N5, seg_ends, verdicts, r6s], seg_ends >= 4 and verdicts >= 1 and h5a == h5b and h5a.size() > 0, "%d hashes" % h5a.size())
+	# manager mode: the whole dual delegated, the log stripped of every fight key - the profile fights, the corners are the log's
+	var log_auto: Array = []
+	for e_in in log_:
+		var keep := {}
+		for k in ["corner", "corner_action", "restart"]:
+			if e_in.has(k): keep[k] = e_in[k]
+		log_auto.append(keep)
+	var da := make_sim(1, 12345); da.delegate_all = true; da.new_dual(); da.events.clear()
+	var hda := run_log(da, log_auto, 60)
+	var hits_auto := 0; var segs_auto := 0
+	for e_a in da.events:
+		if e_a["kind"] == "hit" and e_a["on"] == "B": hits_auto += 1
+		if e_a["kind"] == "seg_end": segs_auto += 1
+	var db := make_sim(1, 12345); db.delegate_all = true; db.new_dual()
+	var hdb := run_log(db, log_auto, 60)
+	_sr("a delegated dual on a fight-key-less log: the profile lands %d and the corners still turn (%d segment ends); every hash identical twice" % [hits_auto, segs_auto], hits_auto >= 5 and segs_auto >= 1 and hda == hdb and hda.size() > 0, "%d hashes" % hda.size())
 	return _verdict("DETERMINISM")
 
 # --------------------------------------------------------------- GEOMETRY ----
