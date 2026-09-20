@@ -1,0 +1,208 @@
+{
+ "schema": "Coaches/NP_10-s9/v1.0",
+ "vault": "v1.3",
+ "notes": "The other mind. Every rival corner is data: an order archetype (NP_10 s2), swap aggressiveness, scouting confidence, decoy use (carried, not consumed - the greybox has no projection screen), a tactic library drawn from tactics.v1.json (only tactics with a boss-side consumer), a Super with its trigger, and ONE tell. Corners are keyed by the club whose fighter opens the dual (coach_of by R1 boss); a club with no record gets the journeyman. 'priority' is the order the corner takes its two actions in (super / swap / tactic).",
+ "default": "journeyman",
+ "coach_of": {
+  "cassidy_vane": "ascendant_b",
+  "tam_nguyen_roy": "ascendant_b",
+  "anders_vey": "ascendant_a",
+  "yordanis_baro": "ascendant_a",
+  "ioan_vasile": "ascendant_a",
+  "sora_kannagi": "ascendant_a",
+  "yuri_kowalchuk": "grain_kings",
+  "moira_macisaac": "netmen",
+  "marta_okonkwo_tremblay": "montreal_technique",
+  "jean_guy_moreau": "montreal_technique",
+  "sam_tagaq": "true_north",
+  "hc0_surety": "hollow_circuit",
+  "hc4_cartographer": "hollow_circuit",
+  "hc7_echo": "hollow_circuit",
+  "hc9_choir": "hollow_circuit",
+  "commissioner_cal": "hollow_circuit",
+  "remy_moreau": "hollow_circuit"
+ },
+ "coaches": {
+  "journeyman": {
+   "label": "a journeyman corner",
+   "club": "unaffiliated",
+   "archetype": "STANDARD",
+   "swap_aggr": 0.3,
+   "scout": 0.5,
+   "decoys": false,
+   "library": [
+    "body_doctrine"
+   ],
+   "super": "iron_resolve",
+   "super_trigger": "when_trailing",
+   "tell": "none",
+   "priority": [
+    "super",
+    "swap",
+    "tactic"
+   ]
+  },
+  "ascendant_b": {
+   "label": "the Ascendant B corner",
+   "club": "Toronto Ascendant Academy, B-squad",
+   "archetype": "STANDARD",
+   "swap_aggr": 0.6,
+   "scout": 0.6,
+   "decoys": false,
+   "library": [
+    "body_doctrine",
+    "cut_the_ring",
+    "ice_the_clock"
+   ],
+   "super": "hostile_crowd",
+   "super_trigger": "when_trailing",
+   "tell": "book_tactic_r3",
+   "priority": [
+    "super",
+    "swap",
+    "tactic"
+   ]
+  },
+  "ascendant_a": {
+   "label": "the Academy corner (Director Vey)",
+   "club": "Toronto Ascendant Academy",
+   "archetype": "STANDARD",
+   "swap_aggr": 1.0,
+   "scout": 1.0,
+   "decoys": true,
+   "library": [
+    "ice_the_clock",
+    "cut_the_ring",
+    "body_doctrine"
+   ],
+   "super": "switch_up",
+   "super_trigger": "corner_1",
+   "tell": "counter_picks",
+   "priority": [
+    "super",
+    "swap",
+    "tactic"
+   ]
+  },
+  "grain_kings": {
+   "label": "the Grain Kings corner",
+   "club": "Prairie Grain Kings",
+   "archetype": "AMBUSH",
+   "swap_aggr": 0.2,
+   "scout": 0.5,
+   "decoys": false,
+   "library": [
+    "body_doctrine",
+    "cut_the_ring"
+   ],
+   "super": "iron_resolve",
+   "super_trigger": "after_flash_drop_conceded",
+   "tell": "burns_super_after_flash_drop",
+   "priority": [
+    "super",
+    "swap",
+    "tactic"
+   ]
+  },
+  "netmen": {
+   "label": "the Netmen corner",
+   "club": "Cape Breton Netmen",
+   "archetype": "RELAY_LADDER",
+   "swap_aggr": 0.5,
+   "scout": 0.6,
+   "decoys": false,
+   "library": [
+    "cut_the_ring",
+    "body_doctrine",
+    "ice_the_clock"
+   ],
+   "super": "perfect_round",
+   "super_trigger": "when_trailing",
+   "tell": "never_swaps_when_leading",
+   "priority": [
+    "super",
+    "swap",
+    "tactic"
+   ]
+  },
+  "montreal_technique": {
+   "label": "the Montréal Technique corner",
+   "club": "Montréal Technique",
+   "archetype": "STANDARD",
+   "swap_aggr": 0.7,
+   "scout": 0.8,
+   "decoys": false,
+   "library": [
+    "ice_the_clock",
+    "body_doctrine"
+   ],
+   "super": "switch_up",
+   "super_trigger": "when_leading",
+   "tell": "ices_the_clock_when_leading",
+   "priority": [
+    "super",
+    "tactic",
+    "swap"
+   ]
+  },
+  "true_north": {
+   "label": "the True North corner",
+   "club": "True North Club",
+   "archetype": "WALL_FIRST",
+   "swap_aggr": 0.0,
+   "scout": 1.0,
+   "decoys": false,
+   "library": [],
+   "super": "iron_resolve",
+   "super_trigger": "after_drop_conceded",
+   "tell": "never_swaps",
+   "priority": [
+    "super",
+    "swap",
+    "tactic"
+   ]
+  },
+  "hollow_circuit": {
+   "label": "the Hollow Circuit corner",
+   "club": "Hollow Circuit",
+   "archetype": "AMBUSH",
+   "swap_aggr": 0.8,
+   "scout": 0.7,
+   "decoys": true,
+   "library": [
+    "body_doctrine",
+    "cut_the_ring"
+   ],
+   "super": "hostile_crowd",
+   "super_trigger": "corner_1",
+   "tell": "hostile_crowd_first_corner",
+   "priority": [
+    "super",
+    "swap",
+    "tactic"
+   ]
+  }
+ },
+ "tells": {
+  "none": "",
+  "book_tactic_r3": "spends his first tactic in the corner before R3, like the book says - never before",
+  "counter_picks": "swaps to the better ring every time he can pay; the sealed order means nothing to him",
+  "burns_super_after_flash_drop": "burns his Super the corner after he concedes a FLASH DROP",
+  "never_swaps_when_leading": "never swaps while he is ahead, whatever the matchup",
+  "ices_the_clock_when_leading": "ices the clock every corner he is ahead on EP",
+  "never_swaps": "never swaps - cold is a coach; the order he sealed is the order you get",
+  "hostile_crowd_first_corner": "turns the crowd on you from the first corner"
+ },
+ "matchup_score": {
+  "style_edge": 2,
+  "element_edge": 1
+ },
+ "triggers": [
+  "when_trailing",
+  "when_leading",
+  "corner_1",
+  "after_flash_drop_conceded",
+  "after_drop_conceded",
+  "never"
+ ]
+}

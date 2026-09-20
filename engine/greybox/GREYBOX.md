@@ -193,7 +193,7 @@ bug. Every phase-trigger form is executable now: 13/13.
   - SUPER (one per dual, free): Iron Resolve - 30s where a knockdown becomes
     a wobble at 1 composure instead. Perfect Round (Tension x2), Switch-Up
     (EP +10% and +50ms counter windows, the triangle lie) and Hostile Crowd
-    (recorded; there is no enemy corner to lock yet) are in the data.
+    (locks the rival corner's next phase since PAC-060) are in the data.
   - STAFF (3 dressed, per-dual charges): Patch Job (+30 composure, 2),
     Raise the Roof (+8 Tension now, 2), Loosen Up (110 stamina cap, 1); The
     Reveal (names the next boss, 1) and Chalk Talk (15s tell highlight, 1)
@@ -210,8 +210,9 @@ bug. Every phase-trigger form is executable now: 13/13.
   ghost behind the caster for the windup (RORY stands behind PRIYA's North
   Star). `-- demo seg2` is the quick way to see it.
 - Not in this pass: The Talk (no personality data on the cards yet), the
-  enemy coach's corner (NP_10 s9), the 4 unnamed launch tactics, staff
-  passives and levels, manager-mode delegation.
+  enemy coach's corner (NP_10 s9 - delivered in PAC-060 below), the 4
+  unnamed launch tactics, staff passives and levels, manager-mode
+  delegation.
 
 ## PAC-059 in the build: THE THREE RINGS (NP_06)
 - Every fighter carries STYLE / ELEMENT / HOUSE: the four Millbrook cards in
@@ -262,6 +263,64 @@ bug. Every phase-trigger form is executable now: 13/13.
   rings are editorial (see REGISTER_COMMANDS_008) until the content lane
   confirms them.
 
+## PAC-060 in the build: THE OTHER MIND (the enemy coach, NP_10 s9)
+- Every rival club has a corner, and it is data in `coaches.v1.json` (vault
+  copy `data/coaches.v1.json`): an order archetype (NP_10 s2), swap
+  aggressiveness, scouting confidence, decoy use (carried, no projection
+  screen yet), a tactic library, a Super with its trigger, a priority order
+  for its two actions, and ONE tell. Eight corners: the Ascendant B and the
+  Academy (Director Vey), the Grain Kings, the Netmen, Montreal Technique,
+  True North, the Hollow Circuit, and a journeyman for everyone else. The
+  corner is keyed by the club whose fighter opens the dual.
+- The enemy seals an order. Four dressed for the mini-dual: R1 is the boss
+  you asked for, the rest go by the archetype - STANDARD closes with the
+  ace/anchor (Vane, Yuri, Sam; Moreau on the bench), AMBUSH opens the slots
+  he controls with the ace (HC-0, Echo, the Cartographer), WALL-FIRST puts
+  the anchor-class first (Sam, then Vey). RELAY LADDER reads as STANDARD
+  here (bond pairs are not a boss-side concept yet).
+- His corner resolves when yours opens, on his scouting, not on your
+  choices - so The Reveal names his slot as it stands after his swap. Two
+  actions at your prices: the Super once per dual on its trigger (when
+  trailing / when leading / corner 1 / after a FLASH DROP conceded / after
+  any drop conceded), a swap judged on the rings against the card he thinks
+  you send next (first free, then 15 of HIS Tension), a tactic from his
+  library at its cost and cooldown. The feed says what he did; the HUD
+  shows his corner, his last call, and the crowd lock.
+- The tells are real and readable: the Academy counter-picks every time it
+  can pay (Cal comes up for Carter against a slugger); True North never
+  swaps even with the better card on the bench, and burns Iron Resolve the
+  corner after a drop; the Grain Kings burn theirs only after a FLASH DROP;
+  Ascendant B spends its first tactic in the corner before R3 like the book
+  says; Montreal ices the clock every corner it leads; the Hollow Circuit
+  turns the crowd on you from the first corner. Each tell is an event
+  (`coach_tell`) the Scout Book can bind.
+- HOSTILE CROWD works both ways now: yours locks his next corner (he takes
+  nothing); his locks yours - 0 actions, every press refused "locked out by
+  the crowd". The lock is spent on the corner it hits.
+- His tactics land on his fighter where yours land on yours: Body Doctrine
+  doubles HIS body drain on you, Cut the Ring his herding, Ice the Clock
+  runs the clock 1/0.8 while HE leads on EP, Iron Resolve holds his fighter
+  up at 1 composure for 30s, Perfect Round doubles his bar, Switch-Up gives
+  him the triangle's +10% EP. The libraries only carry tactics with a
+  boss-side consumer.
+- BOTH TEAMS EARN (NP_05 s2): the enemy has a Tension bar on the score bug,
+  earned from the same table - counters +3, a read that beats your punch +2,
+  the CENTER exchange +2, dropping you +10, the segment win +5, the KO
+  trickle - with the feud's x1.25 and his own Perfect Round. His
+  desperation pays its tier from his bar and still goes at 0 (an authored
+  beat is never blocked). 25 banked sends his next fighter out CHARGED
+  (10s, feet +10%) and his relay chain sits on the bug.
+- Canon correction on your side of the bar: the greybox had paid 1.5 for
+  every clean hit since v5; NP_05 s2 pays nothing for a plain clean hit.
+  The table is in `combat_tuning.v1.json` now (`tension`: clean 0, counter
+  3, flash 5, perfect block or slip 2, interrupt 5, drop 10, segment win
+  5) and the sim reads it for both teams; the segment win and the perfect
+  defence pay were missing on your side too and pay now.
+- Not in this pass: decoy seals and the projection screen (NP_10 s3), the
+  enemy's staff (bosses have no cutman), enemy relay effects beyond the
+  CHARGED surge (bosses cast by composure, not by bar), the coach's read of
+  YOUR corner (he acts first, on scouting), coach tells as Scout Book pages.
+
 ## Verification (agent-run, headless Godot 4.3, this container)
 ```
 godot --headless --path engine/greybox -- smoke boss=N   # N = 0..23
@@ -270,7 +329,7 @@ godot --headless --path engine/greybox -- geometry
 godot --headless --path engine/greybox --quit-after 3600 -- demo
 python3 pbn_compiler.py --margins
 ```
-- SMOKE: 169/169 GREEN on every one of the 24 bosses (4,056 assertions).
+- SMOKE: 180/180 GREEN on every one of the 24 bosses (4,320 assertions).
   Covers: C3 buffer (same-tick / 3-ticks-early fires / 8-ticks-early
   expires / buffered through hitstop), C2 reach, C7 tracker flag -> read
   probability up with boss offense byte-identical, interrupt + flash +
@@ -329,12 +388,24 @@ python3 pbn_compiler.py --margins
   earning 12.5 for 10, a non-edge 10, a lineage qualifier resolving, a DEBT
   edge not counting; every package edit for all three styles measured
   against the boxer-puncher control on the same seed, and the boss-side
-  edits on Yuri, Alfie and Vane against Sam), and static coverage: 39/39
+  edits on Yuri, Alfie and Vane against Sam), the PAC-060 gates (24/24
+  duals open with a corner record whose library the boss side consumes, R1
+  fixed and the three archetypes' sealed orders; the Academy's free
+  counter-pick swap + corner-1 Switch-Up and his lie scoring 22; True
+  North never swapping with the better card on the bench, its tell, Iron
+  Resolve after a drop with the wobble at 1 and no Super without a drop;
+  the Grain Kings' Super after a FLASH DROP and not after a plain one;
+  Ascendant B's tactic held to the corner before R3 and Body Doctrine
+  doubling his body drain at the right price; Montreal's Ice the Clock +
+  Switch-Up when leading and the clock at 150 per 120 while he leads;
+  Hostile Crowd both ways; The Reveal naming the post-swap slot; his bar
+  source by source and yours on the canonical table; the feud both ways,
+  his Perfect Round, his CHARGED entrance), and static coverage: 39/39
   action verbs, 53/53 punish responses, 13/13 phase-trigger forms, 7/7
   effect types, 36/36 states, 14/14 buffs. Every entry in tactics.v1.json
   (8 specials, 4 supers, 5 staff actives) has a gate above; every key in
   affinity.v1.json has one.
-- DETERMINISM: 13/13 GREEN. One 24,000-tick scripted input log run three
+- DETERMINISM: 14/14 GREEN. One 24,000-tick scripted input log run three
   times (twice tick-by-tick, once through the jittered 7-40ms frame loop
   the game uses): all 400 state hashes identical, every hash bit-exact
   over positions, pools, timers, queues, flags, the corner's state and the
@@ -342,8 +413,9 @@ python3 pbn_compiler.py --margins
   windows, interrupts, drops, eight-counts, segment ends, evasions, blocks,
   clinch scrambles, sprint-steps, sensors, the referee, the survival grab,
   hissatsu casts from the library (player and boss), feints with some
-  drawing his read, two segment cards with corner actions taken, and
-  matchup cards with a ring live. A different seed diverges.
+  drawing his read, two segment cards with corner actions taken, matchup
+  cards with a ring live, and the rival corner resolving at both corners
+  with an action taken and his bar earning. A different seed diverges.
 - GEOMETRY: 5/5 GREEN. The emergent dodge table (measured with the style
   packages off - they scale reach and the weave and are gated in the smoke)
   matches the consensus rows in all four orientations (boss->player,
@@ -367,7 +439,9 @@ python3 pbn_compiler.py --margins
   cast North Star) spawned the T3 afterimage ghost - two casts, two ghosts
   in 3,000 ticks, three runs, zero errors. With the rings live a 16,000-
   frame soak on Vane ran R1 -> R2 -> R3 (JUNE swapped in from the corner)
-  with three matchup cards, two ghosts and zero errors.
+  with three matchup cards, two ghosts and zero errors. With the rival
+  corner live, 16,000-frame soaks on Vane and on Yuri ran KO -> card ->
+  both corners (his tactic landing on his fighter) -> R2 with zero errors.
 - Bugs the loop caught before you ever loaded it: inputs pressed during
   hitstop were dropped (v5 and the first v6 core); the boss's read fired
   its dodge at punch startup so slow punches always found the head back

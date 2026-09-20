@@ -167,6 +167,28 @@ var lb_block_t := 0                  # LB + RT held: the WALL motion (400ms)
 var feint_log: Array = []            # [tick, row] of recent feints (10s window)
 var feint_wise: Dictionary = {}      # row -> tick until which he stops reacting to that feint
 
+# PAC-060: the enemy coach (NP_10 s9) and the enemy's half of the economy (NP_05 s2 "both teams earn")
+var COACHES: Dictionary = {}         # data/coaches.v1.json
+var coach: Dictionary = {}           # this dual's rival corner
+var coach_on := true                 # tests: false = the rival corner passes (quiet())
+var blineup: Array = []              # the enemy's sealed slots (boss names), R1 fixed, the rest by the coach's archetype
+var breserves: Array = []
+var btension := 0.0                  # the enemy bar (NP_05 s1: one meter per team, both on the score bug)
+var bcontributed := 0.0
+var bcharged := false
+var brelay_chain := 0
+var btactic_fx: Dictionary = {}      # the rival corner's effects live this segment
+var bpending_fx: Dictionary = {}
+var btactic_cd: Dictionary = {}
+var bsuper_used := false
+var bswaps_used := 0
+var bno_drop_t := 0                  # the enemy's Iron Resolve
+var enemy_lock := 0                  # Hostile Crowd from your corner: rival corners locked
+var player_lock := 0                 # Hostile Crowd from theirs: your corners locked
+var bflash_conceded := false         # the segment just ended, for the coach's triggers
+var bdrop_conceded := false
+var coach_log: Array = []            # what the rival corner did this dual (presentation + Scout Book)
+
 # PAC-059: the affinity rings (NP_06)
 var AFF: Dictionary = {}             # data/affinity.v1.json
 var FEUDS: Array = []                # data/feud_graph.v1.json edges
@@ -209,10 +231,11 @@ static func load_content(base: String = "res://") -> Dictionary:
 	var raw := load_json(base + "hissatsu_library.v2.json")
 	for m in raw.get("moves", []): lib[str(m["name"])] = m
 	return {"tuning": load_json(base + "combat_tuning.v1.json"), "patterns": pats, "library": lib, "tactics": load_json(base + "tactics.v1.json"),
-		"affinity": load_json(base + "affinity.v1.json"), "feuds": load_json(base + "feud_graph.v1.json").get("edges", [])}
+		"affinity": load_json(base + "affinity.v1.json"), "feuds": load_json(base + "feud_graph.v1.json").get("edges", []),
+		"coaches": load_json(base + "coaches.v1.json")}
 
-func setup(tuning: Dictionary, pats: Dictionary, names: Array, lineup_p: Array, first_boss: int, seed_v: int, lib: Dictionary = {}, tac: Dictionary = {}, aff_d: Dictionary = {}, feuds: Array = []) -> void:
-	T = tuning; patterns = pats; boss_names = names; library = lib; TAC = tac; AFF = aff_d; FEUDS = feuds
+func setup(tuning: Dictionary, pats: Dictionary, names: Array, lineup_p: Array, first_boss: int, seed_v: int, lib: Dictionary = {}, tac: Dictionary = {}, aff_d: Dictionary = {}, feuds: Array = [], coaches: Dictionary = {}) -> void:
+	T = tuning; patterns = pats; boss_names = names; library = lib; TAC = tac; AFF = aff_d; FEUDS = feuds; COACHES = coaches
 	lineup = []; reserves = []
 	for f in lineup_p:
 		if f.get("reserve", false): reserves.append(f.duplicate(true))
@@ -228,7 +251,11 @@ func _reset_dual(first_boss: int) -> void:
 	staff_charges = {}
 	for st in TAC.get("staff_active", []): staff_charges[str(st["id"])] = int(st["charges"])
 	corner = {}; card_t = 0
+	btension = 0.0; bcontributed = 0.0; bcharged = false; brelay_chain = 0
+	btactic_fx = {}; bpending_fx = {}; btactic_cd = {}; bsuper_used = false; bswaps_used = 0
+	enemy_lock = 0; player_lock = 0; bflash_conceded = false; bdrop_conceded = false; coach_log = []
 	_first_boss = first_boss
+	_pick_coach(); _build_enemy_lineup()
 	_load_segment()
 
 var _first_boss := 0
@@ -247,7 +274,7 @@ func _load_segment() -> void:
 	var f: Dictionary = lineup[seg_idx]
 	P = _fresh(f["stats"], Vector2(0, 1.0))
 	_dress(P, str(f.get("style", "BOXERPUNCHER")), str(f.get("element", "NONE")), str(f.get("house", "none")))
-	boss_name = boss_names[(_first_boss + seg_idx) % boss_names.size()]
+	boss_name = blineup[seg_idx] if seg_idx < blineup.size() else boss_names[(_first_boss + seg_idx) % boss_names.size()]
 	pattern = patterns[boss_name].duplicate(true)
 	B = _fresh({"PWR": 60, "SPD": 55, "CHN": 60, "RFX": 55, "BLK": 55, "STA": 60, "HRT": 60}, Vector2(0, -1.0))
 	var bm: Dictionary = pattern.get("meta", {})
@@ -285,6 +312,19 @@ func _load_segment() -> void:
 	punish_suppress_t = ms(float(tactic_fx.get("punish_suppress_s", 0)) * 1000.0)
 	tell_highlight_t = ms(float(tactic_fx.get("tell_highlight_s", 0)) * 1000.0)
 	if tactic_fx.size() > 0: _ev("tactics_live", {"fx": tactic_fx.keys()})
+	# the rival corner's choices land on the boss the same way (NP_10 s9)
+	btactic_fx = bpending_fx; bpending_fx = {}
+	bflash_conceded = false; bdrop_conceded = false
+	if btactic_fx.has("stamina_cap"): B["stamina"] = float(btactic_fx["stamina_cap"])
+	if btactic_fx.has("stamina_plus"): B["stamina"] = minf(float(btactic_fx.get("stamina_cap", 100.0)), B["stamina"] + float(btactic_fx["stamina_plus"]))
+	if btactic_fx.has("composure_plus"): B["comp"] = minf(B["comp_max"], B["comp"] + float(btactic_fx["composure_plus"]))
+	if btactic_fx.has("guard_cap_mult"): B["guard_max"] = B["guard_max"] * float(btactic_fx["guard_cap_mult"]); B["guard"] = B["guard_max"]
+	bno_drop_t = ms(float(btactic_fx.get("no_drop_s", 0)) * 1000.0)
+	if btactic_fx.has("enemy_corner_lock"): player_lock += 1
+	if btactic_fx.size() > 0: _ev("tactics_live_b", {"fx": btactic_fx.keys()})
+	if bcharged:
+		B["charge_t"] = ms(float(TAC.get("corner", {}).get("charged_surge_s", 10)) * 1000.0); bcharged = false
+		_say("%s enters CHARGED - their relay chain %d" % [boss_name, brelay_chain])
 	_matchup()
 	if charged:
 		P["charge_t"] = ms(float(TAC.get("corner", {}).get("charged_surge_s", 10)) * 1000.0); charged = false
@@ -294,6 +334,167 @@ func _load_segment() -> void:
 	mode = "FIGHT"
 
 func pname() -> String: return lineup[seg_idx]["name"]
+
+# ============================ THE ENEMY COACH (NP_10 s9) ==================
+func _pick_coach() -> void:
+	var recs: Dictionary = COACHES.get("coaches", {})
+	var id := str(COACHES.get("coach_of", {}).get(boss_names[_first_boss], COACHES.get("default", "journeyman")))
+	coach = recs.get(id, {}).duplicate(true)
+	if coach.size() > 0: coach["id"] = id
+
+func boss_role(name: String) -> int:
+	var slot := str(patterns.get(name, {}).get("meta", {}).get("slot", "R3"))
+	return int(slot.substr(1)) if slot.length() > 1 and slot.substr(1).is_valid_int() else 3
+
+func _anchor_class(name: String) -> bool:
+	var m: Dictionary = patterns.get(name, {}).get("meta", {})
+	return boss_role(name) >= 5 or m.has("wall_gauge") or m.has("migrant_wall")
+
+func _build_enemy_lineup() -> void:
+	# NP_01 s2/s7 + NP_10 s2: four dressed for the mini-dual, R1 sealed as the boss you asked for,
+	# the rest ordered by the corner's archetype. STANDARD: the ace/anchor closes. AMBUSH: the ace opens
+	# the slots the coach controls. WALL_FIRST: anchor-class first. RELAY_LADDER reads as STANDARD here
+	# (bond pairs are a stable concept the boss side does not carry).
+	var n := boss_names.size()
+	var rest: Array = []
+	for i in range(1, 4): rest.append(boss_names[(_first_boss + i) % n])
+	var by_role := rest.duplicate()
+	by_role.sort_custom(func(a, b): return boss_role(a) < boss_role(b) or (boss_role(a) == boss_role(b) and rest.find(a) < rest.find(b)))
+	var arche := str(coach.get("archetype", "STANDARD"))
+	var r2: String; var r3: String; var bench: String
+	match arche:
+		"AMBUSH": r2 = by_role[2]; r3 = by_role[0]; bench = by_role[1]
+		"WALL_FIRST":
+			var anchor := ""
+			for nm in by_role:
+				if _anchor_class(nm): anchor = nm
+			if anchor == "": anchor = by_role[2]
+			var others: Array = by_role.filter(func(x): return x != anchor)
+			r2 = anchor; r3 = others[1]; bench = others[0]
+		_: r2 = by_role[0]; r3 = by_role[2]; bench = by_role[1]
+	blineup = [boss_names[_first_boss], r2, r3]; breserves = [bench]
+
+func _leading_b() -> bool:
+	return score_b > score_p or (score_b == score_p and ep_b > ep_p)
+
+func _coach_matchup(name: String, target: Dictionary) -> int:
+	# the coach reads the rings (NP_06 s5) for a candidate against one of your cards
+	var m: Dictionary = patterns.get(name, {}).get("meta", {})
+	var st := style_key(str(m.get("style", ""))); var el := element_key(str(m.get("element", "")))
+	var ts := style_key(str(target.get("style", "BOXERPUNCHER"))); var te := element_key(str(target.get("element", "NONE")))
+	var w: Dictionary = COACHES.get("matchup_score", {"style_edge": 2, "element_edge": 1})
+	var sc := 0
+	if _beats("style", st, ts): sc += int(w.get("style_edge", 2))
+	elif _beats("style", ts, st): sc -= int(w.get("style_edge", 2))
+	if _beats("element", el, te): sc += int(w.get("element_edge", 1))
+	elif _beats("element", te, el): sc -= int(w.get("element_edge", 1))
+	return sc
+
+func _coach_say(txt: String) -> void:
+	coach_log.append(txt); _say("THEIR CORNER (%s): %s" % [str(coach.get("label", "?")), txt])
+
+func _super_trigger_met(trig: String) -> bool:
+	match trig:
+		"when_trailing": return not _leading_b()
+		"when_leading": return _leading_b()
+		"corner_1": return seg_idx == 0
+		"after_flash_drop_conceded": return bflash_conceded
+		"after_drop_conceded": return bdrop_conceded
+	return false
+
+func _enemy_corner() -> void:
+	# the rival corner, resolved when the corner opens (he acts on his scouting, not on your choices;
+	# The Reveal shows his slot as it stands after this). Two actions, the same prices as yours,
+	# taken in the order his record names (priority: super / swap / tactic).
+	if not coach_on or coach.is_empty() or seg_idx + 1 >= blineup.size(): return
+	var actions: Array = []
+	if enemy_lock > 0:
+		enemy_lock -= 1
+		_ev("coach_locked", {"coach": coach["id"]}); _coach_say("locked out by the crowd - no actions this corner")
+		_ev("enemy_corner", {"coach": coach["id"], "actions": actions, "locked": true}); return
+	var budget := int(TAC.get("corner", {}).get("actions", 2))
+	for step_kind in coach.get("priority", ["super", "swap", "tactic"]):
+		if actions.size() >= budget: break
+		match str(step_kind):
+			"super": _coach_super(actions)
+			"swap": _coach_swap(actions)
+			"tactic": _coach_tactic(actions)
+	if actions.is_empty(): _coach_say("stands pat")
+	_ev("enemy_corner", {"coach": coach["id"], "actions": actions, "locked": false})
+
+func _coach_super(actions: Array) -> void:
+	# once per dual, on its trigger
+	var tell := str(coach.get("tell", "none"))
+	if bsuper_used or not _super_trigger_met(str(coach.get("super_trigger", "never"))): return
+	var sid := str(coach.get("super", ""))
+	for su in TAC.get("super", []):
+		if str(su["id"]) == sid:
+			bsuper_used = true
+			for k in su["effect"]: bpending_fx[k] = su["effect"][k]
+			actions.append("super:" + sid)
+			_ev("coach_action", {"action": "super", "id": sid, "cost": 0})
+			_coach_say("burns %s - %s" % [str(su["name"]).to_upper(), str(su["text"])])
+			if tell == "burns_super_after_flash_drop" or tell == "hostile_crowd_first_corner": _ev("coach_tell", {"coach": coach["id"], "tell": tell})
+
+func _coach_swap(actions: Array) -> void:
+	# the reserve or a not-yet-fought slot into the upcoming one, judged on the rings against your next card
+	var tell := str(coach.get("tell", "none"))
+	var up := seg_idx + 1
+	var candidates: Array = breserves.duplicate()
+	for j in range(up + 1, blineup.size()): candidates.append(blineup[j])
+	var considers := tell != "never_swaps" and not (tell == "never_swaps_when_leading" and _leading_b()) and rng.randf() < float(coach.get("swap_aggr", 0.0))
+	var target: Dictionary = lineup[up]
+	if rng.randf() >= float(coach.get("scout", 0.5)):                       # a bad read: he plans for another of your cards
+		var others: Array = reserves.duplicate()
+		for j in range(up + 1, lineup.size()): others.append(lineup[j])
+		if others.size() > 0: target = others[rng.randi() % others.size()]
+	var cur_sc := _coach_matchup(blineup[up], target)
+	var best := ""; var best_sc := cur_sc
+	for c in candidates:
+		var sc := _coach_matchup(c, target)
+		if sc > best_sc: best = c; best_sc = sc
+	var cost := 0 if (bswaps_used == 0 and bool(TAC.get("corner", {}).get("swap_first_free", true))) else int(TAC.get("corner", {}).get("swap_cost", 15))
+	if best != "" and not considers and (tell == "never_swaps" or tell == "never_swaps_when_leading"):
+		_ev("coach_tell", {"coach": coach["id"], "tell": tell})              # he had the better card and sat on it: the tell is readable
+	if best == "" or not considers or btension < float(cost): return
+	var was: String = blineup[up]
+	var ri := breserves.find(best)
+	if ri >= 0: breserves[ri] = was
+	else:
+		var j := blineup.find(best); blineup[j] = was
+	blineup[up] = best
+	btension -= float(cost); bswaps_used += 1
+	actions.append("swap:" + best)
+	_ev("coach_action", {"action": "swap", "id": best, "cost": cost, "out": was})
+	_coach_say("swaps %s in for %s at R%d%s" % [best, was, up + 1, "" if cost == 0 else " (-%d Tension)" % cost])
+	if tell == "counter_picks": _ev("coach_tell", {"coach": coach["id"], "tell": tell})
+
+func _coach_tactic(actions: Array) -> void:
+	# one from his library, at his prices, on his tell's schedule
+	var tell := str(coach.get("tell", "none"))
+	var up := seg_idx + 1
+	var lib: Array = coach.get("library", []).duplicate()
+	if tell == "ices_the_clock_when_leading" and _leading_b() and "ice_the_clock" in lib:
+		lib.erase("ice_the_clock"); lib.push_front("ice_the_clock")
+	if tell == "book_tactic_r3" and up != 2: return
+	for tid in lib:
+		var rec: Dictionary = {}
+		for t in TAC.get("special", []):
+			if str(t["id"]) == str(tid): rec = t
+		if rec.is_empty() or int(btactic_cd.get(str(tid), -9)) == seg_idx or btension < float(rec["cost"]): continue
+		btension -= float(rec["cost"]); btactic_cd[str(tid)] = seg_idx + 1
+		for k in rec["effect"]: bpending_fx[k] = rec["effect"][k]
+		actions.append("tactic:" + str(tid))
+		_ev("coach_action", {"action": "tactic", "id": str(tid), "cost": int(rec["cost"])})
+		_coach_say("calls %s (-%d Tension) - %s" % [str(rec["name"]).to_upper(), int(rec["cost"]), str(rec["text"])])
+		if tell == "book_tactic_r3" or (tell == "ices_the_clock_when_leading" and str(tid) == "ice_the_clock"): _ev("coach_tell", {"coach": coach["id"], "tell": tell})
+		return
+
+func _earn_tension_b(v: float) -> void:
+	# the enemy's half of NP_05 s2: same table, same feud, his own Perfect Round
+	if aff.get("feud", false): v *= float(AFF.get("house", {}).get("feud_tension_mult", 1.25))
+	v *= float(btactic_fx.get("tension_earn_mult", 1.0))
+	btension = minf(100.0, btension + v); bcontributed += v
 
 # ============================ AFFINITY RINGS (NP_06) ======================
 static func style_key(v: String) -> String:
@@ -365,7 +566,8 @@ func _matchup() -> void:
 func _style_adv(k: String) -> bool:
 	# the triangle's truth, plus Switch-Up's lie for the player (NP_10 s5); the lie never removes his truth
 	if str(aff.get("style_adv", "")) == k: return true
-	return k == "P" and bool(tactic_fx.get("style_advantaged", false))
+	if k == "B": return bool(btactic_fx.get("style_advantaged", false))
+	return bool(tactic_fx.get("style_advantaged", false))
 
 func hiss_mult(who: String) -> float:
 	# s2.1 + s3 + s4: same-element spike x element edge x house-native, one cap on the product
@@ -674,6 +876,7 @@ func _land_player_punch() -> void:
 			_fire_event("player_power_whiff")
 		if body: _fire_event("player_whiffed_body_shot")
 		_ev("whiff", {"by": "P", "why": geo})
+		if B["dodge"] != "" and geo != "MISS_REACH": _earn_tension_b(float(T.get("tension", {}).get("perfect_defense", 2)))
 		if geo != "MISS_REACH": _say("he made you miss (%s)" % geo.to_lower().replace("miss_", ""))
 		B["blocking"] = false
 		_counter_state_trigger()
@@ -709,8 +912,7 @@ func _land_player_punch() -> void:
 	if bstate == "TELL":                                    # INTERRUPT
 		bstate = "IDLE"; btimer = ms(800); bqueue = []
 		P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"]))
-		if not pd["hissatsu"]:
-			tension = minf(100.0, tension + 5.0); contributed += 5.0
+		if not pd["hissatsu"]: _earn_tension(float(T.get("tension", {}).get("interrupt", 5)))
 		_say("INTERRUPT! string broken - flash window open"); _ev("interrupt", {})
 	if B["guard_open_t"] > 0: dmg *= float(T["guard"]["break_open_dmg_mult"])
 	if cast.size() > 0 and cast["who"] == "B" and src["jab"]: _interrupt_cast("P")
@@ -721,8 +923,9 @@ func _land_player_punch() -> void:
 	B["pos"] += (B["pos"] - P["pos"]).normalized() * push; _clamp(B)
 	var tier := _flag_tier()
 	if tier == 0 and not pd["hissatsu"]:
-		var earn := 3.0 if pd["counter"] else 1.5
-		if zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER": earn += 2.0
+		var tt: Dictionary = T.get("tension", {})
+		var earn := float(tt.get("flash_hit", 5)) if pd["flash"] else (float(tt.get("counter_hit", 3)) if pd["counter"] else float(tt.get("clean_hit", 0)))
+		if zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER": earn += float(T["zones"]["CENTER"].get("exchange_tension_bonus", 2))
 		if pd["counter"] and buffs["P"].has("bonus_tension_on_counter"): earn += float(buffs["P"]["bonus_tension_on_counter"]["v"])
 		_earn_tension(earn)
 	if pf == "":                                            # a foul is not a scoring blow
@@ -774,6 +977,7 @@ func _land_boss_punch(mult: float) -> void:
 					P["counter_t"] = _window("weave", wide)
 					pinned_p_t = 0; trapped_p = false
 			_say("%s - counter window!%s" % [P["dodge"].to_lower() + "ped it" if P["dodge"] != "LEAN" else "leaned under it", "  [trapped read: wider]" if trapped_p else ""])
+			_earn_tension(float(T.get("tension", {}).get("perfect_defense", 2)))    # NP_05 s2: a successful slip
 		if geo == "AUTO_SLIP": P["counter_t"] = _window("slip", wide)
 		_ev("evade", {"by": "P", "why": geo, "dodge": P["dodge"]})
 		if P["counter_state_t"] > 0: P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"])); P["counter_state_t"] = 0; _say("COUNTER STANCE - he swung into it: flash window")
@@ -798,6 +1002,7 @@ func _land_boss_punch(mult: float) -> void:
 			P["pb_streak"] += 1
 			if P["counter_state_t"] > 0: P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"])); P["counter_state_t"] = 0
 			_say("PERFECT BLOCK - counter window!"); _ev("perfect_block", {})
+			_earn_tension(float(T.get("tension", {}).get("perfect_defense", 2)))
 			if P["pb_streak"] >= 2:
 				P["pb_streak"] = 0; _fire_event("player_perfect_block_streak2")
 			return
@@ -812,10 +1017,15 @@ func _land_boss_punch(mult: float) -> void:
 	if P["guard_open_t"] > 0: dmg *= float(T["guard"]["break_open_dmg_mult"])
 	if cast.size() > 0 and cast["who"] == "P" and _punch_family(brow) == "STRAIGHT": _interrupt_cast("B")
 	dmg = _comp_damage("P", dmg, {"counter": mult > 1.0, "flash": false, "power": false, "body": body, "hissatsu": false, "jab": _punch_family(brow) == "STRAIGHT"})
-	if body: P["stamina"] = maxf(0.0, P["stamina"] - float(T["modifiers"]["BODY"]["enemy_stamina_drain"]))
+	if body: P["stamina"] = maxf(0.0, P["stamina"] - float(T["modifiers"]["BODY"]["enemy_stamina_drain"]) * float(btactic_fx.get("body_drain_mult", 1.0)))
 	clean_t = 0
-	if bf == "": _score_ep("B")
-	P["pos"] += (P["pos"] - B["pos"]).normalized() * 0.12 * float(B["pkg"].get("herd_mult", 1.0)); _clamp(P)
+	if bf == "":
+		_score_ep("B")
+		var tt: Dictionary = T.get("tension", {})
+		var earn_b := float(tt.get("counter_hit", 3)) if mult > 1.0 else float(tt.get("clean_hit", 0))
+		if zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER": earn_b += float(T["zones"]["CENTER"].get("exchange_tension_bonus", 2))
+		if earn_b > 0.0: _earn_tension_b(earn_b)
+	P["pos"] += (P["pos"] - B["pos"]).normalized() * 0.12 * float(B["pkg"].get("herd_mult", 1.0)) * float(btactic_fx.get("herd_mult", 1.0)); _clamp(P)
 	freeze_t = maxi(freeze_t, ms(float(T["hit_feel"]["hitstop_ms"]["normal"])))
 	_ev("hit", {"on": "P", "dmg": dmg, "body": body})
 	if P["comp"] <= 0.0: _drop(true)
@@ -827,8 +1037,13 @@ func _drop(player_down: bool, flash: bool = false) -> void:
 		P["comp"] = 1.0
 		_ev("iron_resolve", {"left": no_drop_t}); _say("IRON RESOLVE - %s will not go down (%.1fs left)" % [pname(), no_drop_t / float(TICK_HZ)])
 		return
+	if not player_down and bno_drop_t > 0:                  # their corner's Iron Resolve
+		B["comp"] = 1.0
+		_ev("iron_resolve_b", {"left": bno_drop_t}); _say("IRON RESOLVE - %s will not go down (%.1fs left)" % [boss_name, bno_drop_t / float(TICK_HZ)])
+		return
 	if player_down:
 		drops_b += 1; P["drops"] += 1; score_b += 1
+		_earn_tension_b(float(T.get("tension", {}).get("drop", 10)))
 		_ev("drop", {"who": "P"})
 		if P["drops"] >= 3:
 			_segment_ko(false, "three knockdowns"); return
@@ -842,7 +1057,9 @@ func _drop(player_down: bool, flash: bool = false) -> void:
 	else:
 		drops_p += 1; B["drops"] += 1
 		score_p += 2 if flash else 1
-		tension = minf(100.0, tension + 10.0); contributed += 10.0
+		_earn_tension(float(T.get("tension", {}).get("drop", 10)))
+		bdrop_conceded = true
+		if flash: bflash_conceded = true
 		B["comp"] = B["comp_max"] * float(T["composure"]["post_count_reset_pct"]) / 100.0
 		B["no_regen_t"] = ms(float(T["composure"]["regen_halt_after_count_s"]) * 1000.0)
 		_ev("drop", {"who": "B", "flash": flash})
@@ -855,11 +1072,12 @@ func _segment_ko(player_scored: bool, why: String) -> void:
 	var trickle := float(clock_t / ms(10000))
 	if player_scored:
 		score_p += 3
-		tension = minf(100.0, tension + trickle); contributed += trickle
+		_earn_tension(trickle)
 		_ev("segment_ko", {"by": "P"})
 		_end_segment("SEGMENT KO by %s (%s, +3)" % [pname(), why])
 	else:
 		score_b += 3
+		_earn_tension_b(trickle)
 		_ev("segment_ko", {"by": "B"})
 		_end_segment("SEGMENT KO against %s (%s)" % [pname(), why])
 
@@ -877,8 +1095,7 @@ func _eight_step(rise: bool) -> void:
 			mode = "FIGHT"; eight = {}
 			P["comp"] = P["comp_max"] * float(T["composure"]["post_count_reset_pct"]) / 100.0
 			P["no_regen_t"] = ms(float(T["composure"]["regen_halt_after_count_s"]) * 1000.0)
-			tension = minf(100.0, tension + float(T["standing_eight"]["crowd_surge_tension"]))
-			contributed += float(T["standing_eight"]["crowd_surge_tension"])
+			_earn_tension(float(T["standing_eight"]["crowd_surge_tension"]))
 			_say("UP AT EIGHT! Crowd surge - composure regen halted 10s")
 			return
 		eight["timer_t"] = ms(1200)
@@ -897,6 +1114,14 @@ func _end_segment(why: String) -> void:
 		_earn_tension(float(TAC.get("corner", {}).get("save_bar_bonus", 5)))
 		_say("held the bar and won it anyway: +%d" % int(TAC.get("corner", {}).get("save_bar_bonus", 5)))
 	save_bar = false
+	var seg_win := float(T.get("tension", {}).get("segment_win", 5))            # NP_05 s2: segment win +5, both teams
+	var drawn: bool = (score_p - int(seg_score0[0])) == (score_b - int(seg_score0[1])) and (ep_p - int(seg_score0[2])) == (ep_b - int(seg_score0[3]))
+	if won: _earn_tension(seg_win)
+	elif not drawn: _earn_tension_b(seg_win)
+	bcharged = bcontributed >= 25.0
+	if bcharged: brelay_chain += 1
+	elif bcontributed < 10.0: brelay_chain = 0
+	bcontributed = 0.0
 	_ev("seg_end", {"why": why, "won": won, "charged": charged, "chain": relay_chain})
 	if seg_idx >= 2:
 		_end_dual(); return
@@ -910,8 +1135,12 @@ func _end_segment(why: String) -> void:
 func _open_corner() -> void:
 	mode = "CORNER"; card_t = 0
 	var c: Dictionary = TAC.get("corner", {})
-	corner = {"t": ms(float(c.get("seconds", 45)) * 1000.0), "actions_left": int(c.get("actions", 2)), "log": []}
-	_ev("corner_open", {"seconds": int(c.get("seconds", 45)), "actions": corner["actions_left"], "next": lineup[seg_idx + 1]["name"], "boss": boss_names[(_first_boss + seg_idx + 1) % boss_names.size()]})
+	corner = {"t": ms(float(c.get("seconds", 45)) * 1000.0), "actions_left": int(c.get("actions", 2)), "log": [], "locked": false}
+	if player_lock > 0:
+		player_lock -= 1; corner["actions_left"] = 0; corner["locked"] = true
+		_ev("corner_locked", {"by": "crowd"}); _say("HOSTILE CROWD - your corner is locked out this phase")
+	_enemy_corner()
+	_ev("corner_open", {"seconds": int(c.get("seconds", 45)), "actions": corner["actions_left"], "next": lineup[seg_idx + 1]["name"], "boss": blineup[seg_idx + 1]})
 	_say("CORNER (45s, 2 actions): next up %s. Swap / tactic / super / staff / save the bar - or send." % lineup[seg_idx + 1]["name"])
 
 func corner_pick(_opt: int) -> void:
@@ -952,7 +1181,7 @@ func corner_action(a: Dictionary) -> bool:
 	# NP_10 s4: two actions per corner; each kind has its own price
 	if mode != "CORNER": return false
 	var kind := str(a.get("kind", ""))
-	if int(corner["actions_left"]) <= 0: _corner_refuse(kind, "no actions left"); return false
+	if int(corner["actions_left"]) <= 0: _corner_refuse(kind, "locked out by the crowd" if corner.get("locked", false) else "no actions left"); return false
 	var c: Dictionary = TAC.get("corner", {})
 	var eq: Dictionary = TAC.get("equipped", {})
 	match kind:
@@ -991,6 +1220,7 @@ func corner_action(a: Dictionary) -> bool:
 			if srec.is_empty(): _corner_refuse(kind, "no super equipped"); return false
 			super_used = true
 			for k in srec["effect"]: pending_fx[k] = srec["effect"][k]
+			if srec["effect"].has("enemy_corner_lock"): enemy_lock += 1        # HOSTILE CROWD: his next corner phase
 			_say("SUPER TACTIC: %s - %s" % [srec["name"], srec["text"]])
 		"staff":
 			var stid := str(a.get("id", ""))
@@ -1002,7 +1232,7 @@ func corner_action(a: Dictionary) -> bool:
 			staff_charges[stid] = int(staff_charges[stid]) - 1
 			var fx: Dictionary = strec["effect"]
 			if fx.has("tension_plus"): _earn_tension(float(fx["tension_plus"]))
-			if fx.has("reveal_next"): _ev("reveal", {"boss": boss_names[(_first_boss + seg_idx + 1) % boss_names.size()]})
+			if fx.has("reveal_next"): _ev("reveal", {"boss": blineup[seg_idx + 1]}); _say("THE REVEAL: their next slot is %s" % blineup[seg_idx + 1])
 			for k in fx:
 				if k != "tension_plus" and k != "reveal_next": pending_fx[k] = fx[k]
 			_say("STAFF: %s (%s) - %s" % [strec["name"], strec["role"], strec["text"]])
@@ -1473,6 +1703,8 @@ func _start_cast(who: String, mv: Dictionary, arm_only: String = "") -> void:
 	if who == "P":
 		cost = hiss_cost(mv); tension = maxf(0.0, tension - cost); hiss_casts_seg += 1
 		P["cmd"] = {}; P["pending"] = {}
+	else:
+		cost = float(mv.get("tension_cost", 0)); btension = maxf(0.0, btension - cost)   # his bar pays what it can; the desperation is authored and always goes
 	var total := ms(float(mv["startup_cinematic_ms"]))
 	var cp: Dictionary = mv["counter_profile"]
 	cast = {"who": who, "move": mv, "t": total, "total": total, "interruptible": bool(cp["interruptible"]),
@@ -1513,7 +1745,8 @@ func _interrupt_cast(by: String) -> bool:
 	A["busy_t"] = ms(600)
 	if who == "B": bstate = "RECOVER"; btimer = ms(800)
 	if by == "P":
-		_earn_tension(5.0); P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"]))
+		_earn_tension(float(T.get("tension", {}).get("interrupt", 5))); P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"]))
+	else: _earn_tension_b(float(T.get("tension", {}).get("interrupt", 5)))
 	_ev("cast_interrupted", {"who": who, "move": str(mv["name"]), "by": by})
 	_say("%s BROKEN - %s" % [str(mv["name"]).to_upper(), "flash window open, +5 Tension" if by == "P" else "you ate a jab in the windup, half the Tension back"])
 	cast = {}
@@ -1785,7 +2018,8 @@ func _wall_tick() -> void:
 
 func _speed_mult(k: String) -> float:
 	var m := 1.0
-	if k == "P" and P["charge_t"] > 0: m *= 1.0 + float(TAC.get("corner", {}).get("charged_stat_pct", 10)) / 100.0   # CHARGED entrance surge
+	if P["charge_t"] > 0 and k == "P": m *= 1.0 + float(TAC.get("corner", {}).get("charged_stat_pct", 10)) / 100.0   # CHARGED entrance surge
+	if k == "B" and int(B.get("charge_t", 0)) > 0: m *= 1.0 + float(TAC.get("corner", {}).get("charged_stat_pct", 10)) / 100.0
 	if states[k].has("foot_freeze_slow") or states[k].has("foot_slow"): m *= 0.6
 	if buffs[k].has("forward_glide"): m *= 1.5
 	if buffs[k].has("move_speed_plus15"): m *= 1.15
@@ -1953,6 +2187,8 @@ func step(inp: Dictionary) -> void:
 	clock_acc += 1.0
 	if tactic_fx.has("clock_mult_leading") and (ep_p - int(seg_score0[2])) > (ep_b - int(seg_score0[3])):
 		clock_acc += 1.0 / float(tactic_fx["clock_mult_leading"]) - 1.0          # ICE THE CLOCK: it runs 1/0.8 faster while you lead
+	if btactic_fx.has("clock_mult_leading") and (ep_b - int(seg_score0[3])) > (ep_p - int(seg_score0[2])):
+		clock_acc += 1.0 / float(btactic_fx["clock_mult_leading"]) - 1.0         # ...or while his corner iced it and he leads
 	while clock_acc >= 1.0:
 		clock_acc -= 1.0; clock_t -= 1
 	# ---- timers/regen ----
@@ -1999,6 +2235,7 @@ func step(inp: Dictionary) -> void:
 	if sprint_cd > 0: sprint_cd -= 1
 	if neutral_cd > 0: neutral_cd -= 1
 	if no_drop_t > 0: no_drop_t -= 1
+	if bno_drop_t > 0: bno_drop_t -= 1
 	if punish_suppress_t > 0: punish_suppress_t -= 1
 	if tell_highlight_t > 0: tell_highlight_t -= 1
 	if hands_down_t > 0:
@@ -2176,5 +2413,7 @@ func hash_state() -> int:
 		neutral_t, cadence, hands_down_t, react_ticks, bwarnings, pwarnings, pholding, bsurvival_used,
 		cast.get("t", -1), cast.get("who", ""), states, buffs, wall, relay_chain, hiss_casts_seg, wall_migrate, gauge_jabs,
 		feint_log, feint_wise, corner, card_t, tactic_fx, pending_fx, super_used, staff_charges, swaps_used, save_bar, save_bar_next,
-		full_relay, no_drop_t, punish_suppress_t, tell_highlight_t, stamina_cap, ep_frac, ep_frac_b, aff, rng.state]
+		full_relay, no_drop_t, punish_suppress_t, tell_highlight_t, stamina_cap, ep_frac, ep_frac_b, aff,
+		btension, bcontributed, bcharged, brelay_chain, btactic_fx, bpending_fx, btactic_cd, bsuper_used, bswaps_used, bno_drop_t,
+		enemy_lock, player_lock, bflash_conceded, bdrop_conceded, blineup, breserves, coach.get("id", ""), rng.state]
 	return v.hash()

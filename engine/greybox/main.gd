@@ -84,7 +84,7 @@ func _ready() -> void:
 		lineup = TNBSim.LINEUP_MILLBROOK.duplicate(true); lineup[1]["hissatsu"] = "Relay: North Star"   # the demo shows the T3 afterimage
 	var content := TNBSim.load_content()
 	sim = TNBSim.new()
-	sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []))
+	sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}))
 	_build_world()
 	if "seg2" in args:                                   # demo aid: jump to a CHARGED R2 with a full bar (the T3 afterimage)
 		sim.contributed = 30.0; sim._end_segment("demo"); sim.corner_pick(0); sim.corner_pick(0); sim.tension = 100.0; demo_seg2 = true
@@ -340,6 +340,8 @@ func _consume_events() -> void:
 				if tell_tween: tell_tween.kill()
 				var mesh: MeshInstance3D = boss.get_meta("mesh"); mesh.scale = Vector3.ONE
 			"perfect_block": _flash(0.12)
+			"corner_locked", "coach_locked": _flash(0.3)
+			"coach_action": _bump(boss, 0.06)
 			"clinch":
 				var pm: MeshInstance3D = player.get_meta("mesh"); pm.scale = Vector3(1.1, 0.97, 1.1)
 				var bm: MeshInstance3D = boss.get_meta("mesh"); bm.scale = Vector3(1.1, 0.97, 1.1)
@@ -413,6 +415,13 @@ func _tell_fx(secs: float, loud: bool) -> void:
 	tell_tween.tween_property(mesh, "scale", Vector3.ONE, secs * 0.5)
 
 # ============================== HUD =======================================
+func _their_corner() -> String:
+	# the rival corner's line on the HUD: who he is, what he just did, whether the crowd has him
+	if sim.coach.is_empty(): return ""
+	var last := ""
+	if sim.coach_log.size() > 0: last = str(sim.coach_log[-1])
+	return "\n>>> THEIR CORNER: %s [%s]%s%s" % [str(sim.coach.get("label", "")), str(sim.coach.get("archetype", "")), ("  - " + last) if last != "" else "", "   [CROWD ON HIM next corner]" if sim.enemy_lock > 0 else ""]
+
 func _corner_menu() -> String:
 	var o: Dictionary = sim.corner_options()
 	var out := "\n>>> CORNER %4.1fs   actions left %d   next up %s   [1/A] SEND" % [int(sim.corner["t"]) / float(TNBSim.TICK_HZ), int(o["actions_left"]), sim.lineup[sim.seg_idx + 1]["name"]]
@@ -475,7 +484,7 @@ func _hud() -> void:
 	match sim.mode:
 		"EIGHT": mode_line = "\n>>> STANDING EIGHT: ENTER / A on the beat  (%d to go)" % int(sim.eight.get("beats_left", 0))
 		"CARD": mode_line = "\n>>> SEGMENT CARD (%.1fs, ENTER/1 to skip)" % (sim.card_t / float(TNBSim.TICK_HZ))
-		"CORNER": mode_line = _corner_menu()
+		"CORNER": mode_line = _corner_menu() + _their_corner()
 		"OVER": mode_line = "\n>>> DUAL OVER - F5 new dual, F1-F4 pick boss"
 	if sim.mode == "FIGHT" and sim.tick < matchup_until and matchup_text != "": mode_line += "\n" + matchup_text
 	if sim.clinch.size() > 0:
@@ -494,6 +503,10 @@ func _hud() -> void:
 	if sim.aff.get("style_adv", "") != "" or sim.aff.get("element_adv", "") != "":
 		bug += "   RINGS style %s elem %s" % ["<" if sim.aff.get("style_adv", "") == "P" else (">" if sim.aff.get("style_adv", "") == "B" else "="), "<" if sim.aff.get("element_adv", "") == "P" else (">" if sim.aff.get("element_adv", "") == "B" else "=")]
 	if sim.aff.get("feud", false): bug += "   FEUD x1.25"
+	if sim.brelay_chain > 0: bug += "   THEIR RELAY %s" % "|".repeat(sim.brelay_chain)
+	if B["charge_t"] > 0: bug += "   HE IS CHARGED %.1fs" % (B["charge_t"] / float(TNBSim.TICK_HZ))
+	if sim.player_lock > 0: bug += "   [CROWD ON YOU next corner]"
+	if sim.btactic_fx.size() > 0: bug += "   his tactics: " + ",".join(PackedStringArray(sim.btactic_fx.keys()))
 	if sim.bwarnings > 0: bug += "   REF WARN x%d (him)" % sim.bwarnings
 	if sim.pwarnings > 0: bug += "   REF WARN x%d (you)" % sim.pwarnings
 	if sim.pholding > 0: bug += "   holding calls x%d (you)" % sim.pholding
@@ -502,5 +515,5 @@ func _hud() -> void:
 		+ "ZONE you:%s%s  him:%s%s   dist %.2fm   tick %d%s\n" % [zp, " TRAPPED" if sim.trapped_p else "", zb, " TRAPPED" if sim.trapped_b else "", P["pos"].distance_to(B["pos"]), sim.tick, "  [HITSTOP]" if sim.freeze_t > 0 else ""] \
 		+ "YOU   stam %s  chin %s  guard %s%s   %s   [%s/%s]\n" % [_bar(P["stamina"], 100, 14), _bar(P["comp"], P["comp_max"], 14), _bar(P["guard"], P["guard_max"], 10), "  OPEN!" if P["guard_open_t"] > 0 else "", P["dodge"] if P["dodge"] != "" else "", str(P.get("style", "")), str(P.get("element", ""))] \
 		+ "BOSS  chin %s   phase %d   %s%s%s   [%s/%s]\n" % [_bar(B["comp"], B["comp_max"], 14), sim.bphase, "TELL" if sim.bstate == "FAKE" else sim.bstate, "  << TELL - HIT HIM NOW" if (sim.bstate == "TELL" or sim.bstate == "FAKE") else ("  hands DOWN" if sim.hands_down_t > 0 else ""), ("  [" + B["dodge"] + "]") if B["dodge"] != "" else ("  [GUARD]" if (B["blocking"] or B["guard_t"] > 0) else ""), str(B.get("style", "")), str(B.get("element", ""))] \
-		+ "TENSION %s %3.0f  %s%s%s%s" % [_bar(sim.tension, 100, 16), sim.tension, _hiss_line(), "   counter!" if P["counter_t"] > 0 else "", "   FLASH!" if P["flash_t"] > 0 else "", "   relay chain %d" % sim.relay_chain if sim.relay_chain > 0 else ""] \
+		+ "TENSION %s %3.0f  %s%s%s%s   THEIRS %s %3.0f" % [_bar(sim.tension, 100, 16), sim.tension, _hiss_line(), "   counter!" if P["counter_t"] > 0 else "", "   FLASH!" if P["flash_t"] > 0 else "", "   relay chain %d" % sim.relay_chain if sim.relay_chain > 0 else "", _bar(sim.btension, 100, 12), sim.btension] \
 		+ _wall_line() + _cast_line() + _state_line()

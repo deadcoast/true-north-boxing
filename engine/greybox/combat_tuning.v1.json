@@ -72,6 +72,10 @@
  },
  "clinch": {"duel_s": 2.0, "referee_break_s": 4, "reset_stamina_bonus": 5, "position_herd_cm": 50},
  "feint": {"cancel_within_ms": 80, "stamina": 1, "enemy_guard_drain": 1},
+ "tension": {
+  "_note": "NP_05 s2 earn table, both teams (PAC-060). A plain clean hit earns nothing in canon; the CENTER exchange bonus lives in zones.CENTER",
+  "clean_hit": 0, "counter_hit": 3, "flash_hit": 5, "perfect_defense": 2, "interrupt": 5, "drop": 10, "segment_win": 5
+ },
  "standing_eight": {
   "beats": 3, "time_scale": 0.3,
   "beat_window_ms_by_HRT": {"hrt30": 60, "hrt90": 140},

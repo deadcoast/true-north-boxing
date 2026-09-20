@@ -25,7 +25,7 @@ func _verdict(label: String) -> int:
 func make_sim(boss_idx: int, seed_v: int, lineup: Array = TNBSim.LINEUP_MILLBROOK) -> TNBSim:
 	if content.is_empty(): content = TNBSim.load_content()
 	var s := TNBSim.new()
-	s.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, seed_v, content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []))
+	s.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, seed_v, content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}))
 	return s
 
 func play_clinch(s: TNBSim, mode: String, want_reset: bool = false) -> void:
@@ -94,7 +94,7 @@ func sensor_count(s: TNBSim, name: String) -> int:
 
 func quiet(s: TNBSim) -> void:
 	# sensors keep firing as events; bait/punish hooks stay silent; boss frozen; hitstop drained
-	s.hooks_enabled = false; freeze_boss(s); thaw(s); s.events.clear()
+	s.hooks_enabled = false; s.coach_on = false; freeze_boss(s); thaw(s); s.events.clear()
 
 func run(mode: String, boss_idx: int) -> int:
 	match mode:
@@ -313,6 +313,7 @@ func smoke(boss_idx: int) -> int:
 	_sr("action VM executes the selected strings", boss_actions >= 1, "actions=%d" % boss_actions)
 
 	# ---- action VM semantics ----
+	s.mode = "FIGHT"; s.eight = {}; s.P["comp"] = s.P["comp_max"]; s.P["drops"] = 0   # his VM is under test, not your chin: a live 4s may have put you down
 	freeze_boss(s); thaw(s); place(s, 1.0); clear_defense(s.P); clear_defense(s.B)
 	var walk := s.parse_action("WALK_STRING(2_hooks)")
 	var mixed := s.parse_action("MIXED_STRING(4)")
@@ -346,6 +347,7 @@ func smoke(boss_idx: int) -> int:
 		fired_at >= need, "fired after %d steps (threshold %d fight ticks)" % [fired_at, need])
 
 	# ---- dual layer: card -> corner -> rotation ----
+	s.coach_on = false                                            # the flow itself; the rival corner has its own stage (PAC-060)
 	s.mode = "FIGHT"; s.eight = {}
 	s.contributed = 30.0; s.tension = 42.0
 	s._end_segment("smoke-forced")
@@ -969,7 +971,7 @@ func smoke(boss_idx: int) -> int:
 	clear_defense(cv.B); land(cv)
 	cv.score_p += 1; cv.tension = 50.0
 	cv.mode = "FIGHT"; cv._end_segment("smoke-forced")
-	_sr("save the bar: the cast is refused next segment; winning it anyway banks +5", locked and absf(cv.tension - 55.0) < 0.01, "%.0f" % cv.tension)
+	_sr("save the bar: the cast is refused next segment; winning it anyway banks +5 on top of the segment win's +5 (NP_05 s2)", locked and absf(cv.tension - 60.0) < 0.01, "%.0f" % cv.tension)
 	# relay chain arithmetic (NP_05 s6): >=25 links, <10 breaks, a lost segment with >=10 keeps it; FULL RELAY at 3
 	var c_cr := make_sim(0, 7); quiet(c_cr)
 	var chain_log: Array = []
@@ -1250,6 +1252,146 @@ func smoke(boss_idx: int) -> int:
 		absf(b_yu.B["comp_max"] / b_sam.B["comp_max"] - 1.15) < 1e-6 and absf(yu_shred / sam_shred - 1.3) < 0.01 and absf(b_al.B["guard_max"] / b_sam.B["guard_max"] - 0.9) < 1e-6 and absf(al_push / sam_push - 1.5) < 0.01
 		and al_reach == "MISS_REACH" and va_reach == "HIT" and sam_reach == "MISS_REACH" and absf(va_hay / sam_hay - 0.9) < 0.01)
 
+	# ================= PAC-060: the enemy coach (NP_10 s9) and the enemy's half of the economy (NP_05 s2) ==========
+	var coached := func(boss_i: int, seed_v: int, lu_c: Array = TNBSim.LINEUP_MILLBROOK) -> TNBSim:
+		var cs_ := make_sim(boss_i, seed_v, lu_c); quiet(cs_); cs_.coach_on = true; place(cs_, 1.4)
+		return cs_
+	var end_seg := func(sim: TNBSim, contributed_p: float = 0.0) -> void:     # -> the card; the rival corner resolves when the corner opens
+		sim.mode = "FIGHT"; sim.eight = {}; sim.contributed = contributed_p
+		sim._end_segment("smoke-forced")
+	var coach_actions := func(sim: TNBSim) -> Array:
+		for qe in sim.events:
+			if qe["kind"] == "enemy_corner": return qe["actions"]
+		return []
+	# data + the sealed order: every boss opens qa dual with qa corner behind him; archetypes order the slots he controls
+	var coach_ok := true; var r1_ok := true
+	var tacs: Dictionary = {}
+	for qt in content["tactics"].get("special", []): tacs[str(qt["id"])] = qt
+	var boss_keys := ["body_drain_mult", "herd_mult", "clock_mult_leading"]
+	for qb in TNBSim.BOSSES:
+		var cq := make_sim(TNBSim.BOSSES.find(qb), 7)
+		if cq.boss_name != qb or cq.blineup.size() != 3 or cq.breserves.size() != 1 or cq.blineup[0] != qb: r1_ok = false
+		var rec: Dictionary = cq.coach
+		if rec.is_empty() or not (str(rec.get("archetype", "")) in ["STANDARD", "AMBUSH", "WALL_FIRST", "RELAY_LADDER"]) or not (str(rec.get("super_trigger", "")) in content["coaches"]["triggers"]) or not content["coaches"]["tells"].has(str(rec.get("tell", ""))): coach_ok = false
+		for tid in rec.get("library", []):
+			if not tacs.has(str(tid)): coach_ok = false
+			else:
+				var consumed := false
+				for qk in tacs[str(tid)]["effect"]:
+					if qk in boss_keys: consumed = true
+				if not consumed: coach_ok = false
+	var o_std := make_sim(0, 7); var o_amb := make_sim(12, 7); var o_wall := make_sim(3, 7)
+	_sr("coaches: 24/24 duals open with a corner record (archetype, trigger, tell, a library the boss side consumes); R1 stays the boss asked for; STANDARD %s / AMBUSH %s / WALL_FIRST %s" % [JSON.stringify(o_std.blineup), JSON.stringify(o_amb.blineup), JSON.stringify(o_wall.blineup)],
+		coach_ok and r1_ok and o_std.blineup == ["cassidy_vane", "yuri_kowalchuk", "sam_tagaq"] and o_std.breserves == ["jean_guy_moreau"]
+		and o_amb.blineup == ["hc0_surety", "hc7_echo", "hc4_cartographer"] and o_amb.breserves == ["hc9_choir"]
+		and o_wall.blineup == ["sam_tagaq", "anders_vey", "alfie_crane"] and o_wall.breserves == ["ada_okafor"])
+	# the Academy counter-picks: Cal comes up for Carter against qa slugger card; the Super is spent in corner 1; the swap was free; his lie scores
+	var lu_ac: Array = TNBSim.LINEUP_MILLBROOK.duplicate(true); lu_ac[1]["style"] = "SLUGGER"; lu_ac[1]["element"] = "GRANITE"
+	var ac: TNBSim = coached.call(6, 7, lu_ac); end_seg.call(ac); ac.events.clear(); ac.step({"corner": 1})    # the card -> the corner opens: his decisions
+	var ac_acts: Array = coach_actions.call(ac)
+	var ac_swap: bool = ac.blineup == ["anders_vey", "commissioner_cal", "carter_okafor"] and ac.breserves == ["chiamaka_okafor"] and ac.btension == 0.0 and ac.bswaps_used == 1
+	var ac_tell: bool = count_events(ac.events, "coach_tell", {"tell": "counter_picks"}) == 1 and count_events(ac.events, "coach_action", {"action": "swap", "id": "commissioner_cal"}) == 1
+	var ac_super: bool = ac.bsuper_used and count_events(ac.events, "coach_action", {"action": "super", "id": "switch_up"}) == 1
+	ac.step({"corner": 1}); quiet(ac); ac.coach_on = true; place(ac, 1.4)
+	var ac_bep: int = ten_boss_hits.call(ac)
+	_sr("the Academy corner: %s - Cal swapped up for Carter (free) against your slugger card, Switch-Up burned in corner 1, and his lie scores 22 for ten" % JSON.stringify(ac_acts),
+		ac_swap and ac_tell and ac_super and ac.boss_name == "commissioner_cal" and ac._style_adv("B") and ac_bep == 22, "ep %d" % ac_bep)
+	# True North never swaps - even with the better card on the bench, and the tell says so; Iron Resolve the corner after qa drop conceded
+	var lu_tn: Array = TNBSim.LINEUP_MILLBROOK.duplicate(true); lu_tn[1]["style"] = "OUTBOXER"; lu_tn[1]["element"] = "GRANITE"
+	var tn: TNBSim = coached.call(3, 7, lu_tn); tn.P["comp"] = tn.P["comp_max"]; tn.B["comp"] = 0.5; tn._drop(false)
+	end_seg.call(tn); tn.events.clear(); tn.step({"corner": 1})
+	var tn_acts: Array = coach_actions.call(tn)
+	var tn_hold: bool = tn.blineup == ["sam_tagaq", "anders_vey", "alfie_crane"] and count_events(tn.events, "coach_tell", {"tell": "never_swaps"}) == 1 and count_events(tn.events, "coach_action", {"action": "swap"}) == 0
+	tn.step({"corner": 1}); quiet(tn); tn.coach_on = true; place(tn, 1.4); clear_defense(tn.B); tn.B["comp"] = 0.5; tn.bsurvival_used = true   # no survival grab: the wobble is the point
+	var iron_t0: int = tn.bno_drop_t
+	throw_clean(tn, "R_STRAIGHT")
+	var tn_iron: bool = iron_t0 == TNBSim.ms(30000) and count_events(tn.events, "iron_resolve_b") == 1 and tn.B["drops"] == 0 and tn.mode == "FIGHT"
+	var tn2: TNBSim = coached.call(3, 7); end_seg.call(tn2); tn2.events.clear(); tn2.step({"corner": 1})
+	_sr("the True North corner: %s - never swaps (Ada was the better card; the tell fired), burns Iron Resolve the corner after a drop conceded (Vey wobbles at 1 instead of going down); no drop, no Super" % JSON.stringify(tn_acts),
+		tn_hold and tn_iron and not tn2.bsuper_used and count_events(tn2.events, "coach_action", {"action": "super"}) == 0)
+	# Grain Kings: the Super comes the corner after qa FLASH DROP conceded, not after qa plain one
+	var gk: TNBSim = coached.call(1, 7); gk.B["comp"] = 0.5; gk._drop(false, true); end_seg.call(gk); gk.events.clear(); gk.step({"corner": 1})
+	var gk2: TNBSim = coached.call(1, 7); gk2.B["comp"] = 0.5; gk2._drop(false); end_seg.call(gk2); gk2.events.clear(); gk2.step({"corner": 1})
+	_sr("the Grain Kings corner burns Iron Resolve after conceding a FLASH DROP (tell fires) and sits on it after a plain DROP",
+		gk.bsuper_used and count_events(gk.events, "coach_tell", {"tell": "burns_super_after_flash_drop"}) == 1 and not gk2.bsuper_used)
+	# Ascendant B: the book says the first tactic goes in the corner before R3 - never before; Body Doctrine then doubles his body drain on you
+	var ab: TNBSim = coached.call(0, 7); ab.btension = 30.0; ab.score_b = 5
+	end_seg.call(ab); ab.events.clear(); ab.step({"corner": 1})
+	var ab_c1: Array = coach_actions.call(ab)
+	var ab_no_tactic_c1 := true
+	for qa in ab_c1:
+		if str(qa).begins_with("tactic:"): ab_no_tactic_c1 = false
+	ab.step({"corner": 1}); ab.btension = 30.0; ab.score_b = 9
+	end_seg.call(ab); ab.events.clear(); ab.step({"corner": 1})
+	var ab_c2: Array = coach_actions.call(ab)
+	var ab_tell: bool = count_events(ab.events, "coach_tell", {"tell": "book_tactic_r3"}) == 1 and "tactic:body_doctrine" in ab_c2 and absf(ab.btension - 25.0) < 0.01   # 30 + 5 for the segment he won - 10
+	ab.step({"corner": 1}); quiet(ab); ab.coach_on = true; place(ab, 1.4); clear_defense(ab.P); ab.P["comp"] = ab.P["comp_max"]
+	var ab_st0: float = ab.P["stamina"]; boss_lands(ab, "R_HOOK", 1.0, true)
+	_sr("the Ascendant B corner: corner 1 %s (no tactic before R3, the tell), corner 2 %s - Body Doctrine paid 10 (30 + 5 for his segment win - 10 = %.0f) and his body hook drains %.0f" % [JSON.stringify(ab_c1), JSON.stringify(ab_c2), ab.btension, ab_st0 - ab.P["stamina"]],
+		ab_no_tactic_c1 and ab_tell and ab.btactic_fx.get("body_drain_mult", 0.0) == 2.0 and absf((ab_st0 - ab.P["stamina"]) - 12.0) < 0.3)
+	# Montreal ices the clock when he leads: Ice the Clock first from his library, Switch-Up on when_leading; his clock runs 1/0.8 while he leads on EP
+	var mt_: TNBSim = coached.call(18, 7); mt_.btension = 30.0; mt_.score_b = 3
+	end_seg.call(mt_); mt_.events.clear(); mt_.step({"corner": 1})
+	var mt_acts: Array = coach_actions.call(mt_)
+	var mt_tell: bool = count_events(mt_.events, "coach_tell", {"tell": "ices_the_clock_when_leading"}) == 1
+	mt_.step({"corner": 1}); quiet(mt_); mt_.coach_on = true; place(mt_, 1.4)
+	mt_.ep_b += 5; var mt_c0: int = mt_.clock_t; run_ticks(mt_, 120); var his_lead_drop: int = mt_c0 - mt_.clock_t
+	mt_.ep_p += 10; var mt_c1: int = mt_.clock_t; run_ticks(mt_, 120); var your_lead_drop: int = mt_c1 - mt_.clock_t
+	_sr("the Montréal corner: %s - ices the clock when ahead (tell), Switch-Up on when_leading; his segment clock runs %d per 120 while he leads on EP, %d when you do" % [JSON.stringify(mt_acts), his_lead_drop, your_lead_drop],
+		"tactic:ice_the_clock" in mt_acts and "super:switch_up" in mt_acts and mt_tell and his_lead_drop == 150 and your_lead_drop == 120)
+	# Hostile Crowd both ways: yours locks his next corner; the Hollow Circuit's (first corner, the tell) locks yours
+	var hcp: TNBSim = coached.call(0, 7); equip.call(hcp, [], "hostile_crowd", []); end_seg.call(hcp); hcp.step({"corner": 1})
+	var hcp_ok := hcp.corner_action({"kind": "super"}); hcp.step({"corner": 1}); quiet(hcp); hcp.coach_on = true
+	end_seg.call(hcp); hcp.events.clear(); hcp.step({"corner": 1})
+	var his_locked: bool = count_events(hcp.events, "coach_locked") == 1 and coach_actions.call(hcp).is_empty() and hcp.enemy_lock == 0
+	var hce: TNBSim = coached.call(12, 7); end_seg.call(hce); hce.events.clear(); hce.step({"corner": 1})
+	var hce_c1: Array = coach_actions.call(hce)
+	hce.step({"corner": 1}); quiet(hce); hce.coach_on = true
+	end_seg.call(hce); hce.events.clear(); hce.step({"corner": 1})
+	var hce_refused := hce.corner_action({"kind": "save_bar"})
+	var yours_locked: bool = int(hce.corner["actions_left"]) == 0 and count_events(hce.events, "corner_locked") == 1 and not hce_refused and count_events(hce.events, "corner_refused", {"why": "locked out by the crowd"}) == 1
+	_sr("Hostile Crowd: yours locks his next corner (he takes nothing, the lock is spent); the Hollow Circuit's %s locks yours - 0 actions, refused as locked out (tell fired)" % JSON.stringify(hce_c1),
+		hcp_ok and his_locked and "super:hostile_crowd" in hce_c1 and count_events(hce.events, "coach_tell", {"tell": "hostile_crowd_first_corner"}) == 0 and yours_locked)
+	# The Reveal names his slot as it stands after his corner - the post-swap truth
+	var rv2: TNBSim = coached.call(6, 7, lu_ac); equip.call(rv2, [], "iron_resolve", ["the_reveal"]); end_seg.call(rv2); rv2.step({"corner": 1}); rv2.events.clear()
+	var rv2_ok := rv2.corner_action({"kind": "staff", "id": "the_reveal"})
+	_sr("The Reveal names the post-swap slot: the Academy swapped Cal in, the reveal says Cal", rv2_ok and count_events(rv2.events, "reveal", {"boss": "commissioner_cal"}) == 1)
+	# the enemy's half of the economy (NP_05 s2, both teams earn), and yours on the canonical table
+	var eco: TNBSim = coached.call(1, 7); eco.btension = 0.0; clear_defense(eco.P); eco.P["comp"] = eco.P["comp_max"]
+	boss_lands(eco, "R_STRAIGHT"); var his_center: float = eco.btension                          # both in CENTER at 1.4m: 0 + 2
+	thaw(eco); eco.P["pos"] = Vector2(0.0, 2.6); eco.B["pos"] = Vector2(0.0, 1.2); eco.P["comp"] = eco.P["comp_max"]; eco.btension = 0.0
+	boss_lands(eco, "R_STRAIGHT"); var his_plain: float = eco.btension                           # off-center clean hit: 0
+	thaw(eco); eco.btension = 0.0; boss_lands(eco, "R_STRAIGHT", 1.3); var his_counter: float = eco.btension   # qa counter (mult > 1): 3
+	thaw(eco); place(eco, 1.4); eco.btension = 0.0; eco.P["busy_t"] = 0; eco.P["cmd"] = {}; eco.step({"punch": "R_STRAIGHT"}); eco.B["dodge"] = "SLIP"; eco.B["dodge_dir"] = 1; eco.B["dodge_t"] = 999; eco.B["dodge_plan"] = []; eco.B["dodge_at"] = 0; land(eco)
+	var his_slip: float = eco.btension                                                            # his read beat your straight: +2
+	clear_defense(eco.B); thaw(eco); eco.btension = 0.0; eco.P["comp"] = 0.5; place(eco, 1.4); clear_defense(eco.P); boss_lands(eco, "R_STRAIGHT")
+	var his_drop: float = eco.btension; eco.mode = "FIGHT"; eco.eight = {}                        # you went down: +10
+	eco.btension = 40.0; boss_desperation(eco); var his_cast_cost: float = eco.btension              # Grain Elevator (35) paid from his bar
+	eco.cast = {}; eco.bdesp_used = false; eco.bstate = "IDLE"; eco.btimer = 1 << 30; eco.B["busy_t"] = 0
+	eco.btension = 0.0; var cast_anyway := boss_desperation(eco); var his_floor: float = eco.btension  # qa bar of 0 never blocks the authored beat
+	eco.cast = {}; eco.bstate = "IDLE"; eco.btimer = 1 << 30
+	eco.score_b += 1; eco.btension = 0.0; eco.bcontributed = 0.0; end_seg.call(eco); var his_seg_win: float = eco.btension   # his segment win: +5
+	_sr("his bar: a clean hit in CENTER +2, off-center +0, a counter +3, his read that beat your punch +2, the CENTER hit that dropped you +12, his segment win +5; his desperation pays 35 from his bar and still goes at 0",
+		his_center == 2.0 and his_plain == 0.0 and his_counter == 3.0 and his_slip == 2.0 and his_drop == 12.0 and his_cast_cost == 5.0 and cast_anyway and his_floor == 0.0 and his_seg_win == 5.0,
+		"center %.0f plain %.0f counter %.0f slip %.0f drop %.0f cast %.0f floor %.0f win %.0f" % [his_center, his_plain, his_counter, his_slip, his_drop, his_cast_cost, his_floor, his_seg_win])
+	var yc: TNBSim = coached.call(1, 7); yc.tension = 0.0; throw_clean(yc, "L_STRAIGHT"); var my_center: float = yc.tension
+	thaw(yc); yc.P["pos"] = Vector2(0.0, 2.6); yc.B["pos"] = Vector2(0.0, 1.2); yc.tension = 0.0; throw_clean(yc, "L_STRAIGHT"); var my_plain: float = yc.tension
+	thaw(yc); yc.P["pos"] = Vector2(0.0, 2.6); yc.B["pos"] = Vector2(0.0, 1.2); yc.tension = 0.0; yc.P["busy_t"] = 0; yc.P["cmd"] = {}; yc.P["counter_t"] = 60; yc.step({"punch": "R_STRAIGHT"}); clear_defense(yc.B); land(yc); var my_counter: float = yc.tension
+	thaw(yc); yc.P["pos"] = Vector2(0.0, 2.6); yc.B["pos"] = Vector2(0.0, 1.2); yc.tension = 0.0; yc.P["busy_t"] = 0; yc.P["cmd"] = {}; yc.P["flash_t"] = 60; yc.step({"punch": "R_STRAIGHT"}); clear_defense(yc.B); land(yc); var my_flash: float = yc.tension
+	thaw(yc); place(yc, 1.4); yc.tension = 0.0; yc.P["dodge"] = "SLIP"; yc.P["dodge_t"] = 999; yc.P["dodge_dir"] = 1; boss_lands(yc, "R_STRAIGHT"); var my_slip: float = yc.tension
+	clear_defense(yc.P); thaw(yc); place(yc, 1.4); yc.tension = 0.0; yc.P["blocking"] = true; yc.P["block_t"] = 1; boss_lands(yc, "R_STRAIGHT"); var my_pb: float = yc.tension; yc.P["blocking"] = false; yc.P["block_t"] = 0
+	_sr("your bar on the canonical table: clean hit in CENTER +2, off-center +0, counter +3, flash +5, slip +2, perfect block +2 (segment win +5 is gated above)",
+		my_center == 2.0 and my_plain == 0.0 and my_counter == 3.0 and my_flash == 5.0 and my_slip == 2.0 and my_pb == 2.0,
+		"center %.0f plain %.0f counter %.0f flash %.0f slip %.0f pb %.0f" % [my_center, my_plain, my_counter, my_flash, my_slip, my_pb])
+	# the feud is qa geyser both ways; his Perfect Round doubles his sources; 25 banked sends his next fighter out CHARGED
+	var fb: TNBSim = ringed.call(2, 7, "BOXERPUNCHER", "NONE", "tremblay"); fb.btension = 0.0; fb._earn_tension_b(10.0)
+	var nm: TNBSim = coached.call(19, 7); nm.btension = 0.0; nm.score_p = 2
+	end_seg.call(nm); nm.events.clear(); nm.step({"corner": 1}); var nm_acts: Array = coach_actions.call(nm)
+	nm.step({"corner": 1}); nm.btension = 0.0; nm.bcontributed = 0.0; nm._earn_tension_b(10.0)
+	var chg: TNBSim = coached.call(1, 7); chg.bcontributed = 30.0; end_seg.call(chg); next_segment(chg)
+	_sr("feud: House Tremblay vs Moreau pays him 12.5 for 10 too; the Netmen corner trailing burns Perfect Round (%s) and his next segment earns 20 for 10; 30 banked sends his next fighter out CHARGED (10s, feet x1.1)" % JSON.stringify(nm_acts),
+		absf(fb.btension - 12.5) < 0.01 and "super:perfect_round" in nm_acts and absf(nm.btension - 20.0) < 0.01 and chg.brelay_chain == 1 and int(chg.B["charge_t"]) == TNBSim.ms(10000) and absf(chg._speed_mult("B") - 1.1) < 0.001)
+
 	# ---- PUNISH / BAIT from pattern data ----
 	var rc := s.response_coverage(s.patterns)
 	_sr("punish-response grammar resolves for every hook (24 patterns)", rc["unknown"].is_empty(),
@@ -1351,7 +1493,7 @@ func determinism() -> int:
 	var log_ := build_log(N, 777)
 	var a := make_sim(1, 12345); a.events.clear()
 	var ha := run_log(a, log_, 60)
-	var cov := {"hit_B": 0, "hit_P": 0, "counter": 0, "flash": 0, "drop": 0, "eight": 0, "seg_end": 0, "tell": 0, "evade": 0, "block": 0, "interrupt": 0, "clinch": 0, "sprint": 0, "sensor": 0, "foul": 0, "pulled": 0, "survival_grab": 0, "cast_P": 0, "cast_B": 0, "cast_hit": 0, "cast_interrupted": 0, "feint": 0, "feint_drawn": 0, "corner_action": 0, "seg_card": 0, "matchup": 0, "matchup_adv": 0}
+	var cov := {"hit_B": 0, "hit_P": 0, "counter": 0, "flash": 0, "drop": 0, "eight": 0, "seg_end": 0, "tell": 0, "evade": 0, "block": 0, "interrupt": 0, "clinch": 0, "sprint": 0, "sensor": 0, "foul": 0, "pulled": 0, "survival_grab": 0, "cast_P": 0, "cast_B": 0, "cast_hit": 0, "cast_interrupted": 0, "feint": 0, "feint_drawn": 0, "corner_action": 0, "seg_card": 0, "matchup": 0, "matchup_adv": 0, "enemy_corner": 0, "coach_action": 0, "tension_b": 0}
 	for e in a.events:
 		match e["kind"]:
 			"hit":
@@ -1384,6 +1526,8 @@ func determinism() -> int:
 			"matchup":
 				cov["matchup"] += 1
 				if str(e["style_adv"]) != "" or str(e["element_adv"]) != "": cov["matchup_adv"] += 1
+			"enemy_corner": cov["enemy_corner"] += 1
+			"coach_action": cov["coach_action"] += 1
 	for e in a.events:
 		if e["kind"] == "hit" and e.get("hissatsu", false): cov["cast_hit"] += 1
 	var duals := 0
@@ -1400,6 +1544,7 @@ func determinism() -> int:
 	_sr("log exercises feints, some of them drawing his read", cov["feint"] > 0 and cov["feint_drawn"] > 0)
 	_sr("log exercises the segment card and corner actions", cov["seg_card"] > 0 and cov["corner_action"] > 0)
 	_sr("log passes matchup cards with a ring live (the triangle or the element) and hashes the rings' state", cov["matchup"] >= 2 and cov["matchup_adv"] > 0)
+	_sr("log runs the rival corner (it resolves at every corner) and the enemy bar earns; his actions hash with everything else", cov["enemy_corner"] >= 1 and cov["coach_action"] >= 1 and a.btension > 0.0, "rival corners %d, his actions %d, his bar %.1f" % [cov["enemy_corner"], cov["coach_action"], a.btension])
 	var b := make_sim(1, 12345)
 	var hb := run_log(b, log_, 60)
 	var same_ab := ha.size() == hb.size() and ha.size() > 0
