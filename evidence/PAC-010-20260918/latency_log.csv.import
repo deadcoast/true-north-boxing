@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://d0gswps6dbg47"
+
+[deps]
+
+files=["res://evidence/PAC-010-20260918/latency_log.a.translation", "res://evidence/PAC-010-20260918/latency_log.b.translation", "res://evidence/PAC-010-20260918/latency_log.c.translation"]
+
+source_file="res://evidence/PAC-010-20260918/latency_log.csv"
+dest_files=["res://evidence/PAC-010-20260918/latency_log.a.translation", "res://evidence/PAC-010-20260918/latency_log.b.translation", "res://evidence/PAC-010-20260918/latency_log.c.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

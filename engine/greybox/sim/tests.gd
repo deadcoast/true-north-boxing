@@ -22,10 +22,10 @@ func _verdict(label: String) -> int:
 	print("%s VERDICT :: %s (%d/%d)" % [label, "GREEN" if fails == 0 else "RED", results.size() - fails, results.size()])
 	return 0 if fails == 0 else 1
 
-func make_sim(boss_idx: int, seed_v: int, lineup: Array = TNBSim.LINEUP_MILLBROOK) -> TNBSim:
+func make_sim(boss_idx: int, seed_v: int, lineup: Array = TNBSim.LINEUP_MILLBROOK, fmt_id: String = "") -> TNBSim:
 	if content.is_empty(): content = TNBSim.load_content()
 	var s := TNBSim.new()
-	s.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, seed_v, content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}))
+	s.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, seed_v, content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id)
 	return s
 
 func play_clinch(s: TNBSim, mode: String, want_reset: bool = false) -> void:
@@ -350,6 +350,7 @@ func smoke(boss_idx: int) -> int:
 	s.coach_on = false                                            # the flow itself; the rival corner has its own stage (PAC-060)
 	s.mode = "FIGHT"; s.eight = {}
 	s.contributed = 30.0; s.tension = 42.0
+	var ep_lead_now: bool = (s.ep_p - int(s.seg_score0[2])) > (s.ep_b - int(s.seg_score0[3]))   # NP_05 s2: the segment win pays +5 if you took it on EP
 	s._end_segment("smoke-forced")
 	_sr("segment end shows the 4s broadcast card first", s.mode == "CARD" and s.card_t == TNBSim.ms(4000) and count_events(s.events, "seg_card") >= 1)
 	_sr("relay CHARGED at >=25 contributed (chain 1)", s.charged and s.relay_chain == 1)
@@ -359,7 +360,7 @@ func smoke(boss_idx: int) -> int:
 	_sr("the card times out into the CORNER (45s, 2 actions)", still_card and s.mode == "CORNER" and int(s.corner["t"]) == TNBSim.ms(45000) and int(s.corner["actions_left"]) == 2)
 	s.step({"corner": 1})
 	_sr("send: rotation loads the next fighter", s.pname() == "PRIYA", s.pname())
-	_sr("tension persists across segments", s.tension == 42.0, "%.0f" % s.tension)
+	_sr("tension persists across segments (+5 if the segment was won on EP)", s.tension == 42.0 + (5.0 if ep_lead_now else 0.0), "%.0f" % s.tension)
 	var half_cost := 5.0 * (0.9 if s._beats("element", s.P["element"], s.B["element"]) else 1.0)
 	_sr("CHARGED entrance: 10s surge (+10%% feet), first hissatsu half cost, T3 unlocked", s.P["charge_t"] > 0 and absf(s.hiss_cost(s.player_move()) - half_cost) < 0.01 and s.t3_unlocked and absf(s._speed_mult("P") - 1.1) < 0.001, "Marginalia T0 costs %.1f" % s.hiss_cost(s.player_move()))
 	s.contributed = 0.0
@@ -1321,7 +1322,7 @@ func smoke(boss_idx: int) -> int:
 	var ab_no_tactic_c1 := true
 	for qa in ab_c1:
 		if str(qa).begins_with("tactic:"): ab_no_tactic_c1 = false
-	ab.step({"corner": 1}); ab.btension = 30.0; ab.score_b = 9
+	ab.step({"corner": 1}); ab.btension = 30.0; ab.score_b = 9; ab.ep_b += 10     # leading on score and on EP: the segment is his (+5, EP majority)
 	end_seg.call(ab); ab.events.clear(); ab.step({"corner": 1})
 	var ab_c2: Array = coach_actions.call(ab)
 	var ab_tell: bool = count_events(ab.events, "coach_tell", {"tell": "book_tactic_r3"}) == 1 and "tactic:body_doctrine" in ab_c2 and absf(ab.btension - 25.0) < 0.01   # 30 + 5 for the segment he won - 10
@@ -1391,6 +1392,104 @@ func smoke(boss_idx: int) -> int:
 	var chg: TNBSim = coached.call(1, 7); chg.bcontributed = 30.0; end_seg.call(chg); next_segment(chg)
 	_sr("feud: House Tremblay vs Moreau pays him 12.5 for 10 too; the Netmen corner trailing burns Perfect Round (%s) and his next segment earns 20 for 10; 30 banked sends his next fighter out CHARGED (10s, feet x1.1)" % JSON.stringify(nm_acts),
 		absf(fb.btension - 12.5) < 0.01 and "super:perfect_round" in nm_acts and absf(nm.btension - 20.0) < 0.01 and chg.brelay_chain == 1 and int(chg.B["charge_t"]) == TNBSim.ms(10000) and absf(chg._speed_mult("B") - 1.1) < 0.001)
+
+	# ================= PAC-061: dual formats (NP_01 s2 / s3.3 / s6 / s8) ==========
+	var names_of := func(cards: Array) -> Array:
+		var outn: Array = []
+		for cdq in cards: outn.append(str(cdq["name"]) if cdq is Dictionary else str(cdq))
+		return outn
+	var seg_end := func(sim: TNBSim, ep_lead: int = 0) -> void:                # end the segment with an EP result, no fight
+		sim.mode = "FIGHT"; sim.eight = {}
+		if ep_lead > 0: sim.ep_p += ep_lead
+		elif ep_lead < 0: sim.ep_b -= ep_lead
+		sim._end_segment("smoke-forced")
+	var l8: Array = TNBSim.LINEUP_MILLBROOK_8.duplicate(true)
+	var l3: Array = [TNBSim.LINEUP_MILLBROOK_8[0].duplicate(true), TNBSim.LINEUP_MILLBROOK_8[2].duplicate(true), TNBSim.LINEUP_MILLBROOK_8[3].duplicate(true)]   # RORY, PRIYA, MARCUS
+	var l1: Array = [TNBSim.LINEUP_MILLBROOK_8[0].duplicate(true)]
+	var f_san := make_sim(0, 7, l8, "sanctioned"); var f_min := make_sim(0, 7); var f_iron := make_sim(0, 7, l3, "iron"); var f_gau := make_sim(0, 7, l1, "gauntlet"); var f_bli := make_sim(0, 7, l8, "blind")
+	_sr("formats: five records load; the sanctioned dual dresses 5 + 3 both sides (his STANDARD order %s, bench %s), the mini 3 + 1, the Iron dual repeats 3 across 5 slots both sides, the Gauntlet is one fighter five times vs five, blind is a sanctioned shape" % [JSON.stringify(f_san.blineup), JSON.stringify(f_san.breserves)],
+		f_san.segments() == 5 and names_of.call(f_san.lineup) == ["RORY", "JUNE", "PRIYA", "MARCUS", "SAM"] and names_of.call(f_san.reserves) == ["DEX", "YURI", "MARTA"]
+		and f_san.blineup == ["cassidy_vane", "carter_okafor", "ada_okafor", "sam_tagaq", "anders_vey"] and f_san.breserves == ["yuri_kowalchuk", "jean_guy_moreau", "alfie_crane"]
+		and f_min.segments() == 3 and names_of.call(f_min.lineup) == ["RORY", "PRIYA", "MARCUS"] and names_of.call(f_min.reserves) == ["JUNE"] and f_min.blineup.size() == 3 and f_min.breserves.size() == 1
+		and f_iron.segments() == 5 and names_of.call(f_iron.lineup) == ["RORY", "PRIYA", "MARCUS", "RORY", "PRIYA"] and f_iron.reserves.is_empty() and f_iron.blineup == ["cassidy_vane", "yuri_kowalchuk", "jean_guy_moreau", "cassidy_vane", "yuri_kowalchuk"] and f_iron.breserves.is_empty()
+		and names_of.call(f_gau.lineup) == ["RORY", "RORY", "RORY", "RORY", "RORY"] and f_gau.blineup == ["cassidy_vane", "ada_okafor", "yuri_kowalchuk", "jean_guy_moreau", "sam_tagaq"] and f_gau.breserves.is_empty()
+		and f_bli.segments() == 5 and f_bli.fmt.get("blind", false) and f_bli.lineup.size() == 5 and f_bli.reserves.size() == 3)
+	# the sanctioned dual runs five segments; its corner offers three reserves and the not-yet-fought slots; the swap rules generalise
+	var sn := make_sim(0, 7, l8, "sanctioned"); quiet(sn); sn.tension = 30.0
+	seg_end.call(sn, 5); sn.step({"corner": 1})
+	var sn_opts: Array = sn.corner_options()["swap"]
+	var sn_s1 := sn.corner_action({"kind": "swap", "arg": "DEX"})             # a reserve for R2's JUNE: free
+	var sn_s2 := sn.corner_action({"kind": "swap", "arg": "SAM"})             # R5's SAM up to R2 for DEX: 15 Tension
+	var sn_after: Array = names_of.call(sn.lineup); var sn_res: Array = names_of.call(sn.reserves)
+	sn.step({"corner": 1})
+	var modes: Array = []
+	for fi in 4:
+		seg_end.call(sn, 5); modes.append(sn.mode)
+		if sn.mode != "OVER": next_segment(sn)
+	_sr("sanctioned: corner 1 offers %s; DEX in for JUNE (free) then SAM up for DEX (-15) -> %s, reserves %s; five segments end the dual (modes after R2..R5: %s)" % [JSON.stringify(sn_opts), JSON.stringify(sn_after), JSON.stringify(sn_res), JSON.stringify(modes)],
+		sn_opts == ["DEX", "YURI", "MARTA", "PRIYA", "MARCUS", "SAM"] and sn_s1 and sn_s2 and sn_after == ["RORY", "SAM", "PRIYA", "MARCUS", "DEX"] and sn_res == ["JUNE", "YURI", "MARTA"] and absf(sn.tension - 15.0 - 5.0 * 5) < 0.01
+		and modes == ["CARD", "CARD", "CARD", "OVER"] and sn.seg_wins_p == 5)
+	# segment wins are EP majority (s3.2): a DROP is the score, the segment goes to whoever won the exchanges
+	var ew := make_sim(1, 7); quiet(ew); ew.B["comp"] = 0.5; ew._drop(false); ew.btension = 0.0; ew.tension = 0.0
+	seg_end.call(ew, -6)
+	_sr("segment wins by EP majority: you scored the DROP (1-0) but lost the exchanges 0-6 - the segment and its +5 are his", ew.score_p == 1 and ew.seg_wins_b == 1 and ew.seg_wins_p == 0 and absf(ew.btension - 5.0) < 0.01 and ew.tension == 0.0)
+	# the ladder (s3.3): score, then segment wins, then counter hits, then the Golden DROP
+	var la := make_sim(0, 7); quiet(la)
+	seg_end.call(la, 4); next_segment(la); seg_end.call(la, -4); next_segment(la); seg_end.call(la, 4)
+	var lbq := make_sim(0, 7); quiet(lbq); lbq.counters_p = 3; lbq.counters_b = 1
+	seg_end.call(lbq); next_segment(lbq); seg_end.call(lbq); next_segment(lbq); seg_end.call(lbq)
+	_sr("ladder: equal score -> segment wins decide (%s); equal segments -> counter hits decide (%s)" % [str(la.feed), str(lbq.feed)],
+		la.mode == "OVER" and "MILLBROOK WINS ON SEGMENTS" in str(la.feed) and lbq.mode == "OVER" and "MILLBROOK WINS ON COUNTERS" in str(lbq.feed))
+	# all equal -> the Golden DROP: any dressed fighter, condition carried, no clock, first DROP wins
+	var g6 := make_sim(0, 7); quiet(g6)
+	g6.P["comp"] = 20.0; seg_end.call(g6); next_segment(g6)                                   # RORY leaves R1 at 20 composure
+	g6.P["stamina"] = 40.0; g6.P["guard"] = 30.0; g6.P["comp"] = 30.0; seg_end.call(g6); next_segment(g6)   # PRIYA leaves R2 at 40 / 30 / 30
+	g6.B["comp"] = 12.0; seg_end.call(g6)                                                    # MARCUS whole; Sam leaves R3 hurt
+	var r6_card: bool = g6.mode == "CARD" and g6.r6 and count_events(g6.events, "seg_card", {"why": "GOLDEN DROP"}) == 1 and count_events(g6.events, "r6", {"default": "MARCUS"}) == 1
+	g6.step({"corner": 1})
+	var r6_opts: Array = g6.corner_options()["swap"]
+	var r6_free: bool = int(g6.corner_options()["swap_cost"]) == 0
+	var r6_pick := g6.corner_action({"kind": "swap", "arg": "PRIYA"})
+	var his_pick: String = g6.blineup[3]
+	g6.step({"corner": 1})
+	var r6_fight: bool = g6.mode == "FIGHT" and g6.pname() == "PRIYA" and g6.clock_t > TNBSim.ms(3600000) and absf(g6.P["stamina"] - 40.0) < 0.01 and absf(g6.P["guard"] - 30.0) < 0.01 and absf(g6.P["comp"] - 30.0) < 0.01 and count_events(g6.events, "carried", {"who": "P", "name": "PRIYA"}) == 1
+	quiet(g6); place(g6, 1.4); clear_defense(g6.B); g6.B["comp"] = 0.5; g6.bsurvival_used = true
+	throw_clean(g6, "R_STRAIGHT")
+	_sr("Golden DROP: three drawn segments tie the ladder -> the card names your freshest (MARCUS); the pick is free from anyone dressed (%s); PRIYA enters as she left R2 (40 stamina, 30 guard, 30 composure), no clock; his pick was his freshest (%s); the first DROP ends it: %s" % [JSON.stringify(r6_opts), his_pick, str(g6.feed)],
+		r6_card and r6_opts == ["RORY", "PRIYA", "JUNE"] and r6_pick and r6_free and r6_fight and his_pick == "yuri_kowalchuk" and g6.mode == "OVER" and "MILLBROOK WINS - GOLDEN DROP" in str(g6.feed))
+	var g6b := make_sim(0, 7); quiet(g6b)
+	seg_end.call(g6b); next_segment(g6b); seg_end.call(g6b); next_segment(g6b); seg_end.call(g6b); next_segment(g6b); next_segment(g6b)
+	quiet(g6b); place(g6b, 1.4); clear_defense(g6b.P); g6b.P["comp"] = 0.5; boss_lands(g6b, "R_STRAIGHT")
+	_sr("Golden DROP the other way: his first DROP ends it - %s" % str(g6b.feed), g6b.r6 and g6b.mode == "OVER" and "ASCENDANT WINS - GOLDEN DROP" in str(g6b.feed) and count_events(g6b.events, "dual_end", {"rung": "sudden_death"}) == 1)
+	# the Iron dual: RORY fights R1 and R4; he comes back as he left, and the corner's restores finally have something to restore
+	var ir := make_sim(0, 7, l3, "iron"); quiet(ir); ir.tension = 40.0
+	ir.P["stamina"] = 40.0; ir.P["guard"] = 30.0; ir.P["comp"] = 20.0; ir.B["comp"] = 50.0
+	seg_end.call(ir); next_segment(ir); seg_end.call(ir); next_segment(ir); seg_end.call(ir); ir.step({"corner": 1})   # the corner before R4
+	var ir_opts: Array = ir.corner_options()["swap"]
+	var ir_pj := ir.corner_action({"kind": "staff", "id": "patch_job"})
+	var ir_sw := ir.corner_action({"kind": "tactic", "id": "second_wind_call"})
+	ir.step({"corner": 1})
+	var ir_ok: bool = ir.pname() == "RORY" and ir.boss_name == "cassidy_vane" and absf(ir.P["comp"] - 50.0) < 0.01 and absf(ir.P["stamina"] - 80.0) < 0.01 and absf(ir.P["guard"] - 30.0) < 0.01 and absf(ir.B["comp"] - 50.0) < 0.01
+	var ir2 := make_sim(0, 7, l3, "iron"); quiet(ir2); ir2.P["stamina"] = 40.0
+	seg_end.call(ir2); next_segment(ir2); seg_end.call(ir2); next_segment(ir2); seg_end.call(ir2); ir2.step({"corner": 1})
+	ir2.corner_action({"kind": "staff", "id": "loosen_up"}); ir2.step({"corner": 1})
+	_sr("Iron dual: the corner before R4 offers everyone else dressed (%s); Patch Job +30 and Second Wind +40 land on RORY's carried 20 / 40 (-> 50 composure, 80 stamina, guard 30 as left); Vane comes back at the 50 he left with; Loosen Up's 110 cap does not top up a carried 40" % JSON.stringify(ir_opts),
+		ir_opts == ["PRIYA", "MARCUS"] and ir_pj and ir_sw and ir_ok and ir2.pname() == "RORY" and absf(ir2.P["stamina"] - 40.0) < 0.01 and absf(ir2.stamina_cap - 110.0) < 0.01)
+	# the Gauntlet: one fighter, five segments, no one to swap in, condition carried the whole way
+	var ga := make_sim(0, 7, l1, "gauntlet"); quiet(ga); ga.P["stamina"] = 50.0
+	seg_end.call(ga); ga.step({"corner": 1})
+	var ga_refused := ga.corner_action({"kind": "swap", "arg": "PRIYA"})
+	ga.step({"corner": 1}); var ga_r2: float = ga.P["stamina"]
+	ga.P["stamina"] = 30.0; seg_end.call(ga); next_segment(ga); var ga_r3: float = ga.P["stamina"]
+	_sr("Gauntlet: the swap is refused (no one else is dressed); RORY carries 50 into R2 and 30 into R3 against a fresh boss each time",
+		not ga_refused and count_events(ga.events, "corner_refused", {"why": "PRIYA is not available (no one else is dressed)"}) == 1 and absf(ga_r2 - 50.0) < 0.01 and absf(ga_r3 - 30.0) < 0.01 and ga.pname() == "RORY" and ga.seg_idx == 2 and ga.boss_name == "yuri_kowalchuk")
+	# the Blind dual: no reveals - The Reveal is refused and its charge kept, the corner names no slot, the matchup card still fires at the bell
+	var bl := make_sim(0, 7, l8, "blind"); quiet(bl); equip.call(bl, [], "iron_resolve", ["the_reveal"]); seg_end.call(bl); bl.step({"corner": 1})
+	var bl_rv := bl.corner_action({"kind": "staff", "id": "the_reveal"})
+	var bl_open: bool = count_events(bl.events, "corner_open", {"boss": "?"}) == 1
+	bl.events.clear(); bl.step({"corner": 1})
+	_sr("Blind dual: The Reveal is refused (charge kept), the corner shows '?' for his slot, and the matchup card still names him at the bell",
+		not bl_rv and count_events(bl.events, "reveal") == 0 and int(bl.staff_charges.get("the_reveal", 0)) == 1 and bl_open and count_events(bl.events, "matchup") == 1 and bl.mode == "FIGHT")
 
 	# ---- PUNISH / BAIT from pattern data ----
 	var rc := s.response_coverage(s.patterns)
@@ -1570,6 +1669,20 @@ func determinism() -> int:
 		for i in ha.size():
 			if ha[i] != hd[i]: differs = true; break
 	_sr("a different seed produces a different trajectory (hash is not degenerate)", differs)
+	# the sanctioned format: five segments (and the ladder's Golden DROP if it comes to that) through one log, twice
+	const N5 := 66000
+	var log5 := build_log(N5, 4242)
+	var f5a := make_sim(0, 999, TNBSim.LINEUP_MILLBROOK_8, "sanctioned"); f5a.events.clear()
+	var h5a := run_log(f5a, log5, 600)
+	var seg_ends := 0; var verdicts := 0; var r6s := 0
+	for e5 in f5a.events:
+		match e5["kind"]:
+			"seg_end": seg_ends += 1
+			"dual_end": verdicts += 1
+			"r6": r6s += 1
+	var f5b := make_sim(0, 999, TNBSim.LINEUP_MILLBROOK_8, "sanctioned")
+	var h5b := run_log(f5b, log5, 600)
+	_sr("sanctioned-format log (%d ticks) runs five segments to a verdict (segment ends %d, verdicts %d, Golden DROPs %d) and hashes identically twice" % [N5, seg_ends, verdicts, r6s], seg_ends >= 4 and verdicts >= 1 and h5a == h5b and h5a.size() > 0, "%d hashes" % h5a.size())
 	return _verdict("DETERMINISM")
 
 # --------------------------------------------------------------- GEOMETRY ----

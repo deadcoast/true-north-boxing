@@ -45,6 +45,24 @@ const LINEUP_MILLBROOK := [   # NP_01 s8 mini-dual: 4 dressed - three slots and 
 	{"name": "JUNE",   "hissatsu": "First Snap", "reserve": true, "style": "SWARMER", "element": "FROST", "house": "none",
 		"stats": {"PWR": 30, "SPD": 75, "CHN": 35, "RFX": 60, "BLK": 20, "STA": 60, "HRT": 70}},
 ]
+const LINEUP_MILLBROOK_8 := [   # NP_01 s2 sanctioned dual: 8 dressed - five slots (R1 opener .. R5 anchor) and three reserves. Recruits' cards are editorial (REGISTER_COMMANDS_010)
+	{"name": "RORY",   "hissatsu": "Aurora Borealis Breaker", "style": "BOXERPUNCHER", "element": "FROST", "house": "none",
+		"stats": {"PWR": 45, "SPD": 50, "CHN": 45, "RFX": 50, "BLK": 45, "STA": 50, "HRT": 99}},
+	{"name": "JUNE",   "hissatsu": "First Snap", "style": "SWARMER", "element": "FROST", "house": "none",
+		"stats": {"PWR": 30, "SPD": 75, "CHN": 35, "RFX": 60, "BLK": 20, "STA": 60, "HRT": 70}},
+	{"name": "PRIYA",  "hissatsu": "Marginalia", "style": "OUTBOXER", "element": "GALE", "house": "none",
+		"stats": {"PWR": 35, "SPD": 60, "CHN": 40, "RFX": 70, "BLK": 50, "STA": 55, "HRT": 60}},
+	{"name": "MARCUS", "hissatsu": "Chinook Rush", "style": "SLUGGER", "element": "GRANITE", "house": "none",
+		"stats": {"PWR": 70, "SPD": 40, "CHN": 65, "RFX": 35, "BLK": 40, "STA": 55, "HRT": 70}},
+	{"name": "SAM",    "hissatsu": "Sorry Eh", "style": "BOXERPUNCHER", "element": "FROST", "house": "tagaq",
+		"stats": {"PWR": 55, "SPD": 45, "CHN": 90, "RFX": 50, "BLK": 80, "STA": 70, "HRT": 85}},
+	{"name": "DEX",    "hissatsu": "Prodigal", "reserve": true, "style": "SLUGGER", "element": "TIMBER", "house": "macisaac",
+		"stats": {"PWR": 62, "SPD": 48, "CHN": 60, "RFX": 45, "BLK": 50, "STA": 60, "HRT": 65}},
+	{"name": "YURI",   "hissatsu": "Grain Elevator", "reserve": true, "style": "SLUGGER", "element": "GRANITE", "house": "kowalchuk",
+		"stats": {"PWR": 80, "SPD": 40, "CHN": 70, "RFX": 40, "BLK": 45, "STA": 60, "HRT": 75}},
+	{"name": "MARTA",  "hissatsu": "Miroir d'Hiver", "reserve": true, "style": "OUTBOXER", "element": "FROST", "house": "tremblay",
+		"stats": {"PWR": 40, "SPD": 65, "CHN": 50, "RFX": 85, "BLK": 70, "STA": 55, "HRT": 60}},
+]
 const PUNCH_VERBS := {
 	"JAB": "L_STRAIGHT", "L_STR": "L_STRAIGHT", "R_STR": "R_STRAIGHT",
 	"COUNTER_R_STR": "R_STRAIGHT", "STEP_R_STR": "R_STRAIGHT", "UNDER_ELBOW_CROSS": "R_STRAIGHT",
@@ -167,6 +185,19 @@ var lb_block_t := 0                  # LB + RT held: the WALL motion (400ms)
 var feint_log: Array = []            # [tick, row] of recent feints (10s window)
 var feint_wise: Dictionary = {}      # row -> tick until which he stops reacting to that feint
 
+# PAC-061: dual formats (NP_01 s2 / s3.3 / s6 / s8)
+var FMT: Dictionary = {}             # data/formats.v1.json
+var fmt: Dictionary = {}             # this dual's format record
+var dressed: Array = []              # every card you brought, in order (slots are drawn from it)
+var bdressed: Array = []             # every boss he brought
+var condition: Dictionary = {}       # name -> {stamina, guard, comp} at the end of the segment he left (s6: condition carries)
+var bcondition: Dictionary = {}
+var seg_wins_p := 0                  # EP majority per segment (s3.2), the ladder's second rung
+var seg_wins_b := 0
+var counters_p := 0                  # counter hits across the dual, the ladder's third rung
+var counters_b := 0
+var r6 := false                      # the Golden DROP: no clock, first DROP wins
+
 # PAC-060: the enemy coach (NP_10 s9) and the enemy's half of the economy (NP_05 s2 "both teams earn")
 var COACHES: Dictionary = {}         # data/coaches.v1.json
 var coach: Dictionary = {}           # this dual's rival corner
@@ -232,17 +263,35 @@ static func load_content(base: String = "res://") -> Dictionary:
 	for m in raw.get("moves", []): lib[str(m["name"])] = m
 	return {"tuning": load_json(base + "combat_tuning.v1.json"), "patterns": pats, "library": lib, "tactics": load_json(base + "tactics.v1.json"),
 		"affinity": load_json(base + "affinity.v1.json"), "feuds": load_json(base + "feud_graph.v1.json").get("edges", []),
-		"coaches": load_json(base + "coaches.v1.json")}
+		"coaches": load_json(base + "coaches.v1.json"), "formats": load_json(base + "formats.v1.json")}
 
-func setup(tuning: Dictionary, pats: Dictionary, names: Array, lineup_p: Array, first_boss: int, seed_v: int, lib: Dictionary = {}, tac: Dictionary = {}, aff_d: Dictionary = {}, feuds: Array = [], coaches: Dictionary = {}) -> void:
-	T = tuning; patterns = pats; boss_names = names; library = lib; TAC = tac; AFF = aff_d; FEUDS = feuds; COACHES = coaches
-	lineup = []; reserves = []
-	for f in lineup_p:
-		if f.get("reserve", false): reserves.append(f.duplicate(true))
-		else: lineup.append(f.duplicate(true))
+func setup(tuning: Dictionary, pats: Dictionary, names: Array, lineup_p: Array, first_boss: int, seed_v: int, lib: Dictionary = {}, tac: Dictionary = {}, aff_d: Dictionary = {}, feuds: Array = [], coaches: Dictionary = {}, formats: Dictionary = {}, fmt_id: String = "") -> void:
+	T = tuning; patterns = pats; boss_names = names; library = lib; TAC = tac; AFF = aff_d; FEUDS = feuds; COACHES = coaches; FMT = formats
+	var fid := fmt_id if fmt_id != "" else str(FMT.get("default", "mini"))
+	fmt = FMT.get("formats", {}).get(fid, {"label": "Mini-dual", "segments": 3, "dressed": 4, "enemy_dressed": 4, "repeat_slots": false, "condition_carries": true, "sudden_death": true, "blind": false, "segment_s": 90}).duplicate(true)
+	fmt["id"] = fid
+	dressed = []
+	for f in lineup_p: dressed.append(f.duplicate(true))
 	rng.seed = seed_v
 	boss_names = names
 	_reset_dual(first_boss)
+
+func segments() -> int: return int(fmt.get("segments", 3))
+
+func _build_lineup() -> void:
+	# NP_01 s2 / s8: the slots are drawn from the cards you dressed - reserves flagged as such sit out,
+	# starters fill R1.. in order; a roster shorter than the slots repeats (Iron dual, Gauntlet)
+	lineup = []; reserves = []
+	var starters: Array = []
+	for f in dressed:
+		if f.get("reserve", false): reserves.append(f)
+		else: starters.append(f)
+	if starters.is_empty(): starters = reserves.duplicate(); reserves = []
+	for i in segments():
+		if i < starters.size(): lineup.append(starters[i])
+		elif bool(fmt.get("repeat_slots", false)): lineup.append(starters[i % starters.size()])
+		else: break
+	for i in range(segments(), starters.size()): reserves.append(starters[i])   # more starters than slots: the rest are reserves
 
 func _reset_dual(first_boss: int) -> void:
 	seg_idx = 0; drops_p = 0; drops_b = 0; score_p = 0; score_b = 0; ep_p = 0; ep_b = 0
@@ -254,7 +303,9 @@ func _reset_dual(first_boss: int) -> void:
 	btension = 0.0; bcontributed = 0.0; bcharged = false; brelay_chain = 0
 	btactic_fx = {}; bpending_fx = {}; btactic_cd = {}; bsuper_used = false; bswaps_used = 0
 	enemy_lock = 0; player_lock = 0; bflash_conceded = false; bdrop_conceded = false; coach_log = []
+	condition = {}; bcondition = {}; seg_wins_p = 0; seg_wins_b = 0; counters_p = 0; counters_b = 0; r6 = false
 	_first_boss = first_boss
+	_build_lineup()
 	_pick_coach(); _build_enemy_lineup()
 	_load_segment()
 
@@ -280,7 +331,7 @@ func _load_segment() -> void:
 	var bm: Dictionary = pattern.get("meta", {})
 	_dress(B, str(bm.get("style", "BOXERPUNCHER")), str(bm.get("element", "NONE")), str(bm.get("house", "none")))
 	bstate = "IDLE"; btimer = ms(600); bqueue = []; bphase = 1; bdesp_used = false; bpending = {}
-	clock_t = ms(90000); contributed = 0.0
+	contributed = 0.0
 	tokens = []; flags = {}
 	center_hold_t = 0; block_hold_t = 0; punch_ticks = []; punch_rows = []
 	last_zone_p = "MID"; punish_cd = {}; gassed_fired = false; taunt_t = 0
@@ -299,12 +350,23 @@ func _load_segment() -> void:
 	_load_wall_gauge()
 	sensors = _parse_sensors(pattern)
 	seg_score0 = [score_p, score_b, ep_p, ep_b]; clock_acc = 0.0; ep_frac = 0.0; ep_frac_b = 0.0
+	clock_t = (1 << 30) if r6 else ms(float(fmt.get("segment_s", 90)) * 1000.0)
+	# s6: a fighter who re-enters carries the condition he left with (R6, repeat slots); the corner's restores land on top
+	if bool(fmt.get("condition_carries", true)):
+		if condition.has(str(f["name"])):
+			var cp: Dictionary = condition[str(f["name"])]
+			P["stamina"] = minf(100.0, float(cp["stamina"])); P["guard"] = minf(P["guard_max"], float(cp["guard"])); P["comp"] = minf(P["comp_max"], float(cp["comp"]))
+			_ev("carried", {"who": "P", "name": str(f["name"]), "stamina": P["stamina"], "guard": P["guard"], "comp": P["comp"]})
+		if bcondition.has(boss_name):
+			var cb: Dictionary = bcondition[boss_name]
+			B["stamina"] = minf(100.0, float(cb["stamina"])); B["guard"] = minf(B["guard_max"], float(cb["guard"])); B["comp"] = minf(B["comp_max"], float(cb["comp"]))
+			_ev("carried", {"who": "B", "name": boss_name, "stamina": B["stamina"], "guard": B["guard"], "comp": B["comp"]})
 	# the corner's choices land here (NP_10 s4-s6)
 	tactic_fx = pending_fx; pending_fx = {}
 	save_bar = save_bar_next; save_bar_next = false
 	stamina_cap = float(tactic_fx.get("stamina_cap", 100.0))
-	P["stamina"] = stamina_cap
-	if tactic_fx.has("overrun"): P["stamina"] = stamina_cap * float(TAC.get("corner", {}).get("overrun_stamina_pct", 80)) / 100.0
+	P["stamina"] = minf(stamina_cap, P["stamina"]) if condition.has(str(f["name"])) and bool(fmt.get("condition_carries", true)) else stamina_cap
+	if tactic_fx.has("overrun"): P["stamina"] = minf(P["stamina"], stamina_cap * float(TAC.get("corner", {}).get("overrun_stamina_pct", 80)) / 100.0)
 	if tactic_fx.has("stamina_plus"): P["stamina"] = minf(stamina_cap, P["stamina"] + float(tactic_fx["stamina_plus"]))
 	if tactic_fx.has("composure_plus"): P["comp"] = minf(P["comp_max"], P["comp"] + float(tactic_fx["composure_plus"]))
 	if tactic_fx.has("guard_cap_mult"): P["guard_max"] = P["guard_max"] * float(tactic_fx["guard_cap_mult"]); P["guard"] = P["guard_max"]
@@ -351,28 +413,50 @@ func _anchor_class(name: String) -> bool:
 	return boss_role(name) >= 5 or m.has("wall_gauge") or m.has("migrant_wall")
 
 func _build_enemy_lineup() -> void:
-	# NP_01 s2/s7 + NP_10 s2: four dressed for the mini-dual, R1 sealed as the boss you asked for,
-	# the rest ordered by the corner's archetype. STANDARD: the ace/anchor closes. AMBUSH: the ace opens
-	# the slots the coach controls. WALL_FIRST: anchor-class first. RELAY_LADDER reads as STANDARD here
-	# (bond pairs are a stable concept the boss side does not carry).
+	# NP_01 s2/s7 + NP_10 s2: he dresses enemy_dressed fighters from the boss you asked for on; R1 stays that boss,
+	# the coach's archetype orders the slots he controls. STANDARD: the two highest roles close (hammer, anchor),
+	# the lowest open. AMBUSH: the ace opens the slots he controls. WALL_FIRST: anchor-class first, then STANDARD.
+	# RELAY_LADDER reads as STANDARD (bond pairs are not a boss-side concept yet). A roster shorter than the
+	# slots repeats (Iron dual).
 	var n := boss_names.size()
-	var rest: Array = []
-	for i in range(1, 4): rest.append(boss_names[(_first_boss + i) % n])
+	var count := maxi(1, int(fmt.get("enemy_dressed", 4)))
+	bdressed = []
+	for i in count: bdressed.append(boss_names[(_first_boss + i) % n])
+	var rest: Array = bdressed.slice(1)
 	var by_role := rest.duplicate()
 	by_role.sort_custom(func(a, b): return boss_role(a) < boss_role(b) or (boss_role(a) == boss_role(b) and rest.find(a) < rest.find(b)))
 	var arche := str(coach.get("archetype", "STANDARD"))
-	var r2: String; var r3: String; var bench: String
+	var k := mini(segments() - 1, rest.size())              # slots the coach controls from his roster
+	var ordered: Array = []
 	match arche:
-		"AMBUSH": r2 = by_role[2]; r3 = by_role[0]; bench = by_role[1]
+		"AMBUSH":
+			if k > 0: ordered.append(by_role[by_role.size() - 1])
+			for i in range(0, k - 1): ordered.append(by_role[i])
 		"WALL_FIRST":
 			var anchor := ""
 			for nm in by_role:
 				if _anchor_class(nm): anchor = nm
-			if anchor == "": anchor = by_role[2]
+			if anchor == "" and by_role.size() > 0: anchor = by_role[by_role.size() - 1]
 			var others: Array = by_role.filter(func(x): return x != anchor)
-			r2 = anchor; r3 = others[1]; bench = others[0]
-		_: r2 = by_role[0]; r3 = by_role[2]; bench = by_role[1]
-	blineup = [boss_names[_first_boss], r2, r3]; breserves = [bench]
+			if k > 0: ordered.append(anchor)
+			ordered.append_array(_standard_order(others, k - 1))
+		_: ordered = _standard_order(by_role, k)
+	var bench: Array = rest.filter(func(x): return not (x in ordered))
+	blineup = [boss_names[_first_boss]]; blineup.append_array(ordered)
+	if blineup.size() < segments() and bool(fmt.get("repeat_slots", false)):
+		var pool := blineup.duplicate()
+		while blineup.size() < segments(): blineup.append(pool[blineup.size() % pool.size()])
+	breserves = bench
+
+func _standard_order(by_role: Array, k: int) -> Array:
+	# k slots from a role-sorted roster: the lowest roles open, the highest close (anchor last, hammer before it)
+	if k <= 0 or by_role.is_empty(): return []
+	k = mini(k, by_role.size())
+	var closers := mini(2 if k >= 4 else 1, k)
+	var out: Array = []
+	for i in range(0, k - closers): out.append(by_role[i])
+	for i in range(by_role.size() - closers, by_role.size()): out.append(by_role[i])
+	return out
 
 func _leading_b() -> bool:
 	return score_b > score_p or (score_b == score_p and ep_b > ep_p)
@@ -406,7 +490,7 @@ func _enemy_corner() -> void:
 	# the rival corner, resolved when the corner opens (he acts on his scouting, not on your choices;
 	# The Reveal shows his slot as it stands after this). Two actions, the same prices as yours,
 	# taken in the order his record names (priority: super / swap / tactic).
-	if not coach_on or coach.is_empty() or seg_idx + 1 >= blineup.size(): return
+	if not coach_on or coach.is_empty() or _up_slot() >= blineup.size(): return
 	var actions: Array = []
 	if enemy_lock > 0:
 		enemy_lock -= 1
@@ -439,40 +523,56 @@ func _coach_super(actions: Array) -> void:
 func _coach_swap(actions: Array) -> void:
 	# the reserve or a not-yet-fought slot into the upcoming one, judged on the rings against your next card
 	var tell := str(coach.get("tell", "none"))
-	var up := seg_idx + 1
-	var candidates: Array = breserves.duplicate()
-	for j in range(up + 1, blineup.size()): candidates.append(blineup[j])
-	var considers := tell != "never_swaps" and not (tell == "never_swaps_when_leading" and _leading_b()) and rng.randf() < float(coach.get("swap_aggr", 0.0))
+	var up := _up_slot()
+	var open_roster := r6 or bool(fmt.get("repeat_slots", false))         # anyone dressed can take the slot
+	var candidates: Array = []
+	if open_roster:
+		for nm in bdressed:
+			if nm != blineup[up]: candidates.append(nm)
+	else:
+		candidates = breserves.duplicate()
+		for j in range(up + 1, blineup.size()): candidates.append(blineup[j])
+	var considers := r6 or (tell != "never_swaps" and not (tell == "never_swaps_when_leading" and _leading_b()) and rng.randf() < float(coach.get("swap_aggr", 0.0)))
 	var target: Dictionary = lineup[up]
-	if rng.randf() >= float(coach.get("scout", 0.5)):                       # a bad read: he plans for another of your cards
+	if not r6 and rng.randf() >= float(coach.get("scout", 0.5)):            # a bad read: he plans for another of your cards
 		var others: Array = reserves.duplicate()
 		for j in range(up + 1, lineup.size()): others.append(lineup[j])
 		if others.size() > 0: target = others[rng.randi() % others.size()]
-	var cur_sc := _coach_matchup(blineup[up], target)
+	var score_of := func(nm: String) -> float:
+		# the Golden DROP is picked on condition first (s3.3: the gassed ace vs the fresh reserve), the rings second
+		var v := float(_coach_matchup(nm, target))
+		if r6 or open_roster:
+			var frac := 1.0
+			if bcondition.has(nm): frac = float(bcondition[nm]["comp"]) / 120.0
+			v += frac * 4.0
+		return v
+	var cur_sc: float = score_of.call(blineup[up])
 	var best := ""; var best_sc := cur_sc
 	for c in candidates:
-		var sc := _coach_matchup(c, target)
+		var sc: float = score_of.call(c)
 		if sc > best_sc: best = c; best_sc = sc
-	var cost := 0 if (bswaps_used == 0 and bool(TAC.get("corner", {}).get("swap_first_free", true))) else int(TAC.get("corner", {}).get("swap_cost", 15))
+	var cost := 0 if (r6 or (bswaps_used == 0 and bool(TAC.get("corner", {}).get("swap_first_free", true)))) else int(TAC.get("corner", {}).get("swap_cost", 15))
 	if best != "" and not considers and (tell == "never_swaps" or tell == "never_swaps_when_leading"):
 		_ev("coach_tell", {"coach": coach["id"], "tell": tell})              # he had the better card and sat on it: the tell is readable
 	if best == "" or not considers or btension < float(cost): return
 	var was: String = blineup[up]
 	var ri := breserves.find(best)
-	if ri >= 0: breserves[ri] = was
+	if open_roster: pass                                     # the card takes the slot; the roster is open
+	elif ri >= 0: breserves[ri] = was
 	else:
 		var j := blineup.find(best); blineup[j] = was
 	blineup[up] = best
-	btension -= float(cost); bswaps_used += 1
+	btension -= float(cost)
+	if not r6: bswaps_used += 1
 	actions.append("swap:" + best)
 	_ev("coach_action", {"action": "swap", "id": best, "cost": cost, "out": was})
-	_coach_say("swaps %s in for %s at R%d%s" % [best, was, up + 1, "" if cost == 0 else " (-%d Tension)" % cost])
+	_coach_say("%s %s in for %s at %s%s" % ["sends" if r6 else "swaps", best, was, "the Golden DROP" if r6 else "R%d" % (up + 1), "" if cost == 0 else " (-%d Tension)" % cost])
 	if tell == "counter_picks": _ev("coach_tell", {"coach": coach["id"], "tell": tell})
 
 func _coach_tactic(actions: Array) -> void:
 	# one from his library, at his prices, on his tell's schedule
 	var tell := str(coach.get("tell", "none"))
-	var up := seg_idx + 1
+	var up := _up_slot()
 	var lib: Array = coach.get("library", []).duplicate()
 	if tell == "ices_the_clock_when_leading" and _leading_b() and "ice_the_clock" in lib:
 		lib.erase("ice_the_clock"); lib.push_front("ice_the_clock")
@@ -930,6 +1030,7 @@ func _land_player_punch() -> void:
 		_earn_tension(earn)
 	if pf == "":                                            # a foul is not a scoring blow
 		_score_ep("P")
+		if pd["counter"] or pd["flash"]: counters_p += 1
 		if buffs["P"].has("ep_plus_on_clean"): ep_p += 1
 	var stop: Dictionary = T["hit_feel"]["hitstop_ms"]
 	freeze_t = maxi(freeze_t, ms(float(stop["flash_or_hissatsu"] if (pd["flash"] or pd["hissatsu"]) else (stop["counter"] if pd["counter"] else stop["normal"]))))
@@ -1021,6 +1122,7 @@ func _land_boss_punch(mult: float) -> void:
 	clean_t = 0
 	if bf == "":
 		_score_ep("B")
+		if mult > 1.0: counters_b += 1
 		var tt: Dictionary = T.get("tension", {})
 		var earn_b := float(tt.get("counter_hit", 3)) if mult > 1.0 else float(tt.get("clean_hit", 0))
 		if zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER": earn_b += float(T["zones"]["CENTER"].get("exchange_tension_bonus", 2))
@@ -1045,6 +1147,7 @@ func _drop(player_down: bool, flash: bool = false) -> void:
 		drops_b += 1; P["drops"] += 1; score_b += 1
 		_earn_tension_b(float(T.get("tension", {}).get("drop", 10)))
 		_ev("drop", {"who": "P"})
+		if r6: _say("GOLDEN DROP - %s is down" % pname()); _end_dual(); return
 		if P["drops"] >= 3:
 			_segment_ko(false, "three knockdowns"); return
 		mode = "EIGHT"
@@ -1064,6 +1167,7 @@ func _drop(player_down: bool, flash: bool = false) -> void:
 		B["no_regen_t"] = ms(float(T["composure"]["regen_halt_after_count_s"]) * 1000.0)
 		_ev("drop", {"who": "B", "flash": flash})
 		_say("%s %d-%d" % ["FLASH DROP! (2 pts)" if flash else "DROP SCORED!", score_p, score_b])
+		if r6: _say("GOLDEN DROP - %s is down" % boss_name); _end_dual(); return
 		if B["drops"] >= 3: _segment_ko(true, "three knockdowns")
 
 func _segment_ko(player_scored: bool, why: String) -> void:
@@ -1108,22 +1212,26 @@ func _end_segment(why: String) -> void:
 	if charged: relay_chain += 1
 	elif contributed < 10.0: relay_chain = 0                # a lost segment keeps the chain; an empty one breaks it
 	full_relay = relay_chain >= int(TAC.get("corner", {}).get("full_relay_chain", 3))
-	var won: bool = (score_p - int(seg_score0[0])) > (score_b - int(seg_score0[1])) or \
-		((score_p - int(seg_score0[0])) == (score_b - int(seg_score0[1])) and (ep_p - int(seg_score0[2])) > (ep_b - int(seg_score0[3])))
+	# NP_01 s3.2: EP decide segment wins - the "rounds won" drama; the drops are the score, not the segment
+	var won: bool = (ep_p - int(seg_score0[2])) > (ep_b - int(seg_score0[3]))
+	var lost: bool = (ep_b - int(seg_score0[3])) > (ep_p - int(seg_score0[2]))
+	if won: seg_wins_p += 1
+	elif lost: seg_wins_b += 1
+	condition[pname()] = {"stamina": P["stamina"], "guard": P["guard"], "comp": P["comp"]}       # s6: condition carries if he re-enters
+	bcondition[boss_name] = {"stamina": B["stamina"], "guard": B["guard"], "comp": B["comp"]}
 	if save_bar and won:
 		_earn_tension(float(TAC.get("corner", {}).get("save_bar_bonus", 5)))
 		_say("held the bar and won it anyway: +%d" % int(TAC.get("corner", {}).get("save_bar_bonus", 5)))
 	save_bar = false
 	var seg_win := float(T.get("tension", {}).get("segment_win", 5))            # NP_05 s2: segment win +5, both teams
-	var drawn: bool = (score_p - int(seg_score0[0])) == (score_b - int(seg_score0[1])) and (ep_p - int(seg_score0[2])) == (ep_b - int(seg_score0[3]))
 	if won: _earn_tension(seg_win)
-	elif not drawn: _earn_tension_b(seg_win)
+	elif lost: _earn_tension_b(seg_win)
 	bcharged = bcontributed >= 25.0
 	if bcharged: brelay_chain += 1
 	elif bcontributed < 10.0: brelay_chain = 0
 	bcontributed = 0.0
 	_ev("seg_end", {"why": why, "won": won, "charged": charged, "chain": relay_chain})
-	if seg_idx >= 2:
+	if seg_idx >= segments() - 1 or r6:
 		_end_dual(); return
 	mode = "CARD"; card_t = ms(float(TAC.get("corner", {}).get("card_seconds", 4)) * 1000.0)
 	_ev("seg_card", {"seg": seg_idx + 1, "why": why, "won": won, "ep_p": ep_p - int(seg_score0[2]), "ep_b": ep_b - int(seg_score0[3]),
@@ -1140,17 +1248,20 @@ func _open_corner() -> void:
 		player_lock -= 1; corner["actions_left"] = 0; corner["locked"] = true
 		_ev("corner_locked", {"by": "crowd"}); _say("HOSTILE CROWD - your corner is locked out this phase")
 	_enemy_corner()
-	_ev("corner_open", {"seconds": int(c.get("seconds", 45)), "actions": corner["actions_left"], "next": lineup[seg_idx + 1]["name"], "boss": blineup[seg_idx + 1]})
-	_say("CORNER (45s, 2 actions): next up %s. Swap / tactic / super / staff / save the bar - or send." % lineup[seg_idx + 1]["name"])
+	var upn := seg_idx if r6 else seg_idx + 1
+	_ev("corner_open", {"seconds": int(c.get("seconds", 45)), "actions": corner["actions_left"], "next": lineup[upn]["name"], "boss": "?" if bool(fmt.get("blind", false)) else blineup[upn], "r6": r6})
+	_say("CORNER (45s, 2 actions): %s %s. Swap / tactic / super / staff / save the bar - or send." % ["GOLDEN DROP pick:" if r6 else "next up", lineup[upn]["name"]])
 
 func corner_pick(_opt: int) -> void:
 	if mode == "CARD": _open_corner()
 	elif mode == "CORNER": _send_next(false)
 
+func _up_slot() -> int: return seg_idx if r6 else seg_idx + 1
+
 func _send_next(overrun: bool) -> void:
 	if overrun: pending_fx["overrun"] = true
 	corner = {}
-	seg_idx += 1
+	if not r6: seg_idx += 1
 	_load_segment()
 	if overrun: _say("CORNER OVERRUN - %s comes out at %d%% stamina" % [pname(), int(TAC.get("corner", {}).get("overrun_stamina_pct", 80))])
 
@@ -1159,8 +1270,13 @@ func corner_options() -> Dictionary:
 	var eq: Dictionary = TAC.get("equipped", {})
 	var out := {"swap": [], "tactic": [], "super": [], "staff": [], "save_bar": not save_bar_next, "actions_left": int(corner.get("actions_left", 0)),
 		"swap_cost": _swap_cost()}
-	for r in reserves: out["swap"].append(str(r["name"]))
-	for j in range(seg_idx + 2, lineup.size()): out["swap"].append(str(lineup[j]["name"]))
+	if r6 or bool(fmt.get("repeat_slots", false)):           # anyone dressed can take the slot (s6 / s8); the one in it is not a swap
+		for f in dressed:
+			if str(f["name"]) != str(lineup[_up_slot()]["name"]): out["swap"].append(str(f["name"]))
+	else:
+		for r in reserves: out["swap"].append(str(r["name"]))
+		for j in range(seg_idx + 2, lineup.size()): out["swap"].append(str(lineup[j]["name"]))
+	if r6: out["swap_cost"] = int(FMT.get("r6", {}).get("pick_cost", 0))
 	for t in TAC.get("special", []):
 		if str(t["id"]) in eq.get("special", []):
 			out["tactic"].append({"id": str(t["id"]), "name": str(t["name"]), "cost": int(t["cost"]), "cooldown": int(tactic_cd.get(str(t["id"]), -9)) == seg_idx, "text": str(t["text"])})
@@ -1187,19 +1303,24 @@ func corner_action(a: Dictionary) -> bool:
 	match kind:
 		"swap":
 			var name := str(a.get("arg", ""))
-			var cost := _swap_cost()
+			var cost := int(FMT.get("r6", {}).get("pick_cost", 0)) if r6 else _swap_cost()
 			var opts: Array = corner_options()["swap"]
-			if not name in opts: _corner_refuse(kind, "%s is not available (fought, or the upcoming slot)" % name); return false
+			if not name in opts: _corner_refuse(kind, "%s is not available (%s)" % [name, "no one else is dressed" if opts.is_empty() else "fought, or the upcoming slot"]); return false
 			if tension < cost: _corner_refuse(kind, "needs %d Tension" % cost); return false
-			var up: int = seg_idx + 1
+			var up: int = _up_slot()
+			var placed := false
 			for i in reserves.size():
-				if str(reserves[i]["name"]) == name:
-					var tmp: Dictionary = lineup[up]; lineup[up] = reserves[i]; reserves[i] = tmp
+				if str(reserves[i]["name"]) == name and not (r6 or bool(fmt.get("repeat_slots", false))):
+					var tmp: Dictionary = lineup[up]; lineup[up] = reserves[i]; reserves[i] = tmp; placed = true
 			for j in range(up + 1, lineup.size()):
-				if str(lineup[j]["name"]) == name:
-					var tmp2: Dictionary = lineup[up]; lineup[up] = lineup[j]; lineup[j] = tmp2
-			tension -= cost; swaps_used += 1
-			_say("SWAP: %s takes R%d%s" % [name, up + 1, "" if cost == 0 else " (-%d Tension)" % cost])
+				if str(lineup[j]["name"]) == name and not placed and not (r6 or bool(fmt.get("repeat_slots", false))):
+					var tmp2: Dictionary = lineup[up]; lineup[up] = lineup[j]; lineup[j] = tmp2; placed = true
+			if not placed:                                     # a repeat slot or the Golden DROP pick: the card takes the slot, whoever else it belongs to
+				for f in dressed:
+					if str(f["name"]) == name: lineup[up] = f
+			tension -= cost
+			if not r6: swaps_used += 1
+			_say("%s: %s takes %s%s" % ["GOLDEN DROP" if r6 else "SWAP", name, "the Golden DROP" if r6 else "R%d" % (up + 1), "" if cost == 0 else " (-%d Tension)" % cost])
 		"tactic":
 			var id := str(a.get("id", ""))
 			var rec: Dictionary = {}
@@ -1232,7 +1353,9 @@ func corner_action(a: Dictionary) -> bool:
 			staff_charges[stid] = int(staff_charges[stid]) - 1
 			var fx: Dictionary = strec["effect"]
 			if fx.has("tension_plus"): _earn_tension(float(fx["tension_plus"]))
-			if fx.has("reveal_next"): _ev("reveal", {"boss": blineup[seg_idx + 1]}); _say("THE REVEAL: their next slot is %s" % blineup[seg_idx + 1])
+			if fx.has("reveal_next"):
+				if bool(fmt.get("blind", false)): _corner_refuse(kind, "blind dual - no reveals"); staff_charges[stid] = int(staff_charges[stid]) + 1; return false
+				_ev("reveal", {"boss": blineup[_up_slot()]}); _say("THE REVEAL: their next slot is %s" % blineup[_up_slot()])
 			for k in fx:
 				if k != "tension_plus" and k != "reveal_next": pending_fx[k] = fx[k]
 			_say("STAFF: %s (%s) - %s" % [strec["name"], strec["role"], strec["text"]])
@@ -1248,13 +1371,41 @@ func corner_action(a: Dictionary) -> bool:
 	return true
 
 func _end_dual() -> void:
-	mode = "OVER"
-	var v := "DRAW"
+	# NP_01 s3.3: most DROPS (the score) wins; equal -> segment wins -> counter hits -> the Golden DROP
+	var v := "DRAW"; var rung := "score"
 	if score_p > score_b: v = "MILLBROOK WINS"
 	elif score_b > score_p: v = "ASCENDANT WINS"
-	elif ep_p != ep_b: v = ("MILLBROOK" if ep_p > ep_b else "ASCENDANT") + " WINS ON EP"
-	_ev("dual_end", {"verdict": v})
-	_say("DUAL OVER :: %s   SCORE %d-%d (drops %d-%d)   EP %d-%d" % [v, score_p, score_b, drops_p, drops_b, ep_p, ep_b])
+	elif seg_wins_p != seg_wins_b: v = ("MILLBROOK" if seg_wins_p > seg_wins_b else "ASCENDANT") + " WINS ON SEGMENTS"; rung = "segment_wins"
+	elif counters_p != counters_b: v = ("MILLBROOK" if counters_p > counters_b else "ASCENDANT") + " WINS ON COUNTERS"; rung = "counter_hits"
+	elif bool(fmt.get("sudden_death", true)) and not r6:
+		_start_r6(); return
+	if r6: v += " - GOLDEN DROP"; rung = "sudden_death"
+	mode = "OVER"
+	_ev("dual_end", {"verdict": v, "rung": rung, "seg_wins": [seg_wins_p, seg_wins_b], "counters": [counters_p, counters_b]})
+	_say("DUAL OVER :: %s   SCORE %d-%d (drops %d-%d)   segments %d-%d   counters %d-%d   EP %d-%d" % [v, score_p, score_b, drops_p, drops_b, seg_wins_p, seg_wins_b, counters_p, counters_b, ep_p, ep_b])
+
+func freshest(cards: Array, cond: Dictionary) -> int:
+	# the dressed fighter in the best condition (composure fraction; an unfought card is whole), first in order on ties
+	var best := 0; var best_v := -1.0
+	for i in cards.size():
+		var nm := str(cards[i]["name"]) if cards[i] is Dictionary else str(cards[i])
+		var v := 1.0
+		if cond.has(nm):
+			var cm: float = float(cards[i]["stats"]["CHN"]) * 2.0 if cards[i] is Dictionary else 120.0
+			v = float(cond[nm]["comp"]) / maxf(1.0, cm)
+		if v > best_v: best = i; best_v = v
+	return best
+
+func _start_r6() -> void:
+	# the Golden DROP (s3.3): any dressed fighter, condition carried, no clock, first DROP wins.
+	# Both corners pick as they would swap: your default is your freshest card, his is his freshest boss.
+	r6 = true; seg_idx = segments()
+	while lineup.size() <= seg_idx: lineup.append(dressed[freshest(dressed, condition)])
+	while blineup.size() <= seg_idx: blineup.append(bdressed[freshest(bdressed, bcondition)])
+	mode = "CARD"; card_t = ms(float(TAC.get("corner", {}).get("card_seconds", 4)) * 1000.0)
+	_ev("seg_card", {"seg": seg_idx + 1, "why": "GOLDEN DROP", "won": false, "ep_p": 0, "ep_b": 0, "score_p": score_p, "score_b": score_b, "tension": tension, "banked": 0.0, "charged": charged, "chain": relay_chain, "r6": true})
+	_ev("r6", {"default": lineup[seg_idx]["name"], "his_default": blineup[seg_idx]})
+	_say("TIED ON THE LADDER - GOLDEN DROP. Send any dressed fighter, condition carried, no clock: the first DROP wins. Your corner's pick: %s" % lineup[seg_idx]["name"])
 
 func new_dual() -> void:
 	_reset_dual(_first_boss)
@@ -2415,5 +2566,6 @@ func hash_state() -> int:
 		feint_log, feint_wise, corner, card_t, tactic_fx, pending_fx, super_used, staff_charges, swaps_used, save_bar, save_bar_next,
 		full_relay, no_drop_t, punish_suppress_t, tell_highlight_t, stamina_cap, ep_frac, ep_frac_b, aff,
 		btension, bcontributed, bcharged, brelay_chain, btactic_fx, bpending_fx, btactic_cd, bsuper_used, bswaps_used, bno_drop_t,
-		enemy_lock, player_lock, bflash_conceded, bdrop_conceded, blineup, breserves, coach.get("id", ""), rng.state]
+		enemy_lock, player_lock, bflash_conceded, bdrop_conceded, blineup, breserves, coach.get("id", ""),
+		condition, bcondition, seg_wins_p, seg_wins_b, counters_p, counters_b, r6, fmt.get("id", ""), lineup.map(func(f): return str(f["name"])), rng.state]
 	return v.hash()

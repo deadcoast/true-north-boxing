@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://f0fjv4nltbwa"
+
+[deps]
+
+files=["res://evidence/PAC-010-continuation/soak-latency-log.a.translation", "res://evidence/PAC-010-continuation/soak-latency-log.b.translation"]
+
+source_file="res://evidence/PAC-010-continuation/soak-latency-log.csv"
+dest_files=["res://evidence/PAC-010-continuation/soak-latency-log.a.translation", "res://evidence/PAC-010-continuation/soak-latency-log.b.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

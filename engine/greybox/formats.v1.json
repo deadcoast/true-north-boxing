@@ -1,0 +1,15 @@
+{
+ "schema": "Formats/NP_01-s2-s8/v1.0",
+ "vault": "v1.3",
+ "notes": "The dual's shapes as data (NP_01 s2 canonical structure, s3.3 tiebreak ladder, s6 condition carry, s8 alternate formats). 'dressed' is the roster each side brings; 'segments' the slots; a roster shorter than the slots repeats (repeat_slots) and a fighter who re-enters carries stamina, guard and composure from the segment he left (condition_carries). sudden_death is the R6 Golden DROP at the bottom of the ladder. blind: no reveals. Exhibition 2v2 (simultaneous) is not a rotation format and is not here.",
+ "default": "mini",
+ "formats": {
+  "sanctioned": {"label": "Sanctioned dual", "segments": 5, "dressed": 8, "enemy_dressed": 8, "repeat_slots": false, "condition_carries": true, "sudden_death": true, "blind": false, "segment_s": 90, "where": "CRBF sanctioned play: Regionals, Provincials, Nationals"},
+  "mini": {"label": "Mini-dual", "segments": 3, "dressed": 4, "enemy_dressed": 4, "repeat_slots": false, "condition_carries": true, "sudden_death": true, "blind": false, "segment_s": 90, "where": "early Arc 1, side tournaments (the greybox default)"},
+  "iron": {"label": "Iron dual", "segments": 5, "dressed": 3, "enemy_dressed": 3, "repeat_slots": true, "condition_carries": true, "sudden_death": true, "blind": false, "segment_s": 90, "where": "True North Club's signature: fighters must repeat slots, condition carries"},
+  "blind": {"label": "Blind dual", "segments": 5, "dressed": 8, "enemy_dressed": 8, "repeat_slots": false, "condition_carries": true, "sudden_death": true, "blind": true, "segment_s": 90, "where": "the Hollow Circuit (Arc 2): no scouting, no slot reveals"},
+  "gauntlet": {"label": "Gauntlet", "segments": 5, "dressed": 1, "enemy_dressed": 5, "repeat_slots": true, "condition_carries": true, "sudden_death": true, "blind": false, "segment_s": 90, "where": "training arcs, 'prove yourself' story beats: one fighter, five segments"}
+ },
+ "ladder": ["score", "segment_wins", "counter_hits", "sudden_death"],
+ "r6": {"label": "Golden DROP", "clock": "none", "first_drop_wins": true, "any_dressed": true, "pick_cost": 0}
+}

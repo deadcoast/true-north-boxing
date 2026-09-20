@@ -15,7 +15,8 @@ KEYS: WASD | J/K jab/cross, U/I hooks, O uppercut | Space block | Q/E slip L/R
       ENTER = rise beats when dropped | 1 = skip the card / SEND from the corner
       CORNER: 2/3/4 tactics | 5 super | 6/7/8 staff | 9 save the bar | 0 swap
 META: F1-F4 boss (Vane/Yuri/Moreau/Sam) | F6/F7 prev/next of ALL 24 bosses
-      R reload tuning | F5 new dual
+      R reload tuning | F5 new dual | F9 cycle the format (mini / sanctioned /
+      iron / blind / gauntlet); `-- format=sanctioned` from the command line
 DEMO: `godot --path engine/greybox -- demo boss=7` - a scripted fighter plays
       the scene on its own (attract mode; also the presentation soak).
       `-- demo seg2 boss=7` starts at a CHARGED R2 with a full bar and has
@@ -43,7 +44,8 @@ Consequences you can feel:
   chance and nothing else (C7). A live counter window cuts it to a quarter.
 - Scoring is NP_01 canon now: DROP 1, FLASH DROP 2, SEGMENT KO 3 (third
   knockdown or a failed count), cumulative across the dual, most points
-  wins, EP breaks ties. A KO forfeits the loser's remaining time and pays
+  wins; equal points go down the ladder (segment wins, counter hits, the
+  Golden DROP - PAC-061). A KO forfeits the loser's remaining time and pays
   the winner the shadowboxing trickle (+1 Tension per 10s). v5's "three
   total drops ends the dual" was not canon and is gone.
 - All 24 compiled bosses load. The boss agent runs an ACTION VM: every
@@ -321,6 +323,54 @@ bug. Every phase-trigger form is executable now: 13/13.
   CHARGED surge (bosses cast by composure, not by bar), the coach's read of
   YOUR corner (he acts first, on scouting), coach tells as Scout Book pages.
 
+## PAC-061 in the build: THE RULEBOOK'S SHAPES (dual formats, NP_01 s2/s3.3/s6/s8)
+- The dual's shape is data in `formats.v1.json` (vault copy
+  `data/formats.v1.json`): segments, dressed each side, repeat slots,
+  condition carry, sudden death, blind. Five records: the SANCTIONED dual
+  (5 segments, 8 dressed - five slots and three reserves - both sides), the
+  MINI (3 segments, 4 dressed; the greybox default), the IRON dual (5
+  segments from 3 dressed: fighters repeat slots, condition carries - True
+  North's format), the BLIND dual (sanctioned, no reveals - the Hollow
+  Circuit's), the GAUNTLET (one fighter, five segments, five of theirs).
+  F9 cycles them; the roster follows (`LINEUP_MILLBROOK_8` dresses RORY,
+  JUNE, PRIYA, MARCUS, SAM with DEX, YURI and MARTA in reserve; the recruits'
+  cards are editorial until the content lane speaks).
+- Slots are drawn from the cards you dressed: reserves sit out, starters
+  fill R1.. in order, a roster shorter than the slots repeats. His side the
+  same, ordered by his corner's archetype for any slot count (STANDARD: the
+  two highest roles close - hammer at R4, anchor at R5 - the lowest open;
+  AMBUSH: the ace opens; WALL-FIRST: anchor-class first).
+- The corner's swap rules generalise: three reserves and every not-yet-
+  fought slot in a sanctioned dual (first free, then 15); in repeat formats
+  anyone dressed can take the slot; the Gauntlet has no one to offer and
+  says so.
+- CONDITION CARRIES (s6): a fighter who re-enters comes back with the
+  stamina, guard and composure he left with - repeat slots and the Golden
+  DROP. The corner's restores finally have something to restore: Patch
+  Job's +30 composure and Second Wind's +40 stamina land on the carried
+  numbers; Loosen Up raises the ceiling and tops up nothing. His fighters
+  carry too.
+- THE LADDER (s3.3): most DROPS (the score) wins; equal -> segment wins ->
+  counter hits across the dual -> the GOLDEN DROP. Segment wins are EP
+  majority (s3.2): a segment you took on the exchanges is yours even if
+  the drop was his - and pays the +5. The Golden DROP: the card names your
+  freshest dressed fighter, the corner lets you send anyone (the pick is
+  free), condition carried, no clock, the first DROP ends the dual. His
+  corner picks on condition first and the rings second.
+- BLIND: The Reveal is refused with its charge kept, the corner shows "?"
+  for his slot, the matchup card still names him at the bell.
+- Canon corrections in this pass: segment wins had been decided by the
+  drops in the segment with EP as the tiebreak (NP_01 s3.2 says EP decide
+  them); the dual had broken ties on total EP (the ladder is segment wins,
+  then counter hits, then R6). Both fixed; the earlier register row that
+  said "EP" for the ladder's second rung was wrong and 010 says so.
+- Not in this pass: the Exhibition 2v2 (simultaneous - not a rotation
+  format), the R6 pick as a 45s corner with a shot clock of its own (it
+  runs through the normal corner), 8-dressed squads with 3 staff as a
+  pre-dual screen (the formation screen is NP_10 s2 - not built), story
+  injury states (s6), the Blind dual's "no scouting" on his side (he
+  still reads his own scouting number).
+
 ## Verification (agent-run, headless Godot 4.3, this container)
 ```
 godot --headless --path engine/greybox -- smoke boss=N   # N = 0..23
@@ -329,7 +379,7 @@ godot --headless --path engine/greybox -- geometry
 godot --headless --path engine/greybox --quit-after 3600 -- demo
 python3 pbn_compiler.py --margins
 ```
-- SMOKE: 180/180 GREEN on every one of the 24 bosses (4,320 assertions).
+- SMOKE: 189/189 GREEN on every one of the 24 bosses (4,536 assertions).
   Covers: C3 buffer (same-tick / 3-ticks-early fires / 8-ticks-early
   expires / buffered through hitstop), C2 reach, C7 tracker flag -> read
   probability up with boss offense byte-identical, interrupt + flash +
@@ -400,12 +450,23 @@ python3 pbn_compiler.py --margins
   Switch-Up when leading and the clock at 150 per 120 while he leads;
   Hostile Crowd both ways; The Reveal naming the post-swap slot; his bar
   source by source and yours on the canonical table; the feud both ways,
-  his Perfect Round, his CHARGED entrance), and static coverage: 39/39
+  his Perfect Round, his CHARGED entrance), the PAC-061 gates (the five
+  format records and both sides' rosters/orders for each; the sanctioned
+  corner's six swap options, a free reserve swap then a paid slot swap,
+  five segments to a verdict; segment wins by EP majority with the +5;
+  the ladder's second and third rungs; the Golden DROP from three drawn
+  segments both ways - the freshest default, the free pick from anyone
+  dressed, condition carried in, no clock, the first DROP ending it, his
+  pick by condition; the Iron dual's R4 with RORY carrying 20 / 40 / 30
+  and Patch Job / Second Wind / Loosen Up landing on the carried numbers,
+  Vane carrying too; the Gauntlet's refused swap and carried stamina into
+  R2 and R3; the Blind dual's refused reveal and hidden slot), and static
+  coverage: 39/39
   action verbs, 53/53 punish responses, 13/13 phase-trigger forms, 7/7
   effect types, 36/36 states, 14/14 buffs. Every entry in tactics.v1.json
   (8 specials, 4 supers, 5 staff actives) has a gate above; every key in
   affinity.v1.json has one.
-- DETERMINISM: 14/14 GREEN. One 24,000-tick scripted input log run three
+- DETERMINISM: 15/15 GREEN. One 24,000-tick scripted input log run three
   times (twice tick-by-tick, once through the jittered 7-40ms frame loop
   the game uses): all 400 state hashes identical, every hash bit-exact
   over positions, pools, timers, queues, flags, the corner's state and the
@@ -415,7 +476,9 @@ python3 pbn_compiler.py --margins
   hissatsu casts from the library (player and boss), feints with some
   drawing his read, two segment cards with corner actions taken, matchup
   cards with a ring live, and the rival corner resolving at both corners
-  with an action taken and his bar earning. A different seed diverges.
+  with an action taken and his bar earning. A different seed diverges. A
+  second, 66,000-tick log runs the SANCTIONED format (8 dressed a side)
+  through five segments to a verdict and hashes identically twice.
 - GEOMETRY: 5/5 GREEN. The emergent dodge table (measured with the style
   packages off - they scale reach and the weave and are gated in the smoke)
   matches the consensus rows in all four orientations (boss->player,
@@ -442,6 +505,9 @@ python3 pbn_compiler.py --margins
   with three matchup cards, two ghosts and zero errors. With the rival
   corner live, 16,000-frame soaks on Vane and on Yuri ran KO -> card ->
   both corners (his tactic landing on his fighter) -> R2 with zero errors.
+  16,000-frame soaks of the sanctioned, iron, gauntlet and blind formats
+  all ran into their second or third segment (the Iron dual with two
+  corners, the Gauntlet with RORY carried into R2) with zero errors.
 - Bugs the loop caught before you ever loaded it: inputs pressed during
   hitstop were dropped (v5 and the first v6 core); the boss's read fired
   its dodge at punch startup so slow punches always found the head back

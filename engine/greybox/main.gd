@@ -67,6 +67,17 @@ var demo_seg2 := false             # -- demo seg2: the scripted fighter is told 
 var matchup_until := 0             # the matchup card (NP_06 s5) stays on the HUD for the opening 3s of a segment
 var matchup_text := ""
 var matchups_shown := 0
+var fmt_id := ""                   # -- format=sanctioned|mini|iron|blind|gauntlet (F9 cycles); "" = the data's default (mini)
+const FORMAT_CYCLE := ["mini", "sanctioned", "iron", "blind", "gauntlet"]
+var content: Dictionary = {}
+
+func roster_for(f: String) -> Array:
+	# the cards each format dresses: 8 for the sanctioned/blind dual, 4 for the mini, 3 for the Iron dual, 1 for the Gauntlet
+	match f:
+		"sanctioned", "blind": return TNBSim.LINEUP_MILLBROOK_8.duplicate(true)
+		"iron": return [TNBSim.LINEUP_MILLBROOK_8[0].duplicate(true), TNBSim.LINEUP_MILLBROOK_8[2].duplicate(true), TNBSim.LINEUP_MILLBROOK_8[3].duplicate(true)]   # RORY, PRIYA, MARCUS
+		"gauntlet": return [TNBSim.LINEUP_MILLBROOK_8[0].duplicate(true)]
+	return TNBSim.LINEUP_MILLBROOK.duplicate(true)
 
 func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
@@ -78,13 +89,15 @@ func _ready() -> void:
 			var code := TNBTests.new().run(m, boss_idx)
 			get_tree().quit(code)
 			return
-	var lineup: Array = TNBSim.LINEUP_MILLBROOK
+	for a in args:
+		if a.begins_with("format="): fmt_id = a.split("=")[1]
+	var lineup: Array = roster_for(fmt_id if fmt_id != "" else "mini")
 	if "demo" in args:
 		demo_log = TNBTests.new().build_log(120 * 600, 777)
-		lineup = TNBSim.LINEUP_MILLBROOK.duplicate(true); lineup[1]["hissatsu"] = "Relay: North Star"   # the demo shows the T3 afterimage
-	var content := TNBSim.load_content()
+		if lineup.size() > 1: lineup[1]["hissatsu"] = "Relay: North Star"   # the demo shows the T3 afterimage
+	content = TNBSim.load_content()
 	sim = TNBSim.new()
-	sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}))
+	sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, lineup, boss_idx, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id)
 	_build_world()
 	if "seg2" in args:                                   # demo aid: jump to a CHARGED R2 with a full bar (the T3 afterimage)
 		sim.contributed = 30.0; sim._end_segment("demo"); sim.corner_pick(0); sim.corner_pick(0); sim.tension = 100.0; demo_seg2 = true
@@ -231,6 +244,14 @@ func _unhandled_input(e: InputEvent) -> void:
 		elif e.keycode >= KEY_F1 and e.keycode <= KEY_F4: sim.switch_boss(e.keycode - KEY_F1)
 		elif e.keycode == KEY_F6: sim.switch_boss((sim._first_boss + TNBSim.BOSSES.size() - 1) % TNBSim.BOSSES.size())
 		elif e.keycode == KEY_F7: sim.switch_boss((sim._first_boss + 1) % TNBSim.BOSSES.size())
+		elif e.keycode == KEY_F9:                                             # cycle the dual format (NP_01 s2/s8)
+			var cur := fmt_id if fmt_id != "" else "mini"
+			fmt_id = FORMAT_CYCLE[(FORMAT_CYCLE.find(cur) + 1) % FORMAT_CYCLE.size()]
+			var first: int = sim._first_boss
+			sim = TNBSim.new()
+			sim.setup(content["tuning"], content["patterns"], TNBSim.BOSSES, roster_for(fmt_id), first, int(Time.get_ticks_usec() % 2147483647), content.get("library", {}), content.get("tactics", {}), content.get("affinity", {}), content.get("feuds", []), content.get("coaches", {}), content.get("formats", {}), fmt_id)
+			prev_p = sim.P["pos"]; prev_b = sim.B["pos"]; ghosts_spawned = 0
+			feed.text = "FORMAT: %s - %d segments, %d dressed%s" % [str(sim.fmt.get("label", fmt_id)), sim.segments(), sim.dressed.size(), "  (repeat slots, condition carries)" if sim.fmt.get("repeat_slots", false) else ""]
 	if e is InputEventJoypadButton and e.pressed:
 		if e.button_index == JOY_BUTTON_DPAD_UP: q_taunt = true
 		elif e.button_index == JOY_BUTTON_LEFT_STICK: q_sprint = true
@@ -424,7 +445,7 @@ func _their_corner() -> String:
 
 func _corner_menu() -> String:
 	var o: Dictionary = sim.corner_options()
-	var out := "\n>>> CORNER %4.1fs   actions left %d   next up %s   [1/A] SEND" % [int(sim.corner["t"]) / float(TNBSim.TICK_HZ), int(o["actions_left"]), sim.lineup[sim.seg_idx + 1]["name"]]
+	var out := "\n>>> CORNER %4.1fs   actions left %d   %s %s   [1/A] SEND%s" % [int(sim.corner["t"]) / float(TNBSim.TICK_HZ), int(o["actions_left"]), "GOLDEN DROP pick:" if sim.r6 else "next up", sim.lineup[sim._up_slot()]["name"], "   (their slot: %s)" % ("?" if sim.fmt.get("blind", false) else str(sim.blineup[sim._up_slot()]))]
 	var i := 2
 	for t in o["tactic"]:
 		out += "\n   [%d] %s (%d T)%s - %s" % [i, t["name"], int(t["cost"]), "  [cooldown]" if t["cooldown"] else "", t["text"]]; i += 1
@@ -433,7 +454,7 @@ func _corner_menu() -> String:
 	i = 6
 	for st in o["staff"]:
 		out += "\n   [%d] %s x%d - %s" % [i, st["name"], int(st["charges"]), st["text"]]; i += 1
-	out += "\n   [9] SAVE THE BAR%s      [0/X] SWAP %s (%s)" % ["  [set]" if not o["save_bar"] else "", ", ".join(PackedStringArray(o["swap"])) if o["swap"].size() > 0 else "-", "free" if int(o["swap_cost"]) == 0 else "%d T" % int(o["swap_cost"])]
+	out += "\n   [9] SAVE THE BAR%s      [0/X] %s %s (%s)" % ["  [set]" if not o["save_bar"] else "", "PICK" if sim.r6 else "SWAP", ", ".join(PackedStringArray(o["swap"])) if o["swap"].size() > 0 else "-", "free" if int(o["swap_cost"]) == 0 else "%d T" % int(o["swap_cost"])]
 	return out
 
 func _hiss_line() -> String:
@@ -478,14 +499,14 @@ func _bar(v: float, vmax: float, w: int) -> String:
 func _hud() -> void:
 	var P: Dictionary = sim.P; var B: Dictionary = sim.B
 	var zp := sim.zone(P["pos"]); var zb := sim.zone(B["pos"])
-	var head := "TRUE NORTH BOXING :: greybox v6 (sim core 120Hz)   R%d/3  %s vs %s   clock %5.1f   SCORE %d-%d (drops %d-%d)   EP %d-%d" % \
-		[sim.seg_idx + 1, sim.pname(), sim.boss_name, sim.clock_t / float(TNBSim.TICK_HZ), sim.score_p, sim.score_b, sim.drops_p, sim.drops_b, sim.ep_p, sim.ep_b]
+	var head := "TRUE NORTH BOXING :: greybox v6 (sim core 120Hz)   %s %s/%d  %s vs %s   clock %s   SCORE %d-%d (drops %d-%d)   segs %d-%d   EP %d-%d" % \
+		[str(sim.fmt.get("label", "")), "GOLDEN DROP" if sim.r6 else "R%d" % (sim.seg_idx + 1), sim.segments(), sim.pname(), sim.boss_name, "no clock" if sim.r6 else "%5.1f" % (sim.clock_t / float(TNBSim.TICK_HZ)), sim.score_p, sim.score_b, sim.drops_p, sim.drops_b, sim.seg_wins_p, sim.seg_wins_b, sim.ep_p, sim.ep_b]
 	var mode_line := ""
 	match sim.mode:
 		"EIGHT": mode_line = "\n>>> STANDING EIGHT: ENTER / A on the beat  (%d to go)" % int(sim.eight.get("beats_left", 0))
-		"CARD": mode_line = "\n>>> SEGMENT CARD (%.1fs, ENTER/1 to skip)" % (sim.card_t / float(TNBSim.TICK_HZ))
+		"CARD": mode_line = "\n>>> %s (%.1fs, ENTER/1 to skip)" % ["TIED ON THE LADDER - GOLDEN DROP: any dressed fighter, condition carried, no clock, first DROP wins" if sim.r6 else "SEGMENT CARD", sim.card_t / float(TNBSim.TICK_HZ)]
 		"CORNER": mode_line = _corner_menu() + _their_corner()
-		"OVER": mode_line = "\n>>> DUAL OVER - F5 new dual, F1-F4 pick boss"
+		"OVER": mode_line = "\n>>> DUAL OVER - F5 new dual, F1-F4 pick boss, F9 format"
 	if sim.mode == "FIGHT" and sim.tick < matchup_until and matchup_text != "": mode_line += "\n" + matchup_text
 	if sim.clinch.size() > 0:
 		var ci: int = sim.clinch["i"]
