@@ -11,7 +11,7 @@ Runtime target: 12–15 min of scripted content threading 45–60 min of play ([
 
 ## SCENE 1 — COLD OPEN: FEBRUARY 21, 1976
 
-**INT. MILLBROOK MEMORIAL GYM — NIGHT — ARCHIVE BROADCAST**
+> **INT. MILLBROOK MEMORIAL GYM — NIGHT — ARCHIVE BROADCAST**
 
 4:3 frame. Tape grain. A full house standing on the benches, coats still on. The score bug is hand-painted numbers on a flip board: MILLBROOK 4 — LAKEHEAD 4. R5.
 
@@ -34,7 +34,7 @@ Player controls the 1976 fighter at full power: all stats 90+, full verb set liv
 
 ## SCENE 2 — THE SAME GLOVE, FIFTY YEARS DOWN
 
-**INT. THE OLD GYM — PRESENT — 7:00 AM**
+> **INT. THE OLD GYM — PRESENT — 7:00 AM**
 
 Same building. The camera holds the same angle the broadcast used. Empty benches. One bulb in six working. RORY, mid-shadowbox, breath visible indoors.
 
@@ -65,13 +65,13 @@ He picks the letter back up, folds it, pins it to the gym wall — the first obj
 
 ## SCENE 3 — SOMEONE SMARTER THAN US
 
-**EXT./INT. MILLBROOK SECONDARY — MIDDAY**
+> **EXT./INT. MILLBROOK SECONDARY — MIDDAY**
 
 **[PLAY]** District traversal ([[NP_02_TWO_LAYER]] §1.1). First roaming challenger visible by the bike racks — a flagged NPC, avoidable, glove-up prompt.
 
 **SCRAP 1** — objective: *land 3 body shots* (LT modifier taught). Reward toast: XP, +2 Prestige, first PI tick vs. the school dialect. Camera-swing transition both ways, 2 s budget ([[NP_02_TWO_LAYER]] §6).
 
-**INT. LIBRARY — CONTINUOUS**
+> **INT. LIBRARY — CONTINUOUS**
 
 PRIYA SANDHU has a study carrel fortified like a corner office: three open binders, a tablet paused on fight tape, a printed bracket annotated in two colors of ink. Rory arrives mid-sentence — hers.
 
@@ -94,7 +94,7 @@ PRIYA SANDHU has a study carrel fortified like a corner office: three open binde
 
 ## SCENE 4 — TWO MORE PAIRS OF HANDS
 
-**EXT. COMMUNITY CENTRE — AFTER SCHOOL**
+> **EXT. COMMUNITY CENTRE — AFTER SCHOOL**
 
 **[PLAY]** Open-mat day active ([[NP_08_STABLE]] §2.4). Browsable recruits, assembler-backed. Two are quest-flagged:
 
@@ -107,8 +107,7 @@ PRIYA SANDHU has a study carrel fortified like a corner office: three open binde
 **RORY:** Saturday. Bring that exact sentence.
 
 > Both join as assembler-backed stablemates ([[NP_13_SCOPE]] §2: one authored boss + assembler fillers is the VS combat spec; these two are the roster side of the same rule). Their cards go up on the wall. Four dressed.
-
-**INT. THE OLD GYM — THAT NIGHT**
+> **INT. THE OLD GYM — THAT NIGHT**
 
 Priya has colonized a folding table: the bracket, the binders, a new page in her own hand — ASCENDANT B, five names, and next to CASSIDY VANE: *"listens to the tablet. Sequences. NUMBERED."*
 
@@ -120,7 +119,7 @@ Priya has colonized a folding table: the bracket, the binders, a new page in her
 
 ## SCENE 5 — THE SURVIVAL DUAL
 
-**INT. MILLBROOK MEMORIAL GYM — SATURDAY**
+> **INT. MILLBROOK MEMORIAL GYM — SATURDAY**
 
 Folding chairs, maybe forty people. A CRBF OBSERVER in the front row with a clipboard and a stopwatch. The Ascendant B squad warms up in matching gear that costs more than the building's boiler. The broadcast pair works the apron — regional stream, two cameras.
 
@@ -149,11 +148,11 @@ Full PBN per [[NP_04A_BOSS_ROSTER_ARC1]] §1 — corner tablet, called sequences
 **GORD:** DOWN GOES THE CHECKBOX — I'm sorry, down goes VANE, and Memorial Gym remembers what it's for!
 Standing-eight rule holds both ways: if Rory is dropped, the rhythm check runs at full HRT — the build's one 99 stat, load-bearing since character creation.
 
-*(Authored contingency: the dual is winnable 2–1 through any two segments; only R1 is score-scripted. A player who drops R2 can still take it on R3 + tiebreak EP — the clause needs two, the design never fakes them.)*
+> *(Authored contingency: the dual is winnable 2–1 through any two segments; only R1 is score-scripted. A player who drops R2 can still take it on R3 + tiebreak EP — the clause needs two, the design never fakes them.)*
 
 ## SCENE 6 — TAG
 
-**INT. MILLBROOK MEMORIAL GYM — LATER**
+> **INT. MILLBROOK MEMORIAL GYM — LATER**
 
 Chairs half-stacked. The observer signs the form without ceremony — a stamp, a tear, a carbon copy handed over like a parking receipt. The most important piece of paper in the building this decade.
 

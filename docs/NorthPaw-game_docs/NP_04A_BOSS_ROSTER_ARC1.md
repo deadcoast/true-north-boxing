@@ -15,7 +15,7 @@ Out-Boxer · Gale · **No house** — academy product, and the game's first quie
 
 **Tells (Loud, audio):** her corner. An Ascendant assistant coach reads string codes off a tablet — "Sequence Four!" — and Cassidy executes. The player's first audio-channel lesson: hear the code, know the punch. Her own body barely telegraphs; the institution telegraphs for her.
 
-```
+```bash
 BOSS Vane_Cassidy
   IDLE: lateral_drift, guard_high, no_taunt
   STRING S1 "Sequence1": TELL(corner_call_S1, 700ms) -> JAB -> JAB -> R_STR
@@ -42,7 +42,7 @@ Slugger · Timber · House MacIsaac — Dex's older cousin, the heir who stayed.
 
 **Tells (Standard, visual-body):** the net-haul — shoulders roll back like taking up a line before every pull-counter. On the ropes her tell tier drops to Subtle (home water).
 
-```
+```bash
 BOSS MacIsaac_Moira
   IDLE: forward_walk_slow, guard_mid, herding_bias(ropes)
   STRING S1 "SetTheNet": TELL(shoulder_roll, 550ms) -> L_HOOK -> R_HOOK (advance 40cm)
@@ -69,7 +69,7 @@ Coach Wray's club runs decoy seals ([[NP_10_TACTICS]] §3), and Tam carries the 
 
 **Tells (Subtle, visual-body):** true tell — weight shifts fully onto the lead foot before every angle change (the two-bridge step). Opening-phase fake tells — he *performs* other clubs' telegraphs.
 
-```
+```bash
 BOSS NguyenRoy_Tam
   IDLE: angle_walk, guard_low_bait, tempo_shift@6s
   STRING S1 "BorrowedCoat" [phase==1]: TELL(fake_shoulder_load, 800ms) -> JAB (delayed 300ms)
@@ -95,7 +95,7 @@ Swarmer · Gale · House Okafor — the sibling who plays hockey first and boxes
 
 **Tells (Standard, audio):** the skate-blade *shing* seeded in [[NP_04_OPPONENT]] §3 — he drags his rear foot like a crossover stride before direction changes. On ice he'd be silent; on canvas it sings.
 
-```
+```bash
 BOSS Okafor_Carter
   IDLE: circle_fast, guard_mid, taunt@10s
   STRING S1 "Forecheck": TELL(stride_shing, 500ms) -> RUSH(0.8m) -> L_HOOK -> R_HOOK
@@ -122,7 +122,7 @@ The inverse of Yuri, by design: Arc 1's sluggers taught Loud; Jean-Guy is a **Su
 
 **Tells (Subtle, visual-body + audio):** a slow frost-breath exhale before power — visible vapor, a low audible breath under the crowd. His footwork never changes; the breath is everything.
 
-```
+```bash
 BOSS Moreau_JeanGuy
   IDLE: forward_walk_glacial, guard_high, silent
   STRING S1 "ColdForge": TELL(frost_breath, 480ms) -> L_HOOK -> R_HOOK -> LT_R_HOOK
@@ -148,7 +148,7 @@ Swarmer · Gale · House Okafor — the sibling who took the scholarship. *Philo
 
 House Okafor's pressure line, drilled to academy metronome. Her tell is **the beat itself**: she attacks on a fixed 800 ms tempo, and once the player hears it, every entry is readable. Breaking her rhythm is the fight.
 
-```
+```bash
 BOSS Okafor_Ada
   IDLE: advance_metronome(800ms), guard_tight
   STRING S1 "OnTheBeat":  TELL(tempo_step, 400ms) -> JAB -> LT_L_HOOK       # every entry on the metronome
@@ -176,7 +176,7 @@ Swarmer · Timber · House Osei — **UNSANCTIONED** ([[NP_07_HOUSES]] §5): the
 
 **Tells (Subtle, visual-gear):** a glint off her mother's old hand-wraps — taken without blessing — as her shoulder rolls into the shell. Her shell posture is the fight's puzzle: head shots skate off it; body work cracks it.
 
-```
+```bash
 BOSS Osei_Efua
   IDLE: shell_stance(shoulder_roll), advance_patient
   STRING S1 "Shell" [STATE, 3s]: TELL(wrap_glint, 500ms) -> COUNTER_STATE
@@ -206,7 +206,7 @@ Boxer-Puncher · element varies by phase · **formerly House Petrov** — the te
 
 **The gimmick:** three phases, three borrowed house dialects — synthesis without lineage, fought before Arc 2 names it. Each phase performs a real house's tell channel *slightly wrong*, and player PI in those houses transfers at half value: studying real families literally pays off against the counterfeit.
 
-```
+```bash
 BOSS Vey_Anders
   PHASE 1 "TheCounter" [Out-Boxer kit, Frost]:
     STRING P1S1 "MirrorCopy": TELL(glove_turn_NO_silence, 500ms) -> COUNTER_STATE(2s)

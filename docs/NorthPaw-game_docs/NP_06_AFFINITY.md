@@ -60,6 +60,7 @@ Element is the **hissatsu and identity ring** — it does NOT modify normal punc
 | **GALE** | Silver streaks, banner-snap wind, speed lines | Fast, restless, loud |
 | **GRANITE** | Amber-grey, dust rings, shockwave cracks | Immovable, stubborn, warm |
 | **TIMBER** | Deep green-brown, growth patterns, sap-gold glints | Enduring, adaptive, rooted |
+
 Stereotypes exist to be subverted by characters (a screaming, joyful Frost fighter is a design opportunity, not an error).
 
 ### 2.3 Element assignment

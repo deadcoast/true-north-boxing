@@ -27,7 +27,8 @@ The Fight Night Champion verb set under the Punch-Out camera. This is the frame-
 | Out (right) | R Hook | 260 | 340 | 12 | 5 | 7 |
 | Down-out | R Hookercut | 320 | 400 | 13 | 6 | 9 |
 | Down | R Uppercut | 340 | 420 | 15 | 7 | 12 |
-*(Mirror for left half → jab (L straight, 160/220 ms, dmg 6, cost 2), L hook, etc. The jab is deliberately the fastest, cheapest verb in the game — everything is built on it.)*
+
+> *(Mirror for left half → jab (L straight, 160/220 ms, dmg 6, cost 2), L hook, etc. The jab is deliberately the fastest, cheapest verb in the game — everything is built on it.)*
 
 ### 2.2 Modifiers (stack multiplicatively)
 

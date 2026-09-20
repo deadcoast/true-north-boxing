@@ -47,6 +47,7 @@ House {
 | Open Door | Bond growth with all stablemates ×1.5 ([[NP_08_STABLE]] §6) |
 | Debt of Honour | +25% all stats vs. feuded houses (stacks with feud Tension, capped by [[NP_06_AFFINITY]] §4) |
 | ... (11 more in content DB) | |
+
 Traits are house-locked, never transferable — the one progression layer money can't touch ([[NP_11_PROGRESSION]] §8 keeps techniques teachable; traits are blood/adoption only).
 
 ## 4. NATIVE & SECRET TECHNIQUES

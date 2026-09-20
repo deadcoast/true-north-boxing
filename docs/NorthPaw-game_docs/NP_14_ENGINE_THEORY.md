@@ -169,7 +169,7 @@ Greybox v1–v5 ended a dual on any three drops. NP_01 §3 says otherwise: DROP 
 
 ## Reproduction
 
-```
+```bash
 godot --headless --path engine/greybox -- smoke boss=5       # Alfie: referee ladder
 godot --headless --path engine/greybox -- determinism
 godot --headless --path engine/greybox -- geometry

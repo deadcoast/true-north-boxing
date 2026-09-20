@@ -28,6 +28,7 @@ Tension is the single shared team meter that binds five separate segments into o
 | Segment win (EP) | +5 at segment end |
 | Corner hype action | +8 (staff-dependent, [[NP_10_TACTICS]] §6) |
 | Segment KO clock-out trickle | +1 / 10 s |
+
 **Anti-exploit:** hits from adaptation-flagged sequences earn 0 ([[NP_03_COMBAT_ENGINE]] §10). Chip damage through block earns 0. There is no Tension for damage taken (no masochism economy) *except* the standing-eight survival surge.
 
 **Both teams earn.** Enemy clubs run the same economy; enemy AI spends per authored desperation scripts ([[NP_04_OPPONENT]]) and coach logic ([[NP_10_TACTICS]] §9). The dual is a race for the same fuel.

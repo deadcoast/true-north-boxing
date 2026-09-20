@@ -16,7 +16,7 @@ This doc also commits the Commissioner's identity, which [[NP_12_NARRATIVE]] §5
 Out-Boxer · Gale · house UNKNOWN (mask, no crest). *Philosophy: "Your book is my book."*
 The Blind-dual thesis statement: he opens with three different erased houses' tell dialects, one per phase — dialects in nobody's Scout Book.
 
-```
+```bash
 BOSS HC4_Cartographer
   PHASE 1 [dialect: erased house "Calloway"]: 
     STRING S1 "Survey": TELL(chin_tuck_double, 500ms) -> JAB -> JAB -> STEP_OUT
@@ -85,7 +85,7 @@ Fields **Iron Doctrine** — the dead lineage's SECRET, extracted from the same 
 Boxer-Puncher · Frost · **the sealed house, at full power.** *Philosophy: "They erased us. I kept every page."*
 The first time the player sees their own house fought — natives *[SEALED-NATIVE-1/2]* cast by the man they belong to, before the player has them ([[NP_07_HOUSES]] §7 unsealing lands in this dual's aftermath). Whitlock works the player's corner and calls Cal's tells from 1998 memory — **corner-call assists replace the Scout Book for this one fight**, the game's two eras of friendship facing each other across the ring.
 
-```
+```bash
 BOSS Commissioner_Cal
   PHASE 1 "TheArgument": sealed-house kit, Subtle tells (breath-pause before entries, 480ms)
     - strings named for CRBF regulation numbers he was erased under: "Article 12", "Schedule C"
@@ -135,7 +135,7 @@ Swarmer · Gale · the Okafor root line, Lagos. Ada and Carter's second cousin; 
 Boxer-Puncher · element rotates by segment clock · no house: Meridian abolished lineage intake entirely — Vey's thesis, industrialized continent-wide, a generation ahead. *Philosophy: "We measured everything. Sentiment did not correlate."*
 The final exam is Anders' fight at world scale, with the correction the story spent three arcs earning: **Vey is in the player's corner** — Ascendant absorbed into Team Canada ([[NP_12_NARRATIVE]] §6's strongest version, committed), and the counter-picking coach who beat you at Nationals now reads Meridian's order for you. Enemy coach vs. reformed coach is the tactics layer's last fight, running under the player's dual.
 
-```
+```bash
 BOSS Vasile_Ioan
   CLOCK PHASES (by segment time, Sam's clock-scaling at final-boss size):
     0-30s  [FROST kit]:   counter suite, Subtle breath tells

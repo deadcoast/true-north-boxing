@@ -120,6 +120,7 @@ PI never trivializes reads (windows stay skill-gated); it *teaches*. A player wh
 | Quests | HBP, items, recruit flags | Shops, techniques |
 | District rep | Gates | Recruit conditions, vendor tiers |
 | Training slots | Beans | Stat raises |
+
 Full economy tables in [[NP_11_PROGRESSION]] §6.
 
 ---

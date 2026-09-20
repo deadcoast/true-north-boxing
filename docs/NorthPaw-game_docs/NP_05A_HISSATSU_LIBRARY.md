@@ -25,6 +25,7 @@ The ship-target library ([[NP_13_SCOPE]] §1: 80 hissatsu), delivered as data. C
 | Elements | FROST 27 · GALE 17 · GRANITE 17 · TIMBER 13 · DUAL/ANY 6 |
 | Sources | native 39 · shop 10 · personal 6 · syndicate 6 · taught 4 · board 3 · quest 2 · hybrid 2 · relay 2 · duo 2 · other 3 |
 | Houses | 14/14 covered · one SECRET each |
+
 FROST runs heaviest by design — the protagonist line, three Frost-biased houses, and the Arc 2 syndicate all draw from it; the audit floor (≥12 per element) keeps the other three viable for full off-element builds.
 
 ## 3. NOTABLE MECHANISMS (what the data encodes beyond numbers)

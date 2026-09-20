@@ -20,7 +20,7 @@ Every named opponent is a hand-authored pattern boss in the Punch-Out tradition:
 
 Patterns are written in **PBN (Pattern Boss Notation)**, compiled to behavior trees. Core syntax:
 
-```
+```bash
 BOSS GrainKing_Yuri
   IDLE: circle_slow, guard_mid, taunt@8s
   STRING S1 "Freight":   TELL(shoulder_load, 600ms) -> R_HAY -> L_HOOK -> pause(400)
@@ -85,6 +85,7 @@ Remix operators applied as a layer over the original PBN (original remains in th
 | `reweight` | SELECT redistribution (old habits fade) |
 | `newstring` | +1 authored string (remixes get real new content, not just math) |
 | `phase_shift` | Phase triggers move earlier |
+
 Story rematches use 2–3 operators; the Arc 3 "everyone returns" gauntlet uses full remixes. Circuit escalation, Punch-Out style.
 
 ---
