@@ -6,6 +6,6 @@
 git lfs install --local
 git lfs track "packages/*.zip"
 git add --all
-git commit -m "Import FACEMATH Wave 8"
+git commit -m "tnb_pac068_economy"
 git push origin main
 ```
