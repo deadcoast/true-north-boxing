@@ -2052,3 +2052,92 @@ PAC-052 is still proposal-only, PAC-002B stays with @p1-implementer, and NDL-009
 NEXT OBJECTIVE: PAC-100 — The locker room (NP_08 §4): the release and its three-day undo, the stable's cap given its valve
 
 ---
+
+PAC-100 underway: building NP_08 §4's locker room on the sim — the release with its three-day undo, released cards going back to their district as re-recruitable with a grudge/warmth flag, and the browse lines — gated against its absence, through the save and on the determinism log.PAC-100 DONE — the locker room is on the sim. You can browse the stable and compare cards, and releasing a bench card frees its place at once. The release can be undone for three days; after that it's final, and the card returns later with a grudge or with warmth. Recruits are now refused at the 100 cap too, and a release frees the place.
+
+**Proof:**
+
+- Smoke passes 439/439 on all 24 bosses; the diff against PAC-099 is the same on every boss. Only the content stamp moved among the older lines.
+- Determinism 54/54 and geometry 5/5; every older line is identical.
+- `-- faucets` and `-- audit` are GREEN with every line unchanged.
+- All 20 drives pass, including the new locker drive at 10/10; no older drive check moved.
+- Margins, compiler selftest 10/10, the byte-identical recompile, sim_test 14/14 and the hissatsu audit all pass.
+- Seven soaks ran with zero script errors, including the new `-- demo locker`. The code's checksums (165 files) were rechecked before packing.
+
+**Flags for you** (REGISTER_COMMANDS_049):
+
+- **Canon reads:**
+  - (a) "Rare" is read as how often players should do it, not a limit. The grudge is the cost.
+  - (b) "Reversible for 3 in-game days" means the release can be undone until the third day turns. Undoing it restores the card, its role, its gear and its Gym Wall spot, and leaves no memory.
+  - (c) Warmth means the card had at least a Level 1 bond with someone who stays; otherwise it leaves with a grudge.
+  - (d) How each flag changes the way back:
+
+    | | Warmth | Grudge |
+    | --- | --- | --- |
+    | Named recruit | Rejoins as soon as you approach | Needs its original recruit condition again, plus a spar won against it since the release |
+    | Generic | Signs back free any day | Always costs the 10-Prestige priority, even on an open-mat day |
+
+    Either way the card comes back exactly as it left.
+  - (e) The 100 cap now blocks recruits as well as open-mat signings.
+- **Editorial:**
+  - RORY, PRIYA, MARCUS and JUNE can never be released. RORY is the captain; the other three because the Episode 1 scenes need them.
+  - The bond level for warmth, the grudge's one spar and its priority charge.
+  - A released card's gear goes back to the club's locker.
+  - The automatic pick releases the last card on the bench.
+- **Gates moved:** none.
+
+**Not claimed:**
+
+- An in-world locker room scene; the browse and a single comparison card are lines on the between-duals screen.
+- A physical place where a returned recruit is met; "back in the district" just means it can be approached again.
+- Releasing the story's four.
+- Anything a released card does while it's gone.
+
+PAC-052 is still proposal-only, PAC-002B stays with @p1-implementer, and NDL-009 is untouched.
+
+NEXT OBJECTIVE: PAC-101 — District rep (NP_02 §2, NP_08 §2.2 / §2.4): REP() read off the ledger, the flee's cost, the milestones' Prestige
+
+---
+
+PAC-101 underway: putting district rep on the sim's ledger — scraps won in a district raise it, NP_02 §2's mid-scrap flee costs 1, REP() conditions read the ledger instead of a seeded flag, and NP_08 §2.4's rep milestones pay Prestige — then counting the milestones in the faucet audit and gating each against its absence.Now the sim code.Now the register while the soak runs.PAC-101 DONE — district rep is on the sim's ledger. A scrap won in a district adds 1 to its rep, and fleeing mid-scrap costs 1 (fleeing before the first exchange is free). REP() conditions now read the ledger, and rep milestones pay Prestige. `-- faucets` is still GREEN, but Prestige now sits at the top edge of its band.
+
+**Proof:**
+
+- Smoke passes 444/444 on all 24 bosses; the diff against PAC-100 is the same on every boss.
+- Determinism 55/55 and geometry 5/5.
+- `-- audit` is GREEN with its lines unchanged.
+- All 21 drives pass, including the new rep drive at 6/6; no older drive check moved.
+- Margins, compiler selftest 10/10, the byte-identical recompile, sim_test 14/14 and the hissatsu audit all pass.
+- Eight soaks ran with zero script errors, including a scrap soak in the Rink District.
+- The growth soak took 22 steps this run instead of 29. A fixed-seed A/B against PAC-100's code gave 29 each with the same score, so the difference came from the clock seed, not the code.
+
+**Finding — flag for @heat:** Prestige is at 85 % of what's wanted (84.6 %, 14.8 a session), right at the band's upper edge.
+
+- NP_11 §6's 5–15 Prestige a session covers scraps and rep together, and at story pace scraps already pay 13.5 of it. That's why the milestones pay only 1, 1 and 2.
+- NP_08 §2.4's third Prestige source, circuit placements, can't be added at story pace without leaving the band. Either the want grows with the content (NP_08 §9 ships 60 named recruits; the table has 13), or scrap Prestige is read lower.
+- The scrap table itself says tier 1 = 1, tier 2 = 2, tier 3 = 3 Prestige, but C22 pays 2 / 3 / 3 to honour NP_12A's "+2 Prestige" line.
+
+**Other flags** (REGISTER_COMMANDS_050):
+
+- **Canon reads:**
+  - (a) "Mid-scrap" means after the first exchange; the flee costs 1 point and rep never goes below 0.
+  - (b) A scrap won adds 1 to its district. The docs only give the flee's cost, not the gain.
+  - (c) Three milestones, each paid once, sized to the shared 5–15 band.
+  - (d) REP() uses the docs' own district names (`rink_district`, `the_hill`), and a seeded rep flag still counts.
+  - (e) The faucet's story-pace scraps rotate through each phase's districts: Millbrook Secondary and the community centre, then the Rink District and the harbour, then the Hill and downtown.
+- **Editorial:** the +1 per scrap, milestones at 3 / 10 / 25 paying 1 / 1 / 2, a scrap with no district moving no rep, BACKSPACE as the flee key, and the districts per phase.
+- **Gates moved:**
+  - C29's data gate: REP is now read by the sim, so the sim reads 7 condition forms and the overworld 4.
+  - C51's phase arithmetic now includes the rep milestones (135 → 139 Prestige).
+  - Printed only: C51's report (18 lines), C53's Prestige figures, C51's reduced determinism line, and the content stamp.
+
+**Not claimed:**
+
+- Real overworld districts: a scrap's district is passed in as an argument, not reached by walking.
+- NP_02 §4's vendor tiers opening by rep.
+- Rep from anything other than scraps.
+- A scout reading or raising rep.
+
+PAC-052 is still proposal-only, PAC-002B stays with @p1-implementer, and NDL-009 is untouched.
+
+NEXT OBJECTIVE: PAC-102 — The anti-you (NP_12 §2): the academy recruits the club's beaten rivals between arcs
