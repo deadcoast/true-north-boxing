@@ -1,4 +1,4 @@
-# PROJECT NORTHPAW — Game Design Specification v1.0
+# TRUE NORTH BOXING — Game Design Specification v1.0
 
 **Working title (placeholder). Genre:** Action-RPG / shonen sports. **Sport:** North American boxing, rotation team format. **Setting:** Canada.
 **Formula:** `INAZUMA ELEVEN (loop) + PUNCH-OUT!! (staging & opponent souls) + FIGHT NIGHT CHAMPION (hands) + NARUTO/DEMON SLAYER (houses & lineage) + CANADA (story)`
