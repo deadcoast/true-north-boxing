@@ -1,8 +1,9 @@
 # PROJECT NORTHPAW — Design Vault Index
+
 Working title placeholder. 13 dedicated system documents, wikilinked.
 
 | # | Doc | Covers |
-|---|-----|--------|
+| --- | ----- | -------- |
 | 01 | [[NP_01_SPORT]] | Rotation Team Boxing: full rulebook, scoring, zones, fouls, formats, glossary |
 | 02 | [[NP_02_TWO_LAYER]] | Harbourline overworld, scrap/spar/dual specs, Pattern Intel recon, pacing math |
 | 03 | [[NP_03_COMBAT_ENGINE]] | Camera, full input matrix w/ frame data, damage/composure/guard/stamina models, counters, clinch, standing-eight, adaptation tracker |
