@@ -1972,3 +1972,83 @@ PAC-052 unchanged and still proposal-only. PAC-002B stays with @p1-implementer. 
 NEXT OBJECTIVE: PAC-098 — Fix what the faucet/sink audit names: XP's pace, HBP from quests and the story, a Prestige sink, Spirits paid per session, and the Beans wanted, with `-- faucets` GREEN and `-- audit` still GREEN on what the faucet pays
 
 ---
+
+PAC-098 underway: I'm reading NP_08's scouting and NP_02's quests to find the canon mechanisms for the Prestige sink and the HBP faucet, then I'll fix all five currencies and run `-- faucets` until it comes back GREEN.Now the core reserve fix and the test expectations, all reading the pace from the table.Now filling the result block.PAC-098 DONE — both audits pass: `-- faucets` is GREEN on all five currencies, and `-- audit` is GREEN on a budget the faucet now pays. The shares are Spirits 58 %, HBP 72 %, Beans 68 % and Prestige 81 %, and RORY reaches L35 by Arc 3 (he was at L21).
+
+**Proof:**
+
+- `-- faucets` exit 0.
+- `-- audit` exit 0: PRIYA 10/14, DEX 14/14, YURI 14/14 on a budget of 110 Spirits / 140 Beans / 1,700 HBP.
+- Smoke 426/426 on all 24 bosses (10,224 assertions). The diff against PAC-097 is the same on every boss.
+- Determinism 52/52 and geometry 5/5.
+- All 18 drives green, including the new scouting drive at 8/8.
+- Margins, the compiler's selftest 10/10, a byte-identical recompile, sim_test 14/14 and the hissatsu audit all pass.
+- Five soaks ran with zero script errors, including a new `demo scouting` soak.
+- The code's checksums were rechecked before packing.
+
+**Flags for you** (REGISTER_COMMANDS_047):
+
+- **Canon reads, (a)–(f):**
+  - one XP multiplier (2.7) scales every existing XP award, so a story-pace captain reaches NP_11 §2's ~35 by Arc 3;
+  - the Spirits range "3–8" read as pay per session;
+  - a story beat pays 50 HBP and a quest step 30;
+  - the scouting machine's rare leads are the 13 named recruits plus Vera Iron, and every 10th pull is guaranteed rare;
+  - the Prestige players want by Arc 3 is every rare lead the machine holds (14 × 10 pulls × 10 = 1,400);
+  - the audit's budget is re-derived from what the faucet pays.
+- **Editorial:** the 2.7, 50 and 30 values, the flat 2 Spirits a spar, the open mat every 7th day with a 10-Prestige charge to sign on other days, how scouted generics are drawn, and the budget's rounding.
+- **Gates moved (command 8):**
+  - Pay gates now read the economy table instead of hard-coded amounts.
+  - C50's Chiamaka fight moved from seed 11 to seed 22.
+  - C51's verdict is now GREEN, with PAC-097's economy still RED on all five.
+  - Four lines changed only what they print, and their conditions still hold: C23's XP, C49's Alfie Crane fight, C49's CASSIDY reference total, and the content stamp.
+  - One correction to my own write-up: NP_14 C52 had said the growth drive's toasts changed. They didn't, and no drive check moved, so that line is now fixed.
+
+**Not claimed:**
+
+- No overworld path calls `story_mark` yet. Only the audit, the smoke gates and the demo do.
+- Signed generics have no role on the bench.
+- Scouts earn no passive Prestige, so Prestige is still counted only from scraps.
+- The determinism check that replays C50's fight on seed 11 now shows PRIYA losing 2–4. It only checks the two runs are identical, so it doesn't fail.
+
+PAC-052 is still proposal-only, PAC-002B stays with @p1-implementer, and NDL-009 is untouched.
+
+NEXT OBJECTIVE: PAC-099 — The stable roles (NP_08 §1): training partner, scout, cornerman-in-training
+
+---
+
+PAC-099 underway: putting NP_08 §1's three stable roles (training partner, scout, cornerman-in-training) on the sim's ledgers, adding the scout's Prestige to the faucet audit, and gating each role against its absence.Now the `_pay_dual` hook and the staff-use refactor.Now the projection's scout source.Now the faucet table's bench entry.Now the main.gd changes: help, vars, demo, key, HUD, toasts, soak summary.Now the determinism gate.Now GREYBOX.md updates.Everything is in. Filling the result and the register.PAC-099 DONE — any card on the bench can now be set as a training partner, scout or cornerman-in-training. Each role pays through a path the sim already had: the training slot, the day's turn, or a staff member's use. `-- faucets` stays GREEN with a story-pace bench counted, and Prestige's share moves from 81 % to 83 %.
+
+**Proof:**
+
+- Smoke passes 433/433 on all 24 bosses; the diff against PAC-098 is the same on every boss.
+- Determinism 53/53 and geometry 5/5, every older line byte-identical.
+- `-- audit` GREEN with its lines unchanged.
+- All 19 drives pass, including the new roles drive at 8/8; no older drive check moved.
+- Margins, compiler selftest 10/10, the byte-identical recompile, sim_test 14/14 and the hissatsu audit all pass.
+- Six soaks ran with zero script errors, including the new `-- demo roles`. The code's checksums (164 files) were rechecked before packing.
+
+**Flags for you** (REGISTER_COMMANDS_048):
+
+- **Canon reads:**
+  - (a) A training partner's "Beans bonus keyed to their stats" is read as how far he outscores the trainee at the game's stat: +1 Bean per 10 points, 3 at most.
+    - I picked this on design: a partner teaches what the trainee lacks, so a benched veteran is worth keeping around for the rookies.
+    - It also keeps the audit GREEN. At story pace a training slot already pays 9.6 Beans against the docs' 3–10 range, so a bonus paid on the partner's own stats would push it over.
+  - (b) A scout's district pays 1 Prestige a day, once however many scouts cover it; without that cap, 100 bench bodies would print Prestige. A scout from a circuit district also reads its clubs' fight order at +20.
+  - (c) NP_08 §1 says the cornerman-in-training feeds the staff system and cites NP_10 §7, but §7 is the facilities. I read it as §6, the staff system, so each trainee adds a staff use at every dual's end.
+  - (d) A House card's home district is its House's root region; a card with no House is from Millbrook; a generic is from wherever the machine drew him.
+  - (e) The story-pace bench in the audit is three open-mat generics, one per role, from the circuit onward.
+- **Editorial:** the 10-point step and the cap of 3, the 1 Prestige, the +20, the one use per dual, seven House roots I mapped by hand, and the order the auto-assign key fills roles in.
+- **Gates moved:** none changed a condition. Three lines only print different numbers: C51's report is 17 lines instead of 16, C23's round-trip save is 16,387 bytes instead of 16,255, and the content stamp changed.
+
+**Not claimed:**
+
+- The locker-room browser: the scene's key assigns the next role automatically; you can't pick a card and a role yourself.
+- A trainee becoming a staff member.
+- District rep, or leads coming from scouts.
+- The bench running its own training slots.
+
+PAC-052 is still proposal-only, PAC-002B stays with @p1-implementer, and NDL-009 is untouched.
+
+NEXT OBJECTIVE: PAC-100 — The locker room (NP_08 §4): the release and its three-day undo, the stable's cap given its valve
+
+---
