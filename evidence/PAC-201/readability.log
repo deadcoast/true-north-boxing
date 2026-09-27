@@ -1,0 +1,126 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+[PASS] launch waits for a deliberate first bell
+[PASS] entry does not advance sim or clock
+[PASS] entry has keyboard focus
+[PASS] render saved entry-1280x720
+[PASS] controls can open before the bell
+[PASS] closing controls restores entry focus
+[PASS] entry focus stays in its controls
+[PASS] Enter activates focused Fight button
+[PASS] bell input does not become a punch
+[PASS] fight advances after explicit start
+[PASS] controls pause live fight
+[PASS] Practice is accessible by keyboard
+[PASS] practice setting and menu agree
+[PASS] dummy does not attack
+[PASS] leaving practice restores live opponent
+[PASS] full body (1280, 720) distance 0.7 angle 0.0
+[PASS] full body (1280, 720) distance 0.7 angle 1.6
+[PASS] full body (1280, 720) distance 0.7 angle 3.1
+[PASS] full body (1280, 720) distance 0.7 angle 4.7
+[PASS] full body (1280, 720) distance 1.0 angle 0.0
+[PASS] full body (1280, 720) distance 1.0 angle 1.6
+[PASS] full body (1280, 720) distance 1.0 angle 3.1
+[PASS] full body (1280, 720) distance 1.0 angle 4.7
+[PASS] full body (1280, 720) distance 1.5 angle 0.0
+[PASS] full body (1280, 720) distance 1.5 angle 1.6
+[PASS] full body (1280, 720) distance 1.5 angle 3.1
+[PASS] full body (1280, 720) distance 1.5 angle 4.7
+[PASS] full body (1280, 720) distance 2.0 angle 0.0
+[PASS] full body (1280, 720) distance 2.0 angle 1.6
+[PASS] full body (1280, 720) distance 2.0 angle 3.1
+[PASS] full body (1280, 720) distance 2.0 angle 4.7
+[PASS] full body (1280, 720) distance 4.0 angle 0.0
+[PASS] full body (1280, 720) distance 4.0 angle 1.6
+[PASS] full body (1280, 720) distance 4.0 angle 3.1
+[PASS] full body (1280, 720) distance 4.0 angle 4.7
+[PASS] full body (1280, 720) distance 7.0 angle 0.0
+[PASS] full body (1280, 720) distance 7.0 angle 1.6
+[PASS] full body (1280, 720) distance 7.0 angle 3.1
+[PASS] full body (1280, 720) distance 7.0 angle 4.7
+[PASS] corner full body (1280, 720)
+[PASS] all corner boundaries use per-fragment foreground clearance (1280, 720)
+[PASS] render saved close-corner-1280x720
+[PASS] neutral HUD leaves details closed
+[PASS] render saved windup-1280x720
+[PASS] entry stays inside viewport (1280, 720)
+[PASS] full body (960, 600) distance 0.7 angle 0.0
+[PASS] full body (960, 600) distance 0.7 angle 1.6
+[PASS] full body (960, 600) distance 0.7 angle 3.1
+[PASS] full body (960, 600) distance 0.7 angle 4.7
+[PASS] full body (960, 600) distance 1.0 angle 0.0
+[PASS] full body (960, 600) distance 1.0 angle 1.6
+[PASS] full body (960, 600) distance 1.0 angle 3.1
+[PASS] full body (960, 600) distance 1.0 angle 4.7
+[PASS] full body (960, 600) distance 1.5 angle 0.0
+[PASS] full body (960, 600) distance 1.5 angle 1.6
+[PASS] full body (960, 600) distance 1.5 angle 3.1
+[PASS] full body (960, 600) distance 1.5 angle 4.7
+[PASS] full body (960, 600) distance 2.0 angle 0.0
+[PASS] full body (960, 600) distance 2.0 angle 1.6
+[PASS] full body (960, 600) distance 2.0 angle 3.1
+[PASS] full body (960, 600) distance 2.0 angle 4.7
+[PASS] full body (960, 600) distance 4.0 angle 0.0
+[PASS] full body (960, 600) distance 4.0 angle 1.6
+[PASS] full body (960, 600) distance 4.0 angle 3.1
+[PASS] full body (960, 600) distance 4.0 angle 4.7
+[PASS] full body (960, 600) distance 7.0 angle 0.0
+[PASS] full body (960, 600) distance 7.0 angle 1.6
+[PASS] full body (960, 600) distance 7.0 angle 3.1
+[PASS] full body (960, 600) distance 7.0 angle 4.7
+[PASS] corner full body (960, 600)
+[PASS] all corner boundaries use per-fragment foreground clearance (960, 600)
+[PASS] neutral HUD leaves details closed
+[PASS] render saved windup-960x600
+[PASS] entry stays inside viewport (960, 600)
+[PASS] render saved entry-960x600
+[PASS] correct attacking hand L_STRAIGHT
+[PASS] correct attacking hand L_FLARED
+[PASS] correct attacking hand L_HOOK
+[PASS] correct attacking hand L_HOOKERCUT
+[PASS] correct attacking hand L_UPPERCUT
+[PASS] correct attacking hand R_STRAIGHT
+[PASS] correct attacking hand R_FLARED
+[PASS] correct attacking hand R_HOOK
+[PASS] correct attacking hand R_HOOKERCUT
+[PASS] correct attacking hand R_UPPERCUT
+[PASS] ordinary orbit respects its presentation cap
+[PASS] every string poses without changing sim: cassidy_vane
+[PASS] every string poses without changing sim: yuri_kowalchuk
+[PASS] every string poses without changing sim: jean_guy_moreau
+[PASS] every string poses without changing sim: sam_tagaq
+[PASS] every string poses without changing sim: ada_okafor
+[PASS] every string poses without changing sim: alfie_crane
+[PASS] every string poses without changing sim: anders_vey
+[PASS] every string poses without changing sim: carter_okafor
+[PASS] every string poses without changing sim: chiamaka_okafor
+[PASS] every string poses without changing sim: commissioner_cal
+[PASS] every string poses without changing sim: deshawn_vaughn
+[PASS] every string poses without changing sim: efua_osei
+[PASS] every string poses without changing sim: hc0_surety
+[PASS] every string poses without changing sim: hc4_cartographer
+[PASS] every string poses without changing sim: hc7_echo
+[PASS] every string poses without changing sim: hc9_choir
+[PASS] every string poses without changing sim: ioan_vasile
+[PASS] every string poses without changing sim: itzel_reyes_ortega
+[PASS] every string poses without changing sim: marta_okonkwo_tremblay
+[PASS] every string poses without changing sim: moira_macisaac
+[PASS] every string poses without changing sim: remy_moreau
+[PASS] every string poses without changing sim: sora_kannagi
+[PASS] every string poses without changing sim: tam_nguyen_roy
+[PASS] every string poses without changing sim: yordanis_baro
+[PASS] contact pose differs from windup
+[PASS] contact is visibly extended
+[PASS] render saved contact-1280x720
+[PASS] glove recovers on sim time
+[PASS] existing corner actions stay accessible
+[PASS] Hide details works during a corner
+[PASS] corner details reopen without losing actions
+[PASS] details close when fighting resumes
+[PASS] focus loss pauses fight
+VERDICT :: GREEN (119/119)
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)

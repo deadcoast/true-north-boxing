@@ -1,6 +1,12 @@
 # TNB GREYBOX v6 - the engine foundation (NP_14)
 Run (no editor): `godot --path .\engine\greybox`
 
+The normal launch waits at **Before the bell**. Choose Fight, stationary Practice,
+or Controls; the clock does not run while reading or remapping. The fight HUD puts
+resources at the edges. **Ctrl+F1 / Details** opens the complete scrollable diagnostic
+and progression display; it opens automatically at a corner or bout result.
+Explicit command-line demos, saved fights and test drivers retain their direct entry.
+
 PAC-005 combat input (NP-03 §§2.1–2.5; NP-13 P1/R-01): press **Escape** to
 pause, choose the input preset, remap combat bindings, or enable the stationary
 practice dummy. Controls save automatically in `user://controls.cfg`; Restore
@@ -27,14 +33,24 @@ and the stagger event; it respects the existing authored interrupt rules.
 Launch directly into practice: `godot --path engine/greybox -- dummy` (add
 `controls=chords` for the accessible preset). The dummy holds position, replenishes
 composure, and suspends opponent decisions and the round clock. Turning practice
-off restores normal decisions. R reloads tuning. This remains the existing capsule
-greybox, not the finished game presentation. Input regressions:
+off restores normal decisions. R reloads tuning. The geometric boxer rigs remain
+prototype art. Input regressions:
 `godot --headless --path engine/greybox -s tools/drive_input.gd -- dummy`.
 
 
-Blue capsule = you (head sphere shows where the sim says your head is - a
-slip is visible). Red capsule = the boss, driven by the real compiled PBN.
-Yellow flash + swell = tell; hit him during it = interrupt + flash window.
+Blue silhouette = you; red fighter = the boss, driven by the compiled PBN.
+Heads follow the simulation's dodge offsets; gloves coil during wind-up and extend
+on contact. Only tagged strings can be interrupted by a clean jab-class hit.
+The player uses 40% alpha with an additional soft visibility window over the opponent.
+Active hands stay opaque. PI 2 still emphasizes the wind-up.
+The camera preserves 1.8m chase, head+0.6m height and 55-degree FOV. It aims at the
+opponent's center as distance changes: a literal fixed 12-degree pitch cannot also
+keep that target centered. The provisional 70-degree/s orbit cap is not PAC-003's
+completed salience metric. Authored character animation/audio, the full art bible,
+human squint testing and new-player time-to-first-DROP acceptance remain open.
+Presentation regression and GPU captures:
+`godot --headless --path engine/greybox -s tools/drive_readability.gd -- welcome`;
+omit `--headless` and add `capture` for PNGs under the Godot user-data directory.
 All numbers load from `combat_tuning.v1.json` - edit it, press R, feel it.
 
 PAD: LS move | RS flick = punch by angle | RT block (150ms perfect window)

@@ -1,0 +1,286 @@
+FILE: compile-1.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+SCRIPT ERROR: Parse Error: Function "_tell_fx()" not found in base self.
+   at: GDScript::reload (res://main.gd:1229)
+ERROR: Failed to load script "res://main.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+
+
+FILE: readability-1.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+SCRIPT ERROR: Parse Error: Could not preload resource script "res://presentation/fight_view.gd".
+   at: GDScript::reload (res://main.gd:5)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/drive_readability.gd:42)
+SCRIPT ERROR: Parse Error: Could not resolve script "res://presentation/fight_view.gd".
+   at: GDScript::reload (res://main.gd:5)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/drive_readability.gd:42)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "FightView" constant because the value doesn't have a set type.
+   at: GDScript::reload (res://main.gd:5)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/drive_readability.gd:42)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "fight_view" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://main.gd:7)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/drive_readability.gd:42)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "partner_view" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://main.gd:8)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/drive_readability.gd:42)
+ERROR: Failed to load script "res://main.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/drive_readability.gd:42)
+SCRIPT ERROR: Invalid access to property or key 'controls_menu' on a base object of type 'Node3D'.
+   at: _run (res://tools/drive_readability.gd:44)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/drive_readability.gd:44)
+
+
+FILE: readability-2.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] launch waits for a deliberate first bell
+[PASS] entry does not advance sim or clock
+[PASS] entry has keyboard focus
+[PASS] controls can open before the bell
+[PASS] closing controls restores entry focus
+[PASS] Enter activates focused Fight button
+[PASS] bell input does not become a punch
+[PASS] fight advances after explicit start
+[PASS] controls pause live fight
+[PASS] Practice is accessible by keyboard
+[PASS] practice setting and menu agree
+[PASS] dummy does not attack
+[PASS] leaving practice restores live opponent
+[FAIL] full body (1280, 720) distance 0.7 angle 0.0
+[FAIL] full body (1280, 720) distance 0.7 angle 1.6
+[FAIL] full body (1280, 720) distance 0.7 angle 3.1
+[FAIL] full body (1280, 720) distance 0.7 angle 4.7
+[FAIL] full body (1280, 720) distance 1.0 angle 0.0
+[FAIL] full body (1280, 720) distance 1.0 angle 1.6
+[FAIL] full body (1280, 720) distance 1.0 angle 3.1
+[FAIL] full body (1280, 720) distance 1.0 angle 4.7
+[PASS] full body (1280, 720) distance 1.5 angle 0.0
+[PASS] full body (1280, 720) distance 1.5 angle 1.6
+[PASS] full body (1280, 720) distance 1.5 angle 3.1
+[PASS] full body (1280, 720) distance 1.5 angle 4.7
+[PASS] full body (1280, 720) distance 2.0 angle 0.0
+[PASS] full body (1280, 720) distance 2.0 angle 1.6
+[PASS] full body (1280, 720) distance 2.0 angle 3.1
+[PASS] full body (1280, 720) distance 2.0 angle 4.7
+[PASS] full body (1280, 720) distance 4.0 angle 0.0
+[PASS] full body (1280, 720) distance 4.0 angle 1.6
+[PASS] full body (1280, 720) distance 4.0 angle 3.1
+[PASS] full body (1280, 720) distance 4.0 angle 4.7
+[PASS] full body (1280, 720) distance 7.0 angle 0.0
+[PASS] full body (1280, 720) distance 7.0 angle 1.6
+[PASS] full body (1280, 720) distance 7.0 angle 3.1
+[PASS] full body (1280, 720) distance 7.0 angle 4.7
+[FAIL] corner full body (1280, 720)
+[PASS] neutral HUD leaves details closed
+[PASS] entry stays inside viewport (1280, 720)
+[FAIL] full body (960, 600) distance 0.7 angle 0.0
+[FAIL] full body (960, 600) distance 0.7 angle 1.6
+[FAIL] full body (960, 600) distance 0.7 angle 3.1
+[FAIL] full body (960, 600) distance 0.7 angle 4.7
+[FAIL] full body (960, 600) distance 1.0 angle 0.0
+[FAIL] full body (960, 600) distance 1.0 angle 1.6
+[FAIL] full body (960, 600) distance 1.0 angle 3.1
+[FAIL] full body (960, 600) distance 1.0 angle 4.7
+[FAIL] full body (960, 600) distance 1.5 angle 0.0
+[FAIL] full body (960, 600) distance 1.5 angle 1.6
+[FAIL] full body (960, 600) distance 1.5 angle 3.1
+[FAIL] full body (960, 600) distance 1.5 angle 4.7
+[PASS] full body (960, 600) distance 2.0 angle 0.0
+[PASS] full body (960, 600) distance 2.0 angle 1.6
+[PASS] full body (960, 600) distance 2.0 angle 3.1
+[PASS] full body (960, 600) distance 2.0 angle 4.7
+[PASS] full body (960, 600) distance 4.0 angle 0.0
+[PASS] full body (960, 600) distance 4.0 angle 1.6
+[PASS] full body (960, 600) distance 4.0 angle 3.1
+[PASS] full body (960, 600) distance 4.0 angle 4.7
+[PASS] full body (960, 600) distance 7.0 angle 0.0
+[PASS] full body (960, 600) distance 7.0 angle 1.6
+[PASS] full body (960, 600) distance 7.0 angle 3.1
+[PASS] full body (960, 600) distance 7.0 angle 4.7
+[FAIL] corner full body (960, 600)
+[PASS] neutral HUD leaves details closed
+[PASS] entry stays inside viewport (960, 600)
+[PASS] every string poses without changing sim: cassidy_vane
+[PASS] every string poses without changing sim: yuri_kowalchuk
+[PASS] every string poses without changing sim: jean_guy_moreau
+[PASS] every string poses without changing sim: sam_tagaq
+[FAIL] every string poses without changing sim: ada_okafor
+[PASS] every string poses without changing sim: alfie_crane
+[FAIL] every string poses without changing sim: anders_vey
+[PASS] every string poses without changing sim: carter_okafor
+[FAIL] every string poses without changing sim: chiamaka_okafor
+[PASS] every string poses without changing sim: commissioner_cal
+[FAIL] every string poses without changing sim: deshawn_vaughn
+[PASS] every string poses without changing sim: efua_osei
+[PASS] every string poses without changing sim: hc0_surety
+[FAIL] every string poses without changing sim: hc4_cartographer
+[PASS] every string poses without changing sim: hc7_echo
+[PASS] every string poses without changing sim: hc9_choir
+[FAIL] every string poses without changing sim: ioan_vasile
+[PASS] every string poses without changing sim: itzel_reyes_ortega
+[PASS] every string poses without changing sim: marta_okonkwo_tremblay
+[PASS] every string poses without changing sim: moira_macisaac
+[PASS] every string poses without changing sim: remy_moreau
+[PASS] every string poses without changing sim: sora_kannagi
+[PASS] every string poses without changing sim: tam_nguyen_roy
+[PASS] every string poses without changing sim: yordanis_baro
+[PASS] contact pose differs from windup
+[PASS] contact is visibly extended
+[PASS] glove recovers on sim time
+SCRIPT ERROR: Invalid access to property or key 't' on a base object of type 'Dictionary'.
+   at: _corner_menu (res://main.gd:1545)
+   GDScript backtrace (most recent call first):
+       [0] _corner_menu (res://main.gd:1545)
+       [1] _hud (res://main.gd:1621)
+       [2] _run (res://tools/drive_readability.gd:108)
+[PASS] existing corner actions stay accessible
+[PASS] details close when fighting resumes
+[PASS] focus loss pauses fight
+VERDICT :: RED (69/97)
+
+
+FILE: visual-corner-fixed.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+[PASS] launch waits for a deliberate first bell
+[PASS] entry does not advance sim or clock
+[PASS] entry has keyboard focus
+[PASS] render saved entry-1280x720
+[PASS] controls can open before the bell
+[PASS] closing controls restores entry focus
+[PASS] entry focus stays in its controls
+[PASS] Enter activates focused Fight button
+[PASS] bell input does not become a punch
+[PASS] fight advances after explicit start
+[PASS] controls pause live fight
+[PASS] Practice is accessible by keyboard
+[PASS] practice setting and menu agree
+[PASS] dummy does not attack
+[PASS] leaving practice restores live opponent
+[PASS] full body (1280, 720) distance 0.7 angle 0.0
+[PASS] full body (1280, 720) distance 0.7 angle 1.6
+[PASS] full body (1280, 720) distance 0.7 angle 3.1
+[PASS] full body (1280, 720) distance 0.7 angle 4.7
+[PASS] full body (1280, 720) distance 1.0 angle 0.0
+[PASS] full body (1280, 720) distance 1.0 angle 1.6
+[PASS] full body (1280, 720) distance 1.0 angle 3.1
+[PASS] full body (1280, 720) distance 1.0 angle 4.7
+[PASS] full body (1280, 720) distance 1.5 angle 0.0
+[PASS] full body (1280, 720) distance 1.5 angle 1.6
+[PASS] full body (1280, 720) distance 1.5 angle 3.1
+[PASS] full body (1280, 720) distance 1.5 angle 4.7
+[PASS] full body (1280, 720) distance 2.0 angle 0.0
+[PASS] full body (1280, 720) distance 2.0 angle 1.6
+[PASS] full body (1280, 720) distance 2.0 angle 3.1
+[PASS] full body (1280, 720) distance 2.0 angle 4.7
+[PASS] full body (1280, 720) distance 4.0 angle 0.0
+[PASS] full body (1280, 720) distance 4.0 angle 1.6
+[PASS] full body (1280, 720) distance 4.0 angle 3.1
+[PASS] full body (1280, 720) distance 4.0 angle 4.7
+[PASS] full body (1280, 720) distance 7.0 angle 0.0
+[PASS] full body (1280, 720) distance 7.0 angle 1.6
+[PASS] full body (1280, 720) distance 7.0 angle 3.1
+[PASS] full body (1280, 720) distance 7.0 angle 4.7
+[PASS] corner full body (1280, 720)
+[FAIL] corner boundaries clear only in foreground (1280, 720)
+[PASS] render saved close-corner-1280x720
+[PASS] neutral HUD leaves details closed
+[PASS] render saved windup-1280x720
+[PASS] entry stays inside viewport (1280, 720)
+[PASS] full body (960, 600) distance 0.7 angle 0.0
+[PASS] full body (960, 600) distance 0.7 angle 1.6
+[PASS] full body (960, 600) distance 0.7 angle 3.1
+[PASS] full body (960, 600) distance 0.7 angle 4.7
+[PASS] full body (960, 600) distance 1.0 angle 0.0
+[PASS] full body (960, 600) distance 1.0 angle 1.6
+[PASS] full body (960, 600) distance 1.0 angle 3.1
+[PASS] full body (960, 600) distance 1.0 angle 4.7
+[PASS] full body (960, 600) distance 1.5 angle 0.0
+[PASS] full body (960, 600) distance 1.5 angle 1.6
+[PASS] full body (960, 600) distance 1.5 angle 3.1
+[PASS] full body (960, 600) distance 1.5 angle 4.7
+[PASS] full body (960, 600) distance 2.0 angle 0.0
+[PASS] full body (960, 600) distance 2.0 angle 1.6
+[PASS] full body (960, 600) distance 2.0 angle 3.1
+[PASS] full body (960, 600) distance 2.0 angle 4.7
+[PASS] full body (960, 600) distance 4.0 angle 0.0
+[PASS] full body (960, 600) distance 4.0 angle 1.6
+[PASS] full body (960, 600) distance 4.0 angle 3.1
+[PASS] full body (960, 600) distance 4.0 angle 4.7
+[PASS] full body (960, 600) distance 7.0 angle 0.0
+[PASS] full body (960, 600) distance 7.0 angle 1.6
+[PASS] full body (960, 600) distance 7.0 angle 3.1
+[PASS] full body (960, 600) distance 7.0 angle 4.7
+[PASS] corner full body (960, 600)
+[FAIL] corner boundaries clear only in foreground (960, 600)
+[PASS] neutral HUD leaves details closed
+[PASS] render saved windup-960x600
+[PASS] entry stays inside viewport (960, 600)
+[PASS] render saved entry-960x600
+[PASS] correct attacking hand L_STRAIGHT
+[PASS] correct attacking hand L_FLARED
+[PASS] correct attacking hand L_HOOK
+[PASS] correct attacking hand L_HOOKERCUT
+[PASS] correct attacking hand L_UPPERCUT
+[PASS] correct attacking hand R_STRAIGHT
+[PASS] correct attacking hand R_FLARED
+[PASS] correct attacking hand R_HOOK
+[PASS] correct attacking hand R_HOOKERCUT
+[PASS] correct attacking hand R_UPPERCUT
+[PASS] ordinary orbit respects its presentation cap
+[PASS] every string poses without changing sim: cassidy_vane
+[PASS] every string poses without changing sim: yuri_kowalchuk
+[PASS] every string poses without changing sim: jean_guy_moreau
+[PASS] every string poses without changing sim: sam_tagaq
+[PASS] every string poses without changing sim: ada_okafor
+[PASS] every string poses without changing sim: alfie_crane
+[PASS] every string poses without changing sim: anders_vey
+[PASS] every string poses without changing sim: carter_okafor
+[PASS] every string poses without changing sim: chiamaka_okafor
+[PASS] every string poses without changing sim: commissioner_cal
+[PASS] every string poses without changing sim: deshawn_vaughn
+[PASS] every string poses without changing sim: efua_osei
+[PASS] every string poses without changing sim: hc0_surety
+[PASS] every string poses without changing sim: hc4_cartographer
+[PASS] every string poses without changing sim: hc7_echo
+[PASS] every string poses without changing sim: hc9_choir
+[PASS] every string poses without changing sim: ioan_vasile
+[PASS] every string poses without changing sim: itzel_reyes_ortega
+[PASS] every string poses without changing sim: marta_okonkwo_tremblay
+[PASS] every string poses without changing sim: moira_macisaac
+[PASS] every string poses without changing sim: remy_moreau
+[PASS] every string poses without changing sim: sora_kannagi
+[PASS] every string poses without changing sim: tam_nguyen_roy
+[PASS] every string poses without changing sim: yordanis_baro
+[PASS] contact pose differs from windup
+[PASS] contact is visibly extended
+[PASS] render saved contact-1280x720
+[PASS] glove recovers on sim time
+[PASS] existing corner actions stay accessible
+[PASS] Hide details works during a corner
+[PASS] corner details reopen without losing actions
+[PASS] details close when fighting resumes
+[PASS] focus loss pauses fight
+VERDICT :: RED (117/119)
+
+
+FILE: visual-corner-fixed.err.log
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)

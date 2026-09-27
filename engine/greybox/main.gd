@@ -2,6 +2,12 @@ extends Node3D
 const TNBSim := preload("res://sim/core.gd")
 const CombatInput := preload("res://input/combat_input.gd")
 const ControlsMenu := preload("res://input/controls_menu.gd")
+const FightView := preload("res://presentation/fight_view.gd")
+const FightHUD := preload("res://presentation/fight_hud.gd")
+var fight_view := FightView.new()
+var partner_view := FightView.new()
+var fight_hud: CanvasLayer
+var ring_boundaries: Array[MeshInstance3D] = []
 const TNBClock := preload("res://sim/clock.gd")
 const TNBTests := preload("res://sim/tests.gd")
 const TNBObjectives := preload("res://sim/objectives.gd")
@@ -499,6 +505,19 @@ func _ready() -> void:
 		if want.size() > 0: sim.seal_board(want); _consume_events()
 		for ln in sim.formation_lines(): print("FORMATION :: " + str(ln))
 
+	_render(1.0); _hud()
+	# Explicit CLI demos, tests and resumed saves retain their existing entry path.
+	if args.is_empty() or "welcome" in args:
+		fight_hud.show_entry()
+	controls_menu.closed.connect(func():
+		if fight_hud.entry.visible: fight_hud.start_button.grab_focus())
+
+func begin_fight(practice: bool) -> void:
+	clock.acc = 0.0
+	set_practice(practice); controls_menu.practice.set_pressed_no_signal(practice)
+	combat_input.clear(true)
+	fight_hud.dismiss_entry()
+
 # ============================== WORLD =====================================
 func _build_partner() -> void:
 	# PAC-088: the other pair - the partner in his card's colour, his opponent in the enemy's - drawn in the other half of the ring
@@ -507,26 +526,17 @@ func _build_partner() -> void:
 	partner_boss = _mk_capsule(BOSS_COLOR.darkened(0.15), _to3(q.B["pos"], exh.other(exh.ctrl)))
 	prev_q = q.P["pos"]; prev_qb = q.B["pos"]
 
-func _mk_box(size: Vector3, color: Color, pos: Vector3) -> MeshInstance3D:
+func _mk_box(size: Vector3, color: Color, pos: Vector3, boundary: bool = false) -> MeshInstance3D:
 	var m := MeshInstance3D.new()
 	var box := BoxMesh.new(); box.size = size
 	var mat := StandardMaterial3D.new(); mat.albedo_color = color
 	box.material = mat; m.mesh = box; m.position = pos
-	add_child(m); return m
+	add_child(m)
+	if boundary: ring_boundaries.append(m)
+	return m
 
 func _mk_capsule(color: Color, pos: Vector3) -> Node3D:
-	var root := Node3D.new(); root.position = pos; add_child(root)
-	var m := MeshInstance3D.new()
-	var cap := CapsuleMesh.new(); cap.radius = 0.35; cap.height = 1.8
-	var mat := StandardMaterial3D.new(); mat.albedo_color = color
-	cap.material = mat; m.mesh = cap; m.position = Vector3(0, 0.9, 0)
-	root.add_child(m); root.set_meta("mesh", m); root.set_meta("mat", mat)
-	var head := MeshInstance3D.new()
-	var sph := SphereMesh.new(); sph.radius = 0.18; sph.height = 0.36
-	var hmat := StandardMaterial3D.new(); hmat.albedo_color = color.lightened(0.35)
-	sph.material = hmat; head.mesh = sph; head.position = Vector3(0, TNBSim.HEAD_H, 0)
-	root.add_child(head); root.set_meta("head", head)
-	return root
+	return FightView.make_fighter(self, color, pos)
 
 func _build_world() -> void:
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-55, 30, 0); add_child(sun)
@@ -537,12 +547,12 @@ func _build_world() -> void:
 	ring_floor = _mk_box(Vector3(7.4, 0.2, 7.4), Color(0.22, 0.24, 0.28), Vector3(0, -0.1, 0))
 	_mk_box(Vector3(3.7, 0.01, 3.7), Color(0.26, 0.28, 0.33), Vector3(0, 0.005, 0))          # center-ring disc hint
 	for c in [Vector3(-3.7,0.9,-3.7), Vector3(3.7,0.9,-3.7), Vector3(-3.7,0.9,3.7), Vector3(3.7,0.9,3.7)]:
-		_mk_box(Vector3(0.15, 1.8, 0.15), Color(0.55, 0.15, 0.15), c)
+		_mk_box(Vector3(0.15, 1.8, 0.15), Color(0.55, 0.15, 0.15), c, true)
 	for h in [0.5, 0.95, 1.4]:
-		_mk_box(Vector3(7.4, 0.04, 0.04), Color(0.7,0.7,0.75), Vector3(0, h, -3.7))
-		_mk_box(Vector3(7.4, 0.04, 0.04), Color(0.7,0.7,0.75), Vector3(0, h,  3.7))
-		_mk_box(Vector3(0.04, 0.04, 7.4), Color(0.7,0.7,0.75), Vector3(-3.7, h, 0))
-		_mk_box(Vector3(0.04, 0.04, 7.4), Color(0.7,0.7,0.75), Vector3( 3.7, h, 0))
+		_mk_box(Vector3(7.4, 0.04, 0.04), Color(0.7,0.7,0.75), Vector3(0, h, -3.7), true)
+		_mk_box(Vector3(7.4, 0.04, 0.04), Color(0.7,0.7,0.75), Vector3(0, h,  3.7), true)
+		_mk_box(Vector3(0.04, 0.04, 7.4), Color(0.7,0.7,0.75), Vector3(-3.7, h, 0), true)
+		_mk_box(Vector3(0.04, 0.04, 7.4), Color(0.7,0.7,0.75), Vector3( 3.7, h, 0), true)
 	player = _mk_capsule(COLORS["RORY"], Vector3(0, 0, 1.0))
 	boss = _mk_capsule(BOSS_COLOR, Vector3(0, 0, -1.0))
 	cam = Camera3D.new(); cam.fov = 55.0; add_child(cam)
@@ -554,7 +564,8 @@ func _build_world() -> void:
 	feed.add_theme_font_size_override("font_size", 18)
 	feed.add_theme_color_override("font_color", Color(1, 0.9, 0.5)); ui.add_child(feed)
 	flashrect = ColorRect.new(); flashrect.color = Color(1,1,1,0); flashrect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	flashrect.size = Vector2(1280, 720); ui.add_child(flashrect)
+	flashrect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); ui.add_child(flashrect)
+	fight_hud = FightHUD.new(); add_child(fight_hud); fight_hud.setup(self)
 
 # ============================== INPUT =====================================
 func _trigger(axis: int, key: int) -> bool:
@@ -596,6 +607,9 @@ func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_ESCAPE:
 		controls_menu.open(); return
 	if controls_menu.opened or sim == null: return
+	if fight_hud != null and fight_hud.entry.visible: return
+	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F1 and e.ctrl_pressed:
+		fight_hud.show_details = not fight_hud.show_details; return
 	# H+Y remains SURGE; ordinary Y now also exposes the left uppercut.
 	if e is InputEventKey and e.keycode == KEY_Y and e.pressed and (combat_input.down("lb") or Input.is_key_pressed(KEY_H)):
 		q_surge = true; return
@@ -967,6 +981,8 @@ func _hold_dummy() -> void:
 # ============================== LOOP ======================================
 func _process(delta: float) -> void:
 	if sim == null or controls_menu.opened: return
+	if fight_hud != null and fight_hud.entry.visible:
+		_render(1.0); _hud(); return
 	combat_input.tuning = sim.T
 	combat_input.poll_hardware(Time.get_ticks_usec())
 	if formation_open:                                    # the whiteboard: nothing moves until the bell
@@ -1063,8 +1079,6 @@ func _to3(v: Vector2, tag: String = "") -> Vector3:
 func _render(alpha: float) -> void:
 	player.position = _to3(prev_p.lerp(sim.P["pos"], alpha))
 	boss.position = _to3(prev_b.lerp(sim.B["pos"], alpha))
-	_pose(player, sim.P, sim.B)
-	_pose(boss, sim.B, sim.P)
 	var pmat: StandardMaterial3D = player.get_meta("mat")
 	pmat.albedo_color = _base_color("P")
 	for gch in player.get_children():                                                                   # PAC-094: the robe is the walk-out's - off once the bell's card is down
@@ -1090,7 +1104,6 @@ func _render(alpha: float) -> void:
 	if exh != null and partner != null:                                                              # PAC-088: the other pair, its own half of the ring
 		var qt: String = exh.other(exh.ctrl); var q: TNBSim = exh.e(qt)
 		partner.position = _to3(prev_q.lerp(q.P["pos"], alpha), qt); partner_boss.position = _to3(prev_qb.lerp(q.B["pos"], alpha), qt)
-		_pose(partner, q.P, q.B); _pose(partner_boss, q.B, q.P)
 		var qm: StandardMaterial3D = partner.get_meta("mat")
 		qm.albedo_color = COLORS.get(q.pname(), Color(0.55, 0.6, 0.7)).darkened(0.45 if q.mode == "OVER" else 0.0)
 		qm.emission_enabled = q.cast.size() > 0 and str(q.cast["who"]) == "P" and str(q.cast["move"].get("duo_sync", "")) != ""
@@ -1098,26 +1111,15 @@ func _render(alpha: float) -> void:
 		pmat.emission_enabled = pmat.emission_enabled or (sim.cast.size() > 0 and str(sim.cast["who"]) == "P" and str(sim.cast["move"].get("duo_sync", "")) != "")
 		if sim.cast.size() > 0 and str(sim.cast["move"].get("duo_sync", "")) != "" and sim.tform.is_empty(): pmat.emission = Color(1.0, 0.82, 0.35); pmat.emission_energy_multiplier = 1.8
 		var qbm: StandardMaterial3D = partner_boss.get_meta("mat"); qbm.albedo_color = BOSS_COLOR.darkened(0.45 if q.mode == "OVER" else 0.15)
-	cam.position = player.position + back * 1.8 + Vector3(0, 1.5, 0)
-	var target := boss.position + Vector3(0, 1.2, 0)
-	if Vector2(target.x - cam.position.x, target.z - cam.position.z).length() > 0.05:
-		cam.look_at(target)
+	_pose(player, sim.P, sim.B); _pose(boss, sim.B, sim.P)
+	if exh != null and partner != null:
+		var q: TNBSim = exh.e(exh.other(exh.ctrl))
+		partner_view.pose(partner, q.P, q.B, q, "P")
+		partner_view.pose(partner_boss, q.B, q.P, q, "B")
+	fight_view.frame(cam, player, boss, sim.tick, ring_boundaries)
 
-func _pose(n: Node3D, F: Dictionary, other: Dictionary) -> void:
-	# the head sphere sits where the sim says the head is: dodges are visible, not implied
-	var head: MeshInstance3D = n.get_meta("head")
-	var mesh: MeshInstance3D = n.get_meta("mesh")
-	var fwd: Vector2 = (other["pos"] - F["pos"]).normalized()
-	var right := Vector2(fwd.y, -fwd.x)
-	var lat := 0.0; var h := TNBSim.HEAD_H; var back := 0.0
-	if F["dodge"] != "":
-		var d: Dictionary = TNBSim.DODGE[F["dodge"]]
-		lat = float(d["lat"]) * float(F["dodge_dir"]); h = float(d["h"]); back = float(d["back"])
-	var off: Vector2 = right * lat - fwd * back
-	head.position = Vector3(off.x, h, off.y)
-	mesh.scale = Vector3(1, 0.85, 1) if F["dodge"] == "DUCK" or F["dodge"] == "WEAVE" else Vector3.ONE
-	if F["blocking"]: mesh.scale = Vector3(1.08, 1.0, 1.08)
-	if F["guard_open_t"] > 0: mesh.scale = Vector3(0.92, 1.0, 0.92)
+func _pose(n: Node3D, fighter: Dictionary, other: Dictionary) -> void:
+	fight_view.pose(n, fighter, other, sim, "P" if n == player else "B")
 
 var fx_counts := {}
 var echoes_seen := 0                 # PAC-083: the manifest's echoes the scene showed (the drive reads it)
@@ -1149,6 +1151,7 @@ func _formation_check() -> String:
 
 func _consume_events() -> void:
 	for ev in sim.events:
+		fight_view.observe(ev, sim.tick)
 		fx_counts[ev["kind"]] = int(fx_counts.get(ev["kind"], 0)) + 1
 		match ev["kind"]:
 			"feed": feed.text = ev["text"]
@@ -1176,12 +1179,10 @@ func _consume_events() -> void:
 				var target: Node3D = boss if ev["on"] == "B" else player
 				_bump(target, 0.12)
 				if ev.get("counter", false) or ev.get("flash", false):
-					_flash(0.2); cam.fov = 52.0
-					get_tree().create_tween().tween_property(cam, "fov", 55.0, 0.25)
+					_flash(0.2)
 			"drop":
 				_flash(0.5); _bump(boss if ev["who"] == "B" else player, 0.5)
 			"hissatsu": _flash(0.9)
-			"tell": _tell_fx(int(ev["ticks"]) / float(TNBSim.TICK_HZ), bool(ev["loud"]), bool(ev.get("cue", false)))
 			"unbroken": _flash(0.05)
 			"feint_b": _bump(boss, 0.04)
 			"taunt_b": _bump(boss, 0.18)                                                       # his taunt: the guard comes down for half a second
@@ -1530,16 +1531,9 @@ func _flash(a: float) -> void:
 	flashrect.color.a = a
 	get_tree().create_tween().tween_property(flashrect, "color:a", 0.0, 0.35)
 
-func _tell_fx(secs: float, loud: bool, cue: bool = false) -> void:
-	# PI 2 (NP_02 s3): the cue is emphasized - the greybox shows it as a brighter colour and a bigger swell
-	var mat: StandardMaterial3D = boss.get_meta("mat")
-	mat.albedo_color = Color(1.0, 0.85, 0.2) if loud else Color(1.0, 0.6, 0.2)
-	if cue: mat.albedo_color = mat.albedo_color.lightened(0.35)
-	var mesh: MeshInstance3D = boss.get_meta("mesh")
-	if tell_tween: tell_tween.kill()
-	tell_tween = get_tree().create_tween()
-	tell_tween.tween_property(mesh, "scale", Vector3(1.25, 1.08, 1.25) if cue else Vector3(1.15, 1.05, 1.15), secs * 0.5)
-	tell_tween.tween_property(mesh, "scale", Vector3.ONE, secs * 0.5)
+func _tell_fx(secs: float, _loud: bool, _cue: bool = false) -> void:
+	# Non-string cues (e.g. coach tells) retain their highlight on sim time.
+	boss.set_meta("cue_until", sim.tick + TNBSim.ms(secs * 1000.0))
 
 # ============================== HUD =======================================
 func _their_corner() -> String:
@@ -1731,3 +1725,5 @@ func _hud() -> void:
 		+ "TENSION %s %3.0f  %s%s%s%s   THEIRS %s %3.0f" % [_bar(sim.tension, 100, 16), sim.tension, _hiss_line(), "   counter!" if P["counter_t"] > 0 else "", "   FLASH!" if P["flash_t"] > 0 else "", "   relay chain %d" % sim.relay_chain if sim.relay_chain > 0 else "", _bar(sim.btension, 100, 12), sim.btension] \
 		+ _wall_line() + _cast_line() + _state_line()
 	hud.text += "\nESC controls / remap  |  %s%s" % ["BUTTON CHORDS" if combat_input.preset == "chords" else "STICK / MOUSE FLICKS", "  |  PRACTICE DUMMY" if practice_dummy else ""]
+
+	fight_hud.update(sim, practice_dummy, feed.text)
