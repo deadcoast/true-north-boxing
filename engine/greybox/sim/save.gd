@@ -138,7 +138,7 @@ static func read(d) -> Dictionary:
 		"pi": _intify(d.get("scout_book", {}).get("pi_map", {})), "rewards": _intify(d.get("ledgers", {}).get("rewards", {})),
 		"remix_for": d.get("remixes", {}).duplicate(true), "cards": [], "format": str(settings.get("format", "")), "boss": int(settings.get("boss", 0)),
 		"audio_assist": bool(settings.get("audio_assist", false)), "academy": bool(settings.get("academy", false)), "day": int(d.get("calendar", {}).get("day", 1)), "dual": d.get("dual", {}), "staff_dressed": _dressed_of(d.get("staff", []))}
-	out["gym_wall"] = d.get("gym_wall", {}) if d.get("gym_wall", {}) is Dictionary else {}              # PAC-079
+	out["gym_wall"] = _intify(d.get("gym_wall", {})) if d.get("gym_wall", {}) is Dictionary else {}      # Restore integer decoration tiers after JSON, like the other ledgers.
 	out["bench"] = []
 	for rec in d.get("stable", []):
 		if rec is Dictionary: out["cards" if bool(rec.get("dressed", true)) else "bench"].append(card_of(rec))
