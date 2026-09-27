@@ -1,0 +1,172 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+[PASS] keyboard L_UPPERCUT
+[PASS] scene input executes L_UPPERCUT
+[PASS] keyboard L_HOOKERCUT
+[PASS] scene input executes L_HOOKERCUT
+[PASS] keyboard L_HOOK
+[PASS] scene input executes L_HOOK
+[PASS] keyboard L_FLARED
+[PASS] scene input executes L_FLARED
+[PASS] keyboard L_STRAIGHT
+[PASS] scene input executes L_STRAIGHT
+[PASS] keyboard R_STRAIGHT
+[PASS] scene input executes R_STRAIGHT
+[PASS] keyboard R_FLARED
+[PASS] scene input executes R_FLARED
+[PASS] keyboard R_HOOK
+[PASS] scene input executes R_HOOK
+[PASS] keyboard R_HOOKERCUT
+[PASS] scene input executes R_HOOKERCUT
+[PASS] keyboard R_UPPERCUT
+[PASS] scene input executes R_UPPERCUT
+[PASS] press and release in one render frame preserve modifier snapshot
+[PASS] release follows the same-frame press
+[PASS] keyboard auto-repeat never repeats an attack
+[PASS] two presses retain event order
+[PASS] mouse gesture L_UPPERCUT
+[PASS] stick gesture L_UPPERCUT
+[PASS] mouse gesture L_HOOKERCUT
+[PASS] stick gesture L_HOOKERCUT
+[PASS] mouse gesture L_HOOK
+[PASS] stick gesture L_HOOK
+[PASS] mouse gesture L_FLARED
+[PASS] stick gesture L_FLARED
+[PASS] mouse gesture L_STRAIGHT
+[PASS] stick gesture L_STRAIGHT
+[PASS] mouse gesture R_STRAIGHT
+[PASS] stick gesture R_STRAIGHT
+[PASS] mouse gesture R_FLARED
+[PASS] stick gesture R_FLARED
+[PASS] mouse gesture R_HOOK
+[PASS] stick gesture R_HOOK
+[PASS] mouse gesture R_HOOKERCUT
+[PASS] stick gesture R_HOOKERCUT
+[PASS] mouse gesture R_UPPERCUT
+[PASS] stick gesture R_UPPERCUT
+[PASS] subframe stick pulse survives
+[PASS] slow stick drift is not a flick
+[PASS] staggered axis reports settle before classification
+[PASS] 150ms pull-back then forward is one haymaker
+[PASS] accessible chord R_STRAIGHT
+[PASS] accessible chord R_FLARED
+[PASS] accessible chord R_HOOK
+[PASS] accessible chord R_HOOKERCUT
+[PASS] accessible chord R_UPPERCUT
+[PASS] accessible chord L_STRAIGHT
+[PASS] accessible chord L_FLARED
+[PASS] accessible chord L_HOOK
+[PASS] accessible chord L_HOOKERCUT
+[PASS] accessible chord L_UPPERCUT
+[PASS] haymaker charge cannot fire early
+[PASS] button haymaker uses the authored charge
+[PASS] rebind supported
+[PASS] remapped punch reaches the live scene
+[PASS] old binding is removed
+[PASS] bindings persist
+[PASS] bindings and preset restore
+[PASS] restored binding works
+[PASS] authored frame data L_UPPERCUT
+[PASS] authored frame data L_HOOKERCUT
+[PASS] authored frame data L_HOOK
+[PASS] authored frame data L_FLARED
+[PASS] authored frame data L_STRAIGHT
+[PASS] authored frame data R_STRAIGHT
+[PASS] authored frame data R_FLARED
+[PASS] authored frame data R_HOOK
+[PASS] authored frame data R_HOOKERCUT
+[PASS] authored frame data R_UPPERCUT
+[PASS] body power haymaker block-punch startup stacks
+[PASS] body power haymaker damage stacks
+[PASS] moving toward out-of-range opponent activates step
+[PASS] step reaches and multiplies damage
+[PASS] standing out of range does not invent a stepping punch
+[PASS] all five modifiers stack
+[PASS] unaffordable power preserves base punch
+[PASS] unaffordable hissatsu preserves base punch
+[PASS] block-punch exits guard instantly
+[PASS] held guard stays down during punch startup
+[PASS] power whiff opens exactly authored vulnerability
+[PASS] blocked power opens authored vulnerability
+[PASS] modifiers read hot-reloaded data rather than literals
+[PASS] scene hot reload restores authored values within one second
+[PASS] opening controls clears pending/held input
+[PASS] held stick cannot punch when resuming controls
+[PASS] stick returns after neutral and a fresh flick
+[PASS] down-flick release age 50000us
+[PASS] down-flick release age 100000us
+[PASS] dummy disables authored opponent decisions
+[PASS] leaving practice restores opponent behavior
+[PASS] modifier intent replay remains deterministic
+[PASS] controls render (1280, 720)
+CAPTURE C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-005/visual-appdata/Godot/app_userdata/TNB Greybox/controls-1280x720.png
+[PASS] controls render (960, 600)
+CAPTURE C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-005/visual-appdata/Godot/app_userdata/TNB Greybox/controls-960x600.png
+INPUT DRIVE :: GREEN (100/100)
+
+=== Deterministic regression after fixture rebasing ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+DETERMINISM :: C1/C5 - three runs of one input log, hashes every 60 ticks
+  coverage: {"block":51,"cast_B":1,"cast_P":3,"cast_hit":3,"cast_interrupted":1,"clinch":13,"coach_action":2,"corner_action":4,"counter":5,"drop":6,"eight":12,"enemy_corner":2,"evade":43,"feint":47,"feint_drawn":18,"flash":1,"foul":1,"hit_B":68,"hit_P":51,"interrupt":3,"matchup":3,"matchup_adv":2,"pulled":2,"seg_card":2,"seg_end":3,"sensor":218,"sprint":27,"survival_grab":1,"tell":99,"tension_b":0}  duals completed=1  final mode=FIGHT seg=0 drops 0-0
+  [ OK ]  log exercises both offenses
+  [ OK ]  log exercises hitstop + slow-time (C5 paths)
+  [ OK ]  log exercises drops / standing-eight / segment end
+  [ OK ]  log exercises geometric evasion + guard
+  [ OK ]  log exercises clinch scrambles, sprint-steps and sensors
+  [ OK ]  log exercises the referee (fouls or pulled punches) and the survival grab
+  [ OK ]  log exercises hissatsu casts from the library (player and boss) and their resolve
+  [ OK ]  log exercises feints, some of them drawing his read
+  [ OK ]  log exercises the segment card and corner actions
+  [ OK ]  log passes matchup cards with a ring live (the triangle or the element) and hashes the rings' state
+  [ OK ]  log runs the rival corner (it resolves at every corner) and the enemy bar earns; his actions hash with everything else rival corners 2, his actions 2, his bar 8.0
+  [ OK ]  C1 replay of the log reproduces every state hash (run B == run A) 400 hashes
+  [ OK ]  C1 jittered 7-40ms frame loop reproduces every state hash (run C == run A) 400 hashes
+  [ OK ]  a different seed produces a different trajectory (hash is not degenerate)
+  [ OK ]  sanctioned-format log (66000 ticks) runs five segments to a verdict (segment ends 7, verdicts 1, Golden DROPs 0) and hashes identically twice 110 hashes
+  [ OK ]  a delegated dual on a fight-key-less log: the profile lands 80 and the corners still turn (3 segment ends); every hash identical twice 400 hashes
+  [ OK ]  the reward ledger rides the same log: 1373 XP paid across 4 fighters, 5 Spirits, 2 Kizuna pairs, the toasts ["DUAL: 886 XP, 5 Spirits, RORY+PRIYA +5, PRIYA+MARCUS +5"] - identical between the two runs
+  [ OK ]  the relay's own T3 on the delegated log vs Yuri's squad: opened ["R2 PRIYA: Relay: Coast to Coast, Relay: Aurora Chain","R3 MARCUS: Relay: Coast to Coast, Relay: Aurora Chain"], cast ["Relay: Coast to Coast (afterimage PRIYA)","Relay: Coast to Coast (afterimage PRIYA)"]; every hash identical twice and different from the same log with the relay's T3s closed (0 opened there) 400 hashes
+  [ OK ]  In the Zone on the scripted log vs Yuri's squad: ["zone RORY @1","slip @478","slip @970","slip @1398","slip @1775","slip @2623","zone_end RORY @2796","comedown_end RORY @4088"]; every hash identical twice and different from the same log without the SURGE (0 Zones there) 400 hashes
+  [ OK ]  Spirit Manifestation on the scripted log vs Yuri's squad: ["zone RORY manifest @1","zone_end RORY manifest @4040","comedown_end RORY  @5285"], 9 echoes landed, 1 casts from the meter; every hash identical twice and different from the Zone's run 400 hashes
+  [ OK ]  Inheritance on the scripted log vs Yuri's squad: ["zone RORY inheritance <- SAM @1","zone_end RORY inheritance @3393","comedown_end RORY  @4613"], 5 misreads, 0 casts from the meter; every hash identical twice and different from the Zone's run 400 hashes
+  [ OK ]  Awakening on the scripted log vs Yuri's squad: ["zone RORY awakening (zone) @1","zone_end RORY awakening @5228","comedown_end RORY  @6795"], 8 slips, 0 refunds; every hash identical twice and different from the Zone's run 400 hashes
+  [ OK ]  his Zone on the scripted log vs Ioan Vasile: ["boss_transform_tell ioan_vasile zone @1722","boss_zone ioan_vasile zone @1902","boss_zone_end ioan_vasile stood @3822","feat Stood in the Storm @3822","boss_comedown_end ioan_vasile @5072"], weathered 7; every hash identical twice and different from the log with his line stripped (0 there) 400 hashes
+  [ OK ]  the log broken at tick 12,000 by a save (241 KB of text: the SaveGame, the DualState beneath it) and a load into a sim seeded otherwise continues to the unbroken run's hashes (200 of 400, tick 24000)
+  [ OK ]  the delegated dual with an assembled tier-3 Slugger filler in R1 (["sl3b","sl2b","sl3a"]): 110 tells of his own strings (4 of the SPECIAL), 1951 sensors, Kowalchuk ticked to PI 2; every hash identical twice and different from the named run 400 hashes
+  [ OK ]  the delegated dual vs Carter's lineup on their neutral games (["carter_okafor","deshawn_vaughn","commissioner_cal"]): 7 taunts, 0 footwork flags, 0 tempo shifts; every hash identical twice and different from the same dual with the neutral game frozen 400 hashes
+  [ OK ]  the delegated dual with talks in its corners: 3 talks, 1 landed, 1 +5% segments; every hash identical twice and different from the same log without them, which talks 0 times 400 hashes
+  [ OK ]  the delegated dual on a sealed board: the Relay Ladder ["JUNE","RORY","SAM","MARCUS","PRIYA"] with the Reveal at Lv3 vs Vey's corner - out in that order ["JUNE","RORY","SAM","MARCUS","PRIYA"], 3 Adjacent Trust segments (the card order's 2), 2 seals on the log; every hash identical twice and different from the same log on the card order; the projection identical in both runs (decoy true, read by the tactician true, order at 0%) 400 hashes
+  [ OK ]  the delegated dual with a staffed corner vs Yuri: the janitor at Lv3 starts it at 10 Tension; the building heats 17 times (peak 100), 1 Raise the Roof conversions and 2 staff calls refused; the Professor's segments count 2 on Kowalchuk over 1 segment ends (the default corner's 1 over 1); every hash identical twice and different from the default corner 400 hashes
+  [ OK ]  recruitment on the delegated log vs Moira's squad: ["MILLBROOK WINS"]; 1 flagging, 5 conditions surfaced, 1 joined - the stable ["RORY","PRIYA","MARCUS","JUNE","REMY"], the states {"dex":"approached","jean_guy_moreau":"approached","moira_macisaac":"approached","remy_moreau":"joined","tam_nguyen_roy":"approached"} (without the approach: ["moira_macisaac","dex","remy_moreau","tam_nguyen_roy"]); every hash identical twice and different from the log without the approach 400 hashes
+  [ OK ]  the String Wall on the delegated log vs Moira's squad: E05 open, the strings ["REMY -> JEAN-GUY, HOUSE MOREAU"] and JEAN-GUY approached; E05 closed, the strings ["the Moreau blessing -> HOUSE MOREAU, JEAN-GUY, REMY, HOUSE TREMBLAY, HOUSE IRON","HOUSE IRON -> VERA IRON"], joined ["JEAN-GUY","REMY"] (JEAN-GUY via blessing:moreau, the Moreau house blessed); every hash identical twice and different from the log with E05 open 400 hashes
+  [ OK ]  a blessing on the delegated log vs Moira's squad: the crest up from the bell (at the end: blessed), the witness 1; granted ["kowalchuk met [\"YURI\"]"] (at the dual's end: true), YURI NATIVE with ["Grain Elevator","Full Load"]; the wall ["YURI -> HOUSE KOWALCHUK","the Kowalchuk blessing -> THE KOWALCHUK COUSINS, HOUSE WHITECLOUD"]; without YURI's signing the crest down and 0 blessings; every hash identical twice and different from it 400 hashes
+  [ OK ]  house traits on the delegated log vs Carter's squad: the segments' traits ["Load-Bearing / Harvest","Load-Bearing / Harvest","Never Twice / -","First Frost / -","Load-Bearing / Harvest","Never Twice / -"] (3 with both corners), 1 Never Twice wobbles; without traits 0 named; every hash identical twice and different from the traitless log 400 hashes
+  [ OK ]  a Duo relay on the delegated log vs Yuri's squad: the Duo live ["R2 Whiteout"], the casts ["Aurora Borealis Breaker","Whiteout (afterimage RORY)"] (at Adjacent Trust ["Aurora Borealis Breaker","Relay: Coast to Coast"]); every hash identical twice and different from the Adjacent Trust run 400 hashes
+  [ OK ]  a hybrid on the delegated log vs Yuri's squad: ["cast Grain Elevator","cast Grain Elevator","live Grain & Snow relayed R2","live Grain & Snow relayed R2","cast Grain & Snow (relayed, afterimage YURI)","debut Grain & Snow"]; unforged the casts ["Grain Elevator","Grain Elevator","Coast to Coast - MARTA & YURI"]; every hash identical twice and different from the unforged run 400 hashes
+  [ OK ]  the Exhibition 2v2 on the delegated log (the manager's seat) vs Yuri and Moreau: ["Double Overtime by manager","A Double Overtime","B Double Overtime"], then ASCENDANT WINS THE EXHIBITION; at Adjacent Trust the casts ["A Aurora Borealis Breaker","A Aurora Borealis Breaker","A Aurora Borealis Breaker","A Aurora Borealis Breaker"], ASCENDANT WINS THE EXHIBITION; every hash identical twice and different from the Adjacent Trust run 197 hashes
+  [ OK ]  a hosted dual on the delegated log vs Yuri's squad, every facility at T3: entrances 2, the crowd from 20 at 2 bells, the duals' hosted Prestige [5]; away: entrances 2, 0, [0]; every hash identical twice and different from the away run 400 hashes
+  [ OK ]  the fighters' growth on the delegated log vs Yuri's squad: 36 steps before the bell; after 1 dual(s) the aid's 4 nodes, 0 raises, 0 ascensions (RORY at T2), the passives {"JUNE":["ring_cutter","sparkplug","cheap_trick"],"MARCUS":["iron_jaw","sparkplug","cheap_trick"],"PRIYA":["snap","sparkplug","cheap_trick"],"RORY":["tight_guard","sparkplug","cheap_trick"]}; none without it ([0,0,0]); every hash identical twice and different from the run without growth 400 hashes
+  [ OK ]  a taught kit on the scripted log vs Yuri's squad: the kit's casts {"Cornerstone":1,"Root Bind":1}, 10 learned between 1 dual(s); without the kits [{},0]; every hash identical twice and different from the run without them 400 hashes
+  [ OK ]  the academy on the delegated log: 2 dual(s) against ["ASCENDANT 1","ASCENDANT 2","ASCENDANT 3"] (ascendant_a's corner, his swaps [], the squad at the end ["ASCENDANT 1","ASCENDANT 2","ASCENDANT 3"]), the syntheses cast ["ASCENDANT 2 Synthesis Bridge-Snow","ASCENDANT 3 Synthesis Grain-Snow","ASCENDANT 2 Synthesis Bridge-Snow","ASCENDANT 3 Synthesis Grain-Snow"]; against Yuri's squad none (grain_kings); every hash identical twice and different from it 400 hashes
+  [ OK ]  the mirror on the delegated log: 1 dual(s) recorded ["RORY","PRIYA","MARCUS"] (RORY 87 punches), then the mirrors ["RORY: HABIT JAB > JAB, HABIT JAB > R_HOOK"] (3 counters of yours thrown back, 1 spar(s) ended); without the aid none; every hash identical twice and different from it 400 hashes
+  [ OK ]  gear on the delegated log vs Yuri's squad: 1 dual(s) worn {"JUNE":["fitted_guard"],"MARCUS":["fitted_guard"],"PRIYA":["fitted_guard"],"RORY":["regionals_robe"]} (HBP left 150, the locker {"fitted_guard":3,"regionals_robe":1}); undressed {}; every hash identical twice and different from the undressed run 400 hashes
+  [ OK ]  the obsolescence audit, reduced: DEX built [35,4,558,{"BLK":71,"CHN":84,"HRT":90,"PWR":88,"RFX":71,"SPD":72,"STA":82},["Palisade","Timberfall","Chinook Rush","Snowblind","Roadwork"],["nationals_guard","p; fought [["alfie_crane",true,[6,0]],["ioan_vasile",true,[6,0]]]; again identical; a seed apart different 2 spars
+  [ OK ]  the audit's fixes on the log: PRIYA built [36,4,550,{"BLK":75,"CHN":62,"HRT":83,"PWR":58,"RFX":99,"SPD":89,"STA":84},["Palisade","Timberfall","Chinook Rush","Landslide"],["nationals_guard","provincials_; fought [["chiamaka_okafor",false,[2,6]]]; again identical; without the totals different 1 spar
+  [ OK ]  the faucet/sink audit, reduced: the sample [["alfie_crane",true,54]]; Arc 1's first phase paid [{"beans":50,"hbp":1160,"prestige":139,"spirits":75,"xp":7548},{"beats":10,"duals":6,"episodes":6,"hosted":0,"quests":10,"scraps":50,"sessio; again identical; a phase one episode longer different 1 spar
+  [ OK ]  the scouting machine on the delegated log vs Yuri's squad: 12 pulls (1 rare: ["EFUA"]), 1 signed from the open mat (the stable 5), Prestige left 0; without the machine none; every hash identical twice and different from it 400 hashes
+  [ OK ]  the stable roles on the delegated log vs Yuri's squad: 3 signed, the bench set {"DOWNTOWN 3":"SCOUT","HILL 1":"TRAINING","MILLBROOK 2":"SCOUT"}, the roles paid {"beans":0,"prestige":2,"uses":0} by day 2; without the roles none set; every hash identical twice and different from it 400 hashes
+  [ OK ]  the locker room on the delegated log vs Yuri's squad: 3 signed, 1 released (["DOWNTOWN 3"]), waiting ["DOWNTOWN 3"] by day 2, the stable 6 against 7 without; every hash identical twice and different from it 400 hashes
+  [ OK ]  the Gym Wall's board on the delegated log vs Yuri's squad: sealed ["RORY","MARCUS","PRIYA"] (GYM_WALL), out on the log ["RORY","MARCUS","PRIYA"] (0 swaps from the log's corner), the wall at the log's end ["Whitlock's letter - 'Four dressed by Saturday'","Prairie Grain Kings"]; every hash identical twice and different from the card order's run; the same order sealed by hand, and the wall rearranged and decorated, hash the same 400 hashes
+  [ OK ]  the anti-you on the delegated log vs Moira's squad: the academy signed ["moira_macisaac","dex","remy_moreau"] at the Nationals and fielded them true; without the arc's turn nobody signed, the academy unfielded; every hash identical twice and different from it 400 hashes
+  [ OK ]  district rep on the log: SCR-15 on the profile in the Rink District - won, the rink 6; fled at tick 5, 4; placed nowhere, 5; each twice alike, the three different 74 hashes
+  [ OK ]  the vendor tiers on the log: SCR-15 won downtown - DOWNTOWN 10, the aid's gear ["fitted_guard:t2","boil_bite_guard:t1"] (20 HBP left); in the rink ["boil_bite_guard:t1"]; each twice alike, the two different 74 hashes
+  [ OK ]  a scrap (survive 20s) on the profile against the live Yuri ends failed: you went down and hashes identically twice 74 hashes
+  [ OK ]  the delegated dual with a PI 2 ledger vs Kowalchuk: 58 emphasized tells, 2 commentary calls, the ledger ticked 5 times as segments ended (now {"sam_tagaq":{"beaten":1},"yuri_kowalchuk":{"beaten":1}}); every hash identical twice and different from the ledger-less run 400 hashes
+  [ OK ]  the log against the remixed Yuri: 2 feint variants told, 2 of them carried through (the hitch), 24 hits taken in a tell that does not break; every hash identical twice and different from the original's run 400 hashes
+  [ OK ]  the delegated dual vs Vasile on his neutral game: his clock kits turn 1 times with 1 seams and 4 phase lines before R1 ends (SEGMENT KO against RORY (three knockdowns) at 81.2s); with his neutral game frozen the same log turns 2 times with 2 seams and 7 lines; each run's hashes identical twice 400 hashes
+  [ OK ]  the delegated dual vs Vey with Tremblay / Okafor / Kowalchuk PI at 2: 3 commentary calls, 58 cued tells, 4 kit turns; every hash identical twice 400 hashes
+DETERMINISM VERDICT :: GREEN (57/57)

@@ -1643,9 +1643,10 @@ func smoke(boss_idx: int) -> int:
 	var s13_first: bool = met.call(s13)
 	var s14: TNBSim = scrap.call("SCR-14"); thaw(s14); place(s14, 0.5); s14._start_clinch("B", 0.5, 2); play_clinch(s14, "sides"); s14.step({})
 	var s15: TNBSim = scrap.call("SCR-15"); jab.call(s15); var s15_near: bool = not met.call(s15)
-	thaw(s15); place(s15, 2.15); throw_clean(s15, "R_STRAIGHT"); s15.step({})
-	_sr("count forms: SCR-05 a guard break (%d power haymakers into his guard), SCR-13 two perfect blocks in a row, SCR-14 the scramble won, SCR-15 a stepping punch (from 2.15m the lunge makes the reach; from 1.4m it is not one)" % s5_n,
-		met.call(s5) and s13_first and count_events(s13.events, "sensor", {"name": "player_perfect_block_streak2"}) == 1 and met.call(s14) and s15_near and met.call(s15))
+	thaw(s15); place(s15, 2.6); throw_clean(s15, "R_STRAIGHT"); s15.step({}); var s15_still: bool = not met.call(s15)
+	thaw(s15); place(s15, 2.6); throw_clean(s15, "R_STRAIGHT", {"move": Vector2(0, -1)}); s15.step({})
+	_sr("count forms: SCR-05 a guard break (%d power haymakers into his guard), SCR-13 two perfect blocks in a row, SCR-14 the scramble won, SCR-15 a stepping punch (moving toward him from 2.6m earns the reach; standing still there or from 1.4m does not)" % s5_n,
+		met.call(s5) and s13_first and count_events(s13.events, "sensor", {"name": "player_perfect_block_streak2"}) == 1 and met.call(s14) and s15_near and s15_still and met.call(s15))
 	var z2: TNBSim = scrap.call("SCR-02")
 	for zi in 2:
 		thaw(z2); place(z2, 1.4); z2.P["dodge"] = "SLIP"; z2.P["dodge_t"] = 999; z2.P["dodge_dir"] = 1; boss_lands(z2, "R_STRAIGHT"); z2.step({})
@@ -7046,6 +7047,10 @@ func run_log_jittered(s: TNBSim, log_: Array, every: int, seed_v: int) -> Array:
 	return hashes
 
 func determinism() -> int:
+	# PAC-005: completed modifier timing changes trajectories. Rebase only witness seeds;
+	# retain all 57 assertions, positive/negative controls, and pairwise hash checks.
+	# SURGE at the bell avoids a one-tick fixture command falling inside hitstop.
+
 	print("DETERMINISM :: C1/C5 - three runs of one input log, hashes every 60 ticks")
 	const N := 24000
 	var log_ := build_log(N, 778)          # 778 since PAC-065: under the interrupt block (only tagged strings break, jab-class only) seed 777 stopped dropping anyone
@@ -7149,13 +7154,13 @@ func determinism() -> int:
 		for k in ["corner", "corner_action", "restart"]:
 			if e_in.has(k): keep[k] = e_in[k]
 		log_auto.append(keep)
-	var da := make_sim(1, 12345); da.delegate_all = true; da.new_dual(); da.events.clear()
+	var da := make_sim(1, 12346); da.delegate_all = true; da.new_dual(); da.events.clear()
 	var hda := run_log(da, log_auto, 60)
 	var hits_auto := 0; var segs_auto := 0
 	for e_a in da.events:
 		if e_a["kind"] == "hit" and e_a["on"] == "B": hits_auto += 1
 		if e_a["kind"] == "seg_end": segs_auto += 1
-	var db := make_sim(1, 12345); db.delegate_all = true; db.new_dual()
+	var db := make_sim(1, 12346); db.delegate_all = true; db.new_dual()
 	var hdb := run_log(db, log_auto, 60)
 	_sr("a delegated dual on a fight-key-less log: the profile lands %d and the corners still turn (%d segment ends); every hash identical twice" % [hits_auto, segs_auto], hits_auto >= 5 and segs_auto >= 1 and hda == hdb and hda.size() > 0, "%d hashes" % hda.size())
 	var xp_paid := 0
@@ -7171,12 +7176,12 @@ func determinism() -> int:
 		if str(ro_e["kind"]) == "cast" and str(ro_e["who"]) == "P" and str(ro_e["tier"]) == "T3": ro_cast.append("%s (afterimage %s)" % [str(ro_e["move"]), str(ro_e["afterimage"])])
 	var ro_keep: Dictionary = content["tactics"]; content["tactics"] = ro_keep.duplicate(true)
 	content["tactics"]["corner"]["relay_t3_opens"] = []; content["tactics"]["corner"]["full_relay_t3_opens"] = []
-	var roc := make_sim(1, 12345); roc.delegate_all = true; roc.new_dual()
+	var roc := make_sim(1, 12346); roc.delegate_all = true; roc.new_dual()
 	var hroc := run_log(roc, log_auto, 60)
 	content["tactics"] = ro_keep
 	_sr("the relay's own T3 on the delegated log vs Yuri's squad: opened %s, cast %s; every hash identical twice and different from the same log with the relay's T3s closed (%d opened there)" % [JSON.stringify(ro_open), JSON.stringify(ro_cast), count_events(roc.events, "relay_open")],
 		ro_open.size() >= 1 and ro_cast.size() >= 1 and hda == hdb and hda.size() > 0 and hda != hroc and count_events(roc.events, "relay_open") == 0, "%d hashes" % hda.size())
-	# PAC-082: In the Zone on the scripted log vs Yuri's squad - the four at level 20 with the Provincials' flag; at tick 3,000 the bar is topped up
+	# PAC-082: In the Zone on the scripted log vs Yuri's squad - the four at level 20 with the Provincials' flag; at tick zero the bar is topped up
 	# and RORY SURGEs: the camera hold, 20 s in the Zone, the Comedown; identical twice and different from the same log with the bar topped up
 	# and no SURGE
 	var zn_led := TNBSim.seed_story(TNBSim.seed_levels(TNBSim.parse_kizuna_arg(""), "RORY:20,PRIYA:20,MARCUS:20,JUNE:20", content["economy"]), "story:provincials_semifinal")
@@ -7185,7 +7190,7 @@ func determinism() -> int:
 		var zn_h: Array = []
 		for zn_i in log_.size():
 			var zn_in: Dictionary = log_[zn_i]
-			if zn_i == 3000:
+			if zn_i == 0:
 				zn_s.tension = 100.0
 				if zn_surge: zn_in = zn_in.duplicate(); zn_in["surge"] = true
 			zn_s.step(zn_in)
@@ -7197,8 +7202,8 @@ func determinism() -> int:
 		if str(zn_e["kind"]) in ["zone", "zone_end", "comedown_end", "transform_refused"]: zn_seq.append("%s %s @%d" % [str(zn_e["kind"]), str(zn_e.get("who", "")), int(zn_e.get("tick", 0))])
 		if str(zn_e["kind"]) == "evade" and str(zn_e.get("why", "")) == "ZONE_SLIP": zn_seq.append("slip @%d" % int(zn_e.get("tick", 0)))
 	_sr("In the Zone on the scripted log vs Yuri's squad: %s; every hash identical twice and different from the same log without the SURGE (%d Zones there)" % [JSON.stringify(zn_seq), count_events(znc[0].events, "zone")],
-		zn_seq.size() >= 3 and str(zn_seq[0]).begins_with("zone RORY @3001") and zn_seq.filter(func(x): return str(x).begins_with("zone_end")).size() == 1 and zna[1] == znb[1] and zna[1].size() > 0 and zna[1] != znc[1] and count_events(znc[0].events, "zone") == 0, "%d hashes" % zna[1].size())
-	# PAC-083: Spirit Manifestation on the same log - RORY with his Arc 2 flag as well: the same SURGE at tick 3,000 casts the Manifest (30 s of
+		zn_seq.size() >= 3 and str(zn_seq[0]).begins_with("zone RORY @1") and zn_seq.filter(func(x): return str(x).begins_with("zone_end")).size() == 1 and zna[1] == znb[1] and zna[1].size() > 0 and zna[1] != znc[1] and count_events(znc[0].events, "zone") == 0, "%d hashes" % zna[1].size())
+	# PAC-083: Spirit Manifestation on the same log - RORY with his Arc 2 flag as well: the same SURGE at tick zero casts the Manifest (30 s of
 	# x1.4, the echoes, the meter), then the Comedown; identical twice and different from the Zone's run above
 	var mf_led := TNBSim.seed_story(TNBSim.seed_levels(TNBSim.parse_kizuna_arg(""), "RORY:20,PRIYA:20,MARCUS:20,JUNE:20", content["economy"]), "story:provincials_semifinal,story:manifest:RORY")
 	var mf_run := func() -> Array:
@@ -7206,7 +7211,7 @@ func determinism() -> int:
 		var mf_h: Array = []
 		for mf_i in log_.size():
 			var mf_in: Dictionary = log_[mf_i]
-			if mf_i == 3000:
+			if mf_i == 0:
 				mf_s.tension = 100.0; mf_in = mf_in.duplicate(); mf_in["surge"] = true
 			mf_s.step(mf_in)
 			if mf_i % 60 == 0: mf_h.append(mf_s.hash_state())
@@ -7218,8 +7223,8 @@ func determinism() -> int:
 		if str(mf_e["kind"]) == "echo" and float(mf_e["dmg"]) > 0.0: mf_ech += 1
 		if str(mf_e["kind"]) == "feed" and str(mf_e["text"]).contains("from the manifest's meter"): mf_mc += 1
 	_sr("Spirit Manifestation on the scripted log vs Yuri's squad: %s, %d echoes landed, %d casts from the meter; every hash identical twice and different from the Zone's run" % [JSON.stringify(mf_seq), mf_ech, mf_mc],
-		mf_seq.size() >= 2 and str(mf_seq[0]).begins_with("zone RORY manifest @3001") and mf_seq.filter(func(x): return str(x).begins_with("zone_end")).size() == 1 and mf_ech >= 1 and mfa[1] == mfb[1] and mfa[1].size() > 0 and mfa[1] != zna[1], "%d hashes" % mfa[1].size())
-	# PAC-084: Inheritance on the same log - SAM in the club (undressed, the stable's) and Sworn with RORY: the same SURGE at tick 3,000 takes
+		mf_seq.size() >= 2 and str(mf_seq[0]).begins_with("zone RORY manifest @1") and mf_seq.filter(func(x): return str(x).begins_with("zone_end")).size() == 1 and mf_ech >= 1 and mfa[1] == mfb[1] and mfa[1].size() > 0 and mfa[1] != zna[1], "%d hashes" % mfa[1].size())
+	# PAC-084: Inheritance on the same log - SAM in the club (undressed, the stable's) and Sworn with RORY: the same SURGE at tick zero takes
 	# SAM's House Tagaq style (Never Twice, his natives from the meter, the misreads), then the Comedown with RORY's dialect scrambled;
 	# identical twice and different from the Zone's run
 	var ih_led := TNBSim.seed_story(TNBSim.seed_levels(TNBSim.parse_kizuna_arg("RORY+SAM:150"), "RORY:20,PRIYA:20,MARCUS:20,JUNE:20", content["economy"]), "story:provincials_semifinal")
@@ -7229,7 +7234,7 @@ func determinism() -> int:
 		var ih_h: Array = []
 		for ih_i in log_.size():
 			var ih_in: Dictionary = log_[ih_i]
-			if ih_i == 3000:
+			if ih_i == 0:
 				ih_s.tension = 100.0; ih_in = ih_in.duplicate(); ih_in["surge"] = true
 			ih_s.step(ih_in)
 			if ih_i % 60 == 0: ih_h.append(ih_s.hash_state())
@@ -7241,9 +7246,9 @@ func determinism() -> int:
 		if str(ih_e["kind"]) == "misread": ih_mis += 1
 		if str(ih_e["kind"]) == "feed" and str(ih_e["text"]).contains("from the inherited meter"): ih_mc += 1
 	_sr("Inheritance on the scripted log vs Yuri's squad: %s, %d misreads, %d casts from the meter; every hash identical twice and different from the Zone's run" % [JSON.stringify(ih_seq), ih_mis, ih_mc],
-		ih_seq.size() >= 2 and str(ih_seq[0]).begins_with("zone RORY inheritance <- SAM @3001") and ih_seq.filter(func(x): return str(x).begins_with("zone_end")).size() == 1 and ih_mis >= 1 and iha[1] == ihb[1] and iha[1].size() > 0 and iha[1] != zna[1], "%d hashes" % iha[1].size())
+		ih_seq.size() >= 2 and str(ih_seq[0]).begins_with("zone RORY inheritance <- SAM @1") and ih_seq.filter(func(x): return str(x).begins_with("zone_end")).size() == 1 and ih_mis >= 1 and iha[1] == ihb[1] and iha[1].size() > 0 and iha[1] != zna[1], "%d hashes" % iha[1].size())
 	# PAC-085: Awakening on the same log - RORY's SECRET, his Arc 3 trial and the sealed house resolved beside the Zone's flag: the same SURGE at
-	# tick 3,000 Awakens him with the Zone stacked at 75 % (the world x0.8125, a slip every 4 s, stamina three-quarters frozen), the caps x1.75,
+	# tick zero Awakens him with the Zone stacked at 75 % (the world x0.8125, a slip every 4 s, stamina three-quarters frozen), the caps x1.75,
 	# a drop he scores +15 back; identical twice and different from the Zone's run
 	var aw_led := TNBSim.seed_story(TNBSim.seed_levels(TNBSim.parse_kizuna_arg(""), "RORY:20,PRIYA:20,MARCUS:20,JUNE:20", content["economy"]), "story:provincials_semifinal,secret:RORY,story:trial:RORY,story:sealed_house_resolved")
 	var aw_run := func() -> Array:
@@ -7251,7 +7256,7 @@ func determinism() -> int:
 		var aw_h: Array = []
 		for aw_i in log_.size():
 			var aw_in: Dictionary = log_[aw_i]
-			if aw_i == 3000:
+			if aw_i == 0:
 				aw_s.tension = 100.0; aw_in = aw_in.duplicate(); aw_in["surge"] = true
 			aw_s.step(aw_in)
 			if aw_i % 60 == 0: aw_h.append(aw_s.hash_state())
@@ -7263,7 +7268,7 @@ func determinism() -> int:
 		if str(aw_e["kind"]) == "evade" and str(aw_e.get("why", "")) == "ZONE_SLIP": aw_sl += 1
 		if str(aw_e["kind"]) == "refund": aw_rf += 1
 	_sr("Awakening on the scripted log vs Yuri's squad: %s, %d slips, %d refunds; every hash identical twice and different from the Zone's run" % [JSON.stringify(aw_seq), aw_sl, aw_rf],
-		aw_seq.size() >= 2 and str(aw_seq[0]).begins_with("zone RORY awakening (zone) @3001") and aw_seq.filter(func(x): return str(x).begins_with("zone_end")).size() == 1 and aw_sl >= 1 and awa[1] == awb[1] and awa[1].size() > 0 and awa[1] != zna[1], "%d hashes" % awa[1].size())
+		aw_seq.size() >= 2 and str(aw_seq[0]).begins_with("zone RORY awakening (zone) @1") and aw_seq.filter(func(x): return str(x).begins_with("zone_end")).size() == 1 and aw_sl >= 1 and awa[1] == awb[1] and awa[1].size() > 0 and awa[1] != zna[1], "%d hashes" % awa[1].size())
 	# PAC-086: the enemy's transformation on the same log vs Ioan Vasile - his own line, compiled: under 50 % composure he gathers 1.5 s behind
 	# his guard with his line, then his Zone; the log's blocks and slips weather it; unanswered and never down, Stood in the Storm; his Comedown,
 	# then himself; identical twice and different from the same log with his line stripped
@@ -7380,11 +7385,11 @@ func determinism() -> int:
 	for rq_i in log_auto.size():
 		var rq_e: Dictionary = log_auto[rq_i].duplicate(); rq_e["approach"] = "*"; rq_e["recruit"] = "*"; log_rec.append(rq_e)
 	var rq_led := TNBSim.seed_story(TNBSim.parse_kizuna_arg(""), "quest:cold_storage")
-	var rqa := make_sim(19, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqa.delegate_all = true; rqa.new_dual()
+	var rqa := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqa.delegate_all = true; rqa.new_dual()
 	var hrqa := run_log(rqa, log_rec, 60)
-	var rqb := make_sim(19, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqb.delegate_all = true; rqb.new_dual()
+	var rqb := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqb.delegate_all = true; rqb.new_dual()
 	var hrqb := run_log(rqb, log_rec, 60)
-	var rqc := make_sim(19, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqc.delegate_all = true; rqc.new_dual()
+	var rqc := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqc.delegate_all = true; rqc.new_dual()
 	var hrqc := run_log(rqc, log_auto, 60)
 	var rq_verdicts: Array = []
 	for rq_e2 in rqa.events:
@@ -7403,9 +7408,9 @@ func determinism() -> int:
 	for rq_e3 in rqa.events:
 		if str(rq_e3["kind"]) == "wall_revealed": rq_strings.append("%s -> %s" % [str(rq_e3["from"]), ", ".join(PackedStringArray(rq_e3["labels"]))])
 	var sw_led := TNBSim.seed_story(TNBSim.parse_kizuna_arg(""), "quest:cold_storage,feud_resolved:moreau+tremblay")
-	var swa := make_sim(19, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, sw_led); swa.delegate_all = true; swa.new_dual()
+	var swa := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, sw_led); swa.delegate_all = true; swa.new_dual()
 	var hswa := run_log(swa, log_rec, 60)
-	var swb := make_sim(19, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, sw_led); swb.delegate_all = true; swb.new_dual()
+	var swb := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, sw_led); swb.delegate_all = true; swb.new_dual()
 	var hswb := run_log(swb, log_rec, 60)
 	var sw_strings: Array = []; var sw_order: Array = []
 	for sw_e in swa.events:
@@ -7425,11 +7430,11 @@ func determinism() -> int:
 	var bk_led_c := bk_led.duplicate(true)
 	bk_led["recruit"] = {"yuri_kowalchuk": {"state": "joined", "witnessed": 0, "day": 1}}
 	var bk_yuri: Dictionary = TNBSim.LINEUP_MILLBROOK_8[6].duplicate(true); bk_yuri.erase("reserve")
-	var bka := make_sim(19, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led); bka.stable.append(bk_yuri.duplicate(true)); bka.delegate_all = true; bka.new_dual()
+	var bka := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led); bka.stable.append(bk_yuri.duplicate(true)); bka.delegate_all = true; bka.new_dual()
 	var hbka := run_log(bka, log_rec, 60)
-	var bkb := make_sim(19, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led); bkb.stable.append(bk_yuri.duplicate(true)); bkb.delegate_all = true; bkb.new_dual()
+	var bkb := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led); bkb.stable.append(bk_yuri.duplicate(true)); bkb.delegate_all = true; bkb.new_dual()
 	var hbkb := run_log(bkb, log_rec, 60)
-	var bkc := make_sim(19, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led_c); bkc.stable.append(bk_yuri.duplicate(true)); bkc.delegate_all = true; bkc.new_dual()
+	var bkc := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led_c); bkc.stable.append(bk_yuri.duplicate(true)); bkc.delegate_all = true; bkc.new_dual()
 	var hbkc := run_log(bkc, log_rec, 60)
 	var bk_bless: Array = []; var bk_wall: Array = []; var bk_tick := -1; var bk_end := -1
 	for bk_e in bka.events:
@@ -7473,7 +7478,7 @@ func determinism() -> int:
 	# PAC-080: a Duo relay on the delegated log vs Yuri's squad - RORY and PRIYA at Duo (90): R2 PRIYA carries Whiteout and the profile casts it
 	# when the bar allows; identical twice and different from the same log at Adjacent Trust (89), whose stats are the same and where no Duo is live
 	var duo_run := func(duo_k: String) -> Array:
-		var duo_s := make_sim(1, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, TNBSim.parse_kizuna_arg(duo_k)); duo_s.delegate_all = true; duo_s.new_dual()
+		var duo_s := make_sim(1, 17, TNBSim.LINEUP_MILLBROOK, "", {}, TNBSim.parse_kizuna_arg(duo_k)); duo_s.delegate_all = true; duo_s.new_dual()
 		return [duo_s, run_log(duo_s, log_auto, 60)]
 	var dua: Array = duo_run.call("RORY+PRIYA:90"); var dub: Array = duo_run.call("RORY+PRIYA:90"); var duc: Array = duo_run.call("RORY+PRIYA:89")
 	var du_live: Array = []; var du_cast: Array = []; var du_cast_c: Array = []
@@ -7494,7 +7499,7 @@ func determinism() -> int:
 				var hy_cc: Dictionary = hy_c.duplicate(true); hy_cc.erase("reserve"); hy_lu.append(hy_cc)
 	hy_lu[3]["reserve"] = true
 	var hy_run := func(hy_forge: bool) -> Array:
-		var hy_s := make_sim(1, 12345, hy_lu, "", {}, TNBSim.seed_facilities(TNBSim.seed_purse(TNBSim.parse_kizuna_arg("YURI+MARTA:150"), "spirits:40,beans:30"), "wall:3", content["facilities"]))   # since PAC-089 the Forge is The Wall's T3
+		var hy_s := make_sim(1, 42, hy_lu, "", {}, TNBSim.seed_facilities(TNBSim.seed_purse(TNBSim.parse_kizuna_arg("YURI+MARTA:150"), "spirits:40,beans:30"), "wall:3", content["facilities"]))   # since PAC-089 the Forge is The Wall's T3
 		if hy_forge: hy_s.forge("YURI", "MARTA")
 		hy_s.delegate_all = true; hy_s.new_dual(); hy_s.events.clear()
 		var hy_h: Array = []
@@ -7743,29 +7748,29 @@ func determinism() -> int:
 	# academy is fielded with its signings for the duals after: identical twice, and different from the same log without the arc's turn
 	var ay_log: Array = log_auto.map(func(ay_e0): return (ay_e0 as Dictionary).merged({"approach": "*", "academy": true}))
 	var ay_run := func(ay_on: bool) -> Array:
-		var ay_s := make_sim(19, 12345)                                                                    # Moira's squad: the log wins that dual on segments (PAC-075)
+		var ay_s := make_sim(19, 12346)                                                                    # Moira's squad: the log wins that dual on segments (PAC-075)
 		ay_s.delegate_all = true; ay_s.events.clear(); ay_s.new_dual()
 		return [ay_s, run_log(ay_s, ay_log.map(func(ay_e): return (ay_e as Dictionary).merged({"story": "story:nationals"})) if ay_on else ay_log, 60)]
 	var aya: Array = ay_run.call(true); var ayb: Array = ay_run.call(true); var ayc: Array = ay_run.call(false)
 	_sr("the anti-you on the delegated log vs Moira's squad: the academy signed %s at the Nationals and fielded them %s; without the arc's turn nobody signed, the academy unfielded; every hash identical twice and different from it" % [JSON.stringify(aya[0].rewards.get("academy", {}).get("order", [])), str(aya[0].academy_on)],
 		count_events(aya[0].events, "academy_signs") == 1 and aya[0].rewards.get("academy", {}).get("order", []).size() >= 1 and ayc[0].rewards.get("academy", {}).is_empty() and not ayc[0].academy_on and aya[1] == ayb[1] and aya[1].size() > 0 and aya[1] != ayc[1], "%d hashes" % aya[1].size())
 	# PAC-101: district rep on the log - a scrap the profile wins against the live Yuri (SCR-15), in the Rink District with 5 on the
-	# ledger: won, the rink 6; fled at its 600th tick, the rink 4; placed nowhere, 5 - each twice alike to the hash, the three different
+	# ledger: won, the rink 6; fled at its fifth tick, the rink 4; placed nowhere, 5 - each twice alike to the hash, the three different
 	var rp_run := func(rp_d: String, rp_flee: bool) -> Array:
-		var rp_s := make_sim(1, 2024, TNBSim.LINEUP_MILLBROOK, "", {}, {"rep": {"of": {"rink": 5}, "best": {"rink": 5}, "paid": 0}})
+		var rp_s := make_sim(1, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, {"rep": {"of": {"rink": 5}, "best": {"rink": 5}, "paid": 0}})
 		rp_s.start_scrap("SCR-15", 1, "", {}, "", rp_d); rp_s.delegate_all = true; rp_s.new_dual()
 		var rp_h: Array = []
 		for rp_i in 3700:
-			rp_s.step({"flee": true} if rp_flee and rp_i == 600 else {})
+			rp_s.step({"flee": true} if rp_flee and rp_i == 5 else {})
 			if rp_i % 50 == 0: rp_h.append(rp_s.hash_state())
 		return [rp_s.rep_of("rink"), rp_h, rp_s.mode]
 	var rpa: Array = rp_run.call("rink", false); var rpb: Array = rp_run.call("rink", false); var rpf: Array = rp_run.call("rink", true); var rpf2: Array = rp_run.call("rink", true); var rpn: Array = rp_run.call("", false)
-	_sr("district rep on the log: SCR-15 on the profile in the Rink District - won, the rink %d; fled at tick 600, %d; placed nowhere, %d; each twice alike, the three different" % [int(rpa[0]), int(rpf[0]), int(rpn[0])],
+	_sr("district rep on the log: SCR-15 on the profile in the Rink District - won, the rink %d; fled at tick 5, %d; placed nowhere, %d; each twice alike, the three different" % [int(rpa[0]), int(rpf[0]), int(rpn[0])],
 		int(rpa[0]) == 6 and int(rpf[0]) == 4 and int(rpn[0]) == 5 and rpa[1] == rpb[1] and rpf[1] == rpf2[1] and rpa[1] != rpf[1] and rpa[1] != rpn[1] and rpa[1].size() > 0, "%d hashes" % rpa[1].size())
 	# PAC-103: the vendor tiers on the log - SCR-15 on the profile with DOWNTOWN at 9 and 600 HBP; won downtown, the rep's 10 opens the t2
 	# shelves and the aid's gear between bouts comes off them; placed in the rink, the aid buys off t1. Each twice alike, the two different
 	var vd_run := func(vd_d: String) -> Array:
-		var vd_s := make_sim(1, 2024, TNBSim.LINEUP_MILLBROOK, "", {}, {"hbp": 600, "rep": {"of": {"downtown": 9}, "best": {"downtown": 9}, "paid": 0}})
+		var vd_s := make_sim(1, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, {"hbp": 600, "rep": {"of": {"downtown": 9}, "best": {"downtown": 9}, "paid": 0}})
 		vd_s.start_scrap("SCR-15", 1, "", {}, "", vd_d); vd_s.delegate_all = true; vd_s.new_dual()
 		var vd_h: Array = []
 		for vd_i in 3700:
@@ -7803,7 +7808,7 @@ func determinism() -> int:
 	_sr("the log against the remixed Yuri: %d feint variants told, %d of them carried through (the hitch), %d hits taken in a tell that does not break; every hash identical twice and different from the original's run" % [rx_holds, rx_feints, rx_unbroken],
 		rx_holds >= 1 and rx_feints >= 1 and rx_unbroken >= 1 and hra == hrb and hra.size() > 0 and hra != ha, "%d hashes" % hra.size())
 	# the phase scripts live (NP_04B): Vasile's clock kits through a delegated dual - hashes identical twice. Since PAC-071 his measured stance is live:
-	# in this log it knocks RORY out at 63.5s, the 60s turn's clock stopped twice by counts, so the live run proves one turn and its seam, and the same log
+	# fixture seed 2 after PAC-005 exposes a live turn and seam; the same log
 	# with his neutral game frozen (the pre-PAC-071 path) proves both. Since PAC-086 his authored Zone stays unrun on these four runs: the gate watches
 	# his clock kits, bit for bit as before; his Zone on a log is its own gate above
 	var q_kit := func(q_sim: TNBSim) -> Array:
@@ -7814,13 +7819,13 @@ func determinism() -> int:
 			elif e_v["kind"] == "directive" and bool(e_v.get("executed", false)): q_di += 1
 		return [q_sw, q_se, q_di]
 	var vs_corner := {"staff": ["sportsmed", "janitor", "rival_cornerman"]}                          # since PAC-074: a corner with no conditioning coach, so RORY's R1 is the pre-PAC-074 fight bit for bit (the gate watches his clock, not our corner)
-	var va := make_sim(16, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); va.delegate_all = true; va.btransform_on = false; va.new_dual(); va.events.clear()
+	var va := make_sim(16, 2, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); va.delegate_all = true; va.btransform_on = false; va.new_dual(); va.events.clear()
 	var hva := run_log(va, log_auto, 60)
-	var vb := make_sim(16, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vb.delegate_all = true; vb.btransform_on = false; vb.new_dual()
+	var vb := make_sim(16, 2, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vb.delegate_all = true; vb.btransform_on = false; vb.new_dual()
 	var hvb := run_log(vb, log_auto, 60)
-	var vf := make_sim(16, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vf.delegate_all = true; vf.btransform_on = false; vf.new_dual(); vf.neutral_on = false; vf.events.clear()
+	var vf := make_sim(16, 2, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vf.delegate_all = true; vf.btransform_on = false; vf.new_dual(); vf.neutral_on = false; vf.events.clear()
 	var hvf := run_log(vf, log_auto, 60)
-	var vg := make_sim(16, 12345, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vg.delegate_all = true; vg.btransform_on = false; vg.new_dual(); vg.neutral_on = false
+	var vg := make_sim(16, 2, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vg.delegate_all = true; vg.btransform_on = false; vg.new_dual(); vg.neutral_on = false
 	var hvg := run_log(vg, log_auto, 60)
 	var q_live: Array = q_kit.call(va); var q_frz: Array = q_kit.call(vf)
 	var q_ko := ""

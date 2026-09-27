@@ -1135,7 +1135,7 @@ func _head_world(F: Dictionary, other: Dictionary) -> Dictionary:
 	var head: Vector2 = F["pos"] - fwd * back + rightD * lat
 	return {"p": head, "h": h}
 
-func resolve_geometry(A: Dictionary, D: Dictionary, row: String, body: bool) -> String:
+func resolve_geometry(A: Dictionary, D: Dictionary, row: String, body: bool, range_bonus: float = 0.0) -> String:
 	# returns HIT | MISS_REACH | MISS_LATERAL | MISS_HEIGHT
 	var fam := _punch_family(row)
 	var g: Dictionary = GEO[fam]
@@ -1159,7 +1159,7 @@ func resolve_geometry(A: Dictionary, D: Dictionary, row: String, body: bool) -> 
 	if row.begins_with("L_"): l = -l                 # mirror for the left hand
 	var reach := float(g["reach"]) * float(A.get("pkg", {}).get("reach_mult", 1.0))
 	if fam == "STRAIGHT": reach *= float(A.get("pkg", {}).get("straight_reach_mult", 1.0))
-	if d > reach: return "MISS_REACH"
+	if d > reach + range_bonus: return "MISS_REACH"
 	if l < float(g["lat"][0]) or l > float(g["lat"][1]): return "MISS_LATERAL"
 	if not body and (th < float(g["h"][0]) or th > float(g["h"][1])): return "MISS_HEIGHT"
 	return "HIT"
@@ -1238,7 +1238,9 @@ func _queue_punch(row: String, inp: Dictionary) -> void:
 	var mods: Array = []
 	if inp.get("power", false): mods.append("POWER")
 	if inp.get("body", false): mods.append("BODY")
-	P["cmd"] = {"row": row, "mods": mods, "expire_t": BUFFER_TICKS, "lb": inp.get("lb", false)}
+	if inp.get("haymaker", false): mods.append("HAYMAKER")
+	if inp.get("block", false): mods.append("BLOCK_PUNCH")
+	P["cmd"] = {"row": row, "mods": mods, "expire_t": BUFFER_TICKS, "lb": inp.get("lb", false), "toward": Vector2(inp.get("move", Vector2.ZERO)).y < -0.2}
 
 func read_prob(tier: int, counter: bool, flash: bool, hiss: bool) -> float:
 	# C6/C7: the boss's chance to READ a player punch. The tracker tier raises it
@@ -1257,9 +1259,9 @@ func _try_execute_cmd() -> bool:
 	if P["cmd"].is_empty() or P["busy_t"] > 0: return false
 	var c: Dictionary = P["cmd"]; P["cmd"] = {}
 	var row: Dictionary = T["punch_matrix"][c["row"]]
-	var startup := ms(float(row["startup_ms"]) * (1.4 if "POWER" in c["mods"] else 1.0) * float(P["pkg"].get("startup_mult", 1.0)) * _zone_punch_mult())   # PAC-082: the Zone's +15 % speed
-	var mv_p := cast_move(c["row"]) if c["lb"] else player_move()                                     # PAC-080: the Duo's T3 answers its motion first
-	var hiss: bool = c["lb"] and not mv_p.is_empty() and _family_row_matches(str(mv_p["family"]), c["row"]) \
+	var motion_row: String = ("L_HOOKERCUT" if str(c["row"]).begins_with("L_") else "R_HOOKERCUT") if "HAYMAKER" in c["mods"] else str(c["row"])
+	var mv_p := cast_move(motion_row) if c["lb"] else player_move()                                     # PAC-080: the Duo's T3 answers its motion first
+	var hiss: bool = c["lb"] and not mv_p.is_empty() and _family_row_matches(str(mv_p["family"]), motion_row) \
 		and castable(mv_p) and can_pay(mv_p)
 	threw_since_arm = true
 	if hiss:
@@ -1271,15 +1273,27 @@ func _try_execute_cmd() -> bool:
 			hands_down_t = 0; _ev("stance", {"hands_down": false}); _fire_event("trap_stance_hands_down")
 		_start_cast("P", mv_p)
 		return true
-	var st_cost := float(row["stamina"]) * (2.0 if "POWER" in c["mods"] else 1.0)
+	var mod_table: Dictionary = T["modifiers"]
+	# An unaffordable modifier falls back to the base punch; the input remains a verb.
+	if "POWER" in c["mods"] and float(P["stamina"]) < float(row["stamina"]) * float(mod_table["POWER"]["stamina_mult"]):
+		c["mods"].erase("POWER"); _ev("modifier_fallback", {"modifier": "POWER", "row": c["row"]})
+	var st_cost := float(row["stamina"]) * (float(mod_table["POWER"]["stamina_mult"]) if "POWER" in c["mods"] else 1.0)
 	var fam_c := _punch_family(c["row"])
 	var reach_c := float(GEO[fam_c]["reach"]) * float(P["pkg"].get("reach_mult", 1.0)) * (float(P["pkg"].get("straight_reach_mult", 1.0)) if fam_c == "STRAIGHT" else 1.0)
-	var stepping: bool = P["pos"].distance_to(B["pos"]) > reach_c - LUNGE_P - 0.05     # only the step makes it reach
-	_ev("punch", {"row": c["row"], "mods": c["mods"].duplicate(), "stepping": stepping})
+	var stepping: bool = bool(c.get("toward", false)) and P["pos"].distance_to(B["pos"]) > reach_c
+	if stepping: c["mods"].append("STEPPING")
+	var startup_mult: float = float(P["pkg"].get("startup_mult", 1.0)) * _zone_punch_mult()
+	for modifier in ["POWER", "HAYMAKER", "BLOCK_PUNCH"]:
+		if modifier in c["mods"]: startup_mult *= float(mod_table[modifier]["startup_mult"])
+	if stepping: startup_mult *= float(mod_table["STEPPING"]["telegraph_mult"])
+	var startup := ms(float(row["startup_ms"]) * startup_mult)
+	P["blocking"] = false; P["block_t"] = 0
+	_ev("punch", {"row": c["row"], "mods": c["mods"].duplicate(), "stepping": stepping, "startup": startup})
 	if (fam_c == "HOOK" or fam_c == "UPPERCUT") and P["pos"].distance_to(B["pos"]) <= float(AFF.get("style", {}).get("inside_range_m", 1.3)):
 		st_cost *= float(P["pkg"].get("inside_hook_upper_stamina_mult", 1.0))         # the swarmer's phone booth (s1.2)
 	P["pending"] = {"row": c["row"], "t": startup, "startup": startup, "mods": c["mods"], "hissatsu": hiss,
-		"counter": P["counter_t"] > 0, "flash": P["flash_t"] > 0, "stamina_cost": st_cost, "read": "none", "stepping": stepping}
+		"counter": P["counter_t"] > 0, "flash": P["flash_t"] > 0, "stamina_cost": st_cost, "read": "none", "stepping": stepping,
+		"range_bonus": float(mod_table["STEPPING"]["range_bonus_m"]) if stepping else 0.0}
 	P["counter_t"] = 0                                     # window spent by the attempt
 	P["busy_t"] = startup + ms(float(row["recovery_ms"]) * _zone_punch_mult())
 	P["stamina"] = maxf(_sfloor(P), P["stamina"] - st_cost)
@@ -1377,8 +1391,9 @@ func _feint() -> void:
 func _land_player_punch() -> void:
 	var pd: Dictionary = P["pending"]; P["pending"] = {}
 	var body: bool = "BODY" in pd["mods"]
-	var geo := resolve_geometry(P, B, pd["row"], body)
+	var geo := resolve_geometry(P, B, pd["row"], body, float(pd.get("range_bonus", 0.0)))
 	if geo != "HIT":
+		_power_open(pd)
 		if geo == "MISS_REACH" and ("POWER" in pd["mods"] or pd["row"].ends_with("HOOKERCUT")):
 			_fire_event("player_power_whiff")
 		if body: _fire_event("player_whiffed_body_shot")
@@ -1389,14 +1404,17 @@ func _land_player_punch() -> void:
 		if geo != "MISS_REACH" and B["dodge"] != "": _mirror_counter()                                  # PAC-093: the mirror answers as you do
 		_counter_state_trigger()
 		return
-	if _walled("B", pd["row"], false): return
+	if _walled("B", pd["row"], false):
+		_power_open(pd); return
 	if _auto_slips("B", pd["row"], body):
-		_say("he slips it without looking - the wall is up"); B["blocking"] = false; return
+		_power_open(pd); _say("he slips it without looking - the wall is up"); B["blocking"] = false; return
 	var row: Dictionary = T["punch_matrix"][pd["row"]]
 	var dmg: float = float(row["dmg"]) * (float(P["stats"]["PWR"]) / 50.0) * float(_gassed(P)["dmg"])
 	if P["charge_t"] > 0: dmg *= 1.1
 	if "POWER" in pd["mods"]: dmg *= float(T["modifiers"]["POWER"]["dmg_mult"]) * float(P["pkg"].get("power_dmg_mult", 1.0))
 	if body: dmg *= float(T["modifiers"]["BODY"]["dmg_mult"])
+	for modifier in ["HAYMAKER", "STEPPING"]:
+		if modifier in pd["mods"]: dmg *= float(T["modifiers"][modifier]["dmg_mult"])
 	if pd["counter"]: dmg *= float(T["counter_mults"]["counter"])
 	if pd["flash"]: dmg *= float(T["counter_mults"]["flash"])
 	dmg *= _zone_mult(B["pos"])
@@ -1414,6 +1432,7 @@ func _land_player_punch() -> void:
 			B["guard_open_t"] = ms(float(T["guard"]["break_open_ms"])); B["guard_t"] = 0; wall_broken = true
 			_say("HIS GUARD IS BROKEN"); _ev("guard_break", {"who": "B"})
 		_ev("block", {"by": "B"})
+		_power_open(pd)
 		_counter_state_trigger()
 		return
 	var pf := _foul_kind(pd["row"], body, B)
@@ -1461,7 +1480,9 @@ func _land_player_punch() -> void:
 		if pd["counter"] or pd["flash"]: counters_p += 1
 		if buffs["P"].has("ep_plus_on_clean"): ep_p += 1
 	var stop: Dictionary = T["hit_feel"]["hitstop_ms"]
-	freeze_t = maxi(freeze_t, ms(float(stop["flash_or_hissatsu"] if (pd["flash"] or pd["hissatsu"]) else (stop["counter"] if pd["counter"] else stop["normal"]))))
+	freeze_t = maxi(freeze_t, ms(float(stop["flash_or_hissatsu"] if (pd["flash"] or pd["hissatsu"]) else (stop["counter"] if pd["counter"] else (stop["power"] if "POWER" in pd["mods"] or "HAYMAKER" in pd["mods"] else stop["normal"])))))
+	if "HAYMAKER" in pd["mods"] and bool(T["modifiers"]["HAYMAKER"].get("stagger", false)):
+		_ev("stagger", {"who": "B", "ticks": freeze_t})  # heavy impact, never bypasses the authored INTERRUPT law
 	_ev("hit", {"on": "B", "dmg": dmg, "counter": pd["counter"], "flash": pd["flash"], "hissatsu": pd["hissatsu"], "body": body,
 		"row": pd["row"], "foul": pf != "", "center": zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER", "stepping": pd.get("stepping", false)})
 	if pd["counter"] and not pd["hissatsu"]: _say("FLASH COUNTER x2!" if pd["flash"] else "COUNTER x1.6!")
@@ -1477,6 +1498,12 @@ func _foul_kind(row: String, body: bool, D: Dictionary) -> String:
 	var fam := _punch_family(row)
 	if (fam == "FLARED" or fam == "HOOKERCUT") and (D["dodge"] == "DUCK" or D["dodge"] == "WEAVE"): return "behind_the_head"
 	return ""
+
+func _power_open(punch: Dictionary) -> void:
+	if "POWER" in punch["mods"]:
+		P["guard_open_t"] = maxi(int(P["guard_open_t"]), ms(float(T["modifiers"]["POWER"]["whiff_open_ms"])))
+		P["blocking"] = false; P["block_t"] = 0
+		_ev("power_open", {"ticks": P["guard_open_t"]})
 
 func _counter_state_trigger() -> void:
 	# COUNTER_STATE / COUNTER_ON_BLOCK: a punch that lands on his guard or whiffs
@@ -9925,7 +9952,7 @@ func _step_inner(inp: Dictionary) -> void:
 	var block_edge: bool = block_now and not block_prev
 	if block_edge: _ev("block_press", {})
 	block_prev = block_now
-	P["blocking"] = block_now and not dodging
+	P["blocking"] = block_now and not dodging and P["pending"].is_empty() and int(P["guard_open_t"]) <= 0
 	if P["blocking"]:
 		P["block_t"] += 1; block_hold_t += 1
 		var decay := float(T["guard"]["hold_decay_per_s"]) * (float(T["zones"]["CORNER"]["guard_decay_mult"]) if zone(P["pos"]) == "CORNER" else 1.0) * float(tactic_fx.get("guard_decay_mult", 1.0))
@@ -10003,7 +10030,7 @@ func _step_inner(inp: Dictionary) -> void:
 	if pr != "": _queue_punch(pr, inp)
 	var executed := _try_execute_cmd()
 	if inp.get("punch_release", false) and P["pending"].size() > 0 and not P["pending"]["hissatsu"] \
-		and int(P["pending"]["startup"]) - int(P["pending"]["t"]) <= ms(float(T["feint"]["cancel_within_ms"])):
+		and int(P["pending"]["startup"]) - int(P["pending"]["t"]) <= ms(float(T["feint"]["cancel_within_ms"])) and float(inp.get("punch_release_age_ms", 0)) <= float(T["feint"]["cancel_within_ms"]):
 		_feint()
 	# reactions to tells: what you did first after the tell started, and how fast
 	var reacted_now: bool = dg != "" or block_edge or executed

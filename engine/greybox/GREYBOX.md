@@ -1,6 +1,37 @@
 # TNB GREYBOX v6 - the engine foundation (NP_14)
 Run (no editor): `godot --path .\engine\greybox`
 
+PAC-005 combat input (NP-03 §§2.1–2.5; NP-13 P1/R-01): press **Escape** to
+pause, choose the input preset, remap combat bindings, or enable the stationary
+practice dummy. Controls save automatically in `user://controls.cfg`; Restore
+defaults resets bindings. Escape cancels a pending binding before closing the menu.
+Keyboard focus and scrolling work with Tab, arrows, and Enter. The menu uses the
+existing Godot controls, with an opaque panel so fight telemetry remains readable
+only after resuming; NP-03 remains the interaction authority.
+
+All ten punches work with keyboard keys below or by holding the left mouse button
+and flicking in the same directions as the right stick. In **button chords**, A/B/X/Y/
+D-pad Up select straight/flared/hook/hookercut/uppercut; hold Back for the left hand.
+Hold Alt or D-pad Down for at least 150 ms before punching for a haymaker; the stick
+preset also supports pulling back for 150 ms then flicking forward. A short downward
+flick remains an uppercut. Releasing a punch within the authored 80 ms cancels into
+a feint. Inputs retain press-time modifiers when pressed and released in one frame.
+
+Body, power, haymaker, stepping, and block-punch modifiers compose using the tuning
+JSON. Step toward an opponent outside normal reach to gain the authored extra reach;
+a stationary out-of-range punch does not gain the stepping modifier. Block-punch drops guard; power whiffs
+and blocked power strikes leave the authored 300 ms opening. Unaffordable power or
+Hissatsu activation preserves the ordinary punch. Haymaker impact uses heavy hitstop
+and the stagger event; it respects the existing authored interrupt rules.
+
+Launch directly into practice: `godot --path engine/greybox -- dummy` (add
+`controls=chords` for the accessible preset). The dummy holds position, replenishes
+composure, and suspends opponent decisions and the round clock. Turning practice
+off restores normal decisions. R reloads tuning. This remains the existing capsule
+greybox, not the finished game presentation. Input regressions:
+`godot --headless --path engine/greybox -s tools/drive_input.gd -- dummy`.
+
+
 Blue capsule = you (head sphere shows where the sim says your head is - a
 slip is visible). Red capsule = the boss, driven by the real compiled PBN.
 Yellow flash + swell = tell; hit him during it = interrupt + flash window.
@@ -10,7 +41,8 @@ PAD: LS move | RS flick = punch by angle | RT block (150ms perfect window)
      LT+LS lateral = slip, LT+LS fwd = weave, LT+LS back = lean | LT+punch = body
      RB = power | LB+haymaker flick @100 = ABB | A = rise beat / skip card / SEND
      CORNER: X swap | Y super | B save the bar | D-left/right tactic 1-2 | D-down staff 1
-KEYS: WASD | J/K jab/cross, U/I hooks, O uppercut | Space block | Q/E slip L/R
+KEYS: WASD | J/K straights, F/L flared, U/I hooks, N/; hookercuts, Y/O uppercuts
+      Escape controls/remap/practice | Space block | Q/E slip L/R
       V weave | B lean | T taunt | Shift power | C body | H hissatsu-arm
       ENTER = rise beats when dropped | 1 = skip the card / SEND from the corner
       CORNER: 2/3/4 tactics | 5 super | 6/7/8 staff | 9 save the bar | 0 swap

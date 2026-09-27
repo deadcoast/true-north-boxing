@@ -1,5 +1,7 @@
 extends Node3D
 const TNBSim := preload("res://sim/core.gd")
+const CombatInput := preload("res://input/combat_input.gd")
+const ControlsMenu := preload("res://input/controls_menu.gd")
 const TNBClock := preload("res://sim/clock.gd")
 const TNBTests := preload("res://sim/tests.gd")
 const TNBObjectives := preload("res://sim/objectives.gd")
@@ -15,7 +17,8 @@ const TNBExhibition := preload("res://sim/exhibition.gd")
 # PAD: LS move | RS flick punch (angle = punch) | LT+LS slip/weave/lean | LT+punch body
 #      RB power | RT block | LB hold + haymaker-flick at 100 Tension = A.B.B.
 #      L3 sprint-step | R3 clinch | A = beat tap (count / clinch cue) / send (corner) | X = rest (corner) | DPAD-UP taunt
-# KEYS: WASD move | J jab, K cross, U/I hooks, O uppercut (tap-release within 80ms = FEINT) | Space block
+# KEYS: WASD | J/K straights, F/L flared, U/I hooks, N/; hookercuts, Y/O uppercuts | Esc controls
+#       Alt held 150ms + punch haymaker | mouse left-button flick | tap-release within 80ms FEINT | Space block
 #       Q/E slip | V weave | B lean | T taunt | Shift power | C body | H hissatsu-arm
 #       Ctrl sprint-step | G clinch | ENTER beat tap | F8 audio-assist cue toggle
 # CORNER (45s, 2 actions): 1 send | 2/3/4 equipped tactics | 5 super | 6/7/8 staff | 9 save the bar | 0 swap (first option)
@@ -125,15 +128,16 @@ const TNBExhibition := preload("res://sim/exhibition.gd")
 # TESTS (headless): godot --headless --path . -- smoke boss=N | determinism | geometry | audit (NP_11 s10's obsolescence audit, PAC-095) | faucets (NP_11 s6's faucet/sink audit, PAC-097)
 # DEMO: godot --path . -- demo   (self-playing scripted fighter; the presentation soak)
 
-const PUNCH_KEYS := {KEY_J: "L_STRAIGHT", KEY_K: "R_STRAIGHT", KEY_U: "L_HOOK",
-					 KEY_I: "R_HOOK", KEY_O: "R_UPPERCUT", KEY_SEMICOLON: "R_HOOKERCUT"}   # PAC-087: ; the hookercut - the keyboard's HAYMAKER motion
-const SECTORS := ["L_UPPERCUT","L_HOOKERCUT","L_HOOK","L_FLARED","L_STRAIGHT",
-				  "R_STRAIGHT","R_FLARED","R_HOOK","R_HOOKERCUT","R_UPPERCUT"]
 const COLORS := {"RORY": Color(0.25, 0.55, 0.9), "PRIYA": Color(0.3, 0.8, 0.75), "MARCUS": Color(0.9, 0.6, 0.2)}
 const BOSS_COLOR := Color(0.85, 0.3, 0.25)
 const ELEMENT_TINT := {"FROST": Color(0.78, 0.90, 1.0), "GALE": Color(0.82, 0.84, 0.88), "GRANITE": Color(0.80, 0.62, 0.36), "TIMBER": Color(0.36, 0.48, 0.28)}   # NP_06 s2.2 aura language
 
 var sim: TNBSim
+var combat_input := CombatInput.new()
+var controls_menu: CanvasLayer
+var practice_dummy := false
+var practice_restore: Dictionary = {}
+var practice_position := Vector2.ZERO
 var clock := TNBClock.new()
 var prev_p := Vector2.ZERO
 var prev_b := Vector2.ZERO
@@ -162,7 +166,6 @@ var demo_clash := false            # PAC-086: -- demo clash: the aid's SURGE wai
 var bmanifest_fig: Node3D = null   # PAC-086: his manifest behind him
 var bmanifest_pulse := 0.0         # PAC-086: his echo's pulse on his figure
 var q_release := false
-var flick_live := false
 var q_action: Dictionary = {}
 var ghost: Node3D
 var ghost_t := 0.0
@@ -174,11 +177,6 @@ var apron_fig: Node3D = null         # PAC-084: a dressed source at the apron, m
 var ghosts_spawned := 0
 var duo_casts: Array = []          # PAC-080: the Duo T3s cast this run (the soak's summary)
 var audio_assist := false
-# right-stick flick classifier (harness logic, in ticks)
-var armed := true
-var below_tick := 0
-var capture := 0
-var best := Vector2.ZERO
 var demo_log: Array = []           # -- demo: the scripted player drives the scene (attract mode / soak)
 var demo_seg2 := false             # -- demo seg2: a FULL RELAY R2 - the scripted fighter is told to cast North Star (the relay opens it) until the ghost shows
 var matchup_until := 0             # the matchup card (NP_06 s5) stays on the HUD for the opening 3s of a segment
@@ -296,6 +294,15 @@ func _pair_cards(arg: String) -> Array:
 
 func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
+	combat_input.load_settings()
+	practice_dummy = "dummy" in args
+	for option in args:
+		if option == "controls=chords": combat_input.preset = "chords"
+	controls_menu = ControlsMenu.new(); add_child(controls_menu); controls_menu.setup(combat_input)
+	controls_menu.practice_changed.connect(set_practice)
+	controls_menu.practice.set_pressed_no_signal(practice_dummy)
+	Input.joy_connection_changed.connect(func(_device, connected):
+		if not connected: combat_input.clear())
 	var boss_idx := 0
 	for a in args:
 		if a.begins_with("boss="): boss_idx = clampi(int(a.split("=")[1]), 0, TNBSim.BOSSES.size() - 1)
@@ -540,33 +547,16 @@ func _build_world() -> void:
 	boss = _mk_capsule(BOSS_COLOR, Vector3(0, 0, -1.0))
 	cam = Camera3D.new(); cam.fov = 55.0; add_child(cam)
 	var ui := CanvasLayer.new(); add_child(ui)
-	hud = Label.new(); hud.position = Vector2(20, 14)
+	hud = Label.new(); hud.mouse_filter = Control.MOUSE_FILTER_IGNORE; hud.position = Vector2(20, 14)
 	hud.add_theme_font_size_override("font_size", 17); ui.add_child(hud)
-	feed = Label.new(); feed.position = Vector2(20, 640); feed.size = Vector2(1240, 70)
+	feed = Label.new(); feed.mouse_filter = Control.MOUSE_FILTER_IGNORE; feed.position = Vector2(20, 640); feed.size = Vector2(1240, 70)
 	feed.autowrap_mode = TextServer.AUTOWRAP_WORD
 	feed.add_theme_font_size_override("font_size", 18)
 	feed.add_theme_color_override("font_color", Color(1, 0.9, 0.5)); ui.add_child(feed)
-	flashrect = ColorRect.new(); flashrect.color = Color(1,1,1,0)
+	flashrect = ColorRect.new(); flashrect.color = Color(1,1,1,0); flashrect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	flashrect.size = Vector2(1280, 720); ui.add_child(flashrect)
 
 # ============================== INPUT =====================================
-func _poll_stick() -> Vector2:
-	var v := Vector2.ZERO
-	for dev in Input.get_connected_joypads():
-		var s := Vector2(Input.get_joy_axis(dev, JOY_AXIS_RIGHT_X), Input.get_joy_axis(dev, JOY_AXIS_RIGHT_Y))
-		if s.length() > v.length(): v = s
-	return v
-
-func _move_vec() -> Vector2:
-	var v := Vector2.ZERO
-	for dev in Input.get_connected_joypads():
-		var lv := Vector2(Input.get_joy_axis(dev, JOY_AXIS_LEFT_X), Input.get_joy_axis(dev, JOY_AXIS_LEFT_Y))
-		if lv.length() > v.length(): v = lv
-	if v.length() < 0.2: v = Vector2.ZERO
-	v.x += float(Input.is_key_pressed(KEY_D)) - float(Input.is_key_pressed(KEY_A))
-	v.y += float(Input.is_key_pressed(KEY_S)) - float(Input.is_key_pressed(KEY_W))
-	return v.limit_length(1.0)
-
 func _trigger(axis: int, key: int) -> bool:
 	for dev in Input.get_connected_joypads():
 		if Input.get_joy_axis(dev, axis) > 0.5: return true
@@ -576,13 +566,6 @@ func _button(btn: int, key: int) -> bool:
 	for dev in Input.get_connected_joypads():
 		if Input.is_joy_button_pressed(dev, btn): return true
 	return Input.is_key_pressed(key)
-
-func _sector(v: Vector2) -> int:
-	var ang := rad_to_deg(atan2(-v.y, v.x))
-	if ang > 90.0 or ang <= -90.0:
-		var la := 180.0 - ang if ang > 0.0 else -180.0 - ang
-		return clampi(int(floor((la + 90.0) / 36.0)), 0, 4)
-	return 5 + (4 - clampi(int(floor((ang + 90.0) / 36.0)), 0, 4))
 
 func _intent() -> Dictionary:
 	if demo_seg2 and ghosts_spawned == 0 and sim.mode == "FIGHT" and sim.tick % 60 == 0 and sim.cast.is_empty():
@@ -596,22 +579,8 @@ func _intent() -> Dictionary:
 	if demo_anti and demo_log.size() > 0 and sim.mode == "OVER" and sim.academy_left_behind().is_empty():   # PAC-102: the aid turns the arc only once the club has left someone waiting
 		var held: Dictionary = demo_log[sim.tick % demo_log.size()].duplicate(); held.erase("story"); return held
 	if demo_log.size() > 0: return demo_log[sim.tick % demo_log.size()]
-	var inp := {"move": _move_vec(), "block": _trigger(JOY_AXIS_TRIGGER_RIGHT, KEY_SPACE),
-		"body": _trigger(JOY_AXIS_TRIGGER_LEFT, KEY_C), "power": _button(JOY_BUTTON_RIGHT_SHOULDER, KEY_SHIFT),
-		"lb": _button(JOY_BUTTON_LEFT_SHOULDER, KEY_H), "rise": _button(JOY_BUTTON_A, KEY_ENTER), "audio_assist": audio_assist}
-	# right-stick flick -> punch (harness classifier: fast crossing + 4-tick peak capture)
-	var v := _poll_stick(); var mag := v.length()
-	if mag <= 0.25: below_tick = sim.tick
-	if capture > 0:
-		capture -= 1
-		if mag > best.length(): best = v
-		if capture == 0: q_punch = SECTORS[_sector(best)]; flick_live = true
-	elif armed and mag >= 0.6:
-		armed = false
-		if sim.tick - below_tick <= 18: capture = 4; best = v
-	elif not armed and mag <= 0.25:
-		armed = true
-	if flick_live and mag <= 0.25: flick_live = false; q_release = true   # the stick came back: a release
+	var inp := combat_input.take_intent()
+	inp["audio_assist"] = audio_assist
 	if q_punch != "": inp["punch"] = q_punch; q_punch = ""
 	if q_dodge != "": inp["dodge"] = q_dodge; q_dodge = ""
 	if q_taunt: inp["taunt"] = true; q_taunt = false
@@ -624,14 +593,16 @@ func _intent() -> Dictionary:
 	return inp
 
 func _unhandled_input(e: InputEvent) -> void:
-	if e is InputEventKey and not e.pressed and e.keycode in PUNCH_KEYS: q_release = true
+	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_ESCAPE:
+		controls_menu.open(); return
+	if controls_menu.opened or sim == null: return
+	# H+Y remains SURGE; ordinary Y now also exposes the left uppercut.
+	if e is InputEventKey and e.keycode == KEY_Y and e.pressed and (combat_input.down("lb") or Input.is_key_pressed(KEY_H)):
+		q_surge = true; return
+	combat_input.tuning = sim.T
+	if combat_input.handle_event(e, Time.get_ticks_usec(), sim.mode in ["FIGHT", "CLASH"] and not formation_open): return
 	if e is InputEventKey and e.pressed and not e.echo:
-		if e.keycode in PUNCH_KEYS: q_punch = PUNCH_KEYS[e.keycode]
-		elif e.keycode == KEY_Q: q_dodge = "SLIP_L"
-		elif e.keycode == KEY_E: q_dodge = "SLIP_R"
-		elif e.keycode == KEY_V: q_dodge = "WEAVE_R"
-		elif e.keycode == KEY_B: q_dodge = "LEAN"
-		elif sim.mode == "OVER" and e.keycode == KEY_T: _train_key()              # PAC-089: a training slot between duals
+		if sim.mode == "OVER" and e.keycode == KEY_T: _train_key()              # PAC-089: a training slot between duals
 		elif e.keycode == KEY_T: q_taunt = true
 		elif e.keycode == KEY_CTRL: q_sprint = true
 		elif e.keycode == KEY_G: q_clinch = true
@@ -969,9 +940,35 @@ func _formation_pick(i: int) -> void:
 	_consume_events()
 	if not bool(r["ok"]): feed.text = "BOARD REFUSED - " + str(r["why"])
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		combat_input.clear(true)
+		if controls_menu != null: controls_menu.open()
+
+func set_practice(enabled: bool) -> void:
+	practice_dummy = enabled
+	if controls_menu != null: controls_menu.practice.set_pressed_no_signal(enabled)
+	if not enabled and not practice_restore.is_empty():
+		for key in practice_restore: sim.set(key, practice_restore[key])
+		practice_restore.clear()
+	combat_input.clear()
+
+func _hold_dummy() -> void:
+	# Practice is a scene mode; it never rewrites the roster, tuning, or boss patterns.
+	if practice_restore.is_empty():
+		for key in ["hooks_enabled", "coach_on", "neutral_on", "clock_t", "bstate", "btimer"]: practice_restore[key] = sim.get(key)
+		practice_position = sim.B["pos"]
+	sim.bstate = "IDLE"; sim.btimer = 1 << 30; sim.bqueue = []; sim.bpending = {}
+	sim.hooks_enabled = false; sim.coach_on = false; sim.neutral_on = false
+	sim.B["dodge"] = ""; sim.B["dodge_t"] = 0; sim.B["dodge_at"] = 0; sim.B["dodge_plan"] = []
+	sim.B["blocking"] = false; sim.B["block_t"] = 0; sim.B["guard_t"] = 0
+	sim.B["comp"] = sim.B["comp_max"]; sim.clock_t = TNBSim.ms(90000)
+
 # ============================== LOOP ======================================
 func _process(delta: float) -> void:
-	if sim == null: return
+	if sim == null or controls_menu.opened: return
+	combat_input.tuning = sim.T
+	combat_input.poll_hardware(Time.get_ticks_usec())
 	if formation_open:                                    # the whiteboard: nothing moves until the bell
 		_render(1.0); _hud(); return
 	var n := clock.advance(delta)
@@ -985,7 +982,10 @@ func _process(delta: float) -> void:
 			sim = exh.ctrl_sim()
 			if exh.ctrl != ctrl0: _exh_swapped()
 			_consume_exh()
-		else: sim.step(_intent())
+		else:
+			if practice_dummy: _hold_dummy()
+			sim.step(_intent())
+			if practice_dummy: sim.B["pos"] = practice_position
 		_consume_events()
 		if demo_saveload: _demo_saveload()
 	_render(clock.alpha())
@@ -1730,3 +1730,4 @@ func _hud() -> void:
 		+ "BOSS  chin %s   phase %d   %s%s%s   [%s/%s]\n" % [_bar(B["comp"], B["comp_max"], 14), sim.bphase, "TELL" if sim.bstate == "FAKE" else ("HITCH" if sim.bstate == "HOLD" else sim.bstate), ("  << TELL - JAB HIM NOW" if sim._interruptible(sim.bstring) else "  << TELL - THIS ONE DOESN'T BREAK: MOVE") if (sim.bstate == "TELL" or sim.bstate == "FAKE") else ("  hands DOWN" if sim.hands_down_t > 0 else ""), ("  [" + B["dodge"] + "]") if B["dodge"] != "" else ("  [GUARD]" if (B["blocking"] or B["guard_t"] > 0) else ""), str(B.get("style", "")), str(B.get("element", ""))] \
 		+ "TENSION %s %3.0f  %s%s%s%s   THEIRS %s %3.0f" % [_bar(sim.tension, 100, 16), sim.tension, _hiss_line(), "   counter!" if P["counter_t"] > 0 else "", "   FLASH!" if P["flash_t"] > 0 else "", "   relay chain %d" % sim.relay_chain if sim.relay_chain > 0 else "", _bar(sim.btension, 100, 12), sim.btension] \
 		+ _wall_line() + _cast_line() + _state_line()
+	hud.text += "\nESC controls / remap  |  %s%s" % ["BUTTON CHORDS" if combat_input.preset == "chords" else "STICK / MOUSE FLICKS", "  |  PRACTICE DUMMY" if practice_dummy else ""]
