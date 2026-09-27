@@ -1,5 +1,5 @@
 {
-  "status": "source recovered; publication pending",
+  "status": "source recovered, verified and published",
   "original_head": "f9bea669db2f1f43612a66b10c75caafdf4c78bb",
   "latest_delivery": "PAC-103",
   "archives": [
@@ -2183,5 +2183,8 @@
     "tools/verify_source_packages.py": "8e7cbd4ed2412d832bf2361a6d11781df9740de75117e0ae9b0eebf425f9af82",
     ".githooks/pre-push": "b8e927b326ebd7953c15641d9bf53df0c90afd3ab12505d9dc4bd0fecffec319"
   },
-  "pipeline": "Custom pre-commit guard plus retained Git LFS pre-push upload hook"
+  "pipeline": "Custom pre-commit guard plus retained Git LFS pre-push upload hook",
+  "published_source_commit": "0d5c4ff8defed65cf66f18b097a794916f23204e",
+  "published_repository": "https://github.com/deadcoast/true-north-boxing",
+  "recovery_task": "PAC-200 DONE; NDL-010 ABSORBED"
 }
