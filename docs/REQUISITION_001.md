@@ -82,7 +82,7 @@ ratios do not establish the required human p90/p10 spread.
 
 Prepare reviewable proposals after aligning the measurements; no sweep or
 numeric tuning change is claimed here. The requisition's explicit approval
-requirement remains in force. [D8](DOCTRINE.md) specifically protects against
+requirement remains in force. [D8](register-commands_docs/DOCTRINE.md) specifically protects against
 feature removal or simplification without design review; these findings do not
 authorize cutting systems.
 
