@@ -1,0 +1,7 @@
+#!/bin/sh
+# Keep Git LFS uploads active when core.hooksPath selects this directory.
+command -v git-lfs >/dev/null 2>&1 || {
+    printf '%s\n' 'Git LFS is required to push the original package archives.' >&2
+    exit 1
+}
+exec git lfs pre-push "$@"

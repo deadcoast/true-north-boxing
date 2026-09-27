@@ -1,0 +1,24 @@
+{
+  "requirement": "OGM-021",
+  "meaning": "8d3d08c14df9acc59fb30a00e1b909a0eaf954d10e4f5e2506a2c9223073da09",
+  "sources": {
+    "packages/README.md": "77a0db18c50d0efc7faa9a80aef1c245d14c712e314b0b45e5c594c7853fbc45",
+    ".githooks/pre-commit": "5aff595381380c0063dd764406b19ff8232add26c6bea34f1b19d068c6be6239",
+    "tests/test_package_import.py": "69d4c0cf838a6224f46c660bc35722856ca8152c3de909f16e84531d90b4a579",
+    "tools/package_import.py": "4b431c60cd97ea1e68e0e90670bc8f24e1fda5f90f37f0e4569a2be74bb8665b"
+  },
+  "result": "PASS",
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "unittest",
+    "tests.test_package_import",
+    "-v"
+  ],
+  "description": "21 importer tests, including real commit hook refusal and acceptance, passed.",
+  "execution_evidence": [
+    "evidence/source-recovery/python-results.json",
+    "evidence/source-recovery/runtime-results.json",
+    "evidence/source-recovery/execution-logs.zip"
+  ]
+}

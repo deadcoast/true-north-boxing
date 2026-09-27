@@ -5627,7 +5627,7 @@ func smoke(boss_idx: int) -> int:
 	var q31c2 : TNBSim = make_sim(1, 7, TNBSim.LINEUP_MILLBROOK, "", {}, q31c.rewards); q31_tp.append([q31c2.tapes(), count_events(q31c2.events, "tape_found")])
 	_sr("the HBP shop and the fight tapes (NP_11 s8): the shelves %s; refused %s; bought %s; the tapes %s; used %s; the saved ledger again %s" % [JSON.stringify(q31_sh.slice(0, 3)), JSON.stringify(q31_sh.slice(3, 6)), JSON.stringify(q31_sh.slice(6)), JSON.stringify(q31_tp.slice(0, 3)), JSON.stringify(q31_tp.slice(3, 10)), JSON.stringify(q31_tp[10])],
 		q31_sh[0] == ["First Snap", "Cornerstone", "Gust Step", "Sapling"] and q31_sh[1] == ["Chinook Rush", "Snowblind", "Landslide", "Root Bind", "Updraft"] and q31_sh[2] == ["Thunder Bay", "White Squall", "Overtime"] \
-		and str(q31_sh[3]) == "the shop's t2 shelf opens with the Regionals (NP_12 s4 beat 4) (story:regionals)" and str(q31_sh[4]) == "Grain Elevator is not in the HBP shop" and str(q31_sh[5]) == "the shop's t3 shelf opens with the Provincials (beat 6) (story:provincials_semifinal)" \
+		and str(q31_sh[3]) == "the shop's t2 shelf opens with the Regionals (NP_12 s4 beat 4) (story:regionals) or DOWNTOWN rep 10 (0 now)" and str(q31_sh[4]) == "Grain Elevator is not in the HBP shop" and str(q31_sh[5]) == "the shop's t3 shelf opens with the Provincials (beat 6) (story:provincials_semifinal) or DOWNTOWN rep 25 (0 now)" \
 		and bool(q31_sh[6]) and int(q31_sh[7]) == 100 and q31_sh[8] == {"Snowblind": "shop"} and q31_sh[9] == ["Snowblind"] and str(q31_sh[10]) == "Landslide costs 400 HBP (the ledger holds 100)" and str(q31_sh[11]) == "RORY knows Snowblind already" \
 		and str(q31_sh[12]) == "Pressure Cooker is not in the HBP shop" \
 		and q31_tp[0] == {"Black Ice": 1, "Portage": 1} and int(q31_tp[1]) == 1 and int(q31_tp[2]) == 0 \
@@ -6020,7 +6020,7 @@ func smoke(boss_idx: int) -> int:
 	var q34_fe: Array = [q34_fx.call("festival", true), q34_fx.call("festival", false), q34_fx.call("home", true)]
 	var q34_fl: Array = [q34a.gear_festival(), q34a.gear_festival(), q34a.gear_festival(), q34a.gear_festival()]
 	_sr("the sources: the shop %s; the story's %s (announced %d then %d); a signature without and with its questline %s / %s; the festival %s, in turn %s" % [JSON.stringify(q34_so.slice(0, 9)), JSON.stringify(q34_so.slice(9, 10) + q34_so.slice(12, 14)), int(q34_so[10]), int(q34_so[11]), JSON.stringify(q34_so[14]), JSON.stringify(q34_so[15]), JSON.stringify(q34_fe), JSON.stringify(q34_fl)],
-		bool(q34_so[0]) and int(q34_so[1]) == 220 and bool(q34_so[2]) and int(q34_so[3]) == 2 and str(q34_so[4]) == "the gear shop's t2 shelf opens with the Regionals (story:regionals)" and str(q34_so[5]) == "the gear shop (t1, 80 HBP)" \
+		bool(q34_so[0]) and int(q34_so[1]) == 220 and bool(q34_so[2]) and int(q34_so[3]) == 2 and str(q34_so[4]) == "the gear shop's t2 shelf opens with the Regionals (story:regionals) or DOWNTOWN rep 10 (0 now)" and str(q34_so[5]) == "the gear shop (t1, 80 HBP)" \
 		and str(q34_so[6]) == "Club Gloves costs 60 HBP (the ledger holds 50)" and str(q34_so[7]) == "Regionals Robe is not sold - a circuit prize" and str(q34_so[8]) == "Grain-Sack Wraps is not sold - signature gear, never sold" \
 		and q34_so[9] == ["grain_sack_wraps", "nationals_guard", "regionals_robe", "gift:tremblay"] and int(q34_so[10]) == 4 and int(q34_so[11]) == 0 \
 		and str(q34_so[12]) == "the circuit's prize (story:regionals)" and str(q34_so[13]) == "House Tremblay's gift, its blessing given (NP_07 s4)" and q34_so[14] == [] and q34_so[15] == ["mothers_wraps"] \
@@ -6852,6 +6852,79 @@ func smoke(boss_idx: int) -> int:
 	var q42_bl: TNBSim = TNBSave.build(content, TNBSave.read_text(q42_tx), 7)["sim"]
 	var q42_bk: Array = [q42_bl.academy_taken() == q42_v.academy_taken(), q42_bl.recruit_state(str(q42_v.academy_taken()[0])), TNBSave.write_text(q42_bl, false) == q42_tx, bool(q42_bl.approach(str(q42_v.academy_taken()[0]))["ok"])]
 	_sr("the academy in the save: loaded %s" % JSON.stringify(q42_bk), q42_bk == [true, "academy", true, false])
+
+	# ---- PAC-103: VENDOR TIERS (NP_02 s4) - the shops' shelves by the Downtown Strip's rep ----
+	var q43_T: Dictionary = content["techniques"]["shop"]; var q43_G: Dictionary = content["gear"]["shop"]
+	var q43_mk := func(q43_rp: String, q43_fl: String = "", q43_hb: int = 1500) -> TNBSim:
+		var q43_l: Dictionary = TNBSim.seed_rep(TNBSim.seed_story(TNBSim.seed_levels({"hbp": q43_hb}, "RORY:15", content["economy"]), q43_fl), q43_rp, content["economy"])
+		var q43_s := make_sim(7, 7, TNBSim.LINEUP_MILLBROOK, "", {}, q43_l); q43_s.mode = "OVER"
+		return q43_s
+	var q43_lastrep := func(q43_s: TNBSim) -> Dictionary:
+		var q43_e: Array = q43_s.events.filter(func(q43_x): return str(q43_x["kind"]) == "rep")
+		return q43_e[q43_e.size() - 1] if q43_e.size() > 0 else {}
+	# the tiers against their absence: both shops on the Downtown Strip, t2 at rep 10 and t3 at 25. At DOWNTOWN 9 with no story flag only
+	# the t1 shelves stand open and a t2 refusal names the rep; a scrap won downtown makes 10 - both t2 shelves open by the rep, named on the
+	# rep's event, t3 still shut. The Rink District's 30 opens nothing; with the tables' rep gone DOWNTOWN's 30 opens nothing; a seeded rep
+	# flag counts as REP() counts it; the Regionals open t2 by the flag at DOWNTOWN 0; -- rep= reads the docs' district names by alias
+	var q43_a: TNBSim = q43_mk.call("downtown:9")
+	var q43_ab: Array = [q43_a.shelves_open(), q43_a.gear_buy_why("leather_gloves")]
+	q41_won.call(q43_a, "SCR-01", 7, "downtown")
+	var q43_ae: Dictionary = q43_lastrep.call(q43_a)
+	q43_ab.append_array([q43_a.rep_of("downtown"), q43_a.shelf_open_by("techniques", "t2"), q43_a.shelf_open_by("gear", "t2"), q43_a.shelf_open_by("techniques", "t3"), q43_ae.get("shelves", [])])
+	var q43_r: TNBSim = q43_mk.call("rink:30")
+	var q43_n: TNBSim = q43_mk.call("downtown:30")
+	q43_n.TECH = q43_n.TECH.duplicate(true); q43_n.GEAR = q43_n.GEAR.duplicate(true)
+	for q43_t in ["t2", "t3"]: q43_n.TECH["shop"]["tiers"][q43_t].erase("rep"); q43_n.GEAR["shop"]["tiers"][q43_t].erase("rep")
+	var q43_f: TNBSim = q43_mk.call("", "rep:downtown:10")
+	var q43_g: TNBSim = q43_mk.call("", "story:regionals")
+	q43_ab.append_array([q43_r.shelves_open(), q43_n.shelves_open(), q43_f.shelf_open_by("gear", "t2"), q43_g.shelf_open_by("techniques", "t2"), q43_g.shelf_open_by("techniques", "t3"), TNBSim.seed_rep({}, "downtown_strip:9,rink_district:3", content["economy"])["rep"]["of"]])
+	_sr("the vendor tiers against their absence: the tables %s; at DOWNTOWN 9 %s; a scrap won downtown [rep, t2, gear t2, t3, the rep's shelves] %s; the rink's 30 %s; without the rep %s; a seeded flag %s; the Regionals [t2, t3] %s; -- rep= by alias %s" % [JSON.stringify([str(q43_T["district"]), int(q43_T["tiers"]["t2"]["rep"]), int(q43_T["tiers"]["t3"]["rep"]), str(q43_G["district"]), int(q43_G["tiers"]["t2"]["rep"]), int(q43_G["tiers"]["t3"]["rep"])]), JSON.stringify(q43_ab.slice(0, 2)), JSON.stringify(q43_ab.slice(2, 7)), JSON.stringify(q43_ab[7]), JSON.stringify(q43_ab[8]), str(q43_ab[9]), JSON.stringify(q43_ab.slice(10, 12)), JSON.stringify(q43_ab[12])],
+		[str(q43_T["district"]), int(q43_T["tiers"]["t2"]["rep"]), int(q43_T["tiers"]["t3"]["rep"]), str(q43_G["district"]), int(q43_G["tiers"]["t2"]["rep"]), int(q43_G["tiers"]["t3"]["rep"])] == ["downtown", 10, 25, "downtown", 10, 25] \
+		and q43_ab[0] == ["techniques:t1", "gear:t1"] and str(q43_ab[1]) == "the gear shop's t2 shelf opens with the Regionals (story:regionals) or DOWNTOWN rep 10 (9 now)" \
+		and q43_ab.slice(2, 7) == [10, "rep", "rep", "closed", ["the technique shop's t2 shelf", "the gear shop's t2 shelf"]] and q43_ab[7] == ["techniques:t1", "gear:t1"] and q43_ab[8] == ["techniques:t1", "gear:t1"] \
+		and str(q43_ab[9]) == "rep" and q43_ab.slice(10, 12) == ["flag", "closed"] and q43_ab[12] == {"downtown": 9, "rink": 3})
+	# a shelf opened on the ledger's rep and closed below it: at DOWNTOWN 10 RORY buys Snowblind off the t2 shelf and the club Leather Gloves;
+	# a downtown scrap fled after the first exchange drops the rep to 9 - both t2 shelves close, named on the flee's event; Gel Wraps refused
+	# naming the rep; what was bought stays bought; a scrap won brings 10 back and the shelves open again
+	var q43_b: TNBSim = q43_mk.call("downtown:10")
+	var q43_bb: Array = [bool(q43_b.buy("RORY", "Snowblind")["ok"]), bool(q43_b.buy_gear("leather_gloves")["ok"]), int(q43_b.rewards["hbp"])]
+	q43_b.start_scrap("SCR-01", 7, "", {}, "", "downtown")
+	for q43_t2 in 30: q43_b.step({})
+	q43_b.flee()
+	var q43_fe: Array = q43_b.events.filter(func(q43_x): return str(q43_x["kind"]) == "fled")
+	q43_bb.append_array([q43_b.rep_of("downtown"), q43_fe[q43_fe.size() - 1].get("closed", []) if q43_fe.size() > 0 else [], q43_b.shelves_open(), q43_b.gear_buy_why("gel_wraps"), "Snowblind" in q43_b.learned("RORY"), int(q43_b.gear_owned().get("leather_gloves", 0))])
+	q41_won.call(q43_b, "SCR-01", 7, "downtown")
+	q43_bb.append_array([q43_b.rep_of("downtown"), q43_lastrep.call(q43_b).get("shelves", []).size(), q43_b.gear_buy_why("gel_wraps")])
+	_sr("a shelf opened on the rep and closed below it: at DOWNTOWN 10 [Snowblind, Leather Gloves, HBP] %s; fled [rep, closed, open, Gel Wraps, kept, kept] %s; won again %s" % [JSON.stringify(q43_bb.slice(0, 3)), JSON.stringify(q43_bb.slice(3, 9)), JSON.stringify(q43_bb.slice(9))],
+		q43_bb.slice(0, 3) == [true, true, 850] and q43_bb.slice(3, 9) == [9, ["the technique shop's t2 shelf", "the gear shop's t2 shelf"], ["techniques:t1", "gear:t1"], "the gear shop's t2 shelf opens with the Regionals (story:regionals) or DOWNTOWN rep 10 (9 now)", true, 1] \
+		and q43_bb.slice(9) == [10, 2, ""])
+	# the shops' lines and the aid: DUAL OVER's lines name how each shelf stands and what a closed one wants - at DOWNTOWN 9 after the
+	# Regionals, and at 25 with no story; the aid's gear off a shelf the rep opened (t3 at 25) and, without the rep, off t1
+	var q43_l9: TNBSim = q43_mk.call("downtown:9", "story:regionals"); var q43_l25: TNBSim = q43_mk.call("downtown:25")
+	var q43_c: TNBSim = q43_mk.call("downtown:25", "", 3000); var q43_c0: TNBSim = q43_mk.call("", "", 3000)
+	q43_c.gear_aid("RORY"); q43_c0.gear_aid("RORY")
+	var q43_sh := func(q43_s: TNBSim) -> Array: return q43_s.gear_owned().keys().filter(func(q43_id): return str(q43_s.gear_item(str(q43_id)).get("source", "")) == "shop").map(func(q43_id2): return str(q43_s.gear_item(str(q43_id2))["shelf"]))
+	var q43_cl: Array = [q43_sh.call(q43_c), q43_sh.call(q43_c0), q43_c.buy_best("RORY"), q43_c.shop_tier_of(q43_c.buy_best("RORY"))]
+	_sr("the shops' lines: at DOWNTOWN 9 after the Regionals %s; at 25 %s; the aid's gear off the rep's shelves %s, without %s; the technique shop's pick %s" % [JSON.stringify(q43_l9.vendor_lines()), JSON.stringify(q43_l25.vendor_lines()), JSON.stringify(q43_cl[0]), JSON.stringify(q43_cl[1]), JSON.stringify(q43_cl.slice(2))],
+		q43_l9.vendor_lines() == ["THE TECHNIQUE SHOP (DOWNTOWN, rep 9): t1 open, t2 open (the Regionals), t3 at the Provincials or rep 25 (9/25)", "THE GEAR SHOP (DOWNTOWN, rep 9): t1 open, t2 open (the Regionals), t3 at the Provincials or rep 25 (9/25)"] \
+		and q43_l25.vendor_lines() == ["THE TECHNIQUE SHOP (DOWNTOWN, rep 25): t1 open, t2 open (DOWNTOWN rep 10), t3 open (DOWNTOWN rep 25)", "THE GEAR SHOP (DOWNTOWN, rep 25): t1 open, t2 open (DOWNTOWN rep 10), t3 open (DOWNTOWN rep 25)"] \
+		and q43_cl[0].size() > 0 and q43_cl[0].has("t3") and q43_cl[1].size() > 0 and q43_cl[1].all(func(q43_x): return str(q43_x) == "t1") and str(q43_cl[3]) == "t3")
+	# the tiers in the save: DOWNTOWN 10 rides the ledger; the load reads both t2 shelves open by the rep and writes back byte-equal
+	var q43_v: TNBSim = q43_mk.call("downtown:10")
+	var q43_tx: String = TNBSave.write_text(q43_v, false)
+	var q43_bl: TNBSim = TNBSave.build(content, TNBSave.read_text(q43_tx), 7)["sim"]; q43_bl.mode = "OVER"
+	var q43_sv: Array = [q43_bl.shelves_open() == q43_v.shelves_open(), q43_bl.shelf_open_by("gear", "t2"), q43_bl.gear_buy_why("leather_gloves"), TNBSave.write_text(q43_bl, false) == q43_tx]
+	_sr("the tiers in the save: loaded %s" % JSON.stringify(q43_sv), q43_sv == [true, "rep", "", true])
+	# the faucet's vendor tiers: at story pace each shelf opens by its flag in the circuit (DOWNTOWN scrapped only in Arc 2) - none ahead
+	# by the rep; a player who scraps the Strip through the club phase opens both t2 shelves there by the rep, and nothing is paid differently
+	var q43_F1: Dictionary = q37_F.duplicate(true); q43_F1["phases"][0]["districts"] = ["downtown"]
+	var q43_r1: Dictionary = TNBFaucets.run(content, q43_F1, q35_A, {"sample_given": q37_sm})
+	var q43_v0: Dictionary = q41_r1["faucet"]["vendors"]; var q43_v1: Dictionary = q43_r1["faucet"]["vendors"]
+	var q43_ln: Array = TNBFaucets.lines(q41_r1, q37_F).filter(func(q43_x): return str(q43_x).contains("the vendor tiers"))
+	_sr("the faucet's vendor tiers: at story pace %s (DOWNTOWN %s by phase); the Strip scrapped in the club phase %s (DOWNTOWN %s); the paid alike %s" % [JSON.stringify(q43_v0), JSON.stringify(q41_r1["faucet"]["vendor_rep"]), JSON.stringify(q43_v1), JSON.stringify(q43_r1["faucet"]["vendor_rep"]), str(["xp", "spirits", "hbp", "beans"].all(func(q43_c2): return int(q43_r1["faucet"]["paid"][q43_c2]) == int(q41_r1["faucet"]["paid"][q43_c2])))],
+		q43_v0.keys() == ["techniques:t2", "techniques:t3", "gear:t2", "gear:t3"] and q43_v0.values().all(func(q43_x): return str(q43_x["by"]) == "flag" and str(q43_x["phase"]) == "arc1_circuit") \
+		and str(q43_v1["techniques:t2"]["by"]) == "rep" and str(q43_v1["techniques:t2"]["phase"]) == "arc1_club" and str(q43_v1["gear:t2"]["by"]) == "rep" \
+		and ["xp", "spirits", "hbp", "beans"].all(func(q43_c3): return int(q43_r1["faucet"]["paid"][q43_c3]) == int(q41_r1["faucet"]["paid"][q43_c3])) and q43_ln.size() == 1 and str(q43_ln[0]).contains("by rep ahead of the story: none"))
 
 	# ---- PUNISH / BAIT from pattern data ----
 	var rc := s.response_coverage(s.patterns)
@@ -7689,6 +7762,20 @@ func determinism() -> int:
 	var rpa: Array = rp_run.call("rink", false); var rpb: Array = rp_run.call("rink", false); var rpf: Array = rp_run.call("rink", true); var rpf2: Array = rp_run.call("rink", true); var rpn: Array = rp_run.call("", false)
 	_sr("district rep on the log: SCR-15 on the profile in the Rink District - won, the rink %d; fled at tick 600, %d; placed nowhere, %d; each twice alike, the three different" % [int(rpa[0]), int(rpf[0]), int(rpn[0])],
 		int(rpa[0]) == 6 and int(rpf[0]) == 4 and int(rpn[0]) == 5 and rpa[1] == rpb[1] and rpf[1] == rpf2[1] and rpa[1] != rpf[1] and rpa[1] != rpn[1] and rpa[1].size() > 0, "%d hashes" % rpa[1].size())
+	# PAC-103: the vendor tiers on the log - SCR-15 on the profile with DOWNTOWN at 9 and 600 HBP; won downtown, the rep's 10 opens the t2
+	# shelves and the aid's gear between bouts comes off them; placed in the rink, the aid buys off t1. Each twice alike, the two different
+	var vd_run := func(vd_d: String) -> Array:
+		var vd_s := make_sim(1, 2024, TNBSim.LINEUP_MILLBROOK, "", {}, {"hbp": 600, "rep": {"of": {"downtown": 9}, "best": {"downtown": 9}, "paid": 0}})
+		vd_s.start_scrap("SCR-15", 1, "", {}, "", vd_d); vd_s.delegate_all = true; vd_s.new_dual()
+		var vd_h: Array = []
+		for vd_i in 3700:
+			vd_s.step({"gear": "*"} if vd_s.mode == "OVER" else {})
+			if vd_i % 50 == 0: vd_h.append(vd_s.hash_state())
+		var vd_sh: Array = vd_s.gear_owned().keys().filter(func(vd_id): return str(vd_s.gear_item(str(vd_id)).get("source", "")) == "shop").map(func(vd_id2): return "%s:%s" % [str(vd_id2), str(vd_s.gear_item(str(vd_id2))["shelf"])])
+		return [vd_s.rep_of("downtown"), vd_sh, vd_h, int(vd_s.rewards.get("hbp", 0))]
+	var vda: Array = vd_run.call("downtown"); var vdb: Array = vd_run.call("downtown"); var vdr: Array = vd_run.call("rink"); var vdr2: Array = vd_run.call("rink")
+	_sr("the vendor tiers on the log: SCR-15 won downtown - DOWNTOWN %d, the aid's gear %s (%d HBP left); in the rink %s; each twice alike, the two different" % [int(vda[0]), JSON.stringify(vda[1]), int(vda[3]), JSON.stringify(vdr[1])],
+		int(vda[0]) == 10 and vda[1].size() > 0 and vda[1].any(func(vd_x): return str(vd_x).ends_with(":t2")) and vdr[1].size() > 0 and vdr[1].all(func(vd_y): return str(vd_y).ends_with(":t1")) and vda[2] == vdb[2] and vdr[2] == vdr2[2] and vda[2] != vdr[2] and vda[2].size() > 0, "%d hashes" % vda[2].size())
 	_sr("a scrap (survive 20s) on the profile against the live Yuri ends %s and hashes identically twice" % ("met" if bool(sc_a.obj.get("met", false)) else ("failed: " + str(sc_a.obj.get("why", ""))) if bool(sc_a.obj.get("failed", false)) else "at the cap"), sc_a.mode == "OVER" and hsa == hsb and hsa.size() > 0, "%d hashes" % hsa.size())
 	# Pattern Intel live: the delegated dual again with PI 2 vs Kowalchuk (his tells +10%, the profile reading more) and the ledger ticking as segments end
 	var pi_seed: Dictionary = TNBSim.parse_pi_arg("kowalchuk:2", content.get("pattern_intel", {}))

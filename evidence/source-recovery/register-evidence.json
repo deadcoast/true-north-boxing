@@ -1,0 +1,24 @@
+{
+  "requirement": "OGM-015",
+  "meaning": "5e766a7b104d171c7285e4adabca5018e81f371627476825844975997992dbc6",
+  "sources": {
+    "tests/test_register_bootstrap.py": "f5f1b069d9a7651527b7943cfc989a4980384cbd46c433d5c2114b311e822938",
+    "tests/test_pacer_validator.py": "ff39bd18c8fa21aff3d6a1a8d95df6d421f6508ba818ed571c6c71f60ac8527b",
+    "tests/test_pacer_views.py": "fec16f3e0df4110950748e07ffb036b7b343046f1903c09aa014c4099fea4992",
+    "pacer_views.py": "674bd9b0944ff50dfe12c9114be1dc5cc9a6e8cc3bbfe0b72006098623fc3ac0",
+    "tools/pacer_validator.py": "ad72028a76ef37eff50da7dbfaca6efb086867ba9cbc17b0b431096833895d12",
+    "pacer_validator.py": "18813171ce0dca4fbe4dc2e0f826ca0c145d1aca4eaa70010fe91d3a10203380",
+    "tools/pacer_views.py": "ba7c72406950a634bfd8931e54b7b0087783bdc542c1643088603078d0d72a6f"
+  },
+  "result": "PASS",
+  "command": [
+    ".venv/Scripts/python.exe",
+    "pacer_validator.py"
+  ],
+  "description": "Canonical root registers and restored strict CSV tools pass the existing regression suite and current validator.",
+  "execution_evidence": [
+    "evidence/source-recovery/python-results.json",
+    "evidence/source-recovery/runtime-results.json",
+    "evidence/source-recovery/execution-logs.zip"
+  ]
+}

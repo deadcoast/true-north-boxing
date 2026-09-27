@@ -1,7 +1,7 @@
 {
  "schema": "Techniques/NP_11-s2-s8/v1.0",
  "vault": "v1.3",
- "notes": "NP_11 s2 and s8's techniques as the sim reads them: who may carry what, and where a fighter learns it. A card walks out carrying its own move (its hissatsu, as dressed) and a kit beside it. The kit's technique slots open at levels 5 / 15 / 25 / 35 / 45 (five at most) and hold learned T1s and T2s; the T0 slot opens at level 5 and holds exactly one T0, the identity move (NP_05 s3) - a card whose own move is a T0 has it there, and it is castable from level 5 (NP_12A: Priya's Marginalia unlocks at level 5); his house's natives, when he knows them, take no slot (NP_07 s7: natives ADD). The sources read the library's own `source` field: the HBP shop sells the shop and generic rows in three tiers by circuit progress; the masters teach their lists behind a bond, a stat, a flag or a deed; fight tapes teach once and are spent (a quest's tape arrives with its flag); a learned technique that is not native is re-taught to a stablemate in a training slot, the teacher keeping it. A T2 wall wants a defensive board (NP_05 s3): the Anchor Wall on the card's board, which teaches the board's three walls (PAC-096). Relay, duo, hybrid, transformation and boss-only rows are cast by their own rules or not at all. Prices, gates, the flag names and the masters' gates are first drafts.",
+ "notes": "NP_11 s2 and s8's techniques as the sim reads them: who may carry what, and where a fighter learns it. A card walks out carrying its own move (its hissatsu, as dressed) and a kit beside it. The kit's technique slots open at levels 5 / 15 / 25 / 35 / 45 (five at most) and hold learned T1s and T2s; the T0 slot opens at level 5 and holds exactly one T0, the identity move (NP_05 s3) - a card whose own move is a T0 has it there, and it is castable from level 5 (NP_12A: Priya's Marginalia unlocks at level 5); his house's natives, when he knows them, take no slot (NP_07 s7: natives ADD). The sources read the library's own `source` field: the HBP shop sells the shop and generic rows in three tiers by circuit progress; the masters teach their lists behind a bond, a stat, a flag or a deed; fight tapes teach once and are spent (a quest's tape arrives with its flag); a learned technique that is not native is re-taught to a stablemate in a training slot, the teacher keeping it. A T2 wall wants a defensive board (NP_05 s3): the Anchor Wall on the card's board, which teaches the board's three walls (PAC-096). Relay, duo, hybrid, transformation and boss-only rows are cast by their own rules or not at all. Prices, gates, the flag names and the masters' gates are first drafts. Since PAC-103 the shop's shelves open by the Downtown Strip's rep as well as by the story (the shop's district, a shelf's rep).",
  "slot_levels": [5, 15, 25, 35, 45],
  "t0_level": 5,
  "slot_tiers": ["T1", "T2"],
@@ -23,10 +23,12 @@
  },
  "shop": {
   "order": ["t1", "t2", "t3"],
+  "district": "downtown",
+  "text": "PAC-103: NP_02 s4 - district rep gates vendor tiers. The shop stands on the Downtown Strip (NP_02 s1.1: 'Shops (HBP spending)'), and a shelf with a rep opens by DOWNTOWN's rep as well as by its story flag - t2 at 10, t3 at 25 (the rep milestones' second and third). The shelf reads the ledger's rep as it stands: a flee that drops it below the line closes the shelf again, and what was bought stays bought; a seeded rep flag counts, as REP() reads it. At story pace the circuit's flags open both shelves before the club scraps downtown (Arc 2), so the rep opens them early only for a player who works the Strip (NP_02 s1.3: grinding is always legal). The district and the two thresholds are first drafts",
   "tiers": {
    "t1": {"sources": ["shop:hbp_t1"], "generic_tiers": ["T0"], "hbp": 100, "flag": "", "text": "as found"},
-   "t2": {"sources": ["shop:hbp_t2"], "generic_tiers": ["T1"], "hbp": 400, "flag": "story:regionals", "text": "the Regionals (NP_12 s4 beat 4)"},
-   "t3": {"sources": ["shop:hbp_t3"], "generic_tiers": [], "hbp": 800, "flag": "story:provincials_semifinal", "text": "the Provincials (beat 6)"}
+   "t2": {"sources": ["shop:hbp_t2"], "generic_tiers": ["T1"], "hbp": 400, "flag": "story:regionals", "rep": 10, "text": "the Regionals (NP_12 s4 beat 4)"},
+   "t3": {"sources": ["shop:hbp_t3"], "generic_tiers": [], "hbp": 800, "flag": "story:provincials_semifinal", "rep": 25, "text": "the Provincials (beat 6)"}
   }
  },
  "masters": {

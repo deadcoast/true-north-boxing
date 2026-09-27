@@ -1,14 +1,25 @@
 """Exercise preservation, stale plans, conflict handling, rollback and ZIP-only commits."""
 import json
-from pathlib import Path
+import os
+import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 import zipfile
+from pathlib import Path
+from unittest.mock import patch
 
+from tools import package_import
 from tools.package_import import (
-    STATE, apply_import, archive_members, plan_import, resolve_import,
-    rollback_import, verify_imports,
+    STATE,
+    apply_import,
+    archive_members,
+    plan_import,
+    resolve_import,
+    rollback_import,
+    transaction_lock,
+    verify_imports,
 )
 
 
@@ -79,6 +90,20 @@ class ImportTests(unittest.TestCase):
             apply_import(self.root, plan)
         self.assertFalse((self.root / "code.py").exists())
 
+    def test_several_conflicts_are_a_reviewable_plan(self):
+        original = "\n".join(str(i) for i in range(40)) + "\n"
+        self.import_first(original)
+        ours, theirs = original, original
+        for number in (3, 16, 30):
+            ours = ours.replace(f"\n{number}\n", f"\nlocal {number}\n")
+            theirs = theirs.replace(f"\n{number}\n", f"\nincoming {number}\n")
+        (self.root / "code.py").write_text(ours)
+        plan = plan_import(self.root, self.package("second.zip", {"code.py": theirs}))
+        self.assertEqual(json.loads(plan.read_text())["changes"][0]["action"], "conflict")
+        with self.assertRaisesRegex(ValueError, "conflict"):
+            apply_import(self.root, plan)
+        self.assertEqual((self.root / "code.py").read_text(), ours)
+
     def test_stale_source_refuses_all_writes(self):
         self.import_first()
         plan = plan_import(self.root, self.package("second.zip", {"new.py": "new", "code.py": "changed"}))
@@ -117,8 +142,74 @@ class ImportTests(unittest.TestCase):
             rollback_import(self.root, plan)
         self.assertEqual((self.root / "code.py").read_text(), "later work")
 
+    def test_interrupted_apply_can_roll_back_without_losing_original(self):
+        self.import_first("original")
+        plan = plan_import(self.root, self.package("second.zip", {"code.py": "replacement", "later.py": "new"}))
+        real_write = package_import.atomic_write
+        def fail_later(path, data):
+            if path == self.root / "later.py":
+                raise OSError("simulated disk failure")
+            real_write(path, data)
+        with (patch.object(package_import, "atomic_write", side_effect=fail_later),
+              self.assertRaisesRegex(OSError, "disk failure")):
+            apply_import(self.root, plan)
+        self.assertEqual((self.root / "code.py").read_text(), "replacement")
+        rollback_import(self.root, plan)
+        self.assertEqual((self.root / "code.py").read_text(), "original")
+        self.assertFalse((self.root / "later.py").exists())
+
+    def test_corrupt_rollback_state_refuses_before_touching_source(self):
+        self.import_first("original")
+        plan = plan_import(self.root, self.package("second.zip", {"code.py": "replacement"}))
+        apply_import(self.root, plan)
+        (plan.parent / "state-before").write_text("damaged")
+        with self.assertRaisesRegex(ValueError, "state copy is damaged"):
+            rollback_import(self.root, plan)
+        self.assertEqual((self.root / "code.py").read_text(), "replacement")
+
+    def test_second_writer_is_refused(self):
+        plan = plan_import(self.root, self.package("first.zip", {"code.py": "new"}))
+        with (transaction_lock(self.root),
+              self.assertRaisesRegex(ValueError, "Another source import")):
+            apply_import(self.root, plan)
+        self.assertFalse((self.root / "code.py").exists())
+
+    def test_real_commit_hook_rejects_zip_only_and_accepts_imported_source(self):
+        repo = Path(__file__).resolve().parents[1]
+        for name in (".githooks/pre-commit", "tools/package_import.py"):
+            target = self.root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(repo / name, target)
+        hook = self.root / ".githooks/pre-commit"
+        hook.chmod(0o755)
+        # Use this test's real interpreter, including Windows virtualenv launchers.
+        if os.name == "nt":
+            target = self.root / ".venv/Scripts/python.exe"
+            target.parent.mkdir(parents=True)
+            shutil.copy2(sys.executable, target)
+            config = Path(sys.prefix) / "pyvenv.cfg"
+            if config.exists():
+                shutil.copy2(config, self.root / ".venv/pyvenv.cfg")
+        env = dict(os.environ, PATH=str(Path(sys.executable).parent) + os.pathsep + os.environ.get("PATH", ""))
+        def git(*args):
+            return subprocess.run(["git", *args], cwd=self.root, env=env,
+                                  capture_output=True, text=True, check=False)
+        self.assertEqual(git("init", "-q").returncode, 0)
+        for key, value in (("core.hooksPath", ".githooks"), ("user.name", "Import test"),
+                           ("user.email", "import-test@example.invalid"), ("commit.gpgsign", "false")):
+            self.assertEqual(git("config", key, value).returncode, 0)
+        archive = self.package("first.zip", {"code.py": "source\n"})
+        self.assertEqual(git("add", "packages/first.zip").returncode, 0)
+        blocked = git("commit", "-m", "ZIP only must fail")
+        self.assertNotEqual(blocked.returncode, 0)
+        self.assertIn("IMPORT REFUSED", blocked.stderr)
+        apply_import(self.root, plan_import(self.root, archive))
+        self.assertEqual(git("add", "code.py", STATE).returncode, 0)
+        accepted = git("commit", "-m", "Source and receipt")
+        self.assertEqual(accepted.returncode, 0, accepted.stdout + accepted.stderr)
+
     def test_traversal_windows_aliases_and_protected_registers(self):
-        for name in ("../outside.py", "C:/outside.py", "bad\\name.py", "CON.txt", "a./b.py", ".git/config", "todo.PACER.csv", "packages/import-state.json"):
+        for name in ("../outside.py", "C:/outside.py", "bad\\name.py", "CON.txt", "a./b.py", ".git/config", "todo.PACER.csv", "TODO.PACER.csv", "packages/import-state.json"):
             with self.subTest(name=name):
                 archive = self.package("bad.zip", {name: "no"})
                 with self.assertRaises(ValueError):

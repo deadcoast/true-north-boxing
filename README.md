@@ -9,6 +9,11 @@ register. The current design inventory is in `overlord.PACER.csv`. Supplied root
 vault documents and the earlier `docs/` vault are retained with their source history.
 All operational task updates go through PACER; archived copies are historical.
 
+Source-package deliveries are integrated with the [package importer](packages/README.md).
+The ZIPs preserve the deliveries; the source under `engine/`, `tools/`, `data/`,
+and `pbn/` is the working application. Follow the import, conflict-resolution and
+verification steps before committing a new package.
+
 **Engine decision: Godot 4**, selected by the user. The existing input experiment
 uses Godot 4.5.1. See [prototype instructions](prototype/README.md) for launch and
 headless verification commands. Physical input-to-screen latency is unmeasured;

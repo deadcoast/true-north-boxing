@@ -1153,6 +1153,21 @@ bug. Every phase-trigger form is executable now: 13/13.
 - The save writes `gym_wall {layout, decorations}` and a load hangs the
   same wall (a save from before the wall hangs its bench after the four).
 
+## PAC-103 in the build: VENDOR TIERS (NP_02 s4)
+- The technique shop and the gear shop stand on the Downtown Strip. Their
+  t2 and t3 shelves open by DOWNTOWN's rep (10, 25) as well as by the
+  story's flags (`techniques.v1.json` / `gear.v1.json`: the shop's
+  `district`, a shelf's `rep`).
+- The shelf reads the rep as it stands: a flee below the line shuts it
+  again; what was bought stays bought.
+- DUAL OVER's SHOPS lines name each shelf and what a shut one wants; a
+  refused purchase names the rep; the REP toast names a shelf opened, the
+  FLED toast one closed.
+- `-- rep=downtown:9` seeds the ledger's rep; `-- demo vendors` has the
+  aid buy off the open shelves between bouts.
+- `-- faucets` names each shelf's key at story pace: all four open by
+  their flags in the circuit, none by the rep ahead of the story.
+
 ## PAC-102 in the build: THE ANTI-YOU (NP_12 s2)
 - Between arcs (the story flags `story:nationals` and
   `story:hollow_circuit`), Vey's academy signs up to 3 of the club's
@@ -1767,7 +1782,7 @@ godot --headless --path engine/greybox -- faucets  # NP_11 s6; exit 1 = RED
 godot --headless --path engine/greybox --quit-after 3600 -- demo
 python3 pbn_compiler.py --margins
 ```
-- SMOKE: 449/449 GREEN on every one of the 24 bosses (10,776 assertions).
+- SMOKE: 454/454 GREEN on every one of the 24 bosses (10,896 assertions).
   Covers: C3 buffer (same-tick / 3-ticks-early fires / 8-ticks-early
   expires / buffered through hitstop), C2 reach, C7 tracker flag -> read
   probability up with boss offense byte-identical, interrupt + flash +
@@ -2223,12 +2238,17 @@ python3 pbn_compiler.py --margins
   a released rival at the academy on RECRUITS and the String Wall; the
   academy's squad with the taken and the displaced kits, mini and
   sanctioned; the academy beaten and the taken come over; the academy in
-  the save), and static coverage: 39/39
+  the save), the PAC-103 gates (the vendor tiers against their absence -
+  DOWNTOWN 9 to 10, the rink's rep, the tables without the rep, a seeded
+  flag, the Regionals; a shelf opened on the rep and shut by a flee, what
+  was bought kept; the SHOPS lines and the aid off t3 and t1; the tiers
+  in the save; the faucet's vendor tiers at story pace and on the Strip
+  early), and static coverage: 39/39
   action verbs, 53/53 punish responses, 13/13 phase-trigger forms, 7/7
   effect types, 36/36 states, 14/14 buffs. Every entry in tactics.v1.json
   (8 specials, 4 supers, 5 staff actives) has a gate above; every key in
   affinity.v1.json has one.
-- DETERMINISM: 56/56 GREEN. One 24,000-tick scripted input log run three
+- DETERMINISM: 57/57 GREEN. One 24,000-tick scripted input log run three
   times (twice tick-by-tick, once through the jittered 7-40ms frame loop
   the game uses): all 400 state hashes identical, every hash bit-exact
   over positions, pools, timers, queues, flags, the corner's state and the
@@ -2372,6 +2392,9 @@ python3 pbn_compiler.py --margins
   every tick between duals, the Nationals turned, the academy fielded -
   it signs MOIRA, DEX and REMY and fields them; identical twice, different
   without the arc's turn (nobody signed, the academy unfielded).
+  The vendor tiers on the log: SCR-15 on the profile with DOWNTOWN at 9
+  and 600 HBP - won downtown, the aid's gear comes off t2; placed in the
+  rink, off t1; each identical twice, the two different.
   The delegated log against Moira's squad (the dual the log wins, on segments) with the
   approach and the recruit on every tick between duals and Remy's quest
   flag seeded (cold_storage) flags four, surfaces five conditions (the

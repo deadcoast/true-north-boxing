@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      ".venv/Scripts/python.exe",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit": 0,
+    "log": "final-0.log"
+  },
+  {
+    "command": [
+      ".venv/Scripts/python.exe",
+      "pacer_validator.py"
+    ],
+    "exit": 0,
+    "log": "final-1.log"
+  },
+  {
+    "command": [
+      ".venv/Scripts/python.exe",
+      "tools/package_import.py",
+      "verify"
+    ],
+    "exit": 0,
+    "log": "final-2.log"
+  },
+  {
+    "command": [
+      ".venv/Scripts/python.exe",
+      "-m",
+      "ruff",
+      "check",
+      "tools/package_import.py",
+      "tools/build_pattern_pieces.py",
+      "tools/verify_source_packages.py",
+      "pacer_views.py",
+      "tests/test_package_import.py",
+      "tests/test_register_bootstrap.py"
+    ],
+    "exit": 0,
+    "log": "final-3.log"
+  }
+]

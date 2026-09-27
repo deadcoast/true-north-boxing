@@ -11,7 +11,6 @@ import argparse
 import hashlib
 import json
 import os
-from pathlib import Path, PurePosixPath
 import re
 import stat
 import subprocess
@@ -19,6 +18,8 @@ import sys
 import tempfile
 import uuid
 import zipfile
+from contextlib import contextmanager
+from pathlib import Path, PurePosixPath
 
 STATE = "packages/import-state.json"
 REGISTERS = {f"{name}.PACER.csv" for name in ("todo", "overlord", "organism", "nodule")}
@@ -66,7 +67,7 @@ def safe_path(root: Path, name: str) -> Path:
         raise ValueError(f"Unsafe path: {name}")
     if any(p in (".", "..") or p.endswith((".", " ")) for p in name.split("/")):
         raise ValueError(f"Unsafe path: {name}")
-    reserved = re.compile(r"^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)", re.I)
+    reserved = re.compile(r"^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)", re.IGNORECASE)
     if any(reserved.match(p) or p.casefold() in (".git", ".pacer") for p in parts):
         raise ValueError(f"Protected path: {name}")
     target = root.joinpath(*parts)
@@ -86,6 +87,10 @@ def mapped_path(name: str) -> str:
         return "docs/register-commands_docs/" + name
     if name.startswith("docs/NP_"):
         return "docs/NorthPaw-game_docs/" + name[5:]
+    if name in ("DOCTRINE.md", "VS_SCOPE.md"):
+        return "docs/register-commands_docs/" + name
+    if name == "docs/NORTHPAW_GDD_v1.md":
+        return "docs/TNB_GDD_v1.md"
     return name
 
 
@@ -107,7 +112,7 @@ def archive_members(root: Path, archive: Path) -> dict[str, tuple[str, bytes]]:
             if name.casefold() in seen:
                 raise ValueError(f"Duplicate destination: {name}")
             seen.add(name.casefold())
-            if Path(name).name in REGISTERS or name == STATE or name.startswith("packages/"):
+            if Path(name).name.casefold() in {r.casefold() for r in REGISTERS} or name.casefold() == STATE or name.casefold().startswith("packages/"):
                 raise ValueError(f"Package must not overwrite registers or archives: {name}")
             total += info.file_size
             if info.file_size > 100_000_000 or total > 1_000_000_000:
@@ -140,9 +145,10 @@ def merge_bytes(current: bytes, base: bytes, incoming: bytes, folder: Path):
     files = [folder / n for n in ("ours", "base", "theirs")]
     for path, data in zip(files, (current, base, incoming)):
         path.write_bytes(data.replace(b"\r\n", b"\n"))
-    proc = subprocess.run(["git", "merge-file", "-p", *map(str, files)], capture_output=True)
-    if proc.returncode not in (0, 1):
-        raise ValueError(f"Merge failed: {proc.stderr.decode(errors='replace')}")
+    proc = subprocess.run(["git", "merge-file", "-p", *map(str, files)], capture_output=True, check=False)
+    # merge-file returns the number of conflicts, capped at 127.
+    if not 0 <= proc.returncode <= 127:
+        raise ValueError(f"Merge failed ({proc.returncode}): {proc.stderr.decode(errors='replace')}")
     return proc.stdout if proc.returncode == 0 else None
 
 
@@ -241,11 +247,48 @@ def resolve_import(root: Path, plan_path: Path, name: str, resolution: Path) -> 
     write_json(plan_path, plan)
 
 
+@contextmanager
+def transaction_lock(root: Path):
+    """An OS-held writer lock is automatically released if the process exits."""
+    lock_path = root / ".PACER" / "package-import.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open("a+b") as handle:
+        handle.seek(0, os.SEEK_END)
+        if handle.tell() == 0:
+            handle.write(b"0"); handle.flush()
+        handle.seek(0)
+        try:
+            if os.name == "nt":
+                import msvcrt
+                msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+            else:
+                import fcntl
+                fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError as exc:
+            raise ValueError("Another source import is running") from exc
+        try:
+            yield
+        finally:
+            handle.seek(0)
+            if os.name == "nt":
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+
+
 def apply_import(root: Path, plan_path: Path) -> None:
+    with transaction_lock(root.resolve()):
+        _apply_import(root, plan_path)
+
+
+def _apply_import(root: Path, plan_path: Path) -> None:
     root = root.resolve()
     plan, folder = load_plan(root, plan_path)
     if plan["status"] != "planned":
         raise ValueError("Plan has already been applied or rolled back")
+    for other in (root / ".PACER" / "package-import").glob("*/plan.json"):
+        if read_json(other).get("status") == "applying":
+            raise ValueError(f"Interrupted import needs rollback first: {other}")
     archive = safe_path(root, plan["archive"])
     if digest(archive.read_bytes()) != plan["archive_sha256"]:
         raise ValueError("Archive changed after planning")
@@ -265,27 +308,32 @@ def apply_import(root: Path, plan_path: Path) -> None:
             raise ValueError(f"Planned output changed: {row['path']}")
         outputs[row["path"]] = after
     state = json.loads(current_state) if current_state else {"schema": 1, "archives": {}, "files": {}}
+    for row in plan["changes"]:
+        name = row["path"]
+        state["files"][name] = {"archive": plan["archive"], "member": row["member"],
+            "archive_sha256": plan["archive_sha256"], "source_sha256": row["source_sha256"],
+            "installed_sha256": content_digest(outputs[name])}
+    state["archives"][plan["archive"]] = {"sha256": plan["archive_sha256"], "files": [r["path"] for r in plan["changes"]]}
+    state_after = (json.dumps(state, indent=2, ensure_ascii=False) + "\n").encode()
+    plan["state_after"] = digest(state_after)
     plan["status"] = "applying"
     write_json(plan_path, plan)
-    try:
-        for row in plan["changes"]:
-            name = row["path"]
-            if row["action"] not in ("unchanged", "keep-local"):
-                atomic_write(safe_path(root, name), outputs[name])
-            state["files"][name] = {"archive": plan["archive"], "member": row["member"],
-                "archive_sha256": plan["archive_sha256"], "source_sha256": row["source_sha256"],
-                "installed_sha256": content_digest(outputs[name])}
-        state["archives"][plan["archive"]] = {"sha256": plan["archive_sha256"], "files": [r["path"] for r in plan["changes"]]}
-        write_json(root / STATE, state)
-        plan["state_after"] = digest((root / STATE).read_bytes())
-        plan["status"] = "applied"
-        write_json(plan_path, plan)
-    except BaseException:
-        # Keep the transaction and exact originals for explicit safe rollback.
-        raise
+    # On failure the applying journal and exact originals remain for rollback.
+    for row in plan["changes"]:
+        name = row["path"]
+        if row["action"] not in ("unchanged", "keep-local"):
+            atomic_write(safe_path(root, name), outputs[name])
+    atomic_write(root / STATE, state_after)
+    plan["status"] = "applied"
+    write_json(plan_path, plan)
 
 
 def rollback_import(root: Path, plan_path: Path) -> None:
+    with transaction_lock(root.resolve()):
+        _rollback_import(root, plan_path)
+
+
+def _rollback_import(root: Path, plan_path: Path) -> None:
     root = root.resolve()
     plan, folder = load_plan(root, plan_path)
     if plan["status"] not in ("applied", "applying"):
@@ -293,6 +341,11 @@ def rollback_import(root: Path, plan_path: Path) -> None:
     actual_state = digest((root / STATE).read_bytes()) if (root / STATE).exists() else None
     if actual_state not in (plan.get("state_before"), plan.get("state_after")):
         raise ValueError("Import state changed; refusing to discard later work")
+    previous = None
+    if plan["state_before"] is not None:
+        previous = (folder / "state-before").read_bytes()
+        if digest(previous) != plan["state_before"]:
+            raise ValueError("Rollback state copy is damaged")
     for row in plan["changes"]:
         target = safe_path(root, row["path"])
         actual = digest(target.read_bytes()) if target.exists() else None
@@ -311,9 +364,6 @@ def rollback_import(root: Path, plan_path: Path) -> None:
     if plan["state_before"] is None:
         (root / STATE).unlink(missing_ok=True)
     else:
-        previous = (folder / "state-before").read_bytes()
-        if digest(previous) != plan["state_before"]:
-            raise ValueError("Rollback state copy is damaged")
         atomic_write(root / STATE, previous)
     plan["status"] = "rolled-back"
     write_json(plan_path, plan)
@@ -321,7 +371,7 @@ def rollback_import(root: Path, plan_path: Path) -> None:
 
 def verify_imports(root: Path, staged: bool = False) -> dict:
     def git_bytes(name):
-        proc = subprocess.run(["git", "show", ":" + name], cwd=root, capture_output=True)
+        proc = subprocess.run(["git", "show", ":" + name], cwd=root, capture_output=True, check=False)
         if proc.returncode:
             raise ValueError(f"Missing from Git index: {name}")
         return proc.stdout

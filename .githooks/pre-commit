@@ -1,0 +1,13 @@
+#!/bin/sh
+# A ZIP delivery must be committed with its imported source and import receipt.
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+if [ -x .venv/Scripts/python.exe ]; then
+    exec .venv/Scripts/python.exe tools/package_import.py verify --staged
+elif [ -x .venv/bin/python ]; then
+    exec .venv/bin/python tools/package_import.py verify --staged
+elif command -v python3 >/dev/null 2>&1; then
+    exec python3 tools/package_import.py verify --staged
+else
+    exec python tools/package_import.py verify --staged
+fi

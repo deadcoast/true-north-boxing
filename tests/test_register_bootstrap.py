@@ -1,4 +1,4 @@
-"""Prove the archived gameplay roadmap survived canonicalization."""
+"""Preserve roadmap meaning and the documented September 18 dependency splits."""
 
 import csv
 import io
@@ -7,6 +7,15 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# Subsequent canonical planning split engine selection from physical latency and
+# parser implementation from gameplay tuning. These are explicit expected edges,
+# not a blanket exemption from preserving the original task requirements.
+SPLIT_DEPENDENCIES = {
+    "PAC-002": ("PAC-002A;PAC-002B", "hard"),
+    "PAC-005": ("PAC-002A", "hard"),
+    "PAC-010": ("PAC-005;PAC-006;PAC-007;PAC-008;PAC-009;PAC-002B", "hard"),
+    "PAC-011": ("PAC-011A;PAC-011B", "hard"),
+}
 
 
 class BootstrapTests(unittest.TestCase):
@@ -30,12 +39,14 @@ class BootstrapTests(unittest.TestCase):
                     "DoD",
                     "Instructions",
                     "ValidationCriteria",
-                    "DependencyType",
                 ):
                     self.assertEqual(row[field], original[field])
-                self.assertEqual(
-                    row["BlockedBy"], original["BlockedBy"].replace(",", ";")
-                )
+                expected = SPLIT_DEPENDENCIES.get(original["ID"],
+                    (original["BlockedBy"].replace(",", ";"), original["DependencyType"]))
+                self.assertEqual((row["BlockedBy"], row["DependencyType"]), expected)
+        for id in ("PAC-002A", "PAC-002B", "PAC-011A", "PAC-011B"):
+            self.assertIn(id, current)
+        self.assertIn("PAC-010", current["PAC-011B"]["BlockedBy"].split(";"))
 
     def test_alternate_task_registers_are_archived_only(self):
         for path in ("NORTHPAW_PACER.csv", "docs/northpaw/overview.PACER.csv"):

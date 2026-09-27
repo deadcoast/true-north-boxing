@@ -1,0 +1,2733 @@
+{
+  "schema": 1,
+  "recovery": {
+    "date": "2026-09-27",
+    "through": "PAC-103",
+    "original_head": "f9bea669db2f1f43612a66b10c75caafdf4c78bb",
+    "report": "evidence/source-recovery/report.json"
+  },
+  "archives": {
+    "packages/greybox_v0.0.1.zip": {
+      "sha256": "38caf8a4d662c4d62cd59db7ba6a72f6695b59f4c14c8f7c3ebd9ec0f29b2fe7",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/greybox_v0.0.2.zip": {
+      "sha256": "9320ef2cedcfc65945f3b0cd4aded823cc924426057656b6bdc63d9ea6abf90a",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/greybox_v0.0.3.zip": {
+      "sha256": "1659f216c3c9592817696e498975f05599c4055b545ef030670f6ac12a725081",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/greybox_v0.0.4.zip": {
+      "sha256": "a002b4bfbf9f63fd1a4ba48f66397838254186667238c355de66a791f98a74f4",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/PACER-package_v0.0.2.zip": {
+      "sha256": "7a6abfbbb8c4dfd446e945c1851add3c2956c939e1b864ba64ab792bf6695430",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/PACER-package_v0.0.3.zip": {
+      "sha256": "7a6abfbbb8c4dfd446e945c1851add3c2956c939e1b864ba64ab792bf6695430",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/pbn_corpus_delta.zip": {
+      "sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "files": [
+        "pbn/remy_moreau.pbn",
+        "pbn/hc0_surety.pbn",
+        "pbn/hc7_echo.pbn",
+        "pbn/deshawn_vaughn.pbn",
+        "pbn/itzel_reyes_ortega.pbn",
+        "pbn/sora_kannagi.pbn",
+        "pbn/alfie_crane.pbn",
+        "pbn/yordanis_baro.pbn",
+        "pbn/chiamaka_okafor.pbn",
+        "data/patterns/remy_moreau.json",
+        "data/patterns/hc0_surety.json",
+        "data/patterns/hc7_echo.json",
+        "data/patterns/deshawn_vaughn.json",
+        "data/patterns/itzel_reyes_ortega.json",
+        "data/patterns/sora_kannagi.json",
+        "data/patterns/alfie_crane.json",
+        "data/patterns/yordanis_baro.json",
+        "data/patterns/chiamaka_okafor.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/pbn_delta.zip": {
+      "sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "files": [
+        "pbn/ada_okafor.pbn",
+        "pbn/carter_okafor.pbn",
+        "pbn/cassidy_vane.pbn",
+        "pbn/commissioner_cal.pbn",
+        "pbn/efua_osei.pbn",
+        "pbn/hc4_cartographer.pbn",
+        "pbn/hc9_choir.pbn",
+        "pbn/jean_guy_moreau.pbn",
+        "pbn/marta_okonkwo_tremblay.pbn",
+        "pbn/moira_macisaac.pbn",
+        "pbn/sam_tagaq.pbn",
+        "pbn/tam_nguyen_roy.pbn",
+        "pbn/yuri_kowalchuk.pbn",
+        "data/patterns/ada_okafor.json",
+        "data/patterns/carter_okafor.json",
+        "data/patterns/cassidy_vane.json",
+        "data/patterns/commissioner_cal.json",
+        "data/patterns/efua_osei.json",
+        "data/patterns/hc4_cartographer.json",
+        "data/patterns/hc9_choir.json",
+        "data/patterns/jean_guy_moreau.json",
+        "data/patterns/marta_okonkwo_tremblay.json",
+        "data/patterns/moira_macisaac.json",
+        "data/patterns/sam_tagaq.json",
+        "data/patterns/tam_nguyen_roy.json",
+        "data/patterns/yuri_kowalchuk.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/sim_delta.zip": {
+      "sha256": "72aa78d72171acd7297b25c9335a8f5da6c600d0f2b972331d3537980c01003e",
+      "files": [
+        "sim/__init__.py",
+        "sim/engine.py",
+        "sim/agents.py",
+        "tools/sim_run.py",
+        "tools/sim_test.py"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac054_sensors.zip": {
+      "sha256": "6f41a34d013b8c20c0476fa62d4318ed15c50225ca6929d4d996615749f43590",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_003.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac055_rules.zip": {
+      "sha256": "1a4bc34f3bec44c80a186dc75fed8beb457f7a894f7b91f0874ec4e5d12f39c4",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_004.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac056_hissatsu_vm.zip": {
+      "sha256": "a47d1104d4b783ebb07b59b687d3d4c63100c98148eb2c8f2f259073497b4a97",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_005.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac057_feints.zip": {
+      "sha256": "9d0a2ed7ff21864944ffb821e4242fdb4503f9f5c423cc086beed383b3aadb09",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_006.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac058_corner.zip": {
+      "sha256": "6ddea31f913b96f1ec342d020482c42bcd7319d4530e661443cdaffcfe1b996a",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_007.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac059_rings.zip": {
+      "sha256": "a35a90f7314ed3c7b1cefa1f27184b0c6f8af581ab6af4e3e328bb125e5b5408",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_008.md",
+        "data/affinity.v1.json",
+        "engine/greybox/affinity.v1.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac060_coach.zip": {
+      "sha256": "cc9f8b58a363ee2cddb34a84369b17e33c4f53bf2dee997215d3484c0599ad4c",
+      "files": [
+        "data/combat_tuning.v1.json",
+        "engine/greybox/combat_tuning.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_009.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac061_formats.zip": {
+      "sha256": "a42997ef01da5087fdd3ef9d9619f0134be9a132beb4cdab5b08117bbbe814c7",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_010.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac062_manager.zip": {
+      "sha256": "8e561dabef423455454767cb80a52b0ab5b71de2a796134c0af43f1d19abb9a2",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_011.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac063_scraps.zip": {
+      "sha256": "a0b6aaad5444010fcdd4d51abb8805035d6613111895cfbb130abffb6751d544",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_012.md",
+        "engine/greybox/scrap_objectives.v1.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac064_intel.zip": {
+      "sha256": "19f958144c249a34bc72e7999a8f6367dff83c4bddfe48803d0ac1e6b684b8c8",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_013.md",
+        "data/pattern_intel.v1.json",
+        "engine/greybox/pattern_intel.v1.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac065_mindgames.zip": {
+      "sha256": "a5ad893471555ce1ff3de64a10905f819fe2893a58b1cbc2a87c0434350f4230",
+      "files": [
+        "engine/greybox/sim/objectives.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_014.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac066_phasescripts.zip": {
+      "sha256": "0df23ccd3bb24dd38682a1c516999843bc9c9ad78cf3535e1d01cf5ef5f71e56",
+      "files": [
+        "data/remixes.v1.json",
+        "engine/greybox/remixes.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_015.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac067_pattern.zip": {
+      "sha256": "bfd03787c73fc6975323a71cb2a255116f7923f104369e2941f0e19170bb625d",
+      "files": [
+        "pbn/anders_vey.pbn",
+        "data/patterns/anders_vey.json",
+        "engine/greybox/patterns/anders_vey.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_016.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac068_economy.zip": {
+      "sha256": "b9f5368c419842e94c58aac30146405f30e23e85de768630bf2f488333ed6f2e",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_017.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac069_save.zip": {
+      "sha256": "8e1c9affbfe77c7e1a09f6d0b88f35893bc4221c6b66e3f91174c5ad7c3da974",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_018.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac070_assembler.zip": {
+      "sha256": "c5ad7bb80adacc5616a91852c04b46b89c56b68776de6c56d542639b5b3ae5d3",
+      "files": [
+        "data/pattern_pieces.v1.json",
+        "engine/greybox/pattern_pieces.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_019.md"
+      ],
+      "recovery_classification": "original missing PAC-070 data recovered; superseded source retained in archive"
+    },
+    "packages/tnb_pac071_neutral.zip": {
+      "sha256": "064b5678edfea69f16fbf92fb1dcf1ae93a413c52bbf162bc815834149ee2a44",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_020.md",
+        "data/neutral.v1.json",
+        "engine/greybox/neutral.v1.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac072_talk.zip": {
+      "sha256": "71651db3d3c5bfca037e239641ba5e2d0c8722a524cd26bee7fa27f68a635d66",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_021.md",
+        "data/talk.v1.json",
+        "engine/greybox/talk.v1.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac073_formation.zip": {
+      "sha256": "4ba0e0a74b29e5cba7a9d3e5197a053e2ce685c0a0663b7616c16f9936dfea06",
+      "files": [
+        "data/coaches.v1.json",
+        "engine/greybox/coaches.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_022.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac074_staff.zip": {
+      "sha256": "6da2653ad11b2ca5177d032aeb88ba5a63bd3447e7aa3915293362a44fe94518",
+      "files": [
+        "data/formation.v1.json",
+        "engine/greybox/formation.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_023.md",
+        "data/staff.v1.json",
+        "engine/greybox/staff.v1.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac075_recruitment.zip": {
+      "sha256": "86b9d56d46cbc052f794a3af573560757a235b6e85b1d456140f697fdb712ae4",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_024.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac076_string_wall.zip": {
+      "sha256": "869bebd16c771560ed71c0ed3e5171981b7003dc42eef777004c9ea48e0825ce",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_025.md",
+        "data/string_wall.v1.json",
+        "engine/greybox/string_wall.v1.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac077_blessings.zip": {
+      "sha256": "2538d1303541bf23a3eba2cb3e677dbda6a1d4f2b6d35fb4b3a9f1062e48860b",
+      "files": [
+        "data/feud_graph.v1.json",
+        "engine/greybox/feud_graph.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_026.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac078_house_traits.zip": {
+      "sha256": "d34f585eefe3e50e43fddfc1ad2d63e918abf5485df6f8a48031463566f7b9c5",
+      "files": [
+        "engine/greybox/tools/drive_recruit.gd",
+        "data/houses.v1.json",
+        "engine/greybox/houses.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_027.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac079_gym_wall.zip": {
+      "sha256": "096c4271f5b1d84d7613cc402a226c4e5497f48ca43cedac7a3baaf6b14b861b",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_028.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac080_duo.zip": {
+      "sha256": "38a48436a791181ae94f1e4e4dbfb7d7c27a57bced7267c61801e593b32e01fb",
+      "files": [
+        "tools/build_hissatsu_library.py",
+        "tools/hissatsu_audit.py",
+        "engine/greybox/hissatsu_library.v2.json",
+        "engine/greybox/tools/drive_formation.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_029.md",
+        "data/hissatsu_library.v2.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac081_relay_t3.zip": {
+      "sha256": "41b47035344438616f7cc178dcd53bd09e34a3a936d448c4d21ca5bb146bbb2b",
+      "files": [
+        "data/tactics.v1.json",
+        "engine/greybox/tactics.v1.json",
+        "engine/greybox/tools/drive_duo.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_030.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac082_zone.zip": {
+      "sha256": "3900ddcdcff24ecf4ed94564eca98fe2a2f16883906f7f823f9aeb7270db0559",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_031.md",
+        "engine/greybox/tools/drive_zone.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac083_manifest.zip": {
+      "sha256": "54b293fd889aea56279f6ae232945f001ccd501471782bd43f6e5118f91a098b",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_032.md",
+        "engine/greybox/tools/drive_manifest.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac084_inheritance.zip": {
+      "sha256": "b4aa989d389ff6253c2502839bfe3148b9c29beb63ddb74077699b6d260828d2",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_033.md",
+        "engine/greybox/tools/drive_inherit.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac085_awakening.zip": {
+      "sha256": "d1f3a73b4afae029e9b7d3965be1c86ea179cec3f0aa9a4f80e5237059e944da",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_034.md",
+        "engine/greybox/tools/drive_awaken.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac086_enemy_transformations.zip": {
+      "sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "files": [
+        "pbn/ioan_vasile.pbn",
+        "data/patterns/ioan_vasile.json",
+        "pbn_compiler.py",
+        "tools/pbn_compiler.py",
+        "engine/greybox/patterns/ioan_vasile.json",
+        "data/transformations.v1.json",
+        "engine/greybox/transformations.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_035.md",
+        "engine/greybox/tools/drive_bzone.gd",
+        "engine/greybox/tools/drive_clash.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac087_hybrid_research.zip": {
+      "sha256": "6b7a55af8761307ee488528791f13db57efe3d6224ea8b55b600d504e045c5d1",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_036.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac088_exhibition_2v2.zip": {
+      "sha256": "71775f2d45e584a1f2ef7efe624bc760084bca455f77de156ba65e06f653f961",
+      "files": [
+        "data/formats.v1.json",
+        "engine/greybox/formats.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_037.md",
+        "engine/greybox/tools/drive_exhibition.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac089_club_facilities.zip": {
+      "sha256": "33c72f69b68eac26e70e6d10b54bb6a57fb620730f17ab883167fb936d8ff383",
+      "files": [
+        "data/gym_wall.v1.json",
+        "engine/greybox/gym_wall.v1.json",
+        "engine/greybox/tools/drive_forge.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_038.md",
+        "data/facilities.v1.json",
+        "engine/greybox/facilities.v1.json",
+        "engine/greybox/tools/drive_facilities.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac090_fighter_growth.zip": {
+      "sha256": "d4ab4d4c3bf74cc91a6da4c6aec1b5ebfacc6bdf8996e34012a9ec6dde62ede5",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_039.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac091_techniques.zip": {
+      "sha256": "2d270d5c61fcee398bf4ebd20404a2d5db14589978e025257e5e1215d83362ab",
+      "files": [
+        "engine/greybox/sim/profile.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_040.md",
+        "engine/greybox/tools/drive_techniques.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac092_academy.zip": {
+      "sha256": "add98dfb8cc0d2a7953a167b85acb58981db008ceecafc9725931705a74703bc",
+      "files": [
+        "data/hybrids.v1.json",
+        "engine/greybox/hybrids.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_041.md",
+        "engine/greybox/tools/drive_academy.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac093_mirror.zip": {
+      "sha256": "ff38bb9672fdb121f2f599225e6a5ec3cb7688ed93291b83ed52def3dd472e2a",
+      "files": [
+        "data/bouts.v1.json",
+        "engine/greybox/bouts.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_042.md",
+        "engine/greybox/sim/assembler.gd",
+        "engine/greybox/tools/drive_mirror.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac094_gear.zip": {
+      "sha256": "dabe86b7defad82998ebd930335f27232caeb9d3df591d060682524d50a61169",
+      "files": [
+        "engine/greybox/sim/exhibition.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_043.md",
+        "data/gear.v1.json",
+        "engine/greybox/gear.v1.json",
+        "engine/greybox/tools/drive_gear.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac095_audit.zip": {
+      "sha256": "0ecd88b45c003767c76bc783869ad2b08f6417e9c8797a24f6fcb3dc07fedd78",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_044.md",
+        "engine/greybox/sim/audit.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac096_fixes.zip": {
+      "sha256": "efad51f19006b618d8f66d95395a61cbe912213fb8a39ff13205af37d7269f94",
+      "files": [
+        "data/growth.v1.json",
+        "engine/greybox/growth.v1.json",
+        "engine/greybox/tools/drive_growth.gd",
+        "data/techniques.v1.json",
+        "engine/greybox/techniques.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_045.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac097_faucets.zip": {
+      "sha256": "dcf9f5c213cc460914a37b59587ea75eb29034831d2026de9596d2ee4f608298",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_046.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac098_economy.zip": {
+      "sha256": "2d075cedc917a029a0fb04aa8a619c624259d9a15ae21330b237ab6834225a63",
+      "files": [
+        "data/audit.v1.json",
+        "engine/greybox/audit.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_047.md",
+        "engine/greybox/tools/drive_scouting.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac099_roles.zip": {
+      "sha256": "f1486d623b7917f55982b966c4dc5eb58941289ca2f11a5de849df95bda42578",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_048.md",
+        "engine/greybox/tools/drive_roles.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac100_locker.zip": {
+      "sha256": "4edd3c06b2e33a663f9ed44da620199ce1c01dc42692a7239fb659804f6edc4c",
+      "files": [
+        "engine/greybox/sim/save.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_049.md",
+        "engine/greybox/tools/drive_locker.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac101_rep.zip": {
+      "sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "files": [
+        "data/economy.v1.json",
+        "engine/greybox/economy.v1.json",
+        "data/recruits.v1.json",
+        "engine/greybox/recruits.v1.json",
+        "data/faucets.v1.json",
+        "engine/greybox/faucets.v1.json",
+        "engine/greybox/sim/faucets.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_050.md",
+        "engine/greybox/tools/drive_rep.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac102_antiyou.zip": {
+      "sha256": "34b32823e614561ae79b817f0ffecd562f14d8761ac366078f2fef4ed6db7a52",
+      "files": [
+        "docs/NorthPaw-game_docs/NP_00_INDEX.md",
+        "engine/greybox/main.gd",
+        "engine/greybox/GREYBOX.md",
+        "docs/NorthPaw-game_docs/NP_14_ENGINE_THEORY.md",
+        "engine/greybox/sim/core.gd",
+        "engine/greybox/sim/tests.gd",
+        "data/academy.v1.json",
+        "engine/greybox/academy.v1.json",
+        "docs/register-commands_docs/REGISTER_COMMANDS_051.md",
+        "engine/greybox/tools/drive_anti.gd"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_v6_engine_foundation.zip": {
+      "sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "files": [
+        "engine/greybox/patterns/sam_tagaq.json",
+        "engine/greybox/patterns/jean_guy_moreau.json",
+        "engine/greybox/patterns/cassidy_vane.json",
+        "engine/greybox/patterns/yuri_kowalchuk.json",
+        "engine/greybox/main.tscn",
+        "engine/greybox/project.godot",
+        "engine/greybox/sim/clock.gd",
+        "docs/register-commands_docs/REGISTER_COMMANDS_002.md",
+        "engine/greybox/patterns/ada_okafor.json",
+        "engine/greybox/patterns/alfie_crane.json",
+        "engine/greybox/patterns/carter_okafor.json",
+        "engine/greybox/patterns/chiamaka_okafor.json",
+        "engine/greybox/patterns/commissioner_cal.json",
+        "engine/greybox/patterns/deshawn_vaughn.json",
+        "engine/greybox/patterns/efua_osei.json",
+        "engine/greybox/patterns/hc0_surety.json",
+        "engine/greybox/patterns/hc4_cartographer.json",
+        "engine/greybox/patterns/hc7_echo.json",
+        "engine/greybox/patterns/hc9_choir.json",
+        "engine/greybox/patterns/itzel_reyes_ortega.json",
+        "engine/greybox/patterns/marta_okonkwo_tremblay.json",
+        "engine/greybox/patterns/moira_macisaac.json",
+        "engine/greybox/patterns/remy_moreau.json",
+        "engine/greybox/patterns/sora_kannagi.json",
+        "engine/greybox/patterns/tam_nguyen_roy.json",
+        "engine/greybox/patterns/yordanis_baro.json"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/true-north-boxing_v0.0.2.zip": {
+      "sha256": "d8c662c34086d60fe87f5043cf1eb4d00ef266e78ad00509e1d4a38e6530e2da",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.0.3.zip": {
+      "sha256": "bde498613fecc94bcdcc264811434dd102e08713ed300c913633c003d5fc529f",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.0.4.zip": {
+      "sha256": "0c49cd031712539ee2b1ddff5124f6f92eb353b4aeef0ba64fe17c7a6926b220",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.0.5.zip": {
+      "sha256": "2aa75338a8fa73d9b58feab70c541184fc0e1a133761953e84a5e038a7bc8f9f",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.0.6.zip": {
+      "sha256": "93fdcf5b82699ac734d007c354b6c34e29ac766d865d21242531105769618cdd",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.0.7.zip": {
+      "sha256": "60f2811dd68ce569a7626837d2cabe2179f99c58584a21975b1d0442880a83f9",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.0.8.zip": {
+      "sha256": "4da899c9b32d43b04914af725844961b137ec820dc2fb5ac30b0103952a76061",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.0.9.zip": {
+      "sha256": "de61de72144e59f021fd8daf358b8b60ab361b0c8c7c2acaed8e560f3afc7e7d",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.1.0.zip": {
+      "sha256": "cdcb29a67188462255c40b5a6a2c780998f989f33ddea1416556004f166f5031",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.1.1.zip": {
+      "sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "files": [],
+      "recovery_classification": "historical delivery; source superseded or framework/register instructions retained in archive"
+    },
+    "packages/true-north-boxing_v0.1.2.zip": {
+      "sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "files": [
+        "data/hissatsu_library.v1.json",
+        "engine/latency_harness/main.tscn",
+        "engine/latency_harness/main.gd",
+        "engine/latency_harness/project.godot",
+        "docs/NorthPaw-game_docs/NP_07_HOUSES.md",
+        "docs/register-commands_docs/DOCTRINE.md",
+        "docs/NorthPaw-game_docs/NP_03_COMBAT_ENGINE.md",
+        "docs/NorthPaw-game_docs/NP_01_SPORT.md",
+        "docs/NorthPaw-game_docs/NP_04_OPPONENT.md",
+        "docs/NorthPaw-game_docs/NP_09_TRANSFORMATIONS.md",
+        "docs/NorthPaw-game_docs/NP_02_TWO_LAYER.md",
+        "docs/NorthPaw-game_docs/NP_08_STABLE.md",
+        "docs/NorthPaw-game_docs/NP_12A_EP01_SCRIPT.md",
+        "docs/NorthPaw-game_docs/NP_11_PROGRESSION.md",
+        "docs/NorthPaw-game_docs/NP_12_NARRATIVE.md",
+        "docs/NorthPaw-game_docs/NP_13_SCOPE.md",
+        "docs/NorthPaw-game_docs/NP_05A_HISSATSU_LIBRARY.md",
+        "docs/NorthPaw-game_docs/NP_10_TACTICS.md",
+        "docs/register-commands_docs/VS_SCOPE.md",
+        "docs/ENGINE_DECISION.md",
+        "docs/NorthPaw-game_docs/NP_05_TENSION_HISSATSU.md",
+        "docs/TNB_GDD_v1.md",
+        "docs/NorthPaw-game_docs/NP_04B_BOSS_ROSTER_ARC23.md",
+        "docs/NorthPaw-game_docs/NP_04A_BOSS_ROSTER_ARC1.md",
+        "docs/NorthPaw-game_docs/NP_06_AFFINITY.md",
+        "docs/NorthPaw-game_docs/NP_07A_HOUSE_QUESTLINES.md"
+      ],
+      "recovery_classification": "source baseline, including retained local edits"
+    },
+    "packages/tnb_pac103_vendors.zip": {
+      "sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "files": [
+        "docs/register-commands_docs/REGISTER_COMMANDS_052.md",
+        "VAULT_MANIFEST.txt",
+        "data/gear.v1.json",
+        "data/techniques.v1.json",
+        "docs/NorthPaw-game_docs/NP_00_INDEX.md",
+        "docs/NorthPaw-game_docs/NP_14_ENGINE_THEORY.md",
+        "engine/greybox/GREYBOX.md",
+        "engine/greybox/gear.v1.json",
+        "engine/greybox/main.gd",
+        "engine/greybox/sim/core.gd",
+        "engine/greybox/sim/faucets.gd",
+        "engine/greybox/sim/tests.gd",
+        "engine/greybox/techniques.v1.json",
+        "engine/greybox/tools/drive_vendors.gd"
+      ]
+    }
+  },
+  "files": {
+    "data/hissatsu_library.v1.json": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/data/hissatsu_library.v1.json",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "1fab971d1cb825409e8d5b51e8d1455fb43dfa98dfeb828732792ebbcb1a100b",
+      "installed_sha256": "1fab971d1cb825409e8d5b51e8d1455fb43dfa98dfeb828732792ebbcb1a100b",
+      "recovery_disposition": "current"
+    },
+    "tools/build_hissatsu_library.py": {
+      "archive": "packages/tnb_pac080_duo.zip",
+      "member": "tools/build_hissatsu_library.py",
+      "archive_sha256": "38a48436a791181ae94f1e4e4dbfb7d7c27a57bced7267c61801e593b32e01fb",
+      "source_sha256": "fb0a4ac8e9238c62b53e89ded4cf366c9538ca20ef7d1ced7cca3dc416e25213",
+      "installed_sha256": "fb0a4ac8e9238c62b53e89ded4cf366c9538ca20ef7d1ced7cca3dc416e25213",
+      "recovery_disposition": "upgrade"
+    },
+    "tools/hissatsu_audit.py": {
+      "archive": "packages/tnb_pac080_duo.zip",
+      "member": "tools/hissatsu_audit.py",
+      "archive_sha256": "38a48436a791181ae94f1e4e4dbfb7d7c27a57bced7267c61801e593b32e01fb",
+      "source_sha256": "3565a6315a58db6c2397d73f1b0013f6d53db780b1e84eea7dc2e8633dad698f",
+      "installed_sha256": "3565a6315a58db6c2397d73f1b0013f6d53db780b1e84eea7dc2e8633dad698f",
+      "recovery_disposition": "upgrade"
+    },
+    "data/feud_graph.v1.json": {
+      "archive": "packages/tnb_pac077_blessings.zip",
+      "member": "data/feud_graph.v1.json",
+      "archive_sha256": "2538d1303541bf23a3eba2cb3e677dbda6a1d4f2b6d35fb4b3a9f1062e48860b",
+      "source_sha256": "992976455780d8e0cd394fa04e834dce14b1ad84410d759744652a0aea68a5d9",
+      "installed_sha256": "992976455780d8e0cd394fa04e834dce14b1ad84410d759744652a0aea68a5d9",
+      "recovery_disposition": "upgrade"
+    },
+    "data/combat_tuning.v1.json": {
+      "archive": "packages/tnb_pac060_coach.zip",
+      "member": "data/combat_tuning.v1.json",
+      "archive_sha256": "cc9f8b58a363ee2cddb34a84369b17e33c4f53bf2dee997215d3484c0599ad4c",
+      "source_sha256": "a01185b62bd8779ebc2c6737a85654a5a4593a70a2b812baededd71894f5d2d9",
+      "installed_sha256": "a01185b62bd8779ebc2c6737a85654a5a4593a70a2b812baededd71894f5d2d9",
+      "recovery_disposition": "current"
+    },
+    "engine/latency_harness/main.tscn": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/engine/latency_harness/main.tscn",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "691f186c8088e1e3cdade677468dac5350ca987431a0b28a02b3c38949636f40",
+      "installed_sha256": "691f186c8088e1e3cdade677468dac5350ca987431a0b28a02b3c38949636f40",
+      "recovery_disposition": "current"
+    },
+    "engine/latency_harness/main.gd": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/engine/latency_harness/main.gd",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "705e6cf91de62a6b5ce70b3dfe5beb76ad7ec47c140ad78e80ce8e1afcc0205f",
+      "installed_sha256": "705e6cf91de62a6b5ce70b3dfe5beb76ad7ec47c140ad78e80ce8e1afcc0205f",
+      "recovery_disposition": "current"
+    },
+    "engine/latency_harness/project.godot": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/engine/latency_harness/project.godot",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "5898a22bba86f5b361d8abdf60e8b547ba844ba405b5080f5f60e7d506bc765a",
+      "installed_sha256": "7a254637b060efe9090b5ce3e61e9bdaca3f0acda39a92a566ebb70116023bce",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_07_HOUSES.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_07_HOUSES.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "d7e94cd2fb45dca7b24303434568e5ee549f2d4ff866b014f86091e5d326a94d",
+      "installed_sha256": "7e9cc78091ea1178fc5f42487aa38aec47b124a5a64fbe0976c0d6cc1705b4f6",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/register-commands_docs/DOCTRINE.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/DOCTRINE.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "899981175acc5d251dbaa108fcc458277e164dfa0c6396b241850a06512ae99e",
+      "installed_sha256": "9324f28e3c93e07fa8d7b8446d81ae39ccbc2432b44139a22b7e4e447e350e32",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_03_COMBAT_ENGINE.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_03_COMBAT_ENGINE.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "282d25f4e380f231dbcb38676bf81105ceb824241ab28a30fe19000540d0a46f",
+      "installed_sha256": "39f092742e3d02d3c2a59a5e81648e34d6acf5d37cdaf74748eeb8164da309f5",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_01_SPORT.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_01_SPORT.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "f14fff9b600843636cd9e12202fed0743b7078ab9684eaf6f8f60eb9dfe04b8b",
+      "installed_sha256": "d6328414ac3e58634ec0ee07c9646e54f1d2eca8bcf4569ffad86e77059ce079",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_04_OPPONENT.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_04_OPPONENT.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "adc2d86a73217edfdb8da6ff7d1916a7df8889a1e0a1922c11bea6a3100a1ba8",
+      "installed_sha256": "a7913fe535829d86b79a1b8b129b06dcdb9e12fc9224a71bf878b93e3e9fe6a0",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_09_TRANSFORMATIONS.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_09_TRANSFORMATIONS.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "7fbd144221d8511f0eeb0e8a29e100757d822eec1b73700815d52bf63d17d086",
+      "installed_sha256": "3c0ce3595adb8b6307585ec81812b2e4267fdc6b0827feee45907e2053b6b8d7",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_02_TWO_LAYER.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_02_TWO_LAYER.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "cfdb0ce815b80b92ebd3bd0cfe4e8e6e765e6c71a1848dc1f05ab937d398674c",
+      "installed_sha256": "74bf2bebfad4a0e5d1ae42e8091e3c023ce836c10af485c7c1048543a6b8c992",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_08_STABLE.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_08_STABLE.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "2bc344b3982994c1879f952e78d2695bdd4ed5e8d3a89feea83ab7e6b0c6d46d",
+      "installed_sha256": "cdf09f2ef970c28360fb98a78bfa6354cc52343a466097ea7b9beed3d1d07b35",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_12A_EP01_SCRIPT.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_12A_EP01_SCRIPT.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "9239961e1ed34696a44cad1e47b0317950696113769eba87794f0651a877e45c",
+      "installed_sha256": "5e4e5ab4ca061e869ece9e2470ea2829ceb619096939099d105bcdb68c5b6126",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_11_PROGRESSION.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_11_PROGRESSION.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "3bc2a55263993f5f5344973dbb48cfc6fdfc6b5ce11e065fe1cfec126bb96dde",
+      "installed_sha256": "c0fa0abcc8bc41ce6fc75a872779a9a2259c13006f8d3a976cd030ef5a6ad51b",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_12_NARRATIVE.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_12_NARRATIVE.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "5f0280ced358d931c6dda387f54a29504e7150bfe79f0e5962b4311175a57b93",
+      "installed_sha256": "b2369d480616b24e4f051b96c0f4feddf3fd1a82c519065cd5888b0b7aa6e62d",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_00_INDEX.md": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "docs/NP_00_INDEX.md",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "5b2b9ac9e02716da0866044a399f8dab2ed9ab9fe0949673b261468fb30be85d",
+      "installed_sha256": "40edb53314f2b9165698ae8952ad0550f73c6d767c46d73c3a4d31f004da568e"
+    },
+    "docs/NorthPaw-game_docs/NP_13_SCOPE.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_13_SCOPE.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "70e053410a707e90c4c1800aefd4cf3d43630b7ea0847a5fb9195093b0ce1f34",
+      "installed_sha256": "2f1ac407a443486e873796537e9523def0e4a19bd9ce77e4a8ca7799ff2ba870",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_05A_HISSATSU_LIBRARY.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_05A_HISSATSU_LIBRARY.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "115bdc5efa53fb51ab5ae13d220608b9f11d4ec40b00345f13274fe71934a835",
+      "installed_sha256": "0a7cc8ab9af271a6848e5555cfb451daf1c134086920d8d7759d5dbeb3866265",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_10_TACTICS.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_10_TACTICS.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "9b45b99348c84b7d05ab4dccaf9be7b2603bbd7acd4179c740ec555968a7a244",
+      "installed_sha256": "ca46996c5b58681ca7748dc8a4156f3959ee1ec4f9e999bc715e7d9b8cfdcb13",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/register-commands_docs/VS_SCOPE.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/VS_SCOPE.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "aef8bf632dfc534c5800b11e54a03fc51d36b69ed0401b16a7075ebfcbcfe021",
+      "installed_sha256": "ae0649538e5b24e0d132a3f8358874eb2fcfd576363de4149e3a78b21c91464b",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/ENGINE_DECISION.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/ENGINE_DECISION.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "2ec3592f68307a8401b7bcdf64861a3300a59e2a8c231919bd82a69a5002deb4",
+      "installed_sha256": "2ec3592f68307a8401b7bcdf64861a3300a59e2a8c231919bd82a69a5002deb4",
+      "recovery_disposition": "new"
+    },
+    "docs/NorthPaw-game_docs/NP_05_TENSION_HISSATSU.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_05_TENSION_HISSATSU.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "86a6b380434a4f5a67c19e4b73b3c3ccba7af1e107dfe17e322b15d7dab5a77a",
+      "installed_sha256": "4ed8c34b34694a45596e062b41fa833cc163a15c83d3e228927a319550c3cc75",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/TNB_GDD_v1.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NORTHPAW_GDD_v1.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "c15a7b3bdd716571df994561309019ebd460be391008beda46d8d05afb987d25",
+      "installed_sha256": "b7973c59bbec135e7859ba7471774ee1b1627fce39df5ff1081e267a567d4599",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_04B_BOSS_ROSTER_ARC23.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_04B_BOSS_ROSTER_ARC23.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "4b2c745f8edcd790cfa8ee1da023e52bdd1bc74fdca477bf3c08189169252648",
+      "installed_sha256": "eafadc4ffce3e8b41dbf690be19bea11610b14b930643797fd10c18e0e3b528e",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_04A_BOSS_ROSTER_ARC1.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_04A_BOSS_ROSTER_ARC1.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "2154a61783f320d0d7641e6b6b5f651201307e3d4ec02a7efdacde2f5a56c737",
+      "installed_sha256": "eef4040412fdfb106b6de18c816eee6d852adf7c43133992b9f8a5dd4fc7f0e9",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_06_AFFINITY.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_06_AFFINITY.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "a22fd28314ea8621b6203449b8cf4467eeeb4f9e37de744987defdd5b7bd10bc",
+      "installed_sha256": "e1f63579cf46e04c51b588c7bb34b7c3ead7bac19b9de6210aa7664adbb97d51",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/NorthPaw-game_docs/NP_07A_HOUSE_QUESTLINES.md": {
+      "archive": "packages/true-north-boxing_v0.1.2.zip",
+      "member": "true-north-boxing/docs/NP_07A_HOUSE_QUESTLINES.md",
+      "archive_sha256": "2663f711f4a42d22486b158486e4e17807c2b9bf9fada5f68b4699aeda36819a",
+      "source_sha256": "147c57492d6a8f8ab9b8158ac34a3abe1357d96830751505e257173b55a6fe62",
+      "installed_sha256": "3432ec67d6970a8df229615125a6f0113ea7cbe7461b7ba80e718beb50731b64",
+      "recovery_disposition": "local_changes"
+    },
+    "pbn/ada_okafor.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/ada_okafor.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "66ef8c1248a2392a29bdfa98dec3f855e9c1ff1630d14ed0cf05c0fb2ac9cc84",
+      "installed_sha256": "66ef8c1248a2392a29bdfa98dec3f855e9c1ff1630d14ed0cf05c0fb2ac9cc84",
+      "recovery_disposition": "current"
+    },
+    "pbn/anders_vey.pbn": {
+      "archive": "packages/tnb_pac067_pattern.zip",
+      "member": "pbn/anders_vey.pbn",
+      "archive_sha256": "bfd03787c73fc6975323a71cb2a255116f7923f104369e2941f0e19170bb625d",
+      "source_sha256": "a8804a6dd9aa64b15232fdfd3924d785b3b0749f9af38d06f487bd21efdb84dd",
+      "installed_sha256": "a8804a6dd9aa64b15232fdfd3924d785b3b0749f9af38d06f487bd21efdb84dd",
+      "recovery_disposition": "upgrade"
+    },
+    "pbn/carter_okafor.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/carter_okafor.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "244000560e3df9a2b69139a2e4837b334de5a9dbc87272eb86dadec717f829f1",
+      "installed_sha256": "244000560e3df9a2b69139a2e4837b334de5a9dbc87272eb86dadec717f829f1",
+      "recovery_disposition": "current"
+    },
+    "pbn/cassidy_vane.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/cassidy_vane.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "7eac6137b0ab7ce8abeb0b1554681572aba90a540394dd26c83a39ec9e7e2b2a",
+      "installed_sha256": "7eac6137b0ab7ce8abeb0b1554681572aba90a540394dd26c83a39ec9e7e2b2a",
+      "recovery_disposition": "current"
+    },
+    "pbn/commissioner_cal.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/commissioner_cal.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "d5c41810712f04de1ed16ea6fb8b976cbec5c8d3747e22eee4d935b88fd175c8",
+      "installed_sha256": "d5c41810712f04de1ed16ea6fb8b976cbec5c8d3747e22eee4d935b88fd175c8",
+      "recovery_disposition": "current"
+    },
+    "pbn/efua_osei.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/efua_osei.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "ae402106e6f4d685cdcf5d76896ecf6b9165ab6c28d6c9ee8baef05a720080ea",
+      "installed_sha256": "ae402106e6f4d685cdcf5d76896ecf6b9165ab6c28d6c9ee8baef05a720080ea",
+      "recovery_disposition": "current"
+    },
+    "pbn/hc4_cartographer.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/hc4_cartographer.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "1385cc805f5ba611e35d6b2fc089ce32b0e42e1324fdd58e6d5f466c3498dbd5",
+      "installed_sha256": "1385cc805f5ba611e35d6b2fc089ce32b0e42e1324fdd58e6d5f466c3498dbd5",
+      "recovery_disposition": "current"
+    },
+    "pbn/hc9_choir.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/hc9_choir.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "2130f2612bbe2199352f315d5a7bf91560dccced15fdc0c8fc076b4a26186f5a",
+      "installed_sha256": "2130f2612bbe2199352f315d5a7bf91560dccced15fdc0c8fc076b4a26186f5a",
+      "recovery_disposition": "current"
+    },
+    "pbn/ioan_vasile.pbn": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "pbn/ioan_vasile.pbn",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "018b29b1c7853f6d1aa5db7f5d47058698f4b5d5a0f29779fbfa1a63a55443b6",
+      "installed_sha256": "018b29b1c7853f6d1aa5db7f5d47058698f4b5d5a0f29779fbfa1a63a55443b6",
+      "recovery_disposition": "upgrade"
+    },
+    "pbn/jean_guy_moreau.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/jean_guy_moreau.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "2db3070d45a8249f8e88958799ebdce9a0bb51341dcf85194da0bdbf4d067895",
+      "installed_sha256": "2db3070d45a8249f8e88958799ebdce9a0bb51341dcf85194da0bdbf4d067895",
+      "recovery_disposition": "current"
+    },
+    "pbn/marta_okonkwo_tremblay.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/marta_okonkwo_tremblay.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "7edda663cbc6629a878eaa309ae5d9c620a8d4ad32ef66425265583b4a2df951",
+      "installed_sha256": "7edda663cbc6629a878eaa309ae5d9c620a8d4ad32ef66425265583b4a2df951",
+      "recovery_disposition": "current"
+    },
+    "pbn/moira_macisaac.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/moira_macisaac.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "b8f69bfe30d1649bddca060df6fda1c5199281d501c48ae5d7b69bafef1f01db",
+      "installed_sha256": "b8f69bfe30d1649bddca060df6fda1c5199281d501c48ae5d7b69bafef1f01db",
+      "recovery_disposition": "current"
+    },
+    "pbn/sam_tagaq.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/sam_tagaq.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "512d2a407734d3ace7c057b61b2f3db0d2a2e9cf5a14841918fab9e73f06814f",
+      "installed_sha256": "512d2a407734d3ace7c057b61b2f3db0d2a2e9cf5a14841918fab9e73f06814f",
+      "recovery_disposition": "current"
+    },
+    "pbn/tam_nguyen_roy.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/tam_nguyen_roy.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "e8fd6780b67ee6c76372f7207e7981cbe13cd514a2c29132122b14445070c233",
+      "installed_sha256": "e8fd6780b67ee6c76372f7207e7981cbe13cd514a2c29132122b14445070c233",
+      "recovery_disposition": "current"
+    },
+    "pbn/yuri_kowalchuk.pbn": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "pbn/yuri_kowalchuk.pbn",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "e2dfa9bcdd60c7e97eb3ba198feae90b118033492d718d9e0ac58b7cede527ce",
+      "installed_sha256": "e2dfa9bcdd60c7e97eb3ba198feae90b118033492d718d9e0ac58b7cede527ce",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/ada_okafor.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/ada_okafor.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "70850ff88c32eb01d7e58babf1ebeb11c38ca91f5d7b1915a816e9dec7d00b3a",
+      "installed_sha256": "70850ff88c32eb01d7e58babf1ebeb11c38ca91f5d7b1915a816e9dec7d00b3a",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/anders_vey.json": {
+      "archive": "packages/tnb_pac067_pattern.zip",
+      "member": "data/patterns/anders_vey.json",
+      "archive_sha256": "bfd03787c73fc6975323a71cb2a255116f7923f104369e2941f0e19170bb625d",
+      "source_sha256": "db1003ccc91c223021cdfe6cb1cf0b075a34f5158309dcc39c4641dfc0ed99e8",
+      "installed_sha256": "db1003ccc91c223021cdfe6cb1cf0b075a34f5158309dcc39c4641dfc0ed99e8",
+      "recovery_disposition": "upgrade"
+    },
+    "data/patterns/carter_okafor.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/carter_okafor.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "7e833000908c00abd920183e138a03e7ca2c0bc4010ebe4350034e8fd46edc95",
+      "installed_sha256": "7e833000908c00abd920183e138a03e7ca2c0bc4010ebe4350034e8fd46edc95",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/cassidy_vane.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/cassidy_vane.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "f807972fdf4d4efa3e444c89b3ed8d0c6fbf6131ec0831a81a0c27244776877e",
+      "installed_sha256": "f807972fdf4d4efa3e444c89b3ed8d0c6fbf6131ec0831a81a0c27244776877e",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/commissioner_cal.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/commissioner_cal.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "1fae565efef84b7f76fca136a8a0ef624c4e530032fbec63c57a4d57d5376cad",
+      "installed_sha256": "1fae565efef84b7f76fca136a8a0ef624c4e530032fbec63c57a4d57d5376cad",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/efua_osei.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/efua_osei.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "a0553c99b8a055f68e20c87e1ede5b9c36ccfc5617091276970cc2fa57abd6d9",
+      "installed_sha256": "a0553c99b8a055f68e20c87e1ede5b9c36ccfc5617091276970cc2fa57abd6d9",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/hc4_cartographer.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/hc4_cartographer.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "931576463d629f00278899978875d1692c41dc1e1d2b4785a63415d519e213a9",
+      "installed_sha256": "931576463d629f00278899978875d1692c41dc1e1d2b4785a63415d519e213a9",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/hc9_choir.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/hc9_choir.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "753a37bddfc15ca5024a243256e324d32dcb958aabcf2e8a3796e3605b5e220b",
+      "installed_sha256": "753a37bddfc15ca5024a243256e324d32dcb958aabcf2e8a3796e3605b5e220b",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/ioan_vasile.json": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "data/patterns/ioan_vasile.json",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "d98ab5dec046bcad8a03cc47c1ed6ba961c210c81c9f2a7ac77ae35b8d7f378e",
+      "installed_sha256": "d98ab5dec046bcad8a03cc47c1ed6ba961c210c81c9f2a7ac77ae35b8d7f378e",
+      "recovery_disposition": "upgrade"
+    },
+    "data/patterns/jean_guy_moreau.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/jean_guy_moreau.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "cefe67a8e74f6ba0fdbf03d483a45eaa2d3e5f1c84663d108c3565885cbd4325",
+      "installed_sha256": "cefe67a8e74f6ba0fdbf03d483a45eaa2d3e5f1c84663d108c3565885cbd4325",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/marta_okonkwo_tremblay.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/marta_okonkwo_tremblay.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "b271039ed38d3fc8027eff016b7a01a2f4063f826712553287884cd432424350",
+      "installed_sha256": "b271039ed38d3fc8027eff016b7a01a2f4063f826712553287884cd432424350",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/moira_macisaac.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/moira_macisaac.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "5d953a80f1a759bba36fa4b29efe61a83bd505e2cd2dba962073e22407da5801",
+      "installed_sha256": "5d953a80f1a759bba36fa4b29efe61a83bd505e2cd2dba962073e22407da5801",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/sam_tagaq.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/sam_tagaq.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "c998914687fae96020ecbf41e3ebaaf4266f0c994a45a243131fc4bfdc570ec9",
+      "installed_sha256": "c998914687fae96020ecbf41e3ebaaf4266f0c994a45a243131fc4bfdc570ec9",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/tam_nguyen_roy.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/tam_nguyen_roy.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "10971a89ee4d4a7c67a81ff1c83fc04a4c12be28dbd2c67dd2d16d7a39deac94",
+      "installed_sha256": "10971a89ee4d4a7c67a81ff1c83fc04a4c12be28dbd2c67dd2d16d7a39deac94",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/yuri_kowalchuk.json": {
+      "archive": "packages/pbn_delta.zip",
+      "member": "data/patterns/yuri_kowalchuk.json",
+      "archive_sha256": "cb4937c98142d9aa8fb3325702f148d03c791d361e10c3ce8564bc29d54354b3",
+      "source_sha256": "9bffb23dfaa28e432375b2a03c6eac0c967ddbfd06cd55e34aefa7f410b5fefd",
+      "installed_sha256": "9bffb23dfaa28e432375b2a03c6eac0c967ddbfd06cd55e34aefa7f410b5fefd",
+      "recovery_disposition": "current"
+    },
+    "pbn/remy_moreau.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/remy_moreau.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "02c24ba4c6fa126b6088f43a26ef5fa277ba3ac1c479338be17eb2c644c54c16",
+      "installed_sha256": "02c24ba4c6fa126b6088f43a26ef5fa277ba3ac1c479338be17eb2c644c54c16",
+      "recovery_disposition": "current"
+    },
+    "pbn/hc0_surety.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/hc0_surety.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "3398b405e7c64691aa0fd46f488b28d9218208c67a24d41d728e39d54331d727",
+      "installed_sha256": "3398b405e7c64691aa0fd46f488b28d9218208c67a24d41d728e39d54331d727",
+      "recovery_disposition": "current"
+    },
+    "pbn/hc7_echo.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/hc7_echo.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "d2e7b352960ec6daed8afc128a5299b56737e28f9c67420505b16fe9d6ff2ffe",
+      "installed_sha256": "d2e7b352960ec6daed8afc128a5299b56737e28f9c67420505b16fe9d6ff2ffe",
+      "recovery_disposition": "current"
+    },
+    "pbn/deshawn_vaughn.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/deshawn_vaughn.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "38ddd11a00f20c90b3a703ba67ece758e906645c4b94bb83bd81f9ffc331007b",
+      "installed_sha256": "38ddd11a00f20c90b3a703ba67ece758e906645c4b94bb83bd81f9ffc331007b",
+      "recovery_disposition": "current"
+    },
+    "pbn/itzel_reyes_ortega.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/itzel_reyes_ortega.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "3e84a38c685e8ab935e8941dde09040f18994cb775d95ee7e603b8d2a3ba6e04",
+      "installed_sha256": "3e84a38c685e8ab935e8941dde09040f18994cb775d95ee7e603b8d2a3ba6e04",
+      "recovery_disposition": "current"
+    },
+    "pbn/sora_kannagi.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/sora_kannagi.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "cdd31cf058e5ae2e75af6c11499db0340b3824e51a4d82b50fb533f4783a8bbb",
+      "installed_sha256": "cdd31cf058e5ae2e75af6c11499db0340b3824e51a4d82b50fb533f4783a8bbb",
+      "recovery_disposition": "current"
+    },
+    "pbn/alfie_crane.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/alfie_crane.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "3207f4c7e7f038a136acd56740ac4bf3ebe5d3bd568e1c24a28019da1c04464b",
+      "installed_sha256": "3207f4c7e7f038a136acd56740ac4bf3ebe5d3bd568e1c24a28019da1c04464b",
+      "recovery_disposition": "current"
+    },
+    "pbn/yordanis_baro.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/yordanis_baro.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "418255dd191a72a5423805f5dada1dde7b7d13d9926664f4a41a20f0dd806369",
+      "installed_sha256": "418255dd191a72a5423805f5dada1dde7b7d13d9926664f4a41a20f0dd806369",
+      "recovery_disposition": "current"
+    },
+    "pbn/chiamaka_okafor.pbn": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "pbn/chiamaka_okafor.pbn",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "47f143741dc451ff260e860786710a4fab843faa3ac56e9331d6edfc30421918",
+      "installed_sha256": "47f143741dc451ff260e860786710a4fab843faa3ac56e9331d6edfc30421918",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/remy_moreau.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/remy_moreau.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "e192fe297f567f543b75f3c0ccc83cc0d2db8fe717b298d2a7b09fbaf0ba00de",
+      "installed_sha256": "e192fe297f567f543b75f3c0ccc83cc0d2db8fe717b298d2a7b09fbaf0ba00de",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/hc0_surety.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/hc0_surety.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "884c33feac5f910d9a2e5071d729d242992364c6774840bca2c716233cec1c5e",
+      "installed_sha256": "884c33feac5f910d9a2e5071d729d242992364c6774840bca2c716233cec1c5e",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/hc7_echo.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/hc7_echo.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "8d3abba2969590306a7d01b9fb5a8ccc6adad1282f31d24d366e6e9af7728947",
+      "installed_sha256": "8d3abba2969590306a7d01b9fb5a8ccc6adad1282f31d24d366e6e9af7728947",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/deshawn_vaughn.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/deshawn_vaughn.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "78a0cb9b541e4b63de7af13aa2aba26591ac2d6481c6ff039d5186cc41a4a9fb",
+      "installed_sha256": "78a0cb9b541e4b63de7af13aa2aba26591ac2d6481c6ff039d5186cc41a4a9fb",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/itzel_reyes_ortega.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/itzel_reyes_ortega.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "bdcf4cea7d46848f076d87ff82f8a712fc24723b718f63b1ac5b239eb05726e7",
+      "installed_sha256": "bdcf4cea7d46848f076d87ff82f8a712fc24723b718f63b1ac5b239eb05726e7",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/sora_kannagi.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/sora_kannagi.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "238e209b54e864d8cfe0ebbe9821f1042a971fdfd45b38a2c79dbba880b86cb9",
+      "installed_sha256": "238e209b54e864d8cfe0ebbe9821f1042a971fdfd45b38a2c79dbba880b86cb9",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/alfie_crane.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/alfie_crane.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "c5d9fbfcecbe5e03ffd4a2ed2b2cace2940c87290a1fe3bd45113b4c7f0709be",
+      "installed_sha256": "c5d9fbfcecbe5e03ffd4a2ed2b2cace2940c87290a1fe3bd45113b4c7f0709be",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/yordanis_baro.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/yordanis_baro.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "604b82b0c4d501ed6ef8ffbbc50c5baf269bd108e5191a9310c0422841791f4c",
+      "installed_sha256": "604b82b0c4d501ed6ef8ffbbc50c5baf269bd108e5191a9310c0422841791f4c",
+      "recovery_disposition": "current"
+    },
+    "data/patterns/chiamaka_okafor.json": {
+      "archive": "packages/pbn_corpus_delta.zip",
+      "member": "data/patterns/chiamaka_okafor.json",
+      "archive_sha256": "41a420f943edce177af3372ba879953b1602f2dbda13d4ab8b2cc3c0b64f55f8",
+      "source_sha256": "c8fc42caa18fa083633b119bf84ef231a93ec914634a52064ef642a16aa869ce",
+      "installed_sha256": "c8fc42caa18fa083633b119bf84ef231a93ec914634a52064ef642a16aa869ce",
+      "recovery_disposition": "current"
+    },
+    "sim/__init__.py": {
+      "archive": "packages/sim_delta.zip",
+      "member": "sim/__init__.py",
+      "archive_sha256": "72aa78d72171acd7297b25c9335a8f5da6c600d0f2b972331d3537980c01003e",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "installed_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "recovery_disposition": "current"
+    },
+    "sim/engine.py": {
+      "archive": "packages/sim_delta.zip",
+      "member": "sim/engine.py",
+      "archive_sha256": "72aa78d72171acd7297b25c9335a8f5da6c600d0f2b972331d3537980c01003e",
+      "source_sha256": "658202c7b008715fdab284f609c7ba86addd96b03d5eea19612c13632d93a835",
+      "installed_sha256": "bdb44a6060aa34ff7056fb7ff19b10f711c5e21abe1415e7c4ef38665fb91c44",
+      "recovery_disposition": "local_changes"
+    },
+    "sim/agents.py": {
+      "archive": "packages/sim_delta.zip",
+      "member": "sim/agents.py",
+      "archive_sha256": "72aa78d72171acd7297b25c9335a8f5da6c600d0f2b972331d3537980c01003e",
+      "source_sha256": "d5f55e927d0512bf81c98a377f82d24a973024c2e90cf5c6a479511efed04c84",
+      "installed_sha256": "d5f55e927d0512bf81c98a377f82d24a973024c2e90cf5c6a479511efed04c84",
+      "recovery_disposition": "current"
+    },
+    "tools/sim_run.py": {
+      "archive": "packages/sim_delta.zip",
+      "member": "tools/sim_run.py",
+      "archive_sha256": "72aa78d72171acd7297b25c9335a8f5da6c600d0f2b972331d3537980c01003e",
+      "source_sha256": "a14b3b308fe80a7a533a8b1f9413077ee5713c75be7d88e0a70c14473ec0efe1",
+      "installed_sha256": "a14b3b308fe80a7a533a8b1f9413077ee5713c75be7d88e0a70c14473ec0efe1",
+      "recovery_disposition": "current"
+    },
+    "tools/sim_test.py": {
+      "archive": "packages/sim_delta.zip",
+      "member": "tools/sim_test.py",
+      "archive_sha256": "72aa78d72171acd7297b25c9335a8f5da6c600d0f2b972331d3537980c01003e",
+      "source_sha256": "5707434b12a56ec67d8b449334ee11610b77f057ae05fba3823710b43e70f89d",
+      "installed_sha256": "5707434b12a56ec67d8b449334ee11610b77f057ae05fba3823710b43e70f89d",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/sam_tagaq.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/sam_tagaq.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "c998914687fae96020ecbf41e3ebaaf4266f0c994a45a243131fc4bfdc570ec9",
+      "installed_sha256": "c998914687fae96020ecbf41e3ebaaf4266f0c994a45a243131fc4bfdc570ec9",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/jean_guy_moreau.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/jean_guy_moreau.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "cefe67a8e74f6ba0fdbf03d483a45eaa2d3e5f1c84663d108c3565885cbd4325",
+      "installed_sha256": "cefe67a8e74f6ba0fdbf03d483a45eaa2d3e5f1c84663d108c3565885cbd4325",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/cassidy_vane.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/cassidy_vane.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "f807972fdf4d4efa3e444c89b3ed8d0c6fbf6131ec0831a81a0c27244776877e",
+      "installed_sha256": "f807972fdf4d4efa3e444c89b3ed8d0c6fbf6131ec0831a81a0c27244776877e",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/yuri_kowalchuk.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/yuri_kowalchuk.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "9bffb23dfaa28e432375b2a03c6eac0c967ddbfd06cd55e34aefa7f410b5fefd",
+      "installed_sha256": "9bffb23dfaa28e432375b2a03c6eac0c967ddbfd06cd55e34aefa7f410b5fefd",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/main.tscn": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/main.tscn",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "182b3989c0f1b29435d36fa0ac4bb525b93596d2f092514c2f361bf4a7790299",
+      "installed_sha256": "182b3989c0f1b29435d36fa0ac4bb525b93596d2f092514c2f361bf4a7790299",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/main.gd": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "engine/greybox/main.gd",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "1756d6f9652b465aed5fbcafb39bbca31e7622685a51c9560110b862fca91ac8",
+      "installed_sha256": "1756d6f9652b465aed5fbcafb39bbca31e7622685a51c9560110b862fca91ac8"
+    },
+    "engine/greybox/combat_tuning.v1.json": {
+      "archive": "packages/tnb_pac060_coach.zip",
+      "member": "engine/greybox/combat_tuning.v1.json",
+      "archive_sha256": "cc9f8b58a363ee2cddb34a84369b17e33c4f53bf2dee997215d3484c0599ad4c",
+      "source_sha256": "a01185b62bd8779ebc2c6737a85654a5a4593a70a2b812baededd71894f5d2d9",
+      "installed_sha256": "a01185b62bd8779ebc2c6737a85654a5a4593a70a2b812baededd71894f5d2d9",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/project.godot": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/project.godot",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "8de7998b66959373867145dd1d0f075c9fd2561541d214c9dc99e724f6a40d29",
+      "installed_sha256": "8de7998b66959373867145dd1d0f075c9fd2561541d214c9dc99e724f6a40d29",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/GREYBOX.md": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "engine/greybox/GREYBOX.md",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "0d2982cff17bc5fb703622b83cd8f58311fce8d95d7c5d4a3daf97ecf188f6d2",
+      "installed_sha256": "0d2982cff17bc5fb703622b83cd8f58311fce8d95d7c5d4a3daf97ecf188f6d2"
+    },
+    "docs/NorthPaw-game_docs/NP_14_ENGINE_THEORY.md": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "docs/NP_14_ENGINE_THEORY.md",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "ddd0beaf908bff6e373fe4bd619db31ea7fb813e607e0138607fad5c021f7401",
+      "installed_sha256": "87552a8cb2185270ff7af5a137811ae15cd436b65ef8ec83b0a2c9fbe7c10fb8"
+    },
+    "engine/greybox/sim/core.gd": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "engine/greybox/sim/core.gd",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "abe6f2f9a66bff517c5e609e807a129478e6cdf05fb399f08e03718b045fcda8",
+      "installed_sha256": "7fe223f4e8a500b31bf7d9ea79bbe51b93e6e4d100b3efe043db4dd4f8353ea3"
+    },
+    "engine/greybox/sim/clock.gd": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/sim/clock.gd",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "dead7df061e2f2d4a7cee731f5d042fa4df45dd033cc05df361e72317bed54ea",
+      "installed_sha256": "dead7df061e2f2d4a7cee731f5d042fa4df45dd033cc05df361e72317bed54ea",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/sim/tests.gd": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "engine/greybox/sim/tests.gd",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "bd111d7ed1df2f06e23c412815846c825c48868643c43a643704ddb9a58210a3",
+      "installed_sha256": "bd111d7ed1df2f06e23c412815846c825c48868643c43a643704ddb9a58210a3"
+    },
+    "pbn_compiler.py": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "pbn_compiler.py",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "6b103beaa1b5af53134083ae542da99ff3c0f2975a79fa2bef84c8e64d43fd8f",
+      "installed_sha256": "6b103beaa1b5af53134083ae542da99ff3c0f2975a79fa2bef84c8e64d43fd8f",
+      "recovery_disposition": "upgrade"
+    },
+    "tools/pbn_compiler.py": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "tools/pbn_compiler.py",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "6b103beaa1b5af53134083ae542da99ff3c0f2975a79fa2bef84c8e64d43fd8f",
+      "installed_sha256": "6b103beaa1b5af53134083ae542da99ff3c0f2975a79fa2bef84c8e64d43fd8f",
+      "recovery_disposition": "upgrade"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_002.md": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "REGISTER_COMMANDS_002.md",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "b78f8ad57d598ffd321a4b6041b8700aa0d457876b4045311d8fc904a7383f95",
+      "installed_sha256": "fba186e7af51985b2a4db61deaabd3ead77536a83fdf84e1acb10dbacabd7310",
+      "recovery_disposition": "local_changes"
+    },
+    "engine/greybox/patterns/ada_okafor.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/ada_okafor.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "70850ff88c32eb01d7e58babf1ebeb11c38ca91f5d7b1915a816e9dec7d00b3a",
+      "installed_sha256": "70850ff88c32eb01d7e58babf1ebeb11c38ca91f5d7b1915a816e9dec7d00b3a",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/alfie_crane.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/alfie_crane.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "c5d9fbfcecbe5e03ffd4a2ed2b2cace2940c87290a1fe3bd45113b4c7f0709be",
+      "installed_sha256": "c5d9fbfcecbe5e03ffd4a2ed2b2cace2940c87290a1fe3bd45113b4c7f0709be",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/anders_vey.json": {
+      "archive": "packages/tnb_pac067_pattern.zip",
+      "member": "engine/greybox/patterns/anders_vey.json",
+      "archive_sha256": "bfd03787c73fc6975323a71cb2a255116f7923f104369e2941f0e19170bb625d",
+      "source_sha256": "db1003ccc91c223021cdfe6cb1cf0b075a34f5158309dcc39c4641dfc0ed99e8",
+      "installed_sha256": "db1003ccc91c223021cdfe6cb1cf0b075a34f5158309dcc39c4641dfc0ed99e8",
+      "recovery_disposition": "upgrade"
+    },
+    "engine/greybox/patterns/carter_okafor.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/carter_okafor.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "7e833000908c00abd920183e138a03e7ca2c0bc4010ebe4350034e8fd46edc95",
+      "installed_sha256": "7e833000908c00abd920183e138a03e7ca2c0bc4010ebe4350034e8fd46edc95",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/chiamaka_okafor.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/chiamaka_okafor.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "c8fc42caa18fa083633b119bf84ef231a93ec914634a52064ef642a16aa869ce",
+      "installed_sha256": "c8fc42caa18fa083633b119bf84ef231a93ec914634a52064ef642a16aa869ce",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/commissioner_cal.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/commissioner_cal.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "1fae565efef84b7f76fca136a8a0ef624c4e530032fbec63c57a4d57d5376cad",
+      "installed_sha256": "1fae565efef84b7f76fca136a8a0ef624c4e530032fbec63c57a4d57d5376cad",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/deshawn_vaughn.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/deshawn_vaughn.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "78a0cb9b541e4b63de7af13aa2aba26591ac2d6481c6ff039d5186cc41a4a9fb",
+      "installed_sha256": "78a0cb9b541e4b63de7af13aa2aba26591ac2d6481c6ff039d5186cc41a4a9fb",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/efua_osei.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/efua_osei.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "a0553c99b8a055f68e20c87e1ede5b9c36ccfc5617091276970cc2fa57abd6d9",
+      "installed_sha256": "a0553c99b8a055f68e20c87e1ede5b9c36ccfc5617091276970cc2fa57abd6d9",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/hc0_surety.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/hc0_surety.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "884c33feac5f910d9a2e5071d729d242992364c6774840bca2c716233cec1c5e",
+      "installed_sha256": "884c33feac5f910d9a2e5071d729d242992364c6774840bca2c716233cec1c5e",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/hc4_cartographer.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/hc4_cartographer.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "931576463d629f00278899978875d1692c41dc1e1d2b4785a63415d519e213a9",
+      "installed_sha256": "931576463d629f00278899978875d1692c41dc1e1d2b4785a63415d519e213a9",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/hc7_echo.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/hc7_echo.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "8d3abba2969590306a7d01b9fb5a8ccc6adad1282f31d24d366e6e9af7728947",
+      "installed_sha256": "8d3abba2969590306a7d01b9fb5a8ccc6adad1282f31d24d366e6e9af7728947",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/hc9_choir.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/hc9_choir.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "753a37bddfc15ca5024a243256e324d32dcb958aabcf2e8a3796e3605b5e220b",
+      "installed_sha256": "753a37bddfc15ca5024a243256e324d32dcb958aabcf2e8a3796e3605b5e220b",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/ioan_vasile.json": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "engine/greybox/patterns/ioan_vasile.json",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "d98ab5dec046bcad8a03cc47c1ed6ba961c210c81c9f2a7ac77ae35b8d7f378e",
+      "installed_sha256": "d98ab5dec046bcad8a03cc47c1ed6ba961c210c81c9f2a7ac77ae35b8d7f378e",
+      "recovery_disposition": "upgrade"
+    },
+    "engine/greybox/patterns/itzel_reyes_ortega.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/itzel_reyes_ortega.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "bdcf4cea7d46848f076d87ff82f8a712fc24723b718f63b1ac5b239eb05726e7",
+      "installed_sha256": "bdcf4cea7d46848f076d87ff82f8a712fc24723b718f63b1ac5b239eb05726e7",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/marta_okonkwo_tremblay.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/marta_okonkwo_tremblay.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "b271039ed38d3fc8027eff016b7a01a2f4063f826712553287884cd432424350",
+      "installed_sha256": "b271039ed38d3fc8027eff016b7a01a2f4063f826712553287884cd432424350",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/moira_macisaac.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/moira_macisaac.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "5d953a80f1a759bba36fa4b29efe61a83bd505e2cd2dba962073e22407da5801",
+      "installed_sha256": "5d953a80f1a759bba36fa4b29efe61a83bd505e2cd2dba962073e22407da5801",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/remy_moreau.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/remy_moreau.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "e192fe297f567f543b75f3c0ccc83cc0d2db8fe717b298d2a7b09fbaf0ba00de",
+      "installed_sha256": "e192fe297f567f543b75f3c0ccc83cc0d2db8fe717b298d2a7b09fbaf0ba00de",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/sora_kannagi.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/sora_kannagi.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "238e209b54e864d8cfe0ebbe9821f1042a971fdfd45b38a2c79dbba880b86cb9",
+      "installed_sha256": "238e209b54e864d8cfe0ebbe9821f1042a971fdfd45b38a2c79dbba880b86cb9",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/tam_nguyen_roy.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/tam_nguyen_roy.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "10971a89ee4d4a7c67a81ff1c83fc04a4c12be28dbd2c67dd2d16d7a39deac94",
+      "installed_sha256": "10971a89ee4d4a7c67a81ff1c83fc04a4c12be28dbd2c67dd2d16d7a39deac94",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/patterns/yordanis_baro.json": {
+      "archive": "packages/tnb_v6_engine_foundation.zip",
+      "member": "engine/greybox/patterns/yordanis_baro.json",
+      "archive_sha256": "a496605a447ecd3566f909fbbb7a1afd5440778bc5f8ef6f6b40369f0dd600a4",
+      "source_sha256": "604b82b0c4d501ed6ef8ffbbc50c5baf269bd108e5191a9310c0422841791f4c",
+      "installed_sha256": "604b82b0c4d501ed6ef8ffbbc50c5baf269bd108e5191a9310c0422841791f4c",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/hissatsu_library.v2.json": {
+      "archive": "packages/tnb_pac080_duo.zip",
+      "member": "engine/greybox/hissatsu_library.v2.json",
+      "archive_sha256": "38a48436a791181ae94f1e4e4dbfb7d7c27a57bced7267c61801e593b32e01fb",
+      "source_sha256": "7d29b17094519c42b623db3e69bf94bd1724358d5eb321cba00c49016142c169",
+      "installed_sha256": "7d29b17094519c42b623db3e69bf94bd1724358d5eb321cba00c49016142c169",
+      "recovery_disposition": "upgrade"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_003.md": {
+      "archive": "packages/tnb_pac054_sensors.zip",
+      "member": "REGISTER_COMMANDS_003.md",
+      "archive_sha256": "6f41a34d013b8c20c0476fa62d4318ed15c50225ca6929d4d996615749f43590",
+      "source_sha256": "eff64bd4e5e120fbbb05cfacaf362fbe4b2f87ed8c60918db7d7648564ec61d0",
+      "installed_sha256": "e55e2766c445b17c4204037cf85992adc082bda3b4afc3c56ef2feec833c6fa9",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_004.md": {
+      "archive": "packages/tnb_pac055_rules.zip",
+      "member": "REGISTER_COMMANDS_004.md",
+      "archive_sha256": "1a4bc34f3bec44c80a186dc75fed8beb457f7a894f7b91f0874ec4e5d12f39c4",
+      "source_sha256": "e52ee504bf1083d75de06c03918211b35a4a5587a16d1a133b93634fa9263186",
+      "installed_sha256": "752bd083f26419f7140223953a6015519fb06e5e6d55719d385f985349e36cbd",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_005.md": {
+      "archive": "packages/tnb_pac056_hissatsu_vm.zip",
+      "member": "REGISTER_COMMANDS_005.md",
+      "archive_sha256": "a47d1104d4b783ebb07b59b687d3d4c63100c98148eb2c8f2f259073497b4a97",
+      "source_sha256": "8297aaf5d50d95f86f960e447aa242433422b7d53822dd935f38d50d47ec5b4c",
+      "installed_sha256": "5185b33dda17c8cfc6e143a576c126ad0dd507455c108743ab7b54a32dad8e3f",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_006.md": {
+      "archive": "packages/tnb_pac057_feints.zip",
+      "member": "REGISTER_COMMANDS_006.md",
+      "archive_sha256": "9d0a2ed7ff21864944ffb821e4242fdb4503f9f5c423cc086beed383b3aadb09",
+      "source_sha256": "40ebac926184bc172a23b679baea30a58e3749dcd540e38a328ae5a9d980925c",
+      "installed_sha256": "1afadc4aea66fd60acc925163a0ed39651e16ed73c669566ffd6318899233584",
+      "recovery_disposition": "local_changes"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_007.md": {
+      "archive": "packages/tnb_pac058_corner.zip",
+      "member": "REGISTER_COMMANDS_007.md",
+      "archive_sha256": "6ddea31f913b96f1ec342d020482c42bcd7319d4530e661443cdaffcfe1b996a",
+      "source_sha256": "c580f6fffaa3b6627e7c8b1199bfd0d03d65d8339497820bd4c075ad7455afc4",
+      "installed_sha256": "f6175c8d9d2fed54909bb1103a2542957461e6e6a3b8b94c939cb88f12ba619b",
+      "recovery_disposition": "local_changes"
+    },
+    "data/tactics.v1.json": {
+      "archive": "packages/tnb_pac081_relay_t3.zip",
+      "member": "data/tactics.v1.json",
+      "archive_sha256": "41b47035344438616f7cc178dcd53bd09e34a3a936d448c4d21ca5bb146bbb2b",
+      "source_sha256": "b3d60613954021c498951e891f3e32a47d12560b304f1a1fa5905895adfc0ca3",
+      "installed_sha256": "b3d60613954021c498951e891f3e32a47d12560b304f1a1fa5905895adfc0ca3",
+      "recovery_disposition": "upgrade"
+    },
+    "engine/greybox/tactics.v1.json": {
+      "archive": "packages/tnb_pac081_relay_t3.zip",
+      "member": "engine/greybox/tactics.v1.json",
+      "archive_sha256": "41b47035344438616f7cc178dcd53bd09e34a3a936d448c4d21ca5bb146bbb2b",
+      "source_sha256": "b3d60613954021c498951e891f3e32a47d12560b304f1a1fa5905895adfc0ca3",
+      "installed_sha256": "b3d60613954021c498951e891f3e32a47d12560b304f1a1fa5905895adfc0ca3",
+      "recovery_disposition": "upgrade"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_008.md": {
+      "archive": "packages/tnb_pac059_rings.zip",
+      "member": "REGISTER_COMMANDS_008.md",
+      "archive_sha256": "a35a90f7314ed3c7b1cefa1f27184b0c6f8af581ab6af4e3e328bb125e5b5408",
+      "source_sha256": "2512b1da43f6340e47992539caaf5b2811488ad825ce72f68a716a7056ea60b9",
+      "installed_sha256": "b46577c0b41bd811710766b4d56f7498c05627a66253ce27960279f02b4dadaf",
+      "recovery_disposition": "local_changes"
+    },
+    "data/affinity.v1.json": {
+      "archive": "packages/tnb_pac059_rings.zip",
+      "member": "data/affinity.v1.json",
+      "archive_sha256": "a35a90f7314ed3c7b1cefa1f27184b0c6f8af581ab6af4e3e328bb125e5b5408",
+      "source_sha256": "43a78f64c74c837734e9e01b488c7accc37ed3bc1d927b9db536388c0835f901",
+      "installed_sha256": "43a78f64c74c837734e9e01b488c7accc37ed3bc1d927b9db536388c0835f901",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/affinity.v1.json": {
+      "archive": "packages/tnb_pac059_rings.zip",
+      "member": "engine/greybox/affinity.v1.json",
+      "archive_sha256": "a35a90f7314ed3c7b1cefa1f27184b0c6f8af581ab6af4e3e328bb125e5b5408",
+      "source_sha256": "43a78f64c74c837734e9e01b488c7accc37ed3bc1d927b9db536388c0835f901",
+      "installed_sha256": "43a78f64c74c837734e9e01b488c7accc37ed3bc1d927b9db536388c0835f901",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/feud_graph.v1.json": {
+      "archive": "packages/tnb_pac077_blessings.zip",
+      "member": "engine/greybox/feud_graph.v1.json",
+      "archive_sha256": "2538d1303541bf23a3eba2cb3e677dbda6a1d4f2b6d35fb4b3a9f1062e48860b",
+      "source_sha256": "992976455780d8e0cd394fa04e834dce14b1ad84410d759744652a0aea68a5d9",
+      "installed_sha256": "992976455780d8e0cd394fa04e834dce14b1ad84410d759744652a0aea68a5d9",
+      "recovery_disposition": "upgrade"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_009.md": {
+      "archive": "packages/tnb_pac060_coach.zip",
+      "member": "REGISTER_COMMANDS_009.md",
+      "archive_sha256": "cc9f8b58a363ee2cddb34a84369b17e33c4f53bf2dee997215d3484c0599ad4c",
+      "source_sha256": "efbcd7459bad97ea1ed38296d4deada19e947bf6106e395d0ca958948a345c2e",
+      "installed_sha256": "526080dc89e2631d74add8cd230ab8264618c4bfdb16d3f340c8914f9ef4631b",
+      "recovery_disposition": "local_changes"
+    },
+    "data/coaches.v1.json": {
+      "archive": "packages/tnb_pac073_formation.zip",
+      "member": "data/coaches.v1.json",
+      "archive_sha256": "4ba0e0a74b29e5cba7a9d3e5197a053e2ce685c0a0663b7616c16f9936dfea06",
+      "source_sha256": "bc0ce0e47b6a99ebe447409ce526cfc01d7543a3dc79cadb2a469dfd0244827a",
+      "installed_sha256": "bc0ce0e47b6a99ebe447409ce526cfc01d7543a3dc79cadb2a469dfd0244827a",
+      "recovery_disposition": "upgrade"
+    },
+    "engine/greybox/coaches.v1.json": {
+      "archive": "packages/tnb_pac073_formation.zip",
+      "member": "engine/greybox/coaches.v1.json",
+      "archive_sha256": "4ba0e0a74b29e5cba7a9d3e5197a053e2ce685c0a0663b7616c16f9936dfea06",
+      "source_sha256": "bc0ce0e47b6a99ebe447409ce526cfc01d7543a3dc79cadb2a469dfd0244827a",
+      "installed_sha256": "bc0ce0e47b6a99ebe447409ce526cfc01d7543a3dc79cadb2a469dfd0244827a",
+      "recovery_disposition": "upgrade"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_010.md": {
+      "archive": "packages/tnb_pac061_formats.zip",
+      "member": "REGISTER_COMMANDS_010.md",
+      "archive_sha256": "a42997ef01da5087fdd3ef9d9619f0134be9a132beb4cdab5b08117bbbe814c7",
+      "source_sha256": "f9681c16a177bec61df0025cab102c5fc1fbb9fac51ab75e7df326ce824189e2",
+      "installed_sha256": "c443b83f1eda52f56cd8a2800f57b8e6f41fac8c443f7264eabed32ad8f2b820",
+      "recovery_disposition": "local_changes"
+    },
+    "data/formats.v1.json": {
+      "archive": "packages/tnb_pac088_exhibition_2v2.zip",
+      "member": "data/formats.v1.json",
+      "archive_sha256": "71775f2d45e584a1f2ef7efe624bc760084bca455f77de156ba65e06f653f961",
+      "source_sha256": "21636fce065efdf7675a5441d113cf3a1ea2357fc59b96a3e771269b22e34aec",
+      "installed_sha256": "21636fce065efdf7675a5441d113cf3a1ea2357fc59b96a3e771269b22e34aec",
+      "recovery_disposition": "upgrade"
+    },
+    "engine/greybox/formats.v1.json": {
+      "archive": "packages/tnb_pac088_exhibition_2v2.zip",
+      "member": "engine/greybox/formats.v1.json",
+      "archive_sha256": "71775f2d45e584a1f2ef7efe624bc760084bca455f77de156ba65e06f653f961",
+      "source_sha256": "21636fce065efdf7675a5441d113cf3a1ea2357fc59b96a3e771269b22e34aec",
+      "installed_sha256": "21636fce065efdf7675a5441d113cf3a1ea2357fc59b96a3e771269b22e34aec",
+      "recovery_disposition": "upgrade"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_011.md": {
+      "archive": "packages/tnb_pac062_manager.zip",
+      "member": "REGISTER_COMMANDS_011.md",
+      "archive_sha256": "8e561dabef423455454767cb80a52b0ab5b71de2a796134c0af43f1d19abb9a2",
+      "source_sha256": "b33c6e6154dac2a8eee198f70b00823d985825af77636d24898e6ff5353028a3",
+      "installed_sha256": "b33c6e6154dac2a8eee198f70b00823d985825af77636d24898e6ff5353028a3",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/sim/profile.gd": {
+      "archive": "packages/tnb_pac091_techniques.zip",
+      "member": "engine/greybox/sim/profile.gd",
+      "archive_sha256": "2d270d5c61fcee398bf4ebd20404a2d5db14589978e025257e5e1215d83362ab",
+      "source_sha256": "35a83f91874ba5eb2aa30cfc9b66659404d59e1ea094b30dcb2caeaafd1f3629",
+      "installed_sha256": "35a83f91874ba5eb2aa30cfc9b66659404d59e1ea094b30dcb2caeaafd1f3629",
+      "recovery_disposition": "upgrade"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_012.md": {
+      "archive": "packages/tnb_pac063_scraps.zip",
+      "member": "REGISTER_COMMANDS_012.md",
+      "archive_sha256": "a0b6aaad5444010fcdd4d51abb8805035d6613111895cfbb130abffb6751d544",
+      "source_sha256": "617a354788525da0f0b522a20ca93f8a8d9e5ea3d1a6b85e7e01df879196c0d7",
+      "installed_sha256": "617a354788525da0f0b522a20ca93f8a8d9e5ea3d1a6b85e7e01df879196c0d7",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/sim/objectives.gd": {
+      "archive": "packages/tnb_pac065_mindgames.zip",
+      "member": "engine/greybox/sim/objectives.gd",
+      "archive_sha256": "a5ad893471555ce1ff3de64a10905f819fe2893a58b1cbc2a87c0434350f4230",
+      "source_sha256": "c6a53eedecdaea3f3f4f4a6003e6e61cd3a6ce0d07769a3f20a9a39be43b6180",
+      "installed_sha256": "c6a53eedecdaea3f3f4f4a6003e6e61cd3a6ce0d07769a3f20a9a39be43b6180",
+      "recovery_disposition": "new"
+    },
+    "data/bouts.v1.json": {
+      "archive": "packages/tnb_pac093_mirror.zip",
+      "member": "data/bouts.v1.json",
+      "archive_sha256": "ff38bb9672fdb121f2f599225e6a5ec3cb7688ed93291b83ed52def3dd472e2a",
+      "source_sha256": "77adfb1779da8d512a8bfba3c6b40de8b9dbc03cae3c714fa6aed22089035f9d",
+      "installed_sha256": "77adfb1779da8d512a8bfba3c6b40de8b9dbc03cae3c714fa6aed22089035f9d",
+      "recovery_disposition": "upgrade"
+    },
+    "engine/greybox/bouts.v1.json": {
+      "archive": "packages/tnb_pac093_mirror.zip",
+      "member": "engine/greybox/bouts.v1.json",
+      "archive_sha256": "ff38bb9672fdb121f2f599225e6a5ec3cb7688ed93291b83ed52def3dd472e2a",
+      "source_sha256": "77adfb1779da8d512a8bfba3c6b40de8b9dbc03cae3c714fa6aed22089035f9d",
+      "installed_sha256": "77adfb1779da8d512a8bfba3c6b40de8b9dbc03cae3c714fa6aed22089035f9d",
+      "recovery_disposition": "upgrade"
+    },
+    "engine/greybox/scrap_objectives.v1.json": {
+      "archive": "packages/tnb_pac063_scraps.zip",
+      "member": "engine/greybox/scrap_objectives.v1.json",
+      "archive_sha256": "a0b6aaad5444010fcdd4d51abb8805035d6613111895cfbb130abffb6751d544",
+      "source_sha256": "22c261e5eadc1b362579d3b69a7d597e1fbd6ac33e6ed6a35393dba4c9994989",
+      "installed_sha256": "22c261e5eadc1b362579d3b69a7d597e1fbd6ac33e6ed6a35393dba4c9994989",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_013.md": {
+      "archive": "packages/tnb_pac064_intel.zip",
+      "member": "REGISTER_COMMANDS_013.md",
+      "archive_sha256": "19f958144c249a34bc72e7999a8f6367dff83c4bddfe48803d0ac1e6b684b8c8",
+      "source_sha256": "fa63e8b793a13273a98ce481a257e907dcfeef8d307185b1637496fbfdf81bfc",
+      "installed_sha256": "2feb7b8150e4e625240be127b2634c935f003889658892f95606df6df30db572",
+      "recovery_disposition": "local_changes"
+    },
+    "data/pattern_intel.v1.json": {
+      "archive": "packages/tnb_pac064_intel.zip",
+      "member": "data/pattern_intel.v1.json",
+      "archive_sha256": "19f958144c249a34bc72e7999a8f6367dff83c4bddfe48803d0ac1e6b684b8c8",
+      "source_sha256": "2873628003681252ada2456b336ae3bca4472e03684af6b63b6059080822f0be",
+      "installed_sha256": "2873628003681252ada2456b336ae3bca4472e03684af6b63b6059080822f0be",
+      "recovery_disposition": "current"
+    },
+    "engine/greybox/pattern_intel.v1.json": {
+      "archive": "packages/tnb_pac064_intel.zip",
+      "member": "engine/greybox/pattern_intel.v1.json",
+      "archive_sha256": "19f958144c249a34bc72e7999a8f6367dff83c4bddfe48803d0ac1e6b684b8c8",
+      "source_sha256": "2873628003681252ada2456b336ae3bca4472e03684af6b63b6059080822f0be",
+      "installed_sha256": "2873628003681252ada2456b336ae3bca4472e03684af6b63b6059080822f0be",
+      "recovery_disposition": "current"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_014.md": {
+      "archive": "packages/tnb_pac065_mindgames.zip",
+      "member": "REGISTER_COMMANDS_014.md",
+      "archive_sha256": "a5ad893471555ce1ff3de64a10905f819fe2893a58b1cbc2a87c0434350f4230",
+      "source_sha256": "98511443a1ccc0a05a4db53d1b2208bc71c10a3cf07e2a48f85f8d022ccb95d4",
+      "installed_sha256": "98511443a1ccc0a05a4db53d1b2208bc71c10a3cf07e2a48f85f8d022ccb95d4",
+      "recovery_disposition": "new"
+    },
+    "data/remixes.v1.json": {
+      "archive": "packages/tnb_pac066_phasescripts.zip",
+      "member": "data/remixes.v1.json",
+      "archive_sha256": "0df23ccd3bb24dd38682a1c516999843bc9c9ad78cf3535e1d01cf5ef5f71e56",
+      "source_sha256": "86ff24290c3e81a11ab4e0d27fd78ee97f2d3b6e41885806a717831662f0b96a",
+      "installed_sha256": "86ff24290c3e81a11ab4e0d27fd78ee97f2d3b6e41885806a717831662f0b96a",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/remixes.v1.json": {
+      "archive": "packages/tnb_pac066_phasescripts.zip",
+      "member": "engine/greybox/remixes.v1.json",
+      "archive_sha256": "0df23ccd3bb24dd38682a1c516999843bc9c9ad78cf3535e1d01cf5ef5f71e56",
+      "source_sha256": "86ff24290c3e81a11ab4e0d27fd78ee97f2d3b6e41885806a717831662f0b96a",
+      "installed_sha256": "86ff24290c3e81a11ab4e0d27fd78ee97f2d3b6e41885806a717831662f0b96a",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_015.md": {
+      "archive": "packages/tnb_pac066_phasescripts.zip",
+      "member": "REGISTER_COMMANDS_015.md",
+      "archive_sha256": "0df23ccd3bb24dd38682a1c516999843bc9c9ad78cf3535e1d01cf5ef5f71e56",
+      "source_sha256": "a672d3771b92d0493a3487b819fcb439c22a00a4e3f478c3cd2642cdb5e04f6c",
+      "installed_sha256": "a672d3771b92d0493a3487b819fcb439c22a00a4e3f478c3cd2642cdb5e04f6c",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_016.md": {
+      "archive": "packages/tnb_pac067_pattern.zip",
+      "member": "REGISTER_COMMANDS_016.md",
+      "archive_sha256": "bfd03787c73fc6975323a71cb2a255116f7923f104369e2941f0e19170bb625d",
+      "source_sha256": "63662551f3bf5a24c8f31d02bb167ed784f81ce8df709d4112b5320da1061b6e",
+      "installed_sha256": "63662551f3bf5a24c8f31d02bb167ed784f81ce8df709d4112b5320da1061b6e",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_017.md": {
+      "archive": "packages/tnb_pac068_economy.zip",
+      "member": "REGISTER_COMMANDS_017.md",
+      "archive_sha256": "b9f5368c419842e94c58aac30146405f30e23e85de768630bf2f488333ed6f2e",
+      "source_sha256": "d25384eed97bcad7207a437c3ae3f7e0dffa12060470a45699454951ef3ef029",
+      "installed_sha256": "d25384eed97bcad7207a437c3ae3f7e0dffa12060470a45699454951ef3ef029",
+      "recovery_disposition": "new"
+    },
+    "data/economy.v1.json": {
+      "archive": "packages/tnb_pac101_rep.zip",
+      "member": "data/economy.v1.json",
+      "archive_sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "source_sha256": "f2c1119da2e6093b0f2088a6ded339cfdb20f06697cecfa1529bcbab47640987",
+      "installed_sha256": "f2c1119da2e6093b0f2088a6ded339cfdb20f06697cecfa1529bcbab47640987",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/economy.v1.json": {
+      "archive": "packages/tnb_pac101_rep.zip",
+      "member": "engine/greybox/economy.v1.json",
+      "archive_sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "source_sha256": "f2c1119da2e6093b0f2088a6ded339cfdb20f06697cecfa1529bcbab47640987",
+      "installed_sha256": "f2c1119da2e6093b0f2088a6ded339cfdb20f06697cecfa1529bcbab47640987",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_018.md": {
+      "archive": "packages/tnb_pac069_save.zip",
+      "member": "REGISTER_COMMANDS_018.md",
+      "archive_sha256": "8e1c9affbfe77c7e1a09f6d0b88f35893bc4221c6b66e3f91174c5ad7c3da974",
+      "source_sha256": "a8e1decef5664cf38af797763b0ba8ec1288d467fa90fd0c574ed3d2de16904a",
+      "installed_sha256": "a8e1decef5664cf38af797763b0ba8ec1288d467fa90fd0c574ed3d2de16904a",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/sim/save.gd": {
+      "archive": "packages/tnb_pac100_locker.zip",
+      "member": "engine/greybox/sim/save.gd",
+      "archive_sha256": "4edd3c06b2e33a663f9ed44da620199ce1c01dc42692a7239fb659804f6edc4c",
+      "source_sha256": "8151c3599661d74b2ffee3dbeae395dfbc5a97b5c7e61e3bd750bfaedac3e2f1",
+      "installed_sha256": "66af6237e9e8e5e79228828a440c442a94bd4181bfb2553b10d24787d5e85a9f",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_020.md": {
+      "archive": "packages/tnb_pac071_neutral.zip",
+      "member": "REGISTER_COMMANDS_020.md",
+      "archive_sha256": "064b5678edfea69f16fbf92fb1dcf1ae93a413c52bbf162bc815834149ee2a44",
+      "source_sha256": "d9edc33d4b549fa22d54e872ee38881f5bee57693511bd29352ef2a022dd85d0",
+      "installed_sha256": "d9edc33d4b549fa22d54e872ee38881f5bee57693511bd29352ef2a022dd85d0",
+      "recovery_disposition": "new"
+    },
+    "data/neutral.v1.json": {
+      "archive": "packages/tnb_pac071_neutral.zip",
+      "member": "data/neutral.v1.json",
+      "archive_sha256": "064b5678edfea69f16fbf92fb1dcf1ae93a413c52bbf162bc815834149ee2a44",
+      "source_sha256": "c600c4162c2611ee7e86956f61cd4e075a79ec272776ef2cd33efed9f69ba0f1",
+      "installed_sha256": "c600c4162c2611ee7e86956f61cd4e075a79ec272776ef2cd33efed9f69ba0f1",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/neutral.v1.json": {
+      "archive": "packages/tnb_pac071_neutral.zip",
+      "member": "engine/greybox/neutral.v1.json",
+      "archive_sha256": "064b5678edfea69f16fbf92fb1dcf1ae93a413c52bbf162bc815834149ee2a44",
+      "source_sha256": "c600c4162c2611ee7e86956f61cd4e075a79ec272776ef2cd33efed9f69ba0f1",
+      "installed_sha256": "c600c4162c2611ee7e86956f61cd4e075a79ec272776ef2cd33efed9f69ba0f1",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_021.md": {
+      "archive": "packages/tnb_pac072_talk.zip",
+      "member": "REGISTER_COMMANDS_021.md",
+      "archive_sha256": "71651db3d3c5bfca037e239641ba5e2d0c8722a524cd26bee7fa27f68a635d66",
+      "source_sha256": "fd17e6c23a278bfbf12fa042c2a411ab41da1081250eee75ef823c926d228f66",
+      "installed_sha256": "fd17e6c23a278bfbf12fa042c2a411ab41da1081250eee75ef823c926d228f66",
+      "recovery_disposition": "new"
+    },
+    "data/talk.v1.json": {
+      "archive": "packages/tnb_pac072_talk.zip",
+      "member": "data/talk.v1.json",
+      "archive_sha256": "71651db3d3c5bfca037e239641ba5e2d0c8722a524cd26bee7fa27f68a635d66",
+      "source_sha256": "98b58377f1aa022bdfe8413fa442d12cfdec88ca9facd565036b533f0787ceb3",
+      "installed_sha256": "98b58377f1aa022bdfe8413fa442d12cfdec88ca9facd565036b533f0787ceb3",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/talk.v1.json": {
+      "archive": "packages/tnb_pac072_talk.zip",
+      "member": "engine/greybox/talk.v1.json",
+      "archive_sha256": "71651db3d3c5bfca037e239641ba5e2d0c8722a524cd26bee7fa27f68a635d66",
+      "source_sha256": "98b58377f1aa022bdfe8413fa442d12cfdec88ca9facd565036b533f0787ceb3",
+      "installed_sha256": "98b58377f1aa022bdfe8413fa442d12cfdec88ca9facd565036b533f0787ceb3",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_022.md": {
+      "archive": "packages/tnb_pac073_formation.zip",
+      "member": "REGISTER_COMMANDS_022.md",
+      "archive_sha256": "4ba0e0a74b29e5cba7a9d3e5197a053e2ce685c0a0663b7616c16f9936dfea06",
+      "source_sha256": "8f36c141e30f12e58e9b8314a2b935cd75de96ed244863d9a1d9814365157759",
+      "installed_sha256": "8f36c141e30f12e58e9b8314a2b935cd75de96ed244863d9a1d9814365157759",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_formation.gd": {
+      "archive": "packages/tnb_pac080_duo.zip",
+      "member": "engine/greybox/tools/drive_formation.gd",
+      "archive_sha256": "38a48436a791181ae94f1e4e4dbfb7d7c27a57bced7267c61801e593b32e01fb",
+      "source_sha256": "146b6f7937d3d1b80a6bf070da1df04934fa36ca0f81f4f65b496da23a2c6374",
+      "installed_sha256": "146b6f7937d3d1b80a6bf070da1df04934fa36ca0f81f4f65b496da23a2c6374",
+      "recovery_disposition": "new"
+    },
+    "data/formation.v1.json": {
+      "archive": "packages/tnb_pac074_staff.zip",
+      "member": "data/formation.v1.json",
+      "archive_sha256": "6da2653ad11b2ca5177d032aeb88ba5a63bd3447e7aa3915293362a44fe94518",
+      "source_sha256": "9b1fb0c37d6d4eb0e60de4b17bd79b567b5618e252d4724ed94637439fdd29f0",
+      "installed_sha256": "9b1fb0c37d6d4eb0e60de4b17bd79b567b5618e252d4724ed94637439fdd29f0",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/formation.v1.json": {
+      "archive": "packages/tnb_pac074_staff.zip",
+      "member": "engine/greybox/formation.v1.json",
+      "archive_sha256": "6da2653ad11b2ca5177d032aeb88ba5a63bd3447e7aa3915293362a44fe94518",
+      "source_sha256": "9b1fb0c37d6d4eb0e60de4b17bd79b567b5618e252d4724ed94637439fdd29f0",
+      "installed_sha256": "9b1fb0c37d6d4eb0e60de4b17bd79b567b5618e252d4724ed94637439fdd29f0",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_023.md": {
+      "archive": "packages/tnb_pac074_staff.zip",
+      "member": "REGISTER_COMMANDS_023.md",
+      "archive_sha256": "6da2653ad11b2ca5177d032aeb88ba5a63bd3447e7aa3915293362a44fe94518",
+      "source_sha256": "d8fb0f0b9fd59a993bf892f0155e18f25435d8ef865f46cb2220a7f2f704f9aa",
+      "installed_sha256": "d8fb0f0b9fd59a993bf892f0155e18f25435d8ef865f46cb2220a7f2f704f9aa",
+      "recovery_disposition": "new"
+    },
+    "data/staff.v1.json": {
+      "archive": "packages/tnb_pac074_staff.zip",
+      "member": "data/staff.v1.json",
+      "archive_sha256": "6da2653ad11b2ca5177d032aeb88ba5a63bd3447e7aa3915293362a44fe94518",
+      "source_sha256": "bb364109ca8f86ee6fdc2285c6e8d34554d10a5367924c460242fd52ef4459fa",
+      "installed_sha256": "bb364109ca8f86ee6fdc2285c6e8d34554d10a5367924c460242fd52ef4459fa",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/staff.v1.json": {
+      "archive": "packages/tnb_pac074_staff.zip",
+      "member": "engine/greybox/staff.v1.json",
+      "archive_sha256": "6da2653ad11b2ca5177d032aeb88ba5a63bd3447e7aa3915293362a44fe94518",
+      "source_sha256": "bb364109ca8f86ee6fdc2285c6e8d34554d10a5367924c460242fd52ef4459fa",
+      "installed_sha256": "bb364109ca8f86ee6fdc2285c6e8d34554d10a5367924c460242fd52ef4459fa",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_024.md": {
+      "archive": "packages/tnb_pac075_recruitment.zip",
+      "member": "REGISTER_COMMANDS_024.md",
+      "archive_sha256": "86b9d56d46cbc052f794a3af573560757a235b6e85b1d456140f697fdb712ae4",
+      "source_sha256": "66131e7cebfe4b305abdefe7089c58698c1bf430bdf11d648f1811c7d0d7dc02",
+      "installed_sha256": "66131e7cebfe4b305abdefe7089c58698c1bf430bdf11d648f1811c7d0d7dc02",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_recruit.gd": {
+      "archive": "packages/tnb_pac078_house_traits.zip",
+      "member": "engine/greybox/tools/drive_recruit.gd",
+      "archive_sha256": "d34f585eefe3e50e43fddfc1ad2d63e918abf5485df6f8a48031463566f7b9c5",
+      "source_sha256": "714ecdaa1ac923620cc9db0c900b49fdc32aa163b8eab662271419eed708fb4f",
+      "installed_sha256": "714ecdaa1ac923620cc9db0c900b49fdc32aa163b8eab662271419eed708fb4f",
+      "recovery_disposition": "new"
+    },
+    "data/recruits.v1.json": {
+      "archive": "packages/tnb_pac101_rep.zip",
+      "member": "data/recruits.v1.json",
+      "archive_sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "source_sha256": "84e61ab884026ff34f2bfca27351133bc8ca91261451924f5fc0d03de237ced1",
+      "installed_sha256": "84e61ab884026ff34f2bfca27351133bc8ca91261451924f5fc0d03de237ced1",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/recruits.v1.json": {
+      "archive": "packages/tnb_pac101_rep.zip",
+      "member": "engine/greybox/recruits.v1.json",
+      "archive_sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "source_sha256": "84e61ab884026ff34f2bfca27351133bc8ca91261451924f5fc0d03de237ced1",
+      "installed_sha256": "84e61ab884026ff34f2bfca27351133bc8ca91261451924f5fc0d03de237ced1",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_025.md": {
+      "archive": "packages/tnb_pac076_string_wall.zip",
+      "member": "REGISTER_COMMANDS_025.md",
+      "archive_sha256": "869bebd16c771560ed71c0ed3e5171981b7003dc42eef777004c9ea48e0825ce",
+      "source_sha256": "caf59b91e94c860c456baf5cca4e67616f8cc358d754af3f11beb811381a8798",
+      "installed_sha256": "caf59b91e94c860c456baf5cca4e67616f8cc358d754af3f11beb811381a8798",
+      "recovery_disposition": "new"
+    },
+    "data/string_wall.v1.json": {
+      "archive": "packages/tnb_pac076_string_wall.zip",
+      "member": "data/string_wall.v1.json",
+      "archive_sha256": "869bebd16c771560ed71c0ed3e5171981b7003dc42eef777004c9ea48e0825ce",
+      "source_sha256": "15bbd87a8be7562a71f50fbde6790943b9221e05f65e7b1e5d0b9f030f721423",
+      "installed_sha256": "15bbd87a8be7562a71f50fbde6790943b9221e05f65e7b1e5d0b9f030f721423",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/string_wall.v1.json": {
+      "archive": "packages/tnb_pac076_string_wall.zip",
+      "member": "engine/greybox/string_wall.v1.json",
+      "archive_sha256": "869bebd16c771560ed71c0ed3e5171981b7003dc42eef777004c9ea48e0825ce",
+      "source_sha256": "15bbd87a8be7562a71f50fbde6790943b9221e05f65e7b1e5d0b9f030f721423",
+      "installed_sha256": "15bbd87a8be7562a71f50fbde6790943b9221e05f65e7b1e5d0b9f030f721423",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_026.md": {
+      "archive": "packages/tnb_pac077_blessings.zip",
+      "member": "REGISTER_COMMANDS_026.md",
+      "archive_sha256": "2538d1303541bf23a3eba2cb3e677dbda6a1d4f2b6d35fb4b3a9f1062e48860b",
+      "source_sha256": "3372ae057885fffffade9c6e580a1146f0716e5765c05388efe024e7ef9f9622",
+      "installed_sha256": "3372ae057885fffffade9c6e580a1146f0716e5765c05388efe024e7ef9f9622",
+      "recovery_disposition": "new"
+    },
+    "data/houses.v1.json": {
+      "archive": "packages/tnb_pac078_house_traits.zip",
+      "member": "data/houses.v1.json",
+      "archive_sha256": "d34f585eefe3e50e43fddfc1ad2d63e918abf5485df6f8a48031463566f7b9c5",
+      "source_sha256": "f77b6e7e75d00b7b07e4657bdf3d814c9c3a4c61b2955d91fb0a229adc74177d",
+      "installed_sha256": "f77b6e7e75d00b7b07e4657bdf3d814c9c3a4c61b2955d91fb0a229adc74177d",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/houses.v1.json": {
+      "archive": "packages/tnb_pac078_house_traits.zip",
+      "member": "engine/greybox/houses.v1.json",
+      "archive_sha256": "d34f585eefe3e50e43fddfc1ad2d63e918abf5485df6f8a48031463566f7b9c5",
+      "source_sha256": "f77b6e7e75d00b7b07e4657bdf3d814c9c3a4c61b2955d91fb0a229adc74177d",
+      "installed_sha256": "f77b6e7e75d00b7b07e4657bdf3d814c9c3a4c61b2955d91fb0a229adc74177d",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_027.md": {
+      "archive": "packages/tnb_pac078_house_traits.zip",
+      "member": "REGISTER_COMMANDS_027.md",
+      "archive_sha256": "d34f585eefe3e50e43fddfc1ad2d63e918abf5485df6f8a48031463566f7b9c5",
+      "source_sha256": "09b34ccd5e63127ba7dd4c65d93d269362469af2fa763b8d4e7af4c400acd789",
+      "installed_sha256": "09b34ccd5e63127ba7dd4c65d93d269362469af2fa763b8d4e7af4c400acd789",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_028.md": {
+      "archive": "packages/tnb_pac079_gym_wall.zip",
+      "member": "REGISTER_COMMANDS_028.md",
+      "archive_sha256": "096c4271f5b1d84d7613cc402a226c4e5497f48ca43cedac7a3baaf6b14b861b",
+      "source_sha256": "9f6c734b764be8c6246a9addc893a0f4a988418c8b8afc492f78a3bac82e4a39",
+      "installed_sha256": "9f6c734b764be8c6246a9addc893a0f4a988418c8b8afc492f78a3bac82e4a39",
+      "recovery_disposition": "new"
+    },
+    "data/gym_wall.v1.json": {
+      "archive": "packages/tnb_pac089_club_facilities.zip",
+      "member": "data/gym_wall.v1.json",
+      "archive_sha256": "33c72f69b68eac26e70e6d10b54bb6a57fb620730f17ab883167fb936d8ff383",
+      "source_sha256": "7b9b5bc657f90518ff7574b227091fe377a85f0e942412e74fcf169a88b24143",
+      "installed_sha256": "7b9b5bc657f90518ff7574b227091fe377a85f0e942412e74fcf169a88b24143",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/gym_wall.v1.json": {
+      "archive": "packages/tnb_pac089_club_facilities.zip",
+      "member": "engine/greybox/gym_wall.v1.json",
+      "archive_sha256": "33c72f69b68eac26e70e6d10b54bb6a57fb620730f17ab883167fb936d8ff383",
+      "source_sha256": "7b9b5bc657f90518ff7574b227091fe377a85f0e942412e74fcf169a88b24143",
+      "installed_sha256": "7b9b5bc657f90518ff7574b227091fe377a85f0e942412e74fcf169a88b24143",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_029.md": {
+      "archive": "packages/tnb_pac080_duo.zip",
+      "member": "REGISTER_COMMANDS_029.md",
+      "archive_sha256": "38a48436a791181ae94f1e4e4dbfb7d7c27a57bced7267c61801e593b32e01fb",
+      "source_sha256": "d317680990ef60af405f9dfb9dbc817d6d4c7f1a35e3a04f421303ff3fe59ce7",
+      "installed_sha256": "d317680990ef60af405f9dfb9dbc817d6d4c7f1a35e3a04f421303ff3fe59ce7",
+      "recovery_disposition": "new"
+    },
+    "data/hissatsu_library.v2.json": {
+      "archive": "packages/tnb_pac080_duo.zip",
+      "member": "data/hissatsu_library.v2.json",
+      "archive_sha256": "38a48436a791181ae94f1e4e4dbfb7d7c27a57bced7267c61801e593b32e01fb",
+      "source_sha256": "7d29b17094519c42b623db3e69bf94bd1724358d5eb321cba00c49016142c169",
+      "installed_sha256": "7d29b17094519c42b623db3e69bf94bd1724358d5eb321cba00c49016142c169",
+      "recovery_disposition": "local_changes"
+    },
+    "engine/greybox/tools/drive_duo.gd": {
+      "archive": "packages/tnb_pac081_relay_t3.zip",
+      "member": "engine/greybox/tools/drive_duo.gd",
+      "archive_sha256": "41b47035344438616f7cc178dcd53bd09e34a3a936d448c4d21ca5bb146bbb2b",
+      "source_sha256": "8f89cfdc23264224636f07fee24e11222f038bab3b97d129f2a5ad66e8e53245",
+      "installed_sha256": "8f89cfdc23264224636f07fee24e11222f038bab3b97d129f2a5ad66e8e53245",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_030.md": {
+      "archive": "packages/tnb_pac081_relay_t3.zip",
+      "member": "REGISTER_COMMANDS_030.md",
+      "archive_sha256": "41b47035344438616f7cc178dcd53bd09e34a3a936d448c4d21ca5bb146bbb2b",
+      "source_sha256": "d1a13427de3d75441db6244e7d397baed61b1f5aafdd0aa305b34a0acfcc0dfd",
+      "installed_sha256": "d1a13427de3d75441db6244e7d397baed61b1f5aafdd0aa305b34a0acfcc0dfd",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_031.md": {
+      "archive": "packages/tnb_pac082_zone.zip",
+      "member": "REGISTER_COMMANDS_031.md",
+      "archive_sha256": "3900ddcdcff24ecf4ed94564eca98fe2a2f16883906f7f823f9aeb7270db0559",
+      "source_sha256": "5f5d9ac6c7db84237fb41fd0c1584866cc0d6d6289689877d616bf15ac1a3e74",
+      "installed_sha256": "5f5d9ac6c7db84237fb41fd0c1584866cc0d6d6289689877d616bf15ac1a3e74",
+      "recovery_disposition": "new"
+    },
+    "data/transformations.v1.json": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "data/transformations.v1.json",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "b69d92ff09a492d40fa8050a7c36810f29acd0b5b6af33cdb937d6ca3f218f4c",
+      "installed_sha256": "b69d92ff09a492d40fa8050a7c36810f29acd0b5b6af33cdb937d6ca3f218f4c",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/transformations.v1.json": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "engine/greybox/transformations.v1.json",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "b69d92ff09a492d40fa8050a7c36810f29acd0b5b6af33cdb937d6ca3f218f4c",
+      "installed_sha256": "b69d92ff09a492d40fa8050a7c36810f29acd0b5b6af33cdb937d6ca3f218f4c",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_zone.gd": {
+      "archive": "packages/tnb_pac082_zone.zip",
+      "member": "engine/greybox/tools/drive_zone.gd",
+      "archive_sha256": "3900ddcdcff24ecf4ed94564eca98fe2a2f16883906f7f823f9aeb7270db0559",
+      "source_sha256": "8f3fdc54ab95a52981c61ed82a0874311e1af74ebebe498fa0529b9fb84b9267",
+      "installed_sha256": "8f3fdc54ab95a52981c61ed82a0874311e1af74ebebe498fa0529b9fb84b9267",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_032.md": {
+      "archive": "packages/tnb_pac083_manifest.zip",
+      "member": "REGISTER_COMMANDS_032.md",
+      "archive_sha256": "54b293fd889aea56279f6ae232945f001ccd501471782bd43f6e5118f91a098b",
+      "source_sha256": "c4ef27b70de3a60c5141266b899e3449da81a6096eb65102f6dda13418af2be3",
+      "installed_sha256": "c4ef27b70de3a60c5141266b899e3449da81a6096eb65102f6dda13418af2be3",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_manifest.gd": {
+      "archive": "packages/tnb_pac083_manifest.zip",
+      "member": "engine/greybox/tools/drive_manifest.gd",
+      "archive_sha256": "54b293fd889aea56279f6ae232945f001ccd501471782bd43f6e5118f91a098b",
+      "source_sha256": "eb9b68189c59a5e3f53d0249c9583edd642377b57c531214496f6ddb0afeb259",
+      "installed_sha256": "eb9b68189c59a5e3f53d0249c9583edd642377b57c531214496f6ddb0afeb259",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_033.md": {
+      "archive": "packages/tnb_pac084_inheritance.zip",
+      "member": "REGISTER_COMMANDS_033.md",
+      "archive_sha256": "b4aa989d389ff6253c2502839bfe3148b9c29beb63ddb74077699b6d260828d2",
+      "source_sha256": "0f3c437aa2cec93a4525cd4ee0d3a8beca98c8db1c2f784385eed1d26e1120f6",
+      "installed_sha256": "0f3c437aa2cec93a4525cd4ee0d3a8beca98c8db1c2f784385eed1d26e1120f6",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_inherit.gd": {
+      "archive": "packages/tnb_pac084_inheritance.zip",
+      "member": "engine/greybox/tools/drive_inherit.gd",
+      "archive_sha256": "b4aa989d389ff6253c2502839bfe3148b9c29beb63ddb74077699b6d260828d2",
+      "source_sha256": "c0f5c94c28d523167e7717b8005215b041779e8152ceae28f17a8e2c8bd7dae0",
+      "installed_sha256": "c0f5c94c28d523167e7717b8005215b041779e8152ceae28f17a8e2c8bd7dae0",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_034.md": {
+      "archive": "packages/tnb_pac085_awakening.zip",
+      "member": "REGISTER_COMMANDS_034.md",
+      "archive_sha256": "d1f3a73b4afae029e9b7d3965be1c86ea179cec3f0aa9a4f80e5237059e944da",
+      "source_sha256": "f571c08c53d424a4e0f44e9dc28c8658ca6c15bb47d72d7235b7b6cce72b3591",
+      "installed_sha256": "f571c08c53d424a4e0f44e9dc28c8658ca6c15bb47d72d7235b7b6cce72b3591",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_awaken.gd": {
+      "archive": "packages/tnb_pac085_awakening.zip",
+      "member": "engine/greybox/tools/drive_awaken.gd",
+      "archive_sha256": "d1f3a73b4afae029e9b7d3965be1c86ea179cec3f0aa9a4f80e5237059e944da",
+      "source_sha256": "f7ffea5fb4a47e9cafe909ec45816655d8e630d155ff44a01ddf207b63914f44",
+      "installed_sha256": "f7ffea5fb4a47e9cafe909ec45816655d8e630d155ff44a01ddf207b63914f44",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_035.md": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "REGISTER_COMMANDS_035.md",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "15e1035e92daf6712c4e63e4552f07bca3b5afd025c5d2c936e6da7435695251",
+      "installed_sha256": "15e1035e92daf6712c4e63e4552f07bca3b5afd025c5d2c936e6da7435695251",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_bzone.gd": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "engine/greybox/tools/drive_bzone.gd",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "0bffe75d4a0a9e5fb5aca2a4347dcb56f2d2ceb7d44cccc8341a555994069eea",
+      "installed_sha256": "0bffe75d4a0a9e5fb5aca2a4347dcb56f2d2ceb7d44cccc8341a555994069eea",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_clash.gd": {
+      "archive": "packages/tnb_pac086_enemy_transformations.zip",
+      "member": "engine/greybox/tools/drive_clash.gd",
+      "archive_sha256": "8f6b6a6f7929ec8190e46d2c524e65c535274eaa028db9e4e37565e5db33d613",
+      "source_sha256": "a24735ad0f837b98b74b30ab6a3c0f7931a920b46e83603b4db15b68d11189b2",
+      "installed_sha256": "a24735ad0f837b98b74b30ab6a3c0f7931a920b46e83603b4db15b68d11189b2",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_036.md": {
+      "archive": "packages/tnb_pac087_hybrid_research.zip",
+      "member": "REGISTER_COMMANDS_036.md",
+      "archive_sha256": "6b7a55af8761307ee488528791f13db57efe3d6224ea8b55b600d504e045c5d1",
+      "source_sha256": "177d3ea44bdcd99cae938b395f4373782d699a277d66e1e3365a4083705733ee",
+      "installed_sha256": "177d3ea44bdcd99cae938b395f4373782d699a277d66e1e3365a4083705733ee",
+      "recovery_disposition": "new"
+    },
+    "data/hybrids.v1.json": {
+      "archive": "packages/tnb_pac092_academy.zip",
+      "member": "data/hybrids.v1.json",
+      "archive_sha256": "add98dfb8cc0d2a7953a167b85acb58981db008ceecafc9725931705a74703bc",
+      "source_sha256": "cc4fb95458bc5ab323b464606d60fec17a8ecd061562ed9c8a9db5e6f9940ecd",
+      "installed_sha256": "cc4fb95458bc5ab323b464606d60fec17a8ecd061562ed9c8a9db5e6f9940ecd",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/hybrids.v1.json": {
+      "archive": "packages/tnb_pac092_academy.zip",
+      "member": "engine/greybox/hybrids.v1.json",
+      "archive_sha256": "add98dfb8cc0d2a7953a167b85acb58981db008ceecafc9725931705a74703bc",
+      "source_sha256": "cc4fb95458bc5ab323b464606d60fec17a8ecd061562ed9c8a9db5e6f9940ecd",
+      "installed_sha256": "cc4fb95458bc5ab323b464606d60fec17a8ecd061562ed9c8a9db5e6f9940ecd",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_forge.gd": {
+      "archive": "packages/tnb_pac089_club_facilities.zip",
+      "member": "engine/greybox/tools/drive_forge.gd",
+      "archive_sha256": "33c72f69b68eac26e70e6d10b54bb6a57fb620730f17ab883167fb936d8ff383",
+      "source_sha256": "fd23653a6c192dc61edf4b713ba16cc1fd942cfa93a20185ff32cee1eac8b8bc",
+      "installed_sha256": "fd23653a6c192dc61edf4b713ba16cc1fd942cfa93a20185ff32cee1eac8b8bc",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_037.md": {
+      "archive": "packages/tnb_pac088_exhibition_2v2.zip",
+      "member": "REGISTER_COMMANDS_037.md",
+      "archive_sha256": "71775f2d45e584a1f2ef7efe624bc760084bca455f77de156ba65e06f653f961",
+      "source_sha256": "dd5134dc98a65a40446a49636cccb20546b34bb9dbedcd2deb4a2593a80b45b6",
+      "installed_sha256": "dd5134dc98a65a40446a49636cccb20546b34bb9dbedcd2deb4a2593a80b45b6",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/sim/exhibition.gd": {
+      "archive": "packages/tnb_pac094_gear.zip",
+      "member": "engine/greybox/sim/exhibition.gd",
+      "archive_sha256": "dabe86b7defad82998ebd930335f27232caeb9d3df591d060682524d50a61169",
+      "source_sha256": "3726a654ae486705739bce9eac889efb56368be2add3cba06dee90fe22563cdf",
+      "installed_sha256": "3726a654ae486705739bce9eac889efb56368be2add3cba06dee90fe22563cdf",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_exhibition.gd": {
+      "archive": "packages/tnb_pac088_exhibition_2v2.zip",
+      "member": "engine/greybox/tools/drive_exhibition.gd",
+      "archive_sha256": "71775f2d45e584a1f2ef7efe624bc760084bca455f77de156ba65e06f653f961",
+      "source_sha256": "af9a4e69335505d85d2b9739946d49a789a628ac15c6c1dc4d0f37cc9c67fb24",
+      "installed_sha256": "af9a4e69335505d85d2b9739946d49a789a628ac15c6c1dc4d0f37cc9c67fb24",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_038.md": {
+      "archive": "packages/tnb_pac089_club_facilities.zip",
+      "member": "REGISTER_COMMANDS_038.md",
+      "archive_sha256": "33c72f69b68eac26e70e6d10b54bb6a57fb620730f17ab883167fb936d8ff383",
+      "source_sha256": "2791d60ddf6b0df86c3e370e86904cc2efc66fc5d4634a9a52e106b43d596233",
+      "installed_sha256": "2791d60ddf6b0df86c3e370e86904cc2efc66fc5d4634a9a52e106b43d596233",
+      "recovery_disposition": "new"
+    },
+    "data/facilities.v1.json": {
+      "archive": "packages/tnb_pac089_club_facilities.zip",
+      "member": "data/facilities.v1.json",
+      "archive_sha256": "33c72f69b68eac26e70e6d10b54bb6a57fb620730f17ab883167fb936d8ff383",
+      "source_sha256": "e68ffa67a4cb4a471c4e3b03fa54393662960a43284ff9fdaae85aa1cab249cf",
+      "installed_sha256": "e68ffa67a4cb4a471c4e3b03fa54393662960a43284ff9fdaae85aa1cab249cf",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/facilities.v1.json": {
+      "archive": "packages/tnb_pac089_club_facilities.zip",
+      "member": "engine/greybox/facilities.v1.json",
+      "archive_sha256": "33c72f69b68eac26e70e6d10b54bb6a57fb620730f17ab883167fb936d8ff383",
+      "source_sha256": "e68ffa67a4cb4a471c4e3b03fa54393662960a43284ff9fdaae85aa1cab249cf",
+      "installed_sha256": "e68ffa67a4cb4a471c4e3b03fa54393662960a43284ff9fdaae85aa1cab249cf",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_facilities.gd": {
+      "archive": "packages/tnb_pac089_club_facilities.zip",
+      "member": "engine/greybox/tools/drive_facilities.gd",
+      "archive_sha256": "33c72f69b68eac26e70e6d10b54bb6a57fb620730f17ab883167fb936d8ff383",
+      "source_sha256": "15d11e3801fc7e795db6941213455235da92f9009fe13f8c17df45a5a58984a8",
+      "installed_sha256": "15d11e3801fc7e795db6941213455235da92f9009fe13f8c17df45a5a58984a8",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_039.md": {
+      "archive": "packages/tnb_pac090_fighter_growth.zip",
+      "member": "REGISTER_COMMANDS_039.md",
+      "archive_sha256": "d4ab4d4c3bf74cc91a6da4c6aec1b5ebfacc6bdf8996e34012a9ec6dde62ede5",
+      "source_sha256": "b5a23def08a1c7bb1595166c68cae94fb005796e5b58fb0554d9e6a8289d2405",
+      "installed_sha256": "b5a23def08a1c7bb1595166c68cae94fb005796e5b58fb0554d9e6a8289d2405",
+      "recovery_disposition": "new"
+    },
+    "data/growth.v1.json": {
+      "archive": "packages/tnb_pac096_fixes.zip",
+      "member": "data/growth.v1.json",
+      "archive_sha256": "efad51f19006b618d8f66d95395a61cbe912213fb8a39ff13205af37d7269f94",
+      "source_sha256": "5842ddb99e3a33a8fe07c612468eebad506b196a36191fc0534e6221c27743da",
+      "installed_sha256": "5842ddb99e3a33a8fe07c612468eebad506b196a36191fc0534e6221c27743da",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/growth.v1.json": {
+      "archive": "packages/tnb_pac096_fixes.zip",
+      "member": "engine/greybox/growth.v1.json",
+      "archive_sha256": "efad51f19006b618d8f66d95395a61cbe912213fb8a39ff13205af37d7269f94",
+      "source_sha256": "5842ddb99e3a33a8fe07c612468eebad506b196a36191fc0534e6221c27743da",
+      "installed_sha256": "5842ddb99e3a33a8fe07c612468eebad506b196a36191fc0534e6221c27743da",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_growth.gd": {
+      "archive": "packages/tnb_pac096_fixes.zip",
+      "member": "engine/greybox/tools/drive_growth.gd",
+      "archive_sha256": "efad51f19006b618d8f66d95395a61cbe912213fb8a39ff13205af37d7269f94",
+      "source_sha256": "e2c32ad377e2af785fe849584cdddc1a9726b22e19be7e3cf84cc0f23ceacd9b",
+      "installed_sha256": "e2c32ad377e2af785fe849584cdddc1a9726b22e19be7e3cf84cc0f23ceacd9b",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_040.md": {
+      "archive": "packages/tnb_pac091_techniques.zip",
+      "member": "REGISTER_COMMANDS_040.md",
+      "archive_sha256": "2d270d5c61fcee398bf4ebd20404a2d5db14589978e025257e5e1215d83362ab",
+      "source_sha256": "9f6d2d05674652c9c4a0fdf68141063975dcf597a44cd68c83ef98ed89da352c",
+      "installed_sha256": "9f6d2d05674652c9c4a0fdf68141063975dcf597a44cd68c83ef98ed89da352c",
+      "recovery_disposition": "new"
+    },
+    "data/techniques.v1.json": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "data/techniques.v1.json",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "f0538a83be7377e44310c587351c1d2253e3a98864d4a170ec3497dd217185ef",
+      "installed_sha256": "f0538a83be7377e44310c587351c1d2253e3a98864d4a170ec3497dd217185ef"
+    },
+    "engine/greybox/techniques.v1.json": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "engine/greybox/techniques.v1.json",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "f0538a83be7377e44310c587351c1d2253e3a98864d4a170ec3497dd217185ef",
+      "installed_sha256": "f0538a83be7377e44310c587351c1d2253e3a98864d4a170ec3497dd217185ef"
+    },
+    "engine/greybox/tools/drive_techniques.gd": {
+      "archive": "packages/tnb_pac091_techniques.zip",
+      "member": "engine/greybox/tools/drive_techniques.gd",
+      "archive_sha256": "2d270d5c61fcee398bf4ebd20404a2d5db14589978e025257e5e1215d83362ab",
+      "source_sha256": "e4d65eeabc06f541c351e000466aa39168d2862b1249b0e9f5a6aa95e89d50a7",
+      "installed_sha256": "e4d65eeabc06f541c351e000466aa39168d2862b1249b0e9f5a6aa95e89d50a7",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_041.md": {
+      "archive": "packages/tnb_pac092_academy.zip",
+      "member": "REGISTER_COMMANDS_041.md",
+      "archive_sha256": "add98dfb8cc0d2a7953a167b85acb58981db008ceecafc9725931705a74703bc",
+      "source_sha256": "f447aab86c72fbe4ad622ad786ea12448b6d98ed318687abd8877607c1e58a90",
+      "installed_sha256": "f447aab86c72fbe4ad622ad786ea12448b6d98ed318687abd8877607c1e58a90",
+      "recovery_disposition": "new"
+    },
+    "data/academy.v1.json": {
+      "archive": "packages/tnb_pac102_antiyou.zip",
+      "member": "data/academy.v1.json",
+      "archive_sha256": "34b32823e614561ae79b817f0ffecd562f14d8761ac366078f2fef4ed6db7a52",
+      "source_sha256": "c5c06d350f55807446957c21a83ac28bffaaa43757e5af8ca215394db567a665",
+      "installed_sha256": "c5c06d350f55807446957c21a83ac28bffaaa43757e5af8ca215394db567a665",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/academy.v1.json": {
+      "archive": "packages/tnb_pac102_antiyou.zip",
+      "member": "engine/greybox/academy.v1.json",
+      "archive_sha256": "34b32823e614561ae79b817f0ffecd562f14d8761ac366078f2fef4ed6db7a52",
+      "source_sha256": "c5c06d350f55807446957c21a83ac28bffaaa43757e5af8ca215394db567a665",
+      "installed_sha256": "c5c06d350f55807446957c21a83ac28bffaaa43757e5af8ca215394db567a665",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_academy.gd": {
+      "archive": "packages/tnb_pac092_academy.zip",
+      "member": "engine/greybox/tools/drive_academy.gd",
+      "archive_sha256": "add98dfb8cc0d2a7953a167b85acb58981db008ceecafc9725931705a74703bc",
+      "source_sha256": "94a420acf726aaa13653c7c5421d9b372095d972f4ef4c40c99609061a1b1071",
+      "installed_sha256": "94a420acf726aaa13653c7c5421d9b372095d972f4ef4c40c99609061a1b1071",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_042.md": {
+      "archive": "packages/tnb_pac093_mirror.zip",
+      "member": "REGISTER_COMMANDS_042.md",
+      "archive_sha256": "ff38bb9672fdb121f2f599225e6a5ec3cb7688ed93291b83ed52def3dd472e2a",
+      "source_sha256": "7fbd5682010209447e76f78e3052472cbc77a029cc854f262d2ad4f7e7342803",
+      "installed_sha256": "7fbd5682010209447e76f78e3052472cbc77a029cc854f262d2ad4f7e7342803",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/sim/assembler.gd": {
+      "archive": "packages/tnb_pac093_mirror.zip",
+      "member": "engine/greybox/sim/assembler.gd",
+      "archive_sha256": "ff38bb9672fdb121f2f599225e6a5ec3cb7688ed93291b83ed52def3dd472e2a",
+      "source_sha256": "5eb247c7aa628dcc6adb47fc703211bee8b0296d04ebd0c028c6243053e1e271",
+      "installed_sha256": "5eb247c7aa628dcc6adb47fc703211bee8b0296d04ebd0c028c6243053e1e271",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_mirror.gd": {
+      "archive": "packages/tnb_pac093_mirror.zip",
+      "member": "engine/greybox/tools/drive_mirror.gd",
+      "archive_sha256": "ff38bb9672fdb121f2f599225e6a5ec3cb7688ed93291b83ed52def3dd472e2a",
+      "source_sha256": "7ffeb84b4cc381e31d8c7b3ac5cc7e41ae0593e14697ec7d247fdc50824cd5be",
+      "installed_sha256": "7ffeb84b4cc381e31d8c7b3ac5cc7e41ae0593e14697ec7d247fdc50824cd5be",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_043.md": {
+      "archive": "packages/tnb_pac094_gear.zip",
+      "member": "REGISTER_COMMANDS_043.md",
+      "archive_sha256": "dabe86b7defad82998ebd930335f27232caeb9d3df591d060682524d50a61169",
+      "source_sha256": "c0898c55d888769d753eb7c79908c349ff3320f840ce34bc644764f56c7f286d",
+      "installed_sha256": "c0898c55d888769d753eb7c79908c349ff3320f840ce34bc644764f56c7f286d",
+      "recovery_disposition": "new"
+    },
+    "data/gear.v1.json": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "data/gear.v1.json",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "41f57b94eccde69dffd78ecdbfdc2a55e10ee865e0dfd03613be24f52ccd0f40",
+      "installed_sha256": "41f57b94eccde69dffd78ecdbfdc2a55e10ee865e0dfd03613be24f52ccd0f40"
+    },
+    "engine/greybox/gear.v1.json": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "engine/greybox/gear.v1.json",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "41f57b94eccde69dffd78ecdbfdc2a55e10ee865e0dfd03613be24f52ccd0f40",
+      "installed_sha256": "41f57b94eccde69dffd78ecdbfdc2a55e10ee865e0dfd03613be24f52ccd0f40"
+    },
+    "engine/greybox/tools/drive_gear.gd": {
+      "archive": "packages/tnb_pac094_gear.zip",
+      "member": "engine/greybox/tools/drive_gear.gd",
+      "archive_sha256": "dabe86b7defad82998ebd930335f27232caeb9d3df591d060682524d50a61169",
+      "source_sha256": "0894b4b740df69ad62260582f2928a945edb312e46acb3d979561b68b8e6d570",
+      "installed_sha256": "0894b4b740df69ad62260582f2928a945edb312e46acb3d979561b68b8e6d570",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_044.md": {
+      "archive": "packages/tnb_pac095_audit.zip",
+      "member": "REGISTER_COMMANDS_044.md",
+      "archive_sha256": "0ecd88b45c003767c76bc783869ad2b08f6417e9c8797a24f6fcb3dc07fedd78",
+      "source_sha256": "1bd3871c671c6cee60274d4c89e2909af943ebb8acf46eade2f8efcfb9e68a35",
+      "installed_sha256": "1bd3871c671c6cee60274d4c89e2909af943ebb8acf46eade2f8efcfb9e68a35",
+      "recovery_disposition": "new"
+    },
+    "data/audit.v1.json": {
+      "archive": "packages/tnb_pac098_economy.zip",
+      "member": "data/audit.v1.json",
+      "archive_sha256": "2d075cedc917a029a0fb04aa8a619c624259d9a15ae21330b237ab6834225a63",
+      "source_sha256": "c4e1d6fb85dbf7a193f30ae8b91a7cd7a4d38dac1ce49ffd47f5dc7eba09b1a1",
+      "installed_sha256": "c4e1d6fb85dbf7a193f30ae8b91a7cd7a4d38dac1ce49ffd47f5dc7eba09b1a1",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/audit.v1.json": {
+      "archive": "packages/tnb_pac098_economy.zip",
+      "member": "engine/greybox/audit.v1.json",
+      "archive_sha256": "2d075cedc917a029a0fb04aa8a619c624259d9a15ae21330b237ab6834225a63",
+      "source_sha256": "c4e1d6fb85dbf7a193f30ae8b91a7cd7a4d38dac1ce49ffd47f5dc7eba09b1a1",
+      "installed_sha256": "c4e1d6fb85dbf7a193f30ae8b91a7cd7a4d38dac1ce49ffd47f5dc7eba09b1a1",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/sim/audit.gd": {
+      "archive": "packages/tnb_pac095_audit.zip",
+      "member": "engine/greybox/sim/audit.gd",
+      "archive_sha256": "0ecd88b45c003767c76bc783869ad2b08f6417e9c8797a24f6fcb3dc07fedd78",
+      "source_sha256": "5e79ca772323239fc71932aeca7ff6f708df91c24d1f0b9e7960d265347e25f4",
+      "installed_sha256": "5e79ca772323239fc71932aeca7ff6f708df91c24d1f0b9e7960d265347e25f4",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_045.md": {
+      "archive": "packages/tnb_pac096_fixes.zip",
+      "member": "REGISTER_COMMANDS_045.md",
+      "archive_sha256": "efad51f19006b618d8f66d95395a61cbe912213fb8a39ff13205af37d7269f94",
+      "source_sha256": "1c6a96cafe6f64173da6f3ea7c331799f8ca171d8c76a67472e298034622fc96",
+      "installed_sha256": "1c6a96cafe6f64173da6f3ea7c331799f8ca171d8c76a67472e298034622fc96",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_046.md": {
+      "archive": "packages/tnb_pac097_faucets.zip",
+      "member": "REGISTER_COMMANDS_046.md",
+      "archive_sha256": "dcf9f5c213cc460914a37b59587ea75eb29034831d2026de9596d2ee4f608298",
+      "source_sha256": "086153b586819eba083b3b2bf6373f4ebb24bf96476277b029159b17ce991fe7",
+      "installed_sha256": "086153b586819eba083b3b2bf6373f4ebb24bf96476277b029159b17ce991fe7",
+      "recovery_disposition": "new"
+    },
+    "data/faucets.v1.json": {
+      "archive": "packages/tnb_pac101_rep.zip",
+      "member": "data/faucets.v1.json",
+      "archive_sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "source_sha256": "81dff3c6f7dbc857f8f3e03d87490c448760a983e37ad17245c9a5a146c83b49",
+      "installed_sha256": "81dff3c6f7dbc857f8f3e03d87490c448760a983e37ad17245c9a5a146c83b49",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/faucets.v1.json": {
+      "archive": "packages/tnb_pac101_rep.zip",
+      "member": "engine/greybox/faucets.v1.json",
+      "archive_sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "source_sha256": "81dff3c6f7dbc857f8f3e03d87490c448760a983e37ad17245c9a5a146c83b49",
+      "installed_sha256": "81dff3c6f7dbc857f8f3e03d87490c448760a983e37ad17245c9a5a146c83b49",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/sim/faucets.gd": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "engine/greybox/sim/faucets.gd",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "daf30ae8ccdbc1a96ac09459031d586281e11becd70afe8ca21eef722b55c339",
+      "installed_sha256": "daf30ae8ccdbc1a96ac09459031d586281e11becd70afe8ca21eef722b55c339"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_047.md": {
+      "archive": "packages/tnb_pac098_economy.zip",
+      "member": "REGISTER_COMMANDS_047.md",
+      "archive_sha256": "2d075cedc917a029a0fb04aa8a619c624259d9a15ae21330b237ab6834225a63",
+      "source_sha256": "dd2b37d646aae8659263f80ca00c1742d92bac9e6d8e7a0a2994b79fd6fd2392",
+      "installed_sha256": "dd2b37d646aae8659263f80ca00c1742d92bac9e6d8e7a0a2994b79fd6fd2392",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_scouting.gd": {
+      "archive": "packages/tnb_pac098_economy.zip",
+      "member": "engine/greybox/tools/drive_scouting.gd",
+      "archive_sha256": "2d075cedc917a029a0fb04aa8a619c624259d9a15ae21330b237ab6834225a63",
+      "source_sha256": "581a2ecb9b88190a3b95980a5b98304eec2500cc8cf2007fbf57e522ca568e7b",
+      "installed_sha256": "581a2ecb9b88190a3b95980a5b98304eec2500cc8cf2007fbf57e522ca568e7b",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_048.md": {
+      "archive": "packages/tnb_pac099_roles.zip",
+      "member": "REGISTER_COMMANDS_048.md",
+      "archive_sha256": "f1486d623b7917f55982b966c4dc5eb58941289ca2f11a5de849df95bda42578",
+      "source_sha256": "c2df3abf861fc67d91c6e2cf600c9d0b51cf7f9841582537691dd49c7851dfd6",
+      "installed_sha256": "c2df3abf861fc67d91c6e2cf600c9d0b51cf7f9841582537691dd49c7851dfd6",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_roles.gd": {
+      "archive": "packages/tnb_pac099_roles.zip",
+      "member": "engine/greybox/tools/drive_roles.gd",
+      "archive_sha256": "f1486d623b7917f55982b966c4dc5eb58941289ca2f11a5de849df95bda42578",
+      "source_sha256": "5eb00a52390a2dd4d0b2f4ef570ce913370640ed4af4c404dcbf841d57d57477",
+      "installed_sha256": "5eb00a52390a2dd4d0b2f4ef570ce913370640ed4af4c404dcbf841d57d57477",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_049.md": {
+      "archive": "packages/tnb_pac100_locker.zip",
+      "member": "REGISTER_COMMANDS_049.md",
+      "archive_sha256": "4edd3c06b2e33a663f9ed44da620199ce1c01dc42692a7239fb659804f6edc4c",
+      "source_sha256": "53a4bf1989b3ff378378232fdeb203c9b9ff614e92b0e6154a6591d109e9c161",
+      "installed_sha256": "53a4bf1989b3ff378378232fdeb203c9b9ff614e92b0e6154a6591d109e9c161",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_locker.gd": {
+      "archive": "packages/tnb_pac100_locker.zip",
+      "member": "engine/greybox/tools/drive_locker.gd",
+      "archive_sha256": "4edd3c06b2e33a663f9ed44da620199ce1c01dc42692a7239fb659804f6edc4c",
+      "source_sha256": "633fd10b70c7ac18796001ad7a24d6ecd3fd33a8255fb66343a117aef7259d44",
+      "installed_sha256": "633fd10b70c7ac18796001ad7a24d6ecd3fd33a8255fb66343a117aef7259d44",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_050.md": {
+      "archive": "packages/tnb_pac101_rep.zip",
+      "member": "REGISTER_COMMANDS_050.md",
+      "archive_sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "source_sha256": "a7b7dda5c8acfbb6edbdcd24f5352709781c5f4177578171e609bd3150d18dee",
+      "installed_sha256": "a7b7dda5c8acfbb6edbdcd24f5352709781c5f4177578171e609bd3150d18dee",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_rep.gd": {
+      "archive": "packages/tnb_pac101_rep.zip",
+      "member": "engine/greybox/tools/drive_rep.gd",
+      "archive_sha256": "c3f3fdaf214ae45a6ea9a7cd82392035c5ca714e00b0bfd5908120528ba52a71",
+      "source_sha256": "bfaf403ef7ea9cb6190fddad4faf2c437a0c8f50594aabcd2fdbbe3d4754c63a",
+      "installed_sha256": "bfaf403ef7ea9cb6190fddad4faf2c437a0c8f50594aabcd2fdbbe3d4754c63a",
+      "recovery_disposition": "new"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_051.md": {
+      "archive": "packages/tnb_pac102_antiyou.zip",
+      "member": "REGISTER_COMMANDS_051.md",
+      "archive_sha256": "34b32823e614561ae79b817f0ffecd562f14d8761ac366078f2fef4ed6db7a52",
+      "source_sha256": "78aac04025270959a5be24a264a389df840d952225c1075ffe41305d3b2730d2",
+      "installed_sha256": "78aac04025270959a5be24a264a389df840d952225c1075ffe41305d3b2730d2",
+      "recovery_disposition": "new"
+    },
+    "engine/greybox/tools/drive_anti.gd": {
+      "archive": "packages/tnb_pac102_antiyou.zip",
+      "member": "engine/greybox/tools/drive_anti.gd",
+      "archive_sha256": "34b32823e614561ae79b817f0ffecd562f14d8761ac366078f2fef4ed6db7a52",
+      "source_sha256": "415e747e882c40a1ab0fac58a9fcc9011dfa571d11c016172f9f88d0f1f05b8c",
+      "installed_sha256": "415e747e882c40a1ab0fac58a9fcc9011dfa571d11c016172f9f88d0f1f05b8c",
+      "recovery_disposition": "new"
+    },
+    "data/pattern_pieces.v1.json": {
+      "archive": "packages/tnb_pac070_assembler.zip",
+      "member": "data/pattern_pieces.v1.json",
+      "archive_sha256": "c5ad7bb80adacc5616a91852c04b46b89c56b68776de6c56d542639b5b3ae5d3",
+      "source_sha256": "dd33612d59078fb0624b71a6be10605148eb55f4ea882c251ae81e769bdcc713",
+      "installed_sha256": "dd33612d59078fb0624b71a6be10605148eb55f4ea882c251ae81e769bdcc713",
+      "recovery_disposition": "original PAC-070 bytes recovered from newly available archive"
+    },
+    "engine/greybox/pattern_pieces.v1.json": {
+      "archive": "packages/tnb_pac070_assembler.zip",
+      "member": "engine/greybox/pattern_pieces.v1.json",
+      "archive_sha256": "c5ad7bb80adacc5616a91852c04b46b89c56b68776de6c56d542639b5b3ae5d3",
+      "source_sha256": "dd33612d59078fb0624b71a6be10605148eb55f4ea882c251ae81e769bdcc713",
+      "installed_sha256": "dd33612d59078fb0624b71a6be10605148eb55f4ea882c251ae81e769bdcc713",
+      "recovery_disposition": "original PAC-070 bytes recovered from newly available archive"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_019.md": {
+      "archive": "packages/tnb_pac070_assembler.zip",
+      "member": "REGISTER_COMMANDS_019.md",
+      "archive_sha256": "c5ad7bb80adacc5616a91852c04b46b89c56b68776de6c56d542639b5b3ae5d3",
+      "source_sha256": "11b05ffc5a933d05abfc83a1771c868bdf61a2f9618cf12131bc334bb9914ac3",
+      "installed_sha256": "11b05ffc5a933d05abfc83a1771c868bdf61a2f9618cf12131bc334bb9914ac3",
+      "recovery_disposition": "original PAC-070 bytes recovered from newly available archive"
+    },
+    "docs/register-commands_docs/REGISTER_COMMANDS_052.md": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "REGISTER_COMMANDS_052.md",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "1adba32fff43e2543a1e611ab20ea9d543eb8d8f35ad016ef3e1b4abc66bca70",
+      "installed_sha256": "1adba32fff43e2543a1e611ab20ea9d543eb8d8f35ad016ef3e1b4abc66bca70"
+    },
+    "VAULT_MANIFEST.txt": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "VAULT_MANIFEST.txt",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "30f146388c875866f236c0cb889444b1d6596d0e19ef7c1bcb2b6d74786e9ba1",
+      "installed_sha256": "d6c7b88b5376fcf03314c9768a142f3df1ee1b7d6456a3c8679109e0b680ac02",
+      "recovery_disposition": "Regenerated from integrated checkout paths; original manifest retained in delivery archive"
+    },
+    "engine/greybox/tools/drive_vendors.gd": {
+      "archive": "packages/tnb_pac103_vendors.zip",
+      "member": "engine/greybox/tools/drive_vendors.gd",
+      "archive_sha256": "8c20b701fbdd0bc32965fca8d70824ca76bb922888b0d4251abdb66569fe8831",
+      "source_sha256": "72ae6f9dbdcf3f061763e7f0d98516b84a2dc37feb60b818efbcbc03b3030ca3",
+      "installed_sha256": "72ae6f9dbdcf3f061763e7f0d98516b84a2dc37feb60b818efbcbc03b3030ca3"
+    }
+  }
+}

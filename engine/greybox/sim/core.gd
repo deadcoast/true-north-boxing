@@ -2826,6 +2826,17 @@ static func seed_purse(ledger: Dictionary, s_arg: String) -> Dictionary:
 		if kv.size() == 2 and str(kv[0]) in ["spirits", "beans", "prestige", "hbp"] and str(kv[1]).is_valid_int(): out[str(kv[0])] = int(kv[1])
 	return out
 
+static func seed_rep(ledger: Dictionary, r_arg: String, eco: Dictionary = {}) -> Dictionary:
+	# PAC-103: `-- rep=downtown:9,rink:3` -> the districts' rep on the ledger as it stood (its milestones counted as passed, not paid)
+	var out := ledger.duplicate(true)
+	for part in r_arg.split(","):
+		var kv := str(part).strip_edges().to_lower().split(":")
+		if kv.size() != 2 or not str(kv[1]).is_valid_int(): continue
+		var k := str(eco.get("rep", {}).get("aliases", {}).get(str(kv[0]), str(kv[0])))
+		if not out.has("rep"): out["rep"] = {"of": {}, "best": {}, "paid": 0}
+		out["rep"]["of"][k] = int(kv[1]); out["rep"]["best"][k] = maxi(int(out["rep"]["best"].get(k, 0)), int(kv[1]))
+	return out
+
 func _club_card(nm: String) -> Dictionary:
 	var c := _stable_card(nm)
 	return c if c.size() > 0 else _card_of(nm)
@@ -4986,10 +4997,12 @@ func _rep_q() -> Dictionary:
 	if not rewards.has("rep"): rewards["rep"] = {"of": {}, "best": {}, "paid": 0}
 	return rewards["rep"]
 
-func _rep_add(d: String, n: int, why: String) -> void:
-	# the district's rep moved (never under 0); a milestone pays its Prestige the first time the rep reaches it
-	if _rp().is_empty() or d == "" or n == 0: return
+func _rep_add(d: String, n: int, why: String) -> Dictionary:
+	# the district's rep moved (never under 0); a milestone pays its Prestige the first time the rep reaches it; PAC-103: the vendor
+	# shelves the move opened or closed ride the event and the line (returned for the flee's)
+	if _rp().is_empty() or d == "" or n == 0: return {"opened": [], "closed": []}
 	var k := rep_key(d); var q := _rep_q()
+	var sh0 := shelves_open()
 	var before := int(q["of"].get(k, 0)); var after := maxi(0, before + n)
 	q["of"][k] = after
 	var best := int(q["best"].get(k, 0)); var paid := 0; var hit: Array = []
@@ -4998,9 +5011,13 @@ func _rep_add(d: String, n: int, why: String) -> void:
 			if int(m[0]) > best and int(m[0]) <= after: paid += int(m[1]); hit.append(int(m[0]))
 		q["best"][k] = after
 	if paid > 0: rewards["prestige"] = int(rewards.get("prestige", 0)) + paid; q["paid"] = int(q.get("paid", 0)) + paid
-	_ev("rep", {"district": k, "was": before, "rep": after, "by": after - before, "why": why, "milestones": hit, "prestige": paid})
-	_say("REP :: %s %d (%s%d, %s)%s" % [district_label(k), after, "+" if after >= before else "", after - before, why, (" - a milestone at %s: +%d Prestige" % [", ".join(PackedStringArray(hit.map(func(x): return str(x)))), paid]) if paid > 0 else ""])
+	var sh1 := shelves_open()
+	var opened: Array = sh1.filter(func(x): return not x in sh0); var closed: Array = sh0.filter(func(x): return not x in sh1)
+	_ev("rep", {"district": k, "was": before, "rep": after, "by": after - before, "why": why, "milestones": hit, "prestige": paid, "shelves": opened.map(func(x): return shelf_label(x)), "closed": closed.map(func(x): return shelf_label(x))})
+	_say("REP :: %s %d (%s%d, %s)%s%s%s" % [district_label(k), after, "+" if after >= before else "", after - before, why, (" - a milestone at %s: +%d Prestige" % [", ".join(PackedStringArray(hit.map(func(x): return str(x)))), paid]) if paid > 0 else "",
+		(" - opens %s" % ", ".join(PackedStringArray(opened.map(func(x): return shelf_label(x))))) if opened.size() > 0 else "", (" - closes %s" % ", ".join(PackedStringArray(closed.map(func(x): return shelf_label(x))))) if closed.size() > 0 else ""])
 	if after != before: _recruit_check()                                                                 # REP() may be met now (a recruit, a house's blessing)
+	return {"opened": opened, "closed": closed}
 
 func flee_why() -> String:
 	if _rp().is_empty(): return "no district rep in this build"
@@ -5019,9 +5036,9 @@ func flee() -> Dictionary:
 	var cost := int(_rp().get("flee", 1)) if engaged and d != "" else 0
 	mode = "OVER"
 	P["pending"] = {}; bpending = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
-	if cost > 0: _rep_add(d, -cost, "fled")
+	var shv: Dictionary = _rep_add(d, -cost, "fled") if cost > 0 else {"opened": [], "closed": []}
 	var v := ("SCRAP FLED - %s rep -%d" % [district_label(d), cost]) if cost > 0 else ("SCRAP FLED - %s" % ("after the first exchange, placed nowhere: no rep" if engaged else "before the first exchange: free"))
-	_ev("fled", {"engaged": engaged, "district": d, "rep": -cost, "objective": str(bout.get("objective", ""))})
+	_ev("fled", {"engaged": engaged, "district": d, "rep": -cost, "objective": str(bout.get("objective", "")), "closed": shv["closed"].map(func(x): return shelf_label(x))})
 	_ev("bout_end", {"kind": "scrap", "verdict": v, "rung": "fled", "objective": str(bout.get("objective", "")), "met": false, "won": false})
 	_say("%s :: %s" % [str(bout.get("label", "SCRAP")), v])
 	return {"ok": true, "why": "", "engaged": engaged, "rep": -cost}
@@ -5038,6 +5055,72 @@ func rep_lines() -> Array:
 			if int(m[0]) > int(rewards.get("rep", {}).get("best", {}).get(str(k), 0)): nx = int(m[0]); break
 		parts.append("%s %d%s" % [district_label(str(k)), r, (" (next %d)" % nx) if nx > 0 else ""])
 	out.append("DISTRICT REP (milestones %s): %s" % [", ".join(PackedStringArray(ms.map(func(m): return "%d +%d Prestige" % [int(m[0]), int(m[1])]))), ", ".join(PackedStringArray(parts))])
+	return out
+
+# ---- PAC-103: the vendor tiers (NP_02 s4: "District rep | Gates | Recruit conditions, vendor tiers") ----
+# Each shop stands in a district (its table's `district`: the Downtown Strip, NP_02 s1.1's shops). A shelf with a `rep` opens by that
+# district's rep as well as by its story flag: the ledger's rep as it stands (a flee below the line closes it again - what was bought
+# stays bought), a seeded rep flag counting as REP() counts it. A shelf with no flag stands open as found.
+const VENDOR_SHOPS := ["techniques", "gear"]
+const VENDOR_LABELS := {"techniques": "the technique shop", "gear": "the gear shop"}
+
+func vendor_shop(shop: String) -> Dictionary:
+	if shop == "techniques": return TECH.get("shop", {})
+	if shop == "gear": return GEAR.get("shop", {})
+	return {}
+
+func vendor_rep(shop: String) -> int:
+	# the shop's district's rep: the ledger's, or a seeded rep flag's when higher (as REP() reads it)
+	var d := str(vendor_shop(shop).get("district", ""))
+	if d == "": return 0
+	var st: Dictionary = rewards.get("story", {})
+	var sv = st.get("rep:%s" % d, 0)
+	return maxi(rep_of(d), int(sv) if not (sv is bool) else (1 if sv else 0))
+
+func shelf_open_by(shop: String, tier: String) -> String:
+	# how a shelf stands: "found" (no flag), "flag" (its story beat), "rep" (the district's rep met ahead of the beat), "closed"
+	var td: Dictionary = vendor_shop(shop).get("tiers", {}).get(tier, {})
+	var fl := str(td.get("flag", ""))
+	if fl == "": return "found"
+	if _flag_set(fl): return "flag"
+	var n := int(td.get("rep", 0))
+	if n > 0 and str(vendor_shop(shop).get("district", "")) != "" and vendor_rep(shop) >= n: return "rep"
+	return "closed"
+
+func shelves_open() -> Array:
+	# every shop's open shelves as "shop:tier"
+	var out: Array = []
+	for shop in VENDOR_SHOPS:
+		for t in vendor_shop(shop).get("order", []):
+			if shelf_open_by(shop, str(t)) != "closed": out.append("%s:%s" % [shop, str(t)])
+	return out
+
+func shelf_label(st: String) -> String:
+	var bits := st.split(":")
+	return "%s's %s shelf" % [str(VENDOR_LABELS.get(bits[0], bits[0])), bits[1] if bits.size() > 1 else ""]
+
+func shelf_rep_clause(shop: String, tier: String) -> String:
+	# a closed shelf's other key: " or DOWNTOWN rep 10 (3 now)" ("" for a shelf the table gives no rep)
+	var sh := vendor_shop(shop)
+	var n := int(sh.get("tiers", {}).get(tier, {}).get("rep", 0))
+	if n <= 0 or str(sh.get("district", "")) == "": return ""
+	return " or %s rep %d (%d now)" % [district_label(rep_key(str(sh["district"]))), n, vendor_rep(shop)]
+
+func vendor_lines() -> Array:
+	# between duals: each shop's shelves, how each stands open, and what a closed one wants
+	var out: Array = []
+	for shop in VENDOR_SHOPS:
+		var sh := vendor_shop(shop)
+		if sh.is_empty() or str(sh.get("district", "")) == "": continue
+		var parts: Array = []
+		for t in sh.get("order", []):
+			var td: Dictionary = sh["tiers"][t]; var by := shelf_open_by(shop, str(t)); var txt := str(td.get("text", "")).split(" (")[0]
+			match by:
+				"found": parts.append("%s open" % str(t))
+				"flag": parts.append("%s open (%s)" % [str(t), txt])
+				"rep": parts.append("%s open (%s rep %d)" % [str(t), district_label(rep_key(str(sh["district"]))), int(td.get("rep", 0))])
+				_: parts.append("%s at %s%s" % [str(t), txt, (" or rep %d (%d/%d)" % [int(td.get("rep", 0)), vendor_rep(shop), int(td.get("rep", 0))]) if int(td.get("rep", 0)) > 0 else ""])
+		out.append("%s (%s, rep %d): %s" % [str(VENDOR_LABELS[shop]).to_upper(), district_label(rep_key(str(sh["district"]))), vendor_rep(shop), ", ".join(PackedStringArray(parts))])
 	return out
 
 # ---- PAC-100: the locker room (NP_08 s4) - the release, three days to take it back, the grudge / warmth flag, the browse ----
@@ -7327,8 +7410,7 @@ func shop_tier_of(move: String) -> String:
 	return ""
 
 func shop_open(tier: String) -> bool:
-	var fl := str(TECH.get("shop", {}).get("tiers", {}).get(tier, {}).get("flag", ""))
-	return fl == "" or _flag_set(fl)
+	return shelf_open_by("techniques", tier) != "closed"                                                  # PAC-103: its flag, or DOWNTOWN's rep
 
 func shop_list() -> Array:
 	# the shop's rows in the library's order: move, shelf, price, open
@@ -7344,7 +7426,7 @@ func buy_why(name: String, move: String) -> String:
 	var lw := _learn_why(name, move)
 	if lw != "": return lw
 	var td: Dictionary = TECH["shop"]["tiers"][t]
-	if not shop_open(t): return "the shop's %s shelf opens with %s (%s)" % [t, str(td.get("text", "")), str(td.get("flag", ""))]
+	if not shop_open(t): return "the shop's %s shelf opens with %s (%s)%s" % [t, str(td.get("text", "")), str(td.get("flag", "")), shelf_rep_clause("techniques", t)]
 	if int(rewards.get("hbp", 0)) < int(td.get("hbp", 0)): return "%s costs %d HBP (the ledger holds %d)" % [move, int(td.get("hbp", 0)), int(rewards.get("hbp", 0))]
 	return ""
 
@@ -7787,15 +7869,14 @@ func take_off(name: String, id: String) -> Dictionary:
 	return {"ok": true, "why": "", "id": id}
 
 func gear_shelf_open(t: String) -> bool:
-	var fl := str(GEAR.get("shop", {}).get("tiers", {}).get(t, {}).get("flag", ""))
-	return fl == "" or _flag_set(fl)
+	return shelf_open_by("gear", t) != "closed"                                                           # PAC-103: its flag, or DOWNTOWN's rep
 
 func gear_buy_why(id: String) -> String:
 	var it := gear_item(id)
 	if it.is_empty(): return "no gear '%s'" % id
 	if str(it.get("source", "")) != "shop": return "%s is not sold - %s" % [str(it["name"]), {"prize": "a circuit prize", "signature": "signature gear, never sold", "festival": "a festival prize", "gift": "a house's gift"}.get(str(it.get("source", "")), "not in the shop")]
 	var td: Dictionary = GEAR.get("shop", {}).get("tiers", {}).get(str(it.get("shelf", "")), {})
-	if not gear_shelf_open(str(it.get("shelf", ""))): return "the gear shop's %s shelf opens with %s (%s)" % [str(it["shelf"]), str(td.get("text", "")), str(td.get("flag", ""))]
+	if not gear_shelf_open(str(it.get("shelf", ""))): return "the gear shop's %s shelf opens with %s (%s)%s" % [str(it["shelf"]), str(td.get("text", "")), str(td.get("flag", "")), shelf_rep_clause("gear", str(it["shelf"]))]
 	if int(rewards.get("hbp", 0)) < int(it.get("hbp", 0)): return "%s costs %d HBP (the ledger holds %d)" % [str(it["name"]), int(it.get("hbp", 0)), int(rewards.get("hbp", 0))]
 	return ""
 

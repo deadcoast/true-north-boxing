@@ -114,6 +114,7 @@ static func faucet(content: Dictionary, F: Dictionary, seg: Dictionary, opts: Di
 	var tot := {"episodes": 0, "duals": 0, "won": 0, "sessions": 0.0, "scraps": 0, "spars": 0, "slots": 0, "hosted": 0, "beats": 0, "quests": 0}
 	var s: TNBSim = null
 	var bn: Dictionary = p.get("bench", {}); var bench: Array = []; var seated := false                   # PAC-099: NP_08 s1's roles on a story-pace bench
+	var vend := {}; var vrep := {}                                                                       # PAC-103: each shelf's first phase open and its key; the shops' rep by phase
 	for ph in opts.get("phases", F["phases"]):
 		if not seated and bn.size() > 0 and str(ph["id"]) == str(bn.get("from", "")):
 			seated = true
@@ -159,6 +160,12 @@ static func faucet(content: Dictionary, F: Dictionary, seg: Dictionary, opts: Di
 			var tr: Dictionary = s.train("*", hero, float(res["training_grade"]))
 			if bool(tr.get("ok", false)): slots_run += 1; game = str(tr.get("game", game))
 		s.new_day()
+		for vs in TNBSim.VENDOR_SHOPS:                                                                    # PAC-103: NP_02 s4's vendor tiers at the phase's end - the story's flag or the district's rep
+			if str(s.vendor_shop(vs).get("district", "")) == "": continue
+			vrep[str(ph["id"])] = s.vendor_rep(vs)
+			for vt in s.vendor_shop(vs).get("order", []):
+				var vby := s.shelf_open_by(vs, str(vt))
+				if not vend.has("%s:%s" % [vs, vt]) and vby in ["flag", "rep"]: vend["%s:%s" % [vs, vt]] = {"by": vby, "phase": str(ph["id"])}
 		var after := _ledger_sum(s.rewards, hero)
 		var d := {}
 		for k in after: d[k] = int(after[k]) - int(before[k])
@@ -176,7 +183,8 @@ static func faucet(content: Dictionary, F: Dictionary, seg: Dictionary, opts: Di
 	var bview: Array = bench.map(func(bc): return {"name": str(bc["card"]["name"]), "role": str(bc["role"]), "district": str(bc["card"]["district"]), "tier": int(bc["card"]["tier"])})
 	return {"phases": rows, "counts": tot, "paid": paid, "hero": hero, "level": s.level_of(hero) if s != null else 1, "ledger": led, "hash": s.hash_state() if s != null else 0,
 		"bench": bview, "bench_from": str(bn.get("from", "")) if seated else "", "roles_paid": led.get("roles", {}).get("paid", {"prestige": 0, "beans": 0, "uses": 0}).duplicate(),
-		"rep": led.get("rep", {}).get("of", {}).duplicate(), "rep_prestige": rows.reduce(func(acc, r): return acc + int(r.get("rep_prestige", 0)), 0)}
+		"rep": led.get("rep", {}).get("of", {}).duplicate(), "rep_prestige": rows.reduce(func(acc, r): return acc + int(r.get("rep_prestige", 0)), 0),
+		"vendors": vend, "vendor_rep": vrep, "vendor_district": str(s.vendor_shop("techniques").get("district", s.vendor_shop("gear").get("district", ""))) if s != null else ""}
 
 # ---- the sinks a story-pace player wants by Arc 3, priced from the live tables ----
 static func spend_of(content: Dictionary, b: Dictionary) -> Dictionary:
@@ -288,6 +296,13 @@ static func lines(rep: Dictionary, F: Dictionary) -> Array:
 		out.append("FAUCETS :: the bench from %s (NP_08 s1's roles: %s) - the roles paid Prestige %d, Beans %d (to %s), staff uses %d" % [str(fc["bench_from"]), ", ".join(PackedStringArray(fc["bench"].map(func(b): return "%s %s (T%d, %s)" % [str(b["name"]), str(TNBSim.ROLE_LABELS.get(str(b["role"]), b["role"])), int(b["tier"]), str(b["district"])]))), int(rpp.get("prestige", 0)), int(rpp.get("beans", 0)), str(fc["hero"]), int(rpp.get("uses", 0))])
 	if fc.get("rep", {}).size() > 0:                                                                        # PAC-101: the district rep the scraps raised, its milestones' Prestige
 		out.append("FAUCETS :: district rep by Arc 3 (the scraps' districts by phase) - %s; the milestones paid Prestige %d" % [", ".join(PackedStringArray(fc["rep"].keys().map(func(k): return "%s %d" % [str(k), int(fc["rep"][k])]))), int(fc["rep_prestige"])])
+	if fc.get("vendor_rep", {}).size() > 0:                                                                 # PAC-103: NP_02 s4's vendor tiers - each shelf's key at story pace
+		var vk: Array = fc["vendors"].keys()                                                               # in the shops' order, each shop's shelves in order
+		var ahead: Array = vk.filter(func(k): return str(fc["vendors"][k]["by"]) == "rep").map(func(k): return str(k).replace(":", " "))
+		var vph: Array = fc["vendor_rep"].keys()
+		out.append("FAUCETS :: the vendor tiers (NP_02 s4; the shops' district %s at rep %s by phase) - %s; by rep ahead of the story: %s" % [str(fc["vendor_district"]).to_upper(), "/".join(PackedStringArray(vph.map(func(k): return str(fc["vendor_rep"][k])))),
+			", ".join(PackedStringArray(vk.map(func(k): return "%s by its %s (%s)" % [str(k).replace(":", " "), "flag" if str(fc["vendors"][k]["by"]) == "flag" else "rep", str(fc["vendors"][k]["phase"])]))),
+			("%s - the HBP sinks open before their story beats" % ", ".join(PackedStringArray(ahead))) if ahead.size() > 0 else "none - the HBP sinks open with the story, as before"])
 	var pd: Dictionary = fc["paid"]
 	out.append("FAUCETS :: paid by Arc 3 - Spirits %s, HBP %s, Beans %s, Prestige %s; %s at level %d (%s XP)" % [_c(float(pd["spirits"])), _c(float(pd["hbp"])), _c(float(pd["beans"])), _c(float(pd["prestige"])), str(fc["hero"]), int(fc["level"]), _c(float(pd["xp"]))])
 	var pf: Dictionary = sk["per_fighter"]; var w: Dictionary = sk["want"]
