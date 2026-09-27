@@ -7,7 +7,8 @@
   "slot": "R5",
   "arc": "1",
   "pi_transfer": "0.5",
-  "authored_loss": "dual_math"
+  "authored_loss": "dual_math",
+  "kit": "outboxer_frost"
  },
  "idle": [
   "neutral_stance_studied"

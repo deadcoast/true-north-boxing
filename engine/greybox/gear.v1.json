@@ -1,0 +1,270 @@
+{
+ "schema": "Gear/NP_11-s5/v1.0",
+ "vault": "v1.3",
+ "notes": "NP_11 s5's accessories and gear as the sim reads them. Gear is cosmetic-forward: gloves, wraps, robes and mouthguards, each piece a look (its colour, its material) and at most one small passive - its kind's, never more than cap_pct (NP_11 s5: 3%), so a board's passive on the same key (Snap, Tight Guard, Iron Jaw, Sparkplug: 15-30%) always outweighs it. A fighter wears one piece of each kind in the accessory slots his rarity opens (NP_11 s4, C44: 1 / 2 / 3 / 3). The club keeps its gear in one locker; a piece bought twice is two copies. The sources: the HBP shop by circuit progress (the technique shop's three shelves), circuit prizes that arrive once with their flags, a blessed house's gift of its colours (one per house, the piece by the house's style), festival prizes for an Exhibition 2v2 won on the boardwalk, and signature gear - a named character's identity piece, his alone (untradeable: no other card wears it). The names, looks, prices and percentages are first drafts for the content lane; the house gifts are named by rule (the house's colours), never by a cultural object (NP_07 s9).",
+ "cap_pct": 3,
+ "kinds": {
+  "gloves": {
+   "key": "jab_dmg",
+   "dir": 1,
+   "text": "jab damage",
+   "passive": "snap",
+   "passive_key": "jab_dmg_mult"
+  },
+  "wraps": {
+   "key": "guard_decay",
+   "dir": -1,
+   "text": "guard decay while holding",
+   "passive": "tight_guard",
+   "passive_key": "guard_decay_mult"
+  },
+  "mouthguard": {
+   "key": "wobble_time",
+   "dir": -1,
+   "text": "wobble duration",
+   "passive": "iron_jaw",
+   "passive_key": "wobble_time_mult"
+  },
+  "robe": {
+   "key": "tension_earn",
+   "dir": 1,
+   "text": "personal Tension contribution",
+   "passive": "sparkplug",
+   "passive_key": "tension_earn_mult"
+  }
+ },
+ "signature_worn_from_start": false,
+ "shop": {
+  "order": [
+   "t1",
+   "t2",
+   "t3"
+  ],
+  "tiers": {
+   "t1": {
+    "flag": "",
+    "text": "as found"
+   },
+   "t2": {
+    "flag": "story:regionals",
+    "text": "the Regionals"
+   },
+   "t3": {
+    "flag": "story:provincials_semifinal",
+    "text": "the Provincials"
+   }
+  }
+ },
+ "festival": {
+  "order": [
+   "boardwalk_robe",
+   "festival_wraps",
+   "summer_gloves"
+  ],
+  "text": "an Exhibition 2v2 won on the festival's boardwalk (NP_01 s8, NP_02 s1.3): the next prize not yet won"
+ },
+ "house_gift": {
+  "pct": 2,
+  "name": "{House} colours - {kind}",
+  "look": "the house's colours",
+  "by_style": {
+   "OUTBOXER": "gloves",
+   "SWARMER": "wraps",
+   "SLUGGER": "mouthguard",
+   "BOXERPUNCHER": "robe"
+  },
+  "colors": {
+   "gloves": "#b8c4d6",
+   "wraps": "#c9b27a",
+   "mouthguard": "#7fa7a0",
+   "robe": "#6b4f8a"
+  },
+  "text": "a blessed house (C31) gifts its colours once: the piece by the house's style (NP_07 s8's bias), its kind's passive at 2%"
+ },
+ "house_styles": {
+  "tremblay": "OUTBOXER",
+  "kowalchuk": "SLUGGER",
+  "okafor": "SWARMER",
+  "reyes": "SLUGGER",
+  "macisaac": "SLUGGER",
+  "whitecloud": "BOXERPUNCHER",
+  "tagaq": "BOXERPUNCHER",
+  "nguyen-roy": "OUTBOXER",
+  "petrov": "OUTBOXER",
+  "osei": "SWARMER",
+  "delacroix-cardinal": "BOXERPUNCHER",
+  "moreau": "SLUGGER"
+ },
+ "items": {
+  "club_gloves": {
+   "name": "Club Gloves",
+   "kind": "gloves",
+   "pct": 0,
+   "source": "shop",
+   "shelf": "t1",
+   "hbp": 60,
+   "color": "#9b2226",
+   "look": "the gym's red, laced"
+  },
+  "tape_wraps": {
+   "name": "Tape Wraps",
+   "kind": "wraps",
+   "pct": 1,
+   "source": "shop",
+   "shelf": "t1",
+   "hbp": 80,
+   "color": "#e9e4d8",
+   "look": "white tape, wound tight"
+  },
+  "boil_bite_guard": {
+   "name": "Boil-and-Bite Guard",
+   "kind": "mouthguard",
+   "pct": 1,
+   "source": "shop",
+   "shelf": "t1",
+   "hbp": 80,
+   "color": "#3a86ff",
+   "look": "clear blue, shaped at the kettle"
+  },
+  "gym_robe": {
+   "name": "Gym Robe",
+   "kind": "robe",
+   "pct": 0,
+   "source": "shop",
+   "shelf": "t1",
+   "hbp": 60,
+   "color": "#495057",
+   "look": "grey terry, MILLBROOK on the back"
+  },
+  "leather_gloves": {
+   "name": "Leather Gloves",
+   "kind": "gloves",
+   "pct": 2,
+   "source": "shop",
+   "shelf": "t2",
+   "hbp": 250,
+   "color": "#6f1d1b",
+   "look": "oxblood leather"
+  },
+  "gel_wraps": {
+   "name": "Gel Wraps",
+   "kind": "wraps",
+   "pct": 2,
+   "source": "shop",
+   "shelf": "t2",
+   "hbp": 250,
+   "color": "#212529",
+   "look": "black gel knuckle wraps"
+  },
+  "fitted_guard": {
+   "name": "Fitted Guard",
+   "kind": "mouthguard",
+   "pct": 2,
+   "source": "shop",
+   "shelf": "t2",
+   "hbp": 250,
+   "color": "#f8f9fa",
+   "look": "a dentist's fit, white"
+  },
+  "satin_robe": {
+   "name": "Satin Robe",
+   "kind": "robe",
+   "pct": 2,
+   "source": "shop",
+   "shelf": "t2",
+   "hbp": 300,
+   "color": "#1d3557",
+   "look": "navy satin, the club crest"
+  },
+  "pro_gloves": {
+   "name": "Pro Gloves",
+   "kind": "gloves",
+   "pct": 3,
+   "source": "shop",
+   "shelf": "t3",
+   "hbp": 500,
+   "color": "#d62828",
+   "look": "hand-stitched, bright red"
+  },
+  "custom_guard": {
+   "name": "Custom Guard",
+   "kind": "mouthguard",
+   "pct": 3,
+   "source": "shop",
+   "shelf": "t3",
+   "hbp": 500,
+   "color": "#ffb703",
+   "look": "moulded, gold"
+  },
+  "regionals_robe": {
+   "name": "Regionals Robe",
+   "kind": "robe",
+   "pct": 2,
+   "source": "prize",
+   "flag": "story:regionals",
+   "color": "#2a9d8f",
+   "look": "the Regionals' teal, the year stitched on"
+  },
+  "provincials_gloves": {
+   "name": "Provincials Gloves",
+   "kind": "gloves",
+   "pct": 3,
+   "source": "prize",
+   "flag": "story:provincials_semifinal",
+   "color": "#e9c46a",
+   "look": "the bracket's gold trim"
+  },
+  "nationals_guard": {
+   "name": "Nationals Guard",
+   "kind": "mouthguard",
+   "pct": 3,
+   "source": "prize",
+   "flag": "story:nationals",
+   "color": "#e63946",
+   "look": "the maple red"
+  },
+  "boardwalk_robe": {
+   "name": "Boardwalk Robe",
+   "kind": "robe",
+   "pct": 0,
+   "source": "festival",
+   "color": "#f4a261",
+   "look": "sun-faded orange, sand in the hem"
+  },
+  "festival_wraps": {
+   "name": "Festival Wraps",
+   "kind": "wraps",
+   "pct": 1,
+   "source": "festival",
+   "color": "#90be6d",
+   "look": "green, the boardwalk's bunting"
+  },
+  "summer_gloves": {
+   "name": "Summer Gloves",
+   "kind": "gloves",
+   "pct": 1,
+   "source": "festival",
+   "color": "#f9c74f",
+   "look": "yellow, signed by the pair that won them"
+  },
+  "grain_sack_wraps": {
+   "name": "Grain-Sack Wraps",
+   "kind": "wraps",
+   "pct": 3,
+   "source": "signature",
+   "owner": "YURI",
+   "color": "#b08968",
+   "look": "burlap cut from the farm's grain sacks (NP_11 s5)"
+  },
+  "mothers_wraps": {
+   "name": "Her Mother's Wraps",
+   "kind": "wraps",
+   "pct": 3,
+   "source": "signature",
+   "owner": "EFUA",
+   "flag": "quest:osei_blessing",
+   "color": "#7f5539",
+   "look": "the old hand-wraps she took without blessing, hers with it (NP_07A Q-OSEI)"
+  }
+ }
+}

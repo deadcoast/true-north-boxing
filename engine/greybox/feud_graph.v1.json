@@ -9,7 +9,16 @@
    "b": "sealed",
    "relation": "FEUD",
    "origin": "1998 Golden Gloves DQ; the record says a man died",
-   "mutation": "resolves:Q-TREMBLAY/Q-SEALED arc2 -> ALLIED"
+   "mutation": "resolves:Q-TREMBLAY/Q-SEALED arc2 -> ALLIED",
+   "flip": {
+    "on": [
+     "feud_resolved:tremblay+sealed"
+    ],
+    "to": "ALLIED",
+    "questline": "Q-TREMBLAY -> Q-SEALED",
+    "when": "the Arc 2 finale: E01 resolves only through the spine, on the matriarch's testimony",
+    "source": "NP_07A s1 mutation rules; Q-TREMBLAY and Q-SEALED mutations"
+   }
   },
   {
    "id": "E02",
@@ -17,7 +26,18 @@
    "b": "macisaac",
    "relation": "FEUD",
    "origin": "1974 harbour bet: a boat, a broken hand",
-   "mutation": "resolves:Q-REYES+Q-MACISAAC joint arc2 -> ALLIED"
+   "mutation": "resolves:Q-REYES+Q-MACISAAC joint arc2 -> ALLIED",
+   "flip": {
+    "on": [
+     "quest:the_bell",
+     "quest:macisaac_harbour",
+     "feud_resolved:reyes+macisaac"
+    ],
+    "to": "ALLIED",
+    "questline": "Q-REYES + Q-MACISAAC, jointly (Arc 2)",
+    "when": "both houses' quests at their final beat, then the 1974 boat rebuilt in the harbour episode",
+    "source": "NP_07A Q-REYES and Q-MACISAAC mutations"
+   }
   },
   {
    "id": "E03",
@@ -25,7 +45,11 @@
    "b": "whitecloud",
    "relation": "ALLIED",
    "origin": "Grain roads and winter roads; three generations of shared corners",
-   "mutation": "held_stable"
+   "mutation": "held_stable",
+   "flip": {
+    "held": "load-bearing warmth - Q-KOWALCHUK mutates nothing",
+    "source": "NP_07A Q-KOWALCHUK mutations"
+   }
   },
   {
    "id": "E04",
@@ -33,7 +57,16 @@
    "b": "petrov",
    "relation": "DEBT",
    "origin": "Petrov trained the first Okafor free in '89",
-   "mutation": "resolves:Q-OKAFOR okafor_table -> ALLIED"
+   "mutation": "resolves:Q-OKAFOR okafor_table -> ALLIED",
+   "flip": {
+    "on": [
+     "quest:okafor_table"
+    ],
+    "to": "ALLIED",
+    "questline": "Q-OKAFOR",
+    "when": "the house repays Petrov by sending Nneka's community-centre kids to his camps; fires on okafor_table",
+    "source": "NP_07A Q-OKAFOR mutations"
+   }
   },
   {
    "id": "E05",
@@ -41,7 +74,16 @@
    "b": "tremblay",
    "relation": "FEUD",
    "origin": "The 1983 provincial final split Quebec doctrine",
-   "mutation": "resolves:Q-MOREAU cold_storage -> ALLIED"
+   "mutation": "resolves:Q-MOREAU cold_storage -> ALLIED",
+   "flip": {
+    "on": [
+     "feud_resolved:moreau+tremblay"
+    ],
+    "to": "ALLIED",
+    "questline": "Q-MOREAU",
+    "when": "the 1983 schism argued to a draw over tape, both doctrines conceding a round each - before Cold Storage closes (its blessing needs E05 closed first)",
+    "source": "NP_07A Q-MOREAU mutations and blessing; Q-TREMBLAY: E05 unaffected by the Tremblay peace"
+   }
   },
   {
    "id": "E06",
@@ -49,7 +91,11 @@
    "b": "whitecloud",
    "relation": "ALLIED",
    "origin": "Northern circuit; shared billets at -40",
-   "mutation": "held_stable"
+   "mutation": "held_stable",
+   "flip": {
+    "held": "surfaces in Q-TAGAQ's dialogue, stays as authored",
+    "source": "NP_07A Q-TAGAQ mutations"
+   }
   },
   {
    "id": "E07",
@@ -57,7 +103,11 @@
    "b": "delacroix-cardinal",
    "relation": "MARRIAGE",
    "origin": "The Roy grandmother was a Delacroix-Cardinal",
-   "mutation": "permanent"
+   "mutation": "permanent",
+   "flip": {
+    "held": "permanent by definition",
+    "source": "NP_07A Q-NGUYEN-ROY mutations"
+   }
   },
   {
    "id": "E08",
@@ -65,7 +115,16 @@
    "b": "moreau",
    "relation": "DEBT",
    "origin": "Moreau bought the Iron gym fixtures at the estate sale",
-   "mutation": "resolves:Q-IRON -> ALLIED"
+   "mutation": "resolves:Q-IRON -> ALLIED",
+   "flip": {
+    "on": [
+     "quest:estate_sale"
+    ],
+    "to": "ALLIED",
+    "questline": "Q-IRON",
+    "when": "Moreau gives up the stencilled bag; the graph gains a living node where a dead one stood",
+    "source": "NP_07A Q-IRON mutations"
+   }
   },
   {
    "id": "E09",
@@ -73,7 +132,11 @@
    "b": "petrov",
    "relation": "ALLIED",
    "origin": "Halifax summer teaching camps, twenty years",
-   "mutation": "held_stable"
+   "mutation": "held_stable",
+   "flip": {
+    "held": "warms in Q-OSEI's dialogue, stays ALLIED",
+    "source": "NP_07A Q-OSEI mutations"
+   }
   },
   {
    "id": "E10",
@@ -81,7 +144,11 @@
    "b": "tagaq",
    "relation": "DEBT",
    "origin": "A rescue at sea in '96; MacIsaac boats answer Tagaq calls first",
-   "mutation": "acknowledged_stays_DEBT"
+   "mutation": "acknowledged_stays_DEBT",
+   "flip": {
+    "held": "acknowledged on-screen, stays DEBT - Tagaq refuses repayment ('you'll answer a call someday')",
+    "source": "NP_07A Q-MACISAAC and Q-TAGAQ mutations"
+   }
   },
   {
    "id": "E11",
@@ -89,7 +156,14 @@
    "b": "reyes",
    "relation": "FEUD",
    "origin": "The prairie circuit rivalry - the warm feud",
-   "mutation": "authored_unresolvable"
+   "mutation": "authored_unresolvable",
+   "flip": {
+    "on": [
+     "feud_resolved:kowalchuk+reyes"
+    ],
+    "refused": "authored unresolvable - resolving it is the one outcome both houses refuse, and the game says so",
+    "source": "NP_07A s1 mutation rules"
+   }
   },
   {
    "id": "E12",
@@ -97,7 +171,31 @@
    "b": "iron",
    "relation": "DEBT",
    "origin": "Iron's founder learned river-reads from a Delacroix-Cardinal elder",
-   "mutation": "resolves:Q-IRON transfer-to-living -> ALLIED"
+   "mutation": "resolves:Q-IRON transfer-to-living -> ALLIED",
+   "flip": {
+    "on": [
+     "quest:estate_sale"
+    ],
+    "to": "ALLIED",
+    "questline": "Q-IRON (Q-DELACROIX-CARDINAL's mutation fires on it)",
+    "when": "the debt transfers to the living - to Vera",
+    "source": "NP_07A Q-IRON and Q-DELACROIX-CARDINAL mutations"
+   }
+  }
+ ],
+ "mutation_rules": "NP_07A s1: questlines flip edges via story flags - FEUD->ALLIED is the standard resolution, DEBT->ALLIED on repayment, E01 only through the Arc 2 spine, E11 refused. Each edge's `flip` names the flags that must all be set (`on`), the relation it flips to, and the questline; a FEUD flips on its own FEUD_RESOLVED flag (the grammar's feud_resolved:a+b, either order), a DEBT on the quest that repays it. `held` edges never flip; a `refused` edge answers its flag with the houses' refusal. The mutations live in the sim's ledger, never in this table: the launch graph stays as authored.",
+ "provisional": [
+  {
+   "id": "E13",
+   "a": "petrov",
+   "b": "ascendant",
+   "relation": "DEBT",
+   "origin": "Vey took Petrov's heir; the graph's only villain-side debt, and the thesis fight collects it",
+   "on": [
+    "quest:open_ledger"
+   ],
+   "when": "Arc 3",
+   "source": "NP_07A Q-PETROV mutations: 'adds a provisional Petrov-Ascendant DEBT edge in Arc 3, owed by Vey'"
   }
  ]
 }

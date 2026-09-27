@@ -1,0 +1,39 @@
+{
+ "schema": "FaucetAudit/NP_11-s6/v1.0",
+ "vault": "v1.3",
+ "notes": "NP_11 s6's faucet/sink audit as the sim runs it (PAC-097): 'Faucet/sink audit runs per milestone (NP_13 s6): target - a story-pace player affords 70% of desired sinks; completionists find Prestige/Beans the long tails.' The faucet is a story-pace playthrough to Arc 3's start, paid by the sim's own reward paths with the results given: NP_12 s4's Arc 1 (24 episodes, NP_12 s8) and Arc 2 (its beats loose by intent - Arc 1's length here), one story dual an episode at NP_02 s5's cadence (one per 60-90 min of critical path), NP_02 s5's 45-minute session shape between (4-6 scraps, 1-2 spars, 1 training slot), the gym at the tiers the story opens. A segment's own XP (its hits, counters, flashes and drops) is measured from played fights, the obsolescence audit's builds against its endgame. The sinks a story-pace player wants by Arc 3 are priced from the live tables: the dressed squad each built as the obsolescence audit builds (its ledger's spend), the five facility tracks to T3, a Forge. The verdict names each currency that misses: its share against the target, its session pay against NP_11 s6's typical/session, the protagonist's level against NP_11 s2's ~35 by Arc 3, and the obsolescence audit's budget against what the faucet pays. The episode split, the results, the session counts, the band and the squad are first drafts; the economy lane's to set.",
+ "target": {"share": 0.70, "band": 0.15, "text": "NP_11 s6: a story-pace player affords 70% of desired sinks (the band either side is editorial: under it the player is starved of choices, over it the sinks stop being choices)"},
+ "pace": {
+  "minutes_per_story_dual": 75,
+  "session_minutes": 45,
+  "session": {"scraps": 5, "spars": 1.5, "training_slots": 1, "story_beats": 1, "quest_steps": 1},
+  "text": "NP_02 s5: 'one dual per 60-90 min of critical path' (75), 'Session shape target (45-min session): 1 story beat + 4-6 scraps + 1-2 spars + 1 training slot' (the midpoints; its story beat and recruitment step - read as a quest step, NP_02 s4 - pay through story_mark since PAC-098); optional duals are not a story-pace player's; since PAC-099 the bench's roles pay through the sim's own paths (the scout when the day turns, the training partner in the slot, the cornerman-in-training at a dual's end); since PAC-101 each phase's scraps are fought in its districts in turn, their rep and its milestones on the ledger - Ep1's Millbrook Secondary and community centre (NP_12A), the circuit's Rink District (the bridge-the-town questline) and harbour (the MacIsaac quest), Arc 2's Hill (the Whitecloud roadwork) and downtown strip (the districts per phase are editorial)",
+  "results": {"scrap_win": 0.9, "spar_win": 0.7, "segments_won_in_a_win": 0.6, "segments_won_in_a_loss": 0.4, "training_grade": 0.5,
+   "text": "a story-pace player wins nine scraps in ten and seven spars in ten; a won dual carries three segments in five, a lost one two; the minigames graded at the median; the captain fights the overworld's scraps and spars and opens every dual (R1)"},
+  "bench": {"from": "arc1_circuit", "roles": [["TRAINING", "hill"], ["SCOUT", "harbour"], ["CORNER_TRAINEE", "rink"]],
+   "text": "PAC-099: NP_08 s1's roles on a story-pace bench - the story's own squad is dressed whole, so the bench is NP_08 s2.4's open mat ('the filler roster channel for players who want bodies for training roles'): three of the machine's generics signed on the circuit's first open-mat day (day 7, two days into the circuit; seated at the phase's start), from what the club phase's pulls threw off (tier 1 by its flags), one to each role and kept to Arc 3. The districts are editorial"},
+  "protagonist": "RORY",
+  "level_by_arc3": 35,
+  "level_band": 2,
+  "level_text": "NP_11 s2: 'a story-pace player hits ~35 by Arc 3 start' (the band either side is editorial)"
+ },
+ "phases": [
+  {"id": "arc1_club", "text": "Arc 1, beats 1-3 (Ep1, the Survival Dual, Building five): the mini-dual", "episodes": 6, "format": "mini", "lost": 1, "lost_text": "the Survival Dual, lost on paper (NP_12 s4 beat 2)", "scrap_tier": 2, "hosted": 0.0,
+   "flags": ["story:charter_saved"], "facilities": {"bags_mitts": 1}, "book": false, "districts": ["school", "centre"]},
+  {"id": "arc1_circuit", "text": "Arc 1, beats 4-7 (the Regionals to the Nationals): the sanctioned dual", "episodes": 18, "format": "sanctioned", "lost": 1, "lost_text": "the Nationals final, lost close (NP_12 s4 beat 7)", "scrap_tier": 3, "hosted": 0.0,
+   "flags": ["story:charter_saved", "story:regionals", "quest:gym_funding", "story:provincials_semifinal", "quest:macisaac_harbour"], "facilities": {"bags_mitts": 2, "front_of_house": 2}, "book": true, "districts": ["rink", "harbour"]},
+  {"id": "arc2", "text": "Arc 2 (the Hollow Circuit), Arc 1's length: the blind dual", "episodes": 24, "format": "blind", "lost": 2, "lost_text": "two of the syndicate's (editorial)", "scrap_tier": 3, "hosted": 0.5,
+   "flags": ["story:charter_saved", "story:regionals", "quest:gym_funding", "story:provincials_semifinal", "story:nationals", "quest:macisaac_harbour"], "facilities": {"bags_mitts": 3, "front_of_house": 3}, "book": true, "districts": ["hill", "downtown"]}
+ ],
+ "sample": {"fighters": ["PRIYA", "DEX", "YURI"], "bosses": ["alfie_crane", "ioan_vasile"], "seeds": [11], "text": "a segment's own XP measured from the obsolescence audit's builds against two endgame bosses (the median of the won and of the lost)"},
+ "desired": {"squad": 8, "forges": 1, "text": "by Arc 3's start: the sanctioned dual's eight dressed (NP_01 s2) each built as the obsolescence audit builds its earliest three (its ledger's spend: the ascensions, the kit, the gear, the jar), every facility track to T3 (NP_10 s7), one Forge (NP_08 s6); Prestige's - NP_11 s6's scouting pulls (10), since PAC-098 the machine (NP_08 s2.4): every rare-tier lead it holds at the club's start, at the pity's pulls; the open-mat priority is a convenience, not a want"},
+ "prestige_sinks_doc": ["scouting machine pulls (10 Prestige, NP_11 s6)", "open-mat priority (NP_11 s6)"],
+ "baselines": {"spirits": [3, 8], "hbp": [50, 150], "prestige": [5, 15], "beans_per_slot": [3, 10], "text": "NP_11 s6's Earn (typical/session): Spirits 3-8 (spars/duals), HBP 50-150 (quests, wins, story), Prestige 5-15 (scraps, rep), Beans 3-10 a training slot"},
+ "systems": {
+  "xp": "the XP faucet against NP_11 s2's curve (economy.v1.json's xp)",
+  "spirits": "Spirits' faucet against its sinks (economy.v1.json's spirits; growth, facilities, the Forge)",
+  "hbp": "HBP's faucet (NP_02 s4: quests and the story pay HBP - nothing on the sim pays them)",
+  "prestige": "Prestige's sinks (NP_11 s6: scouting pulls, open-mat priority - not built; since PAC-098 the machine; since PAC-099 the scouts' Prestige in the faucet)",
+  "beans": "the Beans faucet (the training slots, facilities.v1.json) against the raises and the Forge"
+ }
+}

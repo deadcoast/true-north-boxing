@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""build_hissatsu_library.py - generates data/hissatsu_library.v1.json (80 moves)
+"""build_hissatsu_library.py - generates data/hissatsu_library.v2.json (87 moves)\nv2 = v1 (80) + 7 worlds desperations per NP_04B (PAC-047 amendment, additive only).
 against the NP_11 s9 Hissatsu schema. Regenerable: content edits happen HERE,
 the JSON is build output. Run from repo root. Audit with tools/hissatsu_audit.py.
 """
@@ -154,8 +154,19 @@ A(mv("Portage","T1","ARC","TIMBER",None,"quest:harbour",1400,[dmg(1.8), disp("CE
 A(mv("Breakup","T1","RISE","FROST",None,"quest:rink_district",1500,[dmg(2.1), shred(35)], CP_STD, "Spring ice gives way; the bridge-the-town quest reward"))
 
 # ================= T3 RELAY / DUO / HYBRID EXEMPLARS =================
-A(mv("Relay: Coast to Coast","T3","HAYMAKER","ANY",None,"relay:charged",2200,[dmg(2.6), disp("ROPES",1.2)], CP_RELAY, "CHARGED-state relay finisher"))
-A(mv("Relay: Aurora Chain","T3","ARC","FROST",None,"relay:charged",2300,[dmg(2.2), state("arena_freeze_vfx",2), state("afterimage_partner",3)], CP_RELAY))
+# PAC-080: the relay T3s carry their Duo variant (NP_08 s5.2 Lv4 "named duo T3 unlocked (afterimage variant)"; NP_05 s7 "bonded pairs get
+# named duo variants with unique VFX"): a Duo pair's named T3 is its base under the pair's name, VFX and camera, the partner's afterimage
+# joining it, hitting as the base. A pair takes the base that names it; else the relay T3 of the element both partners carry; else the
+# ANY-element one. North Star stays the chain's move (FULL RELAY), no pair's. The named pairs are placeholders for the content lane.
+def duo(vfx, cam, add, pairs):
+    return {"afterimage": "partner", "name_rule": "{base} - {a} & {b}", "vfx_set": vfx, "camera_script_id": cam,
+            "effect_add": add, "pairs": pairs, "source": "NP_08 s5.2 Lv4; NP_05 s7",
+            "notes": "hits as its base; the pair's name, VFX, camera and the partner's afterimage are the variant (placeholder names)"}
+A(mv("Relay: Coast to Coast","T3","HAYMAKER","ANY",None,"relay:charged",2200,[dmg(2.6), disp("ROPES",1.2)], CP_RELAY, "CHARGED-state relay finisher",
+     duo=duo("vfx_duo_any", "cam_haymaker_t3_duo", [state("afterimage_partner",3)],
+             {"PRIYA|RORY": "Whiteout", "MARCUS|PRIYA": "Chinook Arch", "MARCUS|RORY": "Permafrost", "JUNE|MARCUS": "Frost Heave", "JUNE|PRIYA": "Snow Squall"})))
+A(mv("Relay: Aurora Chain","T3","ARC","FROST",None,"relay:charged",2300,[dmg(2.2), state("arena_freeze_vfx",2), state("afterimage_partner",3)], CP_RELAY,
+     duo=duo("vfx_duo_frost", "cam_arc_t3_duo", [], {"JUNE|RORY": "Freeze-Up"})))
 A(mv("Double Overtime","T3","RISE","ANY",None,"duo:2v2_festival",2400,[dmg(2.8)], CP_RELAY,
      "True simultaneous duo (both inputs within 500ms); festival exclusive", duo="sync_500ms"))
 A(mv("Two-Hand Winter","T3","WALL","FROST",None,"duo:2v2_festival",2000,[wall(30,0)], CP_WALL, "Duo wall; the only shared gauge in the game", duo="sync_500ms"))
@@ -176,8 +187,31 @@ A(mv("Borrowed Blood","T3","ARC","DUAL",None,"syndicate:boss",2200,[dmg(2.3), st
 A(mv("The Commissioner's Due","T2","WALL","FROST",None,"syndicate:finale",1500,[wall(45,0), state("enemy_hissatsu_cost_plus10",5)], CP_WALL,
      "Arc 2 finale boss-only; taxes the elevated arts themselves"))
 
-assert len(L) == 80, f"library holds {len(L)}, spec says 80"
+# ================= LIBRARY v2 AMENDMENT (PAC-047): worlds desperations from NP_04B =================
+A(mv("Rush Hour","T1","PISTON","GALE",None,"worlds:boss_vaughn",1400,
+     [{"type":"DMG","params":{"mult":0.5,"hits":5}}, state("guard_regen_minus1",3)], CP_FAST,
+     "Vaughn's 5-hit volume string; each hit slows guard recovery"))
+A(mv("La Catedral","T1","ARC","GRANITE",None,"worlds:boss_itzel",1600,
+     [{"type":"DMG","params":{"mult":0.7,"hits":3,"target":"body"}}, burn(24)], CP_STD,
+     "Three-station body series; the gassed-curve fight"))
+A(mv("Fudoshin","T2","WALL","FROST",None,"worlds:boss_kannagi",1400,
+     [wall(0,4), state("counter_on_break_attempt",4)], CP_WALL,
+     "Immovable-mind wall; punishes the impatient break"))
+A(mv("Last Orders","T1","HAYMAKER","TIMBER",None,"worlds:boss_crane",1800,
+     [{"type":"DMG","params":{"mult":2.6,"zone_req":"ROPES"}}], CP_STD,
+     "Rope-zone only; whiffs harmlessly in open ring - zone denial IS the counter"))
+A(mv("Graduacion","T1","RISE","GALE",None,"worlds:boss_baro",1700,
+     [dmg(2.4), shred(30)], CP_STD,
+     "Castable only after his Examen lands - the player controls whether this move exists"))
+A(mv("Harmattan","T1","ARC","GALE",None,"worlds:boss_chiamaka",1500,
+     [{"type":"DMG","params":{"mult":0.6,"hits":4}}, state("tell_jam_visual",2)], CP_STD,
+     "Dust-wind flurry; visual tell-jam"))
+A(mv("The Mean","T2","WALL","ANY",None,"worlds:boss_vasile",1500,
+     [wall(0,5), state("averages_incoming_damage_over_duration",5)], CP_WALL,
+     "Element-null; burst play feeds it, steady play starves it"))
+
+assert len(L) == 87, f"library holds {len(L)}, v2 law says 87 (80 + PAC-047 amendment)"
 os.makedirs("data", exist_ok=True)
-with open("data/hissatsu_library.v1.json", "w") as f:
-    json.dump({"schema": "Hissatsu/NP_11-s9/v1.0", "vault": "v1.2", "count": len(L), "moves": L}, f, indent=1)
-print(f"data/hissatsu_library.v1.json written :: {len(L)} moves")
+with open("data/hissatsu_library.v2.json", "w") as f:
+    json.dump({"schema": "Hissatsu/NP_11-s9/v1.0", "library": "v2", "count": len(L), "moves": L}, f, indent=1)
+print(f"data/hissatsu_library.v2.json written :: {len(L)} moves")

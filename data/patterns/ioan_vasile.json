@@ -172,5 +172,14 @@
   "move": "The Mean",
   "arm_only": null
  },
- "id": "Vasile_Ioan"
+ "id": "Vasile_Ioan",
+ "transform": {
+  "trigger": "composure<50",
+  "tier": "zone",
+  "tell": {
+   "motif": "breath_held",
+   "ms": 1500
+  },
+  "line": "VEY: he has stopped breathing out loud - that is his Zone coming. Weather it."
+ }
 }

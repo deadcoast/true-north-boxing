@@ -1,0 +1,193 @@
+{
+ "schema": "Recruits/NP_08-s2/v1.0",
+ "vault": "v1.3",
+ "notes": "Recruitment (NP_08 s2). Winning a dual flags the recruitable named fighters of the squad you beat (up to 4, NP_08 s2.1's 2-4; a non-boss recruit surfaces 'with' the boss whose club he belongs to) as APPROACHABLE; approaching one surfaces the whole condition, every clause with what you have and what it needs (honest once discovered, no wiki-bait); when every clause is met the fighter is READY, and recruiting him puts his card in the stable - dressable on a board, written by the save. Nobody auto-joins: a met condition raises an event, the recruit is your call. The grammar (NP_08 s2.2) is executed in full: six forms read the sim's own ledgers (BEAT_IN counts your wins against that fighter by size - scrap, spar, dual[segment] - and xN asks N of them; USING STYLE_PROOF(style) asks them won with a fighter of that style; PI_LEVEL reads the recon ledger, his page counting as 3; BOND(stablemate, n) asks that stablemate's best Kizuna in the stable at level n; STAT_PROOF asks a stablemate with the stat; WITNESS counts duals won after he was approached - the greybox has one venue, the Old Gym), and five read the story flags the overworld sets (QUEST, REP, FEUD_RESOLVED, BLESSING, ITEM: flags nobody in the sim sets; the greybox seeds them with `-- flag=`; since PAC-101 REP is the sim's - the district rep ledger, a seeded rep flag still counting). Conditions are the roster docs' own lines, quoted with their source; the readings (Yuri's and Sam's 'recruited post-dual' as BEAT_IN(dual[segment]), Dex's whole line) and the new cards (the boss's META style / element / House, the assembler's tier-3 stat block, his desperation move or a drafted one) are first drafts. Bosses the docs close - none, staff, post-game, unauthored - carry the reason and are never approachable. Jean-Guy declines in Arc 1 (NP_04A s5, kept as his arc1 line) and recruits in Arc 2 through Q-MOREAU (NP_07A); the String Wall (string_wall.v1.json) reveals whom a recruit brings. A record may carry `around_the_family`: a second condition that signs him before his house blesses the club - he arrives UNSANCTIONED (houses.v1.json); Efua's is the only one the docs author.",
+ "grammar": {
+  "BEAT_IN": {
+   "owner": "sim",
+   "text": "beat them in a scrap / spar / dual segment (xN: N times; USING STYLE_PROOF(style): with a fighter of that style)"
+  },
+  "STYLE_PROOF": {
+   "owner": "sim",
+   "text": "beat them with a fighter of that style"
+  },
+  "PI_LEVEL": {
+   "owner": "sim",
+   "text": "Pattern Intel on that House's dialect at that level"
+  },
+  "BOND": {
+   "owner": "sim",
+   "text": "that stablemate's best Kizuna in the stable at that level"
+  },
+  "STAT_PROOF": {
+   "owner": "sim",
+   "text": "a stablemate with that stat"
+  },
+  "WITNESS": {
+   "owner": "sim",
+   "text": "a dual won after they were approached (they watch it)"
+  },
+  "QUEST": {
+   "owner": "overworld",
+   "flag": "quest:{0}"
+  },
+  "REP": {
+   "owner": "sim",
+   "flag": "rep:{0}",
+   "value_arg": 1,
+   "text": "the district's rep on the ledger at that level (PAC-101: scraps won there, a flee's cost; a seeded rep:<district> flag still counts)"
+  },
+  "FEUD_RESOLVED": {
+   "owner": "overworld",
+   "flag": "feud_resolved:{all}"
+  },
+  "BLESSING": {
+   "owner": "overworld",
+   "flag": "blessing:{0}"
+  },
+  "ITEM": {
+   "owner": "overworld",
+   "flag": "item:{0}"
+  }
+ },
+ "approachable_per_dual": 4,
+ "card_tier": 3,
+ "recruits": {
+  "yuri_kowalchuk": {
+   "card": "YURI",
+   "from_lineup": true,
+   "condition": "BEAT_IN(dual[segment])",
+   "source": "NP_12 s2's cast: 'recruited post-Grain Kings' (this condition is that reading); NP_04 s8.1 'recruitable'",
+   "arc": 1
+  },
+  "sam_tagaq": {
+   "card": "SAM",
+   "from_lineup": true,
+   "condition": "BEAT_IN(dual[segment])",
+   "source": "NP_12 s2's cast: 'recruited post-True North dual' (this condition is that reading); NP_04 s8.3",
+   "arc": 1
+  },
+  "marta_okonkwo_tremblay": {
+   "card": "MARTA",
+   "from_lineup": true,
+   "condition": "QUEST(tremblay_feud) AND FEUD_RESOLVED(tremblay, coach_line) AND BEAT_IN(spar) USING STYLE_PROOF(out-boxer)",
+   "source": "NP_08 s2.2's own example",
+   "arc": 1
+  },
+  "dex": {
+   "card": "DEX",
+   "from_lineup": true,
+   "with": "moira_macisaac",
+   "beat_as": "moira_macisaac",
+   "condition": "QUEST(building_five_dex) AND BEAT_IN(scrap)",
+   "source": "NP_12 s3 'Building five - recruitment episodes (Dex; ...)'; NP_04A s2 (Moira's cousin, the Netmen); the condition is a first draft",
+   "arc": 1
+  },
+  "moira_macisaac": {
+   "card": "MOIRA",
+   "condition": "BOND(Dex, 3) AND QUEST(macisaac_harbour)",
+   "source": "NP_04A s2",
+   "arc": 1
+  },
+  "tam_nguyen_roy": {
+   "card": "TAM",
+   "condition": "PI_LEVEL(nguyen-roy, 2) AND BEAT_IN(spar)",
+   "source": "NP_04A s3; NP_07A Q-NGUYEN-ROY",
+   "arc": 1
+  },
+  "carter_okafor": {
+   "card": "CARTER",
+   "condition": "BEAT_IN(scrap)x3 AND REP(rink_district, 3)",
+   "source": "NP_04A s4",
+   "arc": 1
+  },
+  "ada_okafor": {
+   "card": "ADA",
+   "condition": "BOND(Carter, 4) AND QUEST(okafor_table)",
+   "source": "NP_04A s6; NP_07A Q-OKAFOR",
+   "arc": 2
+  },
+  "efua_osei": {
+   "card": "EFUA",
+   "condition": "QUEST(osei_blessing) AND FEUD_RESOLVED(osei_internal)",
+   "around_the_family": "BEAT_IN(dual[segment])",
+   "around_source": "NP_07A Q-OSEI beat 1: 'Efua recruits UNSANCTIONED if approached early - the game allows recruiting around the family'; NP_04A s7: 'Arrives UNSANCTIONED if recruited early'. The early condition is a first draft (Yuri's and Sam's post-dual reading)",
+   "source": "NP_04A s7",
+   "arc": 1
+  },
+  "cassidy_vane": {
+   "card": "CASSIDY",
+   "hissatsu": "Pressure Cooker",
+   "condition": "QUEST(vane_cut) AND WITNESS(she watches you win a dual at the Old Gym)",
+   "source": "NP_04A s1 (no desperation is issued to her: her hissatsu is a drafted Gale T0)",
+   "arc": 2
+  },
+  "hc9_choir": {
+   "card": "CHOIR",
+   "condition": "BOND(Sam, 4) AND QUEST(choir_name)",
+   "source": "NP_04B s14",
+   "arc": 3
+  },
+  "remy_moreau": {
+   "card": "REMY",
+   "condition": "QUEST(cold_storage)",
+   "source": "NP_04B s13: 'through Q-MOREAU completion' - Q-MOREAU's quest is cold_storage (NP_07A; PAC-075 wrote QUEST(q_moreau))",
+   "arc": 2
+  },
+  "jean_guy_moreau": {
+   "card": "JEAN-GUY",
+   "condition": "QUEST(cold_storage) AND FEUD_RESOLVED(moreau, tremblay)",
+   "source": "NP_07A Q-MOREAU (Arc 2): 'Rewards: Jean-Guy recruit', its blessing line the condition - E05 must close first; NP_04A s5 for the Arc 1 refusal (PAC-076 correction: PAC-075 closed him on NP_04A s5 alone)",
+   "arc": 2,
+   "arc1": "declined in Arc 1 - he looks at the offer letter and closes the gym door (a cutscene)"
+  },
+  "anders_vey": {
+   "never": "none - the anti-you until Arc 3 resolves him",
+   "source": "NP_04A s8"
+  },
+  "hc4_cartographer": {
+   "never": "none - he never rematches",
+   "source": "NP_04B s12"
+  },
+  "hc0_surety": {
+   "never": "none",
+   "source": "NP_04B s15"
+  },
+  "hc7_echo": {
+   "never": "none",
+   "source": "NP_04B s16"
+  },
+  "commissioner_cal": {
+   "never": "staff, Arc 3 - Tactician-class, the Scout Book's final pages (the corps, not the stable)",
+   "source": "NP_04B s17"
+  },
+  "itzel_reyes_ortega": {
+   "never": "none - she gifts the Reyes stable a technique instead",
+   "source": "NP_04B s19"
+  },
+  "chiamaka_okafor": {
+   "never": "post-game",
+   "source": "NP_04B s23"
+  },
+  "deshawn_vaughn": {
+   "never": "no recruitment authored",
+   "source": "NP_04B s18"
+  },
+  "sora_kannagi": {
+   "never": "no recruitment authored",
+   "source": "NP_04B s20"
+  },
+  "alfie_crane": {
+   "never": "no recruitment authored",
+   "source": "NP_04B s21"
+  },
+  "yordanis_baro": {
+   "never": "no recruitment authored",
+   "source": "NP_04B s22"
+  },
+  "ioan_vasile": {
+   "never": "no recruitment authored - the Arc 3 final boss",
+   "source": "NP_04B s24"
+  }
+ }
+}

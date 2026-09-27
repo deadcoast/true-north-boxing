@@ -1,0 +1,76 @@
+{
+  "schema": "Hybrids/NP_08-s6/v1.0",
+  "vault": "data/hybrids.v1.json",
+  "notes": "NP_08 s6's cross-house hybrid research as the sim reads it. A Sworn pair (economy.v1.json's Kizuna effect 'hybrid') from two houses, each with a native of his house learned (his house's natives when NATIVE, its SECRET when his secret:<NAME> flag is set, the native his card carries), forges once at a Forge event between duals, paying the ledger's Spirits and Beans (NP_11 s6: both currencies name Forge events as a sink). The output is a hissatsu record (NP_11 s9's schema, hybrid_parents set) unique to the pair: the library's authored hybrid for the two houses when one exists and no pair has claimed it (Two Rivers, Grain & Snow), else one composed from both houses' natives by the rules below. Either fighter of the pair casts it as a T3 (NP_05 s3: CHARGED or bonded adjacency): when he enters CHARGED, when his partner fought the segment before him (relayed between them - the strongest: the partner's afterimage and x1.25), or from an Awakening's hybrid slot (NP_09 s6). Eight per save (the launch ceiling). The Forge scene, its host (NP_10 s7's The Wall) and the Toronto academy's industrialized hybrids (NP_07 s10) are academy.v1.json's syntheses (PAC-092), composed by the same rules on the library's natives.",
+  "forge": {
+    "spirits": 40,
+    "beans": 30,
+    "between_duals": true,
+    "host": "The Wall (NP_10 s7) - a facility the sim does not build",
+    "scene": "the Forge event's scene is the content lane's; the sim's is its feed line and event",
+    "text": "first-draft prices: NP_11 s6 pays 3-8 Spirits a spar or dual and 3-10 Beans a training slot - a Forge costs several of each (scarcity keeps each one a saga)"
+  },
+  "ceiling": 8,
+  "discounts": [
+    {
+      "edge": "E07",
+      "flag": "quest:third_bridge",
+      "pct": 50,
+      "early_level": 4,
+      "source": "NP_07A Q-NGUYEN-ROY: 'the quest arms the Two Rivers Forge pairing early' and 'Forge discount for E07-pair hybrids'",
+      "text": "read: with the questline done, a pair across E07 (Nguyen-Roy x Delacroix-Cardinal) forges at Duo (Lv4), a level early, for half"
+    }
+  ],
+  "compose": {
+    "tier": "T3",
+    "tension_cost": 50,
+    "element": "DUAL",
+    "vfx_set": "vfx_dual",
+    "camera": "cam_{family}_t3",
+    "source": "hybrid:forge",
+    "family": "the family of the strongest learned native of either (the most DMG; a WALL never), ARC if neither strikes",
+    "family_fallback": "ARC",
+    "dmg_floor": 2.4,
+    "dmg_over_parent": 0.1,
+    "dmg": "the stronger parent's DMG + 0.1, never under the T3 floor 2.4 (Grain & Snow: Full Load's 2.4 -> 2.5; Two Rivers: 2.4)",
+    "tags": "from each house, the first non-DMG, non-WALL effect of the fighter's learned natives in the library's order; a state's or a buff's seconds capped at 2 (Grain & Snow: Grain Elevator's guard shred 40, Premiere Neige's auto-slip 5 s -> 2 s)",
+    "tag_seconds_cap": 2,
+    "cinematic_base_ms": 2100,
+    "cinematic_per_tag_ms": 100,
+    "cinematic": "2100 ms + 100 a tag, as the library's T3s run (Coast to Coast and Two Rivers 2200 with one, Aurora Chain and Grain & Snow 2300 with two)",
+    "counter_profile": {
+      "interruptible": true,
+      "window_ms": 700,
+      "negation": "interruptible only during afterimage windup (Loud)"
+    },
+    "name_rule": "{a} & {b}",
+    "name_rule_taken": "{name} - {x} & {y}",
+    "name": "the two houses' motifs in the houses' order (Grain & Snow: Kowalchuk's Grain, Tremblay's Snow); a name already forged by another pair carries the pair's names after it, as an unnamed Duo's does"
+  },
+  "cast": {
+    "relayed_dmg_mult": 1.25,
+    "relayed_afterimage": true,
+    "live": [
+      "relayed",
+      "charged",
+      "awakened"
+    ],
+    "text": "a T3 (NP_05 s3: requires CHARGED or bonded adjacency): live for either of the pair when his partner fought the segment before (relayed between them: the partner's afterimage joins and its damage x1.25 - 'strongest when relayed'), when he enters CHARGED (the relay opens his T3s), or while he is Awakened (NP_09 s6's +1 hybrid slot, the card's choice of his hybrids); it answers its family's motion before a Duo's T3, a relay T3 and the card's own move"
+  },
+  "motifs": {
+    "delacroix-cardinal": "River",
+    "iron": "Iron",
+    "kowalchuk": "Grain",
+    "macisaac": "Tide",
+    "moreau": "Anvil",
+    "nguyen-roy": "Bridge",
+    "okafor": "Heat",
+    "osei": "Root",
+    "petrov": "Ledger",
+    "reyes": "Bell",
+    "tagaq": "Silence",
+    "tremblay": "Snow",
+    "whitecloud": "Light",
+    "text": "first-draft motif words per house, read off each house's natives and root (Kowalchuk's Grain and Tremblay's Snow from Grain & Snow); the content lane's to rewrite; the sealed house has none until it is unsealed"
+  }
+}

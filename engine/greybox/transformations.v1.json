@@ -1,0 +1,274 @@
+{
+ "schema": "Transformations/NP_09/v1.0",
+ "vault": "v1.3",
+ "notes": "NP_09's power-ceiling ladder as the sim keeps it. The shared rules (s1) and the tiers above the hissatsu (s2 is NP_05's): All four tiers above the hissatsu run: In the Zone (s3), Spirit Manifestation (s4), Inheritance (s5) and Awakening (s6). The price is NP_09 s1's whole bar - 100 team Tension, the FULL RELAY's 75 (tactics.v1.json corner.full_relay_t4_cost, NP_05 s6) - and the bar empties on the cast, always: no CHARGED half price, no element edge (those are the hissatsu's). The SURGE motion (LB + both sticks click; the greybox keyboard: H + Y) casts the highest executed tier the fighter has unlocked - Awakening, Inheritance, the Manifest, the Zone - unless his card names a lower one he has unlocked (surge_tier, chosen between duals), and one transformation of any tier is the fighter's for the dual. The startup cinematic is a camera hold the whole world waits out (NP_05 s5's camera hold, at the top of its range): nothing moves, so nothing interrupts it (s1: 'uninterruptible once the cinematic starts'). A transformation lasts its duration of fight time and ends with the segment; the Comedown follows (10 s at 85 % stats; Inheritance's adds its own). The price is the whole bar except where a tier names another (a dual-house fighter's own second house, 75). Enemy transforms are authored per boss (s1): a TRANSFORM line in his pattern (pbn/, compiled to data/patterns/), felt coming through its tell and its line; the table's boss block says which tiers a boss can cast and how each runs on his side; the Manifest Clash (s4) and the weathering (s7) are here too. Manager mode never surges on its own - the whole team's bar is the player's commitment - and the SURGE call passes through delegation. Every value not quoted from NP_09 is a first draft.",
+ "shared": {
+  "cost": 100,
+  "full_relay_cost_from": "tactics.corner.full_relay_t4_cost",
+  "empties_bar": true,
+  "motion": "SURGE",
+  "input": "LB + both sticks click (keyboard H + Y)",
+  "cinematic_ms": 2500,
+  "cinematic_text": "NP_05 s5's camera hold at the top of its 0.8-2.5 s range; the world waits it out",
+  "uninterruptible": true,
+  "per_fighter_per_dual": 1,
+  "comedown": {
+   "seconds": 10,
+   "stat_pct": 85
+  },
+  "source": "NP_09 s1, s7; NP_05 s3, s4, s6",
+  "weathering": {
+   "actions": [
+    "perfect_block",
+    "slip",
+    "clash_exchange"
+   ],
+   "shave_s": 1,
+   "damage_mult": 0.5,
+   "feat": "stood_in_the_storm",
+   "text": "s7: against his transformation, each perfect-defense action of the player's - a perfect block, a slip (his dodge or the Zone's auto-slip), an exchange won in the Clash - shaves 1 s off it; once he has weathered one, the transformed enemy's damage to him is halved for the rest of it. The player's weathering: the boss does not weather the player's transformations",
+   "stood_in_the_storm": {
+    "name": "Stood in the Storm",
+    "text": "a boss's transformation weathered without answering: it ends with at least one perfect-defense action against it, the player never transformed while it ran and never knocked down - a feat on the ledger, commentary's legend (s7)"
+   }
+  }
+ },
+ "tiers": {
+  "zone": {
+   "tier": 2,
+   "name": "In the Zone",
+   "arc": 1,
+   "executed": true,
+   "duration_s": 20,
+   "effects": {
+    "time_scale": 0.75,
+    "auto_slip_every_s": 3,
+    "stamina_frozen": true,
+    "counter_window_plus_ms": 200,
+    "punch_speed_pct": 15
+   },
+   "effects_text": "time perception x0.75 (the world's timers slow for the player, as the flash window's slow-time does, C5); the first incoming punch in each 3 s of the Zone slipped automatically; stamina frozen at its value when the Zone begins (no drain, no regen); every counter window +200 ms; punches +15 % speed (startup and recovery)",
+   "comedown": {
+    "stamina": "resumes at its current value"
+   },
+   "unlock": {
+    "level": 20,
+    "flag": "story:provincials_semifinal",
+    "text": "story (Arc 1 semifinal - the Provincials, where the Zone is taught by failure and earned in the rematch, NP_12 s4 beat 6) + fighter level 20; universal: every fighter can Zone"
+   },
+   "presentation": "desaturated world, breath audio forward, a single-colour aura seep in the fighter's element, the crowd to a heartbeat - the quietest transformation (the greybox: the fighter lit in his element's tint, the HUD's ZONE line)",
+   "source": "NP_09 s3",
+   "words": {
+    "hud": "IN THE ZONE",
+    "state": "in the Zone",
+    "ends": "THE ZONE ENDS"
+   }
+  },
+  "manifest": {
+   "tier": 3,
+   "name": "Spirit Manifestation",
+   "arc": 2,
+   "executed": true,
+   "duration_s": 30,
+   "effects": {
+    "damage_mult": 1.4,
+    "manifest_meter": 50,
+    "echo_delay_s": 0.3,
+    "echo_pct": 30,
+    "displace_mult": 2.0
+   },
+   "effects_text": "all damage x1.4 - every composure hit the fighter deals: his punches (clean, or chipped through a guard) and his hissatsu's damage packets; hissatsu costs - each move's own price, the CHARGED half and the element edge as ever - paid from a private 50-point manifest meter instead of the team bar (the manifest brings its own fuel: the team bar, emptied by the SURGE, fills again for the next fighter, SAVE THE BAR does not hold the meter, and what is left of it goes with the manifest); the manifest's echo of every punch that lands clean, 0.3 s of fight time later, for 30 % of that punch's damage (the two-hit rhythm: a drop or the segment's end cancels an echo in flight, his timed wall stops it, his gauge takes it by the punch's own source); the fighter's DISPLACE packets - NP_05 s5's zone displacement, the knock to the ropes or the corner - at twice their metres",
+   "comedown": {
+    "text": "the standard (s1): 10 s at 85 % stats - NP_09 s4 names nothing more"
+   },
+   "words": {
+    "hud": "MANIFEST",
+    "state": "manifested",
+    "ends": "THE MANIFEST ENDS"
+   },
+   "unlock": {
+    "named": {
+     "flag": "story:manifest:{name}"
+    },
+    "generic": {
+     "level": 35,
+     "flag": "mastery:zone:{name}"
+    },
+    "text": "a named character's own Arc 2 story event (a manifest is earned in fiction - each debut is an episode beat, NP_12 s5): the flag story:manifest:<NAME>; a generic stablemate (a card marked generic): level 35 and a Zone mastery flag, mastery:zone:<NAME>, receiving his element's generic manifest"
+   },
+   "manifests": {
+    "named": {
+     "placeholder": "{name}'s manifest",
+     "figures": {},
+     "text": "an authored figure per named character (NP_09 s4's: an ancestor in old hand-wraps, a colossal bear, a freight train of storm, the northern lights given shoulders) - characterization, each saying something true about its fighter; the content lane's to author (figures: NAME -> {name, figure}); until one is authored the tier runs under the placeholder"
+    },
+    "generic": {
+     "FROST": {
+      "name": "the Frost manifest",
+      "figure": null
+     },
+     "GALE": {
+      "name": "the Gale manifest",
+      "figure": null
+     },
+     "GRANITE": {
+      "name": "the Granite manifest",
+      "figure": null
+     },
+     "TIMBER": {
+      "name": "the Timber manifest",
+      "figure": null
+     },
+     "text": "element-generic manifests for the generic stablemates (NP_09 s4); the names are placeholders and the figures the content lane's"
+    }
+   },
+   "clash": {
+    "executed": true,
+    "seconds": 5,
+    "time_scale": 0.5,
+    "text": "both active fighters manifested at once (the player's Manifest, or his Manifest-Awakening, and a boss's): the fight stops for a 5 s scripted clash sub-duel of five alternating counter-window exchanges at x0.5 time - he defends first (block or slip on the cue), then strikes (a punch on the cue), and so on; each window 180 ms at x0.5 time (360 ms); a press outside the window loses the exchange; pure timing, zero stats. Three exchanges win it: the winner's manifest ends the loser's early, into the loser's Comedown; every exchange he wins weathers the boss's (s7). Manager mode's card hits each cue six times in ten",
+    "exchanges": 5,
+    "window_ms": 180,
+    "to_win": 3,
+    "delegated_hit_pct": 60
+   },
+   "presentation": "a full camera orbit break: the 2.5 s reveal script (the shared cinematic), the arena reacting per element (frost creep, wind-torn banners), commentary's authored lines per named manifest (the greybox: the figure a tall translucent capsule behind the fighter in his element's tint, a pulse on each echo, the HUD's MANIFEST line)",
+   "source": "NP_09 s4; NP_05 s5; NP_11 s2 (manifest_id)"
+  },
+  "inheritance": {
+   "tier": 4,
+   "name": "Inheritance",
+   "arc": 2,
+   "executed": true,
+   "duration_s": 25,
+   "effects": {
+    "inherit_trait": true,
+    "private_meter": 50,
+    "meter_pays": "inherited",
+    "misread": true,
+    "own_stats": true
+   },
+   "effects_text": "the caster carries the source's house trait beside his own (NP_07 s3's traits, read as he would carry them - a stat trait scales his stats for the 25 s, from where they stood); the source's native technique set - a stablemate's unlocked natives with the move he carries first, a legacy's or a second house's natives (SECRETs excepted) - each answering its own family's motion after any open T3 and before the card's own move, cast from a private 50-point meter (the card's own move and the relay's T3s still pay from the team bar; SAVE THE BAR does not hold the meter; half of a broken cast comes back to it; the rest leaves with the Inheritance); the source's tell dialect: the enemy reads the wrong language - every read he makes of the caster's punches is a misread (no evasion, no guard), and a feint draws nothing from a misread; his own stats, style package and house rings (the house worn is the style, not the membership)",
+   "comedown": {
+    "dialect_scrambled_s": 10,
+    "text": "the standard (s1), and the caster's own dialect scrambled 10 s: his feints - the false tells of his own dialect - draw nothing"
+   },
+   "words": {
+    "hud": "INHERITANCE",
+    "state": "inheriting",
+    "ends": "THE INHERITANCE ENDS"
+   },
+   "unlock": {
+    "inherit": true,
+    "bond_from": "economy.v1.json kizuna.effects: the level carrying inheritance (NP_08 s5.2 Lv5 Sworn)",
+    "second_house_field": "house2",
+    "second_house_cost": 75,
+    "source_order": [
+     "legacy",
+     "sworn",
+     "second_house"
+    ],
+    "text": "a Sworn bond (Kizuna Lv5, NP_08 s5.2) with a stablemate of another house than his own, or a story-flagged legacy source (legacy:<id>: an authored gift - no bond level can be grinded for the dead), or - a dual-house fighter (NP_07 s5's marriage line: a card's house2) - his own second house, at 75. Several at once: the legacy first (the story put it there), then the Sworn stablemate with the most Kizuna points (the stable's order on a tie), then his second house"
+   },
+   "legacy_sources": {
+    "departed_coach": {
+     "name": null,
+     "house": null,
+     "flag": "legacy:departed_coach",
+     "text": "NP_09 s5's departed coach and NP_12 s5's legacy Inheritance episode (Whitlock's thread, NP_05A: Eight Count Answer begins it as a technique): whose Inheritance and which house are the content lane's; a source with no house is skipped"
+    }
+   },
+   "presentation": "the source (living and dressed) stands at the apron and mirrors the stance; a ghost-frame of the source over the caster's silhouette; a legacy's in older film-grain (the greybox: a translucent capsule in the source's colour over the caster, a small one at the apron for a dressed source, grey for a legacy; the HUD's INHERITANCE line)",
+   "source": "NP_09 s5; NP_08 s5.2; NP_07 s3, s5; NP_04 s2 (the read)"
+  },
+  "awakening": {
+   "tier": 5,
+   "name": "Awakening",
+   "arc": 3,
+   "executed": true,
+   "duration_s": 40,
+   "effects": {
+    "stack_pct": 75,
+    "ring_cap": 1.75,
+    "drop_refund": 15,
+    "hybrid_slot": 1
+   },
+   "stack_rules": {
+    "time_scale": "mult",
+    "auto_slip_every_s": "period",
+    "stamina_frozen": "fraction",
+    "counter_window_plus_ms": "add",
+    "punch_speed_pct": "add",
+    "damage_mult": "mult",
+    "manifest_meter": "add",
+    "echo_delay_s": "keep",
+    "echo_pct": "add",
+    "displace_mult": "mult",
+    "inherit_trait": "fraction",
+    "private_meter": "add",
+    "meter_pays": "keep",
+    "misread": "fraction",
+    "own_stats": "keep",
+    "text": "a prior tier's effect at 75 % strength: a multiplier's reach from x1 at 75 % (x0.75 -> x0.8125, x1.4 -> x1.3, x2 -> x1.75), an amount at 75 % (+200 ms -> +150, +15 % -> +11.25, a 50-point meter -> 37.5, +30 % -> +22.5), a period stretched to 75 % as often (every 3 s -> every 4 s), a state at 75 % (stamina 75 % frozen: its drain and regen at a quarter; 75 % of the enemy's reads misreads; the inherited trait's magnitudes at 75 %, a count kept whole), a timing or a route kept (the echo's 0.3 s, which moves the meter pays)"
+   },
+   "effects_text": "a chosen prior tier's effects stacked at 75 % strength (Zone-, Manifest- or Inheritance-Awakening: the tier named by the card's awakening_form, chosen between duals, else his highest prior tier unlocked; it must be one he has unlocked); +1 hybrid technique slot active - no hybrid technique exists to fill it (NP_08 s6's hybrid research is not built), so the slot opens on nothing; the three affinity rings' caps x1.5 -> x1.75 for him while he is Awakened (NP_06 s4's one exception: the hissatsu's ring product and the house traits' multipliers); every DROP he scores while Awakened refunds 15 Tension to the team bar, flat (the comeback cascade: it can refuel the next fighter's transformation)",
+   "comedown": {
+    "text": "the standard (s1): s6 names nothing more; the stacked tier's own riders (Inheritance's scrambled dialect) belong to casting that tier, not to its 75 %"
+   },
+   "words": {
+    "hud": "AWAKENED",
+    "state": "awakened",
+    "ends": "THE AWAKENING ENDS"
+   },
+   "unlock": {
+    "awaken": true,
+    "flags": [
+     "secret:{name}",
+     "story:trial:{name}"
+    ],
+    "protagonist": {
+     "card": "RORY",
+     "flags": [
+      "story:sealed_house_resolved"
+     ],
+     "text": "the protagonist (NP_05's 'protagonist signature line' is RORY's Aurora Borealis Breaker) also needs the sealed house resolved (NP_07 s7)"
+    },
+    "needs_form": true,
+    "text": "story-gated per character: his house's SECRET learned (the SECRET gate event, NP_07A - the flag secret:<NAME>) and his personal Arc 3 trial (story:trial:<NAME>); the protagonist also the sealed-house resolution (story:sealed_house_resolved); and a prior tier unlocked to stack"
+   },
+   "choice": {
+    "surge_tier": "the card's surge_tier: the tier his SURGE casts when he has it unlocked, else his highest - chosen between duals",
+    "awakening_form": "the card's awakening_form: the prior tier Awakening stacks when he has it unlocked, else his highest prior tier - chosen between duals",
+    "when": "between duals (the overworld's menu; the greybox seeds -- surge=NAME:tier and -- form=NAME:tier)"
+   },
+   "presentation": "a full element-storm arena takeover, his house crest in the environment, a leitmotif per named character over the club theme - the loudest the game gets (the greybox: the ring floor lit in his element, the fighter lit brightest, the stacked tier's own figure, the HUD's AWAKENED line)",
+   "source": "NP_09 s6; NP_06 s4; NP_07 s7; NP_07A; NP_08 s6"
+  }
+ },
+ "boss": {
+  "tiers": [
+   "zone",
+   "manifest"
+  ],
+  "tell_floor_ms": 1000,
+  "per_boss_per_dual": 1,
+  "grammar": "TRANSFORM @ <condition>: <tier> [\"<manifest name>\"] TELL(<motif>, <ms>ms) \"<line>\" - the condition in the phase vocabulary (composure<N, clock>N); the tell at least the ARMORED floor (1000 ms) and the line said as it starts: the player feels it coming (s1)",
+  "effects": {
+   "zone": {
+    "time_scale": "his timers at 1/0.75 outside his tells (the world slows for him; his tells keep NP_14 C4's floors)",
+    "punch_speed_pct": "his acting at +15 %",
+    "auto_slip_every_s": "the first player punch of every 3 s slipped",
+    "stamina_frozen": "his stamina frozen",
+    "counter_window_plus_ms": "none: bosses counter by authored string, not by window"
+   },
+   "manifest": {
+    "damage_mult": "his damage x1.4 - punches and hissatsu",
+    "echo": "his clean punches echoed at 0.3 s for 30 %",
+    "displace_mult": "his DISPLACE packets x2",
+    "manifest_meter": "none: bosses cast by composure, not by bar (NP_14 C14)"
+   }
+  },
+  "surge": "his tell runs (he gathers, guard up, no attack), then the shared camera hold; his bar empties; his transformation lasts its tier's duration of fight time and ends with his segment; his Comedown is the shared 10 s at 85 % - the player's answer window (s1)",
+  "text": "s1: enemy transforms are authored per boss (desperation-class lines in his pattern), never systemic RNG, and the player must feel one coming. The roster's one authored: Ioan Vasile's 'T4 usage at the 50% mark' (NP_04B s24) - read as the Zone at composure<50"
+ }
+}

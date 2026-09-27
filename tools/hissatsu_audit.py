@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""hissatsu_audit.py - content gate for the hissatsu library (NP_13 s5 hissatsu
+"""hissatsu_audit.py - content gate for the hissatsu library (v2: 87 moves, PAC-047) (NP_13 s5 hissatsu
 gate, mechanized). Enforces schema conformance and the NP_05A distribution law.
 Exit 0 green / 1 violations. Run from repo root after any rebuild.
 """
@@ -16,7 +16,7 @@ CANON_05 = ["Aurora Borealis Breaker","Grain Elevator","Premiere Neige","Sorry E
             "Net-Hauler's Yank","Liver Line","Pressure Cooker","Long Winter","Two Rivers"]
 
 def main():
-    lib = json.load(open("data/hissatsu_library.v1.json"))
+    lib = json.load(open("data/hissatsu_library.v2.json"))
     moves = lib["moves"]
     fails = []
     def chk(ok, where, rule):
@@ -46,7 +46,7 @@ def main():
 
     # -- distribution law --------------------------------------------------
     b = len(fails)
-    chk(len(moves) == 80, "library", f"count {len(moves)} != 80")
+    chk(len(moves) == 87, "library", f"count {len(moves)} != 87 (v2 law: 80 + PAC-047 amendment)")
     by_house = collections.defaultdict(list)
     for m in moves:
         if m["house_id"]: by_house[m["house_id"]].append(m)
@@ -67,6 +67,29 @@ def main():
     chk(sum(1 for m in moves if not m["counter_profile"]["interruptible"] and m["family"] != "WALL") <= 6,
         "armored", "more than 6 armored non-wall moves (dodge-only must stay rare)")
     print(f"  [{'FAIL' if len(fails) > b else ' OK '}]  distribution law")
+
+    # -- duo variants (PAC-080: NP_08 s5.2 Lv4, NP_05 s7) --------------------
+    # null, the 2v2 festival's input rule ("sync_500ms" on duo-sourced moves), or a relay T3's Duo variant: the partner's afterimage,
+    # its VFX and camera, legal effect entries, every named pair a key of two stable names in pair order
+    b = len(fails); variants = 0; named = {}
+    for m in moves:
+        dv, w = m["duo_variant"], m["name"]
+        if dv is None: continue
+        if isinstance(dv, str):
+            chk(dv == "sync_500ms" and m["source"].startswith("duo:"), w, "a string duo_variant is the 2v2 input rule on a duo move only")
+            continue
+        variants += 1
+        chk(isinstance(dv, dict) and m["tier"] == "T3" and m["source"].startswith("relay:"), w, "a Duo variant sits on a relay T3")
+        chk(dv.get("afterimage") == "partner" and str(dv.get("vfx_set", "")).startswith("vfx_duo") and str(dv.get("camera_script_id", "")) != "", w, "Duo variant incomplete (afterimage / vfx / camera)")
+        for e in dv.get("effect_add", []):
+            chk(e.get("type") in ("DMG","SHRED","BURN","DISPLACE","STATE","BUFF","WALL"), w, f"illegal effect_add type {e.get('type')}")
+        for k, nm in dv.get("pairs", {}).items():
+            ab = k.split("|")
+            chk(len(ab) == 2 and ab[0] < ab[1] and ab[0] == ab[0].upper() and ab[1] == ab[1].upper(), w, f"pair key {k} not A|B in order")
+            chk(k not in named, w, f"pair {k} named twice"); named[k] = nm
+            chk(nm not in names, w, f"duo name {nm} collides with a library move")
+    chk(sum(1 for n in named.values()) == len(set(named.values())), "duos", "two pairs share a duo name")
+    print(f"  [{'FAIL' if len(fails) > b else ' OK '}]  duo variants ({variants} relay T3s, {len(named)} named pairs)")
 
     # -- verdict -----------------------------------------------------------
     tiers = collections.Counter(m["tier"] for m in moves)

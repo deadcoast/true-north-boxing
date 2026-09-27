@@ -1,6 +1,6 @@
 # NP_04A s8 - Ascendant A R5; three borrowed dialects, each slightly wrong
 BOSS Vey_Anders
-META style=BOXERPUNCHER element=varies house=petrov_taken slot=R5 arc=1 pi_transfer=0.5 authored_loss=dual_math
+META style=BOXERPUNCHER element=varies house=petrov_taken slot=R5 arc=1 pi_transfer=0.5 authored_loss=dual_math kit=outboxer_frost
 IDLE: neutral_stance_studied
 STRING P1S1 "MirrorCopy": TELL(glove_turn_no_silence, 500ms) -> COUNTER_STATE(2s)
 STRING P1S2 "FrostLineCopy": TELL(glove_turn, 450ms) -> JAB -> JAB -> STEP_OUT

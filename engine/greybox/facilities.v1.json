@@ -1,0 +1,39 @@
+{
+ "schema": "Facilities/NP_10-s7/v1.0",
+ "vault": "v1.3",
+ "notes": "NP_10 s7's club facilities, the gym progression tree, as the sim reads it. Five tracks, each T1 -> T3; the club starts every track at T0, the Old Gym as found (NP_12A: the condemned building). Each tier is a renovation paid from the reward ledger - HBP and Spirits - behind a story gate (NP_10 s7: 'story + HBP + Spirits'), between duals, and it goes up on the Gym Wall as a photograph. A track's effects arrive in the order the doc's table lists them, one a tier: the first listed is the tier-1 effect and, where it is a capacity, it grows at every tier after. Prices and gates are first drafts against NP_11 s6 (HBP 50-150 a session, Spirits 3-8); the flag names are editorial.",
+ "start_tier": 0,
+ "max_tier": 3,
+ "tiers": {
+  "1": {"hbp": 150, "spirits": 5, "story": "story:charter_saved", "story_text": "the charter saved (NP_12 s4 beat 2: the Survival Dual)"},
+  "2": {"hbp": 400, "spirits": 15, "story": "quest:gym_funding", "story_text": "the funding quest after the failed inspection (NP_12 s4 beat 5)"},
+  "3": {"hbp": 800, "spirits": 30, "story": "story:nationals", "story_text": "the Nationals (NP_12 s4 beat 7)"}
+ },
+ "order": ["bags_mitts", "the_ring", "film_room", "the_wall", "front_of_house"],
+ "tracks": {
+  "bags_mitts": {"label": "Bags & Mitts", "alias": "bags", "doc": "Training minigame tiers (NP_11 s7), Beans yield +25/50%",
+   "effects": {"1": "the bags rehung: Mitts and the Heavy Bag open", "2": "the Slip Bag; Beans x1.25", "3": "Shadow Rounds; Beans x1.5"},
+   "training": {"slots_per_day": 3, "yield_mult": [1.0, 1.0, 1.25, 1.5], "text": "a slot pays lo + the grade's share of (hi - lo) Beans, x the tier's yield; the grade is the minigame's own result (0-1, input skill = yield)",
+    "games": {
+     "roadwork": {"label": "Roadwork", "tier": 0, "beans": [3, 5], "bias": "STA", "partner_kizuna": 3, "text": "snow routes on The Hill - no gym needed; a squad member along bonds (a repeatable source)"},
+     "net_haul": {"label": "Net Haul", "tier": 0, "beans": [5, 8], "bias": "PWR", "flag": "quest:macisaac_harbour", "text": "the harbour, unlocked by the MacIsaac content"},
+     "mitts": {"label": "Mitts", "tier": 1, "beans": [3, 6], "bias": "SPD", "text": "called combos under tempo"},
+     "heavy_bag": {"label": "Heavy Bag", "tier": 1, "beans": [3, 6], "bias": "PWR", "text": "haymaker release windows"},
+     "slip_bag": {"label": "Slip Bag", "tier": 2, "beans": [4, 8], "bias": "RFX", "text": "escalating slip strings"},
+     "shadow_rounds": {"label": "Shadow Rounds", "tier": 3, "beans": [6, 10], "bias": "any", "needs_page": true, "text": "free-form against the ghost of a Scout Book pattern"}
+    }}},
+  "the_ring": {"label": "The Ring", "alias": "ring", "doc": "Spar modifiers unlock; 2v2 exhibition hosting; ranked spar board access",
+   "effects": {"1": "the spar modifiers: the lab flags (NP_02 s2.2)", "2": "the Exhibition 2v2 hosted at home", "3": "the ranked spar board (the CRBF Annex)"},
+   "lab_tier": 1, "host_tier": 2, "ranked_tier": 3},
+  "film_room": {"label": "Film Room", "alias": "film", "doc": "Scout Book capacity; PI grind rate +; decoy detection assist",
+   "effects": {"1": "the Scout Book's shelf: 12 pages", "2": "24 pages; the grind's rungs come sooner (2 / 4 scraps, 1 / 2 spars)", "3": "48 pages; the tape reads a decoy seal from a corner that has run one on you"},
+   "book_pages": [6, 12, 24, 48], "grind_tier": 2, "grind_rungs": {"scraps": {"1": 2, "2": 4}, "spars": {"1": 1, "2": 2}}, "tape_tier": 3},
+  "the_wall": {"label": "The Wall", "alias": "wall", "doc": "Bond board slots, decoration sets, Forge event hosting (NP_08 s6)",
+   "effects": {"1": "the wall widened: two card columns more", "2": "two more; the honours set (house crests, feats)", "3": "the Forge hosted (NP_08 s6)"},
+   "grid_w_add": [0, 2, 4, 4], "sets": {"honours": {"tier": 2, "kinds": ["crest", "feat"]}}, "forge_tier": 3},
+  "front_of_house": {"label": "Front of House", "alias": "foh", "doc": "Entrance presentation upgrades, crowd heat base +, Prestige from hosted duals",
+   "effects": {"1": "the entrance: a music sting", "2": "a banner; a hosted dual's crowd starts at 20", "3": "the crowd chant; a hosted dual pays 5 Prestige"},
+   "entrance": [[], ["music sting"], ["music sting", "banner"], ["music sting", "banner", "crowd chant"]], "bell_flag": "quest:the_bell", "bell": "La Campana (NP_07A: the Reyes bell at your entrances)",
+   "crowd_tier": 2, "crowd_base": 20, "prestige_tier": 3, "prestige": 5}
+ }
+}

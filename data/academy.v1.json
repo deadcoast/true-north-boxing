@@ -1,0 +1,27 @@
+{
+ "schema": "Academy/NP_07-s10/v1.0",
+ "vault": "v1.3",
+ "notes": "NP_07 s10's Arc 3 thesis as the sim reads it: the Toronto Ascendant Academy has industrialized hybrid synthesis without bonds. Its prodigies are generic cards on the assembler (C24), each drilled on one house's dialect without the house (no trait, no home bonus), each carrying three syntheses: hybrids composed by the Forge's own rules (C41) from two houses' natives straight off the library - no pair, no bond, no native learned - then priced down, slightly weaker per move (the damage x0.85) and overwhelming in breadth (fifteen across the squad, every house with natives in two of them or more; the club's Forge stops at eight). A synthesis is a T3 at the T3 price that the enemy side casts on its own rule: whenever the prodigy's bar pays for it, at his decision point, within reach, the next in his rotation - no CHARGED, no relay, no afterimage, no duo VFX, no feud or alliance history. The club's answer is its forged hybrids: fewer, relayed x1.25 with the partner's afterimage, each with its pair and its edge. The academy corner is Director Vey's. Prodigy handles are placeholders, the house pairs and the price-down are first drafts. Since PAC-102 the academy recruits the club's beaten rivals between arcs (recruiting): the anti-you.",
+ "club": "Toronto Ascendant Academy",
+ "coach": "ascendant_a",
+ "synthesis": {
+  "dmg_mult": 0.85,
+  "per_fighter": 3,
+  "name_rule": "Synthesis {a}-{b}",
+  "source": "synthesis:academy",
+  "vfx_set": "vfx_synth",
+  "reach_plus": 0.3,
+  "counter_profile": {"interruptible": true, "window_ms": 700, "negation": "interruptible in its windup - a jab inside 700 ms (no afterimage to wait on)"},
+  "text": "the Forge's composer on the library's natives of both houses (the SECRET excepted): the stronger native's family and damage +0.1 over the T3 floor 2.4, a tag from each house, the cinematic by its tags - then the damage x0.85; tension 50 (a T3's); cast from the enemy's bar at his decision point when it pays and he is within the family's reach"
+ },
+ "recruiting": {"turns": ["story:nationals", "story:hollow_circuit"], "per_turn": 3,
+  "text": "PAC-102: NP_12 s2's Director Vey 'recruits YOUR beaten rivals between arcs - the anti-you'. When an arc turns (its story flag lands through story_mark: Arc 1 ends at the Nationals (NP_12 s4 beat 7), Arc 2 at the Hollow Circuit's end), the academy signs up to three of the club's beaten rivals it left behind - the recruit table's fighters the club flagged approachable or approached and never signed, released ones included (PAC-100's road back) - in the order the club met them. Each takes a place in the academy's squad ahead of the prodigies, fighting on its own pattern with the syntheses of the prodigy it displaces (C46: synthesis without bonds), Vey in the corner. A rival at the academy is out of the club's reach until the academy is beaten in a dual; then every rival it holds comes over, approachable again, its release remembered (NP_12 s6: the academy absorbed into Team Canada). Arc 2's flag, the three a turn and the displaced kits are first drafts"
+ },
+ "prodigies": [
+  {"name": "ASCENDANT 1", "style": "SWARMER", "dialect": "okafor", "tier": 3, "syntheses": [["okafor", "macisaac"], ["okafor", "reyes"], ["okafor", "whitecloud"]]},
+  {"name": "ASCENDANT 2", "style": "OUTBOXER", "dialect": "tremblay", "tier": 3, "syntheses": [["tremblay", "nguyen-roy"], ["tremblay", "moreau"], ["tremblay", "osei"]]},
+  {"name": "ASCENDANT 3", "style": "SLUGGER", "dialect": "kowalchuk", "tier": 3, "syntheses": [["kowalchuk", "tremblay"], ["kowalchuk", "macisaac"], ["kowalchuk", "tagaq"]]},
+  {"name": "ASCENDANT 4", "style": "BOXERPUNCHER", "dialect": "delacroix-cardinal", "tier": 3, "syntheses": [["delacroix-cardinal", "nguyen-roy"], ["delacroix-cardinal", "osei"], ["delacroix-cardinal", "tagaq"]]},
+  {"name": "ASCENDANT 5", "style": "BOXERPUNCHER", "dialect": "petrov", "tier": 3, "syntheses": [["petrov", "reyes"], ["petrov", "whitecloud"], ["petrov", "moreau"]]}
+ ]
+}

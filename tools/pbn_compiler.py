@@ -17,10 +17,13 @@ Grammar (strict form; NP_04 s2 blocks normalize to this):
     PHASE <n> @ <cond>: <directives>
     DESPERATION @ <cond>: hissatsu "<Library Name>" [+ arm_only "<Name>"]
     DESPERATION: none "<authored reason>"
+    TRANSFORM @ <cond>: <tier> ["<manifest name>"] TELL(<motif>, <ms>ms) "<line>"   # PAC-086: NP_09 s1, authored per boss
 
 Safety rails (errors): TELL floors 400/700/1000ms (normal/SPECIAL/ARMORED);
 desperation moves must exist in the library with cinematic >=1200ms; SELECT
-must reference declared strings; duplicate string names; unparseable lines.
+must reference declared strings; duplicate string names; unparseable lines;
+a TRANSFORM names a tier a boss can cast (data/transformations.v1.json's boss
+block), a manifest its name, a tell at the boss floor (1000ms) and a line.
 Template rails (errors unless authored-absent with reason): >=1 BAIT, >=2 PUNISH.
 
 Usage:  python3 tools/pbn_compiler.py            # compile pbn/ -> data/patterns/
@@ -34,6 +37,15 @@ DESPERATION_CINE_FLOOR = 1200
 def load_library():
     lib = json.load(open("data/hissatsu_library.v2.json"))
     return {m["name"]: m for m in lib["moves"]}
+
+def load_boss_transforms():
+    # PAC-086: the tiers a boss can cast and his tell floor, from the transformations table
+    try:
+        t = json.load(open("data/transformations.v1.json"))
+    except OSError:
+        return {"tiers": [], "tell_floor_ms": 1000}
+    b = t.get("boss", {})
+    return {"tiers": [x for x in b.get("tiers", []) if t.get("tiers", {}).get(x, {}).get("executed", False)], "tell_floor_ms": int(b.get("tell_floor_ms", 1000))}
 
 def parse(src: str, fname: str, lib: dict):
     boss, errors = {"file": fname, "meta": {}, "idle": [], "strings": {}, "select": None,
@@ -125,6 +137,23 @@ def parse(src: str, fname: str, lib: dict):
             if arm and arm not in lib:
                 err(i, f"arm_only move '{arm}' not in library v2")
             boss["desperation"] = {"trigger": trigger.strip(), "move": move, "arm_only": arm}
+        elif line.startswith("TRANSFORM"):
+            m = re.match(r'TRANSFORM\s*@\s*(.+?):\s*(\w+)(?:\s+"([^"]+)")?\s+TELL\(([^,]+),\s*(\d+)ms\)\s+"([^"]+)"\s*$', line)
+            if not m:
+                err(i, "unparseable TRANSFORM line"); continue
+            trigger, tier, mname, motif, ms, said = m.groups()
+            bt = load_boss_transforms()
+            if tier not in bt["tiers"]:
+                err(i, f"transform tier '{tier}' is not one a boss can cast ({', '.join(bt['tiers'])})")
+            if int(ms) < bt["tell_floor_ms"]:
+                err(i, f"transform tell {ms}ms below the {bt['tell_floor_ms']}ms floor (NP_09 s1: felt coming)")
+            if tier == "manifest" and not mname:
+                err(i, "a manifest transform names its manifest")
+            if "transform" in boss:
+                err(i, "one TRANSFORM per boss (NP_09 s1: one per fighter per dual)")
+            tf = {"trigger": trigger.strip(), "tier": tier, "tell": {"motif": motif.strip(), "ms": int(ms)}, "line": said}
+            if mname: tf["manifest"] = mname
+            boss["transform"] = tf
         else:
             err(i, f"unrecognized line: {line[:60]}")
 
@@ -160,8 +189,14 @@ def margins():
     print("=" * 78)
     worst = {"normal": None, "SPECIAL": None, "ARMORED": None}
     fails, n_strings = [], 0
+    tfs = []
     for path in sorted(glob.glob("pbn/*.pbn")):
         boss, errs = parse(open(path).read(), os.path.basename(path), lib)
+        if "transform" in boss:                                   # PAC-086: a boss's transformation tell must clear the cold read too
+            tms = boss["transform"]["tell"]["ms"]
+            tfs.append(f"{boss.get('id','?')} {boss['transform']['tier']} {tms}ms ({tms - rt3:+.0f}ms vs RT(3))")
+            if tms - rt3 < 0:
+                fails.append(f"{boss.get('id','?')} TRANSFORM tell {tms}ms is {rt3 - tms:.0f}ms under RT(3)")
         for name, st in boss["strings"].items():
             n_strings += 1
             ms, cls = st["tell"]["ms"], st["class"]
@@ -177,11 +212,12 @@ def margins():
               f"worst authored string vs RT(3): {m3:+.0f}ms ({who})")
     print("-" * 78)
     print(f"  {n_strings} strings across {len(glob.glob('pbn/*.pbn'))} patterns")
+    print(f"  transformation tells (NP_09 s1, felt coming): {'; '.join(tfs) if tfs else 'none authored'}")
     print("  reading: normal strings are below a COLD 3-way decision on purpose - they are read by pattern")
     print("           knowledge (n->1, RT 375ms). SPECIAL/ARMORED must clear the cold read outright.")
     for f in fails:
         print("  ! " + f)
-    print(f"  VERDICT :: {'GREEN - every SPECIAL/ARMORED tell clears RT(3)' if not fails else 'RED'}")
+    print(f"  VERDICT :: {'GREEN - every SPECIAL/ARMORED tell and every transformation tell clears RT(3)' if not fails else 'RED'}")
     sys.exit(0 if not fails else 1)
 
 def main():
@@ -198,12 +234,15 @@ def main():
                '  STRING s1 "Dup": TELL(y, 500ms) -> JAB\n'
                '  SELECT: w(s1)=50, w(ghost)=50\n'
                '  INTERRUPT: s1 during TELL -> stagger(800)\n'
-               '  DESPERATION @ composure<20: hissatsu "Not A Real Move"\n')
+               '  DESPERATION @ composure<20: hissatsu "Not A Real Move"\n'
+               '  TRANSFORM @ composure<50: awakening TELL(x, 500ms) "too fast, and not his to cast"\n'
+               '  TRANSFORM @ clock>45: manifest TELL(x, 1200ms) "a second line, and a manifest with no name"\n')
         _, errs = parse(bad, "selftest.pbn", lib)
         expected = ["below normal floor", "duplicate string", "undeclared string 'ghost'",
-                    "not in library", "no BAIT", "fewer than 2 PUNISH"]
+                    "not in library", "no BAIT", "fewer than 2 PUNISH", "not one a boss can cast", "transform tell 500ms below",
+                    "names its manifest", "one TRANSFORM per boss"]
         hits = [e for e in expected if any(e in x for x in errs)]
-        print("PBN COMPILER SELFTEST :: seeded 6 violation classes")
+        print("PBN COMPILER SELFTEST :: seeded %d violation classes" % len(expected))
         for e in expected:
             print(f"  [{' OK ' if e in hits else 'MISS'}]  catches: {e}")
         sys.exit(0 if len(hits) == len(expected) else 1)

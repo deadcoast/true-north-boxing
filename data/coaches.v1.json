@@ -1,7 +1,7 @@
 {
  "schema": "Coaches/NP_10-s9/v1.0",
  "vault": "v1.3",
- "notes": "The other mind. Every rival corner is data: an order archetype (NP_10 s2), swap aggressiveness, scouting confidence, decoy use (carried, not consumed - the greybox has no projection screen), a tactic library drawn from tactics.v1.json (only tactics with a boss-side consumer), a Super with its trigger, and ONE tell. Corners are keyed by the club whose fighter opens the dual (coach_of by R1 boss); a club with no record gets the journeyman. 'priority' is the order the corner takes its two actions in (super / swap / tactic).",
+ "notes": "The other mind. Every rival corner is data: an order archetype (NP_10 s2), swap aggressiveness, scouting confidence, decoy use (a decoy seal on the formation screen's projection at decoy_rate, NP_11 s9 Club.decoy_rate, since PAC-073), a tactic library drawn from tactics.v1.json (only tactics with a boss-side consumer), a Super with its trigger, and ONE tell. Corners are keyed by the club whose fighter opens the dual (coach_of by R1 boss); a club with no record gets the journeyman. 'priority' is the order the corner takes its two actions in (super / swap / tactic).",
  "default": "journeyman",
  "coach_of": {
   "cassidy_vane": "ascendant_b",
@@ -70,6 +70,7 @@
    "swap_aggr": 1.0,
    "scout": 1.0,
    "decoys": true,
+   "decoy_rate": 0.5,
    "library": [
     "ice_the_clock",
     "cut_the_ring",
@@ -169,6 +170,7 @@
    "swap_aggr": 0.8,
    "scout": 0.7,
    "decoys": true,
+   "decoy_rate": 0.4,
    "library": [
     "body_doctrine",
     "cut_the_ring"

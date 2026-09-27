@@ -1,0 +1,90 @@
+{
+ "schema": "GymWall/NP_08-s7/v1.0",
+ "vault": "v1.3",
+ "notes": "The Gym Wall (NP_08 s7), the bond board as the sim keeps it. A grid of card cells on the Old Gym's wall; every stablemate's card is pinned to a cell - the club's cards in the stable's order from the cell beside the letter (NP_12A scene 1: 'the first object on the board that becomes the Gym Wall'; scene 3: 'the stable's first card hits the Gym Wall next to the letter'), a recruit beside the stablemate whose string brought him or in the next free cell - and the player may pin any card to any free cell. Proximity is the formation screen's suggestion (NP_10 s2: 'the Gym Wall's card proximities pre-suggest bonded adjacencies'): the starters in the order that walks the wall the shortest way, offered as an order the board may seal, never overriding one sealed. Kizuna lines run between pinned cards whose pair has any Kizuna, filling toward the next level, gilded at Sworn. Decorations unlock from play - a fight poster for a dual won, a ticket stub for the first dual against a club, a polaroid when a bond crosses a level (the bond scene's photograph), hand-wrap graffiti when a recruit joins - and are placed freely: pure expression, zero stats (NP_08 s7: 'kept sacred from optimization'). Nothing on the wall enters the fight's state hash; only a board the player seals from its suggestion changes a fight. The grid's size is the base wall (The Wall facility's tiers, NP_10 s7, are not built); every value here is a first draft.",
+ "grid": {
+  "w": 8,
+  "h": 4,
+  "first_card_cell": [
+   1,
+   0
+  ],
+  "text": "the base wall's card cells; the letter hangs at the left of the top row"
+ },
+ "letter": {
+  "id": "letter",
+  "kind": "letter",
+  "label": "Whitlock's letter - 'Four dressed by Saturday'",
+  "x": 0.5,
+  "y": 0.5,
+  "source": "NP_12A scene 1"
+ },
+ "decorations": {
+  "poster": {
+   "label": "fight poster",
+   "from": "a dual won",
+   "text": "MILLBROOK vs {club} - {lead}",
+   "source": "NP_08 s7"
+  },
+  "stub": {
+   "label": "ticket stub",
+   "from": "the first dual against a club, won or lost",
+   "text": "{club}",
+   "club": "the coach table's club (coaches.v1.json); an unaffiliated squad is its lead's ('{lead}'s squad')",
+   "source": "NP_08 s7"
+  },
+  "polaroid": {
+   "label": "polaroid",
+   "from": "a bond crossing a Kizuna level - the bond scene's photograph (NP_08 s5.1: bond scenes are threshold-triggered)",
+   "text": "{a} & {b} - {level}",
+   "source": "NP_08 s7, s5.1"
+  },
+  "graffiti": {
+   "label": "hand-wrap graffiti",
+   "from": "a recruit joining - his wraps signed on the wall",
+   "text": "{card}'s wraps",
+   "source": "NP_08 s7"
+  },
+  "renovation": {
+   "label": "renovation photograph",
+   "from": "a facility tier built - the Old Gym coming back to life (NP_10 s7)",
+   "text": "{track} T{tier} - {effect}",
+   "source": "NP_10 s7"
+  },
+  "crest": {
+   "label": "house crest",
+   "set": "honours",
+   "from": "a house's blessing (NP_08 s3) - hung once The Wall reaches its tier (facilities.v1.json's honours set)",
+   "text": "House {house}'s crest",
+   "source": "NP_10 s7, NP_08 s3"
+  },
+  "feat": {
+   "label": "feat plaque",
+   "set": "honours",
+   "from": "a feat on the ledger (NP_09 s7) - hung once The Wall reaches its tier (facilities.v1.json's honours set)",
+   "text": "{feat} - {against}",
+   "source": "NP_10 s7, NP_09 s7"
+  }
+ },
+ "decoration_band": {
+  "y": 4.5,
+  "per_row": 8,
+  "text": "where an unlocked decoration goes up first, along the foot of the wall; the player moves it anywhere on the wall"
+ },
+ "bounds": {
+  "w": 8.0,
+  "h": 6.0,
+  "text": "a decoration may hang anywhere inside the wall"
+ },
+ "suggestion": {
+  "archetype": "GYM_WALL",
+  "label": "The Gym Wall",
+  "key": 6,
+  "text": "the starters in the order that walks the wall the shortest way (straight-line distance between card cells): the nearest cards in adjacent slots; ties to the card order",
+  "unpinned_distance": 100.0
+ },
+ "lines": {
+  "gild_level": 5,
+  "text": "a line for every pinned pair with any Kizuna, filled toward the next level, gilded at Sworn"
+ }
+}

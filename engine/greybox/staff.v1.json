@@ -1,0 +1,149 @@
+{
+ "schema": "Staff/NP_10-s6/v1.0",
+ "vault": "v1.3",
+ "notes": "The staff system (NP_10 s6; NP_08 s1: a corps of 10, 3 dressed per dual). Each staffer has a role, the role's passive (live while he is dressed - two of a role dressed, both passives count) and one corner active (tactics.v1.json staff_active, per-dual charges; two dressed with the same active pool their charges, the first working his before the second). Levels come by use: every charge a staffer spends is one use in the reward ledger (rewards.staff), Lv2 at 3 uses, Lv3 at 8; Lv3 unlocks the role's second passive (NP_10 s6). Two of the five second passives are the vault's own lines (the tactician's decoy read, NP_10 s3; the hype's dual started at 10 Tension, NP_05 s1); the other three, the level thresholds, the crowd table and all ten staffers are first drafts for the content lane - the staffers are NP_10 s6's own list (retired boxers, rival cornermen, a sports-med student, the janitor who used to be somebody) with placeholder handles, not names. The crowd (NP_01 s1: crowd heat feeds corner hype actions): heat 0-100 in a dual, raised by your own spectacle only (NP_05: no Tension for damage taken), the Hype's passive +20% on every gain; Raise the Roof converts 30 heat into its +8 Tension and is refused, charge kept, below 30. The default dressed three are tactics.v1.json's equipped actives, each worked by the first staffer who carries it.",
+ "corps_cap": 10,
+ "dressed": 3,
+ "levels": {
+  "2": 3,
+  "3": 8
+ },
+ "roles": {
+  "Cutman": {
+   "passive": {
+    "corner_stamina_plus": 15
+   },
+   "passive_text": "corner stamina restore +15",
+   "lv3": {
+    "corner_composure_plus": 10
+   },
+   "lv3_text": "corner composure restore +10",
+   "source": "NP_10 s6 (the Lv3 line is a first draft)"
+  },
+  "Tactician": {
+   "passive": {
+    "projection_pct": 15,
+    "richer_pages": true
+   },
+   "passive_text": "+15% scout confidence; Scout Book pages richer",
+   "lv3": {
+    "detect_decoys": true
+   },
+   "lv3_text": "reads a decoy seal",
+   "source": "NP_10 s6; the Lv3 line is NP_10 s3"
+  },
+  "Hype": {
+   "passive": {
+    "crowd_heat_pct": 20
+   },
+   "passive_text": "crowd heat builds 20% faster",
+   "lv3": {
+    "tension_start": 10
+   },
+   "lv3_text": "the dual starts at 10 Tension",
+   "source": "NP_10 s6; the Lv3 line is NP_05 s1"
+  },
+  "Conditioning coach": {
+   "passive": {
+    "stamina_regen_pct": 10
+   },
+   "passive_text": "team stamina regen +10%",
+   "lv3": {
+    "overrun_stamina_pct": 90
+   },
+   "lv3_text": "an overrun corner sends the fighter out at 90%, not 80%",
+   "source": "NP_10 s6 (the Lv3 line is a first draft)"
+  },
+  "The Professor": {
+   "passive": {
+    "pi_dual_extra": 1
+   },
+   "passive_text": "PI gains x2 during duals",
+   "lv3": {
+    "pi_bout_extra": 1
+   },
+   "lv3_text": "PI gains x2 in scraps and spars too",
+   "rare": true,
+   "source": "NP_10 s6 (the Lv3 line is a first draft)"
+  }
+ },
+ "corps": [
+  {
+   "id": "sportsmed",
+   "name": "the sports-med student",
+   "role": "Cutman",
+   "active": "patch_job"
+  },
+  {
+   "id": "old_cutman",
+   "name": "the old cutman",
+   "role": "Cutman",
+   "active": "patch_job"
+  },
+  {
+   "id": "rival_cornerman",
+   "name": "the rival cornerman",
+   "role": "Tactician",
+   "active": "the_reveal"
+  },
+  {
+   "id": "tape_man",
+   "name": "the tape man",
+   "role": "Tactician",
+   "active": "the_reveal"
+  },
+  {
+   "id": "janitor",
+   "name": "the janitor who used to be somebody",
+   "role": "Hype",
+   "active": "raise_the_roof"
+  },
+  {
+   "id": "ring_announcer",
+   "name": "the ring announcer",
+   "role": "Hype",
+   "active": "raise_the_roof"
+  },
+  {
+   "id": "retired_boxer",
+   "name": "the retired boxer",
+   "role": "Conditioning coach",
+   "active": "loosen_up"
+  },
+  {
+   "id": "physio",
+   "name": "the physio",
+   "role": "Conditioning coach",
+   "active": "loosen_up"
+  },
+  {
+   "id": "track_coach",
+   "name": "the track coach",
+   "role": "Conditioning coach",
+   "active": "loosen_up"
+  },
+  {
+   "id": "professor",
+   "name": "the Professor",
+   "role": "The Professor",
+   "active": "chalk_talk"
+  }
+ ],
+ "crowd": {
+  "max": 100,
+  "sources": {
+   "drop": 20,
+   "flash": 10,
+   "counter": 5,
+   "interrupt": 6,
+   "eight_up": 15,
+   "hissatsu": 8
+  },
+  "converts": {
+   "raise_the_roof": {
+    "needs": 30,
+    "spends": 30
+   }
+  }
+ }
+}

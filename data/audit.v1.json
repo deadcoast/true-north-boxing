@@ -1,0 +1,65 @@
+{
+ "schema": "Audit/NP_11-s10/v1.0",
+ "vault": "v1.3",
+ "notes": "NP_11 s10's obsolescence audit as the sim runs it (PAC-095). Per milestone, the three earliest-recruitable fighters are built for the current endgame with live systems only - every step a verb the sim refuses when its rule is unmet: the endgame's XP (his own XP curve applied), the three ascensions on Spirits and the trials marked by the trials' own code paths, the board by the aid's picks, the raises on his lowest stat, a kit from the live sources (the shop's open shelves, the masters' open lessons) chosen so every move answers a motion, the gear the locker and the shop fit. Viability is NP_11 s10's three - tier 4, a competitive board, a coherent technique kit - and holding the endgame: half his segments won or more against the endgame's bosses in spars on the profile. A fighter who falls short names the failing system, not himself. The late recruits are built the same way as the reference. The level, the budget, the flags, the seeds and the thresholds are first drafts; the budget is the economy lane's to set.",
+ "earliest": [
+  {
+   "card": "PRIYA",
+   "source": "NP_12 s4 beat 1 (Ep1 - The Letter): 'First scrap. Priya recruited.'"
+  },
+  {
+   "card": "DEX",
+   "recruit": "dex",
+   "source": "NP_12 s4 beat 3: 'Building five - recruitment episodes (Dex; ...)'"
+  },
+  {
+   "card": "YURI",
+   "recruit": "yuri_kowalchuk",
+   "source": "NP_12 s4 beat 4: 'Regionals pool - Grain Kings (Yuri), the Netmen, ...'"
+  }
+ ],
+ "reference": {
+  "recruits": [
+   "cassidy_vane",
+   "remy_moreau",
+   "jean_guy_moreau",
+   "hc9_choir"
+  ],
+  "text": "the recruit table's arc 2 and arc 3 recruits - the stable's latest arrivals, built the same way"
+ },
+ "endgame": {
+  "arc": "3",
+  "level": 35,
+  "text": "NP_11 s2: 'a story-pace player hits ~35 by Arc 3 start'; the arc-3 patterns are the current endgame's bosses"
+ },
+ "budget": {
+  "spirits": 110,
+  "beans": 140,
+  "hbp": 1700,
+  "flags": [
+   "story:regionals",
+   "story:provincials_semifinal",
+   "story:nationals",
+   "quest:coach_questline"
+  ],
+  "text": "a fighter's share of what the faucet pays by Arc 3 (PAC-098: C51's story-pace playthrough - Spirits 612, Beans 770, HBP 9,440 - over the eight dressed, at NP_11 s6's 70% target, rounded: 612 / 8 / 0.7 = 109, 770 / 8 / 0.7 = 138, 9,440 / 8 / 0.7 = 1,686), the circuit's flags by Arc 3; was 95 / 100 / 3,000, first drafts set by hand"
+ },
+ "criteria": {
+  "points_left_max": 1,
+  "passives_min": 3,
+  "win_rate": 0.5,
+  "seeds": [
+   11,
+   22
+  ],
+  "stat_gap_pct": 10,
+  "spar_ticks_max": 12000
+ },
+ "systems": {
+  "tier4": "rarity (NP_11 s4)",
+  "board": "the ability board (NP_11 s3)",
+  "kit": "techniques (NP_11 s2, s8)",
+  "fights_growth": "growth - the board and the raises (NP_11 s3, s6)",
+  "fights_other": "the fight itself (tuning, PAC-052's lane)"
+ }
+}

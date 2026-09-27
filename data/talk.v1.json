@@ -1,0 +1,68 @@
+{
+ "schema": "Talk/NP_10-s4/v1.0",
+ "vault": "v1.3",
+ "notes": "The Talk (NP_10 s4): the corner's fifth action - Whitlock's dialogue with the NEXT fighter, three options keyed to that fighter's personality (NP_11 s9 Fighter.personality.talk_profile, carried on the card as 'talk'). Every talk offers the same three approaches, each in the fighter's own line: the plan, the fire, the arm around the shoulder. The one the card names lands: +5% all stats for that fighter's segment, bound to that fighter (a swap after the talk leaves it unheard). A wrong read gives nothing and costs only the action (NP_10 s4: never a penalty for trying to know your kids). One talk per corner; a card with no profile cannot be read. Bond levels reveal which talk lands: the next fighter's best Kizuna with a dressed teammate - Gymmates (Lv1) rules one wrong option out, Corner Voices (Lv2) and above names the right one - the teammate is the one who tells you. The profiles live on the cards (core.gd's Millbrook cards: RORY fire, PRIYA plan, MARCUS arm, JUNE fire, SAM arm, DEX arm, YURI fire, MARTA plan); Priya's is the doc's (NP_12A s5: she wants the projection confirmed, never comfort); the other seven and all 24 lines are first drafts from the cards' scenes (NP_12A s3, NP_12, NP_04 s8.3, NP_04A) pending the content lane.",
+ "stat_pct": 5,
+ "approaches": {
+  "plan": {
+   "label": "the plan"
+  },
+  "fire": {
+   "label": "the fire"
+  },
+  "arm": {
+   "label": "the arm around the shoulder"
+  }
+ },
+ "order": [
+  "plan",
+  "fire",
+  "arm"
+ ],
+ "reveal": {
+  "rule_out_level": 1,
+  "name_level": 2
+ },
+ "lines": {
+  "RORY": {
+   "plan": "Two to the body, then take the centre and keep it.",
+   "fire": "Nobody from this gym stays down. Go show them.",
+   "arm": "Whatever happens out there, the gym's open Monday."
+  },
+  "PRIYA": {
+   "plan": "Your projection holds. Third exchange, he leads right.",
+   "fire": "Go take his head off.",
+   "arm": "You don't have to be perfect out there."
+  },
+  "MARCUS": {
+   "plan": "Double jab, then the right hand. Nothing else.",
+   "fire": "Let the temper out. All of it.",
+   "arm": "We asked for you. The hands and the temper both."
+  },
+  "JUNE": {
+   "plan": "Stay in the centre and count your exchanges.",
+   "fire": "He thinks you're too small. Go again until he's sure.",
+   "arm": "Take a breath first. There's no hurry."
+  },
+  "SAM": {
+   "plan": "Walk him down. Let the wall take the first minute.",
+   "fire": "No sorry this time. Just hit him.",
+   "arm": "Take your time. You're the last door they have to get through."
+  },
+  "DEX": {
+   "plan": "Pull him in and counter off the clinch.",
+   "fire": "Show them what the boats taught you.",
+   "arm": "Your cousin's watching. So is this gym. Both of them are glad you're here."
+  },
+  "YURI": {
+   "plan": "Coupling first, then Freight. Keep it on the rails.",
+   "fire": "Load it up. The whole gym is shouting with you.",
+   "arm": "Win or lose, your family's in the second row."
+  },
+  "MARTA": {
+   "plan": "He reads your silence. Turn the glove late and make him guess.",
+   "fire": "Make them sorry they let you go.",
+   "arm": "You're one of ours now. That's settled."
+  }
+ }
+}

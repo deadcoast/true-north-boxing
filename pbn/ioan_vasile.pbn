@@ -18,3 +18,5 @@ PHASE 2 @ clock>30: kit_swap granite; neutral_reset(700ms)
 PHASE 3 @ clock>60: kit_swap gale; neutral_reset(700ms)
 PHASE finale @ composure<10: fundamentals_only
 DESPERATION @ composure<25: hissatsu "The Mean"
+# PAC-086: NP_04B s24 "his authored T4 usage fires at the 50% mark" - the Zone (the tier without ancestors, figures or anyone else's style: Meridian measured sentiment out); the line is Vey's call from the player's corner, a placeholder for the content lane
+TRANSFORM @ composure<50: zone TELL(breath_held, 1500ms) "VEY: he has stopped breathing out loud - that is his Zone coming. Weather it."

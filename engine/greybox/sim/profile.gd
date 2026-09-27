@@ -4,7 +4,8 @@
 # The card's style archetype sets the range and the mix (NP_06 s1.2), its stats set how well it
 # reads (RFX), rises (HRT) and taps (RFX); it reads his tells, his casts and the scramble cue the
 # way a fighter would. Pattern Intel (NP_02 s3) lifts its read of a dialect it knows: the sim's
-# pi_read_bonus() (data) is added to the read roll - "your recon makes your AI teammates smarter".
+# pi_read_bonus() (data) is added to the read roll - "your recon makes your AI teammates smarter" -
+# and with his page in hand (PI 3) it never jabs a string the pattern does not tag breakable.
 extends RefCounted
 
 # preferred distance band by style: the swarmer's phone booth, the out-boxer's jab range, the slugger's mid
@@ -30,7 +31,7 @@ static func fresh_memory() -> Dictionary:
 static func intent(s, ext: Dictionary) -> Dictionary:
 	# ext: the outside world's intent - the corner keys pass through untouched (the player keeps the corners)
 	var inp := {}
-	for k in ["corner", "corner_action", "restart", "audio_assist"]:
+	for k in ["corner", "corner_action", "restart", "audio_assist", "surge"]:   # PAC-082: the SURGE is the manager's call, never the card's
 		if ext.has(k): inp[k] = ext[k]
 	var m: Dictionary = s.auto
 	var P: Dictionary = s.P; var B: Dictionary = s.B
@@ -76,7 +77,8 @@ static func intent(s, ext: Dictionary) -> Dictionary:
 		var p_read := 0.3 + 0.5 * rfx + (0.15 if loud else 0.0) + float(s.pi_read_bonus())
 		if s.rng.randf() < p_read:
 			var roll: float = s.rng.randf()
-			if roll < float(INTERRUPT_PREF[style]) and d <= 2.0 and int(s.btimer) > 30 and idle: m["plan"] = "jab"
+			var knows_it_holds: bool = s.pi_vs() >= 3 and not s._interruptible(s.bstring)          # the page in hand (PI 3): it never jabs a string that does not break (NP_04 s4)
+			if roll < float(INTERRUPT_PREF[style]) and d <= 2.0 and int(s.btimer) > 30 and idle and not knows_it_holds: m["plan"] = "jab"
 			elif s.rng.randf() < float(BLOCK_PREF[style]): m["plan"] = "block"
 			else: m["plan"] = "dodge"
 			m["plan_at"] = s.tick
@@ -91,8 +93,8 @@ static func intent(s, ext: Dictionary) -> Dictionary:
 		if bool(s.cast["interruptible"]) and elapsed <= int(s.cast["window_t"]) and d <= 2.0 and idle and s.rng.randf() < 0.25 + 0.5 * rfx:
 			inp["punch"] = "L_STRAIGHT"; inp["move"] = Vector2(0, -0.6); return inp
 		if int(s.cast["t"]) <= 14: inp["block"] = true
-		var mvw: Dictionary = s.player_move()
-		if not mvw.is_empty() and str(mvw["family"]) == "WALL" and s.tension >= s.hiss_cost(mvw) and not s.save_bar and int(s.cast["t"]) > 50 and int(s.cast["t"]) < 110:
+		var mvw: Dictionary = s.wall_move()                                      # PAC-084: an inherited WALL native first
+		if not mvw.is_empty() and str(mvw["family"]) == "WALL" and s.can_pay(mvw) and int(s.cast["t"]) > 50 and int(s.cast["t"]) < 110:
 			inp["lb"] = true; inp["block"] = true; return inp        # raise the wall to take it
 		return inp
 	# ---- the plan against the string ----
@@ -112,9 +114,14 @@ static func intent(s, ext: Dictionary) -> Dictionary:
 		inp["move"] = Vector2(0, -0.4) if d > 1.6 else Vector2.ZERO
 		return inp
 	# ---- the hissatsu, when the bar and the moment allow ----
-	var mv: Dictionary = s.player_move()
-	if idle and not mv.is_empty() and str(mv["family"]) != "WALL" and s.castable(mv) and s.tension >= s.hiss_cost(mv) and not s.save_bar:
-		var opening: bool = int(B["guard_open_t"]) > 0 or s._wobbled(B) or int(P["flash_t"]) > 0 or s.tension >= 90.0
+	var mv: Dictionary = s.kit_pick()                                                     # PAC-091: his own move, else his kit's first he can cast
+	var t3v: Dictionary = s.t3_pick()                                                     # PAC-080/081: a live Duo T3 first, else the relay's strongest, while the bar can pay it
+	if not t3v.is_empty(): mv = t3v
+	else:
+		var ihv: Dictionary = s.inherit_pick()                                            # PAC-084: an inherited native, the strongest the meter can pay
+		if not ihv.is_empty(): mv = ihv
+	if idle and not mv.is_empty() and str(mv["family"]) != "WALL" and s.castable(mv) and s.can_pay(mv):
+		var opening: bool = int(B["guard_open_t"]) > 0 or s._wobbled(B) or int(P["flash_t"]) > 0 or s.tension >= 90.0 or s._meter_pays(mv)   # PAC-083/084: a private meter leaves with its transformation - spend it
 		if opening and d <= 1.9 and s.rng.randf() < 0.35:
 			inp["punch"] = s.FAMILY_ROW[str(mv["family"])]; inp["lb"] = true; return inp
 	# ---- movement: hold the band, cut angles, back off when winded ----

@@ -1,0 +1,38 @@
+{
+ "schema": "Remixes/NP_04-s6/v1.0",
+ "vault": "v1.3",
+ "notes": "The rematch remix system as data (NP_04 s6): operators applied as a layer over the original PBN at load. The original pattern is never edited - the sim duplicates it and applies the ops; the original keeps its Scout Book page and the remix earns its own. Operators: feint(Sx) - the string gains a feint variant (the tell plays; the attack comes `ms` late, or cancels into another string's actions), taken with probability `pct`, always once the string is burned; tighten(Sx, ms) - the tell shortened, floored at NP_04 s1's fair minimums by class; reweight - SELECT redistribution; newstring - one authored string added; phase_shift - a phase trigger moved earlier; burn(Sx, after) - NP_04 s4: after `after` interrupts of Sx in a segment he only feints it; directive - any phase-directive line executed at load (the same vocabulary the phase scripts use). Story rematches use 2-3 operators (NP_04 s6); the records here follow the roster's remix plans (NP_04A) and are first drafts.",
+ "feint": {"pct": 0.4, "delay_ms": 300},
+ "floors_ms": {"normal": 400, "SPECIAL": 700, "ARMORED": 1000},
+ "stagger_ms_default": 800,
+ "desync": {"widen_ms": 100},
+ "remixes": {
+  "yuri_kowalchuk.rematch": {"base": "yuri_kowalchuk", "label": "Yuri Kowalchuk - the rematch", "plan": "NP_04 s4 / s6: Freight learns to feint; Coupling comes quicker; three interrupts of Freight and it only feints from then on",
+   "ops": [
+    {"op": "feint", "string": "S1", "mode": "delay", "ms": 300, "pct": 0.4},
+    {"op": "tighten", "string": "S2", "ms": 450},
+    {"op": "reweight", "weights": {"S1": 40, "S2": 40, "S3": 20}},
+    {"op": "burn", "string": "S1", "after": 3}
+   ]},
+  "moira_macisaac.rematch": {"base": "moira_macisaac", "label": "Moira MacIsaac - the rematch", "plan": "NP_04A: feint(S2) - the haul that releases into a hook instead",
+   "ops": [
+    {"op": "feint", "string": "S2", "mode": "cancel", "into": "S1", "pct": 0.5}
+   ]},
+  "carter_okafor.rematch": {"base": "carter_okafor", "label": "Carter Okafor - the rematch", "plan": "NP_04A: tighten(S2, 420ms) + newstring - a check-hook he learns from watching Marta tape",
+   "ops": [
+    {"op": "tighten", "string": "S2", "ms": 420},
+    {"op": "newstring", "name": "S4", "weight": 25, "string": {"label": "Tape Study", "tags": [], "tell": {"motif": "stride_shing_short", "ms": 450}, "class": "normal", "actions": ["STEP_BACK", "CHECK_HOOK"]}}
+   ]},
+  "jean_guy_moreau.rematch": {"base": "jean_guy_moreau", "label": "Jean-Guy Moreau - the rematch", "plan": "NP_04A: phase_shift + newstring from the Hollow Circuit's extracted-technique pool",
+   "ops": [
+    {"op": "phase_shift", "phase": "2", "trigger": "composure<70"},
+    {"op": "newstring", "name": "S4", "weight": 20, "string": {"label": "Extracted", "tags": [], "tell": {"motif": "frost_breath_cut", "ms": 480}, "class": "normal", "actions": ["R_STR", "pause(200)", "LT_R_HOOK"]}}
+   ]},
+  "tam_nguyen_roy.rematch": {"base": "tam_nguyen_roy", "label": "Tam Nguyen-Roy - the rematch", "plan": "NP_04A: reweight + S1 returns in phase 2 (he stops respecting you)",
+   "ops": [
+    {"op": "reweight", "weights": {"S1": 40, "S2": 30, "S3": 30}},
+    {"op": "phase_directives", "phase": "2", "directives": ["true_pattern_only"]},
+    {"op": "select_reweights", "lines": []}
+   ]}
+ }
+}

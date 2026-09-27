@@ -1,0 +1,105 @@
+{
+ "schema": "Formation/NP_10-s2/v1.0",
+ "vault": "v1.3",
+ "notes": "The formation screen and the sealed order (NP_10 s2-3, NP_01 s7). YOUR BOARD: the dressed squad in slots R1..Rk (k = the format's segments, 5 in a sanctioned dual) and reserves (the rest), with 3 staff; sealed at the bell - the corner's swap is the only reorder after it. The four named order archetypes are presets over the board's starters: the ace and the anchor are read from the cards (ace = the highest PWR+SPD+RFX, NP_01 s2.1's Hammer as primary scorer; anchor-class = the highest CHN+BLK+STA of the rest, the keeper analog; ties to the higher stat total, then card order); the Hammer is R4 and the Anchor R5 in a 5-slot board, and a board of 3 or fewer closes on its ace (no anchor slot). THEIR PROJECTION: his probable order, one confidence per slot from the sources the sim has - how readable his coach's archetype is, a scout stand-in covering his club's district, the tactician's +15% (his passive while he is dressed on your board - staff.v1.json since PAC-074), Pattern Intel on the dialect of the fighter in that slot (+5 per level) - capped at 95; below 35 the slot is a silhouette. The percentage is honest: a slot is projected right that often (a roll per slot the seal makes without touching the fight's RNG; the wrong slots trade names among themselves, or with his bench). A coach with decoys runs a decoy seal at his decoy_rate (coaches.v1.json): the projection shows his order shifted one slot, every name wrong, every percentage as confident as ever (NP_10 s3: the confidence % lies); a Tactician at Lv3 on your board (earned by use, staff.v1.json) reads the decoy and the board shows nothing it can trust. A blind dual has no projection. THE OVERLAY: every pairing on the board read by the matchup card's own arithmetic (NP_06 s5): the triangle arrow, the element arrow, the feud banner, the projected EP modifier, one coach note. All numbers and notes are first drafts (editorial, REGISTER_COMMANDS_022).",
+ "archetypes": {
+  "STANDARD": {
+   "label": "Standard",
+   "text": "ace at R4 (the Hammer), anchor-class at R5",
+   "readable_pct": 40
+  },
+  "AMBUSH": {
+   "label": "Ambush",
+   "text": "ace at R1",
+   "readable_pct": 30
+  },
+  "WALL_FIRST": {
+   "label": "Wall-First",
+   "text": "anchor-class at R1 to blunt their ambush, ace at the Hammer",
+   "readable_pct": 35
+  },
+  "RELAY_LADDER": {
+   "label": "Relay Ladder",
+   "text": "bond pairs at 2-3 and 3-4 chaining toward R5",
+   "readable_pct": 25
+  }
+ },
+ "order": [
+  "STANDARD",
+  "AMBUSH",
+  "WALL_FIRST",
+  "RELAY_LADDER"
+ ],
+ "ace": {
+  "stats": [
+   "PWR",
+   "SPD",
+   "RFX"
+  ],
+  "why": "NP_01 s2.1: R4 The Hammer - primary scorer, usually the club's ace striker"
+ },
+ "anchor": {
+  "stats": [
+   "CHN",
+   "BLK",
+   "STA"
+  ],
+  "why": "NP_01 s2.1: R5 The Anchor - keeper analog, protect the lead"
+ },
+ "staff_slots": 3,
+ "projection": {
+  "pi_pct_per_level": 5,
+  "cap_pct": 95,
+  "silhouette_below_pct": 35,
+  "decoy_shift": 1
+ },
+ "scouts": {
+  "PRIYA": {
+   "district": "toronto",
+   "pct": 30,
+   "source": "NP_12A s3 / s5: her binders on Ascendant - the scouting economy pre-paid"
+  }
+ },
+ "districts": {
+  "toronto": [
+   "ascendant_a",
+   "ascendant_b"
+  ],
+  "prairies": [
+   "grain_kings"
+  ],
+  "maritimes": [
+   "netmen"
+  ],
+  "montreal": [
+   "montreal_technique"
+  ],
+  "north": [
+   "true_north"
+  ]
+ },
+ "notes_by_rings": {
+  "his_fuel": "Bad wind for us, but this segment will PRINT Tension",
+  "his": "{his} eats {ours}s for breakfast",
+  "ours_both": "Both rings ours - this one we win on points",
+  "ours": "Our angle on the triangle - press it",
+  "feud": "The feud makes it loud - both corners print Tension",
+  "element_ours": "Nothing on the triangle, but the element is ours - the hissatsu hit harder",
+  "element_his": "His element - his walls stand a second longer",
+  "purist": "The purist's matchup - no rings, pure sim",
+  "even": "Nothing on the rings - it comes down to the fighters"
+ },
+ "boards": {
+  "ep1": {
+   "slots": [
+    "MARCUS",
+    "PRIYA",
+    "RORY"
+   ],
+   "reserves": [
+    "JUNE"
+   ],
+   "source": "NP_12A s5: R1 MARCUS (the bank), R2 PRIYA, R3 RORY; JUNE dressed as the fourth"
+  }
+ }
+}

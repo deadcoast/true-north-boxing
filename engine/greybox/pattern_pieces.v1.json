@@ -1,0 +1,960 @@
+{
+ "schema": "PatternPieces/NP_04-s9/v1.0",
+ "provenance": {
+  "kind": "reconstructed",
+  "date": "2026-09-27",
+  "original_archive_missing": "PAC-070",
+  "rules": "NP_04 sections 1, 3, 9; surviving assembler.gd and original PAC-070 regression checks",
+  "content": "Replacement generic combinations, selection weights and fallback motifs; not original-byte recovery or human gameplay approval."
+ },
+ "rules": {
+  "default_dialect": "gym",
+  "slot": "R1",
+  "strings_by_tier": {
+   "1": 2,
+   "2": 3,
+   "3": 3
+  },
+  "special_at_tier": 3,
+  "interrupt_by_tier": {
+   "1": "all_normal",
+   "2": "first_two",
+   "3": "opener"
+  },
+  "interrupt_response": "stagger(800)",
+  "class_floors_ms": {
+   "normal": 400,
+   "SPECIAL": 700,
+   "DESPERATION": 1200
+  },
+  "tell_tiers": {
+   "1": {
+    "band": [
+     600,
+     1200
+    ],
+    "shift": 150
+   },
+   "2": {
+    "band": [
+     450,
+     700
+    ],
+    "shift": 0
+   },
+   "3": {
+    "band": [
+     400,
+     500
+    ],
+    "shift": -100
+   }
+  },
+  "stats_by_tier": {
+   "1": 40,
+   "2": 55,
+   "3": 70
+  }
+ },
+ "styles": {
+  "SWARMER": {
+   "weights": {
+    "2": [
+     60,
+     40
+    ],
+    "3": [
+     50,
+     35,
+     15
+    ]
+   }
+  },
+  "OUTBOXER": {
+   "weights": {
+    "2": [
+     65,
+     35
+    ],
+    "3": [
+     55,
+     30,
+     15
+    ]
+   }
+  },
+  "SLUGGER": {
+   "weights": {
+    "2": [
+     55,
+     45
+    ],
+    "3": [
+     45,
+     30,
+     25
+    ]
+   }
+  },
+  "BOXERPUNCHER": {
+   "weights": {
+    "2": [
+     60,
+     40
+    ],
+    "3": [
+     45,
+     35,
+     20
+    ]
+   }
+  }
+ },
+ "strings": [
+  {
+   "id": "swarmer_t1_1",
+   "label": "Club Swarmer Entry 1",
+   "style": "SWARMER",
+   "tier": 1,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "LT_L_HOOK",
+    "pause(250)"
+   ]
+  },
+  {
+   "id": "swarmer_t1_2",
+   "label": "Club Swarmer Return 1",
+   "style": "SWARMER",
+   "tier": 1,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "LT_R_HOOK",
+    "L_UPC",
+    "pause(280)"
+   ]
+  },
+  {
+   "id": "swarmer_t1_3",
+   "label": "Club Swarmer Finish 1",
+   "style": "SWARMER",
+   "tier": 1,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 600,
+   "actions": [
+    "JAB",
+    "R_UPC",
+    "LT_L_HOOK",
+    "pause(310)"
+   ]
+  },
+  {
+   "id": "swarmer_t2_1",
+   "label": "Club Swarmer Entry 2",
+   "style": "SWARMER",
+   "tier": 2,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "pause(140)",
+    "LT_L_HOOK",
+    "pause(320)"
+   ]
+  },
+  {
+   "id": "swarmer_t2_2",
+   "label": "Club Swarmer Return 2",
+   "style": "SWARMER",
+   "tier": 2,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "LT_R_HOOK",
+    "pause(140)",
+    "L_UPC",
+    "pause(350)"
+   ]
+  },
+  {
+   "id": "swarmer_t2_3",
+   "label": "Club Swarmer Finish 2",
+   "style": "SWARMER",
+   "tier": 2,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 600,
+   "actions": [
+    "JAB",
+    "pause(140)",
+    "R_UPC",
+    "LT_L_HOOK",
+    "pause(380)"
+   ]
+  },
+  {
+   "id": "swarmer_t3_1",
+   "label": "Club Swarmer Entry 3",
+   "style": "SWARMER",
+   "tier": 3,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "LT_L_HOOK",
+    "pause(390)"
+   ]
+  },
+  {
+   "id": "swarmer_t3_2",
+   "label": "Club Swarmer Return 3",
+   "style": "SWARMER",
+   "tier": 3,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "LT_R_HOOK",
+    "L_UPC",
+    "pause(420)"
+   ]
+  },
+  {
+   "id": "swarmer_t3_3",
+   "label": "Club Swarmer Finish 3",
+   "style": "SWARMER",
+   "tier": 3,
+   "role": "followup",
+   "class": "SPECIAL",
+   "tell_ms": 700,
+   "actions": [
+    "RUSH(0.4m)",
+    "JAB",
+    "R_UPC",
+    "LT_L_HOOK",
+    "pause(450)"
+   ]
+  },
+  {
+   "id": "outboxer_t1_1",
+   "label": "Club Outboxer Entry 1",
+   "style": "OUTBOXER",
+   "tier": 1,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "STEP_R_STR",
+    "pause(250)"
+   ]
+  },
+  {
+   "id": "outboxer_t1_2",
+   "label": "Club Outboxer Return 1",
+   "style": "OUTBOXER",
+   "tier": 1,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "JAB",
+    "R_STR",
+    "pause(280)"
+   ]
+  },
+  {
+   "id": "outboxer_t1_3",
+   "label": "Club Outboxer Finish 1",
+   "style": "OUTBOXER",
+   "tier": 1,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 600,
+   "actions": [
+    "JAB",
+    "JAB",
+    "LT_R_HOOK",
+    "pause(310)"
+   ]
+  },
+  {
+   "id": "outboxer_t2_1",
+   "label": "Club Outboxer Entry 2",
+   "style": "OUTBOXER",
+   "tier": 2,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "pause(140)",
+    "STEP_R_STR",
+    "pause(320)"
+   ]
+  },
+  {
+   "id": "outboxer_t2_2",
+   "label": "Club Outboxer Return 2",
+   "style": "OUTBOXER",
+   "tier": 2,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "JAB",
+    "pause(140)",
+    "R_STR",
+    "pause(350)"
+   ]
+  },
+  {
+   "id": "outboxer_t2_3",
+   "label": "Club Outboxer Finish 2",
+   "style": "OUTBOXER",
+   "tier": 2,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 600,
+   "actions": [
+    "JAB",
+    "pause(140)",
+    "JAB",
+    "LT_R_HOOK",
+    "pause(380)"
+   ]
+  },
+  {
+   "id": "outboxer_t3_1",
+   "label": "Club Outboxer Entry 3",
+   "style": "OUTBOXER",
+   "tier": 3,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "STEP_R_STR",
+    "pause(390)"
+   ]
+  },
+  {
+   "id": "outboxer_t3_2",
+   "label": "Club Outboxer Return 3",
+   "style": "OUTBOXER",
+   "tier": 3,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "JAB",
+    "R_STR",
+    "pause(420)"
+   ]
+  },
+  {
+   "id": "outboxer_t3_3",
+   "label": "Club Outboxer Finish 3",
+   "style": "OUTBOXER",
+   "tier": 3,
+   "role": "followup",
+   "class": "SPECIAL",
+   "tell_ms": 700,
+   "actions": [
+    "RUSH(0.4m)",
+    "JAB",
+    "JAB",
+    "LT_R_HOOK",
+    "pause(450)"
+   ]
+  },
+  {
+   "id": "slugger_t1_1",
+   "label": "Club Slugger Entry 1",
+   "style": "SLUGGER",
+   "tier": 1,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "R_HAY",
+    "L_UPC",
+    "pause(250)"
+   ]
+  },
+  {
+   "id": "slugger_t1_2",
+   "label": "Club Slugger Return 1",
+   "style": "SLUGGER",
+   "tier": 1,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "L_HOOK",
+    "R_UPC",
+    "pause(280)"
+   ]
+  },
+  {
+   "id": "slugger_t1_3",
+   "label": "Club Slugger Finish 1",
+   "style": "SLUGGER",
+   "tier": 1,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 600,
+   "actions": [
+    "STEP_R_STR",
+    "L_HOOK",
+    "R_HAY",
+    "pause(310)"
+   ]
+  },
+  {
+   "id": "slugger_t2_1",
+   "label": "Club Slugger Entry 2",
+   "style": "SLUGGER",
+   "tier": 2,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "R_HAY",
+    "pause(140)",
+    "L_UPC",
+    "pause(320)"
+   ]
+  },
+  {
+   "id": "slugger_t2_2",
+   "label": "Club Slugger Return 2",
+   "style": "SLUGGER",
+   "tier": 2,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "L_HOOK",
+    "pause(140)",
+    "R_UPC",
+    "pause(350)"
+   ]
+  },
+  {
+   "id": "slugger_t2_3",
+   "label": "Club Slugger Finish 2",
+   "style": "SLUGGER",
+   "tier": 2,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 600,
+   "actions": [
+    "STEP_R_STR",
+    "pause(140)",
+    "L_HOOK",
+    "R_HAY",
+    "pause(380)"
+   ]
+  },
+  {
+   "id": "slugger_t3_1",
+   "label": "Club Slugger Entry 3",
+   "style": "SLUGGER",
+   "tier": 3,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "R_HAY",
+    "L_UPC",
+    "pause(390)"
+   ]
+  },
+  {
+   "id": "slugger_t3_2",
+   "label": "Club Slugger Return 3",
+   "style": "SLUGGER",
+   "tier": 3,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "L_HOOK",
+    "R_UPC",
+    "pause(420)"
+   ]
+  },
+  {
+   "id": "slugger_t3_3",
+   "label": "Club Slugger Finish 3",
+   "style": "SLUGGER",
+   "tier": 3,
+   "role": "followup",
+   "class": "SPECIAL",
+   "tell_ms": 700,
+   "actions": [
+    "RUSH(0.4m)",
+    "STEP_R_STR",
+    "L_HOOK",
+    "R_HAY",
+    "pause(450)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t1_1",
+   "label": "Club Boxerpuncher Entry 1",
+   "style": "BOXERPUNCHER",
+   "tier": 1,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "R_STR",
+    "pause(250)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t1_2",
+   "label": "Club Boxerpuncher Return 1",
+   "style": "BOXERPUNCHER",
+   "tier": 1,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "L_HOOK",
+    "R_STR",
+    "pause(280)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t1_3",
+   "label": "Club Boxerpuncher Finish 1",
+   "style": "BOXERPUNCHER",
+   "tier": 1,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 600,
+   "actions": [
+    "JAB",
+    "R_UPC",
+    "L_HOOK",
+    "pause(310)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t2_1",
+   "label": "Club Boxerpuncher Entry 2",
+   "style": "BOXERPUNCHER",
+   "tier": 2,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "pause(140)",
+    "R_STR",
+    "pause(320)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t2_2",
+   "label": "Club Boxerpuncher Return 2",
+   "style": "BOXERPUNCHER",
+   "tier": 2,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "L_HOOK",
+    "pause(140)",
+    "R_STR",
+    "pause(350)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t2_3",
+   "label": "Club Boxerpuncher Finish 2",
+   "style": "BOXERPUNCHER",
+   "tier": 2,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 600,
+   "actions": [
+    "JAB",
+    "pause(140)",
+    "R_UPC",
+    "L_HOOK",
+    "pause(380)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t3_1",
+   "label": "Club Boxerpuncher Entry 3",
+   "style": "BOXERPUNCHER",
+   "tier": 3,
+   "role": "opener",
+   "class": "normal",
+   "tell_ms": 450,
+   "actions": [
+    "JAB",
+    "R_STR",
+    "pause(390)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t3_2",
+   "label": "Club Boxerpuncher Return 3",
+   "style": "BOXERPUNCHER",
+   "tier": 3,
+   "role": "followup",
+   "class": "normal",
+   "tell_ms": 525,
+   "actions": [
+    "L_HOOK",
+    "R_STR",
+    "pause(420)"
+   ]
+  },
+  {
+   "id": "boxerpuncher_t3_3",
+   "label": "Club Boxerpuncher Finish 3",
+   "style": "BOXERPUNCHER",
+   "tier": 3,
+   "role": "followup",
+   "class": "SPECIAL",
+   "tell_ms": 700,
+   "actions": [
+    "RUSH(0.4m)",
+    "JAB",
+    "R_UPC",
+    "L_HOOK",
+    "pause(450)"
+   ]
+  }
+ ],
+ "punish": [
+  {
+   "id": "swarmer_punish_1",
+   "style": "SWARMER",
+   "tier": 1,
+   "trigger": "player_power_whiff",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "swarmer_punish_2",
+   "style": "SWARMER",
+   "tier": 2,
+   "trigger": "player_corner_entry",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "swarmer_punish_3",
+   "style": "SWARMER",
+   "tier": 3,
+   "trigger": "player_taunt",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "outboxer_punish_1",
+   "style": "OUTBOXER",
+   "tier": 1,
+   "trigger": "player_power_whiff",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "outboxer_punish_2",
+   "style": "OUTBOXER",
+   "tier": 2,
+   "trigger": "player_corner_entry",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "outboxer_punish_3",
+   "style": "OUTBOXER",
+   "tier": 3,
+   "trigger": "player_taunt",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "slugger_punish_1",
+   "style": "SLUGGER",
+   "tier": 1,
+   "trigger": "player_power_whiff",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "slugger_punish_2",
+   "style": "SLUGGER",
+   "tier": 2,
+   "trigger": "player_corner_entry",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "slugger_punish_3",
+   "style": "SLUGGER",
+   "tier": 3,
+   "trigger": "player_taunt",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "boxerpuncher_punish_1",
+   "style": "BOXERPUNCHER",
+   "tier": 1,
+   "trigger": "player_power_whiff",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "boxerpuncher_punish_2",
+   "style": "BOXERPUNCHER",
+   "tier": 2,
+   "trigger": "player_corner_entry",
+   "response": "immediate {lead}"
+  },
+  {
+   "id": "boxerpuncher_punish_3",
+   "style": "BOXERPUNCHER",
+   "tier": 3,
+   "trigger": "player_taunt",
+   "response": "immediate {lead}"
+  }
+ ],
+ "dialects": {
+  "tremblay": {
+   "house": "tremblay",
+   "element": "FROST",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "glove_micro_turn_silence",
+     "glove_micro_turn",
+     "back_step_load"
+    ],
+    "SPECIAL": [
+     "tremblay_both_gloves_set"
+    ]
+   }
+  },
+  "kowalchuk": {
+   "house": "kowalchuk",
+   "element": "GRANITE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "shoulder_load_corner_shout",
+     "step_stomp",
+     "snort_audio"
+    ],
+    "SPECIAL": [
+     "kowalchuk_both_gloves_set"
+    ]
+   }
+  },
+  "okafor": {
+   "house": "okafor",
+   "element": "GALE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "tempo_step",
+     "tempo_double",
+     "stride_shing"
+    ],
+    "SPECIAL": [
+     "full_windup"
+    ]
+   }
+  },
+  "reyes": {
+   "house": "reyes",
+   "element": "GRANITE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "hip_sink",
+     "hip_sink_deep",
+     "double_sink"
+    ],
+    "SPECIAL": [
+     "reyes_both_gloves_set"
+    ]
+   }
+  },
+  "macisaac": {
+   "house": "macisaac",
+   "element": "TIMBER",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "shoulder_roll",
+     "net_haul",
+     "net_haul_low"
+    ],
+    "SPECIAL": [
+     "macisaac_both_gloves_set"
+    ]
+   }
+  },
+  "whitecloud": {
+   "house": "whitecloud",
+   "element": "NONE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "whitecloud_shoulder_set",
+     "whitecloud_lead_glove_turn",
+     "whitecloud_rear_heel_load"
+    ],
+    "SPECIAL": [
+     "whitecloud_both_gloves_set"
+    ]
+   }
+  },
+  "tagaq": {
+   "house": "tagaq",
+   "element": "FROST",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "soft_exhale",
+     "apology_audio",
+     "double_exhale"
+    ],
+    "SPECIAL": [
+     "tagaq_both_gloves_set"
+    ]
+   }
+  },
+  "nguyen-roy": {
+   "house": "nguyen-roy",
+   "element": "GALE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "fake_shoulder_load",
+     "lead_foot_load",
+     "nguyen-roy_rear_heel_load"
+    ],
+    "SPECIAL": [
+     "nguyen-roy_both_gloves_set"
+    ]
+   }
+  },
+  "petrov": {
+   "house": "petrov",
+   "element": "varies",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "glove_turn_no_silence",
+     "glove_turn",
+     "tempo_step_offbeat"
+    ],
+    "SPECIAL": [
+     "tempo_double"
+    ]
+   }
+  },
+  "osei": {
+   "house": "osei",
+   "element": "TIMBER",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "wrap_glint",
+     "wrap_glint_fast",
+     "double_glint"
+    ],
+    "SPECIAL": [
+     "osei_both_gloves_set"
+    ]
+   }
+  },
+  "delacroix-cardinal": {
+   "house": "delacroix-cardinal",
+   "element": "NONE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "delacroix-cardinal_shoulder_set",
+     "delacroix-cardinal_lead_glove_turn",
+     "delacroix-cardinal_rear_heel_load"
+    ],
+    "SPECIAL": [
+     "delacroix-cardinal_both_gloves_set"
+    ]
+   }
+  },
+  "iron": {
+   "house": "iron",
+   "element": "GRANITE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "iron_load",
+     "iron_load_short",
+     "splice_stutter"
+    ],
+    "SPECIAL": [
+     "iron_both_gloves_set"
+    ]
+   }
+  },
+  "moreau": {
+   "house": "moreau",
+   "element": "FROST",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "frost_breath",
+     "frost_breath_long",
+     "double_breath"
+    ],
+    "SPECIAL": [
+     "shoulder_set_generic"
+    ]
+   }
+  },
+  "school": {
+   "house": "none",
+   "element": "NONE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "school_lead_shoulder",
+     "school_glove_set",
+     "school_heel_turn"
+    ],
+    "SPECIAL": [
+     "school_wide_stance"
+    ]
+   }
+  },
+  "gym": {
+   "house": "none",
+   "element": "NONE",
+   "channel": "visual-body",
+   "motifs": {
+    "normal": [
+     "gym_lead_shoulder",
+     "gym_glove_set",
+     "gym_heel_turn"
+    ],
+    "SPECIAL": [
+     "gym_wide_stance"
+    ]
+   }
+  }
+ }
+}

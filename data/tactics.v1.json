@@ -13,7 +13,10 @@
   "charged_stat_pct": 10,
   "full_relay_chain": 3,
   "full_relay_t4_cost": 75,
-  "delegated_tension_pct": 85
+  "delegated_tension_pct": 85,
+  "relay_t3_opens": ["relay:charged"],
+  "full_relay_t3_opens": ["full_relay_exclusive"],
+  "relay_t3_text": "NP_05 s6: the fighter out CHARGED has the T3 moves unlocked for his segment - the library's moves of the relay_t3_opens sources, and of full_relay_t3_opens on a FULL RELAY only (North Star, NP_05 s10), each answering its own family's motion (NP_05 s4); a card carrying a FULL RELAY move casts it on a FULL RELAY only; a Duo's named T3 stands in for its base (NP_08 s5.2)"
  },
  "special": [
   {

@@ -1,0 +1,314 @@
+{
+ "schema": "Houses/NP_07-s2/v1.0",
+ "vault": "v1.3",
+ "notes": "The houses as the sim reads them (NP_07 s2's schema, the fields the sim uses): the blessing line NP_07A authors for each (NP_08 s3: 'their personal quest + a REP or FEUD condition'), evaluated against the sim's ledgers with the house as the subject - BEAT_IN counts your wins against any fighter of that house, STYLE_PROOF by a style or (Petrov) by the house's own moves, WITNESS a dual won while the house's crest is up on the String Wall (Tagaq's without your crowd heat), the rest as C29 reads them; FEUD_RESOLVED reads the live feud graph for a pair on it, the flag for a feud off it. A met line blesses the house (and the overworld's blessing:<house> flag blesses it too); a blessing is recorded in the ledger with the day and how it came. A recruit of a blessed house is NATIVE and arrives with its natives unlocked (the library's house moves, the SECRET excepted: a SECRET is its gate event's, NP_07 s4); a recruit of an unblessed house arrives UNSANCTIONED (NP_07 s5): no home bonus on his house's moves, natives locked - sanctioned the moment the blessing lands. The cards the club begins with were recruited in the story before the ledger: NATIVE. Iron has no blessing; the sealed house blesses itself (Q-SEALED) and has no card in the sim. The traits are NP_07 s3's nine authored effects (`traits`), executed on both corners where a boss has an analogue (PAC-078); the three s8 variants are named, not executed. The provisional edge and the mutation rules are the feud graph's (feud_graph.v1.json), attached at load.",
+ "status": {
+  "NATIVE": "a member by blood whose house has blessed the club, or a card the club began with: natives unlocked, the home bonus live (NP_06 s3)",
+  "UNSANCTIONED": "a member recruited around his family (NP_08 s3): natives locked, no home bonus until the blessing lands (NP_07 s5)"
+ },
+ "houses": {
+  "tremblay": {
+   "name": "Tremblay",
+   "root": "Montreal",
+   "trait": "First Frost",
+   "trait_id": "first_frost",
+   "authority": "the matriarch, Marta's grandmother",
+   "blessing": "QUEST(la_question_98) AND BEAT_IN(spar) USING STYLE_PROOF(out-boxer)",
+   "source": "NP_07A Q-TREMBLAY"
+  },
+  "kowalchuk": {
+   "name": "Kowalchuk",
+   "root": "Prairies",
+   "trait": "Load-Bearing",
+   "trait_id": "load_bearing",
+   "authority": "the patriarch's barn",
+   "blessing": "BEAT_IN(dual[segment]) AND WITNESS(patriarch attends a home dual)",
+   "source": "NP_07A Q-KOWALCHUK",
+   "witness": {
+    "rule": "crest",
+    "text": "the patriarch attends: a dual won while House Kowalchuk's crest is up on the String Wall"
+   }
+  },
+  "okafor": {
+   "name": "Okafor",
+   "root": "Toronto",
+   "trait": "Harvest",
+   "trait_id": "harvest",
+   "authority": "the Okafor table",
+   "blessing": "BOND(Carter, 4) AND QUEST(okafor_table)",
+   "source": "NP_07A Q-OKAFOR"
+  },
+  "reyes": {
+   "name": "Reyes",
+   "root": "Winnipeg",
+   "trait": "Debt of Honour",
+   "trait_id": "debt_of_honour",
+   "authority": "the uncle with the bell",
+   "blessing": "STAT_PROOF(PWR>=60) AND BEAT_IN(scrap)x3 AND QUEST(the_bell)",
+   "source": "NP_07A Q-REYES",
+   "revocable": {
+    "flag": "reyes_code",
+    "move": "La Campana",
+    "above_stamina": 40,
+    "text": "La Campana is forbidden against anyone above 40 stamina; breaking that rule in a dual voids the blessing - the game's one revocable blessing",
+    "source": "NP_07A Q-REYES beat 3"
+   }
+  },
+  "macisaac": {
+   "name": "MacIsaac",
+   "root": "Cape Breton",
+   "trait": "Tide Discipline",
+   "trait_id": "tide_discipline",
+   "authority": "",
+   "blessing": "BOND(Dex, 3) AND QUEST(macisaac_harbour)",
+   "source": "NP_07A Q-MACISAAC"
+  },
+  "whitecloud": {
+   "name": "Whitecloud",
+   "root": "Northern Ontario",
+   "trait": "Long Winter",
+   "trait_id": "long_winter",
+   "authority": "the elder",
+   "blessing": "REP(the_hill, 3) AND PI_LEVEL(whitecloud, 2)",
+   "source": "NP_07A Q-WHITECLOUD"
+  },
+  "tagaq": {
+   "name": "Tagaq",
+   "root": "Nunavut -> True North",
+   "trait": "Never Twice",
+   "trait_id": "never_twice",
+   "authority": "",
+   "blessing": "BOND(Sam, 3) AND WITNESS(win a dual without your crowd-heat actives)",
+   "source": "NP_07A Q-TAGAQ",
+   "witness": {
+    "rule": "crest_no_crowd",
+    "text": "a dual won while House Tagaq's crest is up on the String Wall, with no crowd heat converted by your corner (Raise the Roof, the Hype's crowd-heat active)"
+   }
+  },
+  "nguyen-roy": {
+   "name": "Nguyen-Roy",
+   "root": "Gatineau",
+   "trait": "Open Door",
+   "trait_id": "open_door",
+   "authority": "",
+   "blessing": "PI_LEVEL(nguyen-roy, 2) AND BEAT_IN(spar)",
+   "source": "NP_07A Q-NGUYEN-ROY"
+  },
+  "petrov": {
+   "name": "Petrov",
+   "root": "Niagara",
+   "trait": "First Frost variant",
+   "trait_id": "first_frost_variant",
+   "authority": "the patriarch, Coach Petrov",
+   "blessing": "QUEST(open_ledger) AND STYLE_PROOF(win using petrov-taught moves only)",
+   "source": "NP_07A Q-PETROV",
+   "style_proof": {
+    "moves": "petrov",
+    "against_coaches": [
+     "ascendant_a",
+     "ascendant_b"
+    ],
+    "text": "beat an Ascendant fighter using only Petrov-taught technique: a segment, scrap or spar won against a fighter Ascendant A or B corners in which every hissatsu your fighter cast was a House Petrov move (at least one)",
+    "source": "NP_07A Q-PETROV beat 3"
+   }
+  },
+  "osei": {
+   "name": "Osei",
+   "root": "Halifax",
+   "trait": "Deep Roots",
+   "trait_id": "deep_roots",
+   "authority": "Efua's mother",
+   "blessing": "QUEST(osei_blessing) AND FEUD_RESOLVED(osei_internal)",
+   "source": "NP_07A Q-OSEI"
+  },
+  "delacroix-cardinal": {
+   "name": "Delacroix-Cardinal",
+   "root": "Metis, Red River",
+   "trait": "Harvest variant",
+   "trait_id": "harvest_variant",
+   "authority": "an elder of the house",
+   "blessing": "QUEST(where_rivers_meet) AND PI_LEVEL(delacroix-cardinal, 2)",
+   "source": "NP_07A Q-DELACROIX-CARDINAL"
+  },
+  "iron": {
+   "name": "Iron",
+   "root": "(dead lineage)",
+   "trait": "doubled trait",
+   "trait_id": null,
+   "authority": "",
+   "blessing": null,
+   "source": "NP_07A Q-IRON: 'Blessing: none exists - there is no patriarch left to grant one'",
+   "last_of_line": {
+    "doubled": true,
+    "text": "House of one; trait doubled (NP_07 s5) - the lineage's own trait is LOST (NP_07 s8), so there is nothing to double until the content lane names it",
+    "source": "NP_07 s5 s8"
+   }
+  },
+  "moreau": {
+   "name": "Moreau",
+   "root": "Quebec City",
+   "trait": "Load-Bearing variant",
+   "trait_id": "load_bearing_variant",
+   "authority": "",
+   "blessing": "QUEST(cold_storage) AND FEUD_RESOLVED(moreau, tremblay)",
+   "source": "NP_07A Q-MOREAU"
+  },
+  "sealed": {
+   "name": "[SEALED]",
+   "root": "-",
+   "trait": "-",
+   "trait_id": null,
+   "authority": "the protagonist, by the end",
+   "blessing": null,
+   "source": "NP_07A Q-SEALED: 'self-directed - the protagonist IS the blessing authority by the end'",
+   "sealed": true,
+   "trait_note": "the sealed house's trait comes online at the unsealing (NP_07 s7, the Arc 2 finale) - not in the sim"
+  }
+ },
+ "traits": {
+  "never_twice": {
+   "name": "Never Twice",
+   "text": "Cannot be dropped twice in one segment (2nd drop -> wobble instead). Cooldown: once per dual",
+   "sides": [
+    "P",
+    "B"
+   ],
+   "uses_per_dual": 1,
+   "source": "NP_07 s3"
+  },
+  "deep_roots": {
+   "name": "Deep Roots",
+   "text": "+guard regen 50% while trailing on DROPS",
+   "sides": [
+    "P"
+   ],
+   "guard_regen_mult": 1.5,
+   "no_boss_analogue": "a boss's guard does not regenerate in the sim - it drains and refills on a break",
+   "source": "NP_07 s3"
+  },
+  "long_winter": {
+   "name": "Long Winter",
+   "text": "All stats +10% in R4/R5 slots",
+   "sides": [
+    "P",
+    "B"
+   ],
+   "stats_mult": 1.1,
+   "slots": [
+    4,
+    5
+   ],
+   "source": "NP_07 s3; NORTHPAW_GDD s(Whitecloud)"
+  },
+  "first_frost": {
+   "name": "First Frost",
+   "text": "Segment-opening 15 s: counter windows +100 ms",
+   "sides": [
+    "P"
+   ],
+   "counter_window_plus_ms": 100,
+   "opening_s": 15,
+   "no_boss_analogue": "bosses counter by authored string, not by window (Ring 1's +50 ms has none either)",
+   "source": "NP_07 s3"
+  },
+  "harvest": {
+   "name": "Harvest",
+   "text": "+1 Tension on every exchange win anywhere (not just center)",
+   "sides": [
+    "P",
+    "B"
+   ],
+   "tension_on_exchange_win": 1,
+   "source": "NP_07 s3"
+  },
+  "load_bearing": {
+   "name": "Load-Bearing",
+   "text": "Composure pool +20% while in ropes/corner zones",
+   "sides": [
+    "P",
+    "B"
+   ],
+   "comp_pool_mult": 1.2,
+   "zones": [
+    "ROPES",
+    "CORNER"
+   ],
+   "source": "NP_07 s3"
+  },
+  "tide_discipline": {
+   "name": "Tide Discipline",
+   "text": "Stamina floor: cannot drop below 10",
+   "sides": [
+    "P",
+    "B"
+   ],
+   "stamina_floor": 10,
+   "source": "NP_07 s3"
+  },
+  "open_door": {
+   "name": "Open Door",
+   "text": "Bond growth with all stablemates x1.5 (NP_08 s6)",
+   "sides": [
+    "P"
+   ],
+   "bond_mult": 1.5,
+   "no_boss_analogue": "bosses keep no bonds",
+   "source": "NP_07 s3; NP_08 s5.1"
+  },
+  "debt_of_honour": {
+   "name": "Debt of Honour",
+   "text": "+25% all stats vs. feuded houses (stacks with feud Tension, capped by NP_06 s4)",
+   "sides": [
+    "P",
+    "B"
+   ],
+   "stats_mult": 1.25,
+   "vs": "FEUD",
+   "source": "NP_07 s3; NP_06 s4"
+  },
+  "first_frost_variant": {
+   "name": "First Frost variant",
+   "text": "unauthored - NP_07 s8 names a variant, the content DB's eleven traits hold it",
+   "executed": false,
+   "base": "first_frost",
+   "source": "NP_07 s8"
+  },
+  "harvest_variant": {
+   "name": "Harvest variant",
+   "text": "unauthored - NP_07 s8 names a variant, the content DB's eleven traits hold it",
+   "executed": false,
+   "base": "harvest",
+   "source": "NP_07 s8"
+  },
+  "load_bearing_variant": {
+   "name": "Load-Bearing variant",
+   "text": "unauthored - NP_07 s8 names a variant, the content DB's eleven traits hold it",
+   "executed": false,
+   "base": "load_bearing",
+   "source": "NP_07 s8"
+  }
+ },
+ "lineage": {
+  "_root_line": {
+   "blood": true,
+   "text": "the house's root line abroad (Chiamaka, Okafor) - blood"
+  },
+  "_origin_line": {
+   "blood": true,
+   "text": "the house's origin line (Itzel, Reyes) - blood"
+  },
+  "_root_system": {
+   "blood": false,
+   "text": "the system the house descends from (Baro, Petrov) - a teaching lineage, not blood"
+  },
+  "_taken": {
+   "blood": false,
+   "text": "an heir taken from the house (Anders, Petrov, mentorship-adopted by Vey) - formerly the house's"
+  },
+  "_extracted": {
+   "blood": false,
+   "text": "the syndicate's extraction (HC-7, Iron) - 'extraction copies the punch, never the breath'"
+  }
+ },
+ "trait_rules": "NP_07 s3: 'Traits are house-locked, never transferable - blood/adoption only.' A fighter carries his house's trait when the trait is authored (the three variants are named, not executed: set `executed` to run one as its base), his lineage is blood (the META qualifiers above) and he is not disowned (NP_07 s5: 'House trait inactive until reconciliation'); UNSANCTIONED keeps the trait - NP_07 s5 takes only the home bonus away. The last of a dead lineage doubles her trait (every magnitude's delta and every use count x2). The sealed house's trait is offline until the unsealing. Stat multipliers clamp to 99 and every multiplier to NP_06 s4's 1.5."
+}

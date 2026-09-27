@@ -2786,7 +2786,30 @@
     "window_ms": 700,
     "negation": "interruptible only during afterimage windup (Loud)"
    },
-   "duo_variant": null,
+   "duo_variant": {
+    "afterimage": "partner",
+    "name_rule": "{base} - {a} & {b}",
+    "vfx_set": "vfx_duo_any",
+    "camera_script_id": "cam_haymaker_t3_duo",
+    "effect_add": [
+     {
+      "type": "STATE",
+      "params": {
+       "name": "afterimage_partner",
+       "seconds": 3
+      }
+     }
+    ],
+    "pairs": {
+     "PRIYA|RORY": "Whiteout",
+     "MARCUS|PRIYA": "Chinook Arch",
+     "MARCUS|RORY": "Permafrost",
+     "JUNE|MARCUS": "Frost Heave",
+     "JUNE|PRIYA": "Snow Squall"
+    },
+    "source": "NP_08 s5.2 Lv4; NP_05 s7",
+    "notes": "hits as its base; the pair's name, VFX, camera and the partner's afterimage are the variant (placeholder names)"
+   },
    "hybrid_parents": null,
    "camera_script_id": "cam_haymaker_t3",
    "vfx_set": "vfx_any",
@@ -2833,7 +2856,18 @@
     "window_ms": 700,
     "negation": "interruptible only during afterimage windup (Loud)"
    },
-   "duo_variant": null,
+   "duo_variant": {
+    "afterimage": "partner",
+    "name_rule": "{base} - {a} & {b}",
+    "vfx_set": "vfx_duo_frost",
+    "camera_script_id": "cam_arc_t3_duo",
+    "effect_add": [],
+    "pairs": {
+     "JUNE|RORY": "Freeze-Up"
+    },
+    "source": "NP_08 s5.2 Lv4; NP_05 s7",
+    "notes": "hits as its base; the pair's name, VFX, camera and the partner's afterimage are the variant (placeholder names)"
+   },
    "hybrid_parents": null,
    "camera_script_id": "cam_arc_t3",
    "vfx_set": "vfx_frost",

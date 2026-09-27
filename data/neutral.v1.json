@@ -1,0 +1,353 @@
+{
+ "schema": "NeutralGame/NP_04-s2/v1.0",
+ "vault": "v1.3",
+ "notes": "The IDLE primitive of NP_04 s2 as data: every verb the 24 patterns' IDLE lines use (52 lines, 41 verbs) with the mechanic the sim runs between strings - how he closes (the speed, whether he leads your movement), the range he keeps, how he circles or holds it, the guard he holds when he has not read your punch, the clocks he taunts or shifts tempo on, and three flags only the presentation reads. A line is 'verb' or 'verb@Ns' (the clock's seconds). The neutral game runs in IDLE and RECOVER; in a TELL he closes to 1.9m at his own pace. A pattern with no IDLE lines (the generics) keeps the default below, which is the pre-PAC-071 approach exactly. Every speed, range, rate and clock value is a first-draft design value read off the roster docs' words; the guard's wobble_mult halves an authored guard when the boss is wobbled (NP_03 s3: 'the opponent's cue to swarm') except where it is composed.",
+ "default": {
+  "kind": "advance",
+  "approach_mps": 1.2,
+  "lead_s": 0.35,
+  "range_m": 1.9,
+  "guard": {
+   "head": 0.35,
+   "body": 0.35,
+   "wobble_mult": 1.0
+  }
+ },
+ "tell_range_m": 1.9,
+ "verbs": {
+  "circle_slow": {
+   "cat": "move",
+   "kind": "orbit",
+   "approach_mps": 1.2,
+   "lead_s": 0.35,
+   "range_m": 1.9,
+   "orbit_mps": 0.5,
+   "dir": 1,
+   "retreat_mps": 0.0,
+   "line": "Yuri: closes, then circles slow at range, one way round"
+  },
+  "circle_fast": {
+   "cat": "move",
+   "kind": "orbit",
+   "approach_mps": 1.4,
+   "lead_s": 0.35,
+   "range_m": 1.9,
+   "orbit_mps": 1.2,
+   "dir": -1,
+   "retreat_mps": 0.0,
+   "line": "Carter: the crossover - closes and circles fast, the other way round"
+  },
+  "lateral_drift": {
+   "cat": "move",
+   "kind": "orbit",
+   "approach_mps": 1.1,
+   "lead_s": 0.35,
+   "range_m": 2.1,
+   "orbit_mps": 0.5,
+   "reverse_s": 2.5,
+   "retreat_mps": 0.5,
+   "line": "Vane: drifts side to side outside your reach and lets the corner call it"
+  },
+  "lateral_orbit": {
+   "cat": "move",
+   "kind": "orbit",
+   "approach_mps": 1.1,
+   "lead_s": 0.35,
+   "range_m": 2.1,
+   "orbit_mps": 0.8,
+   "dir": 1,
+   "retreat_mps": 0.5,
+   "line": "Marta: orbits at her range, and steps back out to it"
+  },
+  "survey_orbit": {
+   "cat": "move",
+   "kind": "orbit",
+   "approach_mps": 1.0,
+   "lead_s": 0.35,
+   "range_m": 2.3,
+   "orbit_mps": 0.6,
+   "reverse_s": 3.0,
+   "retreat_mps": 0.5,
+   "line": "The Cartographer: surveys the whole ring from long range, turning back every 3s"
+  },
+  "textbook_orbit": {
+   "cat": "move",
+   "kind": "orbit",
+   "approach_mps": 1.2,
+   "lead_s": 0.35,
+   "range_m": 1.9,
+   "orbit_mps": 0.7,
+   "reverse_s": 4.0,
+   "retreat_mps": 0.5,
+   "line": "Sora: the textbook circle at the textbook range, reversing every 4s"
+  },
+  "professor_orbit": {
+   "cat": "move",
+   "kind": "orbit",
+   "approach_mps": 1.0,
+   "lead_s": 0.35,
+   "range_m": 2.0,
+   "orbit_mps": 0.6,
+   "reverse_on_string": true,
+   "retreat_mps": 0.5,
+   "line": "Baro: circles at lecture distance and changes direction after every string"
+  },
+  "forward_walk": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 1.0,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "line": "Reyes: walks straight at you"
+  },
+  "forward_walk_slow": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 0.7,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "line": "Moira: the sea doesn't chase - it walks"
+  },
+  "forward_walk_glacial": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 0.45,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "line": "Jean-Guy / Remy: the glacial walk, the footwork that never changes"
+  },
+  "walk_forward_calm": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 0.8,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "line": "Sam: walks forward, calm"
+  },
+  "dead_stance": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 1.2,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "line": "The Echo: no ideas of its own - straight at your position, never at where you are going"
+  },
+  "advance_patient": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 0.7,
+   "lead_s": 0.0,
+   "range_m": 2.0,
+   "line": "Osei: shell up, patient, stops just outside your reach"
+  },
+  "patient_advance": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 0.7,
+   "lead_s": 0.0,
+   "range_m": 2.0,
+   "line": "Surety: the same patience, colder"
+  },
+  "advance_noiseless": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 1.2,
+   "lead_s": 0.35,
+   "range_m": 1.9,
+   "audio": "off",
+   "line": "Choir: the shared approach with the footwork audio stripped"
+  },
+  "crowding_advance": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 1.3,
+   "lead_s": 0.35,
+   "range_m": 1.5,
+   "line": "Alfie: crowds in - his range is inside yours"
+  },
+  "perpetual_advance": {
+   "cat": "move",
+   "kind": "advance",
+   "approach_mps": 1.5,
+   "lead_s": 0.35,
+   "range_m": 1.3,
+   "line": "Deshawn: never stops coming - always mid-string, always closer"
+  },
+  "advance_metronome": {
+   "cat": "move",
+   "kind": "pulse",
+   "approach_mps": 2.0,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "step_ms": 200,
+   "beat": "metronome",
+   "tell_mps": 1.2,
+   "line": "Ada: a step forward on every beat of her metronome and still between"
+  },
+  "dual_tempo_advance": {
+   "cat": "move",
+   "kind": "pulse",
+   "approach_mps": 2.0,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "step_ms": 200,
+   "beat": "tempos",
+   "tell_mps": 1.2,
+   "line": "Chiamaka: a step on each of her two tempos"
+  },
+  "angle_walk": {
+   "cat": "move",
+   "kind": "angle",
+   "approach_mps": 1.1,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "angle_deg": 35,
+   "switch_s": 1.5,
+   "line": "Tam: approaches on the angle, switching sides every 1.5s - never down the middle"
+  },
+  "neutral_stance_studied": {
+   "cat": "move",
+   "kind": "mirror",
+   "approach_mps": 1.2,
+   "lead_s": 0.35,
+   "range_m": 1.9,
+   "mirror": 1.0,
+   "retreat_mps": 0.5,
+   "line": "Vey: studies you - at range he mirrors your lateral movement step for step"
+  },
+  "measured_stance": {
+   "cat": "move",
+   "kind": "hold",
+   "approach_mps": 1.0,
+   "lead_s": 0.0,
+   "range_m": 1.9,
+   "band_m": 0.2,
+   "retreat_mps": 0.9,
+   "line": "Vasile: holds his measured range both ways - steps in when you leave it, steps back when you enter it"
+  },
+  "charter_stance": {
+   "cat": "move",
+   "kind": "ground",
+   "approach_mps": 1.0,
+   "lead_s": 0.0,
+   "range_m": 2.2,
+   "line": "Cal: holds the centre - he stands on it while you are within his 2.2m of it, and otherwise takes the centre-side spot 2.2m from you: he comes no closer, you come the rest"
+  },
+  "herding_bias_ropes": {
+   "cat": "bias",
+   "cut_ring": true,
+   "line": "Moira: she approaches from the centre side - the ring is cut, your back goes to the ropes"
+  },
+  "taunt": {
+   "cat": "clock",
+   "open_ms": 500,
+   "delay_ms": 700,
+   "line": "Yuri / Carter: a taunt on his clock (taunt@Ns) - his guard is open 500ms and his next string waits 700ms"
+  },
+  "no_taunt": {
+   "cat": "clock",
+   "taunt": false,
+   "line": "Vane: the taunt clock declared off - she never taunts"
+  },
+  "tempo_shift": {
+   "cat": "clock",
+   "slow": 1.4,
+   "fast": 0.6,
+   "move_slow": 0.7,
+   "move_fast": 1.3,
+   "line": "Tam: every N s (tempo_shift@Ns) his between-strings tempo flips - slow (recover x1.4, walk x0.7) to fast (x0.6, x1.3) and back"
+  },
+  "guard_mid": {
+   "cat": "guard",
+   "head": 0.35,
+   "body": 0.35,
+   "wobble_mult": 0.5,
+   "line": "the baseline guard, head and body alike"
+  },
+  "guard_high": {
+   "cat": "guard",
+   "head": 0.5,
+   "body": 0.15,
+   "wobble_mult": 0.5,
+   "line": "a high guard: the head covered, the body open"
+  },
+  "guard_tight": {
+   "cat": "guard",
+   "head": 0.45,
+   "body": 0.45,
+   "wobble_mult": 0.5,
+   "line": "Ada: the academy guard, tight everywhere"
+  },
+  "guard_rough": {
+   "cat": "guard",
+   "head": 0.25,
+   "body": 0.25,
+   "wobble_mult": 0.5,
+   "line": "Alfie: ugly on purpose - the guard is rough"
+  },
+  "guard_composed": {
+   "cat": "guard",
+   "head": 0.35,
+   "body": 0.35,
+   "wobble_mult": 1.0,
+   "line": "Cal / Surety: the guard does not drop when he is hurt"
+  },
+  "guard_advance": {
+   "cat": "guard",
+   "head": 0.35,
+   "body": 0.35,
+   "wobble_mult": 0.5,
+   "advancing": 0.8,
+   "line": "Sam: the guard is up while he walks in"
+  },
+  "guard_perfect": {
+   "cat": "guard",
+   "head": 0.5,
+   "body": 0.5,
+   "wobble_mult": 0.5,
+   "line": "Sora: every value at the top of the fair range"
+  },
+  "guard_low_bait": {
+   "cat": "guard",
+   "head": 0.1,
+   "body": 0.6,
+   "wobble_mult": 0.5,
+   "line": "Tam: the hands low - the body covered, the head offered"
+  },
+  "guard_textbook": {
+   "cat": "guard",
+   "head": 0.4,
+   "body": 0.4,
+   "wobble_mult": 0.5,
+   "line": "Baro: the textbook guard"
+  },
+  "shell_stance": {
+   "cat": "guard",
+   "head": 0.6,
+   "body": 0.1,
+   "wobble_mult": 0.5,
+   "line": "Osei: the shell - head shots skate off it, body work cracks it"
+  },
+  "silent": {
+   "cat": "audio",
+   "audio": "off",
+   "presentational": true,
+   "line": "Jean-Guy: no sound from his feet - a flag the presentation reads"
+  },
+  "footwork_audio_drops_when_arming": {
+   "cat": "audio",
+   "audio": "arming_off",
+   "presentational": true,
+   "line": "Marta: her footwork goes quiet while she arms (TELL / HOLD / FAKE) - a flag the presentation reads"
+  },
+  "bell_in_corner": {
+   "cat": "scene",
+   "presentational": true,
+   "line": "Reyes: she rings her corner's bell at the bell; with a Reyes in your stable, two bells (an event the presentation plays)"
+  },
+  "unmasked": {
+   "cat": "reveal",
+   "line": "Remy: the only syndicate fighter who shows his face - in a blind dual his slot is named at the corner where every other shows '?'"
+  }
+ }
+}

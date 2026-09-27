@@ -1,0 +1,676 @@
+{
+ "schema": "StringWall/NP_08-s2.3/v1.0",
+ "vault": "v1.3",
+ "notes": "The String Wall (NP_08 s2.3): the connection maps as data - a corkboard in the Old Gym office, red string between the people a club can reach through who it already has. Three kinds of node: a FIGHTER is a recruits.v1.json record (C29's ledger holds his state); a LEAD is a person the docs name who has no card in the sim (the staff recruits the questlines name, Vera Iron, the unnamed students, cousins and pairs the rewards promise - never a new name); a HOUSE is its crest and its blessing line (NP_07A's, quoted). Three kinds of link, and what each reveals: FAMILY (either way: a relative recruited reveals the relative), MASTER (one way: a master recruited reveals his students), HOUSE (a member recruited reveals his house; the house's blessing - the overworld's story flag blessing:<house> - reveals its members and the houses bound to it on the feud graph, ALLIED / MARRIAGE / DEBT, never across a FEUD; a house with no one left to bless opens with its crest). A revealed fighter's condition surfaces as an approach would (C29's approached, with the string he came by); a revealed lead is a lead: on the wall, with its condition when the docs author one, joining nothing the sim builds. The BOND conditions the roster docs authored are the first strings (Dex -> Moira, Carter -> Ada, Sam -> the Choir). Six maps and 43 nodes composed from the questlines' own people: the grouping, the labels of the unnamed and every lead's role are first drafts.",
+ "link_kinds": {
+  "family": {
+   "reveals": "both ways: a relative recruited reveals the relative",
+   "text": "families chain (NP_08 s2.3)"
+  },
+  "master": {
+   "reveals": "one way, a -> b: a master recruited reveals his students",
+   "text": "masters unlock students (NP_08 s2.3)"
+  },
+  "house": {
+   "reveals": "a -> b on the member's join: his house; b -> a on the house's blessing: its members (and the houses bound to it on the feud graph, never across a FEUD); a house with no blessing opens with its crest",
+   "text": "houses chain through blessings (NP_08 s2.3; NP_08 s3)"
+  }
+ },
+ "node_kinds": {
+  "fighter": "a recruits.v1.json record - his state is C29's recruit ledger",
+  "lead": "a person the docs name with no card in the sim - on the wall, never in the stable here",
+  "house": "a house's crest and its blessing line (NP_07A); blessed when the overworld's blessing:<house> flag is set"
+ },
+ "chain_relations": [
+  "ALLIED",
+  "MARRIAGE",
+  "DEBT"
+ ],
+ "maps": [
+  {
+   "id": "three_chairs",
+   "title": "Three Chairs at the Table",
+   "source": "NP_07A Q-OKAFOR; NP_04A s4 s6; NP_04B s23; NP_07 s8 (three siblings across three rival clubs)",
+   "nodes": [
+    {
+     "id": "carter_okafor",
+     "kind": "fighter",
+     "label": "CARTER",
+     "house": "okafor"
+    },
+    {
+     "id": "ada_okafor",
+     "kind": "fighter",
+     "label": "ADA",
+     "house": "okafor"
+    },
+    {
+     "id": "nneka_okafor",
+     "kind": "lead",
+     "label": "NNEKA OKAFOR",
+     "role": "staff: Hype",
+     "house": "okafor",
+     "note": "the third sibling - she quit boxing when the other two chose clubs over the table; in Arc 2 she corners for the pair (a staff recruit, the Hype role)",
+     "source": "NP_07A Q-OKAFOR beats 2 and 4; NP_07A s3 (one of the three new named characters)"
+    },
+    {
+     "id": "chiamaka_okafor",
+     "kind": "fighter",
+     "label": "CHIAMAKA",
+     "house": "okafor"
+    },
+    {
+     "id": "house_okafor",
+     "kind": "house",
+     "label": "HOUSE OKAFOR",
+     "house": "okafor",
+     "authority": "the Okafor table",
+     "blessing": "BOND(Carter, 4) AND QUEST(okafor_table)",
+     "source": "NP_07A Q-OKAFOR"
+    }
+   ],
+   "links": [
+    {
+     "a": "carter_okafor",
+     "b": "ada_okafor",
+     "kind": "family",
+     "bond": "BOND(Carter, 4)",
+     "why": "siblings: 'his Okafor siblings light up on the String Wall' (NP_04A s4); Ada's condition keys on him (NP_04A s6)"
+    },
+    {
+     "a": "carter_okafor",
+     "b": "nneka_okafor",
+     "kind": "family",
+     "why": "siblings: the third sibling surfaces through the String Wall (NP_07A Q-OKAFOR beat 2)"
+    },
+    {
+     "a": "ada_okafor",
+     "b": "nneka_okafor",
+     "kind": "family",
+     "why": "siblings: 'the sibling map on the String Wall completes through family, and the third sibling surfaces from it' (NP_04A s6)"
+    },
+    {
+     "a": "ada_okafor",
+     "b": "chiamaka_okafor",
+     "kind": "family",
+     "why": "second cousins: the Okafor root line, Lagos (NP_04B s23)"
+    },
+    {
+     "a": "carter_okafor",
+     "b": "chiamaka_okafor",
+     "kind": "family",
+     "why": "second cousins: the Okafor root line, Lagos (NP_04B s23)"
+    },
+    {
+     "a": "carter_okafor",
+     "b": "house_okafor",
+     "kind": "house",
+     "why": "House Okafor (NP_07 s8)"
+    },
+    {
+     "a": "ada_okafor",
+     "b": "house_okafor",
+     "kind": "house",
+     "why": "House Okafor (NP_07 s8)"
+    },
+    {
+     "a": "nneka_okafor",
+     "b": "house_okafor",
+     "kind": "house",
+     "why": "House Okafor (NP_07A Q-OKAFOR)"
+    },
+    {
+     "a": "chiamaka_okafor",
+     "b": "house_okafor",
+     "kind": "house",
+     "why": "the Okafor root line (NP_04B s23)"
+    }
+   ]
+  },
+  {
+   "id": "the_open_ledger",
+   "title": "The Open Ledger",
+   "source": "NP_08 s2.3 (masters unlock students); NP_07A Q-PETROV, Q-OSEI; NP_04A s7 s11; NP_04B s22; the feud graph's E09",
+   "nodes": [
+    {
+     "id": "house_petrov",
+     "kind": "house",
+     "label": "HOUSE PETROV",
+     "house": "petrov",
+     "authority": "the patriarch, Coach Petrov",
+     "blessing": "QUEST(open_ledger) AND STYLE_PROOF(win using petrov-taught moves only)",
+     "source": "NP_07A Q-PETROV"
+    },
+    {
+     "id": "coach_petrov",
+     "kind": "lead",
+     "label": "COACH PETROV",
+     "role": "coach",
+     "house": "petrov",
+     "note": "the patriarch of the teaching house: teaches System Jab to anyone who asks, rivals included (NP_07A Q-PETROV beat 1); NP_08 s2.3's own example of a master",
+     "source": "NP_08 s2.3; NP_07A Q-PETROV"
+    },
+    {
+     "id": "petrov_student_1",
+     "kind": "lead",
+     "label": "A PETROV STUDENT (1 of 3)",
+     "role": "fighter",
+     "house": "petrov",
+     "note": "unnamed, no card: NP_08 s2.3 surfaces three; NP_07A Q-PETROV's rewards recruit two",
+     "source": "NP_08 s2.3; NP_07A Q-PETROV rewards"
+    },
+    {
+     "id": "petrov_student_2",
+     "kind": "lead",
+     "label": "A PETROV STUDENT (2 of 3)",
+     "role": "fighter",
+     "house": "petrov",
+     "note": "unnamed, no card: NP_08 s2.3 surfaces three; NP_07A Q-PETROV's rewards recruit two",
+     "source": "NP_08 s2.3; NP_07A Q-PETROV rewards"
+    },
+    {
+     "id": "petrov_student_3",
+     "kind": "lead",
+     "label": "A PETROV STUDENT (3 of 3)",
+     "role": "fighter",
+     "house": "petrov",
+     "note": "unnamed, no card: NP_08 s2.3 surfaces three; NP_07A Q-PETROV's rewards recruit two",
+     "source": "NP_08 s2.3; NP_07A Q-PETROV rewards"
+    },
+    {
+     "id": "anders_vey",
+     "kind": "fighter",
+     "label": "ANDERS",
+     "house": "petrov"
+    },
+    {
+     "id": "yordanis_baro",
+     "kind": "fighter",
+     "label": "BARO",
+     "house": "petrov"
+    },
+    {
+     "id": "house_osei",
+     "kind": "house",
+     "label": "HOUSE OSEI",
+     "house": "osei",
+     "authority": "Efua's mother",
+     "blessing": "QUEST(osei_blessing) AND FEUD_RESOLVED(osei_internal)",
+     "source": "NP_07A Q-OSEI"
+    },
+    {
+     "id": "efua_osei",
+     "kind": "fighter",
+     "label": "EFUA",
+     "house": "osei"
+    },
+    {
+     "id": "osei_mother",
+     "kind": "lead",
+     "label": "EFUA'S MOTHER",
+     "role": "staff: Conditioning",
+     "house": "osei",
+     "note": "the title loss she locked the style away over; 'mother joins as Conditioning staff'",
+     "source": "NP_07A Q-OSEI beats 2-3 and rewards"
+    }
+   ],
+   "links": [
+    {
+     "a": "coach_petrov",
+     "b": "petrov_student_1",
+     "kind": "master",
+     "why": "'recruit Coach Petrov -> his three students surface' (NP_08 s2.3)"
+    },
+    {
+     "a": "coach_petrov",
+     "b": "petrov_student_2",
+     "kind": "master",
+     "why": "'recruit Coach Petrov -> his three students surface' (NP_08 s2.3)"
+    },
+    {
+     "a": "coach_petrov",
+     "b": "petrov_student_3",
+     "kind": "master",
+     "why": "'recruit Coach Petrov -> his three students surface' (NP_08 s2.3)"
+    },
+    {
+     "a": "coach_petrov",
+     "b": "anders_vey",
+     "kind": "master",
+     "why": "the teaching house's heir, mentorship-adopted by Director Vey (NP_04A s11); Petrov teaches him Perfect Score at last in Arc 3 (NP_07A Q-PETROV beat 4)"
+    },
+    {
+     "a": "coach_petrov",
+     "b": "house_petrov",
+     "kind": "house",
+     "why": "the patriarch (NP_07A Q-PETROV)"
+    },
+    {
+     "a": "petrov_student_1",
+     "b": "house_petrov",
+     "kind": "house",
+     "why": "House Petrov (NP_08 s2.3)"
+    },
+    {
+     "a": "petrov_student_2",
+     "b": "house_petrov",
+     "kind": "house",
+     "why": "House Petrov (NP_08 s2.3)"
+    },
+    {
+     "a": "petrov_student_3",
+     "b": "house_petrov",
+     "kind": "house",
+     "why": "House Petrov (NP_08 s2.3)"
+    },
+    {
+     "a": "anders_vey",
+     "b": "house_petrov",
+     "kind": "house",
+     "why": "formerly House Petrov - taken (NP_04A s11)"
+    },
+    {
+     "a": "yordanis_baro",
+     "b": "house_petrov",
+     "kind": "house",
+     "why": "the system House Petrov descends from (NP_04B s22)"
+    },
+    {
+     "a": "efua_osei",
+     "b": "osei_mother",
+     "kind": "family",
+     "why": "daughter and mother: the kitchen scene, the stolen wraps between them (NP_07A Q-OSEI beat 3)"
+    },
+    {
+     "a": "efua_osei",
+     "b": "house_osei",
+     "kind": "house",
+     "why": "House Osei - the forbidden daughter (NP_04A s7; NP_07 s5)"
+    },
+    {
+     "a": "osei_mother",
+     "b": "house_osei",
+     "kind": "house",
+     "why": "House Osei (NP_07A Q-OSEI)"
+    }
+   ]
+  },
+  {
+   "id": "what_the_water_keeps",
+   "title": "What the Water Keeps",
+   "source": "NP_07A Q-MACISAAC, Q-TAGAQ, Q-WHITECLOUD; NP_04A s2; NP_04B s14; the feud graph's E06 and E10",
+   "nodes": [
+    {
+     "id": "house_macisaac",
+     "kind": "house",
+     "label": "HOUSE MACISAAC",
+     "house": "macisaac",
+     "blessing": "BOND(Dex, 3) AND QUEST(macisaac_harbour)",
+     "source": "NP_07A Q-MACISAAC"
+    },
+    {
+     "id": "dex",
+     "kind": "fighter",
+     "label": "DEX",
+     "house": "macisaac"
+    },
+    {
+     "id": "moira_macisaac",
+     "kind": "fighter",
+     "label": "MOIRA",
+     "house": "macisaac"
+    },
+    {
+     "id": "house_tagaq",
+     "kind": "house",
+     "label": "HOUSE TAGAQ",
+     "house": "tagaq",
+     "blessing": "BOND(Sam, 3) AND WITNESS(win a dual without your crowd-heat actives)",
+     "source": "NP_07A Q-TAGAQ"
+    },
+    {
+     "id": "sam_tagaq",
+     "kind": "fighter",
+     "label": "SAM",
+     "house": "tagaq"
+    },
+    {
+     "id": "tagaq_junior",
+     "kind": "lead",
+     "label": "THE JUNIOR",
+     "role": "scout",
+     "house": "",
+     "note": "Sam has been the junior's whole corner for a year - the parents work Saturdays; 'junior joins as a scout-role stablemate'",
+     "source": "NP_07A Q-TAGAQ hook, beat 1 and rewards; NP_07A s3 (one of the three new named characters)"
+    },
+    {
+     "id": "hc9_choir",
+     "kind": "fighter",
+     "label": "CHOIR",
+     "house": ""
+    },
+    {
+     "id": "house_whitecloud",
+     "kind": "house",
+     "label": "HOUSE WHITECLOUD",
+     "house": "whitecloud",
+     "authority": "the elder",
+     "blessing": "REP(the_hill, 3) AND PI_LEVEL(whitecloud, 2)",
+     "source": "NP_07A Q-WHITECLOUD"
+    },
+    {
+     "id": "whitecloud_elder",
+     "kind": "lead",
+     "label": "THE WHITECLOUD ELDER",
+     "role": "staff: corners for Team Canada in Arc 3",
+     "house": "whitecloud",
+     "note": "attends your Regionals dual unannounced; grants training rights; one of the three staff recruits the questlines name",
+     "source": "NP_07A Q-WHITECLOUD beats and s3"
+    },
+    {
+     "id": "whitecloud_recruit",
+     "kind": "lead",
+     "label": "A WHITECLOUD RECRUIT",
+     "role": "fighter",
+     "house": "whitecloud",
+     "note": "unnamed, no card: Q-WHITECLOUD's rewards name a Whitecloud recruit",
+     "source": "NP_07A Q-WHITECLOUD rewards"
+    }
+   ],
+   "links": [
+    {
+     "a": "dex",
+     "b": "moira_macisaac",
+     "kind": "family",
+     "bond": "BOND(Dex, 3)",
+     "why": "cousins: 'Moira follows her cousin' (NP_04A s2)"
+    },
+    {
+     "a": "dex",
+     "b": "house_macisaac",
+     "kind": "house",
+     "why": "his own line's move is Prodigal (NP_07A Q-MACISAAC beat 4)"
+    },
+    {
+     "a": "moira_macisaac",
+     "b": "house_macisaac",
+     "kind": "house",
+     "why": "House MacIsaac (NP_04A s2)"
+    },
+    {
+     "a": "sam_tagaq",
+     "b": "tagaq_junior",
+     "kind": "master",
+     "why": "the quiet corner: Sam corners for the junior every Saturday (NP_07A Q-TAGAQ)"
+    },
+    {
+     "a": "sam_tagaq",
+     "b": "hc9_choir",
+     "kind": "master",
+     "bond": "BOND(Sam, 4)",
+     "why": "'recruited by Sam - the quiet corner recognizes its own' (NP_04B s14)"
+    },
+    {
+     "a": "sam_tagaq",
+     "b": "house_tagaq",
+     "kind": "house",
+     "why": "House Tagaq (NP_04 s8.3)"
+    },
+    {
+     "a": "whitecloud_elder",
+     "b": "house_whitecloud",
+     "kind": "house",
+     "why": "the elder (NP_07A Q-WHITECLOUD)"
+    },
+    {
+     "a": "whitecloud_recruit",
+     "b": "house_whitecloud",
+     "kind": "house",
+     "why": "House Whitecloud (NP_07A Q-WHITECLOUD rewards)"
+    }
+   ]
+  },
+  {
+   "id": "the_barn_lesson",
+   "title": "The Barn Lesson",
+   "source": "NP_07A Q-KOWALCHUK, Q-REYES; NP_04B s19; the feud graph's E03 and E11",
+   "nodes": [
+    {
+     "id": "house_kowalchuk",
+     "kind": "house",
+     "label": "HOUSE KOWALCHUK",
+     "house": "kowalchuk",
+     "authority": "the patriarch's barn",
+     "blessing": "BEAT_IN(dual[segment]) AND WITNESS(patriarch attends a home dual)",
+     "source": "NP_07A Q-KOWALCHUK"
+    },
+    {
+     "id": "yuri_kowalchuk",
+     "kind": "fighter",
+     "label": "YURI",
+     "house": "kowalchuk"
+    },
+    {
+     "id": "kowalchuk_cousins",
+     "kind": "lead",
+     "label": "THE KOWALCHUK COUSINS",
+     "role": "fighters",
+     "house": "kowalchuk",
+     "note": "unnamed, no cards: 'Kowalchuk cousins surface on the String Wall' - a reward of the barn lesson, so they come with the house's blessing, not with Yuri",
+     "source": "NP_07A Q-KOWALCHUK rewards"
+    },
+    {
+     "id": "house_reyes",
+     "kind": "house",
+     "label": "HOUSE REYES",
+     "house": "reyes",
+     "authority": "the uncle with the bell",
+     "blessing": "STAT_PROOF(PWR>=60) AND BEAT_IN(scrap)x3 AND QUEST(the_bell)",
+     "source": "NP_07A Q-REYES"
+    },
+    {
+     "id": "reyes_recruit_1",
+     "kind": "lead",
+     "label": "A REYES RECRUIT (1 of the pair)",
+     "role": "fighter",
+     "house": "reyes",
+     "note": "unnamed, no card: Q-REYES's rewards name a Reyes recruit pair",
+     "source": "NP_07A Q-REYES rewards"
+    },
+    {
+     "id": "reyes_recruit_2",
+     "kind": "lead",
+     "label": "A REYES RECRUIT (2 of the pair)",
+     "role": "fighter",
+     "house": "reyes",
+     "note": "unnamed, no card: Q-REYES's rewards name a Reyes recruit pair",
+     "source": "NP_07A Q-REYES rewards"
+    },
+    {
+     "id": "itzel_reyes_ortega",
+     "kind": "fighter",
+     "label": "ITZEL",
+     "house": "reyes"
+    }
+   ],
+   "links": [
+    {
+     "a": "yuri_kowalchuk",
+     "b": "house_kowalchuk",
+     "kind": "house",
+     "why": "House Kowalchuk (NP_04 s8.1)"
+    },
+    {
+     "a": "kowalchuk_cousins",
+     "b": "house_kowalchuk",
+     "kind": "house",
+     "why": "House Kowalchuk (NP_07A Q-KOWALCHUK)"
+    },
+    {
+     "a": "reyes_recruit_1",
+     "b": "house_reyes",
+     "kind": "house",
+     "why": "House Reyes (NP_07A Q-REYES)"
+    },
+    {
+     "a": "reyes_recruit_2",
+     "b": "house_reyes",
+     "kind": "house",
+     "why": "House Reyes (NP_07A Q-REYES)"
+    },
+    {
+     "a": "itzel_reyes_ortega",
+     "b": "house_reyes",
+     "kind": "house",
+     "why": "the Reyes house's origin line (NP_04B s19)"
+    }
+   ]
+  },
+  {
+   "id": "cold_storage",
+   "title": "Cold Storage",
+   "source": "NP_07A Q-MOREAU, Q-IRON, Q-TREMBLAY; NP_04A s5; NP_04B s13; the feud graph's E05 and E08",
+   "nodes": [
+    {
+     "id": "house_moreau",
+     "kind": "house",
+     "label": "HOUSE MOREAU",
+     "house": "moreau",
+     "blessing": "QUEST(cold_storage) AND FEUD_RESOLVED(moreau, tremblay)",
+     "source": "NP_07A Q-MOREAU"
+    },
+    {
+     "id": "jean_guy_moreau",
+     "kind": "fighter",
+     "label": "JEAN-GUY",
+     "house": "moreau"
+    },
+    {
+     "id": "remy_moreau",
+     "kind": "fighter",
+     "label": "REMY",
+     "house": "moreau"
+    },
+    {
+     "id": "house_iron",
+     "kind": "house",
+     "label": "HOUSE IRON",
+     "house": "iron",
+     "blessing": null,
+     "source": "NP_07A Q-IRON",
+     "note": "no blessing exists - there is no patriarch left to grant one: the crest on the wall is the whole house, and its last-of-line comes with it"
+    },
+    {
+     "id": "vera_iron",
+     "kind": "lead",
+     "label": "VERA IRON",
+     "role": "fighter",
+     "house": "iron",
+     "condition": "ITEM(iron_gym_stencil_bag) AND QUEST(estate_sale)",
+     "note": "the last Iron - works night shifts and answers no letters; signs on after watching you throw her family's move correctly, once, her doubled trait with her; no card yet (House Iron's style is '?', NP_07 s8)",
+     "source": "NP_07A Q-IRON beats 1 and 4; NP_07A s3 (one of the three new named characters)"
+    },
+    {
+     "id": "house_tremblay",
+     "kind": "house",
+     "label": "HOUSE TREMBLAY",
+     "house": "tremblay",
+     "authority": "the matriarch, Marta's grandmother",
+     "blessing": "QUEST(la_question_98) AND BEAT_IN(spar) USING STYLE_PROOF(out-boxer)",
+     "source": "NP_07A Q-TREMBLAY"
+    },
+    {
+     "id": "marta_okonkwo_tremblay",
+     "kind": "fighter",
+     "label": "MARTA",
+     "house": "tremblay"
+    }
+   ],
+   "links": [
+    {
+     "a": "jean_guy_moreau",
+     "b": "remy_moreau",
+     "kind": "family",
+     "why": "cousins: Remy is 'the cousin who signed' (NP_04B s13; NP_07A Q-MOREAU beat 2)"
+    },
+    {
+     "a": "jean_guy_moreau",
+     "b": "house_moreau",
+     "kind": "house",
+     "why": "House Moreau (NP_04A s5)"
+    },
+    {
+     "a": "remy_moreau",
+     "b": "house_moreau",
+     "kind": "house",
+     "why": "House Moreau (NP_04B s13)"
+    },
+    {
+     "a": "vera_iron",
+     "b": "house_iron",
+     "kind": "house",
+     "why": "the last of the Iron lineage (NP_07 s5; NP_07A Q-IRON)"
+    },
+    {
+     "a": "marta_okonkwo_tremblay",
+     "b": "house_tremblay",
+     "kind": "house",
+     "why": "House Tremblay - her condition dead-ends at her grandmother (NP_07A Q-TREMBLAY hook)"
+    }
+   ]
+  },
+  {
+   "id": "where_rivers_meet",
+   "title": "Where Rivers Meet",
+   "source": "NP_07A Q-NGUYEN-ROY, Q-DELACROIX-CARDINAL; NP_04A s3; the feud graph's E07 and E12",
+   "nodes": [
+    {
+     "id": "house_nguyen_roy",
+     "kind": "house",
+     "label": "HOUSE NGUYEN-ROY",
+     "house": "nguyen-roy",
+     "blessing": "PI_LEVEL(nguyen-roy, 2) AND BEAT_IN(spar)",
+     "source": "NP_07A Q-NGUYEN-ROY"
+    },
+    {
+     "id": "tam_nguyen_roy",
+     "kind": "fighter",
+     "label": "TAM",
+     "house": "nguyen-roy"
+    },
+    {
+     "id": "house_delacroix_cardinal",
+     "kind": "house",
+     "label": "HOUSE DELACROIX-CARDINAL",
+     "house": "delacroix-cardinal",
+     "authority": "an elder of the house",
+     "blessing": "QUEST(where_rivers_meet) AND PI_LEVEL(delacroix-cardinal, 2)",
+     "source": "NP_07A Q-DELACROIX-CARDINAL"
+    },
+    {
+     "id": "delacroix_recruit",
+     "kind": "lead",
+     "label": "A DELACROIX-CARDINAL RECRUIT",
+     "role": "fighter",
+     "house": "delacroix-cardinal",
+     "note": "unnamed, no card: Q-DELACROIX-CARDINAL's rewards name a house recruit; the house is written with paid cultural consultation (NP_07 s9), so this card carries nothing the docs do not",
+     "source": "NP_07A Q-DELACROIX-CARDINAL rewards"
+    }
+   ],
+   "links": [
+    {
+     "a": "tam_nguyen_roy",
+     "b": "house_nguyen_roy",
+     "kind": "house",
+     "why": "House Nguyen-Roy (NP_04A s3)"
+    },
+    {
+     "a": "delacroix_recruit",
+     "b": "house_delacroix_cardinal",
+     "kind": "house",
+     "why": "House Delacroix-Cardinal (NP_07A Q-DELACROIX-CARDINAL rewards)"
+    }
+   ]
+  }
+ ]
+}
