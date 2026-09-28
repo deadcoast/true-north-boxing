@@ -1,0 +1,45 @@
+{
+  "task": "PAC-202A",
+  "result": "PASS",
+  "summary": "Implemented per-fighter punch cancellation and windup continuity in the existing presentation layer.",
+  "implementation": [
+    "Player feint retracts the captured hand over P.busy_t and leaves the opponent's strike intact.",
+    "Authored jab interrupt releases the opponent's captured coil without removing the player's resolving punch. Unbroken strings retain their offense.",
+    "Deterministic tell descriptor preserves body targets; rendering does not parse RNG-selected actions.",
+    "Tell preload, cancellation and delivery use the fight clock excluding hitstop.",
+    "Delayed variants retain a partial feint then deliver within the authored hold. Redirected variants blend outgoing and replacement body/hand poses within the existing tell."
+  ],
+  "checks": {
+    "motion": 94,
+    "input": 98,
+    "combat_loop": 67,
+    "readability": 113,
+    "python": 44,
+    "rendered_lifecycle": 18,
+    "rendered_captures": 12,
+    "render_cadences": [
+      30,
+      60,
+      144
+    ]
+  },
+  "visual_review": {
+    "inspected": [
+      "motion-lifecycle-delay-52.png",
+      "motion-lifecycle-delay-90.png",
+      "motion-lifecycle-cancel-20.png",
+      "motion-lifecycle-cancel-58.png"
+    ],
+    "observed": "Loaded stance flows into delayed delivery; redirected tell transitions into the actual left hook while the opponent remains visible. The previous neutral reset is removed.",
+    "next_gate": "PAC-202B explicitly owns fixed segment lengths, stable joint attachments and visual/resolver reach agreement, followed by weight transfer, full combinations, style/build expression and sustained boxing validation."
+  },
+  "test_corrections": [
+    "Preserved baseline 8/14 and first correction 11/14. R_HAY maps to R_HOOKERCUT, not R_FLARED.",
+    "Planted boot continuity is measured in world coordinates; local coordinates intentionally compensate for the sim's existing 0.30m boss lunge. The 0.25m non-support joint threshold remains."
+  ],
+  "diagnostics": [
+    "Known Windows root certificate-store diagnostic remains in logs.",
+    "Headless shutdown ObjectDB warnings remain in logs; no script or assertion errors in passing runs. GPU lifecycle exited without the headless leak warning."
+  ],
+  "acceptance": "This report closes the listed motion lifecycle implementation. Whole-boxing exit remains PAC-202B through PAC-202F; connected game acceptance remains PAC-204 and OGM-025. Tests do not substitute for that work."
+}

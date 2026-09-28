@@ -1,0 +1,41 @@
+rendered.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+[PASS] native feint is emitted without a player contact
+[PASS] player feint preserves opponent recovery
+[PASS] player feint retains the cancelled hand for retraction
+[PASS] feint finishes its actual recovery without inventing a contact
+[PASS] S1 native jab preserves both fighters' motion at interrupt
+[PASS] S1 opponent windup and retraction hold through hitstop
+[PASS] S2 native jab preserves both fighters' motion at unbroken hit
+[PASS] S2 opponent windup and retraction hold through hitstop
+[PASS] authored body uppercut winds up toward the body
+[PASS] GPU capture lifecycle-delay-20
+[PASS] GPU capture lifecycle-delay-40
+[PASS] GPU capture lifecycle-delay-52
+[PASS] GPU capture lifecycle-delay-58
+[PASS] GPU capture lifecycle-delay-64
+[PASS] GPU capture lifecycle-delay-72
+[PASS] GPU capture lifecycle-delay-90
+VARIANT DETAIL delay max joint jump 0.24560782313347 contacts 1
+[PASS] delay feint has continuous whole-body transition
+[PASS] delay feint displays only the resolving hand at contact
+[PASS] delayed feint does not hold a false contact pose
+[PASS] GPU capture lifecycle-cancel-20
+[PASS] GPU capture lifecycle-cancel-40
+[PASS] GPU capture lifecycle-cancel-52
+[PASS] GPU capture lifecycle-cancel-58
+[PASS] GPU capture lifecycle-cancel-64
+VARIANT DETAIL cancel max joint jump 0.24408331513405 contacts 1
+[PASS] cancel feint has continuous whole-body transition
+[PASS] cancel feint displays only the resolving hand at contact
+[PASS] false tell retracts its coil without a contact or neutral snap
+[PASS] native lifecycle replay is identical with 30 Hz renders
+[PASS] native lifecycle replay is identical with 60 Hz renders
+[PASS] native lifecycle replay is identical with 144 Hz renders
+LIFECYCLE VERDICT :: GREEN (30/30)
+
+rendered-errors.log
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)

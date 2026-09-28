@@ -1,0 +1,104 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] native feint is emitted without a player contact
+[PASS] player feint preserves opponent recovery
+[PASS] player feint retains the cancelled hand for retraction
+[PASS] feint finishes its actual recovery without inventing a contact
+[PASS] S1 native jab preserves both fighters' motion at interrupt
+[PASS] S1 opponent windup and retraction hold through hitstop
+[PASS] S2 native jab preserves both fighters' motion at unbroken hit
+[PASS] S2 opponent windup and retraction hold through hitstop
+[PASS] authored body uppercut winds up toward the body
+VARIANT DETAIL delay max joint jump 0.24560782313347 contacts 1
+[PASS] delay feint has continuous whole-body transition
+[PASS] delay feint displays only the resolving hand at contact
+[PASS] delayed feint does not hold a false contact pose
+VARIANT DETAIL cancel max joint jump 0.24408331513405 contacts 1
+[PASS] cancel feint has continuous whole-body transition
+[PASS] cancel feint displays only the resolving hand at contact
+[PASS] false tell retracts its coil without a contact or neutral snap
+[PASS] native lifecycle replay is identical with 30 Hz renders
+[PASS] native lifecycle replay is identical with 60 Hz renders
+[PASS] native lifecycle replay is identical with 144 Hz renders
+[PASS] L_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] L_UPPERCUT visible contact matches the resolving tick
+[PASS] L_UPPERCUT keeps the elbow bent through delivery
+[PASS] L_UPPERCUT full rig holds through hitstop
+[PASS] L_UPPERCUT has no one-tick neutral snap
+[PASS] L_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] L_HOOKERCUT visible contact matches the resolving tick
+[PASS] L_HOOKERCUT keeps the elbow bent through delivery
+[PASS] L_HOOKERCUT full rig holds through hitstop
+[PASS] L_HOOKERCUT has no one-tick neutral snap
+[PASS] L_HOOK connects the ground, hips, trunk, elbow and fist
+[PASS] L_HOOK visible contact matches the resolving tick
+[PASS] L_HOOK keeps the elbow bent through delivery
+[PASS] L_HOOK full rig holds through hitstop
+[PASS] L_HOOK has no one-tick neutral snap
+[PASS] L_FLARED connects the ground, hips, trunk, elbow and fist
+[PASS] L_FLARED visible contact matches the resolving tick
+[PASS] L_FLARED full rig holds through hitstop
+[PASS] L_FLARED has no one-tick neutral snap
+[PASS] L_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[PASS] L_STRAIGHT visible contact matches the resolving tick
+[PASS] L_STRAIGHT extends the arm through delivery
+[PASS] L_STRAIGHT full rig holds through hitstop
+[PASS] L_STRAIGHT has no one-tick neutral snap
+[PASS] R_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[PASS] R_STRAIGHT visible contact matches the resolving tick
+[PASS] R_STRAIGHT extends the arm through delivery
+[PASS] R_STRAIGHT full rig holds through hitstop
+[PASS] R_STRAIGHT has no one-tick neutral snap
+[PASS] R_FLARED connects the ground, hips, trunk, elbow and fist
+[PASS] R_FLARED visible contact matches the resolving tick
+[PASS] R_FLARED full rig holds through hitstop
+[PASS] R_FLARED has no one-tick neutral snap
+[PASS] R_HOOK connects the ground, hips, trunk, elbow and fist
+[PASS] R_HOOK visible contact matches the resolving tick
+[PASS] R_HOOK keeps the elbow bent through delivery
+[PASS] R_HOOK full rig holds through hitstop
+[PASS] R_HOOK has no one-tick neutral snap
+[PASS] R_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] R_HOOKERCUT visible contact matches the resolving tick
+[PASS] R_HOOKERCUT keeps the elbow bent through delivery
+[PASS] R_HOOKERCUT full rig holds through hitstop
+[PASS] R_HOOKERCUT has no one-tick neutral snap
+[PASS] R_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] R_UPPERCUT visible contact matches the resolving tick
+[PASS] R_UPPERCUT keeps the elbow bent through delivery
+[PASS] R_UPPERCUT full rig holds through hitstop
+[PASS] R_UPPERCUT has no one-tick neutral snap
+[PASS] SLIP_L renders the same moving target used by collision
+[PASS] SLIP_L enters and exits without teleporting
+[PASS] SLIP_R renders the same moving target used by collision
+[PASS] SLIP_R enters and exits without teleporting
+[PASS] DUCK renders the same moving target used by collision
+[PASS] DUCK enters and exits without teleporting
+[PASS] WEAVE_L renders the same moving target used by collision
+[PASS] WEAVE_L enters and exits without teleporting
+[PASS] WEAVE_R renders the same moving target used by collision
+[PASS] WEAVE_R enters and exits without teleporting
+[PASS] LEAN renders the same moving target used by collision
+[PASS] LEAN enters and exits without teleporting
+[PASS] stance feet plant while the other foot steps
+[PASS] extra render frames neither advance motion nor alter combat
+[PASS] SLIP_L native defense earns and delivers a counter
+[PASS] SLIP_L counter keeps the whole-body transition continuous
+[PASS] SLIP_R native defense earns and delivers a counter
+[PASS] SLIP_R counter keeps the whole-body transition continuous
+[PASS] DUCK native defense earns and delivers a counter
+[PASS] DUCK counter keeps the whole-body transition continuous
+[PASS] WEAVE_R native defense earns and delivers a counter
+[PASS] WEAVE_R counter keeps the whole-body transition continuous
+[PASS] LEAN native defense earns and delivers a counter
+[PASS] LEAN counter keeps the whole-body transition continuous
+SEQUENCE DETAIL guard 1.0 rows ["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT"] hits 4
+[PASS] native covered jab-cross-hook-body sequence preserves all four inputs
+[PASS] alternating hands and returning guard have no whole-body snap
+[PASS] tired hands visibly recover for the authored recovery duration
+[PASS] live boss strings show the resolving hand on every contact
+BOXING MOTION VERDICT :: GREEN (94/94)
+WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

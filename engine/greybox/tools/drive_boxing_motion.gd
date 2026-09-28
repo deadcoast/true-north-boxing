@@ -17,10 +17,10 @@ func check(label: String, ok: bool) -> void:
 	if not ok: failures.append(label)
 	print("[%s] %s" % ["PASS" if ok else "FAIL", label])
 
-func fresh() -> void:
+func fresh(boss_index := 0) -> void:
 	for code in keys.keys(): key(code, false)
 	scene.combat_input.clear()
-	scene.sim = tests.make_sim(0, 731); tests.quiet(scene.sim); tests.place(scene.sim, 1.35)
+	scene.sim = tests.make_sim(boss_index, 731); tests.quiet(scene.sim); tests.place(scene.sim, 1.35)
 	scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]
 	scene.fight_view.clock_sim = null; scene._render(1)
 
@@ -42,10 +42,16 @@ func step(inp: Dictionary = {}) -> Array:
 	scene._consume_events(); scene._render(1); scene._hud()
 	return events
 
-func snapshot() -> Array:
+func snapshot(fighter: Node3D = null) -> Array:
 	var result := []
-	for part in scene.player.get_children():
-		if part is Node3D: result.append(part.transform)
+	if fighter == null: fighter = scene.player
+	for part in fighter.get_children():
+		if part is Node3D:
+			var transform: Transform3D = part.transform
+			# Supports are planted in world space. A sim lunge moves their local
+			# coordinates in the opposite direction without moving the planted foot.
+			if part in fighter.get_meta("boots"): transform.origin += fighter.position
+			result.append(transform)
 	return result
 
 func capture(label: String) -> void:
@@ -70,6 +76,10 @@ func _run() -> void:
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
 	await process_frame
 	scene.controls_menu.close(); scene.begin_fight(false)
+	await lifecycle()
+	if "lifecycle-only" in OS.get_cmdline_user_args():
+		print("LIFECYCLE VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
 	for row in scene.combat_input.ROWS:
 		fresh()
 		var first: Dictionary = scene.player.get_meta("kinematics").duplicate(true)
@@ -217,3 +227,107 @@ func transitions() -> void:
 				if scene.boss.get_meta("pose_row") != event["row"] or float(scene.boss.get_meta("extension")) < 0.99: print("BOSS CONTACT ", scene.sim.tick, " event ", event, " pose ", scene.boss.get_meta("pose_row"), " extension ", scene.boss.get_meta("extension"), " state ", scene.sim.bstate)
 				aligned = aligned and scene.boss.get_meta("pose_row") == event["row"] and float(scene.boss.get_meta("extension")) > 0.99
 	check("live boss strings show the resolving hand on every contact", contacts >= 3 and aligned)
+
+func pose_jump(before: Array, after: Array) -> float:
+	var largest := 0.0
+	for i in before.size(): largest = maxf(largest, before[i].origin.distance_to(after[i].origin))
+	return largest
+
+func force_tell(string: String) -> void:
+	scene.sim.events.clear(); scene.sim._force_string(string, 1.0, false)
+	scene._consume_events(); scene._render(1)
+
+func lifecycle() -> void:
+	# Whiffing opponent keeps moving while a real native player key release
+	# cancels the player's startup. Cancellation cannot own the other fighter.
+	fresh(Sim.BOSSES.find("yuri_kowalchuk")); tests.place(scene.sim, 2.8)
+	force_tell("S1"); scene.sim.btimer = 1
+	step(); step()
+	key(KEY_U, true)
+	for i in 6: native_step()
+	key(KEY_U, false)
+	var events := native_step()
+	check("native feint is emitted without a player contact", tests.count_events(events, "feint") == 1 and tests.count_events(events, "hit", {"on": "B"}) == 0)
+	check("player feint preserves opponent recovery", scene.boss.get_meta("pose_row") == "R_HOOKERCUT" and float(scene.boss.get_meta("extension")) > 0.1)
+	check("player feint retains the cancelled hand for retraction", scene.player.get_meta("pose_row") == "L_HOOK")
+	var invented := 0
+	for i in 22: invented += tests.count_events(native_step(), "hit", {"on": "B"})
+	check("feint finishes its actual recovery without inventing a contact", invented == 0 and scene.player.get_meta("pose_row") == "" and scene.sim.P["busy_t"] == 0)
+	for string in ["S1", "S2"]:
+		fresh(Sim.BOSSES.find("yuri_kowalchuk")); force_tell(string)
+		for i in (24 if string == "S1" else 0): step()
+		key(KEY_J, true); var outcome := false; var held := true; var continuing := false
+		for i in 55:
+			tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
+			var was_frozen: bool = scene.sim.freeze_t > 0
+			var before := snapshot(scene.boss)
+			events = native_step()
+			if was_frozen:
+				var current := snapshot(scene.boss)
+				for part in current.size(): held = held and (before[part] as Transform3D).is_equal_approx(current[part])
+			for event in events:
+				if event.get("kind") == ("interrupt" if string == "S1" else "unbroken"):
+					outcome = true
+					continuing = scene.boss.get_meta("pose_row") != "" and float(scene.player.get_meta("extension")) > 0.99
+		check(string + " native jab preserves both fighters' motion at " + ("interrupt" if string == "S1" else "unbroken hit"), outcome and continuing)
+		check(string + " opponent windup and retraction hold through hitstop", held)
+	# Moira's authored low uppercut must wind up below the head, too.
+	fresh(Sim.BOSSES.find("moira_macisaac")); force_tell("S3"); var body_seen := false
+	for i in 70:
+		events = step()
+		if scene.sim.bstate == "TELL" and float(scene.boss.get_meta("extension")) > 0.65:
+			body_seen = (scene.boss.get_meta("kinematics")["wrists"][1] as Vector3).y < 1.3
+		if tests.count_events(events, "boss_act", {"verb": "punch"}) > 0: break
+	check("authored body uppercut winds up toward the body", body_seen)
+	# Delayed and redirected variants use the actual VM, without modifying
+	# source patterns. Setting the variant selects a deterministic remix branch.
+	for variant in ["delay", "cancel"]:
+		var boss_id := "yuri_kowalchuk" if variant == "delay" else "moira_macisaac"
+		fresh(Sim.BOSSES.find(boss_id))
+		scene.sim.set_remix(boss_id, boss_id + ".rematch"); scene.sim.new_dual()
+		tests.quiet(scene.sim); tests.place(scene.sim, 1.35)
+		var string := "S1" if variant == "delay" else "S2"
+		force_tell(string); scene.sim.bfeint = variant
+		var last := snapshot(scene.boss); var jump := 0.0; var contacts := 0; var aligned := true
+		var max_hold_extension := 0.0
+		for i in 170:
+			events = step()
+			var current := snapshot(scene.boss)
+			if pose_jump(last, current) > 0.25: print("JUMP DETAIL ", variant, " tick ", i, " state ", scene.sim.bstate, " events ", events)
+			jump = maxf(jump, pose_jump(last, current)); last = current
+			if scene.sim.bstate == "HOLD" and scene.sim.btimer > 20: max_hold_extension = maxf(max_hold_extension, float(scene.boss.get_meta("extension")))
+			for event in events:
+				if event.get("kind") == "boss_act" and event.get("verb") == "punch":
+					contacts += 1; aligned = aligned and scene.boss.get_meta("pose_row") == event["row"] and float(scene.boss.get_meta("extension")) > 0.99
+			if i in [20, 40, 52, 58, 64, 72, 90]: await capture("lifecycle-" + variant + "-%02d" % i)
+			if contacts >= 1 and scene.sim.freeze_t == 0: break
+		print("VARIANT DETAIL ", variant, " max joint jump ", jump, " contacts ", contacts)
+		check(variant + " feint has continuous whole-body transition", jump < 0.25)
+		check(variant + " feint displays only the resolving hand at contact", contacts >= 1 and aligned)
+		if variant == "delay": check("delayed feint does not hold a false contact pose", max_hold_extension < 0.5)
+	# A false tell has no eventual hit; its loaded torso still needs recovery.
+	fresh(Sim.BOSSES.find("tam_nguyen_roy")); force_tell("S1"); scene.sim.bstate = "FAKE"
+	var last := snapshot(scene.boss); var fake_jump := 0.0; var fake_contacts := 0
+	for i in 150:
+		var was_fake: bool = scene.sim.bstate == "FAKE"
+		events = step(); fake_contacts += tests.count_events(events, "boss_act", {"verb": "punch"})
+		fake_jump = maxf(fake_jump, pose_jump(last, snapshot(scene.boss))); last = snapshot(scene.boss)
+		if was_fake and scene.sim.bstate == "RECOVER": scene.sim.btimer = 1000
+	check("false tell retracts its coil without a contact or neutral snap", fake_contacts == 0 and fake_jump < 0.25 and scene.boss.get_meta("pose_row") == "")
+	var reference := []
+	for hz in [30, 60, 144]:
+		fresh(Sim.BOSSES.find("yuri_kowalchuk")); force_tell("S1")
+		var replay := []; var render_time := 0.0
+		for tick in 240:
+			if tick == 2: key(KEY_U, true)
+			if tick == 8: key(KEY_U, false)
+			if tick == 45: key(KEY_J, true)
+			if tick == 75: key(KEY_J, false)
+			if tick == 110: key(KEY_Q, true)
+			if tick == 130: key(KEY_Q, false)
+			native_step()
+			while render_time < float(tick + 1) / 120:
+				scene._render(fposmod(render_time * 120, 1)); render_time += 1.0 / hz
+			replay.append([scene.sim.hash_state(), scene.player.get_meta("kinematics").duplicate(true), scene.boss.get_meta("kinematics").duplicate(true)])
+		if reference.is_empty(): reference = replay
+		check("native lifecycle replay is identical with %d Hz renders" % hz, replay == reference)

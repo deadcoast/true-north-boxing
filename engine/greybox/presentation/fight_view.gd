@@ -33,11 +33,15 @@ var clock_sim = null
 var reactions := {}
 var clock_tick := -1
 var motion_solvers := {}
+var attacks := {}
+var tell_clock := {}
+var hold_ticks := 1
 
 func _sync_clock(sim) -> void:
 	if clock_sim != sim or sim.tick < clock_tick:
 		clock_sim = sim; frozen_ticks = 0; strikes.clear(); reactions.clear()
 		motion_solvers.clear()
+		attacks.clear(); tell_clock.clear(); hold_ticks = 1
 	clock_tick = sim.tick
 
 func bump(root: Node3D, amount: float, sim) -> void:
@@ -120,19 +124,51 @@ func observe(event: Dictionary, tick: int) -> void:
 		strikes["P"] = {"tick": tick - frozen_ticks + maxi(0, int(event.get("startup", 0)) - 1), "row": event["row"], "body": "BODY" in event.get("mods", []), "retract": remaining}
 	elif event.get("kind") == "hit":
 		reactions[str(event["on"])] = {"tick": tick - frozen_ticks, "weight": clampf(float(event.get("dmg", 6)) / 30, 0.15, 1.0), "body": event.get("body", false)}
-	elif event.get("kind") in ["feint", "drop", "matchup", "bout_end"]:
-		strikes.clear()
+	elif event.get("kind") == "feint":
+		_cancel("P", tick - frozen_ticks, maxi(1, int(clock_sim.P["busy_t"])))
+	elif event.get("kind") == "interrupt":
+		_cancel("B", tick - frozen_ticks, mini(24, maxi(1, int(event.get("stagger", 24)))))
+	elif event.get("kind") == "tell":
+		tell_clock = {"at": tick - frozen_ticks, "ticks": event.get("ticks", 1), "string": event.get("string", "")}
+	elif event.get("kind") == "feint_b" and event.get("mode") == "delay":
+		hold_ticks = maxi(1, int(clock_sim.btimer))
+	elif event.get("kind") == "recover" and float(attacks.get("B", {}).get("preload", 0)) > 0:
+		# A fake tell has no punch/contact event. Release its coil instead of
+		# dropping the loaded torso to neutral in a single frame.
+		_cancel("B", tick - frozen_ticks, mini(24, maxi(1, int(clock_sim.btimer))))
+	elif event.get("kind") in ["drop", "matchup", "bout_end"]:
+		strikes.clear(); attacks.clear(); tell_clock.clear()
+
+func _cancel(who: String, tick: int, duration: int) -> void:
+	var attack: Dictionary = attacks.get(who, {}).duplicate(true)
+	strikes.erase(who)
+	if attack.is_empty(): return
+	strikes[who] = {"tick": tick, "retract": duration, "cancelled": attack}
 
 static func tell_row(sim) -> String:
-	var string: Dictionary = sim.pattern.get("strings", {}).get(sim.bstring, {})
+	return str(_tell_attack(sim, sim.bstring).get("row", ""))
+
+static func _tell_attack(sim, name: String) -> Dictionary:
+	var string: Dictionary = sim.pattern.get("strings", {}).get(name, {})
 	for action in string.get("actions", []):
 		var verb := str(action).split("(")[0].split(" ")[0]
-		if Sim.PUNCH_VERBS.has(verb): return str(Sim.PUNCH_VERBS[verb])
-		if verb in ["BODY_SERIES", "WALK_STRING"]: return "L_HOOK"
+		if Sim.PUNCH_VERBS.has(verb): return {"row": str(Sim.PUNCH_VERBS[verb]), "body": verb.begins_with("LT_")}
+		if verb in ["BODY_SERIES", "WALK_STRING"]: return {"row": "L_HOOK", "body": verb == "BODY_SERIES"}
 		# The VM chooses MIXED_STRING's hand later. Do not resolve it early or
 		# consume the sim RNG while rendering: show a two-handed coil instead.
-		if verb == "MIXED_STRING": return ""
-	return ""
+		if verb == "MIXED_STRING": return {}
+	return {}
+
+static func _blend_rig(from: Dictionary, to: Dictionary, weight: float) -> Dictionary:
+	# Blend both hands and their body chain during a redirected feint. The
+	# replacement punch still reaches its pose on the unchanged VM contact tick.
+	var out := to.duplicate(true)
+	for channel in to:
+		if to[channel] is Vector3 or to[channel] is float:
+			out[channel] = lerp(from[channel], to[channel], weight)
+		elif to[channel] is Array:
+			for i in to[channel].size(): out[channel][i] = lerp(from[channel][i], to[channel][i], weight)
+	return out
 
 func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String, alpha := 1.0) -> void:
 	_sync_clock(sim)
@@ -151,26 +187,51 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	body.rotation.y = atan2(forward.x, forward.z)
 	var row := ""; var load := 0.0; var extension := 0.0; var body_target := false
 	var punch_progress := 0.0; var recovery := 0.0
+	var redirect := {}; var redirect_weight := 0.0; var redirect_progress := 0.0
 	var strike: Dictionary = strikes.get(who, {})
 	var strike_age: int = sim.tick - frozen_ticks - int(strike.get("tick", -1000))
 	var retract_ticks := int(strike.get("retract", 24))
 	var windup: bool = who == "B" and sim.bstate in ["TELL", "FAKE", "HOLD", "CAST", "SURGE"]
-	if who == "B" and strike_age >= 0 and strike_age < retract_ticks:
+	if strike.has("cancelled") and strike_age >= 0 and strike_age < retract_ticks:
+		var cancelled: Dictionary = strike["cancelled"]
+		row = str(cancelled.get("row", "")); body_target = bool(cancelled.get("body", false))
+		punch_progress = float(cancelled.get("progress", 0))
+		recovery = lerpf(float(cancelled.get("recovery", 0)), 1.0, float(strike_age) / retract_ticks)
+		load = float(cancelled.get("preload", 0)) * (1.0 - BoxingMotion.ramp(float(strike_age) / retract_ticks))
+		redirect = cancelled.get("redirect", {}); redirect_weight = float(cancelled.get("redirect_weight", 0))
+		redirect_progress = float(cancelled.get("redirect_progress", 0))
+		extension = pow(punch_progress, 3) * (1.0 - BoxingMotion.ramp(recovery))
+	elif who == "B" and not strike.has("cancelled") and strike_age >= 0 and strike_age < retract_ticks:
 		# Contact owns the hand before the next VM action winds up. Split a short
 		# string gap into retraction and delivery, retaining both authored beats.
 		row = str(strike["row"]); body_target = bool(strike["body"])
 		punch_progress = 1.0; recovery = float(strike_age) / retract_ticks
 		extension = 1.0 - BoxingMotion.ramp(recovery)
 	elif windup:
-		row = tell_row(sim)
+		var told := _tell_attack(sim, sim.bstring)
+		row = str(told.get("row", "")); body_target = bool(told.get("body", false))
 		var tell: Dictionary = sim.pattern.get("strings", {}).get(sim.bstring, {}).get("tell", {})
 		var ms := float(tell.get("ms", 700))
 		var tier := 1.0 if ms >= 600 else (0.75 if ms >= 450 else 0.55)
 		if sim.pi_cue(): tier *= 1.15
-		load = tier * BoxingMotion.ramp(float(sim.tick - sim.tell_start_tick) / maxf(1, Sim.ms(ms * 0.4)))
-		if row != "" and sim.bstate == "TELL":
+		if tell_clock.get("string", "") != sim.bstring:
+			tell_clock = {"at": sim.tick - frozen_ticks, "ticks": sim.btimer, "string": sim.bstring}
+		load = tier * BoxingMotion.ramp(float(sim.tick - frozen_ticks - int(tell_clock.get("at", 0))) / maxf(1, Sim.ms(ms * 0.4)))
+		if sim.bfeint == "cancel":
+			redirect = told
+			redirect_progress = 0.22 * load / maxf(tier, 0.01)
+			var into := str(sim.pattern["strings"][sim.bstring].get("feint", {}).get("into", ""))
+			var replacement := _tell_attack(sim, into)
+			if not replacement.is_empty():
+				row = str(replacement["row"]); body_target = bool(replacement["body"])
+		if row != "" and sim.bstate in ["TELL", "HOLD"]:
 			var swing := Sim.ms(float(sim.T["punch_matrix"][row]["startup_ms"]))
-			punch_progress = clampf(1.0 - float(sim.btimer) / swing, 0, 1)
+			if sim.bstate == "HOLD":
+				punch_progress = lerpf(0.22, 1.0, clampf(1.0 - float(sim.btimer) / mini(swing, hold_ticks), 0, 1))
+			elif sim.bfeint == "delay":
+				punch_progress = 0.22 * BoxingMotion.ramp(1.0 - float(sim.btimer) / maxi(1, int(tell_clock.get("ticks", swing))))
+			else: punch_progress = clampf(1.0 - float(sim.btimer) / swing, 0, 1)
+			redirect_weight = BoxingMotion.ramp(punch_progress)
 			extension = pow(punch_progress, 3)
 	elif who == "B" and sim.bstate == "ACTING" and not sim.bqueue.is_empty() and sim.bqueue[0].get("kind") == "punch" and sim.btimer <= 18:
 		row = str(sim.bqueue[0]["row"]); body_target = bool(sim.bqueue[0].get("body", false))
@@ -186,7 +247,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 		load = sin(progress * PI) * (1.2 if "HAYMAKER" in pending["mods"] else 0.5)
 		extension = pow(progress, 3)
 	elif strikes.has(who):
-		if who == "P" and strike_age >= 0 and strike_age < retract_ticks:
+		if who == "P" and not strike.has("cancelled") and strike_age >= 0 and strike_age < retract_ticks:
 			row = str(strike["row"]); body_target = bool(strike["body"])
 			punch_progress = 1.0; recovery = clampf(float(strike_age - 3) / maxi(1, retract_ticks - 3), 0, 1)
 			extension = 1.0 - BoxingMotion.ramp(recovery)
@@ -202,8 +263,14 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 			if family == "STRAIGHT": reach *= float(fighter.get("pkg", {}).get("straight_reach_mult", 1.0))
 	reach = minf(reach, maxf(0.3, (other["pos"] as Vector2).distance_to(fighter["pos"]) - 0.18))
 	if not motion_solvers.has(who): motion_solvers[who] = BoxingMotion.new()
-	var rig: Dictionary = motion_solvers[who].sample(fighter, other, sim.tick - frozen_ticks,
-		{"row": row, "progress": punch_progress, "recovery": recovery, "body": body_target, "reach": reach, "head_height": Sim.HEAD_H, "preload": load if windup else 0.0}, offset + Vector3.UP * (height - Sim.HEAD_H))
+	var attack := {"row": row, "progress": punch_progress, "recovery": recovery, "body": body_target, "reach": reach, "head_height": Sim.HEAD_H, "preload": load if windup or strike.has("cancelled") else 0.0, "redirect": redirect, "redirect_weight": redirect_weight, "redirect_progress": redirect_progress}
+	attacks[who] = attack
+	var rig: Dictionary = motion_solvers[who].sample(fighter, other, sim.tick - frozen_ticks, attack, offset + Vector3.UP * (height - Sim.HEAD_H))
+	if not redirect.is_empty():
+		var false_attack := attack.duplicate(); false_attack.merge(redirect, true)
+		false_attack["progress"] = redirect_progress
+		var false_rig: Dictionary = motion_solvers[who].sample(fighter, other, sim.tick - frozen_ticks, false_attack, offset + Vector3.UP * (height - Sim.HEAD_H))
+		rig = _blend_rig(false_rig, rig, redirect_weight)
 	root.set_meta("kinematics", rig)
 	var facing := atan2(forward.x, forward.z)
 	body.rotation = Vector3(0, facing + float(rig["chest_turn"]), reaction * 0.10)

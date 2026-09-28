@@ -1,0 +1,74 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] screen lateral 0.0 / -1.0
+[PASS] screen slip 0.0 / -1.0
+[PASS] screen lateral 0.0 / 1.0
+[PASS] screen slip 0.0 / 1.0
+[PASS] screen lateral 1.5707963267949 / -1.0
+[PASS] screen slip 1.5707963267949 / -1.0
+[PASS] screen lateral 1.5707963267949 / 1.0
+[PASS] screen slip 1.5707963267949 / 1.0
+[PASS] screen lateral 3.14159265358979 / -1.0
+[PASS] screen slip 3.14159265358979 / -1.0
+[PASS] screen lateral 3.14159265358979 / 1.0
+[PASS] screen slip 3.14159265358979 / 1.0
+[PASS] screen lateral 4.71238898038469 / -1.0
+[PASS] screen slip 4.71238898038469 / -1.0
+[PASS] screen lateral 4.71238898038469 / 1.0
+[PASS] screen slip 4.71238898038469 / 1.0
+[PASS] gassed hands use authored speed curve
+[PASS] gassed recovery uses authored speed curve
+[PASS] composure recovery band 90.0
+[PASS] composure recovery band 55.0
+[PASS] composure recovery band 25.0
+[PASS] composure recovery band 10.0
+[PASS] holding guard uses active stamina recovery
+[PASS] guard cannot refill through punch recovery
+[PASS] hitstop holds the glove on contact for every frozen tick (5 ticks, (-0.0, 1.55, -1.22) → (-0.0, 1.55, -1.22))
+[PASS] all ten native punch keys commit at 30 Hz
+[PASS] sustained exchange resolves hits at 30 Hz
+[PASS] all ten native punch keys commit at 60 Hz
+[PASS] sustained exchange resolves hits at 60 Hz
+[PASS] all ten native punch keys commit at 144 Hz
+[PASS] sustained exchange resolves hits at 144 Hz
+[PASS] visible standing-eight cue lets native taps recover
+[PASS] visible clinch cues accept all four native alternating taps
+[PASS] contact, tell and timing cues reach audio feedback
+[PASS] club pauses the fight clock
+[PASS] club action available: roadwork
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] club action available: step
+[PASS] played roadwork consumes a daily slot and earns Beans
+[PASS] club page builds: Stable
+[PASS] club page builds: Recruit
+[PASS] club page builds: Formation
+[PASS] club page builds: Scout Book
+[PASS] club page builds: Bouts
+[PASS] repeated save retains a rollback file
+[PASS] continue restores the club ledger and exact sim state
+[PASS] club action available: bout:scrap_1
+[PASS] scrap starts through the club with its real objective
+[PASS] scrap returns to club with verdict and reward
+[PASS] body-shot objective was earned through input
+[PASS] club action available: dual
+[PASS] club action available: order:1
+[PASS] club action available: seal
+[PASS] formation rings the bell in chosen order and retains earnings
+[PASS] live bout cannot be replaced through club buttons
+[PASS] live bout prevents training
+[PASS] mid-bout save resumes exact state
+COMBAT LOOP VERDICT :: GREEN (67/67)
+WARNING: 9 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

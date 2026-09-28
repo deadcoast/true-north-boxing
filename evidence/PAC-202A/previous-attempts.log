@@ -1,0 +1,75 @@
+baseline.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] native feint is emitted without a player contact
+[FAIL] player feint preserves opponent recovery
+[FAIL] player feint retains the cancelled hand for retraction
+[PASS] feint finishes its actual recovery without inventing a contact
+[FAIL] S1 native jab preserves both fighters' motion at interrupt
+[PASS] S1 opponent windup and retraction hold through hitstop
+[PASS] S2 native jab preserves both fighters' motion at unbroken hit
+[PASS] S2 opponent windup and retraction hold through hitstop
+[FAIL] authored body uppercut winds up toward the body
+VARIANT DETAIL delay max joint jump 1.25264954566956 contacts 1
+[FAIL] delay feint has continuous whole-body transition
+[PASS] delay feint displays only the resolving hand at contact
+[PASS] delayed feint does not hold a false contact pose
+VARIANT DETAIL cancel max joint jump 1.13411140441895 contacts 1
+[FAIL] cancel feint has continuous whole-body transition
+[PASS] cancel feint displays only the resolving hand at contact
+LIFECYCLE VERDICT :: RED (8/14)
+WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+
+attempt-01.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] native feint is emitted without a player contact
+[FAIL] player feint preserves opponent recovery
+[PASS] player feint retains the cancelled hand for retraction
+[PASS] feint finishes its actual recovery without inventing a contact
+[PASS] S1 native jab preserves both fighters' motion at interrupt
+[PASS] S1 opponent windup and retraction hold through hitstop
+[PASS] S2 native jab preserves both fighters' motion at unbroken hit
+[PASS] S2 opponent windup and retraction hold through hitstop
+[PASS] authored body uppercut winds up toward the body
+VARIANT DETAIL delay max joint jump 0.30000004172325 contacts 1
+[FAIL] delay feint has continuous whole-body transition
+[PASS] delay feint displays only the resolving hand at contact
+[PASS] delayed feint does not hold a false contact pose
+VARIANT DETAIL cancel max joint jump 0.30000004172325 contacts 1
+[FAIL] cancel feint has continuous whole-body transition
+[PASS] cancel feint displays only the resolving hand at contact
+LIFECYCLE VERDICT :: RED (11/14)
+WARNING: 14 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+
+attempt-02.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+FEINT DETAIL boss row R_HOOKERCUT extension 0.59326171875 strikes { "B": { "tick": 2, "row": "R_HOOKERCUT", "body": false, "retract": 16, "gap": 33 }, "P": { "tick": 9, "retract": 18, "cancelled": { "row": "L_HOOK", "progress": 0.19354838709677, "recovery": 0.0, "body": false, "reach": 1.9, "head_height": 1.55, "preload": 0.0 } } }
+[PASS] native feint is emitted without a player contact
+[FAIL] player feint preserves opponent recovery
+[PASS] player feint retains the cancelled hand for retraction
+[PASS] feint finishes its actual recovery without inventing a contact
+[PASS] S1 native jab preserves both fighters' motion at interrupt
+[PASS] S1 opponent windup and retraction hold through hitstop
+[PASS] S2 native jab preserves both fighters' motion at unbroken hit
+[PASS] S2 opponent windup and retraction hold through hitstop
+[PASS] authored body uppercut winds up toward the body
+JUMP DETAIL delay tick 108 state ACTING events [{ "verb": "punch", "row": "R_HOOKERCUT", "body": false, "kind": "boss_act", "tick": 109 }, { "on": "P", "dmg": 15.6, "body": false, "kind": "hit", "tick": 109 }] from [[X: (0.497918, 0.0, -0.867224), Y: (0.0, 1.0, 0.0), Z: (0.607057, 0.0, 0.348543), O: (0.0, 0.95, 0.1)], [X: (0.764842, 0.0, -0.644218), Y: (0.0, 1.0, 0.0), Z: (0.644218, 0.0, 0.764842), O: (0.0, 0.755, 0.1)], [X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (0.0, 1.55, 0.0)], [X: (1.0, 0.0, 0.0), Y: (0.0, 0.185, -0.1), Z: (0.0, 0.475517, 0.879706), O: (0.0, 1.3375, 0.05)], [X: (0.805107, 0.201074, -0.184044), Y: (0.236558, -0.059531, 0.969792), Z: (0.249, -1.115261, -0.129198), O: (0.151969, 1.335, 0.073858)], [X: (0.9762, 0.216522, 0.012349), Y: (-0.051842, 0.232197, 0.026899), Z: (0.012349, -0.112346, 0.993592), O: (0.17789, 1.218902, 0.060408)], [X: (0.717293, -0.320937, -0.618458), Y: (0.076842, -0.152197, 0.168101), Z: (-0.618458, -0.70209, -0.352956), O: (0.16539, 1.178902, -0.037092)], [X: (0.525207, -0.14694, 0.838192), Y: (0.056619, -0.367795, -0.099954), Z: (0.838192, 0.259406, -0.479731), O: (0.205297, 0.278898, 0.190233)], [X: (0.850628, -0.184643, -0.492279), Y: (0.06991, -0.292205, 0.2304), Z: (-0.492279, -0.608522, -0.622385), O: (0.142033, 0.608898, 0.12501)], [X: (0.996802, 0.0, -0.079915), Y: (0.0, 1.0, 0.0), Z: (0.079915, 0.0, 0.996802), O: (0.233607, 0.065, 0.140256)], [X: (0.295033, -0.639682, 0.475671), Y: (-0.666592, 0.221759, 0.711672), Z: (-0.758632, -0.713061, -0.488386), O: (-0.0, 1.55, 1.17)], [X: (0.745477, -0.611537, -0.265116), Y: (0.365797, 0.343824, 0.23549), Z: (-0.095323, -0.491483, 0.865654), O: (-0.182899, 1.378088, 1.052255)], [X: (0.781458, 0.430704, 0.451462), Y: (-0.238828, -0.083824, 0.493368), Z: (0.451462, -0.889743, 0.067374), O: (-0.246383, 1.248088, 0.687826)], [X: (0.904633, 0.200263, -0.376211), Y: (-0.093347, -0.270102, -0.36824), Z: (-0.376211, 0.790008, -0.4841), O: (-0.243005, 0.230051, -0.098586)], [X: (0.181846, 0.215877, -0.959338), Y: (-0.089254, -0.389898, -0.104656), Z: (-0.959338, 0.25313, -0.124884), O: (-0.151705, 0.560051, 0.137862)], [X: (0.783822, 0.0, -0.620986), Y: (0.0, 1.0, 0.0), Z: (0.620986, 0.0, 0.783822), O: (-0.289679, 0.065, -0.282706)]] to [[X: (0.497918, 0.0, -0.867224), Y: (0.0, 1.0, 0.0), Z: (0.607057, 0.0, 0.348543), O: (0.0, 0.95, 0.1)], [X: (0.764842, 0.0, -0.644218), Y: (0.0, 1.0, 0.0), Z: (0.644218, 0.0, 0.764842), O: (0.0, 0.755, 0.1)], [X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (0.0, 1.55, 0.0)], [X: (1.0, 0.0, 0.0), Y: (0.0, 0.185, -0.1), Z: (0.0, 0.475517, 0.879706), O: (0.0, 1.3375, 0.05)], [X: (0.805107, 0.201074, -0.184044), Y: (0.236558, -0.059531, 0.969792), Z: (0.249, -1.115261, -0.129198), O: (0.151969, 1.335, 0.073858)], [X: (0.9762, 0.216522, 0.012349), Y: (-0.051842, 0.232197, 0.026899), Z: (0.012349, -0.112346, 0.993592), O: (0.17789, 1.218902, 0.060408)], [X: (0.717293, -0.320937, -0.618458), Y: (0.076842, -0.152197, 0.168101), Z: (-0.618458, -0.70209, -0.352956), O: (0.16539, 1.178902, -0.037092)], [X: (0.946831, -0.111819, 0.301676), Y: (0.045649, -0.312237, -0.259006), Z: (0.301676, 0.634445, -0.711668), O: (0.210782, 0.251118, -0.030241)], [X: (0.125222, -0.219735, -0.967489), Y: (0.08088, -0.347763, 0.089452), Z: (-0.967489, -0.243023, -0.070027), O: (0.147518, 0.581118, 0.054535)], [X: (0.996802, 0.0, -0.079915), Y: (0.0, 1.0, 0.0), Z: (0.079915, 0.0, 0.996802), O: (0.233607, 0.065, -0.159744)], [X: (0.329978, -0.607261, 0.494822), Y: (-0.615004, 0.269612, 0.740999), Z: (-0.789291, -0.742536, -0.384914), O: (-0.0, 1.55, 0.99)], [X: (0.724458, -0.647481, -0.236495), Y: (0.301117, 0.28328, 0.146846), Z: (-0.064016, -0.404798, 0.912162), O: (-0.150559, 1.40836, 0.916577)], [X: (0.833611, 0.396938, 0.3841), Y: (-0.174148, -0.02328, 0.402012), Z: (0.3841, -0.91631, 0.113326), O: (-0.214043, 1.27836, 0.642148)], [X: (0.944319, 0.169572, -0.28197), Y: (-0.094199, -0.268634, -0.477027), Z: (-0.281969, 0.858717, -0.427899), O: (-0.242579, 0.229317, -0.344192)], [X: (0.853702, 0.177329, -0.48964), Y: (-0.088402, -0.391366, -0.295869), Z: (-0.48964, 0.593497, -0.63876), O: (-0.151279, 0.559317, 0.042256)], [X: (0.783822, 0.0, -0.620986), Y: (0.0, 1.0, 0.0), Z: (0.620986, 0.0, 0.783822), O: (-0.289679, 0.065, -0.582706)]]
+VARIANT DETAIL delay max joint jump 0.30000004172325 contacts 1
+[FAIL] delay feint has continuous whole-body transition
+[PASS] delay feint displays only the resolving hand at contact
+[PASS] delayed feint does not hold a false contact pose
+JUMP DETAIL cancel tick 60 state ACTING events [{ "verb": "punch", "row": "L_HOOK", "body": false, "kind": "boss_act", "tick": 61 }, { "on": "P", "dmg": 14.4, "body": false, "kind": "hit", "tick": 61 }] from [[X: (0.081107, 0.0, 0.996705), Y: (0.0, 1.0, 0.0), Z: (-0.697694, 0.0, 0.056775), O: (0.0, 0.91, 0.1)], [X: (0.417595, 0.0, 0.908633), Y: (0.0, 1.0, 0.0), Z: (-0.908633, 0.0, 0.417595), O: (0.0, 0.755, 0.1)], [X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (0.0, 1.55, 0.0)], [X: (1.0, 0.0, 0.0), Y: (0.0, 0.185, -0.1), Z: (0.0, 0.475517, 0.879706), O: (0.0, 1.3375, 0.05)], [X: (0.579038, 0.520221, 0.341445), Y: (0.196114, -0.681221, 0.70532), Z: (0.811119, -0.461955, -0.671703), O: (0.0, 1.55, 1.17)], [X: (0.554738, -0.200218, 0.807575), Y: (-0.370619, 0.211078, 0.306917), Z: (-0.441349, -0.893616, 0.08162), O: (0.18531, 1.444461, 1.016542)], [X: (0.594271, -0.66596, -0.450931), Y: (0.349937, 0.048922, 0.388923), Z: (-0.450931, -0.740155, 0.498831), O: (0.195651, 1.314461, 0.668622)], [X: (0.468523, -0.318721, 0.823956), Y: (0.129634, -0.328992, -0.200973), Z: (0.823956, 0.494117, -0.277389), O: (0.224862, 0.259496, 0.257781)], [X: (0.289158, -0.274383, -0.917116), Y: (0.101582, -0.331008, 0.131059), Z: (-0.917116, -0.354004, -0.183247), O: (0.109254, 0.589496, 0.292738)], [X: (0.783822, 0.0, 0.620986), Y: (0.0, 1.0, 0.0), Z: (-0.620986, 0.0, 0.783822), O: (0.289679, 0.065, 0.157294)], [X: (0.806792, -0.20211, 0.175322), Y: (-0.237777, -0.11223, 0.964814), Z: (-0.237201, -1.109537, -0.187522), O: (-0.045682, 1.335, 0.05584)], [X: (0.978347, -0.206262, -0.017118), Y: (0.049614, 0.232075, 0.039223), Z: (-0.017118, -0.163062, 0.986467), O: (-0.070489, 1.218962, 0.036229)], [X: (0.738368, 0.310195, 0.598825), Y: (-0.074614, -0.152075, 0.170777), Z: (0.598825, -0.709977, -0.370596), O: (-0.057989, 1.178962, -0.068771)], [X: (0.925483, 0.151248, -0.347282), Y: (-0.064711, -0.296501, -0.301581), Z: (-0.347282, 0.704883, -0.618494), O: (-0.201252, 0.243251, -0.148954)], [X: (-0.827606, 0.289841, 0.480688), Y: (-0.110433, -0.363499, 0.029046), Z: (0.480688, -0.076233, 0.873572), O: (-0.11368, 0.573251, -0.012686)], [X: (0.996802, 0.0, 0.079915), Y: (0.0, 1.0, 0.0), Z: (-0.079915, 0.0, 0.996802), O: (-0.233607, 0.065, -0.299744)]] to [[X: (0.081107, 0.0, 0.996705), Y: (0.0, 1.0, 0.0), Z: (-0.697694, 0.0, 0.056775), O: (0.0, 0.912857, 0.1)], [X: (0.417595, 0.0, 0.908633), Y: (0.0, 1.0, 0.0), Z: (-0.908633, 0.0, 0.417595), O: (0.0, 0.755, 0.1)], [X: (1.0, 0.0, 0.0), Y: (0.0, 1.0, 0.0), Z: (0.0, 0.0, 1.0), O: (0.0, 1.55, 0.0)], [X: (1.0, 0.0, 0.0), Y: (0.0, 0.185, -0.1), Z: (0.0, 0.475517, 0.879706), O: (0.0, 1.3375, 0.05)], [X: (0.591246, 0.473336, 0.385851), Y: (0.091851, -0.695584, 0.71255), Z: (0.819432, -0.522034, -0.615233), O: (0.0, 1.55, 0.99)], [X: (0.529063, -0.153184, 0.834642), Y: (-0.29124, 0.18554, 0.218664), Z: (-0.460831, -0.877765, 0.131013), O: (0.14562, 1.45723, 0.880668)], [X: (0.629348, -0.661948, -0.407119), Y: (0.270557, 0.07446, 0.297176), Z: (-0.407118, -0.727074, 0.552827), O: (0.155961, 1.32723, 0.622748)], [X: (0.818219, -0.260156, 0.512676), Y: (0.116776, -0.281745, -0.329342), Z: (0.512676, 0.733716, -0.445897), O: (0.231291, 0.235872, 0.021965)], [X: (-0.734179, -0.288069, 0.614815), Y: (0.11444, -0.378255, -0.040572), Z: (0.614815, 0.102129, 0.782031), O: (0.115683, 0.565872, 0.206923)], [X: (0.783822, 0.0, 0.620986), Y: (0.0, 1.0, 0.0), Z: (-0.620986, 0.0, 0.783822), O: (0.289679, 0.065, -0.142706)], [X: (0.806792, -0.20211, 0.175322), Y: (-0.237777, -0.11223, 0.964814), Z: (-0.237201, -1.109537, -0.187522), O: (-0.045682, 1.335, 0.05584)], [X: (0.978347, -0.206262, -0.017118), Y: (0.049614, 0.232075, 0.039223), Z: (-0.017118, -0.163062, 0.986467), O: (-0.070489, 1.218962, 0.036229)], [X: (0.738368, 0.310195, 0.598825), Y: (-0.074614, -0.152075, 0.170777), Z: (0.598825, -0.709977, -0.370596), O: (-0.057989, 1.178962, -0.068771)], [X: (0.970719, 0.115837, -0.210443), Y: (-0.057633, -0.269536, -0.414211), Z: (-0.210443, 0.832525, -0.512461), O: (-0.20479, 0.229768, -0.392639)], [X: (0.32772, 0.268644, -0.905776), Y: (-0.117511, -0.390464, -0.158324), Z: (-0.905776, 0.361949, -0.22037), O: (-0.117219, 0.559768, -0.106371)], [X: (0.996802, 0.0, 0.079915), Y: (0.0, 1.0, 0.0), Z: (-0.079915, 0.0, 0.996802), O: (-0.233607, 0.065, -0.599744)]]
+VARIANT DETAIL cancel max joint jump 0.30000004172325 contacts 1
+[FAIL] cancel feint has continuous whole-body transition
+[PASS] cancel feint displays only the resolving hand at contact
+LIFECYCLE VERDICT :: RED (11/14)
