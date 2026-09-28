@@ -77,6 +77,8 @@ func setup(scene: Node) -> void:
 	detail_button.custom_minimum_size.y = 28
 	var pause := _button("Controls / pause  Esc", actions, func(): owner_scene.controls_menu.open())
 	pause.custom_minimum_size.y = 28
+	var club := _button("Club", actions, func(): owner_scene.club_flow.page = "Bouts"; owner_scene.club_flow.open())
+	club.custom_minimum_size.y = 28
 	details = _panel(surface); details.anchor_left = 0.02; details.anchor_right = 0.98
 	details.anchor_top = 0.23; details.anchor_bottom = 0.80; details.hide()
 	detail_scroll = ScrollContainer.new(); details.add_child(detail_scroll)
@@ -141,5 +143,5 @@ func update(sim, practice: bool, feed_text: String) -> void:
 	var want_details: bool = sim.mode in ["CORNER", "CARD", "OVER"] or owner_scene.formation_open or owner_scene.show_formation
 	if want_details != auto_details: show_details = want_details
 	auto_details = want_details
-	details.visible = show_details and not entry.visible
+	details.visible = show_details and not entry.visible and not (owner_scene.club_flow != null and owner_scene.club_flow.enabled)
 	detail_button.text = ("Hide details" if details.visible else "Details") + "  Ctrl+F1"

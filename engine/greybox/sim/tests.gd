@@ -153,6 +153,17 @@ func boss_lands(s: TNBSim, row: String, mult: float = 1.0, body: bool = false) -
 	s.bpending = {"row": row, "mult": mult, "body": body}
 	s._land_boss_punch(mult)
 
+func dodge_into_contact(s: TNBSim, kind: String) -> void:
+	# Full-pose geometry fixtures use a real scheduled dodge, not a 999-tick
+	# pose outside the verb's duration. Entry/exit are checked by the native driver.
+	clear_defense(s.B)
+	var remaining := int(s.P["pending"].get("t", 0))
+	var midpoint := int(TNBSim.DODGE[kind]["t"]) / 2
+	if remaining > midpoint:
+		s.B["dodge_at"] = remaining - midpoint; s.B["dodge_plan"] = [kind, 1]
+	else:
+		s._set_dodge(s.B, kind, 1); s.B["dodge_t"] = midpoint + remaining
+
 func count_events(evs: Array, kind: String, filt: Dictionary = {}) -> int:
 	var n := 0
 	for e in evs:
@@ -422,7 +433,7 @@ func smoke(boss_idx: int) -> int:
 
 	# ---- trap ----
 	s.P["pos"] = Vector2(3.3, 3.3); s.B["pos"] = Vector2(2.2, 2.2); s.trapped_p = true; s.P["comp"] = s.P["comp_max"]
-	clear_defense(s.P); s._set_dodge(s.P, "SLIP", 1)
+	clear_defense(s.P); s._set_dodge(s.P, "SLIP", 1); s.P["dodge_t"] = 15 # full slip pose, after entry
 	boss_lands(s, "R_STRAIGHT")
 	var base_w := TNBSim.ms(float(s.T["counter_windows_ms"]["slip"]["base"]))
 	_sr("trapped slip window x1.4", s.P["counter_t"] == int(base_w * 1.4), "%d ticks" % s.P["counter_t"])
@@ -440,13 +451,13 @@ func smoke(boss_idx: int) -> int:
 
 	# ---- C2 in play: dodges resolve by geometry, not by table ----
 	place(s, 1.4); clear_defense(s.P); s.P["comp"] = s.P["comp_max"]; s.P["counter_t"] = 0     # 1.4m: inside every style's uppercut (a swarmer's is 1.575m)
-	s._set_dodge(s.P, "SLIP", 1); boss_lands(s, "R_STRAIGHT")
+	s._set_dodge(s.P, "SLIP", 1); s.P["dodge_t"] = 15; boss_lands(s, "R_STRAIGHT")
 	_sr("C2 slip evades the straight + opens a window", s.P["comp"] == s.P["comp_max"] and s.P["counter_t"] > 0)
 	clear_defense(s.P); s.P["counter_t"] = 0
-	s._set_dodge(s.P, "DUCK", 1); boss_lands(s, "R_UPPERCUT")
+	s._set_dodge(s.P, "DUCK", 1); s.P["dodge_t"] = 18; boss_lands(s, "R_UPPERCUT")
 	_sr("C2 duck eats the uppercut", s.P["comp"] < s.P["comp_max"])
 	clear_defense(s.P); s.P["comp"] = s.P["comp_max"]; s.trapped_p = true; s.pinned_p_t = 3200
-	s._set_dodge(s.P, "WEAVE", 1); boss_lands(s, "R_HOOK")
+	s._set_dodge(s.P, "WEAVE", 1); s.P["dodge_t"] = 24; boss_lands(s, "R_HOOK")
 	_sr("C2 weave-away evades the hook + escapes the trap", s.P["comp"] == s.P["comp_max"] and not s.trapped_p and s.pinned_p_t == 0)
 	clear_defense(s.P); s.P["counter_t"] = 0
 
@@ -585,7 +596,7 @@ func smoke(boss_idx: int) -> int:
 	var t11b := make_sim(0, 7); quiet(t11b); t11b.P["pos"] = Vector2(1.6, 2.5); t11b.B["pos"] = Vector2(1.6, 0.9); t11b.last_zone_p = "MID"
 	for i in 90:                                       # he stays square to you while you slide along the rope line
 		t11b.B["pos"] = Vector2(t11b.P["pos"].x, 0.9)
-		t11b.step({"move": Vector2(-1, 0)})
+		t11b.step({"move": Vector2(1, 0)}) # toward +X rope: right in the corrected camera basis
 	_sr("sensor rope_backing: backing onto the ropes fires; sliding sideways onto them is only rope_touch",
 		sensor_count(t11, "player_rope_backing") == 1 and sensor_count(t11, "player_rope_touch") == 1 and sensor_count(t11b, "player_rope_backing") == 0 and sensor_count(t11b, "player_rope_touch") == 1)
 	# 12. referee ladder: Alfie banks exactly two warnings, never the third; warnings_banked==2 is his phase 2
@@ -643,7 +654,7 @@ func smoke(boss_idx: int) -> int:
 	# fouls by geometry: player side
 	var f1 := make_sim(0, 7); quiet(f1); place(f1, 1.4)
 	f1.P["busy_t"] = 0; f1.P["cmd"] = {}
-	f1.step({"punch": "R_STRAIGHT", "body": true}); clear_defense(f1.B); f1.B["dodge"] = "LEAN"; f1.B["dodge_t"] = 999
+	f1.step({"punch": "R_STRAIGHT", "body": true}); clear_defense(f1.B); dodge_into_contact(f1, "LEAN")
 	land(f1)
 	var loss_foul := 0.0
 	for e in f1.events:
@@ -659,13 +670,13 @@ func smoke(boss_idx: int) -> int:
 	_sr("foul: a body punch into his lean-back is a LOW BLOW (half damage, warning 1, no EP); the same punch clean is not",
 		lowblow and count_events(f1.events, "foul") == 0 and absf(loss_foul * 2.0 - loss_clean) < 0.01, "%.2f vs %.2f" % [loss_foul, loss_clean])
 	thaw(f1); place(f1, 1.4); f1.events.clear(); f1.P["busy_t"] = 0; f1.P["cmd"] = {}; f1.tokens = []; f1.flags = {}
-	f1.step({"punch": "R_STRAIGHT"}); clear_defense(f1.B); f1.B["dodge"] = "LEAN"; f1.B["dodge_t"] = 999; land(f1)
+	f1.step({"punch": "R_STRAIGHT"}); clear_defense(f1.B); dodge_into_contact(f1, "LEAN"); land(f1)
 	_sr("foul: a head punch into the lean-back is legal", count_events(f1.events, "foul") == 0 and count_events(f1.events, "hit", {"on": "B"}) == 1)
 	var f2 := make_sim(0, 7); quiet(f2); place(f2, 1.4)
 	var results := {}
 	for row in ["R_FLARED", "R_UPPERCUT", "R_STRAIGHT"]:
 		thaw(f2); place(f2, 1.4); f2.events.clear(); f2.P["busy_t"] = 0; f2.P["cmd"] = {}; f2.tokens = []; f2.flags = {}; f2.pwarnings = 0
-		f2.step({"punch": row}); clear_defense(f2.B); f2.B["dodge"] = "DUCK"; f2.B["dodge_t"] = 999; land(f2)
+		f2.step({"punch": row}); clear_defense(f2.B); dodge_into_contact(f2, "DUCK"); land(f2)
 		results[row] = [count_events(f2.events, "hit", {"on": "B"}), count_events(f2.events, "foul", {"foul": "behind_the_head"})]
 	_sr("foul: the overhand onto a ducked head is BEHIND THE HEAD; the uppercut lands clean; the straight misses",
 		results["R_FLARED"] == [1, 1] and results["R_UPPERCUT"] == [1, 0] and results["R_STRAIGHT"] == [0, 0], JSON.stringify(results))
@@ -675,17 +686,17 @@ func smoke(boss_idx: int) -> int:
 	var rungs: Array = []
 	for k in 3:
 		thaw(f3); place(f3, 1.4); f3.P["busy_t"] = 0; f3.P["cmd"] = {}; f3.tokens = []; f3.flags = {}
-		f3.step({"punch": "L_HOOK", "body": true}); clear_defense(f3.B); f3.B["dodge"] = "LEAN"; f3.B["dodge_t"] = 999; land(f3)
+		f3.step({"punch": "L_HOOK", "body": true}); clear_defense(f3.B); dodge_into_contact(f3, "LEAN"); land(f3)
 		rungs.append([f3.pwarnings, f3.ep_p - ep_p0, f3.score_b - sb0])
 	_sr("referee ladder runs against the player: warning / -5 EP / DROP awarded (no knockdown counted, fight continues)",
 		rungs == [[1, 0, 0], [2, -5, 0], [3, -5, 1]] and f3.P["drops"] == pd0 and f3.mode == "FIGHT", JSON.stringify(rungs))
 	# boss side: clean fighters pull it, dirty ones foul until their cap then pull
 	var f4 := make_sim(0, 7); quiet(f4); place(f4, 1.4); clear_defense(f4.P); f4.P["comp"] = f4.P["comp_max"]
-	f4.P["dodge"] = "LEAN"; f4.P["dodge_t"] = 999
+	f4.P["dodge"] = "LEAN"; f4.P["dodge_t"] = 15
 	boss_lands(f4, "R_HOOK", 1.0, true)
 	var clean_pulled: bool = count_events(f4.events, "pulled") == 1 and f4.P["comp"] == f4.P["comp_max"] and f4.bwarnings == 0
 	var f5 := make_sim(5, 7); quiet(f5); place(f5, 1.4); clear_defense(f5.P); f5.P["comp"] = f5.P["comp_max"]
-	f5.P["dodge"] = "LEAN"; f5.P["dodge_t"] = 999
+	f5.P["dodge"] = "LEAN"; f5.P["dodge_t"] = 15
 	boss_lands(f5, "R_HOOK", 1.0, true)
 	var dirty_fouled: bool = count_events(f5.events, "foul", {"who": "B", "foul": "low_blow"}) == 1 and f5.bwarnings == 1 and f5.P["comp"] < f5.P["comp_max"]
 	f5.bwarnings = 2; f5.events.clear(); f5.P["comp"] = f5.P["comp_max"]; place(f5, 1.4)
@@ -746,7 +757,7 @@ func smoke(boss_idx: int) -> int:
 	var v_full := make_sim(1, 7); quiet(v_full); place(v_full, 1.4); boss_desperation(v_full); clear_defense(v_full.P); resolve_cast(v_full)
 	var v_d_full := hit_dmg(v_full, "P")
 	var slipd := make_sim(1, 7); quiet(slipd); place(slipd, 1.4); boss_desperation(slipd)
-	run_ticks(slipd, int(slipd.cast["t"]) - 10); slipd.P["dodge"] = "SLIP"; slipd.P["dodge_dir"] = 1; slipd.P["dodge_t"] = 40; resolve_cast(slipd)
+	run_ticks(slipd, int(slipd.cast["t"]) - 10); slipd.P["dodge"] = "SLIP"; slipd.P["dodge_dir"] = 1; slipd.P["dodge_t"] = 25; resolve_cast(slipd)
 	var d_slip := hit_dmg(slipd, "P")
 	var blk := make_sim(1, 7); quiet(blk); place(blk, 1.4); boss_desperation(blk)
 	var hm_blk: float = blk.hiss_mult("B")
@@ -760,7 +771,7 @@ func smoke(boss_idx: int) -> int:
 	var rh := make_sim(10, 7); quiet(rh); place(rh, 1.4); boss_desperation(rh); clear_defense(rh.P); resolve_cast(rh)
 	var rh_hits := count_events(rh.events, "hit", {"hissatsu": true})
 	var rh2 := make_sim(10, 7); quiet(rh2); place(rh2, 1.4); boss_desperation(rh2)
-	run_ticks(rh2, int(rh2.cast["t"]) - 10); rh2.P["dodge"] = "SLIP"; rh2.P["dodge_dir"] = 1; rh2.P["dodge_t"] = 40; resolve_cast(rh2)
+	run_ticks(rh2, int(rh2.cast["t"]) - 10); rh2.P["dodge"] = "SLIP"; rh2.P["dodge_dir"] = 1; rh2.P["dodge_t"] = 25; resolve_cast(rh2)
 	_sr("Rush Hour lands as 5 packets; the PISTON profile lets a perfect slip evade in full", rh_hits == 5 and hit_dmg(rh2, "P") == 0.0 and count_events(rh2.events, "hit", {"outcome": "evaded"}) == 5 and rh.states["P"].has("guard_regen_minus1"))
 	# walls: Marta's Premiere Neige is not interruptible; it walls your punches for 5s; a T1 cast breaks it at cost parity
 	var mw := make_sim(18, 7); quiet(mw); place(mw, 1.4); boss_desperation(mw)
@@ -824,7 +835,7 @@ func smoke(boss_idx: int) -> int:
 	var fk := with_move(0, 7, "The Forks"); cast_player(fk); resolve_cast(fk)
 	_sr("STATE two_hit_echo: The Forks lands twice", count_events(fk.events, "hit", {"hissatsu": true}) == 2)
 	var tf := with_move(0, 7, "Timberfall"); cast_player(tf)
-	run_ticks(tf, int(tf.cast["t"]) - 10); tf.B["dodge"] = "DUCK"; tf.B["dodge_t"] = 60; resolve_cast(tf)
+	run_ticks(tf, int(tf.cast["t"]) - 10); tf.B["dodge"] = "DUCK"; tf.B["dodge_t"] = 28; resolve_cast(tf)
 	_sr("beats_duck_reads: a RISE into a ducking head lands full (the duck eats the uppercut by geometry, C2)", count_events(tf.events, "hit", {"outcome": "full"}) == 1)
 	var ns := with_move(0, 7, "Relay: North Star")
 	var v_locked: bool = not ns.castable(ns.player_move())
@@ -1090,7 +1101,7 @@ func smoke(boss_idx: int) -> int:
 	# Open Season: guard cap -20%, counter windows +100ms (a slip's 400ms window reads 500)
 	var osn := make_sim(0, 7); quiet(osn); to_corner.call(osn, 0.0); equip.call(osn, ["open_season"], "iron_resolve", []); osn.tension = 30.0
 	var osn_ok := osn.corner_action({"kind": "tactic", "id": "open_season"}); osn.step({"corner": 1}); quiet(osn); place(osn, 1.4)
-	osn.P["dodge"] = "SLIP"; osn.P["dodge_t"] = 999; osn.P["dodge_dir"] = 1; boss_lands(osn, "R_STRAIGHT")
+	osn.P["dodge"] = "SLIP"; osn.P["dodge_t"] = 15; osn.P["dodge_dir"] = 1; boss_lands(osn, "R_STRAIGHT")
 	var os_win := TNBSim.ms(500) + (TNBSim.ms(50) if osn._style_adv("P") else 0)
 	_sr("tactic: Open Season - guard cap x0.8 (%.1f vs %.1f) and the slip window is 500ms%s (%d ticks)" % [osn.P["guard_max"], hg0.P["guard_max"], " + the triangle's 50" if os_win > TNBSim.ms(500) else "", osn.P["counter_t"]], osn_ok and absf(osn.P["guard_max"] - 0.8 * hg0.P["guard_max"]) < 0.01 and osn.P["counter_t"] == os_win)
 	# Second Wind Call after an overrun corner: 80 + 40 caps at 100
@@ -1106,7 +1117,7 @@ func smoke(boss_idx: int) -> int:
 	var su_ep0: int = su.ep_p
 	for i in 10: place(su, 1.4); throw_clean(su, "L_STRAIGHT")
 	var su_ep: int = su.ep_p - su_ep0
-	thaw(su); place(su, 1.4); su.P["dodge"] = "SLIP"; su.P["dodge_t"] = 999; su.P["dodge_dir"] = 1; boss_lands(su, "R_STRAIGHT")
+	thaw(su); place(su, 1.4); su.P["dodge"] = "SLIP"; su.P["dodge_t"] = 15; su.P["dodge_dir"] = 1; boss_lands(su, "R_STRAIGHT")
 	_sr("super: Switch-Up - ten clean jabs score 22 EP (x1.1) and the slip window reads 450ms", su_ok and su_ep == 22 and su.P["counter_t"] == TNBSim.ms(450), "ep=%d window=%d" % [su_ep, su.P["counter_t"]])
 	var hcw := make_sim(0, 7); quiet(hcw); to_corner.call(hcw, 0.0); equip.call(hcw, [], "hostile_crowd", [])
 	var hcw_ok := hcw.corner_action({"kind": "super"}); hcw.step({"corner": 1})
@@ -1145,7 +1156,7 @@ func smoke(boss_idx: int) -> int:
 			thaw(sim); place(sim, 1.4); clear_defense(sim.P); sim.P["comp"] = sim.P["comp_max"]; boss_lands(sim, "R_STRAIGHT")
 		return sim.ep_b - e0_q
 	var slip_window := func(sim: TNBSim) -> int:
-		thaw(sim); place(sim, 1.4); sim.P["dodge"] = "SLIP"; sim.P["dodge_t"] = 999; sim.P["dodge_dir"] = 1; boss_lands(sim, "R_STRAIGHT")
+		thaw(sim); place(sim, 1.4); sim.P["dodge"] = "SLIP"; sim.P["dodge_t"] = 15; sim.P["dodge_dir"] = 1; boss_lands(sim, "R_STRAIGHT")
 		var w_q: int = sim.P["counter_t"]; clear_defense(sim.P); return w_q
 	# every card and every pattern dresses to the ring keys; the matchup card fires at every segment load
 	var dressed_ok := true; var neutral_elems := 0
@@ -1250,7 +1261,7 @@ func smoke(boss_idx: int) -> int:
 	var ob_back: float = backpedal.call(k_ob); var bp_back: float = backpedal.call(k_bp)
 	thaw(k_ob); place(k_ob, 1.4); k_ob.events.clear(); throw_clean(k_ob, "R_STRAIGHT", {"power": true}); var ob_pow := hit_dmg(k_ob, "B")
 	thaw(k_bp); place(k_bp, 1.4); k_bp.events.clear(); throw_clean(k_bp, "R_STRAIGHT", {"power": true}); var bp_pow := hit_dmg(k_bp, "B")
-	k_ob.P["dodge"] = "WEAVE"; k_ob.P["dodge_dir"] = 1; k_ob.P["dodge_t"] = 99; k_bp.P["dodge"] = "WEAVE"; k_bp.P["dodge_dir"] = 1; k_bp.P["dodge_t"] = 99
+	k_ob.P["dodge"] = "WEAVE"; k_ob.P["dodge_dir"] = 1; k_ob.P["dodge_t"] = 24; k_bp.P["dodge"] = "WEAVE"; k_bp.P["dodge_dir"] = 1; k_bp.P["dodge_t"] = 24
 	var ob_lat: float = (k_ob._head_world(k_ob.P, k_ob.B)["p"] - k_ob.P["pos"]).length(); var bp_lat: float = (k_bp._head_world(k_bp.P, k_bp.B)["p"] - k_bp.P["pos"]).length()
 	clear_defense(k_ob.P); clear_defense(k_bp.P)
 	_sr("package OUT-BOXER: a 2.2m straight lands (x1.12) where the control and a hook miss; sprint-step costs %.1f (x0.85); back-step covers %.2fm vs %.2fm (85%% vs 70%%); power punch %.1f vs %.1f (x0.9); weave arc %.3f vs %.3f (x0.9)" % [ob_sprint, ob_back, bp_back, ob_pow, bp_pow, ob_lat, bp_lat],
@@ -1395,7 +1406,7 @@ func smoke(boss_idx: int) -> int:
 	thaw(eco); eco.P["pos"] = Vector2(0.0, 2.6); eco.B["pos"] = Vector2(0.0, 1.2); eco.P["comp"] = eco.P["comp_max"]; eco.btension = 0.0
 	boss_lands(eco, "R_STRAIGHT"); var his_plain: float = eco.btension                           # off-center clean hit: 0
 	thaw(eco); eco.btension = 0.0; boss_lands(eco, "R_STRAIGHT", 1.3); var his_counter: float = eco.btension   # qa counter (mult > 1): 3
-	thaw(eco); place(eco, 1.4); eco.btension = 0.0; eco.P["busy_t"] = 0; eco.P["cmd"] = {}; eco.step({"punch": "R_STRAIGHT"}); eco.B["dodge"] = "SLIP"; eco.B["dodge_dir"] = 1; eco.B["dodge_t"] = 999; eco.B["dodge_plan"] = []; eco.B["dodge_at"] = 0; land(eco)
+	thaw(eco); place(eco, 1.4); eco.btension = 0.0; eco.P["busy_t"] = 0; eco.P["cmd"] = {}; eco.step({"punch": "R_STRAIGHT"}); dodge_into_contact(eco, "SLIP"); land(eco)
 	var his_slip: float = eco.btension                                                            # his read beat your straight: +2
 	clear_defense(eco.B); thaw(eco); eco.btension = 0.0; eco.P["comp"] = 0.5; place(eco, 1.4); clear_defense(eco.P); boss_lands(eco, "R_STRAIGHT")
 	var his_drop: float = eco.btension; eco.mode = "FIGHT"; eco.eight = {}                        # you went down: +10
@@ -1411,7 +1422,7 @@ func smoke(boss_idx: int) -> int:
 	thaw(yc); yc.P["pos"] = Vector2(0.0, 2.6); yc.B["pos"] = Vector2(0.0, 1.2); yc.tension = 0.0; throw_clean(yc, "L_STRAIGHT"); var my_plain: float = yc.tension
 	thaw(yc); yc.P["pos"] = Vector2(0.0, 2.6); yc.B["pos"] = Vector2(0.0, 1.2); yc.tension = 0.0; yc.P["busy_t"] = 0; yc.P["cmd"] = {}; yc.P["counter_t"] = 60; yc.step({"punch": "R_STRAIGHT"}); clear_defense(yc.B); land(yc); var my_counter: float = yc.tension
 	thaw(yc); yc.P["pos"] = Vector2(0.0, 2.6); yc.B["pos"] = Vector2(0.0, 1.2); yc.tension = 0.0; yc.P["busy_t"] = 0; yc.P["cmd"] = {}; yc.P["flash_t"] = 60; yc.step({"punch": "R_STRAIGHT"}); clear_defense(yc.B); land(yc); var my_flash: float = yc.tension
-	thaw(yc); place(yc, 1.4); yc.tension = 0.0; yc.P["dodge"] = "SLIP"; yc.P["dodge_t"] = 999; yc.P["dodge_dir"] = 1; boss_lands(yc, "R_STRAIGHT"); var my_slip: float = yc.tension
+	thaw(yc); place(yc, 1.4); yc.tension = 0.0; yc.P["dodge"] = "SLIP"; yc.P["dodge_t"] = 15; yc.P["dodge_dir"] = 1; boss_lands(yc, "R_STRAIGHT"); var my_slip: float = yc.tension
 	clear_defense(yc.P); thaw(yc); place(yc, 1.4); yc.tension = 0.0; yc.P["blocking"] = true; yc.P["block_t"] = 1; boss_lands(yc, "R_STRAIGHT"); var my_pb: float = yc.tension; yc.P["blocking"] = false; yc.P["block_t"] = 0
 	_sr("your bar on the canonical table: clean hit in CENTER +2, off-center +0, counter +3, flash +5, slip +2, perfect block +2 (segment win +5 is gated above)",
 		my_center == 2.0 and my_plain == 0.0 and my_counter == 3.0 and my_flash == 5.0 and my_slip == 2.0 and my_pb == 2.0,
@@ -1649,7 +1660,7 @@ func smoke(boss_idx: int) -> int:
 		met.call(s5) and s13_first and count_events(s13.events, "sensor", {"name": "player_perfect_block_streak2"}) == 1 and met.call(s14) and s15_near and s15_still and met.call(s15))
 	var z2: TNBSim = scrap.call("SCR-02")
 	for zi in 2:
-		thaw(z2); place(z2, 1.4); z2.P["dodge"] = "SLIP"; z2.P["dodge_t"] = 999; z2.P["dodge_dir"] = 1; boss_lands(z2, "R_STRAIGHT"); z2.step({})
+		thaw(z2); place(z2, 1.4); z2.P["dodge"] = "SLIP"; z2.P["dodge_t"] = 15; z2.P["dodge_dir"] = 1; boss_lands(z2, "R_STRAIGHT"); z2.step({})
 		if zi == 0: clear_defense(z2.P)
 	var s2_one: bool = int(z2.obj["count"]) == 2 or met.call(z2)
 	var s2b: TNBSim = scrap.call("SCR-02"); thaw(s2b); place(s2b, 2.6); clear_defense(s2b.P); boss_lands(s2b, "R_STRAIGHT"); s2b.step({})   # a whiff from range is not a slip
@@ -2052,7 +2063,7 @@ func smoke(boss_idx: int) -> int:
 	# Alfie: the flirtation stops at two warnings banked - from then he pulls every foul
 	var q6_alf := make_sim(5, 7); quiet(q6_alf); thaw(q6_alf); place(q6_alf, 1.4); clear_defense(q6_alf.P); q6_alf.P["comp"] = q6_alf.P["comp_max"]
 	q6_alf.bwarnings = 2; q6_alf.bstate = "IDLE"; q6_alf.btimer = 1 << 30; q6_alf.step({}); q6_alf.events.clear()
-	q6_alf.P["dodge"] = "LEAN"; q6_alf.P["dodge_t"] = 999; boss_lands(q6_alf, "R_HOOK", 1.0, true)
+	q6_alf.P["dodge"] = "LEAN"; q6_alf.P["dodge_t"] = 15; boss_lands(q6_alf, "R_HOOK", 1.0, true)
 	var q6_alf_ok: bool = q6_alf.bphase == 2 and bool(q6_alf.bmods["pull_all"]) and count_events(q6_alf.events, "pulled", {"by": "B"}) == 1 and q6_alf.bwarnings == 2 and int(q6_alf.pattern["select"]["weights"]["S1"]) == 60
 	_sr("Alfie at warnings_banked==2: 'dirty_flirtation_stops' - the next low blow is pulled, the count stays at two, and w(S1)+=15 lands (45 -> 60)", q6_alf_ok)
 	# Vey: three kits, the rings turning live; Vasile: kits by the clock with a 700ms seam, and the finale's fundamentals
@@ -4879,7 +4890,7 @@ func smoke(boss_idx: int) -> int:
 	q26w.P["blocking"] = true; q26w.P["block_t"] = 1; q26w.P["guard_open_t"] = 0; boss_lands(q26w, "R_HOOK")
 	var q26_pb: Array = [count_events(q26w.events, "perfect_block"), count_events(q26w.events, "weather", {"why": "perfect_block"}), q26_w0 - int(q26w.btform["t"]), q26w.bzone_line()]
 	thaw(q26w); clear_defense(q26w.P); q26w.P["blocking"] = false; var q26_c1: float = float(q26w.P["comp"]); boss_lands(q26w, "R_HOOK"); var q26_hf: float = snappedf(q26_c1 - float(q26w.P["comp"]), 0.001)
-	thaw(q26w); q26w.events.clear(); clear_defense(q26w.P); q26w.P["dodge"] = "SLIP"; q26w.P["dodge_t"] = 30; q26w.P["dodge_dir"] = 1; var q26_t1: int = int(q26w.btform["t"]); boss_lands(q26w, "R_HOOK")
+	thaw(q26w); q26w.events.clear(); clear_defense(q26w.P); q26w.P["dodge"] = "SLIP"; q26w.P["dodge_t"] = 15; q26w.P["dodge_dir"] = 1; var q26_t1: int = int(q26w.btform["t"]); boss_lands(q26w, "R_HOOK")
 	var q26_sp: Array = [count_events(q26w.events, "weather", {"why": "slip"}), q26_t1 - int(q26w.btform["t"]), int(q26w.btform["weathered"])]
 	thaw(q26w); clear_defense(q26w.P); q26w.events.clear()
 	var q26_wn := 0
@@ -5835,7 +5846,7 @@ func smoke(boss_idx: int) -> int:
 		for q33_r in ["L_STRAIGHT", "L_STRAIGHT", "R_STRAIGHT"]: throw_clean(q33a, q33_r)
 	thaw(q33a); q33a.P["busy_t"] = 0; q33a.P["cmd"] = {}
 	q33a.step({"punch": "L_HOOK"}); q33a.step({"punch_release": true}); land(q33a)
-	clear_defense(q33a.P); q33a.P["dodge"] = "SLIP"; q33a.P["dodge_t"] = 30; q33a.P["busy_t"] = 0
+	clear_defense(q33a.P); q33a.P["dodge"] = "SLIP"; q33a.P["dodge_t"] = 15; q33a.P["busy_t"] = 0
 	var q33_c0 := int(q33a.habits_of("RORY").get("chances", 0))
 	q33a.B["pos"] = Vector2(0.0, -2.4); boss_lands(q33a, "R_STRAIGHT"); clear_defense(q33a.P); q33a.B["pos"] = Vector2(0.0, -0.6)
 	var q33_cw: int = int(q33a.P["counter_t"])
@@ -7154,13 +7165,15 @@ func determinism() -> int:
 		for k in ["corner", "corner_action", "restart"]:
 			if e_in.has(k): keep[k] = e_in[k]
 		log_auto.append(keep)
-	var da := make_sim(1, 12346); da.delegate_all = true; da.new_dual(); da.events.clear()
+	# PAC-202: corrected gassed hands change replay paths. These witness seeds
+	# retain every original event assertion and paired positive/negative hash check.
+	var da := make_sim(1, 1); da.delegate_all = true; da.new_dual(); da.events.clear()
 	var hda := run_log(da, log_auto, 60)
 	var hits_auto := 0; var segs_auto := 0
 	for e_a in da.events:
 		if e_a["kind"] == "hit" and e_a["on"] == "B": hits_auto += 1
 		if e_a["kind"] == "seg_end": segs_auto += 1
-	var db := make_sim(1, 12346); db.delegate_all = true; db.new_dual()
+	var db := make_sim(1, 1); db.delegate_all = true; db.new_dual()
 	var hdb := run_log(db, log_auto, 60)
 	_sr("a delegated dual on a fight-key-less log: the profile lands %d and the corners still turn (%d segment ends); every hash identical twice" % [hits_auto, segs_auto], hits_auto >= 5 and segs_auto >= 1 and hda == hdb and hda.size() > 0, "%d hashes" % hda.size())
 	var xp_paid := 0
@@ -7176,7 +7189,7 @@ func determinism() -> int:
 		if str(ro_e["kind"]) == "cast" and str(ro_e["who"]) == "P" and str(ro_e["tier"]) == "T3": ro_cast.append("%s (afterimage %s)" % [str(ro_e["move"]), str(ro_e["afterimage"])])
 	var ro_keep: Dictionary = content["tactics"]; content["tactics"] = ro_keep.duplicate(true)
 	content["tactics"]["corner"]["relay_t3_opens"] = []; content["tactics"]["corner"]["full_relay_t3_opens"] = []
-	var roc := make_sim(1, 12346); roc.delegate_all = true; roc.new_dual()
+	var roc := make_sim(1, 1); roc.delegate_all = true; roc.new_dual()
 	var hroc := run_log(roc, log_auto, 60)
 	content["tactics"] = ro_keep
 	_sr("the relay's own T3 on the delegated log vs Yuri's squad: opened %s, cast %s; every hash identical twice and different from the same log with the relay's T3s closed (%d opened there)" % [JSON.stringify(ro_open), JSON.stringify(ro_cast), count_events(roc.events, "relay_open")],
@@ -7273,7 +7286,10 @@ func determinism() -> int:
 	# his guard with his line, then his Zone; the log's blocks and slips weather it; unanswered and never down, Stood in the Storm; his Comedown,
 	# then himself; identical twice and different from the same log with his line stripped
 	var bz_run := func(bz_strip: bool) -> Array:
-		var bz_s := make_sim(16, 12345)
+		var bz_s := make_sim(16, 1)
+		# Start just inside his authored trigger. This checks the transformation,
+		# its weathering and recovery, independent of random-log damage output.
+		bz_s.B["comp"] = bz_s.B["comp_max"] * 0.49
 		var bz_h: Array = []
 		for bz_i in log_.size():
 			if bz_strip and bz_s.pattern.has("transform"): bz_s.pattern.erase("transform")
@@ -7385,11 +7401,11 @@ func determinism() -> int:
 	for rq_i in log_auto.size():
 		var rq_e: Dictionary = log_auto[rq_i].duplicate(); rq_e["approach"] = "*"; rq_e["recruit"] = "*"; log_rec.append(rq_e)
 	var rq_led := TNBSim.seed_story(TNBSim.parse_kizuna_arg(""), "quest:cold_storage")
-	var rqa := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqa.delegate_all = true; rqa.new_dual()
+	var rqa := make_sim(19, 8, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqa.delegate_all = true; rqa.new_dual()
 	var hrqa := run_log(rqa, log_rec, 60)
-	var rqb := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqb.delegate_all = true; rqb.new_dual()
+	var rqb := make_sim(19, 8, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqb.delegate_all = true; rqb.new_dual()
 	var hrqb := run_log(rqb, log_rec, 60)
-	var rqc := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqc.delegate_all = true; rqc.new_dual()
+	var rqc := make_sim(19, 8, TNBSim.LINEUP_MILLBROOK, "", {}, rq_led); rqc.delegate_all = true; rqc.new_dual()
 	var hrqc := run_log(rqc, log_auto, 60)
 	var rq_verdicts: Array = []
 	for rq_e2 in rqa.events:
@@ -7408,9 +7424,9 @@ func determinism() -> int:
 	for rq_e3 in rqa.events:
 		if str(rq_e3["kind"]) == "wall_revealed": rq_strings.append("%s -> %s" % [str(rq_e3["from"]), ", ".join(PackedStringArray(rq_e3["labels"]))])
 	var sw_led := TNBSim.seed_story(TNBSim.parse_kizuna_arg(""), "quest:cold_storage,feud_resolved:moreau+tremblay")
-	var swa := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, sw_led); swa.delegate_all = true; swa.new_dual()
+	var swa := make_sim(19, 8, TNBSim.LINEUP_MILLBROOK, "", {}, sw_led); swa.delegate_all = true; swa.new_dual()
 	var hswa := run_log(swa, log_rec, 60)
-	var swb := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, sw_led); swb.delegate_all = true; swb.new_dual()
+	var swb := make_sim(19, 8, TNBSim.LINEUP_MILLBROOK, "", {}, sw_led); swb.delegate_all = true; swb.new_dual()
 	var hswb := run_log(swb, log_rec, 60)
 	var sw_strings: Array = []; var sw_order: Array = []
 	for sw_e in swa.events:
@@ -7430,11 +7446,11 @@ func determinism() -> int:
 	var bk_led_c := bk_led.duplicate(true)
 	bk_led["recruit"] = {"yuri_kowalchuk": {"state": "joined", "witnessed": 0, "day": 1}}
 	var bk_yuri: Dictionary = TNBSim.LINEUP_MILLBROOK_8[6].duplicate(true); bk_yuri.erase("reserve")
-	var bka := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led); bka.stable.append(bk_yuri.duplicate(true)); bka.delegate_all = true; bka.new_dual()
+	var bka := make_sim(19, 8, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led); bka.stable.append(bk_yuri.duplicate(true)); bka.delegate_all = true; bka.new_dual()
 	var hbka := run_log(bka, log_rec, 60)
-	var bkb := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led); bkb.stable.append(bk_yuri.duplicate(true)); bkb.delegate_all = true; bkb.new_dual()
+	var bkb := make_sim(19, 8, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led); bkb.stable.append(bk_yuri.duplicate(true)); bkb.delegate_all = true; bkb.new_dual()
 	var hbkb := run_log(bkb, log_rec, 60)
-	var bkc := make_sim(19, 12346, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led_c); bkc.stable.append(bk_yuri.duplicate(true)); bkc.delegate_all = true; bkc.new_dual()
+	var bkc := make_sim(19, 8, TNBSim.LINEUP_MILLBROOK, "", {}, bk_led_c); bkc.stable.append(bk_yuri.duplicate(true)); bkc.delegate_all = true; bkc.new_dual()
 	var hbkc := run_log(bkc, log_rec, 60)
 	var bk_bless: Array = []; var bk_wall: Array = []; var bk_tick := -1; var bk_end := -1
 	for bk_e in bka.events:
@@ -7478,7 +7494,7 @@ func determinism() -> int:
 	# PAC-080: a Duo relay on the delegated log vs Yuri's squad - RORY and PRIYA at Duo (90): R2 PRIYA carries Whiteout and the profile casts it
 	# when the bar allows; identical twice and different from the same log at Adjacent Trust (89), whose stats are the same and where no Duo is live
 	var duo_run := func(duo_k: String) -> Array:
-		var duo_s := make_sim(1, 17, TNBSim.LINEUP_MILLBROOK, "", {}, TNBSim.parse_kizuna_arg(duo_k)); duo_s.delegate_all = true; duo_s.new_dual()
+		var duo_s := make_sim(1, 1, TNBSim.LINEUP_MILLBROOK, "", {}, TNBSim.parse_kizuna_arg(duo_k)); duo_s.delegate_all = true; duo_s.new_dual()
 		return [duo_s, run_log(duo_s, log_auto, 60)]
 	var dua: Array = duo_run.call("RORY+PRIYA:90"); var dub: Array = duo_run.call("RORY+PRIYA:90"); var duc: Array = duo_run.call("RORY+PRIYA:89")
 	var du_live: Array = []; var du_cast: Array = []; var du_cast_c: Array = []
@@ -7499,7 +7515,7 @@ func determinism() -> int:
 				var hy_cc: Dictionary = hy_c.duplicate(true); hy_cc.erase("reserve"); hy_lu.append(hy_cc)
 	hy_lu[3]["reserve"] = true
 	var hy_run := func(hy_forge: bool) -> Array:
-		var hy_s := make_sim(1, 42, hy_lu, "", {}, TNBSim.seed_facilities(TNBSim.seed_purse(TNBSim.parse_kizuna_arg("YURI+MARTA:150"), "spirits:40,beans:30"), "wall:3", content["facilities"]))   # since PAC-089 the Forge is The Wall's T3
+		var hy_s := make_sim(1, 1, hy_lu, "", {}, TNBSim.seed_facilities(TNBSim.seed_purse(TNBSim.parse_kizuna_arg("YURI+MARTA:150"), "spirits:40,beans:30"), "wall:3", content["facilities"]))   # since PAC-089 the Forge is The Wall's T3
 		if hy_forge: hy_s.forge("YURI", "MARTA")
 		hy_s.delegate_all = true; hy_s.new_dual(); hy_s.events.clear()
 		var hy_h: Array = []
@@ -7748,7 +7764,7 @@ func determinism() -> int:
 	# academy is fielded with its signings for the duals after: identical twice, and different from the same log without the arc's turn
 	var ay_log: Array = log_auto.map(func(ay_e0): return (ay_e0 as Dictionary).merged({"approach": "*", "academy": true}))
 	var ay_run := func(ay_on: bool) -> Array:
-		var ay_s := make_sim(19, 12346)                                                                    # Moira's squad: the log wins that dual on segments (PAC-075)
+		var ay_s := make_sim(19, 8)                                                                    # Moira's squad: the log wins that dual on segments (PAC-075)
 		ay_s.delegate_all = true; ay_s.events.clear(); ay_s.new_dual()
 		return [ay_s, run_log(ay_s, ay_log.map(func(ay_e): return (ay_e as Dictionary).merged({"story": "story:nationals"})) if ay_on else ay_log, 60)]
 	var aya: Array = ay_run.call(true); var ayb: Array = ay_run.call(true); var ayc: Array = ay_run.call(false)
@@ -7808,7 +7824,7 @@ func determinism() -> int:
 	_sr("the log against the remixed Yuri: %d feint variants told, %d of them carried through (the hitch), %d hits taken in a tell that does not break; every hash identical twice and different from the original's run" % [rx_holds, rx_feints, rx_unbroken],
 		rx_holds >= 1 and rx_feints >= 1 and rx_unbroken >= 1 and hra == hrb and hra.size() > 0 and hra != ha, "%d hashes" % hra.size())
 	# the phase scripts live (NP_04B): Vasile's clock kits through a delegated dual - hashes identical twice. Since PAC-071 his measured stance is live:
-	# fixture seed 2 after PAC-005 exposes a live turn and seam; the same log
+	# fixture seed 1 after PAC-202 exposes a live turn and seam; the same log
 	# with his neutral game frozen (the pre-PAC-071 path) proves both. Since PAC-086 his authored Zone stays unrun on these four runs: the gate watches
 	# his clock kits, bit for bit as before; his Zone on a log is its own gate above
 	var q_kit := func(q_sim: TNBSim) -> Array:
@@ -7819,13 +7835,13 @@ func determinism() -> int:
 			elif e_v["kind"] == "directive" and bool(e_v.get("executed", false)): q_di += 1
 		return [q_sw, q_se, q_di]
 	var vs_corner := {"staff": ["sportsmed", "janitor", "rival_cornerman"]}                          # since PAC-074: a corner with no conditioning coach, so RORY's R1 is the pre-PAC-074 fight bit for bit (the gate watches his clock, not our corner)
-	var va := make_sim(16, 2, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); va.delegate_all = true; va.btransform_on = false; va.new_dual(); va.events.clear()
+	var va := make_sim(16, 1, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); va.delegate_all = true; va.btransform_on = false; va.new_dual(); va.events.clear()
 	var hva := run_log(va, log_auto, 60)
-	var vb := make_sim(16, 2, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vb.delegate_all = true; vb.btransform_on = false; vb.new_dual()
+	var vb := make_sim(16, 1, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vb.delegate_all = true; vb.btransform_on = false; vb.new_dual()
 	var hvb := run_log(vb, log_auto, 60)
-	var vf := make_sim(16, 2, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vf.delegate_all = true; vf.btransform_on = false; vf.new_dual(); vf.neutral_on = false; vf.events.clear()
+	var vf := make_sim(16, 1, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vf.delegate_all = true; vf.btransform_on = false; vf.new_dual(); vf.neutral_on = false; vf.events.clear()
 	var hvf := run_log(vf, log_auto, 60)
-	var vg := make_sim(16, 2, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vg.delegate_all = true; vg.btransform_on = false; vg.new_dual(); vg.neutral_on = false
+	var vg := make_sim(16, 1, TNBSim.LINEUP_MILLBROOK, "", {}, {}, vs_corner); vg.delegate_all = true; vg.btransform_on = false; vg.new_dual(); vg.neutral_on = false
 	var hvg := run_log(vg, log_auto, 60)
 	var q_live: Array = q_kit.call(va); var q_frz: Array = q_kit.call(vf)
 	var q_ko := ""

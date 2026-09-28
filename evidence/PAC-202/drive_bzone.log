@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  [ OK ]  R1 RORY against Ioan Vasile: his TRANSFORM line on his page (the Zone at composure<50, a 1.5 s tell), no enemy line on the HUD, the boss unlit  {"line":"VEY: he has stopped breathing out loud - that is his Zone coming. Weather it.","tell":{"motif":"breath_held","ms":1500.0},"tier":"zone","trigger":"composure<50"}
+  [ OK ]  under 50 %: he gathers - the HUD's GATHERING line with his line, the toast, the glow starting, his guard up, no attack  GATHERING 1.5s | VEY: he has stopped breathing out loud - that is his Zone coming. Weather it.
+  [ OK ]  1.5 s of fight time on: the camera hold, ENEMY ZONE's toast, his bar emptied, the boss lit in his element  hold 299 ticks left
+  [ OK ]  after the hold: the HUD's ENEMY ZONE line on fight time, nothing weathered yet  ENEMY ZONE 19.5s | weathered 0 (-0.0s)
+  [ OK ]  E (the slip) as his straight comes: WEATHERED - 1 s off his Zone, the toast, the HUD's line  ENEMY ZONE 18.4s | weathered 1 (-1.0s) | damage to you halved
+  [ OK ]  run to its end unanswered and never down: ENEMY COMEDOWN's toast with STOOD IN THE STORM beside it, the HUD's window line, the boss unlit and dimmed, the feat on the ledger  ENEMY COMEDOWN 9.9s (85%) - your window | {"count":1,"day":1,"last":"ioan_vasile"}
+  [ OK ]  10 s on: the window shut - no enemy line, the boss's colour back
+ENEMY TRANSFORMATION DRIVE :: GREEN (7/7)
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+WARNING: 3 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

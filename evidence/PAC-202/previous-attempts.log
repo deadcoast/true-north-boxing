@@ -1,0 +1,378 @@
+SOURCE: .PACER/PAC-202/boxing-motion-01.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] L_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[FAIL] L_UPPERCUT visible contact matches the resolving tick
+[FAIL] L_UPPERCUT full rig holds through hitstop
+[FAIL] L_UPPERCUT has no one-tick neutral snap
+[PASS] L_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[FAIL] L_HOOKERCUT visible contact matches the resolving tick
+[FAIL] L_HOOKERCUT full rig holds through hitstop
+[FAIL] L_HOOKERCUT has no one-tick neutral snap
+[PASS] L_HOOK connects the ground, hips, trunk, elbow and fist
+[FAIL] L_HOOK visible contact matches the resolving tick
+[FAIL] L_HOOK full rig holds through hitstop
+[FAIL] L_HOOK has no one-tick neutral snap
+[PASS] L_FLARED connects the ground, hips, trunk, elbow and fist
+[FAIL] L_FLARED visible contact matches the resolving tick
+[PASS] L_FLARED full rig holds through hitstop
+[FAIL] L_FLARED has no one-tick neutral snap
+[PASS] L_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[FAIL] L_STRAIGHT visible contact matches the resolving tick
+[FAIL] L_STRAIGHT full rig holds through hitstop
+[FAIL] L_STRAIGHT has no one-tick neutral snap
+[PASS] R_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[FAIL] R_STRAIGHT visible contact matches the resolving tick
+[FAIL] R_STRAIGHT full rig holds through hitstop
+[FAIL] R_STRAIGHT has no one-tick neutral snap
+[PASS] R_FLARED connects the ground, hips, trunk, elbow and fist
+[FAIL] R_FLARED visible contact matches the resolving tick
+[FAIL] R_FLARED full rig holds through hitstop
+[FAIL] R_FLARED has no one-tick neutral snap
+[PASS] R_HOOK connects the ground, hips, trunk, elbow and fist
+[FAIL] R_HOOK visible contact matches the resolving tick
+[FAIL] R_HOOK full rig holds through hitstop
+[FAIL] R_HOOK has no one-tick neutral snap
+[PASS] R_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[FAIL] R_HOOKERCUT visible contact matches the resolving tick
+[FAIL] R_HOOKERCUT full rig holds through hitstop
+[FAIL] R_HOOKERCUT has no one-tick neutral snap
+[PASS] R_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[FAIL] R_UPPERCUT visible contact matches the resolving tick
+[FAIL] R_UPPERCUT full rig holds through hitstop
+[FAIL] R_UPPERCUT has no one-tick neutral snap
+[PASS] SLIP_L renders the same moving target used by collision
+[PASS] SLIP_L enters and exits without teleporting
+[PASS] SLIP_R renders the same moving target used by collision
+[PASS] SLIP_R enters and exits without teleporting
+[PASS] DUCK renders the same moving target used by collision
+[PASS] DUCK enters and exits without teleporting
+[PASS] WEAVE_L renders the same moving target used by collision
+[PASS] WEAVE_L enters and exits without teleporting
+[PASS] WEAVE_R renders the same moving target used by collision
+[PASS] WEAVE_R enters and exits without teleporting
+[PASS] LEAN renders the same moving target used by collision
+[PASS] LEAN enters and exits without teleporting
+[PASS] stance feet plant while the other foot steps
+[PASS] extra render frames neither advance motion nor alter combat
+BOXING MOTION VERDICT :: RED (25/54)
+SOURCE: .PACER/PAC-202/boxing-motion-05.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] L_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] L_UPPERCUT visible contact matches the resolving tick
+[PASS] L_UPPERCUT full rig holds through hitstop
+[PASS] L_UPPERCUT has no one-tick neutral snap
+[PASS] L_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] L_HOOKERCUT visible contact matches the resolving tick
+[PASS] L_HOOKERCUT full rig holds through hitstop
+[PASS] L_HOOKERCUT has no one-tick neutral snap
+[PASS] L_HOOK connects the ground, hips, trunk, elbow and fist
+[PASS] L_HOOK visible contact matches the resolving tick
+[PASS] L_HOOK full rig holds through hitstop
+[PASS] L_HOOK has no one-tick neutral snap
+[PASS] L_FLARED connects the ground, hips, trunk, elbow and fist
+[PASS] L_FLARED visible contact matches the resolving tick
+[PASS] L_FLARED full rig holds through hitstop
+[PASS] L_FLARED has no one-tick neutral snap
+[PASS] L_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[PASS] L_STRAIGHT visible contact matches the resolving tick
+[PASS] L_STRAIGHT full rig holds through hitstop
+[PASS] L_STRAIGHT has no one-tick neutral snap
+[PASS] R_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[PASS] R_STRAIGHT visible contact matches the resolving tick
+[PASS] R_STRAIGHT full rig holds through hitstop
+[PASS] R_STRAIGHT has no one-tick neutral snap
+[PASS] R_FLARED connects the ground, hips, trunk, elbow and fist
+[PASS] R_FLARED visible contact matches the resolving tick
+[PASS] R_FLARED full rig holds through hitstop
+[PASS] R_FLARED has no one-tick neutral snap
+[PASS] R_HOOK connects the ground, hips, trunk, elbow and fist
+[PASS] R_HOOK visible contact matches the resolving tick
+[PASS] R_HOOK full rig holds through hitstop
+[PASS] R_HOOK has no one-tick neutral snap
+[PASS] R_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] R_HOOKERCUT visible contact matches the resolving tick
+[PASS] R_HOOKERCUT full rig holds through hitstop
+[PASS] R_HOOKERCUT has no one-tick neutral snap
+[PASS] R_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] R_UPPERCUT visible contact matches the resolving tick
+[PASS] R_UPPERCUT full rig holds through hitstop
+[PASS] R_UPPERCUT has no one-tick neutral snap
+[PASS] SLIP_L renders the same moving target used by collision
+[PASS] SLIP_L enters and exits without teleporting
+[PASS] SLIP_R renders the same moving target used by collision
+[PASS] SLIP_R enters and exits without teleporting
+[PASS] DUCK renders the same moving target used by collision
+[PASS] DUCK enters and exits without teleporting
+[PASS] WEAVE_L renders the same moving target used by collision
+[PASS] WEAVE_L enters and exits without teleporting
+[PASS] WEAVE_R renders the same moving target used by collision
+[PASS] WEAVE_R enters and exits without teleporting
+[PASS] LEAN renders the same moving target used by collision
+[PASS] LEAN enters and exits without teleporting
+[PASS] stance feet plant while the other foot steps
+[PASS] extra render frames neither advance motion nor alter combat
+[PASS] SLIP_L native defense earns and delivers a counter
+[PASS] SLIP_L counter keeps the whole-body transition continuous
+[PASS] SLIP_R native defense earns and delivers a counter
+[PASS] SLIP_R counter keeps the whole-body transition continuous
+[PASS] DUCK native defense earns and delivers a counter
+[PASS] DUCK counter keeps the whole-body transition continuous
+[PASS] WEAVE_R native defense earns and delivers a counter
+[PASS] WEAVE_R counter keeps the whole-body transition continuous
+COUNTER DETAIL LEAN earned false landed false
+[FAIL] LEAN native defense earns and delivers a counter
+[PASS] LEAN counter keeps the whole-body transition continuous
+SEQUENCE DETAIL guard 1.0 rows ["L_STRAIGHT", "R_STRAIGHT"] hits 1
+[FAIL] native covered jab-cross-hook-body sequence preserves all four inputs
+[PASS] alternating hands and returning guard have no whole-body snap
+BOSS CONTACT 157 event { "verb": "punch", "row": "L_STRAIGHT", "body": false, "kind": "boss_act", "tick": 157 } pose L_STRAIGHT extension 0.0 state ACTING
+BOSS CONTACT 180 event { "verb": "punch", "row": "L_STRAIGHT", "body": false, "kind": "boss_act", "tick": 180 } pose R_STRAIGHT extension 0.0 state ACTING
+BOSS CONTACT 584 event { "verb": "punch", "row": "L_STRAIGHT", "body": false, "kind": "boss_act", "tick": 584 } pose L_STRAIGHT extension 0.0 state ACTING
+BOSS CONTACT 607 event { "verb": "punch", "row": "L_STRAIGHT", "body": false, "kind": "boss_act", "tick": 607 } pose R_STRAIGHT extension 0.0 state ACTING
+BOSS CONTACT 795 event { "verb": "punch", "row": "L_STRAIGHT", "body": false, "kind": "boss_act", "tick": 795 } pose L_STRAIGHT extension 0.0 state ACTING
+BOSS CONTACT 818 event { "verb": "punch", "row": "L_STRAIGHT", "body": false, "kind": "boss_act", "tick": 818 } pose R_STRAIGHT extension 0.0 state ACTING
+[FAIL] live boss strings show the resolving hand on every contact
+BOXING MOTION VERDICT :: RED (64/67)
+WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+SOURCE: .PACER/PAC-202/runtime-third/drive_bzone.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+
+
+  [ OK ]  R1 RORY against Ioan Vasile: his TRANSFORM line on his page (the Zone at composure<50, a 1.5 s tell), no enemy line on the HUD, the boss unlit  {"line":"VEY: he has stopped breathing out loud - that is his Zone coming. Weather it.","tell":{"motif":"breath_held","ms":1500.0},"tier":"zone","trigger":"composure<50"}
+
+  [ OK ]  under 50 %: he gathers - the HUD's GATHERING line with his line, the toast, the glow starting, his guard up, no attack  GATHERING 1.5s | VEY: he has stopped breathing out loud - that is his Zone coming. Weather it.
+
+  [ OK ]  1.5 s of fight time on: the camera hold, ENEMY ZONE's toast, his bar emptied, the boss lit in his element  hold 299 ticks left
+
+  [ OK ]  after the hold: the HUD's ENEMY ZONE line on fight time, nothing weathered yet  ENEMY ZONE 19.5s | weathered 0 (-0.0s)
+
+  [FAIL]  E (the slip) as his straight comes: WEATHERED - 1 s off his Zone, the toast, the HUD's line  ENEMY ZONE 19.5s | weathered 0 (-0.0s)
+
+  [FAIL]  run to its end unanswered and never down: ENEMY COMEDOWN's toast with STOOD IN THE STORM beside it, the HUD's window line, the boss unlit and dimmed, the feat on the ledger  ENEMY COMEDOWN 9.8s (85%) - your window | {}
+
+  [FAIL]  10 s on: the window shut - no enemy line, the boss's colour back
+
+ENEMY TRANSFORMATION DRIVE :: RED (4/7)
+
+ERROR: Failed to read the root certificate store.
+
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+
+SOURCE: .PACER/PAC-202/final-checks/drive_input.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+
+
+[FAIL] keyboard L_UPPERCUT
+
+[FAIL] scene input executes L_UPPERCUT
+
+[FAIL] keyboard L_HOOKERCUT
+
+[FAIL] scene input executes L_HOOKERCUT
+
+[FAIL] keyboard L_HOOK
+
+[FAIL] scene input executes L_HOOK
+
+[FAIL] keyboard L_FLARED
+
+[FAIL] scene input executes L_FLARED
+
+[FAIL] keyboard L_STRAIGHT
+
+[FAIL] scene input executes L_STRAIGHT
+
+[FAIL] keyboard R_STRAIGHT
+
+[FAIL] scene input executes R_STRAIGHT
+
+[FAIL] keyboard R_FLARED
+
+[FAIL] scene input executes R_FLARED
+
+[FAIL] keyboard R_HOOK
+
+[FAIL] scene input executes R_HOOK
+
+[FAIL] keyboard R_HOOKERCUT
+
+[FAIL] scene input executes R_HOOKERCUT
+
+[FAIL] keyboard R_UPPERCUT
+
+[FAIL] scene input executes R_UPPERCUT
+
+[FAIL] press and release in one render frame preserve modifier snapshot
+
+[FAIL] release follows the same-frame press
+
+[PASS] keyboard auto-repeat never repeats an attack
+
+[FAIL] two presses retain event order
+
+[FAIL] mouse gesture L_UPPERCUT
+
+[PASS] stick gesture L_UPPERCUT
+
+[FAIL] mouse gesture L_HOOKERCUT
+
+[PASS] stick gesture L_HOOKERCUT
+
+[FAIL] mouse gesture L_HOOK
+
+[PASS] stick gesture L_HOOK
+
+[FAIL] mouse gesture L_FLARED
+
+[PASS] stick gesture L_FLARED
+
+[FAIL] mouse gesture L_STRAIGHT
+
+[PASS] stick gesture L_STRAIGHT
+
+[FAIL] mouse gesture R_STRAIGHT
+
+[PASS] stick gesture R_STRAIGHT
+
+[FAIL] mouse gesture R_FLARED
+
+[PASS] stick gesture R_FLARED
+
+[FAIL] mouse gesture R_HOOK
+
+[PASS] stick gesture R_HOOK
+
+[FAIL] mouse gesture R_HOOKERCUT
+
+[PASS] stick gesture R_HOOKERCUT
+
+[FAIL] mouse gesture R_UPPERCUT
+
+[PASS] stick gesture R_UPPERCUT
+
+[PASS] subframe stick pulse survives
+
+[PASS] slow stick drift is not a flick
+
+[PASS] staggered axis reports settle before classification
+
+[PASS] 150ms pull-back then forward is one haymaker
+
+[FAIL] accessible chord R_STRAIGHT
+
+[FAIL] accessible chord R_FLARED
+
+[FAIL] accessible chord R_HOOK
+
+[FAIL] accessible chord R_HOOKERCUT
+
+[FAIL] accessible chord R_UPPERCUT
+
+[FAIL] accessible chord L_STRAIGHT
+
+[FAIL] accessible chord L_FLARED
+
+[FAIL] accessible chord L_HOOK
+
+[FAIL] accessible chord L_HOOKERCUT
+
+[FAIL] accessible chord L_UPPERCUT
+
+[PASS] haymaker charge cannot fire early
+
+[PASS] button haymaker uses the authored charge
+
+[PASS] rebind supported
+
+[FAIL] remapped punch reaches the live scene
+
+[PASS] old binding is removed
+
+[PASS] bindings persist
+
+[PASS] bindings and preset restore
+
+[FAIL] restored binding works
+
+[PASS] authored frame data L_UPPERCUT
+
+[PASS] authored frame data L_HOOKERCUT
+
+[PASS] authored frame data L_HOOK
+
+[PASS] authored frame data L_FLARED
+
+[PASS] authored frame data L_STRAIGHT
+
+[PASS] authored frame data R_STRAIGHT
+
+[PASS] authored frame data R_FLARED
+
+[PASS] authored frame data R_HOOK
+
+[PASS] authored frame data R_HOOKERCUT
+
+[PASS] authored frame data R_UPPERCUT
+
+[PASS] body power haymaker block-punch startup stacks
+
+[PASS] body power haymaker damage stacks
+
+[PASS] moving toward out-of-range opponent activates step
+
+[PASS] step reaches and multiplies damage
+
+[PASS] standing out of range does not invent a stepping punch
+
+[PASS] all five modifiers stack
+
+[PASS] unaffordable power preserves base punch
+
+[PASS] unaffordable hissatsu preserves base punch
+
+[PASS] block-punch exits guard instantly
+
+[PASS] held guard stays down during punch startup
+
+[PASS] power whiff opens exactly authored vulnerability
+
+[PASS] blocked power opens authored vulnerability
+
+[PASS] modifiers read hot-reloaded data rather than literals
+
+[FAIL] scene hot reload restores authored values within one second
+
+[PASS] opening controls clears pending/held input
+
+[PASS] held stick cannot punch when resuming controls
+
+[PASS] stick returns after neutral and a fresh flick
+
+[PASS] down-flick release age 50000us
+
+[PASS] down-flick release age 100000us
+
+[PASS] dummy disables authored opponent decisions
+
+[PASS] leaving practice restores opponent behavior
+
+[PASS] modifier intent replay remains deterministic
+
+INPUT DRIVE :: RED (52/98)
+
+ERROR: Failed to read the root certificate store.
+
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+
+   at: cleanup (core/object/object.cpp:2536)

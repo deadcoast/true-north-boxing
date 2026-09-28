@@ -1123,15 +1123,27 @@ func _punch_family(row: String) -> String:
 		if row.ends_with(fam): return fam
 	return "STRAIGHT"
 
+static func dodge_weight(F: Dictionary) -> float:
+	if str(F.get("dodge", "")) == "": return 0.0
+	var total := int(DODGE[F["dodge"]]["t"])
+	var remaining := int(F["dodge_t"])
+	# Enter and leave the authored dodge displacement over six fixed ticks.
+	# Collision and visible head motion share this curve: no visual-only evasion.
+	var enter := clampf(float(total - remaining + 1) / 6.0, 0, 1)
+	var leave := clampf(float(remaining) / 6.0, 0, 1)
+	return enter * enter * (3 - 2 * enter) * leave * leave * (3 - 2 * leave)
+
 func _head_world(F: Dictionary, other: Dictionary) -> Dictionary:
 	# defender's head as a world point + height, displaced by its active dodge
 	var fwd: Vector2 = (other["pos"] - F["pos"]).normalized()      # defender facing attacker
-	var rightD := Vector2(fwd.y, -fwd.x)                             # defender's right
+	var rightD := Vector2(-fwd.y, fwd.x)                             # defender's right
 	var lat := 0.0; var h := HEAD_H; var back := 0.0
 	if F["dodge"] != "":
 		var d: Dictionary = DODGE[F["dodge"]]
 		lat = float(d["lat"]) * float(F["dodge_dir"]); h = float(d["h"]); back = float(d["back"])
 		if F["dodge"] == "WEAVE": lat *= float(F.get("pkg", {}).get("weave_arc_mult", 1.0))      # the out-boxer's narrower weave (s1.2)
+		var weight := dodge_weight(F)
+		lat *= weight; back *= weight; h = lerpf(HEAD_H, h, weight)
 	var head: Vector2 = F["pos"] - fwd * back + rightD * lat
 	return {"p": head, "h": h}
 
@@ -1140,17 +1152,18 @@ func resolve_geometry(A: Dictionary, D: Dictionary, row: String, body: bool, ran
 	var fam := _punch_family(row)
 	var g: Dictionary = GEO[fam]
 	var fwd: Vector2 = (D["pos"] - A["pos"]).normalized()
-	var rightA := Vector2(fwd.y, -fwd.x)
+	var rightA := Vector2(-fwd.y, fwd.x)
 	var target := _head_world(D, A)
 	var tp: Vector2 = target["p"]; var th: float = target["h"]
 	if body:
 		# torso: lateral follows the head at 40%, height fixed - slips barely move the body
 		var fwdD: Vector2 = -fwd
-		var rightD := Vector2(fwdD.y, -fwdD.x)
+		var rightD := Vector2(-fwdD.y, fwdD.x)
 		var lat := 0.0; var back := 0.0
 		if D["dodge"] != "":
 			lat = float(DODGE[D["dodge"]]["lat"]) * float(D["dodge_dir"]) * 0.4 * (float(D.get("pkg", {}).get("weave_arc_mult", 1.0)) if D["dodge"] == "WEAVE" else 1.0)
 			back = float(DODGE[D["dodge"]]["back"])
+			lat *= dodge_weight(D); back *= dodge_weight(D)
 		tp = D["pos"] + fwd * back + rightD * lat     # fwd here points A->D, so +fwd*back moves D away
 		th = 1.10
 	var rel: Vector2 = tp - A["pos"]
@@ -1282,7 +1295,8 @@ func _try_execute_cmd() -> bool:
 	var reach_c := float(GEO[fam_c]["reach"]) * float(P["pkg"].get("reach_mult", 1.0)) * (float(P["pkg"].get("straight_reach_mult", 1.0)) if fam_c == "STRAIGHT" else 1.0)
 	var stepping: bool = bool(c.get("toward", false)) and P["pos"].distance_to(B["pos"]) > reach_c
 	if stepping: c["mods"].append("STEPPING")
-	var startup_mult: float = float(P["pkg"].get("startup_mult", 1.0)) * _zone_punch_mult()
+	var hand_speed := float(_gassed(P)["hand_speed"])
+	var startup_mult: float = float(P["pkg"].get("startup_mult", 1.0)) * _zone_punch_mult() / hand_speed
 	for modifier in ["POWER", "HAYMAKER", "BLOCK_PUNCH"]:
 		if modifier in c["mods"]: startup_mult *= float(mod_table[modifier]["startup_mult"])
 	if stepping: startup_mult *= float(mod_table["STEPPING"]["telegraph_mult"])
@@ -1295,7 +1309,7 @@ func _try_execute_cmd() -> bool:
 		"counter": P["counter_t"] > 0, "flash": P["flash_t"] > 0, "stamina_cost": st_cost, "read": "none", "stepping": stepping,
 		"range_bonus": float(mod_table["STEPPING"]["range_bonus_m"]) if stepping else 0.0}
 	P["counter_t"] = 0                                     # window spent by the attempt
-	P["busy_t"] = startup + ms(float(row["recovery_ms"]) * _zone_punch_mult())
+	P["busy_t"] = startup + ms(float(row["recovery_ms"]) * _zone_punch_mult() / hand_speed)
 	P["stamina"] = maxf(_sfloor(P), P["stamina"] - st_cost)
 	P["pos"] += (B["pos"] - P["pos"]).normalized() * LUNGE_P; _clamp(P)
 	passive_t = 0
@@ -9050,7 +9064,7 @@ func _boss_act(act: Dictionary) -> int:
 			match act["dir"]:
 				"toward": step_v = fwd * float(act["dist"])
 				"away": step_v = -fwd * float(act["dist"])
-				"lateral": step_v = Vector2(fwd.y, -fwd.x) * float(act["dist"]) * (1.0 if rng.randf() < 0.5 else -1.0)
+				"lateral": step_v = Vector2(-fwd.y, fwd.x) * float(act["dist"]) * (1.0 if rng.randf() < 0.5 else -1.0)
 				"center": step_v = (Vector2.ZERO - B["pos"]).limit_length(float(act["dist"]))
 			B["pos"] += step_v; _clamp(B)
 			if B["pos"].distance_to(P["pos"]) < 0.9:                                   # bodies meet: he walks you back (Alfie: +75% of the step on top)
@@ -9432,7 +9446,7 @@ func _fx_state(who: String, name: String, seconds: float) -> void:
 				if who == "B": B["guard_t"] = t
 			"angle_exit":
 				var fwd: Vector2 = (D["pos"] - A["pos"]).normalized()
-				A["pos"] += Vector2(fwd.y, -fwd.x) * seconds * (1.0 if rng.randf() < 0.5 else -1.0); _clamp(A)
+				A["pos"] += Vector2(-fwd.y, fwd.x) * seconds * (1.0 if rng.randf() < 0.5 else -1.0); _clamp(A)
 			"averages_incoming_damage_over_duration": dmg_hist[skey] = []
 	elif name in STATE_TARGET:
 		states[tkey][name] = t
@@ -9875,7 +9889,8 @@ func _step_inner(inp: Dictionary) -> void:
 	_wall_tick()
 	for F in [P, B]:
 		var fk := "P" if F == P else "B"
-		var acting: bool = F["busy_t"] > 0
+		var guarding: bool = bool(inp.get("block", false)) if F == P else (bool(F["blocking"]) or int(F["guard_t"]) > 0)
+		var acting: bool = F["busy_t"] > 0 or guarding or int(F["dodge_t"]) > 0
 		if F["busy_t"] > 0: F["busy_t"] -= 1
 		var sreg := 1.0
 		if buffs[fk].has("stamina_regen_x2"): sreg = 2.0
@@ -9883,7 +9898,7 @@ func _step_inner(inp: Dictionary) -> void:
 		if F == P: sreg *= 1.0 + float(staff_fx.get("stamina_regen_pct", 0.0)) / 100.0                 # NP_10 s6: the conditioning coach
 		F["stamina"] = minf(stamina_cap if F == P else 100.0, F["stamina"] + float(T["stamina"]["regen_active_per_s"] if acting else T["stamina"]["regen_neutral_per_s"]) * sreg * DT)
 		if F["no_regen_t"] > 0: F["no_regen_t"] -= 1
-		else: F["comp"] = minf(F["comp_max"], F["comp"] + float(T["composure"]["regen_per_s"]) * DT / (float(_pv("iron_jaw", "wobble_time_mult", 1.0)) if _pas(F, "iron_jaw") and _wobbled(F) else 1.0) / (_gear_mult(F, "wobble_time") if _wobbled(F) else 1.0))   # PAC-090: Iron Jaw - out of the wobble in 70 % of the time (PAC-094: his mouthguard)
+		else: F["comp"] = minf(F["comp_max"], F["comp"] + float(T["composure"]["regen_per_s"]) * float(_gassed(F)["composure_regen"]) * DT / (float(_pv("iron_jaw", "wobble_time_mult", 1.0)) if _pas(F, "iron_jaw") and _wobbled(F) else 1.0) / (_gear_mult(F, "wobble_time") if _wobbled(F) else 1.0))   # PAC-090: Iron Jaw - out of the wobble in 70 % of the time (PAC-094: his mouthguard)
 		if F["guard_open_t"] > 0:
 			F["guard_open_t"] -= 1
 			if F["guard_open_t"] <= 0: F["guard"] = float(T["guard"]["break_refill"])
@@ -9968,7 +9983,8 @@ func _step_inner(inp: Dictionary) -> void:
 		if buffs["P"].has("guard_regen_plus"): greg += 3.0
 		if states["P"].has("guard_regen_minus1"): greg -= 1.0
 		if _tx(P, "deep_roots") > 0 and drops_p < drops_b: greg *= _tmult(float(HOUSES["traits"]["deep_roots"]["guard_regen_mult"]), _tx(P, "deep_roots"), P)   # PAC-078: Deep Roots, trailing on drops
-		P["guard"] = minf(P["guard_max"], P["guard"] + greg * DT)
+		if int(P["busy_t"]) <= 0 and not dodging and P["pending"].is_empty() and int(P["guard_open_t"]) <= 0:
+			P["guard"] = minf(P["guard_max"], P["guard"] + greg * DT)
 	# the WALL motion: LB + block held 400ms casts a WALL-family move
 	var mv_w := wall_move()                                                                             # PAC-084: an inherited WALL native first
 	if inp.get("lb", false) and block_now and not mv_w.is_empty() and str(mv_w["family"]) == "WALL":
@@ -9980,7 +9996,7 @@ func _step_inner(inp: Dictionary) -> void:
 	var spd := lerpf(2.2, 3.4, float(P["stats"]["SPD"]) / 99.0) * float(_gassed(P)["foot_speed"]) * _speed_mult("P")
 	if _wobbled(P): spd *= float(T["composure"]["wobble_move_mult"])
 	var fwd: Vector2 = (B["pos"] - P["pos"]).normalized()
-	var right := Vector2(fwd.y, -fwd.x)
+	var right := Vector2(-fwd.y, fwd.x)
 	var before: Vector2 = P["pos"]
 	var dist0: float = B["pos"].distance_to(P["pos"])
 	P["pos"] += (right * mv.x - fwd * mv.y) * spd * DT * (float(P["pkg"].get("backpedal_mult", T["movement"].get("backpedal_mult", 0.7))) if mv.y > 0 else 1.0)

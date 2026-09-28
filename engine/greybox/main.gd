@@ -4,6 +4,10 @@ const CombatInput := preload("res://input/combat_input.gd")
 const ControlsMenu := preload("res://input/controls_menu.gd")
 const FightView := preload("res://presentation/fight_view.gd")
 const FightHUD := preload("res://presentation/fight_hud.gd")
+const FightFeedback := preload("res://presentation/fight_feedback.gd")
+const ClubFlow := preload("res://presentation/club_flow.gd")
+var fight_feedback: Control
+var club_flow: CanvasLayer
 var fight_view := FightView.new()
 var partner_view := FightView.new()
 var fight_hud: CanvasLayer
@@ -507,7 +511,9 @@ func _ready() -> void:
 
 	_render(1.0); _hud()
 	# Explicit CLI demos, tests and resumed saves retain their existing entry path.
-	if args.is_empty() or "welcome" in args:
+	if args.is_empty() or "club" in args:
+		club_flow.open()
+	elif "welcome" in args:
 		fight_hud.show_entry()
 	controls_menu.closed.connect(func():
 		if fight_hud.entry.visible: fight_hud.start_button.grab_focus())
@@ -566,6 +572,8 @@ func _build_world() -> void:
 	flashrect = ColorRect.new(); flashrect.color = Color(1,1,1,0); flashrect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	flashrect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); ui.add_child(flashrect)
 	fight_hud = FightHUD.new(); add_child(fight_hud); fight_hud.setup(self)
+	fight_feedback = FightFeedback.new(); fight_hud.surface.add_child(fight_feedback); fight_feedback.setup(self)
+	club_flow = ClubFlow.new(); add_child(club_flow); club_flow.setup(self)
 
 # ============================== INPUT =====================================
 func _trigger(axis: int, key: int) -> bool:
@@ -607,6 +615,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_ESCAPE:
 		controls_menu.open(); return
 	if controls_menu.opened or sim == null: return
+	if club_flow != null and club_flow.visible: return
 	if fight_hud != null and fight_hud.entry.visible: return
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F1 and e.ctrl_pressed:
 		fight_hud.show_details = not fight_hud.show_details; return
@@ -981,6 +990,8 @@ func _hold_dummy() -> void:
 # ============================== LOOP ======================================
 func _process(delta: float) -> void:
 	if sim == null or controls_menu.opened: return
+	if club_flow != null and club_flow.pauses_fight():
+		_hud(); return
 	if fight_hud != null and fight_hud.entry.visible:
 		_render(1.0); _hud(); return
 	combat_input.tuning = sim.T
@@ -989,9 +1000,15 @@ func _process(delta: float) -> void:
 		_render(1.0); _hud(); return
 	var n := clock.advance(delta)
 	for i in n:
+		fight_view.capture(player, sim.P, sim.B, sim, "P")
+		fight_view.capture(boss, sim.B, sim.P, sim, "B")
+		fight_view.before_step(sim)
 		prev_p = sim.P["pos"]; prev_b = sim.B["pos"]
 		if exh != null:                                                                                   # PAC-088: the exhibition steps both pairs; the pad plays one
 			var q0: TNBSim = exh.e(exh.other(exh.ctrl)); prev_q = q0.P["pos"]; prev_qb = q0.B["pos"]
+			partner_view.capture(partner, q0.P, q0.B, q0, "P")
+			partner_view.capture(partner_boss, q0.B, q0.P, q0, "B")
+			partner_view.before_step(q0)
 			if demo_exh: _exh_aid()
 			var ctrl0: String = exh.ctrl
 			exh.step(_intent())
@@ -1051,6 +1068,7 @@ func _consume_exh() -> void:
 	exh.events.clear()
 	var q: TNBSim = exh.e(exh.other(exh.ctrl))
 	for ev in q.events:
+		partner_view.observe(ev, q.tick)
 		fx_counts[ev["kind"]] = int(fx_counts.get(ev["kind"], 0)) + 1
 		match str(ev["kind"]):
 			"hit": _bump(partner_boss if str(ev["on"]) == "B" else partner, 0.12)
@@ -1111,11 +1129,12 @@ func _render(alpha: float) -> void:
 		pmat.emission_enabled = pmat.emission_enabled or (sim.cast.size() > 0 and str(sim.cast["who"]) == "P" and str(sim.cast["move"].get("duo_sync", "")) != "")
 		if sim.cast.size() > 0 and str(sim.cast["move"].get("duo_sync", "")) != "" and sim.tform.is_empty(): pmat.emission = Color(1.0, 0.82, 0.35); pmat.emission_energy_multiplier = 1.8
 		var qbm: StandardMaterial3D = partner_boss.get_meta("mat"); qbm.albedo_color = BOSS_COLOR.darkened(0.45 if q.mode == "OVER" else 0.15)
-	_pose(player, sim.P, sim.B); _pose(boss, sim.B, sim.P)
+	fight_view.pose(player, sim.P, sim.B, sim, "P", alpha)
+	fight_view.pose(boss, sim.B, sim.P, sim, "B", alpha)
 	if exh != null and partner != null:
 		var q: TNBSim = exh.e(exh.other(exh.ctrl))
-		partner_view.pose(partner, q.P, q.B, q, "P")
-		partner_view.pose(partner_boss, q.B, q.P, q, "B")
+		partner_view.pose(partner, q.P, q.B, q, "P", alpha)
+		partner_view.pose(partner_boss, q.B, q.P, q, "B", alpha)
 	fight_view.frame(cam, player, boss, sim.tick, ring_boundaries)
 
 func _pose(n: Node3D, fighter: Dictionary, other: Dictionary) -> void:
@@ -1152,6 +1171,8 @@ func _formation_check() -> String:
 func _consume_events() -> void:
 	for ev in sim.events:
 		fight_view.observe(ev, sim.tick)
+		fight_feedback.observe(ev, sim.tick)
+		club_flow.observe(ev)
 		fx_counts[ev["kind"]] = int(fx_counts.get(ev["kind"], 0)) + 1
 		match ev["kind"]:
 			"feed": feed.text = ev["text"]
@@ -1523,9 +1544,11 @@ func _base_color(who: String) -> Color:
 	return c.darkened(0.3) if who == "B" and sim.bcomedown.size() > 0 else c                        # PAC-086: his Comedown dims him
 
 func _bump(n: Node3D, amt: float) -> void:
-	var mesh: MeshInstance3D = n.get_meta("mesh")
-	mesh.position.y = 0.9 - amt
-	get_tree().create_timer(0.12, true, false, true).timeout.connect(func(): mesh.position.y = 0.9)
+	# Node-local impulses run on the same stopped clock as the hands.
+	var other_pair: bool = n == partner or n == partner_boss
+	var view = partner_view if other_pair else fight_view
+	var active_sim = exh.e(exh.other(exh.ctrl)) if other_pair and exh != null else sim
+	view.bump(n, amt, active_sim)
 
 func _flash(a: float) -> void:
 	flashrect.color.a = a
@@ -1727,3 +1750,5 @@ func _hud() -> void:
 	hud.text += "\nESC controls / remap  |  %s%s" % ["BUTTON CHORDS" if combat_input.preset == "chords" else "STICK / MOUSE FLICKS", "  |  PRACTICE DUMMY" if practice_dummy else ""]
 
 	fight_hud.update(sim, practice_dummy, feed.text)
+	club_flow.track()
+	fight_feedback.update_state(sim)

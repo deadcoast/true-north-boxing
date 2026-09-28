@@ -1,0 +1,147 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "name": "drive_boxing_motion",
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_boxing_motion.gd",
+        "--",
+        "welcome"
+      ],
+      "exit": 0,
+      "errors": [],
+      "verdicts": [
+        "BOXING MOTION VERDICT :: GREEN (76/76)"
+      ],
+      "passed": true
+    },
+    {
+      "name": "drive_combat_loop",
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_combat_loop.gd",
+        "--",
+        "welcome"
+      ],
+      "exit": 0,
+      "errors": [],
+      "verdicts": [
+        "COMBAT LOOP VERDICT :: GREEN (67/67)"
+      ],
+      "passed": true
+    },
+    {
+      "name": "drive_bzone",
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_bzone.gd",
+        "--",
+        "boss=16"
+      ],
+      "exit": 0,
+      "errors": [],
+      "verdicts": [
+        "ENEMY TRANSFORMATION DRIVE :: GREEN (7/7)"
+      ],
+      "passed": true
+    },
+    {
+      "name": "drive_input",
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_input.gd",
+        "--",
+        "boss=0"
+      ],
+      "exit": 0,
+      "errors": [],
+      "verdicts": [
+        "INPUT DRIVE :: GREEN (98/98)"
+      ],
+      "passed": true
+    },
+    {
+      "name": "drive_readability",
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_readability.gd",
+        "--",
+        "welcome"
+      ],
+      "exit": 0,
+      "errors": [],
+      "verdicts": [
+        "VERDICT :: GREEN (113/113)"
+      ],
+      "passed": true
+    }
+  ],
+  "sources": {
+    "engine/greybox/main.gd": "570529aa445b2f3db6f9844713cc62ff3a337bec6e57ebed655fd011d0eef85c",
+    "engine/greybox/input/combat_input.gd": "3cceb21d20ec6617a0994ea69dfb35644127d6599c3e09663fc80d7a7e37f651",
+    "engine/greybox/input/controls_menu.gd": "83f7bad71806ef39886c91728baccd36a0d57d27e8431750cee00bacc724f7f8",
+    "engine/greybox/presentation/boxing_motion.gd": "d26b5835502e98ffa4914ce19b203a67d40dbaaf5ede2fab85ba92c8dbd27bcd",
+    "engine/greybox/presentation/club_flow.gd": "e75450a52df42e848e08912f928ede740b2c47abd46bb05d38e62b2a48d2cb20",
+    "engine/greybox/presentation/fight_feedback.gd": "503ca7d088c51460c666596e9c4d27623940eec0aa59e838847d2299b3875cfc",
+    "engine/greybox/presentation/fight_hud.gd": "3cf8eeb063867139dc0332df4298b049f299b0a5bc35fd153e4dcbb9ff3ba906",
+    "engine/greybox/presentation/fight_view.gd": "cd01675e9548eb63799131ca39b4e3d6c6c282c3897d9614cca333f17af9c3dc",
+    "engine/greybox/sim/assembler.gd": "5eb247c7aa628dcc6adb47fc703211bee8b0296d04ebd0c028c6243053e1e271",
+    "engine/greybox/sim/audit.gd": "5e79ca772323239fc71932aeca7ff6f708df91c24d1f0b9e7960d265347e25f4",
+    "engine/greybox/sim/clock.gd": "dead7df061e2f2d4a7cee731f5d042fa4df45dd033cc05df361e72317bed54ea",
+    "engine/greybox/sim/core.gd": "c037ce9a43422817ed0177feaf3a94070e9e4d81a1c3a92dc70aa8f527c0f6aa",
+    "engine/greybox/sim/exhibition.gd": "3726a654ae486705739bce9eac889efb56368be2add3cba06dee90fe22563cdf",
+    "engine/greybox/sim/faucets.gd": "daf30ae8ccdbc1a96ac09459031d586281e11becd70afe8ca21eef722b55c339",
+    "engine/greybox/sim/objectives.gd": "c6a53eedecdaea3f3f4f4a6003e6e61cd3a6ce0d07769a3f20a9a39be43b6180",
+    "engine/greybox/sim/profile.gd": "35a83f91874ba5eb2aa30cfc9b66659404d59e1ea094b30dcb2caeaafd1f3629",
+    "engine/greybox/sim/save.gd": "66af6237e9e8e5e79228828a440c442a94bd4181bfb2553b10d24787d5e85a9f",
+    "engine/greybox/sim/tests.gd": "4b6b4c827991ec9418a7091ee6c8f0632be23286418502d6c0a1b2194c1320fe",
+    "engine/greybox/tools/drive_academy.gd": "94a420acf726aaa13653c7c5421d9b372095d972f4ef4c40c99609061a1b1071",
+    "engine/greybox/tools/drive_anti.gd": "415e747e882c40a1ab0fac58a9fcc9011dfa571d11c016172f9f88d0f1f05b8c",
+    "engine/greybox/tools/drive_awaken.gd": "f7ffea5fb4a47e9cafe909ec45816655d8e630d155ff44a01ddf207b63914f44",
+    "engine/greybox/tools/drive_boxing_motion.gd": "8d34fa0e95448fda76cb3edeb733e62ec28f91fc9aaf55c5eb0d919e7a283717",
+    "engine/greybox/tools/drive_bzone.gd": "28668f880e55c070d0b678ff71e385523ad5c3da66244c2a46a2c0a3409e6dc9",
+    "engine/greybox/tools/drive_clash.gd": "a24735ad0f837b98b74b30ab6a3c0f7931a920b46e83603b4db15b68d11189b2",
+    "engine/greybox/tools/drive_combat_loop.gd": "5c160f1f025194a8c4862a653db6be771f33b01e736b0ad9c128fdfe39fb4fe0",
+    "engine/greybox/tools/drive_duo.gd": "8f89cfdc23264224636f07fee24e11222f038bab3b97d129f2a5ad66e8e53245",
+    "engine/greybox/tools/drive_exhibition.gd": "af9a4e69335505d85d2b9739946d49a789a628ac15c6c1dc4d0f37cc9c67fb24",
+    "engine/greybox/tools/drive_facilities.gd": "15d11e3801fc7e795db6941213455235da92f9009fe13f8c17df45a5a58984a8",
+    "engine/greybox/tools/drive_forge.gd": "fd23653a6c192dc61edf4b713ba16cc1fd942cfa93a20185ff32cee1eac8b8bc",
+    "engine/greybox/tools/drive_formation.gd": "146b6f7937d3d1b80a6bf070da1df04934fa36ca0f81f4f65b496da23a2c6374",
+    "engine/greybox/tools/drive_gear.gd": "0894b4b740df69ad62260582f2928a945edb312e46acb3d979561b68b8e6d570",
+    "engine/greybox/tools/drive_growth.gd": "e2c32ad377e2af785fe849584cdddc1a9726b22e19be7e3cf84cc0f23ceacd9b",
+    "engine/greybox/tools/drive_inherit.gd": "c0f5c94c28d523167e7717b8005215b041779e8152ceae28f17a8e2c8bd7dae0",
+    "engine/greybox/tools/drive_input.gd": "67cfe2ce70894af318497ef5115e62557802d742d5a21fa25d777adf68ed06b8",
+    "engine/greybox/tools/drive_locker.gd": "633fd10b70c7ac18796001ad7a24d6ecd3fd33a8255fb66343a117aef7259d44",
+    "engine/greybox/tools/drive_manifest.gd": "eb9b68189c59a5e3f53d0249c9583edd642377b57c531214496f6ddb0afeb259",
+    "engine/greybox/tools/drive_mirror.gd": "7ffeb84b4cc381e31d8c7b3ac5cc7e41ae0593e14697ec7d247fdc50824cd5be",
+    "engine/greybox/tools/drive_readability.gd": "8f055953309703104cf62328b4428f1f02b9c8cf861ea76ef894546fd4b851d0",
+    "engine/greybox/tools/drive_recruit.gd": "714ecdaa1ac923620cc9db0c900b49fdc32aa163b8eab662271419eed708fb4f",
+    "engine/greybox/tools/drive_rep.gd": "bfaf403ef7ea9cb6190fddad4faf2c437a0c8f50594aabcd2fdbbe3d4754c63a",
+    "engine/greybox/tools/drive_roles.gd": "5eb00a52390a2dd4d0b2f4ef570ce913370640ed4af4c404dcbf841d57d57477",
+    "engine/greybox/tools/drive_scouting.gd": "581a2ecb9b88190a3b95980a5b98304eec2500cc8cf2007fbf57e522ca568e7b",
+    "engine/greybox/tools/drive_techniques.gd": "e4d65eeabc06f541c351e000466aa39168d2862b1249b0e9f5a6aa95e89d50a7",
+    "engine/greybox/tools/drive_vendors.gd": "72ae6f9dbdcf3f061763e7f0d98516b84a2dc37feb60b818efbcbc03b3030ca3",
+    "engine/greybox/tools/drive_zone.gd": "8f3fdc54ab95a52981c61ed82a0874311e1af74ebebe498fa0529b9fb84b9267"
+  }
+}

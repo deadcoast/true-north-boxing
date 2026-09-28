@@ -62,6 +62,10 @@ func _process(_d: float) -> bool:
 			_check("after the hold: the HUD's ENEMY ZONE line on fight time, nothing weathered yet", rx2.search(hud) != null and s.freeze_t == 0, s.bzone_line())
 			_key(KEY_E, true, false)
 		12:
+			# Slip entry now moves through the same six-tick curve as collision.
+			# Let the native dodge enter before the isolated incoming straight;
+			# two headless render frames are not six simulation ticks.
+			_fight(s, 6)
 			var slipping: bool = str(s.P["dodge"]) != ""
 			s.bpending = {"row": "L_STRAIGHT", "mult": 1.0, "body": false}; s._land_boss_punch(1.0); main_node._consume_events()
 			if not slipping: fails.append("the slip was not live when his straight came")
