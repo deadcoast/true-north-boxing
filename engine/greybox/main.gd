@@ -2,6 +2,7 @@ extends Node3D
 const TNBSim := preload("res://sim/core.gd")
 const CombatInput := preload("res://input/combat_input.gd")
 const ControlsMenu := preload("res://input/controls_menu.gd")
+const RigSpace := preload("res://presentation/rig_space.gd")
 const FightView := preload("res://presentation/fight_view.gd")
 const FightHUD := preload("res://presentation/fight_hud.gd")
 const FightFeedback := preload("res://presentation/fight_feedback.gd")
@@ -559,6 +560,10 @@ func _build_world() -> void:
 		_mk_box(Vector3(7.4, 0.04, 0.04), Color(0.7,0.7,0.75), Vector3(0, h,  3.7), true)
 		_mk_box(Vector3(0.04, 0.04, 7.4), Color(0.7,0.7,0.75), Vector3(-3.7, h, 0), true)
 		_mk_box(Vector3(0.04, 0.04, 7.4), Color(0.7,0.7,0.75), Vector3( 3.7, h, 0), true)
+	var arena := Node3D.new(); add_child(arena)
+	for part in get_children():
+		if part is MeshInstance3D: part.reparent(arena)
+	set_meta("arena", arena)
 	player = _mk_capsule(COLORS["RORY"], Vector3(0, 0, 1.0))
 	boss = _mk_capsule(BOSS_COLOR, Vector3(0, 0, -1.0))
 	cam = Camera3D.new(); cam.fov = 55.0; add_child(cam)
@@ -1089,14 +1094,16 @@ func _demo_saveload() -> void:
 		print("SAVE/LOAD :: " + demo_saveload_line)
 
 func _to3(v: Vector2, tag: String = "") -> Vector3:
-	# PAC-088: in the exhibition each pair is drawn in its own half of the ring (A the left, B the right), its lateral compressed
-	if exh == null: return Vector3(v.x, 0.0, v.y)
-	var tg: String = tag if tag != "" else str(exh.ctrl)
-	return Vector3(v.x * 0.5 + (-1.75 if tg == "A" else 1.75), 0.0, v.y)
+	var point := RigSpace.ground(v)
+	if exh != null:
+		var tg: String = tag if tag != "" else str(exh.ctrl)
+		point.x += (-1.0 if tg == "A" else 1.0) * TNBSim.RING_HALF * RigSpace.GROUND_SCALE
+	return point
 
 func _render(alpha: float) -> void:
-	player.position = _to3(prev_p.lerp(sim.P["pos"], alpha))
-	boss.position = _to3(prev_b.lerp(sim.B["pos"], alpha))
+	(get_meta("arena") as Node3D).scale = Vector3(RigSpace.GROUND_SCALE * (2.0 if exh != null else 1.0), 1, RigSpace.GROUND_SCALE)
+	player.position = _to3(fight_view.position(prev_p, sim.P["pos"], "P", sim, alpha))
+	boss.position = _to3(fight_view.position(prev_b, sim.B["pos"], "B", sim, alpha))
 	var pmat: StandardMaterial3D = player.get_meta("mat")
 	pmat.albedo_color = _base_color("P")
 	for gch in player.get_children():                                                                   # PAC-094: the robe is the walk-out's - off once the bell's card is down
@@ -1121,7 +1128,7 @@ func _render(alpha: float) -> void:
 	_bmanifest_render(back, el_b)
 	if exh != null and partner != null:                                                              # PAC-088: the other pair, its own half of the ring
 		var qt: String = exh.other(exh.ctrl); var q: TNBSim = exh.e(qt)
-		partner.position = _to3(prev_q.lerp(q.P["pos"], alpha), qt); partner_boss.position = _to3(prev_qb.lerp(q.B["pos"], alpha), qt)
+		partner.position = _to3(partner_view.position(prev_q, q.P["pos"], "P", q, alpha), qt); partner_boss.position = _to3(partner_view.position(prev_qb, q.B["pos"], "B", q, alpha), qt)
 		var qm: StandardMaterial3D = partner.get_meta("mat")
 		qm.albedo_color = COLORS.get(q.pname(), Color(0.55, 0.6, 0.7)).darkened(0.45 if q.mode == "OVER" else 0.0)
 		qm.emission_enabled = q.cast.size() > 0 and str(q.cast["who"]) == "P" and str(q.cast["move"].get("duo_sync", "")) != ""
@@ -1517,7 +1524,7 @@ func _inherit_render() -> void:
 		if bool(sim.tform["inherit"].get("dressed", false)): apron_fig = _mk_capsule(col, player.position)
 	inherit_fig.position = player.position
 	if apron_fig:
-		apron_fig.position = Vector3((TNBSim.RING_HALF + 0.6) * (1.0 if player.position.x >= 0.0 else -1.0), 0.0, player.position.z)
+		apron_fig.position = Vector3((TNBSim.RING_HALF + 0.6) * RigSpace.GROUND_SCALE * (2.0 if exh != null else 1.0) * (1.0 if player.position.x >= 0.0 else -1.0), 0.0, player.position.z)
 		apron_fig.rotation = player.rotation
 
 func _spawn_ghost(name: String, secs: float, trail: bool, duo_gild: bool = false, hybrid_els: Array = []) -> void:

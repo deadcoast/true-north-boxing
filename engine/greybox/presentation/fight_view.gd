@@ -1,6 +1,7 @@
 extends RefCounted
 ## Presentation only. Every pose reads the sim; no RNG, combat timers or rules are changed.
 const Sim := preload("res://sim/core.gd")
+const Space := preload("res://presentation/rig_space.gd")
 const BoxingMotion := preload("res://presentation/boxing_motion.gd")
 const CHASE := 1.8
 const HEAD_CLEARANCE := 0.6
@@ -55,10 +56,8 @@ func before_step(sim) -> void:
 func capture(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String) -> void:
 	_sync_clock(sim)
 	pose(root, fighter, other, sim, who)
-	var snapshot := {}
-	for part in root.get_children():
-		if part is Node3D: snapshot[part.get_instance_id()] = part.transform
-	root.set_meta("previous_pose", snapshot)
+	root.set_meta("previous_rig", root.get_meta("kinematics").duplicate(true))
+	root.set_meta("previous_sim", sim.get_instance_id())
 
 static func _part(parent: Node3D, mesh: PrimitiveMesh, material: StandardMaterial3D, at: Vector3) -> MeshInstance3D:
 	var node := MeshInstance3D.new()
@@ -68,23 +67,29 @@ static func _part(parent: Node3D, mesh: PrimitiveMesh, material: StandardMateria
 static func make_fighter(parent: Node3D, color: Color, at: Vector3) -> Node3D:
 	var root := Node3D.new(); parent.add_child(root); root.position = at
 	var mat := StandardMaterial3D.new(); mat.albedo_color = color; mat.roughness = 0.85
-	var torso := CylinderMesh.new(); torso.top_radius = 0.29; torso.bottom_radius = 0.19; torso.height = 0.57; torso.radial_segments = 16
+	var torso := CylinderMesh.new(); torso.top_radius = Space.BODY_RADIUS; torso.bottom_radius = Space.BODY_RADIUS; torso.height = 0.57; torso.radial_segments = 16
 	var body := _part(root, torso, mat, Vector3(0, 1.04, 0)); body.scale.z = 0.70
 	root.set_meta("mesh", body); root.set_meta("mat", mat)
 	var shorts_mat := mat.duplicate() as StandardMaterial3D; shorts_mat.albedo_color = color.darkened(0.45)
 	var hips := BoxMesh.new(); hips.size = Vector3(0.39, 0.23, 0.29)
 	root.set_meta("hips", _part(root, hips, shorts_mat, Vector3(0, 0.77, 0)))
+	var abdomen := CylinderMesh.new(); abdomen.top_radius = Space.BODY_RADIUS; abdomen.bottom_radius = 0.19; abdomen.height = 1.0
+	root.set_meta("abdomen", _part(root, abdomen, mat, Vector3.ZERO))
 	var hmat := mat.duplicate() as StandardMaterial3D; hmat.albedo_color = color.lightened(0.35)
 	var ball := SphereMesh.new(); ball.radius = 0.18; ball.height = 0.36
 	root.set_meta("head", _part(root, ball, hmat, Vector3(0, Sim.HEAD_H, 0)))
 	var neck := CylinderMesh.new(); neck.top_radius = 0.085; neck.bottom_radius = 0.10; neck.height = 1
 	root.set_meta("neck", _part(root, neck, hmat, Vector3(0, 1.4, 0)))
+	var joints := []
+	var clavicles := []
 	var gloves := []; var arms := []; var uppers := []; var legs := []; var thighs := []; var boots := []
 	var glove_mat := mat.duplicate() as StandardMaterial3D; glove_mat.albedo_color = color.lightened(0.16)
 	for side in [-1.0, 1.0]:
+		var collar := CylinderMesh.new(); collar.top_radius = 0.085; collar.bottom_radius = 0.085; collar.height = 1.0
+		clavicles.append(_part(root, collar, mat, Vector3.ZERO))
 		var glove := SphereMesh.new(); glove.radius = 0.14; glove.height = 0.28
 		gloves.append(_part(root, glove, glove_mat, Vector3(side * 0.36, 1.35, -0.25)))
-		gloves[-1].scale = Vector3(0.85, 1, 1.15)
+		gloves[-1].scale = Vector3.ONE
 		var thumb := SphereMesh.new(); thumb.radius = 0.065; thumb.height = 0.16
 		_part(gloves[-1], thumb, glove_mat, Vector3(-side * 0.10, -0.065, 0))
 		var arm := CylinderMesh.new(); arm.top_radius = 0.075; arm.bottom_radius = 0.085; arm.height = 1.0
@@ -92,14 +97,19 @@ static func make_fighter(parent: Node3D, color: Color, at: Vector3) -> Node3D:
 		var vector := Vector3(side * 0.08, 0.1, -0.25)
 		limb.quaternion = Quaternion(Vector3.UP, vector.normalized()); limb.scale.y = vector.length()
 		arms.append(limb)
-		var upper := CylinderMesh.new(); upper.top_radius = 0.115; upper.bottom_radius = 0.078; upper.height = 1.0
+		var upper := CylinderMesh.new(); upper.top_radius = 0.078; upper.bottom_radius = 0.115; upper.height = 1.0
 		uppers.append(_part(root, upper, mat, Vector3(side * 0.27, 1.15, 0)))
-		var leg := CylinderMesh.new(); leg.top_radius = 0.095; leg.bottom_radius = 0.065; leg.height = 1.0
+		var leg := CylinderMesh.new(); leg.top_radius = 0.065; leg.bottom_radius = 0.095; leg.height = 1.0
 		legs.append(_part(root, leg, mat, Vector3(side * 0.16, 0.30, 0)))
-		var thigh := CylinderMesh.new(); thigh.top_radius = 0.12; thigh.bottom_radius = 0.09; thigh.height = 1.0
+		var thigh := CylinderMesh.new(); thigh.top_radius = 0.09; thigh.bottom_radius = 0.12; thigh.height = 1.0
 		thighs.append(_part(root, thigh, shorts_mat, Vector3(side * 0.16, 0.61, 0)))
 		var boot := BoxMesh.new(); boot.size = Vector3(0.16, 0.13, 0.32)
 		boots.append(_part(root, boot, shorts_mat, Vector3(side * 0.19, 0.065, 0)))
+		for radius in [0.105, 0.084, 0.095]:
+			var joint_mesh := SphereMesh.new(); joint_mesh.radius = radius; joint_mesh.height = radius * 2
+			joints.append(_part(root, joint_mesh, mat, Vector3.ZERO))
+	root.set_meta("joints", joints)
+	root.set_meta("clavicles", clavicles)
 	root.set_meta("gloves", gloves); root.set_meta("arms", arms); root.set_meta("legs", legs)
 	root.set_meta("upper_arms", uppers); root.set_meta("thighs", thighs); root.set_meta("boots", boots)
 	root.set_meta("glove_mat", glove_mat)
@@ -121,9 +131,9 @@ func observe(event: Dictionary, tick: int) -> void:
 		# The initiating sim step also consumes the first startup tick.
 		var remaining := 24
 		if clock_sim != null: remaining = maxi(4, int(clock_sim.P["busy_t"]) - int(clock_sim.P.get("pending", {}).get("t", 0)))
-		strikes["P"] = {"tick": tick - frozen_ticks + maxi(0, int(event.get("startup", 0)) - 1), "row": event["row"], "body": "BODY" in event.get("mods", []), "retract": remaining}
+		strikes["P"] = {"tick": tick - frozen_ticks + maxi(0, int(event.get("startup", 0)) - 1), "row": event["row"], "body": "BODY" in event.get("mods", []), "range_bonus": float(clock_sim.P.get("pending", {}).get("range_bonus", 0)), "retract": remaining}
 	elif event.get("kind") == "hit":
-		reactions[str(event["on"])] = {"tick": tick - frozen_ticks, "weight": clampf(float(event.get("dmg", 6)) / 30, 0.15, 1.0), "body": event.get("body", false)}
+		reactions[str(event["on"])] = {"tick": tick - frozen_ticks, "weight": clampf(float(event.get("dmg", 6)) / 30, 0.15, 1.0), "body": event.get("body", false), "displacement": event.get("displacement", Vector2.ZERO), "sim_tick": tick}
 	elif event.get("kind") == "feint":
 		_cancel("P", tick - frozen_ticks, maxi(1, int(clock_sim.P["busy_t"])))
 	elif event.get("kind") == "interrupt":
@@ -170,17 +180,31 @@ static func _blend_rig(from: Dictionary, to: Dictionary, weight: float) -> Dicti
 			for i in to[channel].size(): out[channel][i] = lerp(from[channel][i], to[channel][i], weight)
 	return out
 
+func displacement(who: String, sim, previous := false) -> Vector2:
+	var hit: Dictionary = reactions.get(who, {})
+	if hit.is_empty() or (previous and sim.tick == int(hit.get("sim_tick", -1))): return Vector2.ZERO
+	var age: int = sim.tick - frozen_ticks - int(hit["tick"])
+	if previous and sim.freeze_t <= 0: age = maxi(0, age - 1)
+	# Freeze contact before the already-resolved push. Release the visible
+	# recoil over 12 active ticks; simulation herding/scoring remain unchanged.
+	return -(hit.get("displacement", Vector2.ZERO) as Vector2) * (1.0 - BoxingMotion.ramp(float(age) / 12.0))
+
+func position(from: Vector2, to: Vector2, who: String, sim, alpha: float) -> Vector2:
+	_sync_clock(sim)
+	return (from + displacement(who, sim, true)).lerp(to + displacement(who, sim), alpha)
+
 func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String, alpha := 1.0) -> void:
 	_sync_clock(sim)
+	fighter = fighter.duplicate(); other = other.duplicate()
+	fighter["pos"] += displacement(who, sim); other["pos"] += displacement("B" if who == "P" else "P", sim)
 	var fwd2: Vector2 = (other["pos"] - fighter["pos"]).normalized()
 	if fwd2.length_squared() < 0.1: fwd2 = Vector2(0, -1)
 	var forward := Vector3(fwd2.x, 0, fwd2.y)
-	var right := Vector3(-fwd2.y, 0, fwd2.x)
 	var head: MeshInstance3D = root.get_meta("head")
 	var body: MeshInstance3D = root.get_meta("mesh")
 	var geometric_head: Dictionary = sim._head_world(fighter, other)
 	var displacement: Vector2 = geometric_head["p"] - fighter["pos"]
-	var offset := Vector3(displacement.x, 0, displacement.y); var height: float = geometric_head["h"]
+	var offset := Space.ground(displacement); var height: float = geometric_head["h"]
 	var dodge := str(fighter.get("dodge", ""))
 	head.position = offset + Vector3.UP * height
 	body.scale = Vector3(1, lerpf(1, 0.92, Sim.dodge_weight(fighter)) if dodge in ["DUCK", "WEAVE"] else 1.0, 0.70)
@@ -256,30 +280,55 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 		var hit: Dictionary = reactions[who]
 		var age := float(sim.tick - frozen_ticks - int(hit["tick"]))
 		reaction = float(hit["weight"]) * maxf(0, 1.0 - age / 28.0)
-	var reach := 1.4
-	for family in Sim.GEO:
-		if row.ends_with(family):
-			reach = float(Sim.GEO[family]["reach"]) * float(fighter.get("pkg", {}).get("reach_mult", 1.0))
-			if family == "STRAIGHT": reach *= float(fighter.get("pkg", {}).get("straight_reach_mult", 1.0))
-	reach = minf(reach, maxf(0.3, (other["pos"] as Vector2).distance_to(fighter["pos"]) - 0.18))
+	var range_bonus := float(fighter.get("pending", {}).get("range_bonus", strike.get("range_bonus", 0)))
+	var region := sim.contact_region(fighter, other, row if row != "" else "L_STRAIGHT", body_target, range_bonus) as Dictionary
+	var target := Space.contact(region)
 	if not motion_solvers.has(who): motion_solvers[who] = BoxingMotion.new()
-	var attack := {"row": row, "progress": punch_progress, "recovery": recovery, "body": body_target, "reach": reach, "head_height": Sim.HEAD_H, "preload": load if windup or strike.has("cancelled") else 0.0, "redirect": redirect, "redirect_weight": redirect_weight, "redirect_progress": redirect_progress}
+	var attack := {"row": row, "progress": punch_progress, "recovery": recovery, "body": body_target, "target": target, "range_bonus": range_bonus, "preload": load if windup or strike.has("cancelled") else 0.0, "redirect": redirect, "redirect_weight": redirect_weight, "redirect_progress": redirect_progress}
+	attack["target_center"] = Space.ground(region["target"] - fighter["pos"]) + Vector3.UP * float(region["h"])
+	attack["target_radius"] = Space.GLOVE_RADIUS + (Space.BODY_RADIUS if body_target else Space.HEAD_RADIUS)
+	attack["contact_hit"] = region["result"] == "HIT"
 	attacks[who] = attack
 	var rig: Dictionary = motion_solvers[who].sample(fighter, other, sim.tick - frozen_ticks, attack, offset + Vector3.UP * (height - Sim.HEAD_H))
 	if not redirect.is_empty():
 		var false_attack := attack.duplicate(); false_attack.merge(redirect, true)
 		false_attack["progress"] = redirect_progress
+		false_attack["target"] = Space.contact(sim.contact_region(fighter, other, str(false_attack["row"]), bool(false_attack["body"]), range_bonus))
 		var false_rig: Dictionary = motion_solvers[who].sample(fighter, other, sim.tick - frozen_ticks, false_attack, offset + Vector3.UP * (height - Sim.HEAD_H))
 		rig = _blend_rig(false_rig, rig, redirect_weight)
-	root.set_meta("kinematics", rig)
-	var facing := atan2(forward.x, forward.z)
-	body.rotation = Vector3(0, facing + float(rig["chest_turn"]), reaction * 0.10)
-	body.position = ((rig["chest"] as Vector3) + rig["pelvis"]) * 0.5 - forward * reaction * 0.12
-	_link(root.get_meta("neck"), rig["chest"] + Vector3.UP * 0.10, head.position - Vector3.UP * 0.12)
+	# Preserve hit/feint/taunt/drop impulses on the connected rig. Compress
+	# hips and ribcage before solving limbs; a detached torso bob is invalid.
 	var impulse: Dictionary = root.get_meta("bump", {})
 	if impulse.get("sim", -1) == sim.get_instance_id():
 		var age: int = sim.tick - frozen_ticks - int(impulse["tick"])
-		if age >= 0: body.position.y -= float(impulse["amount"]) * maxf(0, 1.0 - float(age) / 14)
+		var compression := float(impulse["amount"]) * maxf(0, 1.0 - float(age) / 14.0) if age >= 0 else 0.0
+		rig["pelvis"].y -= compression; rig["chest"].y -= compression * 0.5
+		for i in 2:
+			rig["hip_joints"][i].y -= compression; rig["shoulders"][i].y -= compression * 0.5
+		if sim.mode != "FIGHT": rig["head"].y -= compression * 0.5
+	# Apply torso reactions to the connected shoulder girdle, before IK.
+	var reaction_offset := -forward * reaction * 0.06
+	rig["chest"] += reaction_offset
+	for i in 2: rig["shoulders"][i] += reaction_offset
+	root.set_meta("kinematics", BoxingMotion.constrain(rig.duplicate(true)))
+	if alpha < 1.0 and root.get_meta("previous_sim", -1) == sim.get_instance_id():
+		rig = _blend_rig(root.get_meta("previous_rig"), rig, alpha)
+	rig = BoxingMotion.constrain(rig)
+	root.set_meta("render_kinematics", rig); root.set_meta("contact_region", region); root.set_meta("contact_target", target)
+	head.position = rig["head"]
+	forward = (rig["forward"] as Vector3).normalized()
+	var facing := atan2(forward.x, forward.z)
+	var collar: Vector3 = (rig["shoulders"][0] + rig["shoulders"][1]) * 0.5
+	var torso_region: Dictionary = sim.contact_region(other, fighter, "L_STRAIGHT", true)
+	var torso_origin := Space.ground(torso_region["target"] - fighter["pos"])
+	var torso_top := torso_origin + Vector3.UP * maxf(1.12, collar.y - 0.06)
+	var torso_bottom := torso_origin + Vector3.UP * minf(1.08, maxf(0.94, float(rig["pelvis"].y) + 0.02))
+	_link(root.get_meta("abdomen"), rig["pelvis"], torso_bottom)
+	_link(body, torso_bottom, torso_top)
+	body.scale.y /= 0.57
+	body.rotate_object_local(Vector3.UP, facing + float(rig["chest_turn"]))
+	_link(root.get_meta("neck"), torso_top, head.position - Vector3.UP * 0.12)
+	for i in 2: _link(root.get_meta("clavicles")[i], torso_top, rig["shoulders"][i])
 	var hips: Node3D = root.get_meta("hips")
 	hips.position = rig["pelvis"]; hips.rotation.y = facing + float(rig["hips_turn"])
 	var gloves: Array = root.get_meta("gloves"); var arms: Array = root.get_meta("arms")
@@ -287,18 +336,19 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	var legs: Array = root.get_meta("legs"); var boots: Array = root.get_meta("boots")
 	var glove_color: Color = (root.get_meta("mat") as StandardMaterial3D).albedo_color.lightened(0.16)
 	for index in 2:
-		var side := -1.0 if index == 0 else 1.0
 		var shoulder: Vector3 = rig["shoulders"][index]; var elbow: Vector3 = rig["elbows"][index]
+		root.get_meta("joints")[index * 3].position = shoulder
+		root.get_meta("joints")[index * 3 + 1].position = elbow
+		root.get_meta("joints")[index * 3 + 2].position = rig["knees"][index]
 		var hand: Vector3 = rig["wrists"][index]
 		gloves[index].position = hand
 		gloves[index].quaternion = Quaternion(Vector3.FORWARD, (hand - elbow).normalized()) * Quaternion(Vector3.FORWARD, float(rig["twists"][index]))
 		_link(uppers[index], shoulder, elbow); _link(arms[index], elbow, hand)
 		arms[index].rotate_object_local(Vector3.UP, float(rig["forearm_twists"][index]))
-		var hip: Vector3 = rig["pelvis"] + (right * side * 0.14).rotated(Vector3.UP, float(rig["hips_turn"]))
-		var knee: Vector3 = rig["knees"][index]; var sole: Vector3 = rig["feet"][index]
+		var hip: Vector3 = rig["hip_joints"][index]
+		var knee: Vector3 = rig["knees"][index]
 		# The forefoot stays planted while the heel turns around it.
-		var foot_forward := forward.rotated(Vector3.UP, float(rig["pivots"][index]))
-		boots[index].position = sole + Vector3.UP * 0.065 - foot_forward * 0.08
+		boots[index].position = rig["ankles"][index] - Vector3.UP * 0.03
 		boots[index].rotation.y = facing + float(rig["pivots"][index])
 		_link(thighs[index], hip, knee); _link(legs[index], knee, boots[index].position + Vector3.UP * 0.03)
 	for child in root.get_children():
@@ -328,13 +378,6 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 		hands.albedo_color = glove_color
 	root.set_meta("pose_row", row); root.set_meta("windup", windup)
 	root.set_meta("extension", extension)
-	# Interpolate the last two fixed-tick poses, not the last two render frames.
-	# The result and input timing stay independent of 30/60/144 Hz rendering.
-	var snapshot: Dictionary = root.get_meta("previous_pose", {})
-	if alpha < 1.0:
-		for part in root.get_children():
-			if part is Node3D and snapshot.has(part.get_instance_id()):
-				part.transform = (snapshot[part.get_instance_id()] as Transform3D).interpolate_with(part.transform, alpha)
 
 func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, boundaries: Array = []) -> void:
 	var wanted := (player.position - opponent.position).normalized()
@@ -346,11 +389,12 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	var angle := atan2(orbit.x, orbit.z)
 	angle = rotate_toward(angle, atan2(wanted.x, wanted.z), deg_to_rad(70.0) * elapsed)
 	orbit = Vector3(sin(angle), 0, cos(angle)); last_tick = tick
-	camera.position = player.position + orbit * CHASE + Vector3.UP * (Sim.HEAD_H + HEAD_CLEARANCE)
+	var chase := maxf(CHASE, 2.8 - player.position.distance_to(opponent.position))
+	camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + HEAD_CLEARANCE)
 	# At close contact a stale orbit can cross the opponent: use the current
 	# chase direction for safety. Ordinary circling stays rate-limited.
 	if camera.position.distance_to(opponent.position + Vector3.UP) < 1.9:
-		orbit = wanted; camera.position = player.position + orbit * CHASE + Vector3.UP * (Sim.HEAD_H + HEAD_CLEARANCE)
+		orbit = wanted; camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + HEAD_CLEARANCE)
 	camera.look_at(opponent.position + Vector3.UP)
 	# D2: clear a soft window through the player's silhouette over the enemy.
 	# Arms remain full opacity when punching; they are the action being shown.
@@ -361,8 +405,9 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	var window := Vector4((top.x - half_width) / size.x, top.y / size.y, (top.x + half_width) / size.x, bottom.y / size.y)
 	var parts: Array = [player.get_meta("mesh"), player.get_meta("head")]
 	parts.append_array(player.get_meta("legs"))
+	parts.append_array(player.get_meta("joints")); parts.append_array(player.get_meta("clavicles"))
 	parts.append_array(player.get_meta("thighs")); parts.append(player.get_meta("hips"))
-	parts.append(player.get_meta("neck"))
+	parts.append(player.get_meta("neck")); parts.append(player.get_meta("abdomen"))
 	for child in player.get_children():
 		if child.has_meta("kind") and str(child.get_meta("kind")) == "robe": parts.append(child)
 	_clear_window(parts, window, WINDUP_ALPHA)

@@ -40,7 +40,10 @@ func _queue(sim, row: String, modifiers: Dictionary = {}) -> void:
 
 func _damage(sim) -> float:
 	var before: float = sim.B["comp"]
-	sim._land_player_punch()
+	if sim.P["pending"].get("stepping", false):
+		while not sim.P["pending"].is_empty():
+			test.clear_defense(sim.B); sim.step({})
+	else: sim._land_player_punch()
 	return before - float(sim.B["comp"])
 
 func _run() -> void:
@@ -115,7 +118,7 @@ func _run() -> void:
 	_check("body power haymaker block-punch startup stacks", heavy.P["pending"]["startup"] == Sim.ms(160.0 * 1.4 * 1.9 * 1.15) and heavy.P["pending"]["mods"].size() == 4)
 	_check("body power haymaker damage stacks", is_equal_approx(_damage(heavy), base_damage * 0.8 * 1.5 * 2.2))
 	var stepping = _fresh(2.5); _queue(stepping, "L_STRAIGHT", {"move": Vector2(0, -1)})
-	_check("moving toward out-of-range opponent activates step", stepping.P["pending"]["stepping"] and stepping.P["pending"]["startup"] == Sim.ms(160.0 * 1.3) and is_equal_approx(stepping.P["pending"]["range_bonus"], 0.5))
+	_check("moving toward out-of-range opponent activates step", stepping.P["pending"]["stepping"] and stepping.P["pending"]["startup"] == Sim.ms(160.0 * 1.3) and is_zero_approx(stepping.P["pending"]["range_bonus"]) and is_equal_approx(stepping.P["pending"]["step_remaining"], 0.5))
 	_check("step reaches and multiplies damage", is_equal_approx(_damage(stepping), base_damage * 1.2))
 	var still = _fresh(2.5); _queue(still, "L_STRAIGHT")
 	_check("standing out of range does not invent a stepping punch", not still.P["pending"]["stepping"] and is_zero_approx(_damage(still)))

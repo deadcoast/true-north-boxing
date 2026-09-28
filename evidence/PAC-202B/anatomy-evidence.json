@@ -1,0 +1,107 @@
+{
+  "task": "PAC-202B",
+  "result": "PASS",
+  "checked_at": "2026-09-28T05:44:58.664832+00:00",
+  "sources": {
+    "engine/greybox/main.gd": "b310a36ccf23d9e061d1d577a06739fc6530d30243d4674a478daa9fba15185c",
+    "engine/greybox/presentation/boxing_motion.gd": "34f6f13786e724dc56a658175b63004c1b2624dcc877ea5789c6db6d3de73291",
+    "engine/greybox/presentation/fight_view.gd": "6579ab2d490566f42b8facaa876545e7a355f27dfa1aca707ccaa70f82c8af9a",
+    "engine/greybox/presentation/rig_space.gd": "8c6784b1ad5357983463bdfd4ae22711cf14863e22f802fe08ad81f9cd5adbdc",
+    "engine/greybox/sim/core.gd": "52b42c50946075c526dcff05957ea132d26449b258800a31d6253ac5a6a05b6a",
+    "engine/greybox/tools/drive_boxing_motion.gd": "1936f2530e4a19dc9a3343236308a5a43ec6ba97cfa349a44c80d7b7e4899a1a",
+    "engine/greybox/tools/drive_input.gd": "10a22ab82c59a2579fc020c29e3e23b54f7ecccbdd0a77bf1c025e6ec23fb8c0",
+    "engine/greybox/tools/drive_inherit.gd": "2f4a7fa728fc12747b76f614740c4dd5540335d81501d296ce3e69bd94472238"
+  },
+  "command": [
+    "godot --headless --path engine/greybox -s tools/drive_boxing_motion.gd -- welcome",
+    "godot --path engine/greybox -s tools/drive_boxing_motion.gd -- welcome anatomy-only capture"
+  ],
+  "checks": {
+    "motion": 134,
+    "motion_passed": 134,
+    "static_contact_cases": 2400,
+    "live_scene_edge_contacts": 40,
+    "interpolation_phases": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "render_clock_hz": [
+      30,
+      60,
+      144
+    ],
+    "gpu_checks": 34,
+    "gpu_captures": 46,
+    "gpu_driver_total": 80
+  },
+  "contract": {
+    "ground_scale": 0.65,
+    "bone_lengths": {
+      "upper_arm": 0.38,
+      "forearm": 0.36,
+      "thigh": 0.43,
+      "shin": 0.42
+    },
+    "bone_tolerance": 1e-05,
+    "mesh_endpoint_tolerance": 0.0001,
+    "contact_surface_tolerance": 0.001,
+    "step_distance_source": "combat_tuning.v1.json modifiers.STEPPING.range_bonus_m",
+    "step_realization": "directed startup travel; no contact-range bonus",
+    "recoil": "pre-push contact held through hitstop; presentation release over 12 active ticks; simulated push unchanged"
+  },
+  "coverage": [
+    "Ten rows and both hands; inside/edge/missed head and body targets",
+    "Both actors; four style packages; slip, duck, lean and weave targets",
+    "Fixed arm/leg lengths and rendered elbow/knee/ankle/glove/abdomen attachment",
+    "Close straights fold; edge straights extend; hooks retain elbow flexion",
+    "Continuous hook recovery and covered elbow through delayed feint/lunge",
+    "Guard/counter/feint/hitstop/recovery and 30/60/144 Hz render invariance",
+    "Step-in travel halts in hitstop and cancels with feint",
+    "Shared uniform single/exhibition ring mapping; unchanged camera framing criteria"
+  ],
+  "visual_review": {
+    "reviewed": [
+      "side-contact.png",
+      "front-contact.png",
+      "chase-body-contact.png",
+      "side-step-12.png",
+      "chase-step-20.png"
+    ],
+    "observations": [
+      "Side view shows the delivered glove against the head without changing arm length.",
+      "Hip/abdomen/torso, shoulder/elbow and knee/boot links stay joined in retained frames.",
+      "Front view includes normal opponent occlusion; side and chase views expose the delivered arm.",
+      "The final rig preserves hit/drop/feint/taunt impulses through connected anchors.",
+      "Diagnostic capture fixtures retain some stale HUD feedback from prior simulated setups; images are anatomy evidence, not a fresh-player usability session."
+    ]
+  },
+  "limitations": [
+    "Procedural anatomy remains a development rig. This does not certify professional boxing authenticity or player enjoyment.",
+    "Foot plant and weight-transfer refinement is PAC-202C; style/build presentation is PAC-202E. Parent PAC-202 and full ecosystem OGM-025 remain open.",
+    "No physical controller latency or manual sustained play acceptance was performed."
+  ],
+  "prior_failures": "previous-attempts.log; full experimental logs remain under .PACER/PAC-202B",
+  "retained_artifacts": {
+    "anatomy-baseline.log": "45a0cba65d0c2ba272ea5a15866462cd701085f9f12cf1a2ee9521105671284d",
+    "chase-body-contact.png": "23f12933061e22c8f17b0e4bef072d358dcb395f4fd2eb5bc2ba9b9e5470dd21",
+    "chase-step-20.png": "83a76e8bbb70336053f33d1ff6e6b9433f5fdf8703cc5071817470101b6faba0",
+    "combat.log": "3e0d6a164a1a5903872ade662df03bad8084532efb5618745d673b109fde91f9",
+    "front-contact.png": "6e467814b37b2eeb114db8f7495c12b73268a03e06e57c64e9c767a10541a690",
+    "input-evidence.json": "4ca83a5ad49de8119ffeba1aa9c15c0aacf5d91a2f476120b3bd930bea81240e",
+    "input.log": "b22f54d28c772fd0fdd6559690ec00e03a2ed181ffc008a196f36fe0eb2699fd",
+    "motion.log": "60e452d60d6c8c8863b6ea20a97228dae8cc2949c61bf062f6b22ccfc2556d01",
+    "presentation-evidence.json": "e270e37cb3935c328b80e7e636a1ce3441a9d8231acfdebfe53c8435c52bbdcd",
+    "previous-attempts.log": "436b62b39d023f63aa7a0ac5edd4bcce569c915956ed9ffa609339b093c1a1c8",
+    "python-tests.log": "b59c2a5046ea42f7f6a5e3b3a804cac7066b11c83270d25c5defa2d6eedf0bd7",
+    "readability.log": "03ac6333855bd089b2315fc865ffc56253df71074444567adc3292ee2c3251ac",
+    "rendered.log": "52297b28acdebfc5cb8abe2f5f77a516f7d204471977eeec98bd975a19511568",
+    "runtime-evidence.json": "1692f78b3510d0c14f73b1bec1001820f79d6a875f881938adfbec8744315437",
+    "runtime-results.json": "010eed8351ce0601746fdd8d5a32c6dd9cb07c23e880a8a91c35a0c46aed1dde",
+    "side-contact.png": "57a8fa9da837936202aa933992f93c1def3baedee792ff7b550f85784d095134",
+    "side-step-12.png": "e7e6655a35b92987d8c4bb2d234e94424d28c34dcf776778e2bf980e12e77aae"
+  },
+  "log_encoding": "Versioned logs normalize CRCRLF/CRLF and trailing spaces; original raw logs retained under .PACER/PAC-202B."
+}

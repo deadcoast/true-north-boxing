@@ -54,7 +54,7 @@ func _process(_d: float) -> bool:
 			var rx := RegEx.new(); rx.compile("INHERITANCE (24\\.0|23\\.9|23\\.8)s \\| House Tagaq from SAM \\(Sworn\\) \\| Never Twice \\| meter 50/50 \\| Sorry Eh, Still Water \\| the enemy misreads you")
 			var gf: Node3D = main_node.inherit_fig; var af: Node3D = main_node.apron_fig
 			var over: bool = gf != null and gf.position.distance_to(main_node.player.position) < 0.01
-			var apron: bool = af != null and absf(absf(af.position.x) - (s.RING_HALF + 0.6)) < 0.01
+			var apron: bool = af != null and absf(absf(af.position.x) - (s.RING_HALF + 0.6) * preload("res://presentation/rig_space.gd").GROUND_SCALE) < 0.01
 			_check("after the hold: the HUD's INHERITANCE line, SAM's ghost-frame over RORY, SAM at the apron", rx.search(main_node.hud.text) != null and over and apron, s.zone_line())
 			_quiet(s); s.P["busy_t"] = 0; s.P["cmd"] = {}; bar0 = s.tension; m_cost = s.hiss_cost(s.library["Sorry Eh"])
 			_key(KEY_H, true, true)

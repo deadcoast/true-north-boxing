@@ -1,0 +1,57 @@
+anatomy-02.log (full log retained in .PACER/PAC-202B)
+[FAIL] BOXERPUNCHER head fixed-arm contact matrix
+[FAIL] BOXERPUNCHER body fixed-arm contact matrix
+[FAIL] OUTBOXER head fixed-arm contact matrix
+[FAIL] OUTBOXER body fixed-arm contact matrix
+[FAIL] SWARMER head fixed-arm contact matrix
+[FAIL] SWARMER body fixed-arm contact matrix
+[FAIL] SLUGGER head fixed-arm contact matrix
+[FAIL] SLUGGER body fixed-arm contact matrix
+ANATOMY VERDICT :: RED (10/18)
+
+anatomy-04.log (full log retained in .PACER/PAC-202B)
+[FAIL] BOXERPUNCHER head fixed-arm contact matrix
+[FAIL] OUTBOXER head fixed-arm contact matrix
+[FAIL] OUTBOXER body fixed-arm contact matrix
+[FAIL] SWARMER head fixed-arm contact matrix
+[FAIL] SLUGGER head fixed-arm contact matrix
+ANATOMY VERDICT :: RED (13/18)
+
+motion-01.log (full log retained in .PACER/PAC-202B)
+[FAIL] native lifecycle replay is identical with 60 Hz renders
+[FAIL] native lifecycle replay is identical with 144 Hz renders
+[FAIL] L_UPPERCUT keeps the elbow bent through delivery
+[FAIL] L_HOOKERCUT keeps the elbow bent through delivery
+[FAIL] L_HOOK keeps the elbow bent through delivery
+[FAIL] L_STRAIGHT extends the arm through delivery
+[FAIL] R_STRAIGHT extends the arm through delivery
+[FAIL] R_HOOK keeps the elbow bent through delivery
+[FAIL] R_HOOKERCUT keeps the elbow bent through delivery
+[FAIL] R_UPPERCUT keeps the elbow bent through delivery
+[FAIL] SLIP_L renders the same moving target used by collision
+[FAIL] SLIP_R renders the same moving target used by collision
+[FAIL] DUCK renders the same moving target used by collision
+[FAIL] WEAVE_L renders the same moving target used by collision
+[FAIL] WEAVE_R renders the same moving target used by collision
+[FAIL] LEAN renders the same moving target used by collision
+[FAIL] extra render frames neither advance motion nor alter combat
+BOXING MOTION VERDICT :: RED (77/94)
+
+motion-05.log (full log retained in .PACER/PAC-202B)
+[FAIL] delay feint has continuous whole-body transition
+[FAIL] L_HOOK has no one-tick neutral snap
+[FAIL] R_HOOK has no one-tick neutral snap
+[FAIL] alternating hands and returning guard have no whole-body snap
+BOXING MOTION VERDICT :: RED (122/126)
+
+motion-09.log (full log retained in .PACER/PAC-202B)
+[FAIL] delay feint has continuous whole-body transition
+BOXING MOTION VERDICT :: RED (125/126)
+
+motion-10.log (full log retained in .PACER/PAC-202B)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "supported" variable because the value doesn't have a set type.
+[FAIL] player feint preserves opponent recovery
+[FAIL] player feint retains the cancelled hand for retraction
+[FAIL] feint finishes its actual recovery without inventing a contact
+
+First broad regression run overlapped the age type-inference fix; 6 launched smoke jobs timed out on that compile error. Their logs/results are retained under .PACER/PAC-202B/runtime. The final runtime run is separate.

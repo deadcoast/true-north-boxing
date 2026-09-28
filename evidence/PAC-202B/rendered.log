@@ -1,0 +1,113 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+ANATOMY LENGTHS L_UPPERCUT min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.3600001335144, 0.4300000667572, 0.42000004649162]
+[PASS] L_UPPERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_HOOKERCUT min [0.37999993562698, 0.35999992489815, 0.42999991774559, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] L_HOOKERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_HOOK min [0.37999993562698, 0.35999989509583, 0.42999991774559, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] L_HOOK preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_FLARED min [0.37999993562698, 0.3599998652935, 0.42999991774559, 0.41999995708466] max [0.38000011444092, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] L_FLARED preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_STRAIGHT min [0.37999990582466, 0.35999992489815, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.3600001335144, 0.4300000667572, 0.42000004649162]
+[PASS] L_STRAIGHT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_STRAIGHT min [0.37999993562698, 0.35999989509583, 0.42999991774559, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_STRAIGHT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_FLARED min [0.37999993562698, 0.35999989509583, 0.42999991774559, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_FLARED preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_HOOK min [0.37999993562698, 0.35999992489815, 0.42999991774559, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_HOOK preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_HOOKERCUT min [0.37999990582466, 0.35999989509583, 0.42999991774559, 0.41999995708466] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_HOOKERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_UPPERCUT min [0.37999993562698, 0.35999992489815, 0.42999991774559, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_UPPERCUT preserves upper-arm forearm thigh and shin lengths
+[PASS] GPU capture side-contact-l_hook-head
+[PASS] GPU capture side-contact-r_straight-head
+CONTACT MATRIX BOXERPUNCHER body=false cases=300 worst=0.44928762316704 failures=0 examples=[]
+[PASS] BOXERPUNCHER head fixed-arm contact matrix
+[PASS] GPU capture side-contact-l_hook-body
+[PASS] GPU capture side-contact-r_straight-body
+CONTACT MATRIX BOXERPUNCHER body=true cases=300 worst=0.31725549697876 failures=0 examples=[]
+[PASS] BOXERPUNCHER body fixed-arm contact matrix
+CONTACT MATRIX OUTBOXER body=false cases=300 worst=0.60217934846878 failures=0 examples=[]
+[PASS] OUTBOXER head fixed-arm contact matrix
+CONTACT MATRIX OUTBOXER body=true cases=300 worst=0.45568871498108 failures=0 examples=[]
+[PASS] OUTBOXER body fixed-arm contact matrix
+CONTACT MATRIX SWARMER body=false cases=300 worst=0.33423671126366 failures=0 examples=[]
+[PASS] SWARMER head fixed-arm contact matrix
+CONTACT MATRIX SWARMER body=true cases=300 worst=0.16450117528439 failures=0 examples=[]
+[PASS] SWARMER body fixed-arm contact matrix
+CONTACT MATRIX SLUGGER body=false cases=300 worst=0.44123283028603 failures=0 examples=[]
+[PASS] SLUGGER head fixed-arm contact matrix
+CONTACT MATRIX SLUGGER body=true cases=300 worst=0.31578394770622 failures=0 examples=[]
+[PASS] SLUGGER body fixed-arm contact matrix
+[PASS] GPU capture native-l_hook-head
+[PASS] GPU capture side-native-l_hook-head
+[PASS] GPU capture front-native-l_hook-head
+EDGE STRAIGHT L_STRAIGHT step=false angle=166.801593343634
+EDGE STRAIGHT R_STRAIGHT step=false angle=166.30087217558
+[PASS] GPU capture native-r_straight-head
+[PASS] GPU capture side-native-r_straight-head
+[PASS] GPU capture front-native-r_straight-head
+NATIVE CONTACT step=false body=false landed=10 gap=0.00000011205673
+[PASS] native [false, false] every punch contacts at edge range
+[PASS] native [false, false] connected fixed bones at five interpolation phases
+[PASS] native [false, false] step reach is gradual body travel
+[PASS] native false edge straights extend while close straights fold
+[PASS] GPU capture native-l_hook-body
+[PASS] GPU capture side-native-l_hook-body
+[PASS] GPU capture front-native-l_hook-body
+[PASS] GPU capture native-r_straight-body
+[PASS] GPU capture side-native-r_straight-body
+[PASS] GPU capture front-native-r_straight-body
+NATIVE CONTACT step=false body=true landed=10 gap=0.00000014305115
+[PASS] native [false, true] every punch contacts at edge range
+[PASS] native [false, true] connected fixed bones at five interpolation phases
+[PASS] native [false, true] step reach is gradual body travel
+[PASS] GPU capture native-l_hook-head-step
+[PASS] GPU capture side-native-l_hook-head-step
+[PASS] GPU capture front-native-l_hook-head-step
+EDGE STRAIGHT L_STRAIGHT step=true angle=177.334209496657
+[PASS] GPU capture step-sequence-00
+[PASS] GPU capture side-step-sequence-00
+[PASS] GPU capture front-step-sequence-00
+[PASS] GPU capture step-sequence-04
+[PASS] GPU capture side-step-sequence-04
+[PASS] GPU capture front-step-sequence-04
+[PASS] GPU capture step-sequence-08
+[PASS] GPU capture side-step-sequence-08
+[PASS] GPU capture front-step-sequence-08
+[PASS] GPU capture step-sequence-12
+[PASS] GPU capture side-step-sequence-12
+[PASS] GPU capture front-step-sequence-12
+[PASS] GPU capture step-sequence-16
+[PASS] GPU capture side-step-sequence-16
+[PASS] GPU capture front-step-sequence-16
+[PASS] GPU capture step-sequence-20
+[PASS] GPU capture side-step-sequence-20
+[PASS] GPU capture front-step-sequence-20
+EDGE STRAIGHT R_STRAIGHT step=true angle=145.431324789255
+[PASS] GPU capture native-r_straight-head-step
+[PASS] GPU capture side-native-r_straight-head-step
+[PASS] GPU capture front-native-r_straight-head-step
+NATIVE CONTACT step=true body=false landed=10 gap=0.00000005245209
+[PASS] native [true, false] every punch contacts at edge range
+[PASS] native [true, false] connected fixed bones at five interpolation phases
+[PASS] native [true, false] step reach is gradual body travel
+[PASS] native true edge straights extend while close straights fold
+[PASS] GPU capture native-l_hook-body-step
+[PASS] GPU capture side-native-l_hook-body-step
+[PASS] GPU capture front-native-l_hook-body-step
+[PASS] GPU capture native-r_straight-body-step
+[PASS] GPU capture side-native-r_straight-body-step
+[PASS] GPU capture front-native-r_straight-body-step
+NATIVE CONTACT step=true body=true landed=10 gap=0.00000002384186
+[PASS] native [true, true] every punch contacts at edge range
+[PASS] native [true, true] connected fixed bones at five interpolation phases
+[PASS] native [true, true] step reach is gradual body travel
+[PASS] hitstop suspends step-in travel and its remaining distance
+[PASS] feint cancels unspent step-in travel
+ANATOMY VERDICT :: GREEN (80/80)
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)

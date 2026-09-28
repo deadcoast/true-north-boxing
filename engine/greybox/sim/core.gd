@@ -1148,7 +1148,10 @@ func _head_world(F: Dictionary, other: Dictionary) -> Dictionary:
 	return {"p": head, "h": h}
 
 func resolve_geometry(A: Dictionary, D: Dictionary, row: String, body: bool, range_bonus: float = 0.0) -> String:
-	# returns HIT | MISS_REACH | MISS_LATERAL | MISS_HEIGHT
+	return str(contact_region(A, D, row, body, range_bonus)["result"])
+
+func contact_region(A: Dictionary, D: Dictionary, row: String, body: bool, range_bonus: float = 0.0) -> Dictionary:
+	# One authoritative region description for resolution and anatomical posing.
 	var fam := _punch_family(row)
 	var g: Dictionary = GEO[fam]
 	var fwd: Vector2 = (D["pos"] - A["pos"]).normalized()
@@ -1172,10 +1175,11 @@ func resolve_geometry(A: Dictionary, D: Dictionary, row: String, body: bool, ran
 	if row.begins_with("L_"): l = -l                 # mirror for the left hand
 	var reach := float(g["reach"]) * float(A.get("pkg", {}).get("reach_mult", 1.0))
 	if fam == "STRAIGHT": reach *= float(A.get("pkg", {}).get("straight_reach_mult", 1.0))
-	if d > reach + range_bonus: return "MISS_REACH"
-	if l < float(g["lat"][0]) or l > float(g["lat"][1]): return "MISS_LATERAL"
-	if not body and (th < float(g["h"][0]) or th > float(g["h"][1])): return "MISS_HEIGHT"
-	return "HIT"
+	var result := "HIT"
+	if d > reach + range_bonus: result = "MISS_REACH"
+	elif l < float(g["lat"][0]) or l > float(g["lat"][1]): result = "MISS_LATERAL"
+	elif not body and (th < float(g["h"][0]) or th > float(g["h"][1])): result = "MISS_HEIGHT"
+	return {"result": result, "d": d, "l": l, "h": th, "reach": reach + range_bonus, "lat": g["lat"], "heights": g["h"], "forward": fwd, "right": rightA, "left": row.begins_with("L_"), "body": body, "target": tp}
 
 func _correct_dodge_for(row: String, body: bool = false) -> Array:
 	# a read chooses a geometrically valid evasion: [kind, dir] in defender's frame.
@@ -1307,7 +1311,8 @@ func _try_execute_cmd() -> bool:
 		st_cost *= float(P["pkg"].get("inside_hook_upper_stamina_mult", 1.0))         # the swarmer's phone booth (s1.2)
 	P["pending"] = {"row": c["row"], "t": startup, "startup": startup, "mods": c["mods"], "hissatsu": hiss,
 		"counter": P["counter_t"] > 0, "flash": P["flash_t"] > 0, "stamina_cost": st_cost, "read": "none", "stepping": stepping,
-		"range_bonus": float(mod_table["STEPPING"]["range_bonus_m"]) if stepping else 0.0}
+		"range_bonus": 0.0, "step_remaining": float(mod_table["STEPPING"]["range_bonus_m"]) if stepping else 0.0,
+		"step_direction": (B["pos"] - P["pos"]).normalized()}
 	P["counter_t"] = 0                                     # window spent by the attempt
 	P["busy_t"] = startup + ms(float(row["recovery_ms"]) * _zone_punch_mult() / hand_speed)
 	P["stamina"] = maxf(_sfloor(P), P["stamina"] - st_cost)
@@ -1480,6 +1485,7 @@ func _land_player_punch() -> void:
 	# herding
 	var push := (0.2 if pd["row"].ends_with("HOOKERCUT") or pd["row"].ends_with("FLARED") else 0.1) * float(tactic_fx.get("herd_mult", 1.0)) * float(P["pkg"].get("herd_mult", 1.0))
 	if _pas(P, "ring_cutter"): push *= float(_pv("ring_cutter", "herd_mult", 1.0))                     # PAC-090: Ring Cutter (NP_11 s3)
+	var before_push: Vector2 = B["pos"]
 	B["pos"] += (B["pos"] - P["pos"]).normalized() * push; _clamp(B)
 	var tier := _flag_tier()
 	if tier == 0 and not pd["hissatsu"]:
@@ -1498,7 +1504,7 @@ func _land_player_punch() -> void:
 	if "HAYMAKER" in pd["mods"] and bool(T["modifiers"]["HAYMAKER"].get("stagger", false)):
 		_ev("stagger", {"who": "B", "ticks": freeze_t})  # heavy impact, never bypasses the authored INTERRUPT law
 	_ev("hit", {"on": "B", "dmg": dmg, "counter": pd["counter"], "flash": pd["flash"], "hissatsu": pd["hissatsu"], "body": body,
-		"row": pd["row"], "foul": pf != "", "center": zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER", "stepping": pd.get("stepping", false)})
+		"row": pd["row"], "displacement": B["pos"] - before_push, "foul": pf != "", "center": zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER", "stepping": pd.get("stepping", false)})
 	if pd["counter"] and not pd["hissatsu"]: _say("FLASH COUNTER x2!" if pd["flash"] else "COUNTER x1.6!")
 	if B["comp"] <= 0.0: _drop(false, pd["flash"])
 
@@ -1604,9 +1610,10 @@ func _land_boss_punch(mult: float) -> void:
 		if zone(B["pos"]) == "CENTER" and zone(P["pos"]) == "CENTER": earn_b += float(T["zones"]["CENTER"].get("exchange_tension_bonus", 2))
 		if _tx(B, "harvest") > 0: earn_b += float(HOUSES["traits"]["harvest"]["tension_on_exchange_win"]) * _tx(B, "harvest")   # PAC-078: Harvest, his side
 		if earn_b > 0.0: _earn_tension_b(earn_b)
+	var before_push: Vector2 = P["pos"]
 	P["pos"] += (P["pos"] - B["pos"]).normalized() * 0.12 * float(B["pkg"].get("herd_mult", 1.0)) * float(btactic_fx.get("herd_mult", 1.0)); _clamp(P)
 	freeze_t = maxi(freeze_t, ms(float(T["hit_feel"]["hitstop_ms"]["normal"])))
-	_ev("hit", {"on": "P", "dmg": dmg, "body": body})
+	_ev("hit", {"on": "P", "dmg": dmg, "body": body, "displacement": P["pos"] - before_push})
 	if P["comp"] <= 0.0: _drop(true)
 
 # ============================ DROPS / EIGHT ================================
@@ -10063,6 +10070,12 @@ func _step_inner(inp: Dictionary) -> void:
 			if all_fast:
 				react_ticks = []; _fire_event("player_audio_assist_reliance")
 	if P["pending"].size() > 0:
+		# NP_03's step-in reach is travel, not extra arm length. Spread the
+		# authored distance over startup; hitstop/feint naturally halt it.
+		var travel := float(P["pending"].get("step_remaining", 0.0)) / maxi(1, int(P["pending"]["t"]))
+		P["pos"] += P["pending"].get("step_direction", Vector2.ZERO) * travel
+		P["pending"]["step_remaining"] = maxf(0, float(P["pending"].get("step_remaining", 0.0)) - travel)
+		_clamp(P)
 		P["pending"]["t"] -= 1
 		if P["pending"]["t"] <= 0: _land_player_punch()
 	# ---- positional reads ----
