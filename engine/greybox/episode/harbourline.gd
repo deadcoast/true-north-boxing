@@ -2,6 +2,8 @@ extends Node3D
 ## Four contiguous, traversable districts in the frozen vertical slice.
 ## Walking and collision live here; combat remains on the shared 120 Hz sim.
 const View := preload("res://presentation/fight_view.gd")
+const EnvironmentArt := preload("res://episode/environment.gd")
+const SupportingCast := preload("res://episode/supporting_cast.gd")
 var data: Dictionary
 var language := "en"
 var actor: Node3D
@@ -21,6 +23,7 @@ var signposts: Array[Label3D] = []
 var spectators: Node3D
 var vey: Node3D
 var binders: Node3D
+var dressing: Node3D
 
 func setup(content: Dictionary, lang: String) -> void:
 	data = content; language = lang
@@ -61,36 +64,27 @@ func setup(content: Dictionary, lang: String) -> void:
 			_box(Vector3(0.8, 0.7, 0.04), at + Vector3(0, 1, 0.23), Color("e2ddc2"))
 		elif object["id"] in ["wall", "board", "film", "locker"]: pass # Dressed furniture below.
 		else:
-			_box(Vector3(0.8, 0.25, 0.8), at + Vector3.UP * 0.12, Color("bc965a"))
+			# The floor marker denotes a clear activity space, not a solid crate.
+			_box(Vector3(0.7, 0.008, 0.08), at + Vector3.UP * 0.062, Color("c2bb98"))
 	# School bike racks and the library's three binders.
 	for i in 4:
 		_box(Vector3(0.06, 0.8, 1.1), Vector3(-27 + i * 0.7, 0.4, -20.5), Color("2b404d"))
-	for i in 3: _box(Vector3(0.2, 0.4, 0.35), Vector3(-33.5 + i * 0.25, 0.95, -26), Color("947054"))
 	cards = Node3D.new(); add_child(cards)
-	spectators = Node3D.new(); add_child(spectators)
-	for i in 40:
-		var at := Vector3(-6.3 if i % 2 == 0 else 6.3, 0, -5.5 + (i / 2) * 0.55)
-		var coat := BoxMesh.new(); coat.size = Vector3(0.38, 0.85, 0.33)
-		var material := StandardMaterial3D.new(); material.albedo_color = [Color("504a47"), Color("616c72"), Color("69716a"), Color("80694c")][i % 4]
-		View._part(spectators, coat, material, at + Vector3.UP * 0.8)
-		var head := SphereMesh.new(); head.radius = 0.16; head.height = 0.32
-		var skin := StandardMaterial3D.new(); skin.albedo_color = Color("b99d85")
-		View._part(spectators, head, skin, at + Vector3.UP * 1.45)
-	spectators.hide()
 	vey = View.make_fighter(self, Color("272d36"), Vector3(2.4, 0, 7.6)); _identity(vey, "VEY"); _pose(vey, 0, 0); vey.hide()
-	var long_coat := BoxMesh.new(); long_coat.size = Vector3(0.48, 0.7, 0.36)
-	var coat_material := StandardMaterial3D.new(); coat_material.albedo_color = Color("272d36")
-	View._part(vey, long_coat, coat_material, Vector3(0, 0.65, 0))
 	actor = View.make_fighter(self, Color("d6b06f"), Vector3(0, 0, 6))
 	_identity(actor, "RORY")
 	for i in 3:
 		var member := View.make_fighter(self, [Color("73a4b7"), Color("a8744f"), Color("92b8b9")][i], actor.position)
 		member.visible = false; squad.append(member)
 		_identity(member, ["PRIYA", "MARCUS", "JUNE"][i])
+	dressing = EnvironmentArt.new(); add_child(dressing); dressing.setup(self)
 	camera = Camera3D.new(); add_child(camera); camera.fov = 48; camera.far = 180
 	frame(1.0, true)
 
 func _identity(person: Node3D, name: String) -> void:
+	if SupportingCast.apply(person, name):
+		_pose(person, 0, 0)
+		return
 	if View.FighterVisuals.apply(person, name, true):
 		_pose(person, 0, 0)
 		return
@@ -130,6 +124,10 @@ func _dress_town() -> void:
 	for i in 90:
 		var x := random.randf_range(-46, 46); var z := random.randf_range(-38, 52)
 		if absf(x) < 9 or absf(z + 14) < 6: continue
+		var inside := false
+		for place in data["places"]:
+			if absf(x-float(place["at"][0])) < 8 and absf(z-float(place["at"][1])) < 8.5: inside = true
+		if inside: continue
 		var pile := SphereMesh.new(); pile.radius = random.randf_range(0.45, 1.2); pile.height = pile.radius * 2
 		var material := StandardMaterial3D.new(); material.albedo_color = Color("dfebec")
 		var drift := View._part(self, pile, material, Vector3(x, -0.12, z)); drift.scale.y = 0.25
@@ -215,6 +213,7 @@ func restore(at: Array) -> void:
 func point() -> Array: return [actor.position.x, actor.position.z]
 
 func stage(id: String) -> void:
+	dressing.stage(id)
 	spectators.visible = id in ["archive", "survival"]
 	vey.visible = id == "tag"
 	# In-world signs must never cover a tell, fighter or the match score.
@@ -337,7 +336,7 @@ func _pose(person: Node3D, phase: float, strength: float) -> void:
 		View._link(person.get_meta("upper_arms")[i], shoulder, elbow); View._link(person.get_meta("arms")[i], elbow, hand)
 		person.get_meta("gloves")[i].position = hand
 		if person.get_meta("cast_key", "") != "":
-			person.get_meta("gloves")[i].quaternion = Quaternion(Vector3.FORWARD, (hand - elbow).normalized())
+			person.get_meta("gloves")[i].quaternion = Quaternion(Vector3.DOWN if person.has_meta("support_key") else Vector3.FORWARD, (hand - elbow).normalized())
 		person.get_meta("joints")[i * 3].position = shoulder
 		person.get_meta("joints")[i * 3 + 1].position = elbow
 		person.get_meta("joints")[i * 3 + 2].position = knee

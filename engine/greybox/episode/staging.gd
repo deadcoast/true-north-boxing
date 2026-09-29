@@ -136,6 +136,8 @@ func _hand(person: Node3D, target: Vector3, right := true) -> void:
 	View._link(person.get_meta("upper_arms")[side], shoulder, elbow)
 	View._link(person.get_meta("arms")[side], elbow, target)
 	person.get_meta("gloves")[side].position = target
+	if person.has_meta("support_key"):
+		person.get_meta("gloves")[side].quaternion = Quaternion(Vector3.DOWN, (target - elbow).normalized())
 	person.get_meta("joints")[side * 3 + 1].position = elbow
 
 func _camera(at: Vector3, target: Vector3, fov := 44.0) -> void:
@@ -235,6 +237,7 @@ func begin(id: String, index := 0) -> float:
 
 func frame(delta: float) -> void:
 	if not director.active: film.hide(); black.hide(); breath.clear(); ambience.stop(); foley.stop(); return
+	director.world.dressing.frame(delta)
 	var previous := elapsed; elapsed += delta
 	var shadow: bool = director.state == "training" and director.training.get("game") == "shadow" and director.training.get("intro", false)
 	var cold: bool = shot.begins_with("present:") or shot.begins_with("letter:") or shadow or (director.state == "world" and director.world.district == "gym")
