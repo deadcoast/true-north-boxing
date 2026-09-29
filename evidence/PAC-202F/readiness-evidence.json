@@ -1,0 +1,1215 @@
+{
+  "task": "PAC-202F",
+  "result": "PASS",
+  "design_authority": [
+    "PAC-202F DoD and PAC-202 parent",
+    "NP_03_COMBAT_ENGINE sections 1-9",
+    "NP_13_SCOPE P1/P2",
+    "NDL-013 user connected boxing requirements"
+  ],
+  "implementation": [
+    "Corrected floating-point accumulator drift at 144 Hz without altering the fixed 120 Hz simulation or combat timing.",
+    "Solved minimum opponent framing radius along the capped camera orbit so close circling cannot crowd the score area.",
+    "Added sustained native scene-loop gate, per-rate input/state journals, GPU film and live-controller contamination precondition.",
+    "Added a Windows launcher for engine/greybox working source and normal first-bell entry."
+  ],
+  "changed_sources": {
+    "engine/greybox/sim/clock.gd": "5e8d75e97e901f8b87c2b26b89f89db240d56d79b923d9693b423bada0a55378",
+    "engine/greybox/presentation/fight_view.gd": "cce7ff1b5d26c9d42107db3f221c6e1abd0da495aaef49968c3507ceb5ef0002",
+    "engine/greybox/tools/drive_readiness.gd": "c85b46454b0f6fe5ba4eec9c9cad23d2ac3b27e9dcfdca705c42bd74c1e93a27",
+    "tools/play_boxing.ps1": "42c2ff8cfe045c2449a15d2eca721bd446904d0e199d32f04778b9881d5fa807",
+    "Play True North Boxing.cmd": "873b3311e5be2dab2a6c6a683f96233493c2a8d1539826e441a42777c409d47e"
+  },
+  "authored_assets_unchanged": {
+    "data/academy.v1.json": {
+      "sha256": "c5c06d350f55807446957c21a83ac28bffaaa43757e5af8ca215394db567a665",
+      "git_blob": "97affd31549dfa8f433740107b48bc2f56e8f5bf"
+    },
+    "data/affinity.v1.json": {
+      "sha256": "43a78f64c74c837734e9e01b488c7accc37ed3bc1d927b9db536388c0835f901",
+      "git_blob": "70210de64e40f096c79aaa6a4b0ec606d9df263a"
+    },
+    "data/audit.v1.json": {
+      "sha256": "c4e1d6fb85dbf7a193f30ae8b91a7cd7a4d38dac1ce49ffd47f5dc7eba09b1a1",
+      "git_blob": "a292a3a53f0d3b348abd9ace8c1b0765a3e237b7"
+    },
+    "data/bouts.v1.json": {
+      "sha256": "77adfb1779da8d512a8bfba3c6b40de8b9dbc03cae3c714fa6aed22089035f9d",
+      "git_blob": "aad72905dc907bf7e40b2a31fcfb4d8e19df8d52"
+    },
+    "data/coaches.v1.json": {
+      "sha256": "bc0ce0e47b6a99ebe447409ce526cfc01d7543a3dc79cadb2a469dfd0244827a",
+      "git_blob": "f02a0d94ed8afda61b037223210dc19feb9f1984"
+    },
+    "data/combat_tuning.v1.json": {
+      "sha256": "a01185b62bd8779ebc2c6737a85654a5a4593a70a2b812baededd71894f5d2d9",
+      "git_blob": "ebaa44bfdd9bd81ef6187ca47641e1df4d10596f"
+    },
+    "data/economy.v1.json": {
+      "sha256": "f2c1119da2e6093b0f2088a6ded339cfdb20f06697cecfa1529bcbab47640987",
+      "git_blob": "13b8148da405349edc319c8b070c9150b50ef091"
+    },
+    "data/facilities.v1.json": {
+      "sha256": "e68ffa67a4cb4a471c4e3b03fa54393662960a43284ff9fdaae85aa1cab249cf",
+      "git_blob": "057e620d9ba6f14660446b7db04ba0384e5c383e"
+    },
+    "data/faucets.v1.json": {
+      "sha256": "81dff3c6f7dbc857f8f3e03d87490c448760a983e37ad17245c9a5a146c83b49",
+      "git_blob": "98701f398f034b96b3555389c1b867e474b3d994"
+    },
+    "data/feud_graph.v1.json": {
+      "sha256": "992976455780d8e0cd394fa04e834dce14b1ad84410d759744652a0aea68a5d9",
+      "git_blob": "ea69dedbaa77e679b110c94e010cb3332c6de519"
+    },
+    "data/formation.v1.json": {
+      "sha256": "9b1fb0c37d6d4eb0e60de4b17bd79b567b5618e252d4724ed94637439fdd29f0",
+      "git_blob": "4f20b84caaebe7c1ccd8dc0f2ba7f74d4a82da19"
+    },
+    "data/formats.v1.json": {
+      "sha256": "21636fce065efdf7675a5441d113cf3a1ea2357fc59b96a3e771269b22e34aec",
+      "git_blob": "d58ba36ff6f6bc171e1fee50708a906fcba540c9"
+    },
+    "data/gear.v1.json": {
+      "sha256": "41f57b94eccde69dffd78ecdbfdc2a55e10ee865e0dfd03613be24f52ccd0f40",
+      "git_blob": "df87b5372a51529306c8b57928f07360192e3cd0"
+    },
+    "data/growth.v1.json": {
+      "sha256": "5842ddb99e3a33a8fe07c612468eebad506b196a36191fc0534e6221c27743da",
+      "git_blob": "79892780a1e6658724ee8ae1361e0c25d7cc53f6"
+    },
+    "data/gym_wall.v1.json": {
+      "sha256": "7b9b5bc657f90518ff7574b227091fe377a85f0e942412e74fcf169a88b24143",
+      "git_blob": "f0d17785789b906331b6ed7f0730e0d0fc58da41"
+    },
+    "data/hissatsu_library.v1.json": {
+      "sha256": "1fab971d1cb825409e8d5b51e8d1455fb43dfa98dfeb828732792ebbcb1a100b",
+      "git_blob": "3006f0742d144d5714f4119caf93410187e85091"
+    },
+    "data/hissatsu_library.v2.json": {
+      "sha256": "7d29b17094519c42b623db3e69bf94bd1724358d5eb321cba00c49016142c169",
+      "git_blob": "da0b740e444a5ec8abc70726cabd8d8a6acf2839"
+    },
+    "data/houses.v1.json": {
+      "sha256": "f77b6e7e75d00b7b07e4657bdf3d814c9c3a4c61b2955d91fb0a229adc74177d",
+      "git_blob": "94323b3054944fe5b91572a78f9760aadb0458a3"
+    },
+    "data/hybrids.v1.json": {
+      "sha256": "cc4fb95458bc5ab323b464606d60fec17a8ecd061562ed9c8a9db5e6f9940ecd",
+      "git_blob": "5b0757a1bc01f80b266dc8604464858aaa45a82d"
+    },
+    "data/neutral.v1.json": {
+      "sha256": "c600c4162c2611ee7e86956f61cd4e075a79ec272776ef2cd33efed9f69ba0f1",
+      "git_blob": "9f5669e52bedba69529a6ea2e7c5047605d4e031"
+    },
+    "data/pattern_intel.v1.json": {
+      "sha256": "2873628003681252ada2456b336ae3bca4472e03684af6b63b6059080822f0be",
+      "git_blob": "7ba01f3a08a1675ef168529d431c7932da076fa4"
+    },
+    "data/pattern_pieces.v1.json": {
+      "sha256": "dd33612d59078fb0624b71a6be10605148eb55f4ea882c251ae81e769bdcc713",
+      "git_blob": "8d09f59bd113a3b36101ddd72ca469ff6db52b1f"
+    },
+    "data/patterns/README.md": {
+      "sha256": "9508ee808a7b1cbc9d9cf3bd18a6df5c40d063f4ca01184db7a2b49656833ce4",
+      "git_blob": "d52857531998df529ac2af8804cb48d3343f323a"
+    },
+    "data/patterns/ada_okafor.json": {
+      "sha256": "70850ff88c32eb01d7e58babf1ebeb11c38ca91f5d7b1915a816e9dec7d00b3a",
+      "git_blob": "2fae4c6ec42930060bbf942815ce3111d78bedbf"
+    },
+    "data/patterns/alfie_crane.json": {
+      "sha256": "c5d9fbfcecbe5e03ffd4a2ed2b2cace2940c87290a1fe3bd45113b4c7f0709be",
+      "git_blob": "dc20fd2b7b5f728afe0fca517d4b404b92792461"
+    },
+    "data/patterns/anders_vey.json": {
+      "sha256": "db1003ccc91c223021cdfe6cb1cf0b075a34f5158309dcc39c4641dfc0ed99e8",
+      "git_blob": "19ffefb0dbe22d4f7275584613ded1db7e7a917c"
+    },
+    "data/patterns/carter_okafor.json": {
+      "sha256": "7e833000908c00abd920183e138a03e7ca2c0bc4010ebe4350034e8fd46edc95",
+      "git_blob": "f462439972b10accc5fcaf9bce9aa3df362ac2c9"
+    },
+    "data/patterns/cassidy_vane.json": {
+      "sha256": "f807972fdf4d4efa3e444c89b3ed8d0c6fbf6131ec0831a81a0c27244776877e",
+      "git_blob": "4fe8de6c486c4526363b709efe2524a39bed6e9c"
+    },
+    "data/patterns/chiamaka_okafor.json": {
+      "sha256": "c8fc42caa18fa083633b119bf84ef231a93ec914634a52064ef642a16aa869ce",
+      "git_blob": "e31f7f36423906d0e435b255a383fa208bc0b906"
+    },
+    "data/patterns/commissioner_cal.json": {
+      "sha256": "1fae565efef84b7f76fca136a8a0ef624c4e530032fbec63c57a4d57d5376cad",
+      "git_blob": "b1dc3a02badb457b78fa3a8ade5699aac4665f3c"
+    },
+    "data/patterns/deshawn_vaughn.json": {
+      "sha256": "78a0cb9b541e4b63de7af13aa2aba26591ac2d6481c6ff039d5186cc41a4a9fb",
+      "git_blob": "8b3b3632dcdf0a2292ce66376793963952567c00"
+    },
+    "data/patterns/efua_osei.json": {
+      "sha256": "a0553c99b8a055f68e20c87e1ede5b9c36ccfc5617091276970cc2fa57abd6d9",
+      "git_blob": "da58535e029ed2a1f31d24449d5ef8e799c975d7"
+    },
+    "data/patterns/hc0_surety.json": {
+      "sha256": "884c33feac5f910d9a2e5071d729d242992364c6774840bca2c716233cec1c5e",
+      "git_blob": "aeeab85f4c81fa862743c61a18dd441e241eb0d4"
+    },
+    "data/patterns/hc4_cartographer.json": {
+      "sha256": "931576463d629f00278899978875d1692c41dc1e1d2b4785a63415d519e213a9",
+      "git_blob": "19377c9fea8eb5863a395ca3b6f78749e74943ec"
+    },
+    "data/patterns/hc7_echo.json": {
+      "sha256": "8d3abba2969590306a7d01b9fb5a8ccc6adad1282f31d24d366e6e9af7728947",
+      "git_blob": "97475e0d3b1675ace756408fa0e06e4ed3c503db"
+    },
+    "data/patterns/hc9_choir.json": {
+      "sha256": "753a37bddfc15ca5024a243256e324d32dcb958aabcf2e8a3796e3605b5e220b",
+      "git_blob": "6d31ec78be24ceda0e5de151e428da7555657b08"
+    },
+    "data/patterns/ioan_vasile.json": {
+      "sha256": "d98ab5dec046bcad8a03cc47c1ed6ba961c210c81c9f2a7ac77ae35b8d7f378e",
+      "git_blob": "1a5e2d65f2af1aefcddcc347606851721f4e3055"
+    },
+    "data/patterns/itzel_reyes_ortega.json": {
+      "sha256": "bdcf4cea7d46848f076d87ff82f8a712fc24723b718f63b1ac5b239eb05726e7",
+      "git_blob": "6e156c496e01d489a1d300a63bbe2ccdf2c21089"
+    },
+    "data/patterns/jean_guy_moreau.json": {
+      "sha256": "cefe67a8e74f6ba0fdbf03d483a45eaa2d3e5f1c84663d108c3565885cbd4325",
+      "git_blob": "ebc32324f3bd372302c8f7052755acb2a41020f1"
+    },
+    "data/patterns/marta_okonkwo_tremblay.json": {
+      "sha256": "b271039ed38d3fc8027eff016b7a01a2f4063f826712553287884cd432424350",
+      "git_blob": "d899769f8ffe7f1cd71e9a95e5e4787f919f10b8"
+    },
+    "data/patterns/moira_macisaac.json": {
+      "sha256": "5d953a80f1a759bba36fa4b29efe61a83bd505e2cd2dba962073e22407da5801",
+      "git_blob": "d627b9cb80c1425c74627ac8f9234dfc279ca959"
+    },
+    "data/patterns/remy_moreau.json": {
+      "sha256": "e192fe297f567f543b75f3c0ccc83cc0d2db8fe717b298d2a7b09fbaf0ba00de",
+      "git_blob": "2cca67f407bb776a307a1c1aa56001479c5555a0"
+    },
+    "data/patterns/sam_tagaq.json": {
+      "sha256": "c998914687fae96020ecbf41e3ebaaf4266f0c994a45a243131fc4bfdc570ec9",
+      "git_blob": "b83960c3b6b0b107dcb39dce79692b43fc6ddb67"
+    },
+    "data/patterns/sora_kannagi.json": {
+      "sha256": "238e209b54e864d8cfe0ebbe9821f1042a971fdfd45b38a2c79dbba880b86cb9",
+      "git_blob": "32839c8ad559212fdc46995419689061a90ff1e5"
+    },
+    "data/patterns/tam_nguyen_roy.json": {
+      "sha256": "10971a89ee4d4a7c67a81ff1c83fc04a4c12be28dbd2c67dd2d16d7a39deac94",
+      "git_blob": "cf8f0b0e4bf4c6792feb6dbb22dfa0a02c3f2489"
+    },
+    "data/patterns/yordanis_baro.json": {
+      "sha256": "604b82b0c4d501ed6ef8ffbbc50c5baf269bd108e5191a9310c0422841791f4c",
+      "git_blob": "5dafa59cdab92d8cf0f03489aaaba3f72f42ff07"
+    },
+    "data/patterns/yuri_kowalchuk.json": {
+      "sha256": "9bffb23dfaa28e432375b2a03c6eac0c967ddbfd06cd55e34aefa7f410b5fefd",
+      "git_blob": "4ee91ad1ba7237ea79a40063e7f2eff5e4432c2d"
+    },
+    "data/recruits.v1.json": {
+      "sha256": "84e61ab884026ff34f2bfca27351133bc8ca91261451924f5fc0d03de237ced1",
+      "git_blob": "6acdf905d27ef71d74ac7f3c066d1e42aaa15642"
+    },
+    "data/remixes.v1.json": {
+      "sha256": "86ff24290c3e81a11ab4e0d27fd78ee97f2d3b6e41885806a717831662f0b96a",
+      "git_blob": "e984648e51144cf6f3b633344407cbbbc8793efc"
+    },
+    "data/scrap_objectives.v1.json": {
+      "sha256": "22c261e5eadc1b362579d3b69a7d597e1fbd6ac33e6ed6a35393dba4c9994989",
+      "git_blob": "8888d73c2c6f34507ac59b78aef5a108723b30c6"
+    },
+    "data/staff.v1.json": {
+      "sha256": "bb364109ca8f86ee6fdc2285c6e8d34554d10a5367924c460242fd52ef4459fa",
+      "git_blob": "999fb8f8d10b330f1da5f0ef40990bfb075ac896"
+    },
+    "data/string_wall.v1.json": {
+      "sha256": "15bbd87a8be7562a71f50fbde6790943b9221e05f65e7b1e5d0b9f030f721423",
+      "git_blob": "09d70f9929e59e43b92f2aeda9f3578313492895"
+    },
+    "data/tactics.v1.json": {
+      "sha256": "b3d60613954021c498951e891f3e32a47d12560b304f1a1fa5905895adfc0ca3",
+      "git_blob": "6bdba7bdca9d58e025aa259e3d3169893b88b4f1"
+    },
+    "data/talk.v1.json": {
+      "sha256": "98b58377f1aa022bdfe8413fa442d12cfdec88ca9facd565036b533f0787ceb3",
+      "git_blob": "950118bb5e5397b08f02be9ec5d4cdfb217151a0"
+    },
+    "data/techniques.v1.json": {
+      "sha256": "f0538a83be7377e44310c587351c1d2253e3a98864d4a170ec3497dd217185ef",
+      "git_blob": "b12d4bbd6d1826acf6da2acd502b81dca3cc4fd3"
+    },
+    "data/transformations.v1.json": {
+      "sha256": "b69d92ff09a492d40fa8050a7c36810f29acd0b5b6af33cdb937d6ca3f218f4c",
+      "git_blob": "6a434ba8f55097c0ade64113779b1891776f266a"
+    },
+    "docs/NorthPaw-game_docs/NP_00_INDEX.md": {
+      "sha256": "40edb53314f2b9165698ae8952ad0550f73c6d767c46d73c3a4d31f004da568e",
+      "git_blob": "7ca30438e437cd13b5caca79d70b02561763f5a2"
+    },
+    "docs/NorthPaw-game_docs/NP_01_SPORT.md": {
+      "sha256": "d6328414ac3e58634ec0ee07c9646e54f1d2eca8bcf4569ffad86e77059ce079",
+      "git_blob": "93ae1ededb6726eb5db2d0f86a283d231b9e8407"
+    },
+    "docs/NorthPaw-game_docs/NP_02_TWO_LAYER.md": {
+      "sha256": "74bf2bebfad4a0e5d1ae42e8091e3c023ce836c10af485c7c1048543a6b8c992",
+      "git_blob": "6b1851f39d67ec6a9686ff6c7772d3f32287c25f"
+    },
+    "docs/NorthPaw-game_docs/NP_03_COMBAT_ENGINE.md": {
+      "sha256": "39f092742e3d02d3c2a59a5e81648e34d6acf5d37cdaf74748eeb8164da309f5",
+      "git_blob": "4c5e3d2fa70d8c50178c9742b0c871b45905ed07"
+    },
+    "docs/NorthPaw-game_docs/NP_04A_BOSS_ROSTER_ARC1.md": {
+      "sha256": "eef4040412fdfb106b6de18c816eee6d852adf7c43133992b9f8a5dd4fc7f0e9",
+      "git_blob": "6728c233c360edfeefd3c531eafb0fdf50fe1561"
+    },
+    "docs/NorthPaw-game_docs/NP_04B_BOSS_ROSTER_ARC23.md": {
+      "sha256": "eafadc4ffce3e8b41dbf690be19bea11610b14b930643797fd10c18e0e3b528e",
+      "git_blob": "743b1c96a48984117f5dd5232fc846bc74d61cc4"
+    },
+    "docs/NorthPaw-game_docs/NP_04_OPPONENT.md": {
+      "sha256": "a7913fe535829d86b79a1b8b129b06dcdb9e12fc9224a71bf878b93e3e9fe6a0",
+      "git_blob": "b90a92cb726e7035d7f9ee7cebf3586ebdd40791"
+    },
+    "docs/NorthPaw-game_docs/NP_05A_HISSATSU_LIBRARY.md": {
+      "sha256": "0a7cc8ab9af271a6848e5555cfb451daf1c134086920d8d7759d5dbeb3866265",
+      "git_blob": "ae0bd85b1b6b05c001c2cc59ede1c0ddc2a004ed"
+    },
+    "docs/NorthPaw-game_docs/NP_05_TENSION_HISSATSU.md": {
+      "sha256": "4ed8c34b34694a45596e062b41fa833cc163a15c83d3e228927a319550c3cc75",
+      "git_blob": "335f3c64d37693dc04645dbaf69a2f45cfff6d77"
+    },
+    "docs/NorthPaw-game_docs/NP_06_AFFINITY.md": {
+      "sha256": "e1f63579cf46e04c51b588c7bb34b7c3ead7bac19b9de6210aa7664adbb97d51",
+      "git_blob": "c78bf29eef91b8cf59adfbe97a8a90ac839280c5"
+    },
+    "docs/NorthPaw-game_docs/NP_07A_HOUSE_QUESTLINES.md": {
+      "sha256": "3432ec67d6970a8df229615125a6f0113ea7cbe7461b7ba80e718beb50731b64",
+      "git_blob": "5f926d7070d37bb64dbf6608b1e2036eb2c6c04a"
+    },
+    "docs/NorthPaw-game_docs/NP_07_HOUSES.md": {
+      "sha256": "7e9cc78091ea1178fc5f42487aa38aec47b124a5a64fbe0976c0d6cc1705b4f6",
+      "git_blob": "139576fb3a8648080beca34c63ac1e4b0c6f585c"
+    },
+    "docs/NorthPaw-game_docs/NP_08_STABLE.md": {
+      "sha256": "cdf09f2ef970c28360fb98a78bfa6354cc52343a466097ea7b9beed3d1d07b35",
+      "git_blob": "08af402a9fb9a9575d271700cf4eeefc6b4d556a"
+    },
+    "docs/NorthPaw-game_docs/NP_09_TRANSFORMATIONS.md": {
+      "sha256": "3c0ce3595adb8b6307585ec81812b2e4267fdc6b0827feee45907e2053b6b8d7",
+      "git_blob": "1bbebd5771f87e5d593b48cd5ec9fb817257be08"
+    },
+    "docs/NorthPaw-game_docs/NP_10_TACTICS.md": {
+      "sha256": "ca46996c5b58681ca7748dc8a4156f3959ee1ec4f9e999bc715e7d9b8cfdcb13",
+      "git_blob": "b109187f1b68cc43f7146db557ff9217a447ac94"
+    },
+    "docs/NorthPaw-game_docs/NP_11_PROGRESSION.md": {
+      "sha256": "c0fa0abcc8bc41ce6fc75a872779a9a2259c13006f8d3a976cd030ef5a6ad51b",
+      "git_blob": "8d7aa5ad378896850f46b8728849c1ca3988cdad"
+    },
+    "docs/NorthPaw-game_docs/NP_12A_EP01_SCRIPT.md": {
+      "sha256": "5e4e5ab4ca061e869ece9e2470ea2829ceb619096939099d105bcdb68c5b6126",
+      "git_blob": "9bd75b00d4f279474fb78a19721e7633d8c30e9e"
+    },
+    "docs/NorthPaw-game_docs/NP_12_NARRATIVE.md": {
+      "sha256": "b2369d480616b24e4f051b96c0f4feddf3fd1a82c519065cd5888b0b7aa6e62d",
+      "git_blob": "292634e6d53fc86444dbcc36b92ca42c84929ca1"
+    },
+    "docs/NorthPaw-game_docs/NP_13_SCOPE.md": {
+      "sha256": "2f1ac407a443486e873796537e9523def0e4a19bd9ce77e4a8ca7799ff2ba870",
+      "git_blob": "8c6fe3ec37e9bd767b14a2a997ebf0b1c3a3cea0"
+    },
+    "docs/NorthPaw-game_docs/NP_14_ENGINE_THEORY.md": {
+      "sha256": "031f707d12e9df54e81586679946bf012e3f01570b0e93cc0fa3087dcd143529",
+      "git_blob": "b2fb88e6cd6b15c8865f270ce9189db35fb2a4c9"
+    },
+    "docs/NorthPaw-game_docs/first.md": {
+      "sha256": "09ad90212c0708f3273b05a7062bcada67b8a1eab3f88b10e524671e067ca621",
+      "git_blob": "7513cbe13478921020b88aeed48127a431a3cc9d"
+    },
+    "engine/greybox/academy.v1.json": {
+      "sha256": "c5c06d350f55807446957c21a83ac28bffaaa43757e5af8ca215394db567a665",
+      "git_blob": "97affd31549dfa8f433740107b48bc2f56e8f5bf"
+    },
+    "engine/greybox/affinity.v1.json": {
+      "sha256": "43a78f64c74c837734e9e01b488c7accc37ed3bc1d927b9db536388c0835f901",
+      "git_blob": "70210de64e40f096c79aaa6a4b0ec606d9df263a"
+    },
+    "engine/greybox/audit.v1.json": {
+      "sha256": "c4e1d6fb85dbf7a193f30ae8b91a7cd7a4d38dac1ce49ffd47f5dc7eba09b1a1",
+      "git_blob": "a292a3a53f0d3b348abd9ace8c1b0765a3e237b7"
+    },
+    "engine/greybox/bouts.v1.json": {
+      "sha256": "77adfb1779da8d512a8bfba3c6b40de8b9dbc03cae3c714fa6aed22089035f9d",
+      "git_blob": "aad72905dc907bf7e40b2a31fcfb4d8e19df8d52"
+    },
+    "engine/greybox/coaches.v1.json": {
+      "sha256": "bc0ce0e47b6a99ebe447409ce526cfc01d7543a3dc79cadb2a469dfd0244827a",
+      "git_blob": "f02a0d94ed8afda61b037223210dc19feb9f1984"
+    },
+    "engine/greybox/combat_tuning.v1.json": {
+      "sha256": "a01185b62bd8779ebc2c6737a85654a5a4593a70a2b812baededd71894f5d2d9",
+      "git_blob": "ebaa44bfdd9bd81ef6187ca47641e1df4d10596f"
+    },
+    "engine/greybox/economy.v1.json": {
+      "sha256": "f2c1119da2e6093b0f2088a6ded339cfdb20f06697cecfa1529bcbab47640987",
+      "git_blob": "13b8148da405349edc319c8b070c9150b50ef091"
+    },
+    "engine/greybox/facilities.v1.json": {
+      "sha256": "e68ffa67a4cb4a471c4e3b03fa54393662960a43284ff9fdaae85aa1cab249cf",
+      "git_blob": "057e620d9ba6f14660446b7db04ba0384e5c383e"
+    },
+    "engine/greybox/faucets.v1.json": {
+      "sha256": "81dff3c6f7dbc857f8f3e03d87490c448760a983e37ad17245c9a5a146c83b49",
+      "git_blob": "98701f398f034b96b3555389c1b867e474b3d994"
+    },
+    "engine/greybox/feud_graph.v1.json": {
+      "sha256": "992976455780d8e0cd394fa04e834dce14b1ad84410d759744652a0aea68a5d9",
+      "git_blob": "ea69dedbaa77e679b110c94e010cb3332c6de519"
+    },
+    "engine/greybox/formation.v1.json": {
+      "sha256": "9b1fb0c37d6d4eb0e60de4b17bd79b567b5618e252d4724ed94637439fdd29f0",
+      "git_blob": "4f20b84caaebe7c1ccd8dc0f2ba7f74d4a82da19"
+    },
+    "engine/greybox/formats.v1.json": {
+      "sha256": "21636fce065efdf7675a5441d113cf3a1ea2357fc59b96a3e771269b22e34aec",
+      "git_blob": "d58ba36ff6f6bc171e1fee50708a906fcba540c9"
+    },
+    "engine/greybox/gear.v1.json": {
+      "sha256": "41f57b94eccde69dffd78ecdbfdc2a55e10ee865e0dfd03613be24f52ccd0f40",
+      "git_blob": "df87b5372a51529306c8b57928f07360192e3cd0"
+    },
+    "engine/greybox/growth.v1.json": {
+      "sha256": "5842ddb99e3a33a8fe07c612468eebad506b196a36191fc0534e6221c27743da",
+      "git_blob": "79892780a1e6658724ee8ae1361e0c25d7cc53f6"
+    },
+    "engine/greybox/gym_wall.v1.json": {
+      "sha256": "7b9b5bc657f90518ff7574b227091fe377a85f0e942412e74fcf169a88b24143",
+      "git_blob": "f0d17785789b906331b6ed7f0730e0d0fc58da41"
+    },
+    "engine/greybox/hissatsu_library.v2.json": {
+      "sha256": "7d29b17094519c42b623db3e69bf94bd1724358d5eb321cba00c49016142c169",
+      "git_blob": "da0b740e444a5ec8abc70726cabd8d8a6acf2839"
+    },
+    "engine/greybox/houses.v1.json": {
+      "sha256": "f77b6e7e75d00b7b07e4657bdf3d814c9c3a4c61b2955d91fb0a229adc74177d",
+      "git_blob": "94323b3054944fe5b91572a78f9760aadb0458a3"
+    },
+    "engine/greybox/hybrids.v1.json": {
+      "sha256": "cc4fb95458bc5ab323b464606d60fec17a8ecd061562ed9c8a9db5e6f9940ecd",
+      "git_blob": "5b0757a1bc01f80b266dc8604464858aaa45a82d"
+    },
+    "engine/greybox/neutral.v1.json": {
+      "sha256": "c600c4162c2611ee7e86956f61cd4e075a79ec272776ef2cd33efed9f69ba0f1",
+      "git_blob": "9f5669e52bedba69529a6ea2e7c5047605d4e031"
+    },
+    "engine/greybox/pattern_intel.v1.json": {
+      "sha256": "2873628003681252ada2456b336ae3bca4472e03684af6b63b6059080822f0be",
+      "git_blob": "7ba01f3a08a1675ef168529d431c7932da076fa4"
+    },
+    "engine/greybox/pattern_pieces.v1.json": {
+      "sha256": "dd33612d59078fb0624b71a6be10605148eb55f4ea882c251ae81e769bdcc713",
+      "git_blob": "8d09f59bd113a3b36101ddd72ca469ff6db52b1f"
+    },
+    "engine/greybox/patterns/ada_okafor.json": {
+      "sha256": "70850ff88c32eb01d7e58babf1ebeb11c38ca91f5d7b1915a816e9dec7d00b3a",
+      "git_blob": "2fae4c6ec42930060bbf942815ce3111d78bedbf"
+    },
+    "engine/greybox/patterns/alfie_crane.json": {
+      "sha256": "c5d9fbfcecbe5e03ffd4a2ed2b2cace2940c87290a1fe3bd45113b4c7f0709be",
+      "git_blob": "dc20fd2b7b5f728afe0fca517d4b404b92792461"
+    },
+    "engine/greybox/patterns/anders_vey.json": {
+      "sha256": "db1003ccc91c223021cdfe6cb1cf0b075a34f5158309dcc39c4641dfc0ed99e8",
+      "git_blob": "19ffefb0dbe22d4f7275584613ded1db7e7a917c"
+    },
+    "engine/greybox/patterns/carter_okafor.json": {
+      "sha256": "7e833000908c00abd920183e138a03e7ca2c0bc4010ebe4350034e8fd46edc95",
+      "git_blob": "f462439972b10accc5fcaf9bce9aa3df362ac2c9"
+    },
+    "engine/greybox/patterns/cassidy_vane.json": {
+      "sha256": "f807972fdf4d4efa3e444c89b3ed8d0c6fbf6131ec0831a81a0c27244776877e",
+      "git_blob": "4fe8de6c486c4526363b709efe2524a39bed6e9c"
+    },
+    "engine/greybox/patterns/chiamaka_okafor.json": {
+      "sha256": "c8fc42caa18fa083633b119bf84ef231a93ec914634a52064ef642a16aa869ce",
+      "git_blob": "e31f7f36423906d0e435b255a383fa208bc0b906"
+    },
+    "engine/greybox/patterns/commissioner_cal.json": {
+      "sha256": "1fae565efef84b7f76fca136a8a0ef624c4e530032fbec63c57a4d57d5376cad",
+      "git_blob": "b1dc3a02badb457b78fa3a8ade5699aac4665f3c"
+    },
+    "engine/greybox/patterns/deshawn_vaughn.json": {
+      "sha256": "78a0cb9b541e4b63de7af13aa2aba26591ac2d6481c6ff039d5186cc41a4a9fb",
+      "git_blob": "8b3b3632dcdf0a2292ce66376793963952567c00"
+    },
+    "engine/greybox/patterns/efua_osei.json": {
+      "sha256": "a0553c99b8a055f68e20c87e1ede5b9c36ccfc5617091276970cc2fa57abd6d9",
+      "git_blob": "da58535e029ed2a1f31d24449d5ef8e799c975d7"
+    },
+    "engine/greybox/patterns/hc0_surety.json": {
+      "sha256": "884c33feac5f910d9a2e5071d729d242992364c6774840bca2c716233cec1c5e",
+      "git_blob": "aeeab85f4c81fa862743c61a18dd441e241eb0d4"
+    },
+    "engine/greybox/patterns/hc4_cartographer.json": {
+      "sha256": "931576463d629f00278899978875d1692c41dc1e1d2b4785a63415d519e213a9",
+      "git_blob": "19377c9fea8eb5863a395ca3b6f78749e74943ec"
+    },
+    "engine/greybox/patterns/hc7_echo.json": {
+      "sha256": "8d3abba2969590306a7d01b9fb5a8ccc6adad1282f31d24d366e6e9af7728947",
+      "git_blob": "97475e0d3b1675ace756408fa0e06e4ed3c503db"
+    },
+    "engine/greybox/patterns/hc9_choir.json": {
+      "sha256": "753a37bddfc15ca5024a243256e324d32dcb958aabcf2e8a3796e3605b5e220b",
+      "git_blob": "6d31ec78be24ceda0e5de151e428da7555657b08"
+    },
+    "engine/greybox/patterns/ioan_vasile.json": {
+      "sha256": "d98ab5dec046bcad8a03cc47c1ed6ba961c210c81c9f2a7ac77ae35b8d7f378e",
+      "git_blob": "1a5e2d65f2af1aefcddcc347606851721f4e3055"
+    },
+    "engine/greybox/patterns/itzel_reyes_ortega.json": {
+      "sha256": "bdcf4cea7d46848f076d87ff82f8a712fc24723b718f63b1ac5b239eb05726e7",
+      "git_blob": "6e156c496e01d489a1d300a63bbe2ccdf2c21089"
+    },
+    "engine/greybox/patterns/jean_guy_moreau.json": {
+      "sha256": "cefe67a8e74f6ba0fdbf03d483a45eaa2d3e5f1c84663d108c3565885cbd4325",
+      "git_blob": "ebc32324f3bd372302c8f7052755acb2a41020f1"
+    },
+    "engine/greybox/patterns/marta_okonkwo_tremblay.json": {
+      "sha256": "b271039ed38d3fc8027eff016b7a01a2f4063f826712553287884cd432424350",
+      "git_blob": "d899769f8ffe7f1cd71e9a95e5e4787f919f10b8"
+    },
+    "engine/greybox/patterns/moira_macisaac.json": {
+      "sha256": "5d953a80f1a759bba36fa4b29efe61a83bd505e2cd2dba962073e22407da5801",
+      "git_blob": "d627b9cb80c1425c74627ac8f9234dfc279ca959"
+    },
+    "engine/greybox/patterns/remy_moreau.json": {
+      "sha256": "e192fe297f567f543b75f3c0ccc83cc0d2db8fe717b298d2a7b09fbaf0ba00de",
+      "git_blob": "2cca67f407bb776a307a1c1aa56001479c5555a0"
+    },
+    "engine/greybox/patterns/sam_tagaq.json": {
+      "sha256": "c998914687fae96020ecbf41e3ebaaf4266f0c994a45a243131fc4bfdc570ec9",
+      "git_blob": "b83960c3b6b0b107dcb39dce79692b43fc6ddb67"
+    },
+    "engine/greybox/patterns/sora_kannagi.json": {
+      "sha256": "238e209b54e864d8cfe0ebbe9821f1042a971fdfd45b38a2c79dbba880b86cb9",
+      "git_blob": "32839c8ad559212fdc46995419689061a90ff1e5"
+    },
+    "engine/greybox/patterns/tam_nguyen_roy.json": {
+      "sha256": "10971a89ee4d4a7c67a81ff1c83fc04a4c12be28dbd2c67dd2d16d7a39deac94",
+      "git_blob": "cf8f0b0e4bf4c6792feb6dbb22dfa0a02c3f2489"
+    },
+    "engine/greybox/patterns/yordanis_baro.json": {
+      "sha256": "604b82b0c4d501ed6ef8ffbbc50c5baf269bd108e5191a9310c0422841791f4c",
+      "git_blob": "5dafa59cdab92d8cf0f03489aaaba3f72f42ff07"
+    },
+    "engine/greybox/patterns/yuri_kowalchuk.json": {
+      "sha256": "9bffb23dfaa28e432375b2a03c6eac0c967ddbfd06cd55e34aefa7f410b5fefd",
+      "git_blob": "4ee91ad1ba7237ea79a40063e7f2eff5e4432c2d"
+    },
+    "engine/greybox/recruits.v1.json": {
+      "sha256": "84e61ab884026ff34f2bfca27351133bc8ca91261451924f5fc0d03de237ced1",
+      "git_blob": "6acdf905d27ef71d74ac7f3c066d1e42aaa15642"
+    },
+    "engine/greybox/remixes.v1.json": {
+      "sha256": "86ff24290c3e81a11ab4e0d27fd78ee97f2d3b6e41885806a717831662f0b96a",
+      "git_blob": "e984648e51144cf6f3b633344407cbbbc8793efc"
+    },
+    "engine/greybox/scrap_objectives.v1.json": {
+      "sha256": "22c261e5eadc1b362579d3b69a7d597e1fbd6ac33e6ed6a35393dba4c9994989",
+      "git_blob": "8888d73c2c6f34507ac59b78aef5a108723b30c6"
+    },
+    "engine/greybox/staff.v1.json": {
+      "sha256": "bb364109ca8f86ee6fdc2285c6e8d34554d10a5367924c460242fd52ef4459fa",
+      "git_blob": "999fb8f8d10b330f1da5f0ef40990bfb075ac896"
+    },
+    "engine/greybox/string_wall.v1.json": {
+      "sha256": "15bbd87a8be7562a71f50fbde6790943b9221e05f65e7b1e5d0b9f030f721423",
+      "git_blob": "09d70f9929e59e43b92f2aeda9f3578313492895"
+    },
+    "engine/greybox/tactics.v1.json": {
+      "sha256": "b3d60613954021c498951e891f3e32a47d12560b304f1a1fa5905895adfc0ca3",
+      "git_blob": "6bdba7bdca9d58e025aa259e3d3169893b88b4f1"
+    },
+    "engine/greybox/talk.v1.json": {
+      "sha256": "98b58377f1aa022bdfe8413fa442d12cfdec88ca9facd565036b533f0787ceb3",
+      "git_blob": "950118bb5e5397b08f02be9ec5d4cdfb217151a0"
+    },
+    "engine/greybox/techniques.v1.json": {
+      "sha256": "f0538a83be7377e44310c587351c1d2253e3a98864d4a170ec3497dd217185ef",
+      "git_blob": "b12d4bbd6d1826acf6da2acd502b81dca3cc4fd3"
+    },
+    "engine/greybox/transformations.v1.json": {
+      "sha256": "b69d92ff09a492d40fa8050a7c36810f29acd0b5b6af33cdb937d6ca3f218f4c",
+      "git_blob": "6a434ba8f55097c0ade64113779b1891776f266a"
+    },
+    "pbn/README.md": {
+      "sha256": "7501b429f0841eb7d12fa4e26aa4084e00542be4902a1657a786e7cab28a3568",
+      "git_blob": "32f583594eef5e3703bfa975abd0a9ad605c6821"
+    },
+    "pbn/ada_okafor.pbn": {
+      "sha256": "66ef8c1248a2392a29bdfa98dec3f855e9c1ff1630d14ed0cf05c0fb2ac9cc84",
+      "git_blob": "6919ff3350955abcf8b6a81423ae1c6457a912c6"
+    },
+    "pbn/alfie_crane.pbn": {
+      "sha256": "3207f4c7e7f038a136acd56740ac4bf3ebe5d3bd568e1c24a28019da1c04464b",
+      "git_blob": "2383d51fdca3b2a6706ce5a894016743ab1d83b3"
+    },
+    "pbn/anders_vey.pbn": {
+      "sha256": "a8804a6dd9aa64b15232fdfd3924d785b3b0749f9af38d06f487bd21efdb84dd",
+      "git_blob": "99bc4122a70c38c1705487eb73c49480f7e40a25"
+    },
+    "pbn/carter_okafor.pbn": {
+      "sha256": "244000560e3df9a2b69139a2e4837b334de5a9dbc87272eb86dadec717f829f1",
+      "git_blob": "7dccf6f9b9dec8b0c5a760972dc8007d90d626f4"
+    },
+    "pbn/cassidy_vane.pbn": {
+      "sha256": "7eac6137b0ab7ce8abeb0b1554681572aba90a540394dd26c83a39ec9e7e2b2a",
+      "git_blob": "8e3593330e3aa58803a132b594182205f5bbaeea"
+    },
+    "pbn/chiamaka_okafor.pbn": {
+      "sha256": "47f143741dc451ff260e860786710a4fab843faa3ac56e9331d6edfc30421918",
+      "git_blob": "94108c7fe18b8546f0cb7c4b6c02d4c8c334ff0f"
+    },
+    "pbn/commissioner_cal.pbn": {
+      "sha256": "d5c41810712f04de1ed16ea6fb8b976cbec5c8d3747e22eee4d935b88fd175c8",
+      "git_blob": "8f73067cfc2ee70208e65fdd346beb92bbb2653e"
+    },
+    "pbn/deshawn_vaughn.pbn": {
+      "sha256": "38ddd11a00f20c90b3a703ba67ece758e906645c4b94bb83bd81f9ffc331007b",
+      "git_blob": "0795839392921be9e804ceca1aff304bc6473b7b"
+    },
+    "pbn/efua_osei.pbn": {
+      "sha256": "ae402106e6f4d685cdcf5d76896ecf6b9165ab6c28d6c9ee8baef05a720080ea",
+      "git_blob": "e6c2eee5129abb4c28f3e4be6f9698fee8964b2b"
+    },
+    "pbn/hc0_surety.pbn": {
+      "sha256": "3398b405e7c64691aa0fd46f488b28d9218208c67a24d41d728e39d54331d727",
+      "git_blob": "55294fa858e804f95104730ef0935f8fab5fb750"
+    },
+    "pbn/hc4_cartographer.pbn": {
+      "sha256": "1385cc805f5ba611e35d6b2fc089ce32b0e42e1324fdd58e6d5f466c3498dbd5",
+      "git_blob": "4157bcfe994e9c1e8fa5b88aabdf116ef74b2925"
+    },
+    "pbn/hc7_echo.pbn": {
+      "sha256": "d2e7b352960ec6daed8afc128a5299b56737e28f9c67420505b16fe9d6ff2ffe",
+      "git_blob": "90f150526f4a4346729426bc2b622c8fb8b43c25"
+    },
+    "pbn/hc9_choir.pbn": {
+      "sha256": "2130f2612bbe2199352f315d5a7bf91560dccced15fdc0c8fc076b4a26186f5a",
+      "git_blob": "d392d12b99bc21b3e535606b8c87d59f7fe196e0"
+    },
+    "pbn/ioan_vasile.pbn": {
+      "sha256": "018b29b1c7853f6d1aa5db7f5d47058698f4b5d5a0f29779fbfa1a63a55443b6",
+      "git_blob": "b0d774971aecc217263fa9e3d11ff68ab4e39cae"
+    },
+    "pbn/itzel_reyes_ortega.pbn": {
+      "sha256": "3e84a38c685e8ab935e8941dde09040f18994cb775d95ee7e603b8d2a3ba6e04",
+      "git_blob": "f7702ef3df1ec2b5ecb9b80a9b8a9f9aa99240dd"
+    },
+    "pbn/jean_guy_moreau.pbn": {
+      "sha256": "2db3070d45a8249f8e88958799ebdce9a0bb51341dcf85194da0bdbf4d067895",
+      "git_blob": "915ddfe2d91b8ab0fb1f1ef853d83f8d2a3d166c"
+    },
+    "pbn/marta_okonkwo_tremblay.pbn": {
+      "sha256": "7edda663cbc6629a878eaa309ae5d9c620a8d4ad32ef66425265583b4a2df951",
+      "git_blob": "6c04aa9105de63c6cd29b0bb956e7d90e2e10d2d"
+    },
+    "pbn/moira_macisaac.pbn": {
+      "sha256": "b8f69bfe30d1649bddca060df6fda1c5199281d501c48ae5d7b69bafef1f01db",
+      "git_blob": "2d0eec76bc380476b8d293d713b74a3c7e5c92e8"
+    },
+    "pbn/pbn_compiler.py": {
+      "sha256": "0793d3841743bb5f6cb8451ba8b37bed040a961554e44cd4d13e350c4efdc40b",
+      "git_blob": "575bb8aabe74353890a1b0d90d756748ef1d75a1"
+    },
+    "pbn/remy_moreau.pbn": {
+      "sha256": "02c24ba4c6fa126b6088f43a26ef5fa277ba3ac1c479338be17eb2c644c54c16",
+      "git_blob": "0a00a32515547a6a1b1d9028e0d53d4aab41c10d"
+    },
+    "pbn/sam_tagaq.pbn": {
+      "sha256": "512d2a407734d3ace7c057b61b2f3db0d2a2e9cf5a14841918fab9e73f06814f",
+      "git_blob": "d52d448a1c0270784797bf051d9eab0cab182699"
+    },
+    "pbn/sora_kannagi.pbn": {
+      "sha256": "cdd31cf058e5ae2e75af6c11499db0340b3824e51a4d82b50fb533f4783a8bbb",
+      "git_blob": "a67ded590f213f9ad49e87017dc7dca0fa30fa55"
+    },
+    "pbn/tam_nguyen_roy.pbn": {
+      "sha256": "e8fd6780b67ee6c76372f7207e7981cbe13cd514a2c29132122b14445070c233",
+      "git_blob": "c68d166d370b44ac89678af3a3d2eaf36bdb7468"
+    },
+    "pbn/yordanis_baro.pbn": {
+      "sha256": "418255dd191a72a5423805f5dada1dde7b7d13d9926664f4a41a20f0dd806369",
+      "git_blob": "7e53b3ddc11ddda0f7de4b9ca0dbe80c08c3acd4"
+    },
+    "pbn/yuri_kowalchuk.pbn": {
+      "sha256": "e2dfa9bcdd60c7e97eb3ba198feae90b118033492d718d9e0ac58b7cede527ce",
+      "git_blob": "b9e95a948776dbacdf5e96141d56d1bb39d6562b"
+    }
+  },
+  "verification": {
+    "runtime_jobs": 56,
+    "runtime_passed": 56,
+    "all_24_bosses": "454/454 each",
+    "determinism": "57/57",
+    "progression_audit": "3/3",
+    "python": "44/44",
+    "input": "98/98",
+    "readability": "113/113",
+    "motion": "302/302",
+    "combat_loop_and_club_saves": "67/67",
+    "native_readiness": "152/152",
+    "gpu_30_144": "102/102",
+    "gpu_film_60": "52/52",
+    "native_sessions": 18,
+    "gpu_sessions": 18,
+    "all_gpu_histories_match_native": true,
+    "native_boundary_hashes": 7977,
+    "cohort_notes": "Runtime driver 151 checks preceded external-controller precondition and optional capture-only dispatch; native rerun 152 and final GPU 30/144 + 60 sessions cover these additions. Runtime presentation jobs ran after the camera fix; all core smoke sources were unchanged during the batch."
+  },
+  "session_summary": [
+    {
+      "case": "rory-yuri",
+      "events": {
+        "backstep": 39,
+        "block": 29,
+        "block_press": 24,
+        "boss_act": 57,
+        "bout_end": 1,
+        "bout_start": 1,
+        "card_pinned": 4,
+        "clinch": 2,
+        "clinch_beat": 8,
+        "clinch_cue": 8,
+        "clinch_end": 2,
+        "drop": 3,
+        "eight_beat": 6,
+        "eight_survived": 1,
+        "eight_up": 2,
+        "evade": 3,
+        "feed": 47,
+        "flag": 1,
+        "guard_break": 3,
+        "hit": 23,
+        "matchup": 2,
+        "perfect_block": 2,
+        "pi": 1,
+        "pi_count": 1,
+        "punch": 19,
+        "recover": 20,
+        "reward_toast": 1,
+        "sealed": 1,
+        "seg_end": 1,
+        "segment_ko": 1,
+        "sensor": 11,
+        "taunt_b": 5,
+        "tell": 23,
+        "traits": 2,
+        "unbroken": 2,
+        "whiff": 5,
+        "xp": 1
+      },
+      "fight_ticks": 5736,
+      "first_bad_camera": {},
+      "hz": 60,
+      "minimum_stamina": 73.4366666666763,
+      "modes": [
+        "FIGHT",
+        "EIGHT",
+        "OVER"
+      ],
+      "recovered_stamina": 47.7233333333228,
+      "zones": [
+        "CENTER",
+        "MID",
+        "ROPES",
+        "CORNER"
+      ],
+      "simulated_seconds": 52.833333333333336
+    },
+    {
+      "case": "priya-marta",
+      "events": {
+        "backstep": 135,
+        "block": 38,
+        "block_press": 49,
+        "boss_act": 87,
+        "bout_end": 1,
+        "bout_start": 1,
+        "card_pinned": 4,
+        "clinch": 3,
+        "clinch_beat": 12,
+        "clinch_cue": 12,
+        "clinch_end": 3,
+        "evade": 6,
+        "feed": 100,
+        "flag": 1,
+        "footwork_audio": 90,
+        "guard_break": 3,
+        "hit": 30,
+        "matchup": 2,
+        "perfect_block": 11,
+        "pi": 1,
+        "pi_count": 1,
+        "punch": 45,
+        "range_step": 1,
+        "recover": 54,
+        "reward_toast": 1,
+        "sealed": 1,
+        "seg_end": 1,
+        "sensor": 50,
+        "stance": 14,
+        "tell": 45,
+        "traits": 2,
+        "unbroken": 5,
+        "whiff": 7,
+        "xp": 1
+      },
+      "fight_ticks": 10962,
+      "first_bad_camera": {},
+      "hz": 60,
+      "minimum_stamina": 18.8150000000037,
+      "modes": [
+        "FIGHT",
+        "OVER"
+      ],
+      "recovered_stamina": 145.695,
+      "zones": [
+        "CENTER",
+        "MID",
+        "ROPES",
+        "CORNER"
+      ],
+      "simulated_seconds": 91.5
+    },
+    {
+      "case": "marcus-sam",
+      "events": {
+        "backstep": 118,
+        "block": 20,
+        "block_press": 38,
+        "boss_act": 103,
+        "bout_end": 1,
+        "bout_start": 1,
+        "card_pinned": 4,
+        "clinch": 6,
+        "clinch_beat": 24,
+        "clinch_cue": 24,
+        "clinch_end": 6,
+        "directive": 3,
+        "evade": 3,
+        "feed": 66,
+        "gauge": 21,
+        "hit": 18,
+        "matchup": 2,
+        "perfect_block": 1,
+        "phase": 2,
+        "pi": 1,
+        "pi_count": 1,
+        "punch": 28,
+        "recover": 46,
+        "reward_toast": 1,
+        "sealed": 1,
+        "seg_end": 1,
+        "sensor": 50,
+        "tell": 55,
+        "traits": 2,
+        "trial_met": 1,
+        "unbroken": 3,
+        "whiff": 7,
+        "xp": 1
+      },
+      "fight_ticks": 10888,
+      "first_bad_camera": {},
+      "hz": 60,
+      "minimum_stamina": 71.4491666666773,
+      "modes": [
+        "FIGHT",
+        "OVER"
+      ],
+      "recovered_stamina": 98.6899999999802,
+      "zones": [
+        "CENTER",
+        "MID",
+        "ROPES",
+        "CORNER"
+      ],
+      "simulated_seconds": 90.83333333333333
+    },
+    {
+      "case": "june-dual",
+      "events": {
+        "backstep": 111,
+        "block": 39,
+        "block_press": 49,
+        "boss_act": 128,
+        "card_pinned": 4,
+        "clinch": 5,
+        "clinch_beat": 16,
+        "clinch_cue": 16,
+        "clinch_end": 4,
+        "coach_action": 1,
+        "corner_open": 1,
+        "crowd": 2,
+        "directive": 3,
+        "drop": 3,
+        "eight_beat": 6,
+        "eight_survived": 1,
+        "eight_up": 2,
+        "enemy_corner": 1,
+        "evade": 4,
+        "feed": 78,
+        "flag": 1,
+        "gauge": 21,
+        "guard_break": 3,
+        "hit": 33,
+        "matchup": 2,
+        "phase": 2,
+        "pi": 1,
+        "pi_count": 1,
+        "punch": 38,
+        "recover": 54,
+        "relay_open": 1,
+        "sealed": 1,
+        "seg_card": 1,
+        "seg_end": 1,
+        "segment_ko": 1,
+        "sensor": 45,
+        "tactics_live_b": 1,
+        "taunt_b": 3,
+        "tell": 59,
+        "traits": 2,
+        "unbroken": 7,
+        "whiff": 8,
+        "xp": 1
+      },
+      "fight_ticks": 12488,
+      "first_bad_camera": {},
+      "hz": 60,
+      "minimum_stamina": 73.5691666666765,
+      "modes": [
+        "FIGHT",
+        "EIGHT",
+        "CARD",
+        "CORNER"
+      ],
+      "recovered_stamina": 109.049999999974,
+      "zones": [
+        "CENTER",
+        "MID",
+        "ROPES",
+        "CORNER"
+      ],
+      "simulated_seconds": 110.0
+    },
+    {
+      "case": "ep1-scrap",
+      "events": {
+        "backstep": 35,
+        "block": 30,
+        "block_press": 14,
+        "boss_act": 45,
+        "bout_end": 1,
+        "bout_start": 1,
+        "card_pinned": 4,
+        "clinch": 1,
+        "clinch_beat": 4,
+        "clinch_cue": 4,
+        "clinch_end": 1,
+        "drop": 1,
+        "eight_beat": 3,
+        "eight_survived": 1,
+        "eight_up": 1,
+        "evade": 2,
+        "feed": 25,
+        "generic": 1,
+        "guard_break": 1,
+        "hit": 20,
+        "matchup": 2,
+        "perfect_block": 1,
+        "punch": 10,
+        "recover": 15,
+        "reward_toast": 1,
+        "sealed": 1,
+        "seg_end": 1,
+        "sensor": 14,
+        "tell": 16,
+        "unbroken": 3,
+        "whiff": 2,
+        "xp": 1
+      },
+      "fight_ticks": 3706,
+      "first_bad_camera": {},
+      "hz": 60,
+      "minimum_stamina": 74.4033333333439,
+      "modes": [
+        "FIGHT",
+        "EIGHT",
+        "OVER"
+      ],
+      "recovered_stamina": 39.4933333333223,
+      "zones": [
+        "CENTER",
+        "MID",
+        "ROPES",
+        "CORNER"
+      ],
+      "simulated_seconds": 33.0
+    },
+    {
+      "case": "fatigue-recovery",
+      "events": {
+        "backstep": 209,
+        "block": 9,
+        "block_press": 13,
+        "boss_act": 79,
+        "bout_start": 1,
+        "card_pinned": 4,
+        "clinch": 1,
+        "clinch_beat": 4,
+        "clinch_cue": 4,
+        "clinch_end": 1,
+        "directive": 3,
+        "drop": 1,
+        "eight_beat": 3,
+        "eight_survived": 1,
+        "eight_up": 1,
+        "evade": 2,
+        "feed": 49,
+        "flag": 2,
+        "gauge": 15,
+        "hit": 25,
+        "matchup": 2,
+        "modifier_fallback": 8,
+        "phase": 2,
+        "power_open": 2,
+        "punch": 21,
+        "recover": 39,
+        "sealed": 1,
+        "sensor": 37,
+        "sprint": 26,
+        "tell": 39,
+        "traits": 2,
+        "unbroken": 4,
+        "whiff": 6
+      },
+      "fight_ticks": 7492,
+      "first_bad_camera": {},
+      "hz": 60,
+      "minimum_stamina": 0.100833333333333,
+      "modes": [
+        "FIGHT",
+        "EIGHT"
+      ],
+      "recovered_stamina": 122.65,
+      "zones": [
+        "CENTER",
+        "MID",
+        "ROPES",
+        "CORNER"
+      ],
+      "simulated_seconds": 65.0
+    }
+  ],
+  "defect_closure": [
+    {
+      "defect": "144 Hz clock fell one tick behind at exact 1/6-second boundaries",
+      "before": "baseline.log: divergent native histories",
+      "after": "native.log and render-rates.log: identical hashes/commands at 30/60/144; short-tick and hitch boundaries preserved"
+    },
+    {
+      "defect": "Close circling with lagging camera orbit crowded HUD",
+      "before": "previous-attempts.log: opponent head y=88.8-89.8",
+      "after": "18 GPU sessions retain full-body framing; sampled state images and sequence inspected"
+    },
+    {
+      "defect": "Live controller contaminated scripted keyboard film",
+      "classification": "test-environment contamination, not a game input bug",
+      "before": "trace-input shows InputEventJoypadMotion:0:5 held alongside released keyboard",
+      "after": "process-local SDL controller allowlist; empty controller registry asserted; all 18 GPU journals match native commands and hashes"
+    }
+  ],
+  "visual_review": {
+    "method": "Agent inspected six ordered frames from film seconds 9.5-10.5 plus full-resolution 30/144 Hz clinch, counter, rise, gassed, recovery and R2 fighter-swap captures.",
+    "findings": [
+      "Opponent and support chain remain visible below score and above lower HUD.",
+      "Opponent tell color and counter cue survive close exchanges and body overlap.",
+      "Clinch and standing-eight timing rings are readable; native cue taps resume exchanges.",
+      "Fatigue consumes actual resources and subsequent neutral movement recovers them without resets.",
+      "Dual resumes with the next roster fighter and the same input/presentation path."
+    ],
+    "continuous_human_viewing": false
+  },
+  "launch": {
+    "file": "Play True North Boxing.cmd",
+    "project": "engine/greybox",
+    "verification": "launcher.log; normal first-bell entry plus native Enter verified in both GPU and headless gates",
+    "requires": "Installed Godot 4; source launcher, not a standalone exported executable"
+  },
+  "capture_environment": {
+    "SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT": "0x0000/0x0000",
+    "scope": "Only automated capture child processes; no OS device or normal game configuration changes",
+    "reference": "https://wiki.libsdl.org/SDL3/SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT"
+  },
+  "boundaries": [
+    "Automated native keyboard events through main._process with real authored opponents, costs and fight sizes. No quiet/frozen boss, forced strings, composure refill, invulnerability or tuning edits in these sessions.",
+    "Initial session setup uses existing sim setup/start_spar/start_ep1 APIs; club and save journeys are additionally covered by drive_combat_loop.",
+    "State hashes are compared every 1/6 second; fight_ticks is a frame-end mode estimate and is not a human gameplay metric.",
+    "GPU rendering and scheduled frame partitions do not measure physical input-to-photon latency or hardware frame pacing.",
+    "Professional boxing authenticity, fun and complete ecosystem acceptance are not claimed. PAC-203/PAC-204 and OGM-025 remain open.",
+    "Windows root-certificate-store diagnostic and historical exit ObjectDB warnings are retained; no leak-free claim.",
+    "The shared video is compressed and silent; original frames and the raw movie remain in .PACER/PAC-202F. Audio event routing is covered by combat-loop checks, not listening acceptance."
+  ],
+  "failures_retained": [
+    "baseline.log",
+    "previous-attempts.log",
+    ".PACER/PAC-202F raw journals, logs and initial failed film AVI"
+  ],
+  "verified_at": "2026-09-29T11:26:12.087508+00:00",
+  "media": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "60/1",
+        "nb_frames": "26593"
+      }
+    ],
+    "format": {
+      "duration": "443.216667",
+      "size": "42804804"
+    }
+  },
+  "artifacts": {
+    "baseline.log": {
+      "sha256": "d7ae782af10566ccd85419221580fc4f3774f3143cd1b31e26d7467d29d2e961",
+      "bytes": 20071
+    },
+    "clinch-30hz.png": {
+      "sha256": "b87d8a2ef6101ffdcb20a975f9b1edfb009ce3380e7a98a6dacf285cb18a7e32",
+      "bytes": 112707
+    },
+    "combat.log": {
+      "sha256": "5d6485048272e519242b50a69d549e05d0e270da279a0b263c900a45e04f707a",
+      "bytes": 3237
+    },
+    "counter-144hz.png": {
+      "sha256": "feac010e8c86bbb4b02196f8c5f24ec99565ad0f9c4a7a2903311748437b1bf7",
+      "bytes": 106224
+    },
+    "dual-next-fighter-30hz.png": {
+      "sha256": "8e8115515906e8857fe86ec30f01a1221f51bf277fd73151c68d210659c8862b",
+      "bytes": 85024
+    },
+    "exchange-01.png": {
+      "sha256": "79436056f97fc2e962bf124ac2e67389a5af63830f28a02e62c4aacfda17b644",
+      "bytes": 355014
+    },
+    "exchange-02.png": {
+      "sha256": "f2e94bbf0dc8e6fc74cb25ab9afa7831b5cb32fe29878f37e1092523767cb57e",
+      "bytes": 368341
+    },
+    "exchange-03.png": {
+      "sha256": "73800061709204ad55e99717640205cbc9362b24672ef589ff4eeb501774b34f",
+      "bytes": 369612
+    },
+    "exchange-04.png": {
+      "sha256": "034fb07f4922917a2f627b4298b7ddddc7983eb3495f8ccb6c5b7e8c1c3eb34f",
+      "bytes": 371425
+    },
+    "exchange-05.png": {
+      "sha256": "de2258cc0ef8f3d7b70806530f509279bd8522c55824750f2639ea478514847b",
+      "bytes": 369703
+    },
+    "exchange-06.png": {
+      "sha256": "3feb64b315c76ce62be2ff5cc346af75d128a9be56b8f92fe1eb0474d855a40e",
+      "bytes": 344255
+    },
+    "film-sessions.json": {
+      "sha256": "87136b815614ddfe75399f2079f38be372964fda3c1e8dfd40d5c9d51b29fd8a",
+      "bytes": 182772
+    },
+    "film.log": {
+      "sha256": "868e94bae693dc88b3271ed1c9a8094c6edd9335da091999ca66353b73f2c6de",
+      "bytes": 8449
+    },
+    "gassed-144hz.png": {
+      "sha256": "aa57834f0f2595852e1ad3af537360825e9bc93d84848ae9568de9d74f761aa4",
+      "bytes": 112139
+    },
+    "input-evidence.json": {
+      "sha256": "53ad3fb8b540df6a77f4803cbf3f83acbe2567879e8d8439c92728e7b48b2a22",
+      "bytes": 10643
+    },
+    "input.log": {
+      "sha256": "d1c890734326e0bfc3b358db8140fde427eab5df1670c74f85b7e24bb07cf7b5",
+      "bytes": 4199
+    },
+    "launcher.log": {
+      "sha256": "b07370491c3ff7c5abf980df63ab6fda9175e7ba9bf6f479731c7abbebbdf144",
+      "bytes": 345
+    },
+    "motion.log": {
+      "sha256": "16cb54804e29735c749c959bb47a4c7ab4ef11886251fafc4e9894c5bc80beb6",
+      "bytes": 28217
+    },
+    "native-sessions.json": {
+      "sha256": "3a7826d6150e59f3914647eee452016655460c5e52308616978a83d82a9e6b8e",
+      "bytes": 548203
+    },
+    "native.log": {
+      "sha256": "ab72d11a1ab6501728a70875de62a327fd336598f97995a868c40cdbbdc0ce35",
+      "bytes": 22610
+    },
+    "presentation-evidence.json": {
+      "sha256": "463ac68f700d0497fa67bda00dc416db5093ea47cddeb943b64c12de7bc6515f",
+      "bytes": 10773
+    },
+    "previous-attempts.log": {
+      "sha256": "ed31f966b25e0bc38f5ae3a9699d1eaed16a435fa637b71d28e8a9c5a0a58ea7",
+      "bytes": 43124
+    },
+    "python-tests.log": {
+      "sha256": "719dafca1cf39b7b921d3956e80da02051d0aa70722aebf17a2a8d8fd74620bf",
+      "bytes": 5745
+    },
+    "readability.log": {
+      "sha256": "6d0b4f111bbb9b9b8886e0ff10da7260714a7482d74fa92caa66f3c9a3c5623c",
+      "bytes": 6176
+    },
+    "readiness-game-speed.mp4": {
+      "sha256": "f4cd844cfca3376fb74c50fffbd8a0dc7c7e9ab25bdafbdee5ab9a0e8af2e3e8",
+      "bytes": 42804804
+    },
+    "recovery-144hz.png": {
+      "sha256": "ea7941bac993fd24253c82865d2ae72ff695a3bd52186fb3aa06b6d09a22e42f",
+      "bytes": 107835
+    },
+    "render-rates.log": {
+      "sha256": "05122ee24431f5e429a2819c3ee2dac479d87ae5129fddf736351990a97f3180",
+      "bytes": 15304
+    },
+    "render-sessions.json": {
+      "sha256": "c0d885c2b346a132223f8212e7d6b2eb10787a315f910f5be790c1c82ca99cbe",
+      "bytes": 365495
+    },
+    "rise-144hz.png": {
+      "sha256": "8f2bbe07237fe67fb45b80496b028c1b45053dc162076bbdd7c649b2b82841fb",
+      "bytes": 132701
+    },
+    "runtime-evidence.json": {
+      "sha256": "2fbb39c966fd368db667365f3a91f85d05854eca91778daed224787b5c955e2b",
+      "bytes": 13095
+    },
+    "runtime-results.json": {
+      "sha256": "a4cceff4bbad462bad0447baafbad32b1aad22616c7ab7e2d5264c7a3e06aa6d",
+      "bytes": 48137
+    }
+  }
+}

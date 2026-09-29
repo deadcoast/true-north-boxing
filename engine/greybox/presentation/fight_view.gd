@@ -453,7 +453,12 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	var angle := atan2(orbit.x, orbit.z)
 	angle = rotate_toward(angle, atan2(wanted.x, wanted.z), deg_to_rad(70.0) * elapsed)
 	orbit = Vector3(sin(angle), 0, cos(angle)); last_tick = tick
-	var chase := maxf(CHASE, 2.8 - player.position.distance_to(opponent.position))
+	# The capped orbit can lag behind close circling. Subtracting fighter
+	# distance assumes they remain collinear with it and can crowd the HUD.
+	# Solve the chase ray against the minimum opponent framing radius instead.
+	var separation := player.position - opponent.position
+	var along := separation.dot(orbit)
+	var chase := maxf(CHASE, -along + sqrt(maxf(0, along * along + 2.8 * 2.8 - separation.length_squared())))
 	camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + HEAD_CLEARANCE)
 	# At close contact a stale orbit can cross the opponent: use the current
 	# chase direction for safety. Ordinary circling stays rate-limited.

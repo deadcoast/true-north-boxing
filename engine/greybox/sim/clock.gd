@@ -12,8 +12,11 @@ var acc := 0.0
 
 func advance(delta: float) -> int:
 	acc += minf(maxf(delta, 0.0), MAX_FRAME)
-	var n := int(floor(acc / TNBSim.DT))
-	acc -= float(n) * TNBSim.DT
+	# Equivalent frame partitions can land a few ulps below a tick (e.g. six
+	# 144 Hz frames). Do not postpone an input boundary for rounding residue.
+	# The tolerance is in ticks: less than 9 picoseconds, not an early frame.
+	var n := int(floor(acc / TNBSim.DT + 1e-9))
+	acc = maxf(0.0, acc - float(n) * TNBSim.DT)
 	return n
 
 func alpha() -> float:
