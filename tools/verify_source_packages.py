@@ -36,7 +36,7 @@ def main(argv=None):
         appdata = output / "user-data" / name
         appdata.mkdir(parents=True, exist_ok=True)
         env = dict(os.environ, APPDATA=str(appdata), LOCALAPPDATA=str(appdata))
-        command = [str(args.godot.resolve()), "--headless", "--log-file",
+        command = [str(args.godot.resolve()), "--headless", "--audio-driver", "Dummy", "--log-file",
                    str(output / (name + ".engine.log")), "--path",
                    str(root / "engine/greybox"), *flags, "--", *command_args]
         try:

@@ -44,6 +44,15 @@ the native journey, rendered captures, performance samples and remaining demo
 acceptance limits. Automated boxing and source checks do not establish new-player
 playtime, professional animation quality or physical input-to-screen latency.
 
+Automated runs must use `--audio-driver Dummy`, including rendered screenshot
+and playthrough drivers. `tools/verify_source_packages.py` sets it for every
+child process. The game also mutes its process-local Master bus before audio
+starts when launched by a `drive_*.gd` script or an automated regression mode.
+Normal player launches retain sound; no Windows mixer or saved audio setting is
+changed. Keep the silent driver flag in new automation commands.
+The [continuation report](evidence/PAC-204/continuation/episode-evidence.json)
+records the silent-output checks and playable opening/letter/verdict refinements.
+
 ```powershell
 uv run --no-sync --locked python pacer_views.py --ready
 uv run --no-sync --locked python pacer_validator.py

@@ -5,6 +5,7 @@ const World := preload("res://episode/harbourline.gd")
 const Save := preload("res://sim/save.gd")
 const Locale := preload("res://episode/locale.gd")
 const Staging := preload("res://episode/staging.gd")
+const RigSpace := preload("res://presentation/rig_space.gd")
 const SAVE_PATH := "user://tnb_episode.json"
 var scene: Node
 var sandbox_sim
@@ -43,6 +44,11 @@ var episode_environment: WorldEnvironment
 var sandbox_environment: Environment
 var staging: Node
 var archive_drop := {}
+var handoff_t := -1.0
+var handoff_camera := Transform3D.IDENTITY
+var handoff_fov := 40.0
+var handoff_rotation := Quaternion.IDENTITY
+var handoff_parts: Array = []
 
 func text(en: String, fr: String) -> String: return fr if language == "fr_CA" else en
 
@@ -156,6 +162,7 @@ func new_episode(lang: String) -> void:
 	if FileAccess.file_exists(SAVE_PATH) and DirAccess.copy_absolute(SAVE_PATH, SAVE_PATH + ".previous") != OK:
 		status = text("Could not preserve the previous episode. New episode was not started.", "Impossible de conserver l’épisode précédent. Nouvelle partie annulée."); _title(); return
 	language = lang; _language(); scene.sim = Campaign.fresh(scene.content, language, 1976)
+	handoff_t = -1; handoff_parts.clear()
 	scene.controls_menu.practice.disabled = true
 	scene.club_flow.enabled = false; scene.club_flow.close(); scene.fight_hud.dismiss_entry()
 	world.restore([0.0, 6.0]); world.sync(scene.sim); _dialogue("archive")
@@ -190,7 +197,7 @@ func next_line() -> void:
 	_ep()["dialogue"] = ""; _ep()["line"] = 0
 	match id:
 		"archive": Campaign.archive(scene.sim); _fight()
-		"present": _training("shadow", true)
+		"present": _shadow_handoff()
 		"letter": Campaign.mark(scene.sim, "letter"); _world()
 		"priya": _start_bout("priya_trial")
 		"priya_join": Campaign.join(scene.sim, "PRIYA"); _world()
@@ -405,6 +412,51 @@ func _training_prompt(game: String) -> void:
 	_button("train", text("Start coaching drill", "Commencer la leçon"), func(): _training(game, false))
 	_button("back", text("Back", "Retour"), _world)
 
+func _shadow_handoff() -> void:
+	# The raised glove and camera continue into the existing responsive boxing
+	# rig. Blend presentation only; no simulated punch or lesson credit is given.
+	var at: Vector3 = world.actor.global_position
+	handoff_camera = world.camera.global_transform; handoff_fov = world.camera.fov
+	handoff_rotation = world.actor.quaternion
+	handoff_parts.clear()
+	for key in ["head", "mesh", "hips", "neck", "abdomen", "gloves", "arms", "legs", "upper_arms", "thighs", "boots", "joints", "clavicles"]:
+		var from = world.actor.get_meta(key); var to = scene.player.get_meta(key)
+		if from is Array:
+			for i in from.size(): handoff_parts.append({"node":to[i], "from":from[i].transform})
+		else: handoff_parts.append({"node":to, "from":from.transform})
+	_training("shadow", true)
+	transition_t = 0; handoff_t = 0
+	scene.sim.P["pos"] = Vector2(at.x, at.z) / RigSpace.GROUND_SCALE
+	scene.sim.B["pos"] = scene.sim.P["pos"] + Vector2(0, -3)
+	scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]
+	scene.cam.make_current(); scene._render(1.0)
+	save_episode()
+
+func finish_frame() -> void:
+	if not active or state != "training" or training.get("game") != "shadow": return
+	if handoff_t >= 0:
+		var pose_weight := smoothstep(0.0, 0.22, handoff_t)
+		scene.player.quaternion = handoff_rotation.slerp(scene.player.quaternion, pose_weight)
+		for part in handoff_parts:
+			var node: Node3D = part["node"]
+			node.transform = (part["from"] as Transform3D).interpolate_with(node.transform, pose_weight)
+	# Keep Rory's world identity throughout. His visible rig follows the real
+	# combat pose; the opponent-visibility silhouette has no purpose in shadowwork.
+	scene.player.hide(); world.actor.show()
+	world.actor.global_transform = scene.player.global_transform
+	for key in ["head", "mesh", "hips", "neck", "abdomen", "gloves", "arms", "legs", "upper_arms", "thighs", "boots", "joints", "clavicles"]:
+		var from = scene.player.get_meta(key); var to = world.actor.get_meta(key)
+		if from is Array:
+			for i in from.size(): to[i].transform = from[i].transform
+		else: to.transform = from.transform
+	scene.cam.global_position = scene.player.global_position + Vector3(3.5, 2.4, 4.5)
+	scene.cam.look_at(scene.player.global_position + Vector3.UP)
+	scene.cam.fov = 55
+	if handoff_t >= 0:
+		var camera_weight := smoothstep(0.0, 0.65, handoff_t)
+		scene.cam.global_transform = handoff_camera.interpolate_with(scene.cam.global_transform, camera_weight)
+		scene.cam.fov = lerpf(handoff_fov, 55, camera_weight)
+
 func _training(game: String, intro: bool) -> void:
 	training = {"game":game, "intro":intro, "t":0.0, "score":0.0, "beats":0, "hit":false, "accepted":0, "sequence":["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_HOOK", "L_UPPERCUT", "R_UPPERCUT"], "index":0}
 	_ep()["training"] = training; _ep()["phase"] = "shadow" if intro else "world"
@@ -423,6 +475,9 @@ func _training(game: String, intro: bool) -> void:
 		_fight(); state = "training"; _ep()["fight"] = ""; scene.set_practice(true)
 		scene.boss.visible = game == "mitts"; scene.sim.P["pos"] = Vector2(0, 0.8); scene.sim.B["pos"] = Vector2(0, -0.8)
 		quest.text = ""; hint.text = ""
+		if game == "shadow":
+			scene.get_meta("arena").hide(); scene.fight_hud.hide()
+			quest.position = Vector2(26, 30)
 	save_episode()
 
 func training_tap() -> void:
@@ -544,6 +599,9 @@ func _end_card() -> void:
 
 func advance(delta: float) -> bool:
 	if not active: return false
+	if handoff_t >= 0:
+		handoff_t += delta
+		if handoff_t >= 0.65 or state != "training": handoff_t = -1; handoff_parts.clear()
 	# Presentation has its own clock; pausing or opening controls never consumes
 	# a shot, a name-sized audio hole or the live simulation underneath it.
 	if not scene.controls_menu.opened: staging.frame(delta)
@@ -566,7 +624,7 @@ func advance(delta: float) -> bool:
 			if state == "dialogue" and buttons.has("next"):
 				buttons["next"].disabled = false
 				panel.show(); hint.text = text("Enter / A · continue", "Entrée / A · continuer")
-				if (_ep()["dialogue"] == "archive" and int(_ep()["line"]) == 1) or (_ep()["dialogue"] == "tag" and int(_ep()["line"]) == 2):
+				if _ep()["dialogue"] == "present" or (_ep()["dialogue"] == "archive" and int(_ep()["line"]) == 1) or (_ep()["dialogue"] == "tag" and int(_ep()["line"]) == 2):
 					vignette.color.a = 0; next_line()
 			elif state == "freeze":
 				vignette.color.a = 0; scene.sim = Campaign.present(scene.content, scene.sim); _show_world(); _dialogue("present")
@@ -669,6 +727,7 @@ func _load_episode_path(path: String) -> void:
 	scene.controls_menu.practice.disabled = true
 	language = ep["language"]; _language(); world.restore(ep["position"]); world.visited = ep.get("visits", []).duplicate(); world.sync(scene.sim)
 	training = {}; pending.assign(ep.get("pending_events", [])); freeze_t = 0
+	handoff_t = -1; handoff_parts.clear()
 	if ep.get("dialogue", "") != "": _show_world(); _dialogue(ep["dialogue"], true)
 	elif ep.get("training", {}).size() > 0:
 		var saved: Dictionary = ep["training"].duplicate(true); _training(saved["game"], saved["intro"]); training = saved; _ep()["training"] = training

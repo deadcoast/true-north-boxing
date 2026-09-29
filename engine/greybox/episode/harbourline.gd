@@ -229,7 +229,7 @@ func sync(sim) -> void:
 	var letter := _box(Vector3(0.55, 0.8, 0.04), Vector3(-6.1, 1.7, -5.18), Color("ece2bd")); letter.reparent(cards)
 	for i in sim.stable.size():
 		var card := _box(Vector3(0.4, 0.6, 0.06), Vector3(-5.65 + i * 0.42, 1.35, -4.7), Color("e2c78e"))
-		card.reparent(cards)
+		card.reparent(cards); card.name = "card_" + str(sim.stable[i]["name"])
 		var label := _label(str(sim.stable[i]["name"]), card.position + Vector3(0, 0.5, 0), 17); label.reparent(cards)
 	if sim.rewards.get("episode", {}).get("flags", {}).get("survival", false):
 		var carbon := _box(Vector3(0.55, 0.8, 0.04), Vector3(-4.7, 1.6, -5.18), Color("a8c8e1")); carbon.reparent(cards); carbon.name = "charter"

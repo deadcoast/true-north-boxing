@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+[PASS] normal player entry keeps its audio choice: []
+[PASS] normal player entry keeps its audio choice: ["episode"]
+[PASS] normal player entry keeps its audio choice: ["club"]
+[PASS] normal player entry keeps its audio choice: ["welcome"]
+[PASS] direct automation recognized: ["--headless"]
+[PASS] direct automation recognized: ["-s", "tools/drive_episode.gd"]
+[PASS] direct automation recognized: ["--script", "C:\\game\\tools\\drive_readiness.gd"]
+[PASS] direct automation recognized: ["-s", "res://tools/drive_club_journey.gd"]
+[PASS] automated main-scene mode recognized: automation
+[PASS] automated main-scene mode recognized: smoke
+[PASS] automated main-scene mode recognized: determinism
+[PASS] automated main-scene mode recognized: geometry
+[PASS] automated main-scene mode recognized: audit
+[PASS] automated main-scene mode recognized: faucets
+[PASS] automated main-scene mode recognized: demo
+[PASS] ordinary script path is not a test driver
+[PASS] new process mutes Master before the title is ready
+[PASS] archive ambience still plays behind the output mute
+[PASS] sound feedback remains exercised without unmuting output
+AUTOMATION AUDIO 19 checks; 0 failures
+DRIVE :: GREEN

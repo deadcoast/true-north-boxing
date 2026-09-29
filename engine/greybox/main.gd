@@ -306,6 +306,9 @@ func _pair_cards(arg: String) -> Array:
 	return out
 
 func _ready() -> void:
+	# Apply before constructing any feedback or ambience players. This also
+	# protects manually launched GPU drivers that omitted --audio-driver Dummy.
+	preload("res://tools/automation_audio.gd").configure()
 	var args := OS.get_cmdline_user_args()
 	combat_input.load_settings()
 	practice_dummy = "dummy" in args
@@ -1153,6 +1156,7 @@ func _render(alpha: float) -> void:
 		partner_view.pose(partner, q.P, q.B, q, "P", alpha)
 		partner_view.pose(partner_boss, q.B, q.P, q, "B", alpha)
 	fight_view.frame(cam, player, boss, sim.tick, ring_boundaries)
+	if episode != null: episode.finish_frame()
 
 func _pose(n: Node3D, fighter: Dictionary, other: Dictionary) -> void:
 	fight_view.pose(n, fighter, other, sim, "P" if n == player else "B")

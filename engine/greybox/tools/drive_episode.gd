@@ -89,14 +89,40 @@ func _dialogue() -> void:
 				_check("letter is physically moved: " + shot, episode.staging.paper.position != first)
 			await _capture("shot-" + shot.replace(":", "-"))
 			if shot == "tag:2":
-				for i in 210: _tick()
+				for i in 310: _tick()
 				_check("Priya carries the carbon copy to its permanent wall position", episode.staging.paper.position.distance_to(Vector3(-4.7, 1.6, -5.18)) < 0.01)
+				_check("June straightens her own persistent card", absf(episode.world.cards.get_node("card_JUNE").rotation.z) < 0.001)
 				await _capture("carbon-pinned")
 		if shot == "present:0":
 			_check("present glove matches the archive camera", episode.world.camera.global_transform.is_equal_approx(episode.staging.archive_camera) and episode.world.camera.fov == 40)
 			_check("present holds the same raised glove", episode.world.actor.get_meta("gloves")[1].position.y > 2.0)
 			await _capture("match-cut")
 		while episode.freeze_t > 0: _tick()
+		if shot == "letter:11": _check("Whitlock folds the sheet before pinning it", is_equal_approx(episode.staging.fold.rotation.z, PI))
+		if shot == "letter:11": await _capture("letter-pinned")
+		if shot == "tag:0":
+			_check("observer signs the original and separates the handed-over carbon", episode.staging.signature.scale.x == 1 and episode.staging.paper.position.distance_to(episode.staging.form.position) > 0.5)
+		if shot == "present:0":
+			_check("match cut transfers automatically to live shadow boxing", episode.state == "training" and episode.handoff_t >= 0 and not episode.panel.visible)
+			_check("shadow boxing keeps the gym visible without a competition overlay", not scene.get_meta("arena").visible and not scene.fight_hud.visible and not scene.boss.visible)
+			var t: float = episode.handoff_t; var tick: int = scene.sim.tick
+			_key(KEY_ESCAPE, true); _key(KEY_ESCAPE, false)
+			for i in 15: _tick()
+			_check("controls pause both handoff and combat", scene.controls_menu.opened and episode.handoff_t == t and scene.sim.tick == tick)
+			_key(KEY_ESCAPE, true); _key(KEY_ESCAPE, false)
+			for i in 3: _tick()
+			_check("idle handoff grants no punches or lesson credit", episode.training["accepted"] == 0 and not episode._ep()["flags"].get("shadow", false))
+			_held([KEY_J])
+			for i in 6: _tick()
+			_held([])
+			_check("a real jab is accepted while the camera is still blending", episode.handoff_t >= 0 and episode.training["accepted"] > 0)
+			_check("live shadow boxer retains Rory's opaque world identity", episode.world.actor.visible and not scene.player.visible and episode.world.actor.global_transform.is_equal_approx(scene.player.global_transform))
+			await _capture("live-shadow-handoff")
+			_key(KEY_F10, true); _key(KEY_F10, false)
+			var accepted: int = episode.training["accepted"]
+			episode.load_episode()
+			_check("continue restores earned shadow punches without replaying the handoff", episode.state == "training" and episode.training["accepted"] == accepted and episode.handoff_t < 0)
+			return
 		if shot == "archive:1": _check("tape sound hole lasts exactly a second", is_equal_approx(episode.staging.sound_hole_seconds, 1.0) and not episode.staging.ambience.stream_paused)
 		if not await _press("next"): return
 	_check("dialogue has a finite authored end", false)
@@ -317,6 +343,7 @@ func _run() -> void:
 	root.size = Vector2i(1280, 720)
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
 	episode = scene.episode; scene.club_flow.set_process(false)
+	_check("automated episode output is muted before playback", AudioServer.is_bus_mute(0))
 	await process_frame; await process_frame
 	_check("normal episode entry pauses simulation", episode != null and episode.state == "title" and scene.sim.tick == 0)
 	await _capture("title")
@@ -370,6 +397,7 @@ func _run() -> void:
 	_finish()
 
 func _finish() -> void:
+	_check("automated episode cannot leave its output unmuted", AudioServer.is_bus_mute(0))
 	var report := {"checks":checks, "failures":failures, "journal":journal, "captures":captures, "frames":frame, "accelerated_frames_nominal_seconds":frame / 60.0, "episode_metrics":episode._ep().get("metrics", {}), "performance":performance_samples, "wall_ms":Time.get_ticks_msec() - started, "population":"One automated native-input implementer journey. Not new-player or physical input-to-photon evidence."}
 	var file := FileAccess.open("user://episode-journey.json", FileAccess.WRITE); file.store_string(JSON.stringify(report, "  ")); file.close()
 	print("EPISODE JOURNEY ", checks, " checks; ", failures.size(), " failures; ", ProjectSettings.globalize_path("user://episode-journey.json"))
