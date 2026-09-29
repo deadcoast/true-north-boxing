@@ -79,6 +79,17 @@ func _run() -> void:
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
 	await process_frame
 	scene.controls_menu.close(); scene.begin_fight(false)
+	if "film" in OS.get_cmdline_user_args():
+		await _exchange_film()
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "transitions-only" in OS.get_cmdline_user_args():
+		await transitions()
+		print("TRANSITIONS VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	await _connected_combinations()
+	if "combinations-only" in OS.get_cmdline_user_args():
+		print("COMBINATIONS VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
 	await planted_movement()
 	if "footwork-only" in OS.get_cmdline_user_args():
 		print("FOOTWORK VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
@@ -181,10 +192,14 @@ func _run() -> void:
 func transitions() -> void:
 	# Real key edges go through the same adapter as play. The opponent's isolated
 	# straight creates an observable evade/counter window; no counter flag is set.
-	for pair in [[KEY_Q, "SLIP_L"], [KEY_E, "SLIP_R"], [KEY_DOWN, "DUCK"], [KEY_V, "WEAVE_R"], [KEY_B, "LEAN"]]:
+	for pair in [[KEY_Q, "SLIP_L"], [KEY_E, "SLIP_R"], [KEY_DOWN, "DUCK"], [KEY_V, "WEAVE_R"], [KEY_B, "LEAN"], [KEY_SPACE, "PERFECT_BLOCK"], [KEY_S, "STEP_OUT"]]:
 		fresh()
 		if pair[1] == "LEAN":
 			tests.place(scene.sim, 2.2); scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
+		if pair[1] == "STEP_OUT":
+			tests.place(scene.sim, float(scene.sim.contact_region(scene.sim.B, scene.sim.P, "R_STRAIGHT", false)["reach"]) - 0.03)
+			scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
+			scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
 		key(pair[0], true)
 		var last := snapshot(); var jump := 0.0
 		for tick in 12:
@@ -195,12 +210,16 @@ func transitions() -> void:
 		key(pair[0], false)
 		scene.sim.bpending = {"row": "R_STRAIGHT", "body": false}; scene.sim._land_boss_punch(1.0)
 		var earned: bool = scene.sim.P["counter_t"] > 0
-		scene._consume_events(); key(KEY_W, pair[1] == "LEAN"); key(KEY_K, true)
+		scene._consume_events(); key(KEY_W, pair[1] in ["LEAN", "STEP_OUT"]); key(KEY_K, true)
 		var landed := false
 		for tick in 100:
 			var events := native_step()
 			if tick == 0: tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
 			var now := snapshot()
+			if pose_jump(last, now) >= 0.25:
+				print("COUNTER DISCONTINUITY ", pair[1], " tick=", tick, " attack=", scene.fight_view.attacks.get("P"), " positions=", scene.sim.P["pos"], " / ", scene.sim.B["pos"])
+				for part in now.size():
+					if last[part].origin.distance_to(now[part].origin) >= 0.25: print("COUNTER PART ", part, " from=", last[part].origin, " to=", now[part].origin)
 			for i in now.size(): jump = maxf(jump, now[i].origin.distance_to(last[i].origin))
 			last = now
 			for event in events:
@@ -209,6 +228,29 @@ func transitions() -> void:
 		if not (earned and landed): print("COUNTER DETAIL ", pair[1], " earned ", earned, " landed ", landed)
 		check(pair[1] + " native defense earns and delivers a counter", earned and landed)
 		check(pair[1] + " counter keeps the whole-body transition continuous", jump < 0.25)
+	# No counter for stationary distance, starting already out of range, or
+	# stopping the retreat before the opponent commits. An origin is spent once.
+	for mode in ["stationary", "outside", "stopped", "consumed", "approach", "circle", "reversed"]:
+		fresh(); scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
+		var reach: float = scene.sim.contact_region(scene.sim.B, scene.sim.P, "R_STRAIGHT", false)["reach"]
+		tests.place(scene.sim, reach + (0.1 if mode in ["stationary", "outside", "approach"] else -0.03))
+		if mode == "circle": tests.place(scene.sim, reach - 0.0001); key(KEY_A, true)
+		key(KEY_S, mode not in ["stationary", "circle"])
+		for i in 12: native_step()
+		if mode == "stopped": key(KEY_S, false); native_step()
+		if mode == "reversed": key(KEY_S, false); key(KEY_W, true); native_step()
+		if mode == "approach": scene.sim.B["pos"] += (scene.sim.P["pos"] - scene.sim.B["pos"]).normalized() * 0.2
+		if mode == "consumed":
+			var restored = tests.make_sim(0, 731)
+			var restore_result: Dictionary = restored.restore(scene.sim.snapshot())
+			check("active retreat eligibility survives save and deterministic hash", restore_result.get("ok", false) and restored.hash_state() == scene.sim.hash_state() and restored.P.get("range_step_from") == scene.sim.P.get("range_step_from"))
+			restored.bpending = {"row": "R_STRAIGHT", "body": false}; restored._land_boss_punch(1.0)
+			scene.sim.bpending = {"row": "R_STRAIGHT", "body": false}; scene.sim._land_boss_punch(1.0)
+			check("step-out grants the authored RFX-scaled window", scene.sim.P["counter_t"] == scene.sim._window("range_step"))
+			check("restored retreat earns the same counter window", restored.P["counter_t"] == scene.sim.P["counter_t"])
+			scene.sim.P["counter_t"] = 0
+		scene.sim.bpending = {"row": "R_STRAIGHT", "body": false}; scene.sim._land_boss_punch(1.0)
+		check("range counter rejects " + mode + " retreat credit", scene.sim.P["counter_t"] == 0)
 	fresh(); key(KEY_SPACE, true)
 	for tick in 12: native_step()
 	var covered: float = scene.player.get_meta("kinematics")["guard"]
@@ -259,6 +301,148 @@ func pose_jump(before: Array, after: Array) -> float:
 func force_tell(string: String) -> void:
 	scene.sim.events.clear(); scene.sim._force_string(string, 1.0, false)
 	scene._consume_events(); scene._render(1)
+
+func _anatomy_ok(rig: Dictionary) -> bool:
+	for i in 2:
+		if absf(rig["shoulders"][i].distance_to(rig["elbows"][i]) - Motion.UPPER_ARM) > 0.00001: return false
+		if absf(rig["elbows"][i].distance_to(rig["wrists"][i]) - Motion.FOREARM) > 0.00001: return false
+		if absf(rig["hip_joints"][i].distance_to(rig["knees"][i]) - Motion.THIGH) > 0.00001: return false
+		if absf(rig["knees"][i].distance_to(rig["ankles"][i]) - Motion.SHIN) > 0.00001: return false
+	return true
+
+func _exchange_film() -> void:
+	# --write-movie at 60 fps records exactly two fixed 120 Hz combat steps per
+	# frame. This is an isolated native-input exchange, not an AI/player trial.
+	fresh(); scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
+	scene.sim.B["comp"] = 10000; scene.sim.B["comp_max"] = 10000
+	var opaque_materials := {}
+	if "side" in OS.get_cmdline_user_args():
+		for part in scene.player.get_children():
+			if part is MeshInstance3D:
+				var opaque: StandardMaterial3D = part.mesh.material.duplicate()
+				opaque.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED; opaque_materials[part] = opaque
+	var sequence := [KEY_J, KEY_K, KEY_U, KEY_O, KEY_J, KEY_J, KEY_I, KEY_N, KEY_K, KEY_K, KEY_Y, KEY_L]
+	var issued := 0; var fired := 0; var journal := []; var fixed := true
+	key(KEY_SPACE, true)
+	for frame in 900:
+		for substep in 2:
+			if scene.sim.tick > 8 and issued < sequence.size() and fired == issued and scene.sim.P["pending"].is_empty() and scene.sim.P["busy_t"] <= 3:
+				if issued > 0: key(sequence[issued - 1], false)
+				key(KEY_C, issued % 4 == 3); key(KEY_SHIFT, issued in [2, 8]); key(KEY_ALT, issued == 6)
+				if issued == 6: scene.combat_input.since["windup"] = Time.get_ticks_usec() - 200000
+				key(sequence[issued], true); issued += 1
+				tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
+			var events := native_step()
+			for event in events:
+				if event.get("kind") == "punch": fired += 1
+				if event.get("kind") in ["punch", "hit", "block"]: journal.append({"frame": frame, "time_s": frame / 60.0, "event": event})
+			fixed = fixed and _anatomy_ok(scene.player.get_meta("kinematics")) and rigid_render(scene.player)
+		scene._render(0.5)
+		var production_materials := {}
+		if "side" in OS.get_cmdline_user_args():
+			scene.cam.position = scene.player.position + Vector3(3.7, 1.8, 1.1); scene.cam.look_at(scene.player.position + Vector3.UP * 0.9)
+			for part in opaque_materials:
+				production_materials[part] = part.material_override; part.material_override = opaque_materials[part]
+		await process_frame; await RenderingServer.frame_post_draw
+		if frame % 30 == 0: root.get_texture().get_image().save_png("user://film-%04d.png" % frame)
+		# The next production frame updates ShaderMaterial uniforms. Restore
+		# those materials immediately after this inspection frame is drawn.
+		for part in production_materials: part.material_override = production_materials[part]
+		if fired == sequence.size() and scene.sim.P["busy_t"] == 0: break
+	check("60fps native film retains twelve commands and fixed attached anatomy", fired == sequence.size() and fixed)
+	var f := FileAccess.open("user://exchange-film.json", FileAccess.WRITE)
+	f.store_string(JSON.stringify(journal, "  ")); f.close()
+	print("FILM VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+
+func _connected_combinations() -> void:
+	# Every native row, both targets, and the legal POWER/HAYMAKER stack. Windup
+	# age is supplied to the existing input clock; combat still runs every tick.
+	var codes := [KEY_J, KEY_F, KEY_U, KEY_N, KEY_Y, KEY_K, KEY_L, KEY_I, KEY_SEMICOLON, KEY_O]
+	var rows := ["L_STRAIGHT", "L_FLARED", "L_HOOK", "L_HOOKERCUT", "L_UPPERCUT", "R_STRAIGHT", "R_FLARED", "R_HOOK", "R_HOOKERCUT", "R_UPPERCUT"]
+	var half_poses := {}
+	for variant in 8:
+		var retained := true; var connected := true; var contact := true; var settled := true; var held := true
+		var count := 0; var peak_jump := 0.0; var distinct := true
+		for n in rows.size():
+			fresh(); scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
+			key(KEY_SPACE, true)
+			for i in 8: native_step()
+			# Alternate guarded and open starts, independently of punch modifiers.
+			key(KEY_SPACE, n % 2 == 0)
+			key(KEY_C, bool(variant & 1)); key(KEY_SHIFT, bool(variant & 2)); key(KEY_ALT, bool(variant & 4))
+			if variant & 4: scene.combat_input.since["windup"] = Time.get_ticks_usec() - 200000
+			key(codes[n], true)
+			var expected: Array = []; var recovery_seen := false; var half := {}; var previous := snapshot()
+			for tick in 230:
+				tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
+				var frozen: bool = scene.sim.freeze_t > 0
+				var events := native_step(); var now := snapshot()
+				if pose_jump(previous, now) >= 0.25:
+					print("COMBINATION DISCONTINUITY ", rows[n], " variant=", variant, " tick=", tick, " attack=", scene.fight_view.attacks.get("P"))
+					for part in now.size():
+						if previous[part].origin.distance_to(now[part].origin) >= 0.25: print("PART ", part, " from=", previous[part].origin, " to=", now[part].origin)
+				peak_jump = maxf(peak_jump, pose_jump(previous, now))
+				if frozen: held = held and same_pose(previous, now)
+				previous = now
+				for event in events:
+					if event.get("kind") == "punch": expected = event["mods"].duplicate()
+					if event.get("kind") == "hit" and event.get("on") == "B":
+						count += 1
+						var r: Dictionary = scene.player.get_meta("kinematics"); var hand := 0 if n < 5 else 1
+						contact = contact and absf(r["wrists"][hand].distance_to(r["contact_centers"][hand]) - float(r["contact_radii"][hand])) < 0.001
+				var attack: Dictionary = scene.fight_view.attacks.get("P", {})
+				if attack.get("row", "") != "":
+					retained = retained and attack.get("mods", []) == expected
+					if float(attack.get("recovery", 0)) > 0.1: recovery_seen = true
+					if half.is_empty() and float(attack.get("progress", 0)) >= 0.5 and float(attack.get("progress", 0)) < 1:
+						half = scene.player.get_meta("kinematics").duplicate(true)
+				connected = connected and _anatomy_ok(scene.player.get_meta("kinematics")) and rigid_render(scene.player)
+				if tick > 10 and scene.sim.P["busy_t"] == 0 and scene.player.get_meta("pose_row") == "": break
+			settled = settled and recovery_seen and scene.sim.P["busy_t"] == 0 and scene.player.get_meta("pose_row") == ""
+			if variant < 2: half_poses[str(variant) + rows[n]] = half
+			else:
+				var base: Dictionary = half_poses[str(variant & 1) + rows[n]]
+				distinct = distinct and absf(float(half.get("chest_turn", 0)) - float(base.get("chest_turn", 0))) > 0.01
+			if n == 5 and variant in [0, 2, 4]:
+				# Individual stroke phases are captured in the sustained run below.
+				print("MODIFIER DETAIL variant=", variant, " mid_chest=", half.get("chest_turn"))
+		print("MODIFIER MATRIX ", variant, " contacts=", count, " max_jump=", peak_jump)
+		check("modifier matrix %d retains executed modifiers through contact and recovery" % variant, retained)
+		check("modifier matrix %d delivers all ten native punches on the resolved surface" % variant, count == 10 and contact)
+		check("modifier matrix %d keeps fixed anatomy, continuous poses and hitstop" % variant, connected and held and peak_jump < 0.25)
+		check("modifier matrix %d completes recovery with differentiated loading" % variant, settled and distinct)
+	# Sustained native strings issue the next edge inside the authored six-tick
+	# buffer, including repeated hands. Opponent defenses alternate clean/block;
+	# no sim timer is shortened to permit an input or complete a recovery.
+	for tired in [false, true]:
+		fresh(); scene.sim.P["stamina"] = 10 if tired else 100
+		scene.sim.B["comp"] = 10000; scene.sim.B["comp_max"] = 10000
+		scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
+		key(KEY_SPACE, true)
+		for i in 8: native_step()
+		var sequence := [0, 5, 2, 9, 0, 0, 2, 2, 5, 5, 7, 7]
+		var issued := 0; var fired := []; var hits := 0; var blocks := 0; var previous := snapshot(); var jump := 0.0; var fixed := true
+		for tick in 2400:
+			if issued < sequence.size() and fired.size() == issued and scene.sim.P["pending"].is_empty() and scene.sim.P["busy_t"] <= 3:
+				if issued > 0: key(codes[sequence[issued - 1]], false)
+				key(KEY_C, issued % 4 == 3); key(codes[sequence[issued]], true); issued += 1
+			# Isolate response choice without replacing actual resolution.
+			tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 100 if fired.size() % 3 == 0 else 0
+			scene.sim.B["guard"] = 100
+			var events := native_step()
+			for event in events:
+				if event.get("kind") == "punch": fired.append(event["row"])
+				if event.get("kind") == "hit" and event.get("on") == "B": hits += 1
+				if event.get("kind") == "block" and event.get("by") == "B": blocks += 1
+			jump = maxf(jump, pose_jump(previous, snapshot())); previous = snapshot()
+			fixed = fixed and _anatomy_ok(scene.player.get_meta("kinematics")) and rigid_render(scene.player)
+			if "capture" in OS.get_cmdline_user_args() and not tired and fired.size() in [2, 5, 6] and tick % 6 == 0 and scene.sim.P["busy_t"] > 0:
+				await capture("side-combination-%02d-%04d" % [fired.size(), tick])
+			if fired.size() == sequence.size() and scene.sim.P["busy_t"] == 0: break
+		var expected := sequence.map(func(n): return rows[n])
+		print("SUSTAINED tired=", tired, " rows=", fired, " hits=", hits, " blocks=", blocks, " jump=", jump)
+		check("sustained %s alternating and same-hand buffer preserves twelve commands" % tired, fired == expected and hits + blocks == sequence.size() and hits > 0 and blocks > 0)
+		check("sustained %s guard, impact and exhausted recovery stay connected" % tired, fixed and jump < 0.25 and scene.sim.P["busy_t"] == 0)
 
 func lifecycle() -> void:
 	# Whiffing opponent keeps moving while a real native player key release
@@ -381,10 +565,12 @@ func contacts() -> void:
 		for body in [false, true]:
 			var cases := 0; var bad := []; var worst := 0.0
 			for row in scene.combat_input.ROWS:
-				for bonus in [0.0]:
+				for mods in [[], ["POWER"], ["HAYMAKER"], ["POWER", "HAYMAKER"]]:
+					var bonus := 0.0
 					for range_case in ["inside", "edge", "outside"]:
 						for dodge in ["", "SLIP", "DUCK", "LEAN", "WEAVE"]:
 							for who in ["P", "B"]:
+								if who == "B" and not mods.is_empty(): continue # Boss VM authors rows, not player modifier chords.
 								fresh()
 								var attacker: Dictionary = scene.sim.P if who == "P" else scene.sim.B
 								var defender: Dictionary = scene.sim.B if who == "P" else scene.sim.P
@@ -398,7 +584,7 @@ func contacts() -> void:
 									defender["dodge"] = dodge; defender["dodge_t"] = 12; defender["dodge_dir"] = 1
 								scene.fight_view.motion_solvers.clear()
 								region = scene.sim.contact_region(attacker, defender, row, body, bonus)
-								scene.fight_view.strikes[who] = {"tick": scene.sim.tick, "row": row, "body": body, "retract": 24, "range_bonus": bonus}
+								scene.fight_view.strikes[who] = {"tick": scene.sim.tick, "row": row, "body": body, "mods": mods, "retract": 24, "range_bonus": bonus}
 								var actor: Node3D = scene.player if who == "P" else scene.boss
 								scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
 								var rig: Dictionary = actor.get_meta("kinematics")
@@ -409,10 +595,10 @@ func contacts() -> void:
 								var target := Space.ground(region["target"] - attacker["pos"]) + Vector3.UP * float(region["h"])
 								var surface_gap := hand.distance_to(target) - Space.GLOVE_RADIUS - (Space.BODY_RADIUS if body else Space.HEAD_RADIUS)
 								var agrees := absf(surface_gap) < 0.001 if region["result"] == "HIT" else surface_gap > 0.00001
-								if "capture" in OS.get_cmdline_user_args() and style == "BOXERPUNCHER" and who == "P" and dodge == "" and row in ["R_STRAIGHT", "L_HOOK"] and range_case == "edge":
+								if "capture" in OS.get_cmdline_user_args() and mods.is_empty() and style == "BOXERPUNCHER" and who == "P" and dodge == "" and row in ["R_STRAIGHT", "L_HOOK"] and range_case == "edge":
 									await capture("side-contact-" + row.to_lower() + ("-body" if body else "-head") + ("-step" if bonus > 0 else ""))
 								if not agrees:
-									bad.append([row, bonus, range_case, dodge, who, region["result"], error, surface_gap])
+									bad.append([row, mods, range_case, dodge, who, region["result"], error, surface_gap])
 			print("CONTACT MATRIX ", style, " body=", body, " cases=", cases, " worst=", worst, " failures=", bad.size(), " examples=", bad.slice(0, 16))
 			check(style + " " + ("body" if body else "head") + " fixed-arm contact matrix", bad.is_empty())
 

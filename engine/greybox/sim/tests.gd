@@ -6286,17 +6286,23 @@ func smoke(boss_idx: int) -> int:
 	_sr("the aid and the builder: wanted at 25 / 35 %s; RORY's picks at 20 with and without the wall %s (%d nodes); PRIYA's kit %s, the wall %s, short %s; without the board's walls %d of %d, short %s" % [JSON.stringify(q36_ww), "the same" if q36_sq[0] == q36_sq[1] else "DIFFERENT", q36_sq[0].size(), JSON.stringify(q35_pb["kit"]), JSON.stringify(q36_pw), JSON.stringify(q35_pb["fails"].keys()), int(q36_nb["used"]), int(q36_nb["slots"]), JSON.stringify(q36_nb["fails"].keys())],
 		q36_ww == [false, true, true] and q36_sq[0] == q36_sq[1] and q36_sq[0].size() > 5 and not ("s15" in q36_sq[0]) and q36_pw.size() == 1 and q35_pb["dead"] == [] and int(q35_pb["used"]) == 4 and q35_pb["fails"].is_empty() \
 		and int(q36_nb["used"]) == 3 and int(q36_nb["slots"]) == 4 and q36_nb["fails"].keys() == ["kit"])
-	# the fight the fixes turn: the audit's PRIYA against Chiamaka Okafor (seed 22 since PAC-098's jar of 140 moved her build) wins; built with
-	# the totals taken out she loses; the
-	# reduced verdict on that fight says VIABLE, and names growth without the totals
-	var q36_f1: Dictionary = TNBAudit.fight(content, q35_pb, "chiamaka_okafor", 22, 12000)
+	# PAC-202D adds NP_03's earned range-step counter, changing the profile's
+	# choice after its seed-22 sprint retreat. Keep BOTH authored audit seeds
+	# and its existing viability threshold, instead of requiring one picked
+	# fight to win. Removing growth totals must still fail the same criterion.
 	var q36_ntb: Dictionary = TNBAudit.build(q35_nt, q35_A, q35_cards[0])
-	var q36_f2: Dictionary = TNBAudit.fight(q35_nt, q36_ntb, "chiamaka_okafor", 22, 12000)
+	var q36_seeds: Array = q35_A["criteria"]["seeds"]
+	var q36_f1: Array = []; var q36_f2: Array = []
+	for q36_seed in q36_seeds:
+		q36_f1.append(TNBAudit.fight(content, q35_pb, "chiamaka_okafor", int(q36_seed), int(q35_A["criteria"]["spar_ticks_max"])))
+		q36_f2.append(TNBAudit.fight(q35_nt, q36_ntb, "chiamaka_okafor", int(q36_seed), int(q35_A["criteria"]["spar_ticks_max"])))
 	var q36_Ar: Dictionary = q35_A.duplicate(true); q36_Ar["reference"]["recruits"] = ["cassidy_vane"]
-	var q36_v1: Dictionary = TNBAudit.run(content, q36_Ar, {"fighters": ["PRIYA"], "bosses": ["chiamaka_okafor"], "seeds": [22]})
-	var q36_v2: Dictionary = TNBAudit.run(q35_nt, q36_Ar, {"fighters": ["PRIYA"], "bosses": ["chiamaka_okafor"], "seeds": [22]})
-	_sr("the fight the fixes turn: PRIYA (total %d) vs Chiamaka (seed 22) %s; the totals taken out (total %d) %s; the verdict %s / %s" % [int(q35_pb["total"]), JSON.stringify([q36_f1["won"], q36_f1["score"], q36_f1["ep"]]), int(q36_ntb["total"]), JSON.stringify([q36_f2["won"], q36_f2["score"], q36_f2["ep"]]), JSON.stringify([int(q36_v1["viable"]), q36_v1["early"][0]["systems"]]), JSON.stringify([int(q36_v2["viable"]), q36_v2["early"][0]["systems"]])],
-		bool(q36_f1["won"]) and not bool(q36_f2["won"]) and int(q35_pb["total"]) > int(q36_ntb["total"]) and int(q36_v1["viable"]) == 1 and int(q36_v2["viable"]) == 0 and q36_v2["early"][0]["systems"] == ["growth - the board and the raises (NP_11 s3, s6)"])
+	var q36_v1: Dictionary = TNBAudit.run(content, q36_Ar, {"fighters": ["PRIYA"], "bosses": ["chiamaka_okafor"], "seeds": q36_seeds})
+	var q36_v2: Dictionary = TNBAudit.run(q35_nt, q36_Ar, {"fighters": ["PRIYA"], "bosses": ["chiamaka_okafor"], "seeds": q36_seeds})
+	var q36_rate1 := float(q36_f1.filter(func(f): return f["won"]).size()) / q36_seeds.size()
+	var q36_rate2 := float(q36_f2.filter(func(f): return f["won"]).size()) / q36_seeds.size()
+	_sr("growth viability on every authored seed: PRIYA (total %d) vs Chiamaka %s; without totals (total %d) %s; verdict %s / %s" % [int(q35_pb["total"]), JSON.stringify(q36_f1), int(q36_ntb["total"]), JSON.stringify(q36_f2), JSON.stringify([int(q36_v1["viable"]), q36_v1["early"][0]["systems"]]), JSON.stringify([int(q36_v2["viable"]), q36_v2["early"][0]["systems"]])],
+		q36_rate1 >= float(q35_A["criteria"]["win_rate"]) and q36_rate2 < float(q35_A["criteria"]["win_rate"]) and int(q35_pb["total"]) > int(q36_ntb["total"]) and int(q36_v1["viable"]) == 1 and int(q36_v2["viable"]) == 0 and q36_v2["early"][0]["systems"] == ["growth - the board and the raises (NP_11 s3, s6)"])
 
 	# ---- PAC-097: THE FAUCET/SINK AUDIT (NP_11 s6) ----
 	var q37_F: Dictionary = content["faucets"]

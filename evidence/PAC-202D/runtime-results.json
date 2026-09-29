@@ -1,0 +1,1332 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "name": "smoke-00",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-00.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=0"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-01",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-01.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=1"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-02",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-02.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=2"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-03",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-03.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=3"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-04",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-04.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=4"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-05",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-05.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=5"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-06",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-06.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=6"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-07",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-07.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=7"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-08",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-08.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=8"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-09",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-09.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=9"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-10",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-10.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=10"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-11",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-11.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=11"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-12",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-12.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=12"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-13",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-13.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=13"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-14",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-14.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=14"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-15",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-15.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=15"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-16",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-16.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=16"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-17",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-17.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=17"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-18",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-18.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=18"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-19",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-19.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=19"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-20",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-20.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=20"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-21",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-21.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=21"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-22",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-22.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=22"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "smoke-23",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\smoke-23.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=23"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "determinism",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\determinism.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "determinism"
+      ],
+      "verdicts": [
+        "DETERMINISM VERDICT :: GREEN (57/57)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "geometry",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\geometry.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "geometry"
+      ],
+      "verdicts": [
+        "GEOMETRY VERDICT :: GREEN (5/5)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "audit",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\audit.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "audit"
+      ],
+      "verdicts": [
+        "AUDIT VERDICT :: GREEN (3 of 3 viable)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "faucets",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\faucets.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "faucets"
+      ],
+      "verdicts": [
+        "FAUCETS VERDICT :: GREEN"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_academy",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_academy.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_academy.gd",
+        "--",
+        "academy",
+        "format=sanctioned",
+        "kizuna=YURI+MARTA:150",
+        "purse=spirits:40,beans:30",
+        "facility=wall:3",
+        "forge=YURI+MARTA",
+        "board=YURI,MARTA,RORY,PRIYA,SAM"
+      ],
+      "verdicts": [
+        "ACADEMY DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_anti",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_anti.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_anti.gd",
+        "--",
+        "boss=19"
+      ],
+      "verdicts": [
+        "ANTI-YOU DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_awaken",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_awaken.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_awaken.gd",
+        "--",
+        "level=RORY:20",
+        "flag=story:provincials_semifinal,story:manifest:RORY,secret:RORY,story:trial:RORY,story:sealed_house_resolved",
+        "form=RORY:manifest"
+      ],
+      "verdicts": [
+        "AWAKENING DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_boxing_motion",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_boxing_motion.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_boxing_motion.gd",
+        "--",
+        "welcome"
+      ],
+      "verdicts": [
+        "BOXING MOTION VERDICT :: GREEN (252/252)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_bzone",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_bzone.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_bzone.gd",
+        "--",
+        "boss=16"
+      ],
+      "verdicts": [
+        "ENEMY TRANSFORMATION DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_clash",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_clash.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_clash.gd",
+        "--",
+        "boss=19",
+        "btransform=manifest@composure<80",
+        "level=RORY:20",
+        "flag=story:provincials_semifinal,story:manifest:RORY"
+      ],
+      "verdicts": [
+        "MANIFEST CLASH DRIVE :: GREEN (5/5)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_combat_loop",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_combat_loop.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_combat_loop.gd",
+        "--",
+        "welcome"
+      ],
+      "verdicts": [
+        "COMBAT LOOP VERDICT :: GREEN (67/67)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_duo",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_duo.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_duo.gd",
+        "--",
+        "kizuna=RORY+PRIYA:90"
+      ],
+      "verdicts": [
+        "DUO DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_exhibition",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_exhibition.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_exhibition.gd",
+        "--",
+        "format=exhibition_2v2",
+        "kizuna=RORY+PRIYA:90"
+      ],
+      "verdicts": [
+        "EXHIBITION DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_facilities",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_facilities.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_facilities.gd",
+        "--",
+        "purse=hbp:3000,spirits:150",
+        "flag=story:charter_saved,quest:gym_funding,story:nationals"
+      ],
+      "verdicts": [
+        "FACILITIES DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_forge",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_forge.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_forge.gd",
+        "--",
+        "format=sanctioned",
+        "kizuna=YURI+MARTA:150",
+        "purse=spirits:40,beans:30",
+        "facility=wall:3",
+        "board=YURI,MARTA,RORY,PRIYA,SAM"
+      ],
+      "verdicts": [
+        "FORGE DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_formation",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_formation.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_formation.gd",
+        "--",
+        "formation"
+      ],
+      "verdicts": [
+        "FORMATION DRIVE :: GREEN (12/12)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_gear",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_gear.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_gear.gd",
+        "--",
+        "purse=hbp:600",
+        "flag=story:regionals",
+        "gear=tape_wraps"
+      ],
+      "verdicts": [
+        "GEAR DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_growth",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_growth.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_growth.gd",
+        "--",
+        "level=RORY:10,PRIYA:10",
+        "purse=spirits:40,beans:20",
+        "beans=PWR:6",
+        "facility=film:2",
+        "growth=RORY:trial:spar_won"
+      ],
+      "verdicts": [
+        "GROWTH DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_inherit",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_inherit.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_inherit.gd",
+        "--",
+        "format=sanctioned",
+        "kizuna=RORY+SAM:150"
+      ],
+      "verdicts": [
+        "INHERITANCE DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_input",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_input.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_input.gd",
+        "--",
+        "dummy"
+      ],
+      "verdicts": [
+        "INPUT DRIVE :: GREEN (98/98)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_locker",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_locker.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_locker.gd",
+        "--",
+        "purse=prestige:60"
+      ],
+      "verdicts": [
+        "LOCKER DRIVE :: GREEN (10/10)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_manifest",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_manifest.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_manifest.gd",
+        "--",
+        "level=RORY:20",
+        "flag=story:provincials_semifinal,story:manifest:RORY"
+      ],
+      "verdicts": [
+        "MANIFEST DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_mirror",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_mirror.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_mirror.gd",
+        "--",
+        "habits=RORY:L_STRAIGHT+L_STRAIGHT+R_STRAIGHT*8,RORY:L_HOOK+R_HOOK*5,RORY:counter=R_HOOK*6/6"
+      ],
+      "verdicts": [
+        "MIRROR DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_readability",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_readability.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_readability.gd",
+        "--",
+        "welcome"
+      ],
+      "verdicts": [
+        "VERDICT :: GREEN (113/113)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_recruit",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_recruit.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_recruit.gd",
+        "--",
+        "boss=1"
+      ],
+      "verdicts": [
+        "RECRUIT DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_rep",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_rep.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_rep.gd",
+        "--",
+        "boss=7",
+        "scrap=SCR-01",
+        "district=rink"
+      ],
+      "verdicts": [
+        "REP DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_roles",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_roles.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_roles.gd",
+        "--",
+        "purse=prestige:70",
+        "flag=story:regionals,story:nationals",
+        "facility=bags:1"
+      ],
+      "verdicts": [
+        "ROLES DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_scouting",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_scouting.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_scouting.gd",
+        "--",
+        "purse=prestige:100"
+      ],
+      "verdicts": [
+        "SCOUTING DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_techniques",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_techniques.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_techniques.gd",
+        "--",
+        "level=RORY:15,PRIYA:5",
+        "purse=hbp:1000",
+        "flag=story:regionals,quest:coach_questline",
+        "facility=bags:1",
+        "tapes=Black Ice:1"
+      ],
+      "verdicts": [
+        "TECHNIQUES DRIVE :: GREEN (10/10)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_vendors",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_vendors.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_vendors.gd",
+        "--",
+        "boss=7",
+        "scrap=SCR-01",
+        "district=downtown",
+        "rep=downtown:9",
+        "purse=hbp:1500",
+        "level=RORY:15"
+      ],
+      "verdicts": [
+        "VENDORS DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    },
+    {
+      "name": "drive_zone",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\PAC-202D\\runtime-verified\\drive_zone.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_zone.gd",
+        "--",
+        "level=RORY:20",
+        "flag=story:provincials_semifinal"
+      ],
+      "verdicts": [
+        "ZONE DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": [
+        "ERROR: Failed to read the root certificate store."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+.PACER\PAC-202D\combinations-baseline.log (selected diagnostics; raw file retained locally)
+[FAIL] modifier matrix 0 retains executed modifiers through contact and recovery
+[FAIL] modifier matrix 1 retains executed modifiers through contact and recovery
+[FAIL] modifier matrix 2 retains executed modifiers through contact and recovery
+[FAIL] modifier matrix 2 completes recovery with differentiated loading
+[FAIL] modifier matrix 3 retains executed modifiers through contact and recovery
+[FAIL] modifier matrix 3 completes recovery with differentiated loading
+[FAIL] modifier matrix 4 retains executed modifiers through contact and recovery
+[FAIL] modifier matrix 4 completes recovery with differentiated loading
+[FAIL] modifier matrix 5 retains executed modifiers through contact and recovery
+[FAIL] modifier matrix 5 completes recovery with differentiated loading
+[FAIL] modifier matrix 6 retains executed modifiers through contact and recovery
+[FAIL] modifier matrix 6 completes recovery with differentiated loading
+[FAIL] modifier matrix 7 retains executed modifiers through contact and recovery
+[FAIL] modifier matrix 7 completes recovery with differentiated loading
+COMBINATIONS VERDICT :: RED (22/36)
+
+.PACER\PAC-202D\motion01.log (selected diagnostics; raw file retained locally)
+[FAIL] modifier matrix 1 keeps fixed anatomy, continuous poses and hitstop
+[FAIL] modifier matrix 3 keeps fixed anatomy, continuous poses and hitstop
+[FAIL] modifier matrix 5 keeps fixed anatomy, continuous poses and hitstop
+JUMP DETAIL delay tick 108 state ACTING events [{ "verb": "punch", "row": "R_HOOKERCUT", "body": false, "kind": "boss_act", "tick": 109 }, { "on": "P", "dmg": 15.6, "body": false, "displacement": (0.0, 0.12), "kind": "hit", "tick": 109 }]
+VARIANT PART 1 from=(0.0624, 0.7447, -0.32155) to=(0.06101, 0.561792, -0.144496)
+VARIANT PART 10 from=(0.205289, 0.6036, -0.253521) to=(0.2164, 0.421567, -0.079034)
+VARIANT PART 12 from=(0.189369, 1.2447, -0.542692) to=(0.187979, 1.061792, -0.365638)
+VARIANT PART 14 from=(0.241101, 0.462501, -0.095302) to=(0.264713, 0.281341, 0.076618)
+VARIANT PART 22 from=(-0.064569, 1.2797, 0.019592) to=(-0.065959, 1.096792, 0.196646)
+[FAIL] delay feint has continuous whole-body transition
+BOXING MOTION VERDICT :: RED (234/238)
+
+.PACER\PAC-202D\motion02.log (selected diagnostics; raw file retained locally)
+JUMP DETAIL delay tick 108 state ACTING events [{ "verb": "punch", "row": "R_HOOKERCUT", "body": false, "kind": "boss_act", "tick": 109 }, { "on": "P", "dmg": 15.6, "body": false, "displacement": (0.0, 0.12), "kind": "hit", "tick": 109 }]
+VARIANT PART 1 from=(0.0624, 0.7447, -0.32155) to=(0.06101, 0.561792, -0.144496)
+VARIANT PART 10 from=(0.205289, 0.6036, -0.253521) to=(0.2164, 0.421567, -0.079034)
+VARIANT PART 12 from=(0.189369, 1.2447, -0.542692) to=(0.187979, 1.061792, -0.365638)
+VARIANT PART 14 from=(0.241101, 0.462501, -0.095302) to=(0.264713, 0.281341, 0.076618)
+VARIANT PART 22 from=(-0.064569, 1.2797, 0.019592) to=(-0.065959, 1.096792, 0.196646)
+[FAIL] delay feint has continuous whole-body transition
+BOXING MOTION VERDICT :: RED (237/238)
+
+.PACER\PAC-202D\motion03.log (selected diagnostics; raw file retained locally)
+[FAIL] LEAN counter keeps the whole-body transition continuous
+BOXING MOTION VERDICT :: RED (237/238)
+
+.PACER\PAC-202D\motion04.log (selected diagnostics; raw file retained locally)
+COUNTER DISCONTINUITY LEAN tick=58 attack={ "row": "R_STRAIGHT", "progress": 1.0, "recovery": 0.23529411764706, "body": false, "mods": ["STEPPING"], "target": (0.0, 1.55, -0.321532), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, -0.641532), "target_radius": 0.32, "contact_hit": true } positions=(0.0, -0.091061) / (0.0, -1.08)
+COUNTER PART 14 from=(-0.420386, 0.429094, -0.213905) to=(-0.58695, 0.16141, -0.21081)
+[FAIL] LEAN counter keeps the whole-body transition continuous
+[FAIL] STEP_OUT native defense earns and delivers a counter
+BOXING MOTION VERDICT :: RED (240/242)
+
+.PACER\PAC-202D\motion05.log (selected diagnostics; raw file retained locally)
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'elbows' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+[FAIL] BOXERPUNCHER forward transfers support through attached continuous anatomy
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'elbows' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+[FAIL] BOXERPUNCHER retreat transfers support through attached continuous anatomy
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'elbows' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+[FAIL] BOXERPUNCHER left transfers support through attached continuous anatomy
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'elbows' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+[FAIL] BOXERPUNCHER right transfers support through attached continuous anatomy
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'elbows' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+SCRIPT ERROR: Invalid access to property or key 'forward' on a base object of type 'Dictionary'.
+SCRIPT ERROR: Invalid access to property or key 'head' on a base object of type 'Dictionary'.
+[FAIL] OUTBOXER forward transfers support through attached continuous anatomy
+
+.PACER\PAC-202D\transitions03.log (selected diagnostics; raw file retained locally)
+SCRIPT ERROR: Invalid call to function 'contact_region' in base 'RefCounted (core.gd)'. Expected 4 argument(s).
+TRANSITIONS VERDICT :: GREEN (12/12)
+
+.PACER\PAC-202D\range-context.log (selected diagnostics; raw file retained locally)
+AUDIT RANGE CONTEXT { "tick": 1979, "origin": <null>, "P": (-0.190579, 3.093772), "B": (0.891475, 2.079385), "busy": 25, "dodge": "", "vel": (-0.933312, -1.967211), "state": "ACTING", "queue": [{ "kind": "punch", "row": "L_STRAIGHT", "mult": 1.0, "body": false }, { "kind": "punch", "row": "L_HOOK", "mult": 1.0, "body": true }] } after=[(-0.786079, 3.5), (0.662536, 2.273258)]
+AUDIT RANGE { "ticks": 36, "kind": "range_step", "tick": 1980 }
+AUDIT FIXTURE total=550 score=[2, 5] ep=[30, 46]
+[FAIL] existing PRIYA 550 versus Chiamaka seed 22 remains a win
+RANGE AUDIT VERDICT :: RED (0/1)
+
+.PACER\PAC-202D\range-paired.log (selected diagnostics; raw file retained locally)
+AUDIT RANGE CONTEXT { "tick": 1979, "origin": <null>, "P": (-0.190579, 3.093772), "B": (0.891475, 2.079385), "busy": 25, "dodge": "", "vel": (-0.933312, -1.967211), "state": "ACTING", "queue": [{ "kind": "punch", "row": "L_STRAIGHT", "mult": 1.0, "body": false }, { "kind": "punch", "row": "L_HOOK", "mult": 1.0, "body": true }] } after=[(-0.786079, 3.5), (0.662536, 2.273258)]
+AUDIT RANGE { "ticks": 36, "kind": "range_step", "tick": 1980 }
+AUDIT FIXTURE total=550 score=[2, 5] ep=[30, 46]
+[FAIL] existing PRIYA 550 versus Chiamaka seed 22 remains a win
+PAIRED AUDIT seed=11.0 full={ "boss": "chiamaka_okafor", "seed": 11, "won": true, "score": [6, 2], "ep": [36, 48], "ticks": 5316, "hash": 2156150232 } without={ "boss": "chiamaka_okafor", "seed": 11, "won": false, "score": [0, 6], "ep": [20, 44], "ticks": 3439, "hash": 1352305834 }
+PAIRED AUDIT seed=22.0 full={ "boss": "chiamaka_okafor", "seed": 22, "won": false, "score": [2, 5], "ep": [30, 46], "ticks": 3700, "hash": 268679863 } without={ "boss": "chiamaka_okafor", "seed": 22, "won": false, "score": [2, 6], "ep": [44, 52], "ticks": 8212, "hash": 931566639 }
+RANGE AUDIT VERDICT :: RED (0/1)
+
+.PACER\PAC-202D\film.err (selected diagnostics; raw file retained locally)
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: Condition "f.is_null()" is true. Returning: ERR_CANT_OPEN
+   at: write_begin (modules/jpg/movie_writer_mjpeg.cpp:65)
+ERROR: Condition "f.is_null()" is true. Returning: ERR_UNCONFIGURED
+   at: write_frame (modules/jpg/movie_writer_mjpeg.cpp:196)
+ERROR: Condition "f.is_null()" is true. Returning: ERR_UNCONFIGURED
+   at: write_frame (modules/jpg/movie_writer_mjpeg.cpp:196)
+ERROR: Condition "f.is_null()" is true. Returning: ERR_UNCONFIGURED
+   at: write_frame (modules/jpg/movie_writer_mjpeg.cpp:196)
+ERROR: Condition "f.is_null()" is true. Returning: ERR_UNCONFIGURED
+   at: write_frame (modules/jpg/movie_writer_mjpeg.cpp:196)
+ERROR: Condition "f.is_null()" is true. Returning: ERR_UNCONFIGURED
+   at: write_frame (modules/jpg/movie_writer_mjpeg.cpp:196)
+ERROR: Condition "f.is_null()" is true. Returning: ERR_UNCONFIGURED
+   at: write_frame (modules/jpg/movie_writer_mjpeg.cpp:196)
+
+Late film rejection: .PACER/PAC-202D/film-final.err retained locally; 1512 SCRIPT ERROR calls to set_shader_parameter on StandardMaterial3D. Capture-only opaque override persisted into production camera updates. Fixed by restoring production materials immediately after each captured frame. Replacement film-clean.log/.err inspected: no script errors.

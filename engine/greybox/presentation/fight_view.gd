@@ -131,7 +131,7 @@ func observe(event: Dictionary, tick: int) -> void:
 		# The initiating sim step also consumes the first startup tick.
 		var remaining := 24
 		if clock_sim != null: remaining = maxi(4, int(clock_sim.P["busy_t"]) - int(clock_sim.P.get("pending", {}).get("t", 0)))
-		strikes["P"] = {"tick": tick - frozen_ticks + maxi(0, int(event.get("startup", 0)) - 1), "row": event["row"], "body": "BODY" in event.get("mods", []), "range_bonus": float(clock_sim.P.get("pending", {}).get("range_bonus", 0)), "retract": remaining}
+		strikes["P"] = {"tick": tick - frozen_ticks + maxi(0, int(event.get("startup", 0)) - 1), "row": event["row"], "body": "BODY" in event.get("mods", []), "mods": event.get("mods", []).duplicate(), "range_bonus": float(clock_sim.P.get("pending", {}).get("range_bonus", 0)), "retract": remaining}
 	elif event.get("kind") == "hit":
 		reactions[str(event["on"])] = {"tick": tick - frozen_ticks, "weight": clampf(float(event.get("dmg", 6)) / 30, 0.15, 1.0), "body": event.get("body", false), "displacement": event.get("displacement", Vector2.ZERO), "sim_tick": tick}
 	elif event.get("kind") == "feint":
@@ -211,6 +211,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	body.rotation.y = atan2(forward.x, forward.z)
 	var row := ""; var load := 0.0; var extension := 0.0; var body_target := false
 	var punch_progress := 0.0; var recovery := 0.0
+	var mods: Array = []
 	var redirect := {}; var redirect_weight := 0.0; var redirect_progress := 0.0
 	var strike: Dictionary = strikes.get(who, {})
 	var strike_age: int = sim.tick - frozen_ticks - int(strike.get("tick", -1000))
@@ -219,6 +220,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	if strike.has("cancelled") and strike_age >= 0 and strike_age < retract_ticks:
 		var cancelled: Dictionary = strike["cancelled"]
 		row = str(cancelled.get("row", "")); body_target = bool(cancelled.get("body", false))
+		mods = cancelled.get("mods", [])
 		punch_progress = float(cancelled.get("progress", 0))
 		recovery = lerpf(float(cancelled.get("recovery", 0)), 1.0, float(strike_age) / retract_ticks)
 		load = float(cancelled.get("preload", 0)) * (1.0 - BoxingMotion.ramp(float(strike_age) / retract_ticks))
@@ -266,6 +268,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	elif who == "P" and not fighter.get("pending", {}).is_empty():
 		var pending: Dictionary = fighter["pending"]
 		row = str(pending["row"]); body_target = "BODY" in pending["mods"]
+		mods = pending["mods"]
 		var progress := 1.0 - float(pending["t"]) / maxf(1, float(pending["startup"]))
 		punch_progress = progress
 		load = sin(progress * PI) * (1.2 if "HAYMAKER" in pending["mods"] else 0.5)
@@ -273,6 +276,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	elif strikes.has(who):
 		if who == "P" and not strike.has("cancelled") and strike_age >= 0 and strike_age < retract_ticks:
 			row = str(strike["row"]); body_target = bool(strike["body"])
+			mods = strike.get("mods", [])
 			punch_progress = 1.0; recovery = clampf(float(strike_age - 3) / maxi(1, retract_ticks - 3), 0, 1)
 			extension = 1.0 - BoxingMotion.ramp(recovery)
 	var reaction := 0.0
@@ -284,7 +288,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	var region := sim.contact_region(fighter, other, row if row != "" else "L_STRAIGHT", body_target, range_bonus) as Dictionary
 	var target := Space.contact(region)
 	if not motion_solvers.has(who): motion_solvers[who] = BoxingMotion.new()
-	var attack := {"row": row, "progress": punch_progress, "recovery": recovery, "body": body_target, "target": target, "range_bonus": range_bonus, "preload": load if windup or strike.has("cancelled") else 0.0, "redirect": redirect, "redirect_weight": redirect_weight, "redirect_progress": redirect_progress}
+	var attack := {"row": row, "progress": punch_progress, "recovery": recovery, "body": body_target, "mods": mods.duplicate(), "target": target, "range_bonus": range_bonus, "preload": load if windup or strike.has("cancelled") else 0.0, "redirect": redirect, "redirect_weight": redirect_weight, "redirect_progress": redirect_progress}
 	attack["target_center"] = Space.ground(region["target"] - fighter["pos"]) + Vector3.UP * float(region["h"])
 	attack["target_radius"] = Space.GLOVE_RADIUS + (Space.BODY_RADIUS if body_target else Space.HEAD_RADIUS)
 	attack["contact_hit"] = region["result"] == "HIT"

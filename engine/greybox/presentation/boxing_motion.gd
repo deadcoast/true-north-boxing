@@ -23,29 +23,38 @@ var support_shift := Vector3.ZERO
 var elbow_tick := -1
 var elbow_history: Array = []
 var elbow_prior: Array = []
+var knee_history: Array = []
+var knee_prior: Array = []
 
 static func ramp(value: float) -> float:
 	var x := clampf(value, 0, 1)
 	return x * x * (3 - 2 * x)
 
-static func chain(row: String, progress: float, recovery: float, coil := 1.0) -> Dictionary:
+static func chain(row: String, progress: float, recovery: float, coil := 1.0, mods: Array = []) -> Dictionary:
 	var active := 0.0 if row == "" else 1.0
 	var retract := 1.0 - ramp(recovery)
 	var side := -1.0 if row.begins_with("L_") else 1.0
 	var hook := "HOOK" in row; var upper := "UPPER" in row or "HOOKERCUT" in row
-	var rotation := 0.20 if row == "L_STRAIGHT" else (0.80 if hook else 0.52)
-	var load := sin(clampf(progress, 0, 1) * PI) * (0.32 if hook or upper else 0.13)
+	var power := 1.0 if "POWER" in mods else 0.0
+	var haymaker := 1.0 if "HAYMAKER" in mods else 0.0
+	var strength := 1.0 + power * 0.16 + haymaker * 0.28
+	var rotation := (0.20 if row == "L_STRAIGHT" else (0.80 if hook else 0.52)) * strength
+	var load := sin(clampf(progress, 0, 1) * PI) * ((0.32 if hook or upper else 0.13) + power * 0.16 + haymaker * 0.30)
+	# A haymaker spends more of its already-authored startup loading the rear
+	# side, then releases. Contact still occurs exactly at sim progress == 1.
+	var delivery := clampf((progress - haymaker * 0.16) / (1.0 - haymaker * 0.16), 0, 1)
+	var arm_return := 1.0 - ramp(recovery * 1.15)
 	# Staggered onset: pressure/pivot, hips, ribcage, scapula, then delivery.
 	# All channels recover continuously and reach neutral at recovery == 1.
 	return {"plant": active * ramp(progress / 0.45) * retract,
 		"drive": active * (ramp((progress - 0.03) / 0.55) - load) * retract,
 		"hips": active * side * (rotation * ramp((progress - 0.07) / 0.65) - load) * retract * coil,
 		"core": active * side * (rotation * 0.38 * ramp((progress - 0.13) / 0.68) - load * 0.4) * retract * coil,
-		"shoulder": active * ramp((progress - 0.20) / 0.66) * retract,
-		"upper_arm": active * ramp((progress - 0.24) / 0.76) * retract,
-		"forearm": active * ramp((progress - 0.38) / 0.62) * retract,
-		"fist": active * ramp((progress - 0.66) / 0.34) * retract,
-		"load": active * load * retract, "side": side, "upper": upper, "hook": hook}
+		"shoulder": active * ramp((delivery - 0.20) / 0.66) * retract,
+		"upper_arm": active * ramp((delivery - 0.24) / 0.76) * arm_return,
+		"forearm": active * ramp((delivery - 0.38) / 0.62) * arm_return,
+		"fist": active * ramp((delivery - 0.66) / 0.34) * arm_return,
+		"load": active * load * retract, "side": side, "upper": upper, "hook": hook, "strength": strength}
 
 static func joint(start: Vector3, end: Vector3, pole: Vector3, first: float, second: float) -> Dictionary:
 	var axis := end - start
@@ -127,16 +136,27 @@ static func constrain(rig: Dictionary) -> Dictionary:
 			arm["joint"] = shoulder + direction * UPPER_ARM
 			arm["end"] = arm["joint"] + (hand - arm["joint"]).normalized() * FOREARM
 		rig["elbows"][i] = arm["joint"]; rig["wrists"][i] = arm["end"]
-		var leg := joint(rig["hip_joints"][i], rig["ankles"][i], rig["leg_poles"][i], THIGH, SHIN)
+		var knee_pole: Vector3 = rig["leg_poles"][i]
+		if float(rig.get("knee_stability", 0)) > 0:
+			# Use the final lowered hip, after contact/leg constraints. Projecting
+			# about the unconstrained hip can select the opposite knee branch.
+			var axis: Vector3 = (rig["ankles"][i] - rig["hip_joints"][i]).normalized()
+			var prior: Vector3 = rig["support_knees"][i] - rig["hip_joints"][i]
+			prior -= axis * prior.dot(axis)
+			var wanted := knee_pole - axis * knee_pole.dot(axis)
+			if prior.length_squared() > 0.000001 and wanted.length_squared() > 0.000001:
+				knee_pole = prior.normalized().slerp(wanted.normalized(), minf(0.4, 0.18 / maxf(prior.angle_to(wanted), 0.0001)))
+		var leg := joint(rig["hip_joints"][i], rig["ankles"][i], knee_pole, THIGH, SHIN)
 		rig["knees"][i] = leg["joint"]
 		# Pelvis is lowered to keep both planted ankles reachable before solving.
 		rig["ankles"][i] = leg["end"]
 	return rig
 
-func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stance: Dictionary, turns: Array = [], balance := 0.5) -> Array:
+func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stance: Dictionary, turns: Array = [], balance := 0.5, advance := 0.0) -> Array:
 	var wanted: Array = []
 	for i in 2:
 		wanted.append(origin + right * (-1 if i == 0 else 1) * float(stance["width"]) + forward * (1 if i == 0 else -1) * float(stance["lead"]))
+		if i == 0: wanted[i] += forward * advance
 	if feet.is_empty() or origin.distance_to(previous_origin) > 0.7 or tick < last_tick:
 		feet = wanted.duplicate(); step.clear()
 		foot_yaw = [atan2(forward.x, forward.z) + 0.08, atan2(forward.x, forward.z) - 0.08]
@@ -189,20 +209,25 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	var origin := Space.ground(at)
 	if tick != elbow_tick:
 		elbow_prior = elbow_history.duplicate(); elbow_tick = tick
+		knee_prior = knee_history.duplicate()
 	var dt := maxi(0, tick - last_tick) if last_tick >= 0 else 1
 	var block := bool(fighter.get("blocking", false)) or int(fighter.get("guard_t", 0)) > 0
 	guard = move_toward(guard, 1.0 if block else 0.0, float(dt) / 6)
 	var row := str(attack.get("row", ""))
 	var progress := float(attack.get("progress", 0)); var recovery := float(attack.get("recovery", 0))
-	var motion := chain(row, progress, recovery, float(style["coil"]))
+	var mods: Array = attack.get("mods", [])
+	var motion := chain(row, progress, recovery, float(style["coil"]), mods)
 	var preload_weight := float(attack.get("preload", 0)) * (1.0 - ramp(progress))
 	motion["hips"] -= float(motion["side"]) * preload_weight * 0.20
 	motion["core"] -= float(motion["side"]) * preload_weight * 0.12
 	motion["load"] += preload_weight * 0.22
 	var turns := [0.08, -0.08]
-	if row != "": turns[0 if row.begins_with("L_") else 1] += float(motion["side"]) * float(motion["plant"]) * (0.75 if motion["hook"] else 0.48)
+	if row != "": turns[0 if row.begins_with("L_") else 1] += float(motion["side"]) * float(motion["plant"]) * (0.75 if motion["hook"] else 0.48) * float(motion["strength"])
 	var balance := clampf(0.5 - head_offset.dot(right) * 1.1 + head_offset.dot(forward) * 0.9, 0.2, 0.8)
-	var soles := footwork(origin, forward, right, tick, style, turns, balance)
+	balance = clampf(balance + float(motion["drive"]) * (0.13 if row.begins_with("R_") else 0.06) - float(motion["load"]) * 0.12, 0.2, 0.8)
+	# Set the lead foot before committing the torso. Otherwise a VM lunge can
+	# arrive over a narrow base and force the fixed-length legs into a squat.
+	var soles := footwork(origin, forward, right, tick, style, turns, balance, maxf(0, float(motion["drive"])) * 0.13)
 	var foot_turns := [wrapf(float(foot_yaw[0]) - atan2(forward.x, forward.z), -PI, PI), wrapf(float(foot_yaw[1]) - atan2(forward.x, forward.z), -PI, PI)]
 	# The punch chain already contains its foot-driven hip rotation. Add only
 	# the planted foot's lag behind that requested angle, not a second punch turn.
@@ -226,7 +251,13 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 		if active: shoulder += forward * float(motion["shoulder"]) * (0.07 if "STRAIGHT" in row or "FLARED" in row else 0.12) + Vector3.UP * float(motion["shoulder"]) * 0.035
 		var neutral: Vector3 = shoulder + right * side * 0.025 + forward * (0.21 + (float(style["guard"]) if i == 0 else 0.0)) + Vector3.UP * 0.08
 		var covered := head_offset + Vector3.UP * 1.57 + right * side * 0.20 + forward * 0.17
-		var hand: Vector3 = neutral.lerp(covered, ramp(guard))
+		# A punch exits the sim's block immediately, but its glove leaves the
+		# covered position continuously. The other glove protects the chin as
+		# the working shoulder rolls; this is pose only, never free sim blocking.
+		var cover := guard
+		if active and "BLOCK_PUNCH" in mods: cover = maxf(cover, (1.0 - ramp(progress / 0.4)) * (1.0 - ramp(recovery)))
+		if not active and row != "": cover = maxf(cover, float(motion["shoulder"]))
+		var hand: Vector3 = neutral.lerp(covered, ramp(cover))
 		var twist := 0.0; var pronation := 0.0
 		if active:
 			var e := float(motion["upper_arm"])
@@ -234,13 +265,16 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 			var curve := right * side * (0.62 if motion["hook"] else 0.03)
 			if motion["upper"]: curve.y = -0.5
 			elif "FLARED" in row: curve.y = 0.42
+			# Recovery folds the elbow toward the ribs, instead of playing the
+			# outgoing hook/uppercut arc backwards. Every arc closes at contact.
+			curve *= (1.0 + (0.18 if "POWER" in mods else 0.0) + (0.32 if "HAYMAKER" in mods else 0.0)) * (1.0 - ramp(recovery * 2.0))
 			hand += -forward * float(motion["load"]) * 0.50
 			hand = hand.lerp(target, e) + curve * sin(e * PI)
-			if motion["upper"]:
+			if motion["upper"] or recovery > 0:
 				# Rising punches sweep in front of the chest. A lateral/downward
 				# arc alone can route the wrist through the advancing shoulder,
 				# collapsing the elbow axis. Clearance vanishes at exact contact.
-				var clearance := 0.32 * sqrt(maxf(0, sin(e * PI)))
+				var clearance := 0.32 * sqrt(maxf(0, sin(e * PI))) * (1.0 if motion["upper"] else ramp(recovery * 6.0))
 				hand += forward * maxf(0, clearance - (hand - shoulder).dot(forward)) * (1.0 - ramp((e - 0.9) / 0.1))
 			var turnover := side * (0.15 if motion["upper"] else PI * 0.5)
 			pronation = turnover * 0.70 * float(motion["forearm"])
@@ -271,10 +305,13 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 		pivots.append(foot_turn)
 		var hip := pelvis + (right * side * 0.14).rotated(Vector3.UP, hips_turn)
 		hip_joints.append(hip); ankles.append(soles[i] + Vector3.UP * 0.095 - forward.rotated(Vector3.UP, foot_turn) * 0.08)
-		leg_poles.append(forward.rotated(Vector3.UP, foot_turn) * 1.2 + right * side * 0.1); knees.append(Vector3.ZERO)
+		var knee_pole := forward.rotated(Vector3.UP, foot_turn) * 1.2 + right * side * 0.1
+		leg_poles.append(knee_pole); knees.append(Vector3.ZERO)
 	last_tick = tick
-	var result := constrain({"support_elbows": support_elbows, "arm_stability": arm_stability, "hand_goals": wrists.duplicate(), "delivery_targets": delivery_targets, "contact_centers": contact_centers, "contact_radii": contact_radii, "contact_hits": contact_hits, "contact_weights": contact_weights, "arm_poles": arm_poles, "leg_poles": leg_poles, "hip_joints": hip_joints, "ankles": ankles, "forward": forward, "head": head_offset + Vector3.UP * 1.55, "pelvis": pelvis, "chest": chest, "hips_turn": hips_turn, "chest_turn": chest_turn, "shoulders": shoulders,
+	var supported_knees := [knee_prior[0] - origin, knee_prior[1] - origin] if not knee_prior.is_empty() else hip_joints.duplicate()
+	var result := constrain({"knee_stability": 0.0 if knee_prior.is_empty() else 1.0, "support_knees": supported_knees, "support_elbows": support_elbows, "arm_stability": arm_stability, "hand_goals": wrists.duplicate(), "delivery_targets": delivery_targets, "contact_centers": contact_centers, "contact_radii": contact_radii, "contact_hits": contact_hits, "contact_weights": contact_weights, "arm_poles": arm_poles, "leg_poles": leg_poles, "hip_joints": hip_joints, "ankles": ankles, "forward": forward, "head": head_offset + Vector3.UP * 1.55, "pelvis": pelvis, "chest": chest, "hips_turn": hips_turn, "chest_turn": chest_turn, "shoulders": shoulders,
 		"elbows": elbows, "wrists": wrists, "twists": twists, "forearm_twists": forearm_twists, "feet": soles, "pivots": pivots, "knees": knees, "chain": motion, "guard": guard, "lead_weight": lead_weight, "support_shift": support_shift})
 
 	elbow_history = [origin + result["elbows"][0], origin + result["elbows"][1]]
+	knee_history = [origin + result["knees"][0], origin + result["knees"][1]]
 	return result

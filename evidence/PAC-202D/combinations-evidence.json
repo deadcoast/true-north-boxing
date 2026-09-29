@@ -1,0 +1,142 @@
+{
+  "task": "PAC-202D",
+  "result": "PASS",
+  "scope": "Connected punch, defense and counter combinations on planted footwork",
+  "sources": {
+    "engine/greybox/presentation/fight_view.gd": "d6fb4df91671f3e60e0d02e4da731456c8e4abcd4c3de4e1b8bf56086016dfe3",
+    "engine/greybox/sim/core.gd": "4aa9b798c5e6ec65a1d938fa07c83fd7c069d14ad973fef43a642ef671a6654a",
+    "engine/greybox/presentation/boxing_motion.gd": "55e5e4c0558d4a3b0d66163744ee2cea3cf7bf317e2581537e602ceca14aa6d3",
+    "engine/greybox/sim/tests.gd": "fe30a89ea997974eebbe9ff6004fba725395fd78c1e1ddf0062a751ab0714bcf",
+    "engine/greybox/tools/drive_boxing_motion.gd": "71b1b6a2b421f9799b0c5175a6d085c83533e48eb1c5a31f53417679c788b02c"
+  },
+  "command": [
+    ".venv/Scripts/python.exe tools/verify_source_packages.py --godot Godot_v4.7.2-stable_win64_console.exe --output .PACER/PAC-202D/runtime-verified --jobs 6",
+    "Godot_v4.7.2-stable_win64_console.exe --headless --path engine/greybox -s tools/drive_boxing_motion.gd -- welcome",
+    "Godot_v4.7.2-stable_win64_console.exe --headless --path engine/greybox -s tools/drive_combat_loop.gd -- welcome",
+    "Godot_v4.7.2-stable_win64_console.exe --headless --path engine/greybox -s tools/drive_readability.gd -- welcome",
+    "Godot_v4.7.2-stable_win64_console.exe --path engine/greybox -s tools/drive_boxing_motion.gd -- welcome capture",
+    "Godot_v4.7.2-stable_win64_console.exe --headless --path engine/greybox -s tools/drive_input.gd -- dummy",
+    ".venv/Scripts/python.exe -m unittest discover -s tests -v",
+    "Godot_v4.7.2-stable_win64_console.exe --path engine/greybox --write-movie <absolute-workspace>/.PACER/PAC-202D/exchange-clean.avi --fixed-fps 60 -s tools/drive_boxing_motion.gd -- welcome film side"
+  ],
+  "results": {
+    "baseline": "22/36",
+    "motion": "252/252",
+    "new_checks": 50,
+    "contacts": 6000,
+    "native_edge_contacts": 40,
+    "native_modifier_strokes": 80,
+    "sustained_strings": {
+      "commands_each": 12,
+      "normal": {
+        "hits": 8,
+        "blocks": 4
+      },
+      "exhausted": {
+        "hits": 8,
+        "blocks": 4
+      }
+    },
+    "gpu": "426/426 (252 checks + 174 captures)",
+    "input": "98/98",
+    "combat": "67/67",
+    "readability": "113/113",
+    "python": "44/44",
+    "full_runtime": "55/55",
+    "boss_smokes": "24 at454/454",
+    "determinism": "57/57"
+  },
+  "changes": [
+    "Executed modifiers preserved through startup, contact, cancellation and recovery.",
+    "Power/haymaker load the pivot/hips/core and delay haymaker delivery on existing sim timings; guarded starts and the protecting hand remain connected.",
+    "Returning hooks fold toward the ribs with wrist clearance; lead-foot preparation and knee-plane continuity prevent lunge/recovery discontinuities.",
+    "NP_03 range-step counter requires continuous backward movement from an actual threatened position; rejects stationary/outside/stopped/reversed/circling/approach/reused credit; origin survives save and deterministic hashing."
+  ],
+  "design_reconciliation": {
+    "legal_modifiers": [
+      "BODY",
+      "POWER",
+      "HAYMAKER",
+      "BLOCK_PUNCH",
+      "STEPPING"
+    ],
+    "corkscrew_hosing": "Not authored legal modifiers in NP_03, tuning or production input. No invented additional moves.",
+    "meter": "NP_05 pays a later clean counter hit, not range evasion itself.",
+    "audit_fixture": "The historical seed22 Priya winner assertion changed to BOTH pre-authored seeds [11,22] and unchanged 0.5 viability; full growth wins1/2, without totals0/2. Original failure retained. No seeds, tuning, thresholds, patterns or profile changes."
+  },
+  "render_review": {
+    "artifacts": [
+      "exchange-game-speed.mp4",
+      "exchange-quarter-speed.mp4",
+      "side-combination-delivery.png",
+      "side-combination-contact.png",
+      "side-heavy-load.png",
+      "side-heavy-delivery.png",
+      "side-heavy-miss.png",
+      "side-heavy-recovery.png"
+    ],
+    "observations": "Inspected native cross delivery/contact and haymaker load, delivery above a ducking target, and folded recovery. Fixed limbs, foot support and protecting hand are checked throughout the native runs.",
+    "method": "Recorded 120 Hz native exchange at60 fps; inspected extracted frames and retained game-speed and quarter-speed playback artifacts. This is frame-based agent review, not human real-time play/fun acceptance.",
+    "film": {
+      "size": "1280x720",
+      "frames": 506,
+      "fps": 60,
+      "game_seconds": 8.433333,
+      "quarter_seconds": 33.716667,
+      "scenario": "Isolated opponent attack queue with native opponent defensive reads; twelve player key commands. Side inspection camera uses opaque materials; production chase visibility behavior is unchanged."
+    }
+  },
+  "failed_attempts": "previous-attempts.log and runtime-attempt01.json retain failures; complete raw runs remain under .PACER/PAC-202D.",
+  "limitations": [
+    "Procedural rig; final fighter art and professional boxing authenticity not accepted.",
+    "Parent PAC-202, style/build PAC-202E, integrated boxing PAC-202F and connected-game PAC-203/204 remain open.",
+    "Synthetic/native input tests are not physical input-latency measurements.",
+    "Windows root-certificate and intermittent ObjectDB exit diagnostics are retained; no claim of leak-free shutdown."
+  ],
+  "next": "PAC-202E - style/build differentiation and the Yuri/Marta/Sam authored encounters",
+  "artifacts": {
+    "combat.log": "3e0d6a164a1a5903872ade662df03bad8084532efb5618745d673b109fde91f9",
+    "combinations-baseline.log": "e9b43825421830243e25b55c512f2148cf2edab9a8a9ffbd3ab229775b0e2f93",
+    "exchange-film.json": "14938b5037350d429a8db2c0c9a3845009c0ff0fb2323c0e38f566f7714326f1",
+    "exchange-game-speed.mp4": "fdaffc7708e4c0716e9953126c9948b6366fe5a1af1932b7a1c2c9b48d47a96a",
+    "exchange-quarter-speed.mp4": "1deaa249f2a64257bdd383b2a024f6b81dbad26438725c9c8fbaeb0b09c15118",
+    "film.log": "a71e836bc93ab3a78cffe8df98308d8eaf39ab6629a20d9c29d6afdffed82d6c",
+    "input-evidence.json": "ff3478ae8b056b6a58b175fdb792b9256b9a961c77afc6f3d6ea8115e88770ec",
+    "input.log": "b22f54d28c772fd0fdd6559690ec00e03a2ed181ffc008a196f36fe0eb2699fd",
+    "motion.log": "390b5994bdce43f7a76d8f73ee9548b895e648f2d43179f4916875ef533c7273",
+    "presentation-evidence.json": "145661acd76a6c1806b8a0f12d6f6f806eac71b5cff29cbd4a13a9601b925c09",
+    "previous-attempts.log": "cfbf2e63a1f58d66613463fbce737c068101b0597eb696ac90ecddb09d156e67",
+    "python-tests.log": "f4b05ea32773b1da99eb6a3fe3b6d834b0ae1d5077eaf9369139c025981f503d",
+    "readability.log": "036fb3eb3ef77e7d3c6f62f035e1ee486ef125a6c027b13f44252a8584587cb3",
+    "rendered.log": "2d7545bc572c3bf2d01c7484e1a76a8b50fdd4949fa6d5d2ad8980f0c1a8dab5",
+    "runtime-attempt01.json": "91bb47088271f17f1609b08497616eb4c1ecca98c09897c00e35ef7c8326e631",
+    "runtime-evidence.json": "9ec55ccba15af203781748c2be5383137bc522bd6eff85d2fa6c4c025a56ecda",
+    "runtime-results.json": "6841a15ff37ecad4aeb128632a02095973e8d6609d4040944664abfcc378a756",
+    "side-combination-contact.png": "827967bdd9874001a626610af3169b95fd9994e379a93374ae956e8042b063b0",
+    "side-combination-delivery.png": "855d67cae1ea88dd85a0600c385fd6fb2d039bfc614816aea338e8939d43bfee",
+    "side-heavy-delivery.png": "52334f6c5c9dc8a0298ac836d241c5c563568b6aa40c2299a7450674982c6bf5",
+    "side-heavy-load.png": "ff5ee53ba6bb228ff8955c9ab7cd94626a93b48d36a6b8f2de1417923c840a73",
+    "side-heavy-miss.png": "8426951342fb4c71e93fddac66e9c3138036bbb96f0602d3d9fc4a34bea674a0",
+    "side-heavy-recovery.png": "7dee09c22b4baaf84f8f0166b16db451999a8749fd19bf4a11794de453d18dc7"
+  },
+  "raw_failed_logs": {
+    ".PACER\\PAC-202D\\combinations-baseline.log": "ae16075247aad6b338745780a1377fd59871e3bc59e305cdc8d201d80491522f",
+    ".PACER\\PAC-202D\\motion01.log": "29828fbb39ec9445b431efe6cd8041fc75c7b7505a5099c8c6947ff24f1a8c1b",
+    ".PACER\\PAC-202D\\motion02.log": "3a6d31a7104d2b575c96596dd9596b030556204255be64022b003eb542d0e108",
+    ".PACER\\PAC-202D\\motion03.log": "fa25eb142f7453dd320e00569fddd5ede213c36e050e0037c3f59a2e7520adb8",
+    ".PACER\\PAC-202D\\motion04.log": "d15d1a52e399e28d5eb8545c7d21a9eb486b6d326707d8bf590c2479d2cf5d0d",
+    ".PACER\\PAC-202D\\motion05.log": "91505b9f80287c17d7b6ef91400b90902eb710fd88a5a5c38ba9d258453f75f4",
+    ".PACER\\PAC-202D\\motion06.log": "eb65ccd7921f3999043514e260a10842b483b2c876828da6d2f4bf998db3a530",
+    ".PACER\\PAC-202D\\range-audit.log": "45947cca3eb6f5afb0d5005d1390ebd8aa4200eec5a3b994b6953d986f732a1f",
+    ".PACER\\PAC-202D\\range-context.log": "13878f5ab898c841224875732d2054502243733347321e73a3efea6a02c3cca7",
+    ".PACER\\PAC-202D\\range-paired.log": "88ada82c7ab3e23cc2432bfc90bea80051f92b6af501d95f578f6f892dda2a13",
+    ".PACER\\PAC-202D\\smoke-corrected.log": "7ae8a236fb72464badff88cac89003f895c88b3d4f4538c72f9842f94e91f103",
+    ".PACER\\PAC-202D\\smoke-retreat.log": "7ae8a236fb72464badff88cac89003f895c88b3d4f4538c72f9842f94e91f103",
+    ".PACER\\PAC-202D\\transitions01.log": "7a0da8282c9b63bb65a5c4dc4ee6fdd7ee13a8320ff877bf804ef2756cec9f46",
+    ".PACER\\PAC-202D\\transitions02.log": "5a9a698dc731785b111598e6544e333ddb699d06fe9a5d52fabea7a269ea8893",
+    ".PACER\\PAC-202D\\transitions03.log": "561c90e21b63879f56bd4ccbd59ede2a8178d14bc09fef84ef44ae67821481a6",
+    ".PACER\\PAC-202D\\transitions04.log": "197e6bedb176b51fedf28f5d3e662005ce456488c843f4a3be39425002e5a725",
+    ".PACER/PAC-202D/film-final.err": "9e5ceabf06ddf9e1b4e6e273f16063a49c83a6430be557ece5097f6e5ae14b89"
+  },
+  "post_suite_verification": "After55/55 runtime completion, repaired only the optional side-film material override. Reran the changed driver252/252 and clean GPU native film1/1 with no script errors. Normal gameplay source and the other54 runtime jobs are unchanged; full GPU426/426 predates this optional recording-helper repair."
+}

@@ -1540,12 +1540,25 @@ func _land_boss_punch(mult: float) -> void:
 	var brow: String = bpending.get("row", "R_STRAIGHT")
 	var body: bool = bpending.get("body", false)
 	bpending = {}
+	# A range counter requires a continuous retreat from a threatened position
+	# during this attack. Consume the origin on every resolution so another
+	# out-of-range swing cannot pay again for the same step.
+	var retreat_origin = P.get("range_step_from", null)
+	P.erase("range_step_from")
 	var geo := resolve_geometry(B, P, brow, body)
 	var row: Dictionary = T["punch_matrix"][brow]
 	if geo == "HIT" and _walled("P", brow, body): return
 	if geo == "HIT" and _auto_slips("P", brow, body): geo = "AUTO_SLIP"
 	if geo != "HIT":
 		var wide := 1.4 if trapped_p else 1.0
+		if geo == "MISS_REACH" and P["dodge"] == "" and retreat_origin is Dictionary:
+			var before_step := P.duplicate(); before_step["pos"] = retreat_origin["player"]
+			var attacker_before := B.duplicate(); attacker_before["pos"] = retreat_origin["attacker"]
+			if resolve_geometry(attacker_before, before_step, brow, body) == "HIT":
+				P["counter_t"] = _window("range_step", wide)
+				# NP_05 pays perfect blocks/slips here, not range evasion.
+				# A clean counter from this window earns its normal hit reward.
+				_ev("range_step", {"ticks": P["counter_t"]}); _say("STEPPED OUT - counter window!")
 		if P["dodge"] != "":
 			match P["dodge"]:
 				"SLIP": P["counter_t"] = _window("slip", wide)
@@ -10026,6 +10039,9 @@ func _step_inner(inp: Dictionary) -> void:
 				backstep_ticks = []; _fire_event("player_backstep_chain3")
 	if mv.y > 0.2 and tick - backstep_ev_t > 20: _ev("backstep", {"sprint": false}); backstep_ev_t = tick   # a backward step, once per 20 ticks
 	p_vel = (P["pos"] - before) / DT
+	if bstate in ["TELL", "HOLD", "ACTING"] and mv.y > 0.0 and p_vel.dot((P["pos"] - B["pos"]).normalized()) > 0.0:
+		if not P.has("range_step_from"): P["range_step_from"] = {"player": before, "attacker": B["pos"]}
+	else: P.erase("range_step_from")
 	# straight-line retreat: backing without an angle, 1.2m of it
 	if mv.y > 0.7 and absf(mv.x) < 0.3: retreat_d += (P["pos"] - before).length()
 	else: retreat_d = 0.0
@@ -10132,7 +10148,7 @@ func _step_inner(inp: Dictionary) -> void:
 func hash_state() -> int:
 	# bit-exact: serialises the raw values, no float formatting, no rounding
 	var v := [tick, P["pos"], B["pos"], P["stamina"], P["comp"], P["guard"], P["busy_t"],
-		P["dodge"], P["dodge_t"], P["counter_t"], P["flash_t"], P["cmd"], P["pending"],
+		P["dodge"], P["dodge_t"], P["counter_t"], P["flash_t"], P["cmd"], P["pending"], P.get("range_step_from", null),
 		B["stamina"], B["comp"], B["guard"], B["dodge"], B["dodge_t"], B["dodge_at"], B["blocking"],
 		tension, contributed, drops_p, drops_b, score_p, score_b, ep_p, ep_b, seg_idx,
 		bstate, btimer, bstring, bphase, bqueue, flags, tokens, mode, clock_t, freeze_t, boss_acc,

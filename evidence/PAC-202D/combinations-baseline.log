@@ -1,0 +1,56 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+MODIFIER DETAIL variant=0 mid_chest=0.09145862978549
+MODIFIER MATRIX 0 contacts=10 max_jump=0.18347366154194
+[FAIL] modifier matrix 0 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 0 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 0 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 0 completes recovery with differentiated loading
+MODIFIER MATRIX 1 contacts=10 max_jump=0.1579966545105
+[FAIL] modifier matrix 1 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 1 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 1 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 1 completes recovery with differentiated loading
+MODIFIER DETAIL variant=2 mid_chest=0.11173970437854
+MODIFIER MATRIX 2 contacts=10 max_jump=0.13001331686974
+[FAIL] modifier matrix 2 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 2 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 2 keeps fixed anatomy, continuous poses and hitstop
+[FAIL] modifier matrix 2 completes recovery with differentiated loading
+MODIFIER MATRIX 3 contacts=10 max_jump=0.13001331686974
+[FAIL] modifier matrix 3 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 3 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 3 keeps fixed anatomy, continuous poses and hitstop
+[FAIL] modifier matrix 3 completes recovery with differentiated loading
+MODIFIER DETAIL variant=4 mid_chest=0.09145862978549
+MODIFIER MATRIX 4 contacts=10 max_jump=0.13000729680061
+[FAIL] modifier matrix 4 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 4 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 4 keeps fixed anatomy, continuous poses and hitstop
+[FAIL] modifier matrix 4 completes recovery with differentiated loading
+MODIFIER MATRIX 5 contacts=10 max_jump=0.13000729680061
+[FAIL] modifier matrix 5 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 5 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 5 keeps fixed anatomy, continuous poses and hitstop
+[FAIL] modifier matrix 5 completes recovery with differentiated loading
+MODIFIER MATRIX 6 contacts=10 max_jump=0.13000373542309
+[FAIL] modifier matrix 6 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 6 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 6 keeps fixed anatomy, continuous poses and hitstop
+[FAIL] modifier matrix 6 completes recovery with differentiated loading
+MODIFIER MATRIX 7 contacts=10 max_jump=0.13000373542309
+[FAIL] modifier matrix 7 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 7 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 7 keeps fixed anatomy, continuous poses and hitstop
+[FAIL] modifier matrix 7 completes recovery with differentiated loading
+SUSTAINED tired=false rows=["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT", "L_STRAIGHT", "L_STRAIGHT", "L_HOOK", "L_HOOK", "R_STRAIGHT", "R_STRAIGHT", "R_HOOK", "R_HOOK"] hits=8 blocks=4 jump=0.13001784682274
+[PASS] sustained false alternating and same-hand buffer preserves twelve commands
+[PASS] sustained false guard, impact and exhausted recovery stay connected
+SUSTAINED tired=true rows=["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT", "L_STRAIGHT", "L_STRAIGHT", "L_HOOK", "L_HOOK", "R_STRAIGHT", "R_STRAIGHT", "R_HOOK", "R_HOOK"] hits=8 blocks=4 jump=0.1300054192543
+[PASS] sustained true alternating and same-hand buffer preserves twelve commands
+[PASS] sustained true guard, impact and exhausted recovery stay connected
+COMBINATIONS VERDICT :: RED (22/36)
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
