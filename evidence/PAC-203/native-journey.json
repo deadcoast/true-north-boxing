@@ -1,0 +1,1426 @@
+{
+  "captures": [],
+  "checks": 133,
+  "failures": [],
+  "journeys": [
+    {
+      "fighter": "RORY",
+      "hashes_each_second": [
+        2238148797,
+        1815608240,
+        1523515784
+      ],
+      "ledger": {
+        "bean_types": {
+          "RFX": 3,
+          "STA": 7
+        },
+        "beans": 10,
+        "beaten": {
+          "CHALLENGER": {
+            "dual": 0,
+            "scrap": 1,
+            "segment": 0,
+            "spar": 0,
+            "styles": {
+              "scrap:BOXERPUNCHER": 1
+            }
+          }
+        },
+        "day": 2,
+        "graph": {},
+        "growth": {
+          "RORY": {
+            "board": [
+              "sp1"
+            ],
+            "raises": {
+              "STA": 1
+            },
+            "rarity": 1,
+            "socket": "",
+            "spent": 1,
+            "trials": {}
+          }
+        },
+        "habits": {
+          "RORY": {
+            "chances": 0,
+            "counters": {},
+            "feints": 0,
+            "grams": {
+              "L_STRAIGHT,R_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1
+            },
+            "punches": 4,
+            "reads": {},
+            "rows": {
+              "L_STRAIGHT": 1,
+              "R_STRAIGHT": 3
+            }
+          }
+        },
+        "hbp": 0,
+        "houses": {},
+        "kizuna": {
+          "PRIYA|RORY": 9
+        },
+        "kizuna_day": {},
+        "log": [
+          "SCRAP: 45 XP, +2 Prestige"
+        ],
+        "prestige": 2,
+        "recruit": {},
+        "spirits": 0,
+        "staff": {},
+        "story": {},
+        "string_wall": {},
+        "training": {
+          "day": 1,
+          "used": 3
+        },
+        "xp": {
+          "RORY": 45
+        }
+      },
+      "name": "earned-scrap-0",
+      "result": "SCRAP WON - objective",
+      "reward": "SCRAP: 45 XP, +2 Prestige",
+      "tick_end": 258,
+      "tick_start": 0
+    },
+    {
+      "fighter": "RORY",
+      "hashes_each_second": [
+        2780419807,
+        1244343926,
+        4174620118,
+        1036390669
+      ],
+      "ledger": {
+        "bean_types": {
+          "RFX": 3,
+          "STA": 7
+        },
+        "beans": 10,
+        "beaten": {
+          "CHALLENGER": {
+            "dual": 0,
+            "scrap": 2,
+            "segment": 0,
+            "spar": 0,
+            "styles": {
+              "scrap:BOXERPUNCHER": 2
+            }
+          }
+        },
+        "day": 2,
+        "graph": {},
+        "growth": {
+          "RORY": {
+            "board": [
+              "sp1"
+            ],
+            "raises": {
+              "STA": 1
+            },
+            "rarity": 1,
+            "socket": "",
+            "spent": 1,
+            "trials": {}
+          }
+        },
+        "habits": {
+          "RORY": {
+            "chances": 0,
+            "counters": {},
+            "feints": 0,
+            "grams": {
+              "L_STRAIGHT,R_STRAIGHT": 2,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,R_STRAIGHT": 6,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 4
+            },
+            "punches": 10,
+            "reads": {
+              "R_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1
+            },
+            "rows": {
+              "L_STRAIGHT": 2,
+              "R_STRAIGHT": 8
+            }
+          }
+        },
+        "hbp": 0,
+        "houses": {},
+        "kizuna": {
+          "PRIYA|RORY": 9
+        },
+        "kizuna_day": {},
+        "log": [
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige"
+        ],
+        "prestige": 4,
+        "recruit": {},
+        "spirits": 0,
+        "staff": {},
+        "story": {},
+        "string_wall": {},
+        "training": {
+          "day": 1,
+          "used": 3
+        },
+        "xp": {
+          "RORY": 90
+        }
+      },
+      "name": "earned-scrap-1",
+      "result": "SCRAP WON - objective",
+      "reward": "SCRAP: 45 XP, +2 Prestige",
+      "tick_end": 696,
+      "tick_start": 258
+    },
+    {
+      "fighter": "RORY",
+      "hashes_each_second": [
+        1434645295,
+        3625480786,
+        2466237716
+      ],
+      "ledger": {
+        "bean_types": {
+          "RFX": 3,
+          "STA": 7
+        },
+        "beans": 10,
+        "beaten": {
+          "CHALLENGER": {
+            "dual": 0,
+            "scrap": 3,
+            "segment": 0,
+            "spar": 0,
+            "styles": {
+              "scrap:BOXERPUNCHER": 3
+            }
+          }
+        },
+        "day": 2,
+        "graph": {},
+        "growth": {
+          "RORY": {
+            "board": [
+              "sp1"
+            ],
+            "raises": {
+              "STA": 1
+            },
+            "rarity": 1,
+            "socket": "",
+            "spent": 1,
+            "trials": {}
+          }
+        },
+        "habits": {
+          "RORY": {
+            "chances": 0,
+            "counters": {},
+            "feints": 0,
+            "grams": {
+              "L_STRAIGHT,R_STRAIGHT": 3,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 3,
+              "R_STRAIGHT,R_STRAIGHT": 9,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 6
+            },
+            "punches": 15,
+            "reads": {
+              "R_STRAIGHT,R_STRAIGHT": 3,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1
+            },
+            "rows": {
+              "L_STRAIGHT": 3,
+              "R_STRAIGHT": 12
+            }
+          }
+        },
+        "hbp": 0,
+        "houses": {},
+        "kizuna": {
+          "PRIYA|RORY": 9
+        },
+        "kizuna_day": {},
+        "log": [
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige, PI tick vs School"
+        ],
+        "prestige": 6,
+        "recruit": {},
+        "spirits": 0,
+        "staff": {},
+        "story": {},
+        "string_wall": {},
+        "training": {
+          "day": 1,
+          "used": 3
+        },
+        "xp": {
+          "RORY": 135
+        }
+      },
+      "name": "earned-scrap-2",
+      "result": "SCRAP WON - objective",
+      "reward": "SCRAP: 45 XP, +2 Prestige, PI tick vs School",
+      "tick_end": 1044,
+      "tick_start": 696
+    },
+    {
+      "fighter": "RORY",
+      "hashes_each_second": [
+        1091155531,
+        2859098836,
+        3053706585,
+        1296599773,
+        4096226458,
+        2522398018,
+        2413154200,
+        1385791663,
+        329081738,
+        4132885172,
+        3748149323,
+        2151677783,
+        2949024574,
+        93695750,
+        2711054378,
+        2759875857,
+        4265211655
+      ],
+      "ledger": {
+        "bean_types": {
+          "RFX": 3,
+          "STA": 7
+        },
+        "beans": 10,
+        "beaten": {
+          "CHALLENGER": {
+            "dual": 0,
+            "scrap": 4,
+            "segment": 0,
+            "spar": 0,
+            "styles": {
+              "scrap:BOXERPUNCHER": 4
+            }
+          }
+        },
+        "day": 2,
+        "graph": {},
+        "growth": {
+          "RORY": {
+            "board": [
+              "sp1"
+            ],
+            "raises": {
+              "STA": 1
+            },
+            "rarity": 1,
+            "socket": "",
+            "spent": 1,
+            "trials": {}
+          }
+        },
+        "habits": {
+          "RORY": {
+            "chances": 0,
+            "counters": {},
+            "feints": 0,
+            "grams": {
+              "L_STRAIGHT,R_STRAIGHT": 4,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 4,
+              "R_STRAIGHT,R_STRAIGHT": 30,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 26
+            },
+            "punches": 38,
+            "reads": {
+              "R_STRAIGHT,R_STRAIGHT": 22,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 19
+            },
+            "rows": {
+              "L_STRAIGHT": 4,
+              "R_STRAIGHT": 34
+            }
+          }
+        },
+        "hbp": 0,
+        "houses": {},
+        "kizuna": {
+          "PRIYA|RORY": 9
+        },
+        "kizuna_day": {},
+        "log": [
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige, PI tick vs School",
+          "SCRAP: 45 XP, +2 Prestige"
+        ],
+        "prestige": 8,
+        "recruit": {},
+        "spirits": 0,
+        "staff": {},
+        "story": {},
+        "string_wall": {},
+        "training": {
+          "day": 1,
+          "used": 3
+        },
+        "xp": {
+          "RORY": 180
+        }
+      },
+      "name": "earned-scrap-3",
+      "result": "SCRAP WON - objective",
+      "reward": "SCRAP: 45 XP, +2 Prestige",
+      "tick_end": 3020,
+      "tick_start": 1044
+    },
+    {
+      "fighter": "RORY",
+      "hashes_each_second": [
+        1211447657,
+        1146980028,
+        261725390,
+        349426995,
+        3963048464,
+        2472740801
+      ],
+      "ledger": {
+        "bean_types": {
+          "RFX": 3,
+          "STA": 7
+        },
+        "beans": 10,
+        "beaten": {
+          "CHALLENGER": {
+            "dual": 0,
+            "scrap": 5,
+            "segment": 0,
+            "spar": 0,
+            "styles": {
+              "scrap:BOXERPUNCHER": 5
+            }
+          }
+        },
+        "day": 2,
+        "graph": {},
+        "growth": {
+          "RORY": {
+            "board": [
+              "sp1"
+            ],
+            "raises": {
+              "STA": 1
+            },
+            "rarity": 1,
+            "socket": "",
+            "spent": 1,
+            "trials": {}
+          }
+        },
+        "habits": {
+          "RORY": {
+            "chances": 0,
+            "counters": {},
+            "feints": 0,
+            "grams": {
+              "L_STRAIGHT,R_STRAIGHT": 5,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 5,
+              "R_STRAIGHT,R_STRAIGHT": 36,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 31
+            },
+            "punches": 46,
+            "reads": {
+              "R_STRAIGHT,R_STRAIGHT": 26,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 22
+            },
+            "rows": {
+              "L_STRAIGHT": 5,
+              "R_STRAIGHT": 41
+            }
+          }
+        },
+        "hbp": 0,
+        "houses": {},
+        "kizuna": {
+          "PRIYA|RORY": 9
+        },
+        "kizuna_day": {},
+        "log": [
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige, PI tick vs School",
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige"
+        ],
+        "prestige": 10,
+        "recruit": {},
+        "spirits": 0,
+        "staff": {},
+        "story": {},
+        "string_wall": {},
+        "training": {
+          "day": 1,
+          "used": 3
+        },
+        "xp": {
+          "RORY": 225
+        }
+      },
+      "name": "earned-scrap-4",
+      "result": "SCRAP WON - objective",
+      "reward": "SCRAP: 45 XP, +2 Prestige",
+      "tick_end": 3638,
+      "tick_start": 3020
+    },
+    {
+      "fighter": "MARCUS",
+      "hashes_each_second": [
+        2402524855,
+        4146741311,
+        365814264,
+        3141200806,
+        1630968243,
+        4244226184,
+        163352850,
+        2852087963,
+        3374576329,
+        277702393,
+        2127371106,
+        3252800558,
+        3220773225,
+        3022233055,
+        3980368867,
+        2235091546,
+        4171990149,
+        3186057822,
+        1388448484,
+        4127804787,
+        3507524370,
+        2589853415,
+        520233753,
+        56412445,
+        2966154336,
+        767939779,
+        210497312,
+        4037516415,
+        2587926728,
+        2601672616,
+        4267351137,
+        2440674758,
+        3438424792,
+        1065053598,
+        2561789182,
+        2593755040,
+        1969251259,
+        3110986576,
+        3610771360,
+        2903105814,
+        774745099,
+        3937457886,
+        497103129,
+        2666336833,
+        3923141478,
+        286484577,
+        985903833,
+        797615200,
+        4128332626,
+        398627987,
+        1399132443,
+        393238580,
+        2038015152,
+        1670666097,
+        2851737891,
+        114311498,
+        1979689644,
+        383087244,
+        2709492494,
+        2072833163,
+        1402493648,
+        3729358252,
+        2686811542,
+        4239843120,
+        2304802643,
+        3960034079,
+        2168596305,
+        1901282861,
+        2761908876,
+        224418829,
+        3612694799,
+        2397262613,
+        2189708144,
+        3776554263,
+        3047496013,
+        446992487,
+        2699491548,
+        2971880452,
+        2958232205,
+        1482146539,
+        3319140350,
+        3091984901,
+        1434198819,
+        2539115914,
+        4056975716,
+        2708556136,
+        133592744,
+        754743180,
+        1039785767,
+        1515860164,
+        274550969,
+        3831273741,
+        2168661990,
+        3533493105,
+        214096596,
+        3523835342,
+        1455924424,
+        2629613510,
+        2894567040,
+        1237226607,
+        2362683404,
+        2936679805,
+        1871248900,
+        2321462067,
+        895245095,
+        989479148,
+        3265352294,
+        3616168669,
+        3783551175,
+        941284862,
+        3839762415,
+        1336130754,
+        2559864107,
+        2553370569,
+        3276354098,
+        2381824098,
+        1573839335,
+        240379964,
+        4115679202,
+        3567875672,
+        2460082230,
+        1827248991,
+        3195703569,
+        4065715445,
+        4002776447,
+        1355469371,
+        3890633967,
+        3868370457,
+        510389693,
+        1586277110,
+        849107225,
+        3954034398,
+        1553203390,
+        2018552730,
+        3984382443,
+        4239553062,
+        3253514179,
+        4198319309,
+        4237758721,
+        187855220,
+        731396792,
+        1178750379,
+        1517072303,
+        3477402417,
+        2535542981,
+        579528471,
+        2375566016,
+        4052206743,
+        2909491741,
+        547460800,
+        4205336845,
+        1163747892,
+        4128122336,
+        40225425,
+        3885829322,
+        1350013843,
+        2633856674,
+        2467285184,
+        1513230280,
+        4076011943,
+        2371807546,
+        2819289621,
+        2766317665,
+        2403853821,
+        2977600083,
+        3891808016,
+        3422076723,
+        487978632,
+        933052440,
+        1067570729,
+        3406553096,
+        1670801198,
+        1025624689,
+        1574110308,
+        2944980804,
+        1105123855,
+        3492161738,
+        3564192850,
+        2190028485,
+        3865959462,
+        2557133672,
+        3820842574,
+        1392869590,
+        2789520596,
+        1863153648,
+        4190123096,
+        2125021438,
+        3665821391,
+        3692321690,
+        3957170833,
+        1450808901,
+        308107224,
+        4282320819,
+        363860032,
+        2247611829,
+        1101809984,
+        2523844914,
+        166026153,
+        1789364553,
+        1293653371,
+        542336945,
+        3950980150,
+        247056878,
+        616911506,
+        3194803647,
+        3018132475,
+        1082033960,
+        76045769,
+        3906894492,
+        173305839,
+        3450058464,
+        271184143,
+        390365951,
+        1525450433,
+        1507193750,
+        3508247318,
+        1493585853,
+        1196988773,
+        1629748831,
+        341288769,
+        3250812400,
+        1386305068,
+        4016188540,
+        4291362188,
+        3568352625,
+        1249986322,
+        3189824307,
+        119789206,
+        2910058590,
+        1507703874
+      ],
+      "ledger": {
+        "bean_types": {
+          "RFX": 3,
+          "STA": 7
+        },
+        "beans": 10,
+        "beaten": {
+          "CHALLENGER": {
+            "dual": 0,
+            "scrap": 5,
+            "segment": 0,
+            "spar": 0,
+            "styles": {
+              "scrap:BOXERPUNCHER": 5
+            }
+          },
+          "carter_okafor": {
+            "dual": 0,
+            "house": "okafor",
+            "scrap": 0,
+            "segment": 1,
+            "spar": 0,
+            "styles": {
+              "segment:SLUGGER": 1
+            }
+          },
+          "commissioner_cal": {
+            "dual": 0,
+            "house": "sealed",
+            "scrap": 0,
+            "segment": 1,
+            "spar": 0,
+            "styles": {
+              "segment:SLUGGER": 1
+            }
+          },
+          "deshawn_vaughn": {
+            "dual": 0,
+            "scrap": 0,
+            "segment": 1,
+            "spar": 0,
+            "styles": {
+              "segment:OUTBOXER": 1
+            }
+          }
+        },
+        "day": 7,
+        "graph": {},
+        "growth": {
+          "RORY": {
+            "board": [
+              "sp1"
+            ],
+            "raises": {
+              "STA": 1
+            },
+            "rarity": 1,
+            "socket": "",
+            "spent": 1,
+            "trials": {}
+          }
+        },
+        "habits": {
+          "HILL 1": {
+            "chances": 0,
+            "counters": {},
+            "feints": 10,
+            "grams": {
+              "F_L_STRAIGHT,F_R_STRAIGHT": 1,
+              "F_L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1,
+              "F_L_STRAIGHT,R_STRAIGHT": 4,
+              "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1,
+              "F_L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 3,
+              "F_R_STRAIGHT,F_L_STRAIGHT": 1,
+              "F_R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT": 4,
+              "F_R_STRAIGHT,L_STRAIGHT,F_L_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 3,
+              "L_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT": 3,
+              "L_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 2,
+              "L_STRAIGHT,L_STRAIGHT": 16,
+              "L_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 1,
+              "L_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 9,
+              "L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 6,
+              "L_STRAIGHT,R_STRAIGHT": 8,
+              "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 3,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 2,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 3,
+              "R_STRAIGHT,F_L_STRAIGHT": 3,
+              "R_STRAIGHT,F_L_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 7,
+              "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 2,
+              "R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 3,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,R_STRAIGHT": 10,
+              "R_STRAIGHT,R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 4,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 4
+            },
+            "punches": 50,
+            "reads": {
+              "L_STRAIGHT,L_STRAIGHT": 12,
+              "L_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 5,
+              "L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT": 4
+            },
+            "rows": {
+              "L_STRAIGHT": 28,
+              "R_STRAIGHT": 22
+            }
+          },
+          "MARCUS": {
+            "chances": 22,
+            "counters": {
+              "L_STRAIGHT": 2,
+              "R_STRAIGHT": 1
+            },
+            "feints": 12,
+            "grams": {
+              "F_L_STRAIGHT,F_R_STRAIGHT": 2,
+              "F_L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 2,
+              "F_L_STRAIGHT,R_STRAIGHT": 3,
+              "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1,
+              "F_L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 2,
+              "F_R_STRAIGHT,F_L_STRAIGHT": 1,
+              "F_R_STRAIGHT,F_L_STRAIGHT,F_R_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT": 6,
+              "F_R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 5,
+              "L_STRAIGHT,F_R_STRAIGHT": 4,
+              "L_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 3,
+              "L_STRAIGHT,L_STRAIGHT": 3,
+              "L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 3,
+              "L_STRAIGHT,R_STRAIGHT": 24,
+              "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 2,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 15,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 7,
+              "R_STRAIGHT,F_L_STRAIGHT": 3,
+              "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 3,
+              "R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 22,
+              "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 4,
+              "R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 2,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 16,
+              "R_STRAIGHT,R_STRAIGHT": 9,
+              "R_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 6
+            },
+            "punches": 67,
+            "reads": {
+              "L_STRAIGHT,R_STRAIGHT": 23,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 7,
+              "R_STRAIGHT,L_STRAIGHT": 21,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 10,
+              "R_STRAIGHT,R_STRAIGHT": 4
+            },
+            "rows": {
+              "L_STRAIGHT": 31,
+              "R_STRAIGHT": 36
+            }
+          },
+          "PRIYA": {
+            "chances": 0,
+            "counters": {},
+            "feints": 4,
+            "grams": {
+              "F_L_STRAIGHT,R_STRAIGHT": 2,
+              "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 2,
+              "F_R_STRAIGHT,L_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 1,
+              "F_R_STRAIGHT,R_STRAIGHT": 1,
+              "F_R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1,
+              "L_STRAIGHT,L_STRAIGHT": 1,
+              "L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT": 7,
+              "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT,F_R_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 3,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1,
+              "R_STRAIGHT,F_L_STRAIGHT": 2,
+              "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,F_R_STRAIGHT,R_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 7,
+              "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 5,
+              "R_STRAIGHT,R_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1
+            },
+            "punches": 21,
+            "reads": {
+              "L_STRAIGHT,R_STRAIGHT": 6,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 5,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 3
+            },
+            "rows": {
+              "L_STRAIGHT": 9,
+              "R_STRAIGHT": 12
+            }
+          },
+          "RORY": {
+            "chances": 0,
+            "counters": {},
+            "feints": 0,
+            "grams": {
+              "L_STRAIGHT,R_STRAIGHT": 5,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 5,
+              "R_STRAIGHT,R_STRAIGHT": 36,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 31
+            },
+            "punches": 46,
+            "reads": {
+              "R_STRAIGHT,R_STRAIGHT": 26,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 22
+            },
+            "rows": {
+              "L_STRAIGHT": 5,
+              "R_STRAIGHT": 41
+            }
+          }
+        },
+        "hbp": 0,
+        "houses": {},
+        "kizuna": {
+          "HILL 1|PRIYA": 5,
+          "MARCUS|PRIYA": 5,
+          "PRIYA|RORY": 9
+        },
+        "kizuna_day": {},
+        "log": [
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige, PI tick vs School",
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige",
+          "DUAL: 688 XP, 5 Spirits, HILL 1+PRIYA +5, PRIYA+MARCUS +5"
+        ],
+        "prestige": 0,
+        "recruit": {},
+        "roles": {
+          "of": {
+            "HILL 1": "SCOUT"
+          },
+          "paid": {
+            "beans": 0,
+            "prestige": 0,
+            "uses": 0
+          }
+        },
+        "scouting": {
+          "leads": [
+            {
+              "day": 2,
+              "district": "hill",
+              "house": "macisaac",
+              "id": "HILL 1",
+              "label": "HILL 1",
+              "n": 1,
+              "rare": false,
+              "style": "SLUGGER"
+            }
+          ],
+          "open_mat": [],
+          "pulls": 1
+        },
+        "spirits": 5,
+        "staff": {},
+        "story": {},
+        "string_wall": {},
+        "techniques": {
+          "eights": {
+            "PRIYA": 7
+          },
+          "granted": {},
+          "kit": {},
+          "learned": {},
+          "tapes": {}
+        },
+        "training": {
+          "day": 1,
+          "used": 3
+        },
+        "xp": {
+          "HILL 1": 224,
+          "JUNE": 377,
+          "MARCUS": 229,
+          "PRIYA": 235,
+          "RORY": 225
+        }
+      },
+      "name": "full-dual",
+      "result": "ASCENDANT WINS",
+      "reward": "DUAL: 688 XP, 5 Spirits, HILL 1+PRIYA +5, PRIYA+MARCUS +5",
+      "tick_end": 31136,
+      "tick_start": 3640
+    },
+    {
+      "fighter": "PRIYA",
+      "hashes_each_second": [
+        1406267644,
+        3260960848,
+        2654622584,
+        4079811572,
+        2993440403,
+        2552196731,
+        2323585215,
+        340468539,
+        4235593258,
+        2556327525,
+        650472416,
+        194145596,
+        341869081,
+        1968866658,
+        3758647166,
+        3035901912,
+        647877843,
+        1748984332,
+        1886352525,
+        1968702730,
+        3797812624,
+        1019930047,
+        3955317985,
+        1214507666,
+        3538692947,
+        1884240694,
+        1761513824,
+        2080610665,
+        3510737799,
+        4110279915,
+        2551457436,
+        1826387692,
+        3394138176,
+        1507203307,
+        1730820034,
+        3707400386,
+        2229694971,
+        2691807994,
+        2023762659,
+        2901901828,
+        4150569274,
+        1569390340,
+        168924220,
+        1581171306,
+        2195857372,
+        1379943156,
+        3744477963,
+        1368148095,
+        2055248582,
+        95296434,
+        924832350,
+        2755444445,
+        2467636840,
+        1256809184,
+        868057588,
+        280133751,
+        4086496817,
+        2567066764,
+        846780788,
+        3713034441,
+        3700131640,
+        4024868272
+      ],
+      "ledger": {
+        "bean_types": {
+          "RFX": 3,
+          "STA": 7
+        },
+        "beans": 10,
+        "beaten": {
+          "CHALLENGER": {
+            "dual": 0,
+            "scrap": 5,
+            "segment": 0,
+            "spar": 0,
+            "styles": {
+              "scrap:BOXERPUNCHER": 5
+            }
+          },
+          "carter_okafor": {
+            "dual": 0,
+            "house": "okafor",
+            "scrap": 0,
+            "segment": 1,
+            "spar": 0,
+            "styles": {
+              "segment:SLUGGER": 1
+            }
+          },
+          "commissioner_cal": {
+            "dual": 0,
+            "house": "sealed",
+            "scrap": 0,
+            "segment": 1,
+            "spar": 0,
+            "styles": {
+              "segment:SLUGGER": 1
+            }
+          },
+          "deshawn_vaughn": {
+            "dual": 0,
+            "scrap": 0,
+            "segment": 1,
+            "spar": 0,
+            "styles": {
+              "segment:OUTBOXER": 1
+            }
+          }
+        },
+        "day": 7,
+        "graph": {},
+        "growth": {
+          "RORY": {
+            "board": [
+              "sp1"
+            ],
+            "raises": {
+              "STA": 1
+            },
+            "rarity": 1,
+            "socket": "",
+            "spent": 1,
+            "trials": {}
+          }
+        },
+        "habits": {
+          "HILL 1": {
+            "chances": 0,
+            "counters": {},
+            "feints": 10,
+            "grams": {
+              "F_L_STRAIGHT,F_R_STRAIGHT": 1,
+              "F_L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1,
+              "F_L_STRAIGHT,R_STRAIGHT": 4,
+              "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1,
+              "F_L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 3,
+              "F_R_STRAIGHT,F_L_STRAIGHT": 1,
+              "F_R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT": 4,
+              "F_R_STRAIGHT,L_STRAIGHT,F_L_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 3,
+              "L_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT": 3,
+              "L_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 2,
+              "L_STRAIGHT,L_STRAIGHT": 16,
+              "L_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 1,
+              "L_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 9,
+              "L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 6,
+              "L_STRAIGHT,R_STRAIGHT": 8,
+              "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 3,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 2,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 3,
+              "R_STRAIGHT,F_L_STRAIGHT": 3,
+              "R_STRAIGHT,F_L_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 7,
+              "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 2,
+              "R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 3,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,R_STRAIGHT": 10,
+              "R_STRAIGHT,R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 4,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 4
+            },
+            "punches": 50,
+            "reads": {
+              "L_STRAIGHT,L_STRAIGHT": 12,
+              "L_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 5,
+              "L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT": 4
+            },
+            "rows": {
+              "L_STRAIGHT": 28,
+              "R_STRAIGHT": 22
+            }
+          },
+          "MARCUS": {
+            "chances": 22,
+            "counters": {
+              "L_STRAIGHT": 2,
+              "R_STRAIGHT": 1
+            },
+            "feints": 12,
+            "grams": {
+              "F_L_STRAIGHT,F_R_STRAIGHT": 2,
+              "F_L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 2,
+              "F_L_STRAIGHT,R_STRAIGHT": 3,
+              "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1,
+              "F_L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 2,
+              "F_R_STRAIGHT,F_L_STRAIGHT": 1,
+              "F_R_STRAIGHT,F_L_STRAIGHT,F_R_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT": 6,
+              "F_R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 5,
+              "L_STRAIGHT,F_R_STRAIGHT": 4,
+              "L_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 3,
+              "L_STRAIGHT,L_STRAIGHT": 3,
+              "L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 3,
+              "L_STRAIGHT,R_STRAIGHT": 24,
+              "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 2,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 15,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 7,
+              "R_STRAIGHT,F_L_STRAIGHT": 3,
+              "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 3,
+              "R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 22,
+              "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 4,
+              "R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 2,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 16,
+              "R_STRAIGHT,R_STRAIGHT": 9,
+              "R_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 6
+            },
+            "punches": 67,
+            "reads": {
+              "L_STRAIGHT,R_STRAIGHT": 23,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 7,
+              "R_STRAIGHT,L_STRAIGHT": 21,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 10,
+              "R_STRAIGHT,R_STRAIGHT": 4
+            },
+            "rows": {
+              "L_STRAIGHT": 31,
+              "R_STRAIGHT": 36
+            }
+          },
+          "PRIYA": {
+            "chances": 0,
+            "counters": {},
+            "feints": 9,
+            "grams": {
+              "F_L_STRAIGHT,R_STRAIGHT": 5,
+              "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 3,
+              "F_L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 2,
+              "F_R_STRAIGHT,F_L_STRAIGHT": 2,
+              "F_R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 2,
+              "F_R_STRAIGHT,L_STRAIGHT": 1,
+              "F_R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 1,
+              "F_R_STRAIGHT,R_STRAIGHT": 1,
+              "F_R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1,
+              "L_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 1,
+              "L_STRAIGHT,F_R_STRAIGHT": 3,
+              "L_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 2,
+              "L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1,
+              "L_STRAIGHT,L_STRAIGHT": 18,
+              "L_STRAIGHT,L_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 1,
+              "L_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 14,
+              "L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT": 7,
+              "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT,F_R_STRAIGHT": 1,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 3,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1,
+              "R_STRAIGHT,F_L_STRAIGHT": 2,
+              "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 2,
+              "R_STRAIGHT,F_R_STRAIGHT": 1,
+              "R_STRAIGHT,F_R_STRAIGHT,R_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 10,
+              "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 2,
+              "R_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 3,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 5,
+              "R_STRAIGHT,R_STRAIGHT": 6,
+              "R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 3,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 3
+            },
+            "punches": 50,
+            "reads": {
+              "L_STRAIGHT,L_STRAIGHT": 14,
+              "L_STRAIGHT,L_STRAIGHT,L_STRAIGHT": 11,
+              "L_STRAIGHT,R_STRAIGHT": 6,
+              "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1,
+              "R_STRAIGHT,L_STRAIGHT": 5,
+              "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 3,
+              "R_STRAIGHT,R_STRAIGHT": 3,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1
+            },
+            "rows": {
+              "L_STRAIGHT": 30,
+              "R_STRAIGHT": 20
+            }
+          },
+          "RORY": {
+            "chances": 0,
+            "counters": {},
+            "feints": 0,
+            "grams": {
+              "L_STRAIGHT,R_STRAIGHT": 5,
+              "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 5,
+              "R_STRAIGHT,R_STRAIGHT": 36,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 31
+            },
+            "punches": 46,
+            "reads": {
+              "R_STRAIGHT,R_STRAIGHT": 26,
+              "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 22
+            },
+            "rows": {
+              "L_STRAIGHT": 5,
+              "R_STRAIGHT": 41
+            }
+          }
+        },
+        "hbp": 0,
+        "houses": {},
+        "kizuna": {
+          "HILL 1|PRIYA": 5,
+          "MARCUS|PRIYA": 8,
+          "PRIYA|RORY": 9
+        },
+        "kizuna_day": {
+          "MARCUS|PRIYA": 3
+        },
+        "log": [
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige, PI tick vs School",
+          "SCRAP: 45 XP, +2 Prestige",
+          "SCRAP: 45 XP, +2 Prestige",
+          "DUAL: 688 XP, 5 Spirits, HILL 1+PRIYA +5, PRIYA+MARCUS +5",
+          "SPAR: 119 XP, 2 Spirits, PRIYA+MARCUS +3, PI tick vs Marcus"
+        ],
+        "prestige": 0,
+        "recruit": {},
+        "roles": {
+          "of": {
+            "HILL 1": "SCOUT"
+          },
+          "paid": {
+            "beans": 0,
+            "prestige": 0,
+            "uses": 0
+          }
+        },
+        "scouting": {
+          "leads": [
+            {
+              "day": 2,
+              "district": "hill",
+              "house": "macisaac",
+              "id": "HILL 1",
+              "label": "HILL 1",
+              "n": 1,
+              "rare": false,
+              "style": "SLUGGER"
+            }
+          ],
+          "open_mat": [],
+          "pulls": 1
+        },
+        "spirits": 7,
+        "staff": {},
+        "story": {},
+        "string_wall": {},
+        "techniques": {
+          "eights": {
+            "PRIYA": 7
+          },
+          "granted": {},
+          "kit": {},
+          "learned": {},
+          "tapes": {}
+        },
+        "training": {
+          "day": 1,
+          "used": 3
+        },
+        "xp": {
+          "HILL 1": 224,
+          "JUNE": 377,
+          "MARCUS": 229,
+          "PRIYA": 354,
+          "RORY": 225
+        }
+      },
+      "name": "stablemate-spar",
+      "result": "SPAR: THEY WINS on drops 0-6",
+      "reward": "SPAR: 119 XP, 2 Spirits, PRIYA+MARCUS +3, PI tick vs Marcus",
+      "tick_end": 38470,
+      "tick_start": 31136
+    }
+  ]
+}

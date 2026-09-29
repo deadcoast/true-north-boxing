@@ -139,6 +139,7 @@ static func read(d) -> Dictionary:
 		"remix_for": d.get("remixes", {}).duplicate(true), "cards": [], "format": str(settings.get("format", "")), "boss": int(settings.get("boss", 0)),
 		"audio_assist": bool(settings.get("audio_assist", false)), "academy": bool(settings.get("academy", false)), "day": int(d.get("calendar", {}).get("day", 1)), "dual": d.get("dual", {}), "staff_dressed": _dressed_of(d.get("staff", []))}
 	out["gym_wall"] = _intify(d.get("gym_wall", {})) if d.get("gym_wall", {}) is Dictionary else {}      # Restore integer decoration tiers after JSON, like the other ledgers.
+	out["staff_declared"] = d.has("staff") # An explicitly empty corner is a choice; legacy saves without staff retain defaults.
 	out["bench"] = []
 	for rec in d.get("stable", []):
 		if rec is Dictionary: out["cards" if bool(rec.get("dressed", true)) else "bench"].append(card_of(rec))
@@ -169,7 +170,7 @@ static func build(content: Dictionary, rd: Dictionary, seed_v: int) -> Dictionar
 	sim.gym_wall_restore(rd.get("gym_wall", {}))                                                        # PAC-079: the wall as it hung
 	sim.audio_assist = bool(rd.get("audio_assist", false))
 	var sd: Array = rd.get("staff_dressed", [])
-	if sd.size() > 0 and sd != sim.staff_dressed():                                                     # PAC-074: the staff the save dressed, on a board of the stable's starters
+	if (bool(rd.get("staff_declared", false)) or sd.size() > 0) and sd != sim.staff_dressed():           # PAC-203: also restore an intentionally empty staff lineup
 		sim.seal_board({"slots": sim.sealed_p.slice(0, sim.board_k()), "staff": sd})
 	var restored := {}
 	var dual = rd.get("dual", {})

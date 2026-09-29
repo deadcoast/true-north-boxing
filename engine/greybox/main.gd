@@ -759,6 +759,10 @@ func _load_save(path: String) -> bool:
 	var rd: Dictionary = TNBSave.read_file(path)
 	if not bool(rd["ok"]): feed.text = "NOT LOADED %s :: %s" % [path, str(rd["why"])]; return false
 	var built: Dictionary = TNBSave.build(content, rd, int(Time.get_ticks_usec() % 2147483647))
+	var restored: Dictionary = built.get("restored", {})
+	if not restored.is_empty() and (not bool(restored.get("ok", false)) or not bool(restored.get("same", false))):
+		feed.text = "Saved fight could not be restored exactly: " + str(restored.get("why", "state does not match"))
+		return false
 	sim = built["sim"]; fmt_id = str(sim.fmt.get("id", "mini"))
 	prev_p = sim.P["pos"]; prev_b = sim.B["pos"]; ghosts_spawned = 0; matchup_until = 0; toast_until = 0; pi_toast_until = 0
 	var r: Dictionary = built["restored"]
