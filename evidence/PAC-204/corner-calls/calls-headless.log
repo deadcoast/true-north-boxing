@@ -1,0 +1,96 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] automation is silent at the output bus
+[PASS] en S1 speaks code 1 once
+[PASS] localized offline resource en_1
+[PASS] complete call fits original tell en_1
+[PASS] distinct voiced waveform en_1
+[PASS] duplicate observation neither restarts nor cancels en_1
+[PASS] presentation leaves sim and RNG unchanged en_1
+[PASS] readable localized code en_1
+[PASS] en S2 speaks code 4 once
+[PASS] localized offline resource en_4
+[PASS] complete call fits original tell en_4
+[PASS] distinct voiced waveform en_4
+[PASS] duplicate observation neither restarts nor cancels en_4
+[PASS] presentation leaves sim and RNG unchanged en_4
+[PASS] readable localized code en_4
+[PASS] en S3 speaks code 7 once
+[PASS] localized offline resource en_7
+[PASS] complete call fits original tell en_7
+[PASS] distinct voiced waveform en_7
+[PASS] duplicate observation neither restarts nor cancels en_7
+[PASS] presentation leaves sim and RNG unchanged en_7
+[PASS] readable localized code en_7
+[PASS] fr_CA S1 speaks code 1 once
+[PASS] localized offline resource fr_1
+[PASS] complete call fits original tell fr_1
+[PASS] distinct voiced waveform fr_1
+[PASS] duplicate observation neither restarts nor cancels fr_1
+[PASS] presentation leaves sim and RNG unchanged fr_1
+[PASS] readable localized code fr_1
+[PASS] fr_CA S2 speaks code 4 once
+[PASS] localized offline resource fr_4
+[PASS] complete call fits original tell fr_4
+[PASS] distinct voiced waveform fr_4
+[PASS] duplicate observation neither restarts nor cancels fr_4
+[PASS] presentation leaves sim and RNG unchanged fr_4
+[PASS] readable localized code fr_4
+[PASS] fr_CA S3 speaks code 7 once
+[PASS] localized offline resource fr_7
+[PASS] complete call fits original tell fr_7
+[PASS] distinct voiced waveform fr_7
+[PASS] duplicate observation neither restarts nor cancels fr_7
+[PASS] presentation leaves sim and RNG unchanged fr_7
+[PASS] readable localized code fr_7
+[PASS] phase two is 6dB quieter, with original 600ms tell
+[PASS] phase directive applies once, retains 700ms tell
+[PASS] current quieter phase restores exact state
+[PASS] legacy phase snapshot retains hash and old clocks
+[PASS] loading mid-tell does not replay stale speech
+[PASS] legacy volume fallback is read-only
+[PASS] native jab lands during S1
+[PASS] authored interrupt rule S1
+[PASS] call cancels only on actual interrupt S1
+[PASS] full 800ms stagger S1
+[PASS] interrupt opens readable follow-up S1
+[PASS] French interrupt feedback S1
+[PASS] follow-up cue survives hitstop and all recovery ticks S1
+[PASS] native jab lands during S2
+[PASS] authored interrupt rule S2
+[PASS] call cancels only on actual interrupt S2
+[PASS] native jab lands during S3
+[PASS] authored interrupt rule S3
+[PASS] call cancels only on actual interrupt S3
+[PASS] full 800ms stagger S3
+[PASS] interrupt opens readable follow-up S3
+[PASS] French interrupt feedback S3
+[PASS] follow-up cue survives hitstop and all recovery ticks S3
+[PASS] native Escape pauses speech and simulation
+[PASS] resume continues call without replay
+[PASS] impacts duck under the spoken cue
+[PASS] standing eight stops obsolete call
+[PASS] new audio jam stops speech and masks its caption
+[PASS] jammed event cannot play or reveal code
+[PASS] visual jam does not suppress an audio-channel tell
+[PASS] another fighter's S1 never speaks Cassidy's code
+[PASS] rewind cancels obsolete speech
+[PASS] mockup teaches only its real sequence S1
+[PASS] mockup uses same localized call S1
+[PASS] mockup preserves interrupt lesson S1
+[PASS] mockup teaches only its real sequence S2
+[PASS] mockup uses same localized call S2
+[PASS] mockup preserves interrupt lesson S2
+[PASS] mockup teaches only its real sequence S3
+[PASS] mockup uses same localized call S3
+[PASS] mockup preserves interrupt lesson S3
+[PASS] save during a real queued call
+[PASS] queued call survives native save format exactly
+[PASS] load stops old speech without replaying saved tell
+[PASS] leaving combat for a story page silences call
+[PASS] source Cassidy pattern remains complete
+[PASS] output remains silent throughout
+CORNER CALLS 90 checks; 0 failures
+DRIVE :: GREEN

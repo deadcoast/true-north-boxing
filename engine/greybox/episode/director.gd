@@ -100,7 +100,7 @@ func setup(owner_scene: Node) -> void:
 		keys.clear()
 		if active and panel.visible:
 			for button in buttons.values():
-				if is_instance_valid(button) and not button.disabled: button.grab_focus.call_deferred(); break)
+				if is_instance_valid(button) and not button.disabled: _focus_button.call_deferred(button); break)
 
 func _label(parent: Node, value: String, size: int) -> Label:
 	var label := Label.new(); label.text = value; label.add_theme_font_size_override("font_size", size)
@@ -126,8 +126,14 @@ func _button(id: String, value: String, action: Callable, why := "") -> Button:
 	button.custom_minimum_size.y = 44; button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT; button.disabled = why != ""; column.add_child(button); buttons[id] = button
 	button.pressed.connect(action)
-	if buttons.size() == 1 and not button.disabled: button.grab_focus.call_deferred()
+	if buttons.size() == 1 and not button.disabled: _focus_button.call_deferred(button)
 	return button
+
+func _focus_button(button) -> void:
+	# Loading/replacing a page can remove its default button before deferred
+	# focus runs. Never focus a detached or already discarded page.
+	if is_instance_valid(button) and button.is_inside_tree() and not button.is_queued_for_deletion() and button.is_visible_in_tree() and not button.disabled:
+		button.grab_focus()
 
 func _title() -> void:
 	if staging != null: staging.clear()
@@ -403,6 +409,19 @@ func _mockup(index: int) -> void:
 	var spec: Dictionary = scene.sim.generic_spec("MOCKUP", ["OUTBOXER", "SLUGGER", "BOXERPUNCHER"][index], "cassidy_vane", 1, 300 + index, "PRIYA · VANE " + str(index + 1))
 	var card: Dictionary = spec.duplicate(true); card["generic"] = true
 	if scene.sim.start_spar(0, ["tell_highlight"], card, "SEGMENT_END", "PRIYA · VANE", {"authored":true}):
+		# NP-12A explicitly asks for mockups OF Ascendant sequences. An unknown
+		# generic dialect otherwise falls back to gym visual tells. Rehearse one
+		# real code at a time, with its own actions and interrupt rule; generic
+		# opponents elsewhere still use the piece library, not named-boss strings.
+		var authored: Dictionary = scene.sim.patterns["cassidy_vane"]
+		var string: String = ["S1", "S2", "S3"][index]
+		var drill: Dictionary = authored.duplicate(true)
+		drill["strings"] = {string: authored["strings"][string].duplicate(true)}
+		drill["strings"][string]["tags"] = []
+		drill["select"] = {"weights": {string: 100}, "reweights": []}
+		drill["interrupt"] = [{"strings": [string], "response": "stagger(800)"}] if index != 1 else []
+		for section in ["phases", "punish", "bait"]: drill[section] = []
+		scene.sim.pattern = drill; scene.sim.gpatterns["MOCKUP"] = drill.duplicate(true)
 		_ep()["fight"] = "mockup"; _fight()
 
 func _training_prompt(game: String) -> void:
@@ -724,6 +743,11 @@ func _load_episode_path(path: String) -> void:
 	var built := Save.build(scene.content, rd, 1976)
 	if not rd.get("dual", {}).is_empty() and not built["restored"].get("ok", false): status = str(built["restored"]); _title(); return
 	scene.sim = built["sim"]; scene.club_flow.enabled = false; scene.club_flow.close()
+	# The typed in-flight snapshot is authoritative. Reusing the JSON summary
+	# here reorders event dictionaries/converts numbers; the autosave in _fight
+	# would then replace the exact pending-event state and change its hash.
+	ep = Campaign.state(scene.sim)
+	scene.fight_feedback.sync_audio(true)
 	scene.controls_menu.practice.disabled = true
 	language = ep["language"]; _language(); world.restore(ep["position"]); world.visited = ep.get("visits", []).duplicate(); world.sync(scene.sim)
 	training = {}; pending.assign(ep.get("pending_events", [])); freeze_t = 0

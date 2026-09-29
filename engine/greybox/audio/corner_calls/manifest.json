@@ -1,0 +1,109 @@
+{
+  "provenance": "Synthetic Canadian English/French functional corner calls, edge-tts 7.2.7. Offline runtime; not final cast recordings or a human listening acceptance.",
+  "source": "https://github.com/rany2/edge-tts",
+  "build": "tools/build_corner_calls.py --ffmpeg <ffmpeg>",
+  "clips": [
+    {
+      "file": "engine/greybox/audio/corner_calls/en_1.wav",
+      "master": "assets/audio/corner_calls/source/en_one.mp3",
+      "text": "Sequence one!",
+      "voice": "en-CA-LiamNeural",
+      "rate": "+35%",
+      "trim_frames": [
+        3080,
+        18498
+      ],
+      "tempo": 1.0,
+      "seconds": 0.6355,
+      "peak": 0.54754638671875,
+      "rms": 0.07695600937527777,
+      "sha256": "9db0a568bc43a13ba6f7d72954add983db02fdb9ace378c0d0b708d39ff4822f",
+      "master_sha256": "b995d94b9fce5a67aafb320948ad15f9430a3a4774a78122eae470db34314874"
+    },
+    {
+      "file": "engine/greybox/audio/corner_calls/en_4.wav",
+      "master": "assets/audio/corner_calls/source/en_four.mp3",
+      "text": "Sequence four!",
+      "voice": "en-CA-LiamNeural",
+      "rate": "+35%",
+      "trim_frames": [
+        3122,
+        19804
+      ],
+      "tempo": 1.022181,
+      "seconds": 0.6890416666666667,
+      "peak": 0.5040283203125,
+      "rms": 0.07912473118854424,
+      "sha256": "4816a75f342edd7bed78272595fe535a18158cffdf8d2281d99f15604255f33b",
+      "master_sha256": "6581bcfdd7eca06235d125d753cf2b4d02253a3cbc39a62b0a54da8d73bf1567"
+    },
+    {
+      "file": "engine/greybox/audio/corner_calls/en_7.wav",
+      "master": "assets/audio/corner_calls/source/en_seven.mp3",
+      "text": "Sequence seven!",
+      "voice": "en-CA-LiamNeural",
+      "rate": "+35%",
+      "trim_frames": [
+        3348,
+        18722
+      ],
+      "tempo": 1.104454,
+      "seconds": 0.5945833333333334,
+      "peak": 0.478240966796875,
+      "rms": 0.08507869969959839,
+      "sha256": "d3c96c30cd892670ed59458996843b6e7f84724a6cc875924ff8540119ae8b90",
+      "master_sha256": "bc7cf6e0a8538dd8d5a6780f79fd7705c4064d97c611ba24596af9e2f7c0d980"
+    },
+    {
+      "file": "engine/greybox/audio/corner_calls/fr_1.wav",
+      "master": "assets/audio/corner_calls/source/fr_one.mp3",
+      "text": "Séquence un !",
+      "voice": "fr-CA-AntoineNeural",
+      "rate": "+35%",
+      "trim_frames": [
+        3298,
+        16915
+      ],
+      "tempo": 1.0,
+      "seconds": 0.5612083333333333,
+      "peak": 0.46807861328125,
+      "rms": 0.07717108831970382,
+      "sha256": "4954f7e735e497d2b47371eb083af79ac6cf89c66c657d7aeab2ccd454563b43",
+      "master_sha256": "6507941a08941c738c20d2ab6583bb69098bcb01d9a455baa4b2bf23063b18dc"
+    },
+    {
+      "file": "engine/greybox/audio/corner_calls/fr_4.wav",
+      "master": "assets/audio/corner_calls/source/fr_four.mp3",
+      "text": "Séquence quatre !",
+      "voice": "fr-CA-AntoineNeural",
+      "rate": "+35%",
+      "trim_frames": [
+        3207,
+        19745
+      ],
+      "tempo": 1.013358,
+      "seconds": 0.6746666666666666,
+      "peak": 0.504608154296875,
+      "rms": 0.06734517337429423,
+      "sha256": "bb8150373ce513c1930b1dfb70bb33bb139e9f1763c7696fa7558ec81a785717",
+      "master_sha256": "252a35dee8718b7bcabf7bafb9f088ff0d8c851f9f01556c9c5679e66a77e79e"
+    },
+    {
+      "file": "engine/greybox/audio/corner_calls/fr_7.wav",
+      "master": "assets/audio/corner_calls/source/fr_seven.mp3",
+      "text": "Séquence sept !",
+      "voice": "fr-CA-AntoineNeural",
+      "rate": "+35%",
+      "trim_frames": [
+        3218,
+        19355
+      ],
+      "tempo": 1.159267,
+      "seconds": 0.5832916666666667,
+      "peak": 0.453216552734375,
+      "rms": 0.07389389633675303,
+      "sha256": "a41926694328e8b562eacaa6a8677f307bcb32e4519660c52ede5c9c53c0d0d6",
+      "master_sha256": "e1dd05690d43cea500a1625cf257a7a716ce0765b1e3d95a42c961fb8495aac4"
+    }
+  ]
+}

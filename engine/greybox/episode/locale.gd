@@ -1,4 +1,5 @@
 extends RefCounted
+const CornerCalls := preload("res://presentation/corner_calls.gd")
 ## Episode-local Canadian French. Static native controls translate through Godot;
 ## values and dynamic fight states are formatted from their authoritative fields.
 const FR := {
@@ -50,8 +51,10 @@ static func hud(scene, french: bool, archive: bool, status: String) -> void:
 		var motif: String = sim.pattern.get("strings", {}).get(sim.bstring, {}).get("tell", {}).get("motif", "")
 		var motifs := {"chin_dip":"MENTON BAISSÉ", "glove_tap":"GANTS TAPÉS", "shoulder_roll":"ÉPAULE QUI ROULE", "weight_load":"CHARGE SUR L’APPUI", "heel_turn":"TALON QUI TOURNE"}
 		hud.cue.text = motifs.get(motif, "LIS LE SIGNAL · " + str(sim.bstring))
+		var call := CornerCalls.caption(sim, true)
+		if call != "": hud.cue.text = call
+	elif scene.fight_feedback.interrupt_active(sim): hud.cue.text = "INTERROMPU · ENCHAÎNE"
 	elif sim.P["counter_t"] > 0: hud.cue.text = "FENÊTRE DE CONTRE"
-	elif sim.bstate == "STAGGER": hud.cue.text = "INTERROMPU · ENCHAÎNE"
 	elif sim.P["stamina"] < 15: hud.cue.text = "ÉPUISÉ · PRENDS DE L’ESPACE"
 	if sim.mode == "EIGHT": hud.cue.text = "COMPTE DE HUIT · Entrée / A sur le temps · %d à réussir" % int(sim.eight.get("beats_left", 0))
 	elif sim.mode == "CLASH": hud.cue.text = "ÉCHANGE · bloque ou esquive, puis frappe à ton tour"

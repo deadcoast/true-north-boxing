@@ -2051,14 +2051,14 @@ func smoke(boss_idx: int) -> int:
 		q6_r1 == TNBSim.ms(800) and q6_r2 == TNBSim.ms(800) and q6_ada2.bphase == 2 and q6_r3 == TNBSim.ms(650) and q6_t1 == TNBSim.ms(600) and q6_t2 == TNBSim.ms(900) and q6_t3 == TNBSim.ms(600) and q6_chi2.bphase == 2 and q6_t4 == TNBSim.ms(550) and q6_t5 == TNBSim.ms(850))
 	# Vane's calls get hidden a tier; Cal's tells louden a tier, he answers Whitlock, and in phase 3 he drifts to the strings you read
 	var q6_vane: TNBSim = q6_phase.call(0, 0.45)
-	var q6_vane_ok: bool = q6_vane.bphase == 2 and int(q6_vane.pattern["strings"]["S1"]["tell"]["ms"]) == 550 and int(q6_vane.pattern["strings"]["S2"]["tell"]["ms"]) == 550 and int(q6_vane.pattern["strings"]["S3"]["tell"]["ms"]) == 450 and q6_vane._phase_ok("S3") and int(q6_vane.bmods["tier_shift"]) == -1
+	var q6_vane_ok: bool = q6_vane.bphase == 2 and int(q6_vane.pattern["strings"]["S1"]["tell"]["ms"]) == 700 and int(q6_vane.pattern["strings"]["S2"]["tell"]["ms"]) == 700 and int(q6_vane.pattern["strings"]["S3"]["tell"]["ms"]) == 600 and q6_vane._phase_ok("S3") and int(q6_vane.bmods["tier_shift"]) == 0 and int(q6_vane.bmods["corner_call_tier"]) == -1
 	var q6_cal: TNBSim = q6_phase.call(9, 0.55)
 	var q6_cal_ok: bool = q6_cal.bphase == 2 and int(q6_cal.pattern["strings"]["S1"]["tell"]["ms"]) == 630 and int(q6_cal.pattern["strings"]["S3"]["tell"]["ms"]) == 850 and q6_cal.bdialogue == "corner" and count_events(q6_cal.events, "dialogue", {"which": "corner"}) == 1
 	q6_cal.B["comp"] = q6_cal.B["comp_max"] * 0.25; q6_cal.bstate = "IDLE"; q6_cal.btimer = 1 << 30; q6_cal.step({})
 	q6_cal.breads = {"S2": 4, "S1": 1}
 	var q6_w3: Dictionary = q6_cal._select_weights()
 	var q6_cal3: bool = q6_cal.bphase == 3 and str(q6_cal.bmods["select_drift"]).begins_with("recognition") and int(q6_w3["S2"]) == 35 + 25 and int(q6_w3["S1"]) == 45
-	_sr("Vane's phase 2 hides the corner calls a tier (700 -> 550, 600 -> 450, S3 added); Cal's phase 2 loudens his a tier (480 -> 630, 700 -> 850) and opens the corner dialogue; his phase 3 drifts SELECT +25 toward the string you have read most (S2 read 4 times: 35 -> 60)",
+	_sr("Vane's phase 2 lowers corner-call volume a tier (700/700/600ms retained, S3 added); Cal's phase 2 loudens his tell tier (480 -> 630, 700 -> 850) and opens the corner dialogue; his phase 3 drifts SELECT +25 toward the string you have read most (S2 read 4 times: 35 -> 60)",
 		q6_vane_ok and q6_cal_ok and q6_cal3)
 	# Alfie: the flirtation stops at two warnings banked - from then he pulls every foul
 	var q6_alf := make_sim(5, 7); quiet(q6_alf); thaw(q6_alf); place(q6_alf, 1.4); clear_defense(q6_alf.P); q6_alf.P["comp"] = q6_alf.P["comp_max"]

@@ -5,6 +5,7 @@ const INK := Color("111a2b")
 const ICE := Color("89c9fa")
 const RED := Color("f49a88")
 const GOLD := Color("ffd486")
+const CornerCalls := preload("res://presentation/corner_calls.gd")
 var owner_scene: Node
 var surface: Control
 var entry: PanelContainer
@@ -134,8 +135,10 @@ func update(sim, practice: bool, feed_text: String) -> void:
 	if sim.bstate in ["TELL", "FAKE", "HOLD"] and not practice:
 		var tell: Dictionary = sim.pattern.get("strings", {}).get(sim.bstring, {}).get("tell", {})
 		cue.text = str(tell.get("motif", "wind-up")).replace("_", " ").to_upper()
+		var call := CornerCalls.caption(sim, TranslationServer.get_locale().begins_with("fr"))
+		if call != "": cue.text = call
+	elif owner_scene.fight_feedback.interrupt_active(sim): cue.text = "INTERRUPTED • Follow up"
 	elif int(sim.P["counter_t"]) > 0: cue.text = "COUNTER WINDOW"
-	elif sim.bstate == "STAGGER": cue.text = "INTERRUPTED • Follow up"
 	elif float(sim.P["stamina"]) < 15: cue.text = "GASSED • Make space and recover"
 	if sim.mode == "EIGHT": cue.text = "STANDING EIGHT • Enter / A on the beat • %d to go" % int(sim.eight.get("beats_left", 0))
 	elif sim.mode == "CLASH": cue.text = "CLASH • Block or slip their exchange; punch on yours"

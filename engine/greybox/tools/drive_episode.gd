@@ -222,8 +222,14 @@ func _fight(max_seconds: int) -> void:
 			_key(KEY_TAB, true); _key(KEY_TAB, false); await process_frame
 			await _press("save")
 			var hash_before: int = scene.sim.hash_state(); var tick_before: int = scene.sim.tick
+			var state_before := {}
+			for name in scene.sim.state_vars(): state_before[name] = var_to_bytes(scene.sim.get(name))
 			await _press("load")
 			_check("in-flight save restores exact simulation hash and tick", scene.sim.hash_state() == hash_before and scene.sim.tick == tick_before)
+			if scene.sim.hash_state() != hash_before:
+				for name in state_before:
+					if state_before[name] != var_to_bytes(scene.sim.get(name)):
+						print("SAVE DIFF ", name, " before bytes hash ", hash(state_before[name]), " after bytes hash ", hash(var_to_bytes(scene.sim.get(name))))
 		_held(_policy()); _tick()
 		if label == "archive" and episode._ep().get("lesson", 0) == 0:
 			for event in episode.pending:

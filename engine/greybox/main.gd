@@ -1006,7 +1006,12 @@ func _hold_dummy() -> void:
 
 # ============================== LOOP ======================================
 func _process(delta: float) -> void:
-	if sim == null or controls_menu.opened: return
+	if sim == null: return
+	# Audio owns real playback time, so explicitly freeze it on every UI branch
+	# that freezes combat. Call sync before the early returns, including Escape.
+	var story_paused: bool = episode != null and episode.active and episode.state != "fight" and (episode.state != "training" or episode.training.get("game", "") == "roadwork")
+	fight_feedback.sync_audio(controls_menu.opened or formation_open or story_paused or fight_hud.entry.visible or (club_flow != null and club_flow.pauses_fight()))
+	if controls_menu.opened: return
 	if episode != null and episode.advance(delta): return
 	if club_flow != null and club_flow.pauses_fight():
 		_hud(); return

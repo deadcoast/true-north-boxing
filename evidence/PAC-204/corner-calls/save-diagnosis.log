@@ -1,0 +1,371 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] automated episode output is muted before playback
+[PASS] normal episode entry pauses simulation
+[PASS] native episode action: new
+[PASS] native episode action: next
+[PASS] the missing name mutes a real tape audio stream
+[PASS] tape sound hole lasts exactly a second
+[PASS] native episode action: next
+[PASS] archive gives authored legend build and 80 initial tension
+ARCHIVE LESSON 0 tick 2 tension 80.0
+ARCHIVE HIT L_STRAIGHT frame 160
+ARCHIVE LESSON 1 tick 124 tension 87.0
+ARCHIVE LESSON 2 tick 398 tension 94.0
+ARCHIVE LESSON 3 tick 432 tension 96.0
+ARCHIVE LESSON 4 tick 992 tension 75.0
+[PASS] Continue during the raised glove retains the earned DROP transition
+[PASS] present glove matches the archive camera
+[PASS] present holds the same raised glove
+[PASS] match cut transfers automatically to live shadow boxing
+[PASS] shadow boxing keeps the gym visible without a competition overlay
+[PASS] controls pause both handoff and combat
+[PASS] idle handoff grants no punches or lesson credit
+[PASS] a real jab is accepted while the camera is still blending
+[PASS] live shadow boxer retains Rory's opaque world identity
+[PASS] continue restores earned shadow punches without replaying the handoff
+[PASS] shadow drill requires and records twelve accepted punches
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] authored shot pauses combat: letter:3
+[PASS] letter is physically moved: letter:3
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] authored shot pauses combat: letter:11
+[PASS] letter is physically moved: letter:11
+[PASS] Whitlock folds the sheet before pinning it
+[PASS] native episode action: next
+[PASS] Rory starts alone after the letter
+[PASS] Scout Book shelf stays empty before Priya joins
+[PASS] walk reaches (0.0, -5.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target board
+[PASS] unrecruited squad cannot seal Saturday's order
+[PASS] native episode action: back
+[PASS] walk reaches (0.0, 6.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] world save preserves earned ledgers and location
+[PASS] walk reaches (0.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-30.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-30.0, -18.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-26.0, -18.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target scrap_1
+[PASS] native episode action: glove_up
+[PASS] body shots earn the first lesson
+[PASS] native episode action: back
+[PASS] walk reaches (-30.0, -18.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-34.0, -25.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target priya
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] save at the final bell retains unconsumed story events
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] fought trial recruits Priya
+[PASS] final-bell save was exercised before recruitment
+[PASS] Priya's binders appear through the real recruitment event
+[PASS] walk reaches (-30.0, -18.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-30.0, -13.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (30.0, -13.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (30.0, -20.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (25.0, -22.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target scrap_2
+[PASS] native episode action: glove_up
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] survival lesson recruits Marcus
+[PASS] walk reaches (35.0, -22.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target scrap_3
+[PASS] native episode action: glove_up
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] centre exchange recruits June
+[PASS] walk reaches (30.0, -20.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (30.0, -13.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (12.0, -13.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (12.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 6.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (5.0, 4.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target film
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] walk reaches (5.0, 4.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target film
+[PASS] native episode action: mockup:0
+[PASS] optional scouting spar 1 reaches its real segment verdict
+[PASS] native episode action: back
+[PASS] physical interaction target film
+[PASS] native episode action: mockup:1
+[PASS] optional scouting spar 2 reaches its real segment verdict
+[PASS] native episode action: back
+[PASS] physical interaction target film
+[PASS] native episode action: mockup:2
+[PASS] optional scouting spar 3 reaches its real segment verdict
+[PASS] native episode action: back
+[PASS] physical interaction target film
+[PASS] all three mockups earn Vane Pattern Intel
+[PASS] native episode action: back
+[PASS] walk reaches (0.0, 6.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 25.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-4.0, 29.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target roadwork
+[PASS] native episode action: train
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] Harbour roadwork books a real paid training slot
+[PASS] native episode action: back
+[PASS] physical interaction target roadwork
+[PASS] native episode action: train
+[PASS] native episode action: cancel
+[PASS] cancelled roadwork cannot survive in the episode save
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] world save preserves earned ledgers and location
+[PASS] walk reaches (0.0, 25.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 6.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-5.0, -1.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target mitts
+[PASS] native episode action: train
+[PASS] Mitts scores actual called punches under tempo
+[PASS] native episode action: back
+[PASS] walk reaches (0.0, 4.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (5.0, -5.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target locker
+[PASS] native episode action: raise:STA
+[PASS] earned Beans purchase a persistent stat raise
+[PASS] native episode action: node:sp1
+[PASS] ability board spends earned points
+[PASS] native episode action: back
+[PASS] unearned charter save is rejected
+[PASS] malformed segment evidence is rejected without coercion
+[PASS] native episode action: language
+[PASS] native episode action: back
+[PASS] Canadian French is an in-game language choice
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] world save preserves earned ledgers and location
+[PASS] EN/FR authored line archive
+[PASS] EN/FR authored line archive
+[PASS] EN/FR authored line archive
+[PASS] EN/FR authored line present
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya_join
+[PASS] EN/FR authored line priya_join
+[PASS] EN/FR authored line priya_join
+[PASS] EN/FR authored line marcus_join
+[PASS] EN/FR authored line marcus_join
+[PASS] EN/FR authored line june_join
+[PASS] EN/FR authored line june_join
+[PASS] EN/FR authored line binders
+[PASS] EN/FR authored line binders
+[PASS] EN/FR authored line binders
+[PASS] EN/FR authored line survival
+[PASS] EN/FR authored line survival
+[PASS] EN/FR authored line vane
+[PASS] EN/FR authored line vane
+[PASS] EN/FR authored line tag
+[PASS] EN/FR authored line tag
+[PASS] EN/FR authored line tag
+[PASS] EN/FR authored line tag
+[PASS] EN/FR authored line tag
+[PASS] native episode action: load
+[PASS] invalid save leaves the live simulation intact and reports failure
+[PASS] native episode action: backup
+[PASS] native backup recovery restores the episode
+[PASS] recovery preserves readable backup and retains damaged primary
+[PASS] legacy club save remains separate
+[PASS] walk reaches (0.0, 4.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, -5.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target board
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] Survival Dual preserves sealed authored opponents
+[PASS] native episode action: bell
+[PASS] native episode action: send
+[PASS] native episode action: send
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] losing the actual dual cannot award the charter or tag
+[PASS] native episode action: retry_survival
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] failure offers a real retry with the recruited squad preserved
+[PASS] native episode action: bell
+[PASS] native episode action: save
+[PASS] native episode action: load
+[FAIL] in-flight save restores exact simulation hash and tick
+SAVE DIFF rewards BEFORE { "beaten": { "CHALLENGER": { "dual": 0, "scrap": 1, "segment": 0, "spar": 0, "styles": { "scrap:BOXERPUNCHER": 1 } }, "PRIYA": { "dual": 0, "scrap": 0, "segment": 0, "spar": 1, "styles": { "spar:BOXERPUNCHER": 1 } }, "MARCUS": { "scrap": 1, "spar": 0, "segment": 0, "dual": 0, "styles": { "scrap:BOXERPUNCHER": 1 } }, "JUNE": { "scrap": 1, "spar": 0, "segment": 0, "dual": 0, "styles": { "scrap:BOXERPUNCHER": 1 } }, "MOCKUP": { "scrap": 0, "spar": 3, "segment": 0, "dual": 0, "styles": { "spar:BOXERPUNCHER": 3 } } }, "day": 1, "episode": { "abb_tick": 991, "dialogue": "", "fight": "survival", "flags": { "archive": true, "letter": true, "scrap_1": true, "shadow": true, "priya_trial": true, "joined_PRIYA": true, "scrap_2": true, "joined_MARCUS": true, "scrap_3": true, "joined_JUNE": true, "binders": true, "mockup": true }, "language": "fr_CA", "lesson": 4, "line": 0, "metrics": { "bouts": [{ "fight": "scrap_1", "segment_wins": 0, "tick": 3878, "verdict": "SCRAP WON - objective", "won": true }, { "fight": "priya_trial", "verdict": "SPAR: MILLBROOK WINS on EP 74-8  |  reach segment end: met", "segment_wins": 0, "won": true, "tick": 0 }, { "fight": "scrap_2", "verdict": "SCRAP WON - survived", "segment_wins": 0, "won": true, "tick": 2472 }, { "fight": "scrap_3", "verdict": "SCRAP WON - objective", "segment_wins": 0, "won": true, "tick": 2516 }, { "fight": "mockup", "verdict": "SPAR: MILLBROOK WINS on EP 88-8  |  reach segment end: met", "segment_wins": 1, "won": true, "tick": 13776 }, { "fight": "mockup", "verdict": "SPAR: MILLBROOK WINS on EP 78-2  |  reach segment end: met", "segment_wins": 1, "won": true, "tick": 25006 }, { "fight": "mockup", "verdict": "SPAR: MILLBROOK WINS on drops 2-0  |  reach segment end: met", "segment_wins": 1, "won": true, "tick": 36546 }, { "fight": "survival", "verdict": "ASCENDANT WINS", "segment_wins": 0, "won": false, "tick": 8680 }], "combat_seconds": 476.816666666562, "counters": 80, "first_drop_seconds": 9.28333333333337, "interrupts": 62, "played_seconds": 626.433333333092, "training": [{ "game": "shadow", "grade": 1, "intro": true, "seconds": 30.0166666666662 }, { "game": "roadwork", "grade": 0.9629629629629, "seconds": 12.0000000000002, "intro": false }, { "game": "mitts", "grade": 0.87500000000013, "seconds": 15.6000000000004, "intro": false }], "world_seconds": 75.9166666666636, "segments": [{ "seg": 1, "why": "SEGMENT KO against MARCUS (counted out)", "won": false, "ep_p": 0, "ep_b": 105, "score_p": 0, "score_b": 4, "tension": 0, "banked": 0, "charged": false, "chain": 0, "kind": "seg_card", "tick": 5430 }, { "seg": 2, "why": "SEGMENT KO against PRIYA (counted out)", "won": false, "ep_p": 0, "ep_b": 26, "score_p": 0, "score_b": 8, "tension": 0, "banked": 0, "charged": false, "chain": 0, "kind": "seg_card", "tick": 7834 }], "r2_cycles": [["S1", "S2", "TAPE_RIGHT", "S1", "S2", "TAPE_RIGHT", "S1", "S2", "TAPE_RIGHT", "S1"]], "r2_tells": ["S1", "S2", "TAPE_RIGHT", "S1", "S2", "TAPE_RIGHT", "S1", "S2", "TAPE_RIGHT", "S1"] }, "pending_events": [{ "row": "R_STRAIGHT", "mods": [], "stepping": false, "startup": 29, "kind": "punch", "tick": 123 }], "phase": "fight", "position": [-0.02559873834252, -5.48829650878906], "schema": "TheLetter/1", "slipped": true, "visits": ["gym", "school", "community", "harbour"] }, "graph": {  }, "growth": { "RORY": { "board": ["sp1"], "raises": { "STA": 1 }, "rarity": 1, "socket": "", "spent": 1, "trials": { "spar_won": 1 } } }, "habits": { "RORY": { "chances": 338, "counters": { "L_STRAIGHT": 129, "R_STRAIGHT": 74 }, "feints": 216, "grams": { "F_L_HOOK,F_R_HOOK": 10, "F_L_HOOK,F_R_HOOK,F_L_UPPERCUT": 10, "F_L_STRAIGHT,F_L_STRAIGHT": 17, "F_L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 17, "F_L_STRAIGHT,F_R_STRAIGHT": 13, "F_L_STRAIGHT,F_R_STRAIGHT,F_L_HOOK": 9, "F_L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1, "F_L_STRAIGHT,L_STRAIGHT": 18, "F_L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 18, "F_L_STRAIGHT,R_STRAIGHT": 46, "F_L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 17, "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 28, "F_L_UPPERCUT,F_R_UPPERCUT": 10, "F_L_UPPERCUT,F_R_UPPERCUT,F_L_STRAIGHT": 10, "F_R_HOOK,F_L_UPPERCUT": 10, "F_R_HOOK,F_L_UPPERCUT,F_R_UPPERCUT": 10, "F_R_STRAIGHT,F_L_HOOK": 10, "F_R_STRAIGHT,F_L_HOOK,F_R_HOOK": 10, "F_R_STRAIGHT,F_L_STRAIGHT": 4, "F_R_STRAIGHT,F_L_STRAIGHT,L_STRAIGHT": 1, "F_R_STRAIGHT,F_R_STRAIGHT": 23, "F_R_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 18, "F_R_STRAIGHT,L_STRAIGHT": 30, "F_R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 17, "F_R_STRAIGHT,R_STRAIGHT": 12, "F_R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 8, "F_R_UPPERCUT,F_L_STRAIGHT": 10, "F_R_UPPERCUT,F_L_STRAIGHT,F_R_STRAIGHT": 9, "L_STRAIGHT,F_L_STRAIGHT": 15, "L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 15, "L_STRAIGHT,F_R_STRAIGHT": 42, "L_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 2, "L_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 18, "L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 11, "L_STRAIGHT,F_R_STRAIGHT,R_STRAIGHT": 11, "L_STRAIGHT,R_STRAIGHT": 121, "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 29, "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 88, "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1, "R_STRAIGHT,F_L_STRAIGHT": 49, "R_STRAIGHT,F_L_STRAIGHT,F_L_STRAIGHT": 17, "R_STRAIGHT,F_L_STRAIGHT,F_R_STRAIGHT": 4, "R_STRAIGHT,F_L_STRAIGHT,L_STRAIGHT": 17, "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 11, "R_STRAIGHT,L_STRAIGHT": 126, "R_STRAIGHT,L_STRAIGHT,F_L_STRAIGHT": 15, "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 27, "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 83, "R_STRAIGHT,R_STRAIGHT": 4, "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1, "F_R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 13, "R_STRAIGHT,F_R_STRAIGHT": 2, "F_R_STRAIGHT,R_STRAIGHT,F_R_STRAIGHT": 2, "R_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 1, "F_L_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 3, "F_R_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 1, "F_R_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 2, "F_R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 3, "R_STRAIGHT,F_R_STRAIGHT,R_STRAIGHT": 1, "F_R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 2, "R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 2, "R_STRAIGHT,L_HOOK": 2, "L_STRAIGHT,R_STRAIGHT,L_HOOK": 2, "L_HOOK,R_HOOK": 2, "R_STRAIGHT,L_HOOK,R_HOOK": 2, "R_HOOK,L_UPPERCUT": 2, "L_HOOK,R_HOOK,L_UPPERCUT": 2, "L_UPPERCUT,R_UPPERCUT": 2, "R_HOOK,L_UPPERCUT,R_UPPERCUT": 2, "R_UPPERCUT,L_STRAIGHT": 1, "L_UPPERCUT,R_UPPERCUT,L_STRAIGHT": 1, "R_UPPERCUT,L_STRAIGHT,R_STRAIGHT": 1 }, "punches": 375, "reads": { "F_L_STRAIGHT,R_STRAIGHT": 16, "L_STRAIGHT,R_STRAIGHT": 111, "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 55, "R_STRAIGHT,F_L_STRAIGHT": 15, "R_STRAIGHT,L_STRAIGHT": 122, "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 55, "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 4, "F_L_STRAIGHT,F_L_STRAIGHT": 2, "R_STRAIGHT,F_L_STRAIGHT,F_L_STRAIGHT": 2, "F_L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 2, "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 5, "F_L_STRAIGHT,L_STRAIGHT": 4, "R_STRAIGHT,F_L_STRAIGHT,L_STRAIGHT": 4, "F_L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 2, "F_R_STRAIGHT,F_R_STRAIGHT": 8, "F_L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 1, "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 1, "L_STRAIGHT,F_R_STRAIGHT": 12, "F_R_STRAIGHT,L_STRAIGHT": 9, "L_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 4, "F_R_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 3, "F_R_STRAIGHT,R_STRAIGHT": 2, "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 1, "L_STRAIGHT,F_R_STRAIGHT,R_STRAIGHT": 1, "F_R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1 }, "rows": { "L_STRAIGHT": 180, "R_STRAIGHT": 187, "L_HOOK": 2, "R_HOOK": 2, "L_UPPERCUT": 2, "R_UPPERCUT": 2 } }, "MARCUS": { "punches": 2, "feints": 0, "rows": { "L_STRAIGHT": 1, "R_STRAIGHT": 1 }, "grams": { "L_STRAIGHT,R_STRAIGHT": 1 }, "reads": {  }, "chances": 0, "counters": {  } } }, "hbp": 40, "houses": {  }, "kizuna": { "PRIYA|RORY": 8, "MARCUS|PRIYA": 5 }, "kizuna_day": { "PRIYA|RORY": 3 }, "log": ["SCRAP: 45 XP, +2 Prestige", "SPAR: 89 XP, 2 Spirits, RORY+PRIYA +3, PI tick vs Priya", "SCRAP: 45 XP, +2 Prestige", "SCRAP: 45 XP, +2 Prestige", "SPAR: 89 XP, 2 Spirits, PI tick vs Cassidy Vane", "SPAR: 89 XP, 2 Spirits", "SPAR: 89 XP, 2 Spirits, PI tick vs Cassidy Vane", "DUAL: 357 XP, 5 Spirits, MARCUS+PRIYA +5, PRIYA+RORY +5"], "prestige": 6, "recruit": {  }, "spirits": 13, "staff": {  }, "story": { "episode:letter": true, "episode:scrap_1": true, "episode:shadow": true, "episode:priya_trial": true, "episode:joined_PRIYA": true, "episode:scrap_2": true, "episode:joined_MARCUS": true, "episode:scrap_3": true, "episode:joined_JUNE": true, "episode:binders": true, "episode:mockup": true }, "string_wall": {  }, "xp": { "RORY": 610, "MARCUS": 119, "PRIYA": 119, "JUNE": 196 }, "beans": 0, "bean_types": { "STA": 0 }, "training": { "day": 1, "used": 1 } } AFTER { "beaten": { "CHALLENGER": { "dual": 0, "scrap": 1, "segment": 0, "spar": 0, "styles": { "scrap:BOXERPUNCHER": 1 } }, "PRIYA": { "dual": 0, "scrap": 0, "segment": 0, "spar": 1, "styles": { "spar:BOXERPUNCHER": 1 } }, "MARCUS": { "scrap": 1, "spar": 0, "segment": 0, "dual": 0, "styles": { "scrap:BOXERPUNCHER": 1 } }, "JUNE": { "scrap": 1, "spar": 0, "segment": 0, "dual": 0, "styles": { "scrap:BOXERPUNCHER": 1 } }, "MOCKUP": { "scrap": 0, "spar": 3, "segment": 0, "dual": 0, "styles": { "spar:BOXERPUNCHER": 3 } } }, "day": 1, "episode": { "abb_tick": 991, "dialogue": "", "fight": "survival", "flags": { "archive": true, "letter": true, "scrap_1": true, "shadow": true, "priya_trial": true, "joined_PRIYA": true, "scrap_2": true, "joined_MARCUS": true, "scrap_3": true, "joined_JUNE": true, "binders": true, "mockup": true }, "language": "fr_CA", "lesson": 4, "line": 0, "metrics": { "bouts": [{ "fight": "scrap_1", "segment_wins": 0, "tick": 3878, "verdict": "SCRAP WON - objective", "won": true }, { "fight": "priya_trial", "verdict": "SPAR: MILLBROOK WINS on EP 74-8  |  reach segment end: met", "segment_wins": 0, "won": true, "tick": 0 }, { "fight": "scrap_2", "verdict": "SCRAP WON - survived", "segment_wins": 0, "won": true, "tick": 2472 }, { "fight": "scrap_3", "verdict": "SCRAP WON - objective", "segment_wins": 0, "won": true, "tick": 2516 }, { "fight": "mockup", "verdict": "SPAR: MILLBROOK WINS on EP 88-8  |  reach segment end: met", "segment_wins": 1, "won": true, "tick": 13776 }, { "fight": "mockup", "verdict": "SPAR: MILLBROOK WINS on EP 78-2  |  reach segment end: met", "segment_wins": 1, "won": true, "tick": 25006 }, { "fight": "mockup", "verdict": "SPAR: MILLBROOK WINS on drops 2-0  |  reach segment end: met", "segment_wins": 1, "won": true, "tick": 36546 }, { "fight": "survival", "verdict": "ASCENDANT WINS", "segment_wins": 0, "won": false, "tick": 8680 }], "combat_seconds": 476.816666666562, "counters": 80, "first_drop_seconds": 9.28333333333337, "interrupts": 62, "played_seconds": 626.433333333092, "training": [{ "game": "shadow", "grade": 1, "intro": true, "seconds": 30.0166666666662 }, { "game": "roadwork", "grade": 0.9629629629629, "seconds": 12.0000000000002, "intro": false }, { "game": "mitts", "grade": 0.87500000000013, "seconds": 15.6000000000004, "intro": false }], "world_seconds": 75.9166666666636, "segments": [{ "seg": 1, "why": "SEGMENT KO against MARCUS (counted out)", "won": false, "ep_p": 0, "ep_b": 105, "score_p": 0, "score_b": 4, "tension": 0, "banked": 0, "charged": false, "chain": 0, "kind": "seg_card", "tick": 5430 }, { "seg": 2, "why": "SEGMENT KO against PRIYA (counted out)", "won": false, "ep_p": 0, "ep_b": 26, "score_p": 0, "score_b": 8, "tension": 0, "banked": 0, "charged": false, "chain": 0, "kind": "seg_card", "tick": 7834 }], "r2_cycles": [["S1", "S2", "TAPE_RIGHT", "S1", "S2", "TAPE_RIGHT", "S1", "S2", "TAPE_RIGHT", "S1"]], "r2_tells": ["S1", "S2", "TAPE_RIGHT", "S1", "S2", "TAPE_RIGHT", "S1", "S2", "TAPE_RIGHT", "S1"] }, "pending_events": [{ "kind": "punch", "mods": [], "row": "R_STRAIGHT", "startup": 29, "stepping": false, "tick": 123 }], "phase": "fight", "position": [-0.02559873834252, -5.48829650878906], "schema": "TheLetter/1", "slipped": true, "visits": ["gym", "school", "community", "harbour"] }, "graph": {  }, "growth": { "RORY": { "board": ["sp1"], "raises": { "STA": 1 }, "rarity": 1, "socket": "", "spent": 1, "trials": { "spar_won": 1 } } }, "habits": { "RORY": { "chances": 338, "counters": { "L_STRAIGHT": 129, "R_STRAIGHT": 74 }, "feints": 216, "grams": { "F_L_HOOK,F_R_HOOK": 10, "F_L_HOOK,F_R_HOOK,F_L_UPPERCUT": 10, "F_L_STRAIGHT,F_L_STRAIGHT": 17, "F_L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 17, "F_L_STRAIGHT,F_R_STRAIGHT": 13, "F_L_STRAIGHT,F_R_STRAIGHT,F_L_HOOK": 9, "F_L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 1, "F_L_STRAIGHT,L_STRAIGHT": 18, "F_L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 18, "F_L_STRAIGHT,R_STRAIGHT": 46, "F_L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 17, "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 28, "F_L_UPPERCUT,F_R_UPPERCUT": 10, "F_L_UPPERCUT,F_R_UPPERCUT,F_L_STRAIGHT": 10, "F_R_HOOK,F_L_UPPERCUT": 10, "F_R_HOOK,F_L_UPPERCUT,F_R_UPPERCUT": 10, "F_R_STRAIGHT,F_L_HOOK": 10, "F_R_STRAIGHT,F_L_HOOK,F_R_HOOK": 10, "F_R_STRAIGHT,F_L_STRAIGHT": 4, "F_R_STRAIGHT,F_L_STRAIGHT,L_STRAIGHT": 1, "F_R_STRAIGHT,F_R_STRAIGHT": 23, "F_R_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 18, "F_R_STRAIGHT,L_STRAIGHT": 30, "F_R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 17, "F_R_STRAIGHT,R_STRAIGHT": 12, "F_R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 8, "F_R_UPPERCUT,F_L_STRAIGHT": 10, "F_R_UPPERCUT,F_L_STRAIGHT,F_R_STRAIGHT": 9, "L_STRAIGHT,F_L_STRAIGHT": 15, "L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 15, "L_STRAIGHT,F_R_STRAIGHT": 42, "L_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 2, "L_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 18, "L_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 11, "L_STRAIGHT,F_R_STRAIGHT,R_STRAIGHT": 11, "L_STRAIGHT,R_STRAIGHT": 121, "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 29, "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 88, "L_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1, "R_STRAIGHT,F_L_STRAIGHT": 49, "R_STRAIGHT,F_L_STRAIGHT,F_L_STRAIGHT": 17, "R_STRAIGHT,F_L_STRAIGHT,F_R_STRAIGHT": 4, "R_STRAIGHT,F_L_STRAIGHT,L_STRAIGHT": 17, "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 11, "R_STRAIGHT,L_STRAIGHT": 126, "R_STRAIGHT,L_STRAIGHT,F_L_STRAIGHT": 15, "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 27, "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 83, "R_STRAIGHT,R_STRAIGHT": 4, "R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 1, "F_R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 13, "R_STRAIGHT,F_R_STRAIGHT": 2, "F_R_STRAIGHT,R_STRAIGHT,F_R_STRAIGHT": 2, "R_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 1, "F_L_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 3, "F_R_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 1, "F_R_STRAIGHT,F_R_STRAIGHT,F_L_STRAIGHT": 2, "F_R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 3, "R_STRAIGHT,F_R_STRAIGHT,R_STRAIGHT": 1, "F_R_STRAIGHT,R_STRAIGHT,R_STRAIGHT": 2, "R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 2, "R_STRAIGHT,L_HOOK": 2, "L_STRAIGHT,R_STRAIGHT,L_HOOK": 2, "L_HOOK,R_HOOK": 2, "R_STRAIGHT,L_HOOK,R_HOOK": 2, "R_HOOK,L_UPPERCUT": 2, "L_HOOK,R_HOOK,L_UPPERCUT": 2, "L_UPPERCUT,R_UPPERCUT": 2, "R_HOOK,L_UPPERCUT,R_UPPERCUT": 2, "R_UPPERCUT,L_STRAIGHT": 1, "L_UPPERCUT,R_UPPERCUT,L_STRAIGHT": 1, "R_UPPERCUT,L_STRAIGHT,R_STRAIGHT": 1 }, "punches": 375, "reads": { "F_L_STRAIGHT,R_STRAIGHT": 16, "L_STRAIGHT,R_STRAIGHT": 111, "L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 55, "R_STRAIGHT,F_L_STRAIGHT": 15, "R_STRAIGHT,L_STRAIGHT": 122, "R_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 55, "F_L_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 4, "F_L_STRAIGHT,F_L_STRAIGHT": 2, "R_STRAIGHT,F_L_STRAIGHT,F_L_STRAIGHT": 2, "F_L_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 2, "L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 5, "F_L_STRAIGHT,L_STRAIGHT": 4, "R_STRAIGHT,F_L_STRAIGHT,L_STRAIGHT": 4, "F_L_STRAIGHT,L_STRAIGHT,R_STRAIGHT": 2, "F_R_STRAIGHT,F_R_STRAIGHT": 8, "F_L_STRAIGHT,R_STRAIGHT,F_L_STRAIGHT": 1, "R_STRAIGHT,F_L_STRAIGHT,R_STRAIGHT": 1, "L_STRAIGHT,F_R_STRAIGHT": 12, "F_R_STRAIGHT,L_STRAIGHT": 9, "L_STRAIGHT,F_R_STRAIGHT,F_R_STRAIGHT": 4, "F_R_STRAIGHT,F_R_STRAIGHT,L_STRAIGHT": 3, "F_R_STRAIGHT,R_STRAIGHT": 2, "R_STRAIGHT,L_STRAIGHT,F_R_STRAIGHT": 1, "L_STRAIGHT,F_R_STRAIGHT,R_STRAIGHT": 1, "F_R_STRAIGHT,R_STRAIGHT,L_STRAIGHT": 1 }, "rows": { "L_STRAIGHT": 180, "R_STRAIGHT": 187, "L_HOOK": 2, "R_HOOK": 2, "L_UPPERCUT": 2, "R_UPPERCUT": 2 } }, "MARCUS": { "punches": 2, "feints": 0, "rows": { "L_STRAIGHT": 1, "R_STRAIGHT": 1 }, "grams": { "L_STRAIGHT,R_STRAIGHT": 1 }, "reads": {  }, "chances": 0, "counters": {  } } }, "hbp": 40, "houses": {  }, "kizuna": { "PRIYA|RORY": 8, "MARCUS|PRIYA": 5 }, "kizuna_day": { "PRIYA|RORY": 3 }, "log": ["SCRAP: 45 XP, +2 Prestige", "SPAR: 89 XP, 2 Spirits, RORY+PRIYA +3, PI tick vs Priya", "SCRAP: 45 XP, +2 Prestige", "SCRAP: 45 XP, +2 Prestige", "SPAR: 89 XP, 2 Spirits, PI tick vs Cassidy Vane", "SPAR: 89 XP, 2 Spirits", "SPAR: 89 XP, 2 Spirits, PI tick vs Cassidy Vane", "DUAL: 357 XP, 5 Spirits, MARCUS+PRIYA +5, PRIYA+RORY +5"], "prestige": 6, "recruit": {  }, "spirits": 13, "staff": {  }, "story": { "episode:letter": true, "episode:scrap_1": true, "episode:shadow": true, "episode:priya_trial": true, "episode:joined_PRIYA": true, "episode:scrap_2": true, "episode:joined_MARCUS": true, "episode:scrap_3": true, "episode:joined_JUNE": true, "episode:binders": true, "episode:mockup": true }, "string_wall": {  }, "xp": { "RORY": 610, "MARCUS": 119, "PRIYA": 119, "JUNE": 196 }, "beans": 0, "bean_types": { "STA": 0 }, "training": { "day": 1, "used": 1 } }
+[PASS] native episode action: talk:plan
+[PASS] native episode action: send
+[PASS] locked corner explains the real crowd rule
+[PASS] native episode action: send
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] Survival qualification matches actual segment wins
+[PASS] hands-on retry actually qualifies for the authored tag
+[PASS] R2 tape fact actually occurs in combat
+[PASS] R2 third-exchange right lead at opener 1
+[PASS] R2 third-exchange right lead at opener 2
+[PASS] R2 third-exchange right lead at opener 3
+[PASS] R2 third-exchange right lead at opener 4
+[PASS] R2 third-exchange right lead at opener 5
+[PASS] R2 third-exchange right lead at opener 6
+[PASS] R2 third-exchange right lead at opener 7
+[PASS] R2 third-exchange right lead at opener 8
+[PASS] R2 third-exchange right lead at opener 9
+[PASS] R2 third-exchange right lead at opener 10
+[PASS] R2 third-exchange right lead at opener 1
+[PASS] R2 third-exchange right lead at opener 2
+[PASS] R2 third-exchange right lead at opener 3
+[PASS] R2 third-exchange right lead at opener 4
+[PASS] R2 third-exchange right lead at opener 5
+[PASS] R2 third-exchange right lead at opener 6
+[PASS] R2 third-exchange right lead at opener 7
+[PASS] R2 third-exchange right lead at opener 8
+[PASS] R2 third-exchange right lead at opener 9
+[PASS] R2 third-exchange right lead at opener 10
+[PASS] R2 third-exchange right lead at opener 11
+[PASS] R2 third-exchange right lead at opener 12
+[PASS] R2 third-exchange right lead at opener 13
+[PASS] R2 third-exchange right lead at opener 14
+[PASS] R2 third-exchange right lead at opener 15
+[PASS] R2 third-exchange right lead at opener 16
+[PASS] R2 third-exchange right lead at opener 17
+[PASS] R2 third-exchange right lead at opener 18
+[PASS] R2 third-exchange right lead at opener 19
+[PASS] R2 third-exchange right lead at opener 20
+[PASS] R2 third-exchange right lead at opener 21
+[PASS] R2 third-exchange right lead at opener 22
+[PASS] R2 third-exchange right lead at opener 23
+[PASS] R2 third-exchange right lead at opener 24
+[PASS] R2 third-exchange right lead at opener 25
+[PASS] R2 third-exchange right lead at opener 26
+[PASS] R2 third-exchange right lead at opener 27
+[PASS] R2 third-exchange right lead at opener 28
+[PASS] R2 third-exchange right lead at opener 29
+[PASS] R2 third-exchange right lead at opener 30
+[PASS] R2 third-exchange right lead at opener 31
+[PASS] R2 third-exchange right lead at opener 32
+[PASS] R2 third-exchange right lead at opener 33
+[PASS] R2 third-exchange right lead at opener 34
+[PASS] R2 third-exchange right lead at opener 35
+[PASS] R2 third-exchange right lead at opener 36
+[PASS] R2 third-exchange right lead at opener 37
+[PASS] R2 third-exchange right lead at opener 38
+[PASS] R2 third-exchange right lead at opener 39
+[PASS] R2 third-exchange right lead at opener 40
+[PASS] R2 third-exchange right lead at opener 41
+[PASS] R2 third-exchange right lead at opener 42
+[PASS] R2 third-exchange right lead at opener 43
+[PASS] R2 third-exchange right lead at opener 44
+[PASS] R2 third-exchange right lead at opener 45
+[PASS] R2 third-exchange right lead at opener 46
+[PASS] R2 third-exchange right lead at opener 47
+[PASS] R2 third-exchange right lead at opener 48
+[PASS] R2 third-exchange right lead at opener 49
+[PASS] R2 third-exchange right lead at opener 50
+[PASS] R2 third-exchange right lead at opener 51
+[PASS] authored shot pauses combat: tag:0
+[PASS] observer signs the original and separates the handed-over carbon
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] authored shot pauses combat: tag:2
+[PASS] Priya carries the carbon copy to its permanent wall position
+[PASS] June straightens her own persistent card
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] authored audiovisual action reached archive:1
+[PASS] authored audiovisual action reached freeze:0
+[PASS] authored audiovisual action reached present:0
+[PASS] authored audiovisual action reached letter:3
+[PASS] authored audiovisual action reached letter:11
+[PASS] authored audiovisual action reached tag:0
+[PASS] authored audiovisual action reached tag:2
+[PASS] automated episode cannot leave its output unmuted
+EPISODE JOURNEY 358 checks; 1 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-204-calls/episode-diagnose/Godot/app_userdata/TNB Greybox/episode-journey.json
+DRIVE :: RED

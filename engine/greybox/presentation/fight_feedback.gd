@@ -2,6 +2,8 @@ extends Control
 ## Shared combat feedback. Reads authoritative timers; never predicts a result.
 ## Procedural PCM is a functional sound layer, independent of simulation RNG.
 const RATE := 22050
+const CornerCalls := preload("res://presentation/corner_calls.gd")
+var corner_calls := CornerCalls.new()
 var scene: Node
 var voices: Array[AudioStreamPlayer] = []
 var sounds := {}
@@ -12,10 +14,14 @@ var tell_until := 0
 var impact_tick := -1000
 var impact_on := "B"
 var impact_heavy := false
+var interrupt_sim
+var interrupt_start := -1
+var interrupt_until := -1
 
 func setup(owner_scene: Node) -> void:
 	scene = owner_scene; mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	corner_calls.setup(self)
 	for i in 8:
 		var voice := AudioStreamPlayer.new(); add_child(voice); voices.append(voice)
 	for kind in ["jab", "heavy", "block", "counter", "tell", "beat", "bell", "air"]:
@@ -46,12 +52,21 @@ func play(kind: String, priority := false) -> void:
 		for voice in voices: voice.volume_db = -22
 	var voice := voices[voice_index]; voice_index = (voice_index + 1) % voices.size()
 	voice.stream = sounds[kind]
-	voice.volume_db = -8 if priority else (-22 if Time.get_ticks_msec() < tell_until else -12)
+	voice.volume_db = -24 if corner_calls.voice.playing else (-8 if priority else (-22 if Time.get_ticks_msec() < tell_until else -12))
 	voice.play()
 
 func observe(event: Dictionary, tick: int) -> void:
+	var called: bool = corner_calls.observe(scene.sim, event)
+	if called:
+		for voice in voices: voice.volume_db = -24
 	match str(event.get("kind", "")):
-		"tell": play("tell", true)
+		"interrupt":
+			interrupt_sim = scene.sim; interrupt_start = tick
+			interrupt_until = tick + int(event.get("stagger", 0))
+		"tell":
+			interrupt_until = -1
+			if not called and not scene.sim.states["P"].has("tell_jam_audio"): play("tell", true)
+		"fake": interrupt_until = -1
 		"hit":
 			impact_tick = tick; impact_on = str(event["on"])
 			impact_heavy = bool(event.get("counter", false)) or bool(event.get("flash", false))
@@ -59,7 +74,18 @@ func observe(event: Dictionary, tick: int) -> void:
 		"block", "perfect_block": play("block")
 		"punch": play("air")
 		"clinch_cue", "eight_beat": play("beat", true)
-		"matchup", "bout_end", "drop": play("bell", true)
+		"matchup", "bout_end", "drop":
+			interrupt_until = -1; play("bell", true)
+
+func interrupt_active(sim) -> bool:
+	# The core represents stagger as an IDLE recovery, not a STAGGER state.
+	# Hitstop advances sim.tick while the actual recovery timer holds. Follow
+	# that timer so the cue cannot disappear before the punish window ends.
+	return interrupt_sim == sim and sim.mode == "FIGHT" and sim.bstate == "IDLE" and sim.tick >= interrupt_start and sim.btimer > 0 and sim.btimer <= interrupt_until - interrupt_start
+
+func sync_audio(paused: bool) -> void:
+	corner_calls.sync(scene.sim, paused)
+	for voice in voices: voice.stream_paused = paused
 
 static func timing_state(sim) -> Dictionary:
 	if sim.mode == "EIGHT" and not sim.eight.is_empty():

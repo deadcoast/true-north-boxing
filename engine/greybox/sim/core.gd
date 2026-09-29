@@ -2380,7 +2380,12 @@ func apply_directive(text: String) -> bool:
 	if m: bdesync_ms = float(m.get_string(2)) * 1000.0; return true
 	# ---- the bosses' own mechanics (NP_04A / NP_04B), one line each ----
 	rx = RegEx.new(); rx.compile("^corner_call_volume -(\\d+)_tier$"); m = rx.search(t)                  # Vane: they start hiding the calls
-	if m: _tier_shift(-int(m.get_string(1))); return true
+	if m:
+		# NP-04A Cassidy: hide the AUDIO call one volume tier, not 150ms
+		# of the player's reaction window. Cal's tell-tier directive below
+		# still owns its explicit timing change.
+		bmods["corner_call_tier"] = int(bmods.get("corner_call_tier", 0)) - int(m.get_string(1))
+		return true
 	rx = RegEx.new(); rx.compile("^tells_louden \\+(\\d+)_tier$"); m = rx.search(t)                     # Cal: the memory gets louder
 	if m: _tier_shift(int(m.get_string(1))); return true
 	rx = RegEx.new(); rx.compile("^metronome (\\d+)ms->(\\d+)ms$"); m = rx.search(t)                    # Ada: the beat tightens

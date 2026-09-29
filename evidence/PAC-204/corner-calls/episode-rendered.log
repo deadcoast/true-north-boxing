@@ -1,0 +1,406 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+[PASS] automated episode output is muted before playback
+[PASS] normal episode entry pauses simulation
+[PASS] rendered title
+[PASS] native episode action: new
+[PASS] native episode action: next
+[PASS] the missing name mutes a real tape audio stream
+[PASS] tape sound hole lasts exactly a second
+[PASS] native episode action: next
+[PASS] archive gives authored legend build and 80 initial tension
+[PASS] rendered 1976
+ARCHIVE LESSON 0 tick 45 tension 80.0
+ARCHIVE HIT L_STRAIGHT frame 360
+ARCHIVE LESSON 1 tick 147 tension 87.0
+ARCHIVE LESSON 2 tick 413 tension 94.0
+ARCHIVE LESSON 3 tick 455 tension 96.0
+ARCHIVE LESSON 4 tick 1969 tension 75.0
+[PASS] Continue during the raised glove retains the earned DROP transition
+[PASS] rendered archive-result
+[PASS] present glove matches the archive camera
+[PASS] present holds the same raised glove
+[PASS] rendered match-cut
+[PASS] match cut transfers automatically to live shadow boxing
+[PASS] shadow boxing keeps the gym visible without a competition overlay
+[PASS] controls pause both handoff and combat
+[PASS] idle handoff grants no punches or lesson credit
+[PASS] a real jab is accepted while the camera is still blending
+[PASS] live shadow boxer retains Rory's opaque world identity
+[PASS] rendered live-shadow-handoff
+[PASS] continue restores earned shadow punches without replaying the handoff
+[PASS] shadow drill requires and records twelve accepted punches
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] authored shot pauses combat: letter:3
+[PASS] letter is physically moved: letter:3
+[PASS] rendered shot-letter-3
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] authored shot pauses combat: letter:11
+[PASS] letter is physically moved: letter:11
+[PASS] rendered shot-letter-11
+[PASS] Whitlock folds the sheet before pinning it
+[PASS] rendered letter-pinned
+[PASS] native episode action: next
+[PASS] Rory starts alone after the letter
+[PASS] Scout Book shelf stays empty before Priya joins
+[PASS] rendered letter-gym
+[PASS] walk reaches (0.0, -5.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target board
+[PASS] unrecruited squad cannot seal Saturday's order
+[PASS] native episode action: back
+[PASS] walk reaches (0.0, 6.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] world save preserves earned ledgers and location
+[PASS] rendered continued-world
+[PASS] walk reaches (0.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-30.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-30.0, -18.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-26.0, -18.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target scrap_1
+[PASS] native episode action: glove_up
+[PASS] rendered scrap_1-result
+[PASS] body shots earn the first lesson
+[PASS] native episode action: back
+[PASS] walk reaches (-30.0, -18.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-34.0, -25.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target priya
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] save at the final bell retains unconsumed story events
+[PASS] rendered priya_trial-result
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] fought trial recruits Priya
+[PASS] final-bell save was exercised before recruitment
+[PASS] Priya's binders appear through the real recruitment event
+[PASS] walk reaches (-30.0, -18.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-30.0, -13.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (30.0, -13.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (30.0, -20.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (25.0, -22.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target scrap_2
+[PASS] native episode action: glove_up
+[PASS] rendered scrap_2-result
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] survival lesson recruits Marcus
+[PASS] walk reaches (35.0, -22.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target scrap_3
+[PASS] native episode action: glove_up
+[PASS] rendered scrap_3-result
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] centre exchange recruits June
+[PASS] rendered four-dressed
+[PASS] walk reaches (30.0, -20.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (30.0, -13.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (12.0, -13.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (12.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 6.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (5.0, 4.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target film
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] walk reaches (5.0, 4.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target film
+[PASS] native episode action: mockup:0
+[PASS] rendered mockup-result
+[PASS] optional scouting spar 1 reaches its real segment verdict
+[PASS] native episode action: back
+[PASS] physical interaction target film
+[PASS] native episode action: mockup:1
+[PASS] rendered mockup-result
+[PASS] optional scouting spar 2 reaches its real segment verdict
+[PASS] native episode action: back
+[PASS] physical interaction target film
+[PASS] native episode action: mockup:2
+[PASS] rendered mockup-result
+[PASS] optional scouting spar 3 reaches its real segment verdict
+[PASS] native episode action: back
+[PASS] physical interaction target film
+[PASS] all three mockups earn Vane Pattern Intel
+[PASS] rendered scouting-binders
+[PASS] native episode action: back
+[PASS] walk reaches (0.0, 6.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 25.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-4.0, 29.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target roadwork
+[PASS] native episode action: train
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] native episode action: step
+[PASS] Harbour roadwork books a real paid training slot
+[PASS] rendered harbour-training
+[PASS] native episode action: back
+[PASS] physical interaction target roadwork
+[PASS] native episode action: train
+[PASS] native episode action: cancel
+[PASS] cancelled roadwork cannot survive in the episode save
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] world save preserves earned ledgers and location
+[PASS] rendered continued-world
+[PASS] walk reaches (0.0, 25.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 12.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, 6.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (-5.0, -1.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target mitts
+[PASS] native episode action: train
+[PASS] Mitts scores actual called punches under tempo
+[PASS] rendered mitts-result
+[PASS] native episode action: back
+[PASS] walk reaches (0.0, 4.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (5.0, -5.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target locker
+[PASS] native episode action: raise:STA
+[PASS] earned Beans purchase a persistent stat raise
+[PASS] native episode action: node:sp1
+[PASS] ability board spends earned points
+[PASS] rendered growth
+[PASS] native episode action: back
+[PASS] unearned charter save is rejected
+[PASS] malformed segment evidence is rejected without coercion
+[PASS] native episode action: language
+[PASS] native episode action: back
+[PASS] Canadian French is an in-game language choice
+[PASS] rendered fr-960-world
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] world save preserves earned ledgers and location
+[PASS] rendered continued-world
+[PASS] EN/FR authored line archive
+[PASS] EN/FR authored line archive
+[PASS] EN/FR authored line archive
+[PASS] EN/FR authored line present
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line letter
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya
+[PASS] EN/FR authored line priya_join
+[PASS] EN/FR authored line priya_join
+[PASS] EN/FR authored line priya_join
+[PASS] EN/FR authored line marcus_join
+[PASS] EN/FR authored line marcus_join
+[PASS] EN/FR authored line june_join
+[PASS] EN/FR authored line june_join
+[PASS] EN/FR authored line binders
+[PASS] EN/FR authored line binders
+[PASS] EN/FR authored line binders
+[PASS] EN/FR authored line survival
+[PASS] EN/FR authored line survival
+[PASS] EN/FR authored line vane
+[PASS] EN/FR authored line vane
+[PASS] EN/FR authored line tag
+[PASS] EN/FR authored line tag
+[PASS] EN/FR authored line tag
+[PASS] EN/FR authored line tag
+[PASS] EN/FR authored line tag
+[PASS] native episode action: load
+[PASS] invalid save leaves the live simulation intact and reports failure
+[PASS] native episode action: backup
+[PASS] native backup recovery restores the episode
+[PASS] recovery preserves readable backup and retains damaged primary
+[PASS] legacy club save remains separate
+[PASS] rendered fr-recovered
+[PASS] walk reaches (0.0, 4.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] walk reaches (0.0, -5.0) using native movement
+[PASS] walking never steps the fight clock
+[PASS] physical interaction target board
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] Survival Dual preserves sealed authored opponents
+[PASS] rendered board
+[PASS] native episode action: bell
+[PASS] native episode action: send
+[PASS] native episode action: send
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] losing the actual dual cannot award the charter or tag
+[PASS] rendered survival-loss
+[PASS] native episode action: retry_survival
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] failure offers a real retry with the recruited squad preserved
+[PASS] native episode action: bell
+[PASS] native episode action: save
+[PASS] native episode action: load
+[PASS] in-flight save restores exact simulation hash and tick
+[PASS] rendered corner-0
+[PASS] native episode action: talk:plan
+[PASS] native episode action: send
+[PASS] rendered corner-1
+[PASS] locked corner explains the real crowd rule
+[PASS] native episode action: send
+[PASS] rendered vane-introduction
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] rendered survival-result
+[PASS] Survival qualification matches actual segment wins
+[PASS] hands-on retry actually qualifies for the authored tag
+[PASS] R2 tape fact actually occurs in combat
+[PASS] R2 third-exchange right lead at opener 1
+[PASS] R2 third-exchange right lead at opener 2
+[PASS] R2 third-exchange right lead at opener 3
+[PASS] R2 third-exchange right lead at opener 4
+[PASS] R2 third-exchange right lead at opener 5
+[PASS] R2 third-exchange right lead at opener 6
+[PASS] R2 third-exchange right lead at opener 7
+[PASS] R2 third-exchange right lead at opener 8
+[PASS] R2 third-exchange right lead at opener 9
+[PASS] R2 third-exchange right lead at opener 10
+[PASS] R2 third-exchange right lead at opener 1
+[PASS] R2 third-exchange right lead at opener 2
+[PASS] R2 third-exchange right lead at opener 3
+[PASS] R2 third-exchange right lead at opener 4
+[PASS] R2 third-exchange right lead at opener 5
+[PASS] R2 third-exchange right lead at opener 6
+[PASS] R2 third-exchange right lead at opener 7
+[PASS] R2 third-exchange right lead at opener 8
+[PASS] R2 third-exchange right lead at opener 9
+[PASS] R2 third-exchange right lead at opener 10
+[PASS] R2 third-exchange right lead at opener 11
+[PASS] R2 third-exchange right lead at opener 12
+[PASS] R2 third-exchange right lead at opener 13
+[PASS] R2 third-exchange right lead at opener 14
+[PASS] R2 third-exchange right lead at opener 15
+[PASS] R2 third-exchange right lead at opener 16
+[PASS] R2 third-exchange right lead at opener 17
+[PASS] R2 third-exchange right lead at opener 18
+[PASS] R2 third-exchange right lead at opener 19
+[PASS] R2 third-exchange right lead at opener 20
+[PASS] R2 third-exchange right lead at opener 21
+[PASS] R2 third-exchange right lead at opener 22
+[PASS] R2 third-exchange right lead at opener 23
+[PASS] R2 third-exchange right lead at opener 24
+[PASS] R2 third-exchange right lead at opener 25
+[PASS] R2 third-exchange right lead at opener 26
+[PASS] R2 third-exchange right lead at opener 27
+[PASS] R2 third-exchange right lead at opener 28
+[PASS] R2 third-exchange right lead at opener 29
+[PASS] R2 third-exchange right lead at opener 30
+[PASS] R2 third-exchange right lead at opener 31
+[PASS] R2 third-exchange right lead at opener 32
+[PASS] R2 third-exchange right lead at opener 33
+[PASS] R2 third-exchange right lead at opener 34
+[PASS] R2 third-exchange right lead at opener 35
+[PASS] R2 third-exchange right lead at opener 36
+[PASS] R2 third-exchange right lead at opener 37
+[PASS] R2 third-exchange right lead at opener 38
+[PASS] R2 third-exchange right lead at opener 39
+[PASS] R2 third-exchange right lead at opener 40
+[PASS] R2 third-exchange right lead at opener 41
+[PASS] R2 third-exchange right lead at opener 42
+[PASS] R2 third-exchange right lead at opener 43
+[PASS] R2 third-exchange right lead at opener 44
+[PASS] R2 third-exchange right lead at opener 45
+[PASS] R2 third-exchange right lead at opener 46
+[PASS] R2 third-exchange right lead at opener 47
+[PASS] R2 third-exchange right lead at opener 48
+[PASS] R2 third-exchange right lead at opener 49
+[PASS] R2 third-exchange right lead at opener 50
+[PASS] R2 third-exchange right lead at opener 51
+[PASS] R2 third-exchange right lead at opener 52
+[PASS] authored shot pauses combat: tag:0
+[PASS] rendered shot-tag-0
+[PASS] observer signs the original and separates the handed-over carbon
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] authored shot pauses combat: tag:2
+[PASS] rendered shot-tag-2
+[PASS] Priya carries the carbon copy to its permanent wall position
+[PASS] June straightens her own persistent card
+[PASS] rendered carbon-pinned
+[PASS] native episode action: next
+[PASS] native episode action: next
+[PASS] rendered survival-verdict
+[PASS] authored audiovisual action reached archive:1
+[PASS] authored audiovisual action reached freeze:0
+[PASS] authored audiovisual action reached present:0
+[PASS] authored audiovisual action reached letter:3
+[PASS] authored audiovisual action reached letter:11
+[PASS] authored audiovisual action reached tag:0
+[PASS] authored audiovisual action reached tag:2
+[PASS] automated episode cannot leave its output unmuted
+EPISODE JOURNEY 395 checks; 0 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-204-calls/episode-rendered/Godot/app_userdata/TNB Greybox/episode-journey.json
+DRIVE :: GREEN
