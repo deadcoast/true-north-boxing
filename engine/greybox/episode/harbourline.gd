@@ -307,6 +307,7 @@ func walk(direction: Vector2, jog: bool, delta: float) -> void:
 func _pose(person: Node3D, phase: float, strength: float) -> void:
 	# Shadowboxing hands this same rig back to exploration; reset the combat
 	# face orientation when the actor resumes facing with its world root.
+	if person.has_meta("rib_shift"): View.FighterVisuals.torso_pose(person, Vector3.ZERO, Vector3.ZERO)
 	person.get_meta("head").rotation = Vector3.ZERO
 	if person.get_meta("cast_key", "") != "":
 		person.get_meta("mesh").rotation = Vector3(0, PI, 0)

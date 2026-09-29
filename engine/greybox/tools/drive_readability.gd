@@ -8,6 +8,7 @@ var scene: Node
 var checks := 0
 var failures: Array[String] = []
 var tests := Tests.new()
+var camera_samples: Array = []
 
 func _initialize() -> void:
 	_run.call_deferred()
@@ -36,6 +37,9 @@ func frame_at(distance: float, angle: float, center := Vector2.ZERO) -> bool:
 	var head: Vector2 = scene.cam.unproject_position(scene.boss.position + Vector3.UP * 1.9)
 	var feet: Vector2 = scene.cam.unproject_position(scene.boss.position)
 	var size := root.get_visible_rect().size
+	var player_head: Vector2 = scene.cam.unproject_position(scene.player.global_position + scene.player.get_meta("head").position + Vector3.UP * .18)
+	var player_feet: Vector2 = scene.cam.unproject_position(scene.player.global_position)
+	camera_samples.append({"viewport":str(size),"distance_m":distance,"angle_rad":angle,"center":str(center),"pitch_deg":rad_to_deg(-scene.cam.rotation.x),"fov_deg":scene.cam.fov,"chase_m":Vector2(scene.cam.position.x-scene.player.position.x,scene.cam.position.z-scene.player.position.z).length(),"player_projected_height_pct":absf(player_feet.y-player_head.y)/size.y*100,"player_visible_height_pct":(clampf(player_feet.y,0,size.y)-clampf(player_head.y,0,size.y))/size.y*100})
 	# The center scorebug ends at y=90; side resource panels do not cross it.
 	var clear: bool = head.y > 100 and feet.y < size.y - 112 and absf(head.x - size.x * 0.5) < 1.0
 	if not clear: print("PROJECTION head=%s feet=%s viewport=%s" % [head, feet, size])
@@ -150,6 +154,8 @@ func _run() -> void:
 	check("details close when fighting resumes", not scene.fight_hud.details.visible)
 	scene._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
 	check("focus loss pauses fight", scene.controls_menu.opened)
+	var report := FileAccess.open("user://camera-observations.json",FileAccess.WRITE)
+	report.store_string(JSON.stringify({"samples":camera_samples,"scope":"Measurements of production projection; existing framing checks establish opponent/HUD containment, not NP-03 fixed pitch, chase or compact-player compliance."},"  ")); report.close()
 	print("VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
 	scene.queue_free(); await process_frame
 	quit(0 if failures.is_empty() else 1)

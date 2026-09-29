@@ -39,6 +39,7 @@ var elbow_prior: Array = []
 var knee_history: Array = []
 var knee_prior: Array = []
 var inside_extent := 1.0
+var travel_ticks := 0
 
 static func ramp(value: float) -> float:
 	var x := clampf(value, 0, 1)
@@ -178,7 +179,7 @@ static func constrain(rig: Dictionary) -> Dictionary:
 		rig["ankles"][i] = leg["end"]
 	return rig
 
-func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stance: Dictionary, turns: Array = [], balance := 0.5, advance := 0.0) -> Array:
+func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stance: Dictionary, turns: Array = [], balance := 0.5, advance := 0.0, plant_hand := -1) -> Array:
 	var wanted: Array = []
 	for i in 2:
 		wanted.append(origin + right * (-1 if i == 0 else 1) * float(stance["width"]) + forward * (1 if i == 0 else -1) * float(stance["lead"]))
@@ -187,16 +188,23 @@ func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stan
 		feet = wanted.duplicate(); step.clear()
 		foot_yaw = [atan2(forward.x, forward.z) + 0.08, atan2(forward.x, forward.z) - 0.08]
 		lead_weight = 0.5; support_shift = Vector3.ZERO; previous_origin = origin
+		travel_ticks = 0
 	if tick != last_tick:
 		var dt := maxi(1, tick - last_tick) if last_tick >= 0 else 1
 		var velocity := ((origin - previous_origin) * 120.0 / dt).limit_length(3.0)
 		var moving := velocity.length() > 0.05
+		travel_ticks = travel_ticks + dt if moving else 0
 		if step.is_empty():
 			var errors := [(feet[0] as Vector3).distance_to(wanted[0]), (feet[1] as Vector3).distance_to(wanted[1])]
 			# Open in the travel direction; then gather the trailing foot. A new
 			# direction is judged against the actual stance, not an alternating timer.
 			var i := 0 if (wanted[0] - wanted[1]).dot(velocity) >= 0 else 1
 			if absf(float(errors[0]) - float(errors[1])) > 0.06 or not moving: i = 0 if errors[0] > errors[1] else 1
+			# A punch's single-tick lunge is weight transfer, not walking. Keep
+			# its driving foot down; the other foot can gather. Continuous root
+			# travel releases this hold, so moving attacks never anchor a leg
+			# behind the boxer. Already-airborne steps finish without snapping.
+			if i == plant_hand and travel_ticks <= 1: i = 1 - i
 			if float(errors[i]) > (0.025 if moving else 0.09):
 				step = {"index": i, "from": feet[i], "to": wanted[i], "at": tick, "duration": float(stance.get("step_ticks", 16.0))}
 		if not step.is_empty():
@@ -259,9 +267,12 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	if row != "": turns[0 if row.begins_with("L_") else 1] += float(motion["side"]) * float(motion["plant"]) * (0.75 if motion["hook"] else 0.48) * float(motion["strength"])
 	var balance := clampf(float(style["balance"]) - head_offset.dot(right) * 1.1 + head_offset.dot(forward) * 0.9, 0.2, 0.8)
 	balance = clampf(balance + float(motion["drive"]) * (0.13 if row.begins_with("R_") else 0.06) - float(motion["load"]) * 0.12, 0.2, 0.8)
-	# Set the lead foot before committing the torso. Otherwise a VM lunge can
-	# arrive over a narrow base and force the fixed-length legs into a squat.
-	var soles := footwork(origin, forward, right, tick, style, turns, balance, maxf(0, float(motion["drive"])) * 0.13)
+	# Gather around the delivered weight without lifting the working pivot.
+	# Stepping punches and sustained locomotion can change that support; an
+	# ordinary punch releases its base only as recovery unloads the drive.
+	var plant_hand := (0 if row.begins_with("L_") else 1) if row != "" and recovery < 0.5 and not "STEPPING" in mods else -1
+	var advance := maxf(0, float(motion["drive"])) * 0.13
+	var soles := footwork(origin, forward, right, tick, style, turns, balance, advance, plant_hand)
 	var foot_turns := [wrapf(float(foot_yaw[0]) - atan2(forward.x, forward.z), -PI, PI), wrapf(float(foot_yaw[1]) - atan2(forward.x, forward.z), -PI, PI)]
 	# The punch chain already contains its foot-driven hip rotation. Add only
 	# the planted foot's lag behind that requested angle, not a second punch turn.

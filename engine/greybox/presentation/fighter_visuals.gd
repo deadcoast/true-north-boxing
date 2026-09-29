@@ -107,6 +107,59 @@ static func _aura(root: Node3D) -> void:
 		material.emission_enabled = source.emission_enabled
 		material.emission = source.emission; material.emission_energy_multiplier = source.emission_energy_multiplier
 
+static func torso_pose(root: Node3D, rib_shift: Vector3, waist_shift: Vector3) -> void:
+	root.set_meta("rib_shift", rib_shift); root.set_meta("waist_shift", waist_shift)
+	var anchor: MeshInstance3D = root.get_meta("mesh")
+	var rib := anchor.basis.inverse() * rib_shift
+	var waist := anchor.basis.inverse() * waist_shift
+	var parts: Array = [anchor] if anchor.layers != 0 else []
+	for child in anchor.get_children():
+		if child is MeshInstance3D and child.layers != 0: parts.append(child)
+	for part in parts:
+		if not part.has_meta("torso_bound"):
+			var local: Transform3D = Transform3D.IDENTITY if part == anchor else part.transform
+			part.mesh = _torso_mesh(part.mesh, local)
+			part.set_meta("torso_bound", true)
+		for i in 4: part.set_blend_shape_value(i, [rib.x, rib.z, waist.x, waist.z][i])
+
+static func _torso_mesh(source: Mesh, local: Transform3D) -> ArrayMesh:
+	var key := "torso-bind:" + str(source.get_instance_id()) + ":" + str(local)
+	if shapes.has(key): return shapes[key]
+	var base := source.surface_get_arrays(0)
+	var result := ArrayMesh.new(); result.blend_shape_mode = Mesh.BLEND_SHAPE_MODE_NORMALIZED
+	var morphs: Array[Array] = []
+	for channel in 4:
+		result.add_blend_shape(["rib_x", "rib_z", "waist_x", "waist_z"][channel])
+		var vertices: PackedVector3Array = base[Mesh.ARRAY_VERTEX].duplicate()
+		var normals: PackedVector3Array = base[Mesh.ARRAY_NORMAL].duplicate()
+		for i in vertices.size():
+			var at: Vector3 = local * vertices[i]
+			# NP-03 body aim is inside this unchanged central band. Only the
+			# shoulder/waist ends deform; the singlet details use the same weights.
+			var weight := smoothstep(0.13, 0.285, at.y) if channel < 2 else 1.0 - smoothstep(-0.285, -0.17, at.y)
+			var direction := Vector3.RIGHT if channel % 2 == 0 else Vector3.BACK
+			var offset := local.basis.inverse() * direction
+			vertices[i] += offset * weight
+			# Preserve the source topology (including primitive UV seams). A
+			# SurfaceTool round-trip can merge them and invalidate morph counts.
+			var span := 0.155 if channel < 2 else 0.115
+			var t := clampf((at.y - (0.13 if channel < 2 else -0.285)) / span, 0, 1)
+			var slope := 6.0 * t * (1.0 - t) / span * (1.0 if channel < 2 else -1.0)
+			var gradient := local.basis.transposed() * Vector3.UP * slope
+			normals[i] = (normals[i] - gradient * offset.dot(normals[i])).normalized()
+		var morph := []; morph.resize(Mesh.ARRAY_MAX)
+		morph[Mesh.ARRAY_VERTEX] = vertices
+		morph[Mesh.ARRAY_NORMAL] = normals
+		morph[Mesh.ARRAY_TANGENT] = base[Mesh.ARRAY_TANGENT]
+		morphs.append(morph)
+	result.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, base, morphs)
+	result.surface_set_material(0, source.surface_get_material(0))
+	# Loft meshes are shared by identity. Primitive kit details and the legacy
+	# torso belong to an actor instance; retaining their instance IDs here would
+	# grow the global cache on every roster swap or return to the world.
+	if not source is PrimitiveMesh: shapes[key] = result
+	return result
+
 static func _material(color: String, roughness := 0.9) -> StandardMaterial3D:
 	var mat := StandardMaterial3D.new(); mat.albedo_color = Color(color); mat.roughness = roughness
 	return mat

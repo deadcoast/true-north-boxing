@@ -387,7 +387,7 @@ func _style_signatures() -> void:
 
 func _styles() -> void:
 	for style in Motion.STANCES:
-		var fixed := true; var contacts := 0; var jump := 0.0; var head_agrees := true
+		var fixed := true; var contacts := 0; var jump := 0.0; var head_agrees := true; var planted := true
 		for row in scene.combat_input.ROWS:
 			fresh(); scene.sim.P["style"] = style
 			scene.sim.P["pkg"] = scene.sim.AFF["style"]["packages"][style].duplicate()
@@ -402,12 +402,14 @@ func _styles() -> void:
 				for event in events:
 					if event.get("kind") == "hit" and event.get("on") == "B":
 						var hand := 0 if row.begins_with("L_") else 1
+						planted = planted and absf(rig["feet"][hand].y) < .00001
 						var center: Vector3 = rig["contact_centers"][hand]
 						if absf(rig["wrists"][hand].distance_to(center) - float(rig["contact_radii"][hand])) < 0.001: contacts += 1
 				if tick % 8 == 0:
 					scene._render(0.5); fixed = fixed and rigid_render(scene.player); scene._render(1)
 				if row == "R_STRAIGHT" and tick in [0, 12, 28, 44, 100]: await capture("side-style-" + style.to_lower() + "-%03d" % tick)
 		check(style + " ten punches keep authoritative contact and attached anatomy", contacts == 10 and fixed)
+		check(style + " delivers every stationary punch from a planted driving foot", planted)
 		check(style + " delivery and return remain continuous", jump < 0.25)
 		for pair in [[KEY_Q, "SLIP_L"], [KEY_E, "SLIP_R"], [KEY_DOWN, "DUCK"], [KEY_V, "WEAVE"], [KEY_B, "LEAN"], [KEY_SPACE, "GUARD"]]:
 			fresh(); scene.sim.P["style"] = style; scene.sim.P["pkg"] = scene.sim.AFF["style"]["packages"][style].duplicate()
@@ -548,6 +550,7 @@ func _connected_combinations() -> void:
 	var half_poses := {}
 	for variant in 8:
 		var retained := true; var connected := true; var contact := true; var settled := true; var held := true
+		var visible_chain := true; var skin_follows := true; var drive_planted := true
 		var count := 0; var peak_jump := 0.0; var distinct := true
 		for n in rows.size():
 			fresh(); scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
@@ -559,10 +562,12 @@ func _connected_combinations() -> void:
 			if variant & 4: scene.combat_input.since["windup"] = Time.get_ticks_usec() - 200000
 			key(codes[n], true)
 			var expected: Array = []; var recovery_seen := false; var half := {}; var previous := snapshot()
+			var prior_plant := Vector3.ZERO; var sampled_plant := false
 			for tick in 230:
 				tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
 				var frozen: bool = scene.sim.freeze_t > 0
 				var events := native_step(); var now := snapshot()
+				visible_chain = visible_chain and _working_chain_visible()
 				if pose_jump(previous, now) >= 0.25:
 					print("COMBINATION DISCONTINUITY ", rows[n], " variant=", variant, " tick=", tick, " attack=", scene.fight_view.attacks.get("P"))
 					for part in now.size():
@@ -578,10 +583,18 @@ func _connected_combinations() -> void:
 						contact = contact and absf(r["wrists"][hand].distance_to(r["contact_centers"][hand]) - float(r["contact_radii"][hand])) < 0.001
 				var attack: Dictionary = scene.fight_view.attacks.get("P", {})
 				if attack.get("row", "") != "":
+					if float(attack.get("progress", 0)) >= .7 and float(attack.get("recovery", 0)) == 0:
+						var foot: Vector3 = scene.player.get_meta("kinematics")["feet"][0 if n < 5 else 1]
+						if foot.y > .00001 and drive_planted: print("AIRBORNE DRIVE ",rows[n]," variant=",variant," progress=",attack["progress"]," foot=",foot)
+						drive_planted = drive_planted and absf(foot.y) < .00001
+						var world_plant: Vector3 = scene.player.position + foot
+						if sampled_plant: drive_planted = drive_planted and world_plant.distance_to(prior_plant) < .00001
+						prior_plant = world_plant; sampled_plant = true
 					retained = retained and attack.get("mods", []) == expected
 					if float(attack.get("recovery", 0)) > 0.1: recovery_seen = true
 					if half.is_empty() and float(attack.get("progress", 0)) >= 0.5 and float(attack.get("progress", 0)) < 1:
 						half = scene.player.get_meta("kinematics").duplicate(true)
+						skin_follows = skin_follows and _rib_skin_follows()
 				connected = connected and _anatomy_ok(scene.player.get_meta("kinematics")) and rigid_render(scene.player)
 				if tick > 10 and scene.sim.P["busy_t"] == 0 and scene.player.get_meta("pose_row") == "": break
 			settled = settled and recovery_seen and scene.sim.P["busy_t"] == 0 and scene.player.get_meta("pose_row") == ""
@@ -597,6 +610,9 @@ func _connected_combinations() -> void:
 		check("modifier matrix %d delivers all ten native punches on the resolved surface" % variant, count == 10 and contact)
 		check("modifier matrix %d keeps fixed anatomy, continuous poses and hitstop" % variant, connected and held and peak_jump < 0.25)
 		check("modifier matrix %d completes recovery with differentiated loading" % variant, settled and distinct)
+		check("modifier matrix %d keeps the whole working arm visible" % variant, visible_chain)
+		check("modifier matrix %d moves the visible ribcage with its shoulders" % variant, skin_follows)
+		check("modifier matrix %d keeps stationary punch drive planted through delivery" % variant, drive_planted)
 	# Sustained native strings issue the next edge inside the authored six-tick
 	# buffer, including repeated hands. Opponent defenses alternate clean/block;
 	# no sim timer is shortened to permit an input or complete a recovery.
@@ -629,6 +645,33 @@ func _connected_combinations() -> void:
 		print("SUSTAINED tired=", tired, " rows=", fired, " hits=", hits, " blocks=", blocks, " jump=", jump)
 		check("sustained %s alternating and same-hand buffer preserves twelve commands" % tired, fired == expected and hits + blocks == sequence.size() and hits > 0 and blocks > 0)
 		check("sustained %s guard, impact and exhausted recovery stay connected" % tired, fixed and jump < 0.25 and scene.sim.P["busy_t"] == 0)
+
+func _working_chain_visible() -> bool:
+	var row := str(scene.player.get_meta("pose_row", ""))
+	if row == "": return true
+	var hand := 0 if row.begins_with("L_") else 1
+	var found := {}
+	for part in scene.player.get_meta("cast_parts", []):
+		var field := str(part.get_meta("rig_anchor", ""))
+		if field not in ["upper_arms", "arms", "gloves", "clavicles"] or int(part.get_meta("rig_index", -1)) != hand: continue
+		found[field] = true
+		if not part.material_override is ShaderMaterial: return false
+		if not is_equal_approx(float(part.material_override.get_shader_parameter("window_alpha")), 1.0): return false
+		if not is_equal_approx((part.material_override.get_shader_parameter("tint") as Color).a, 1.0): return false
+	return found.size() == 4
+
+func _rib_skin_follows() -> bool:
+	var torso: MeshInstance3D = scene.player.get_meta("cast_parts")[0]
+	var skin := torso.bake_mesh_from_current_blend_shape_mix()
+	var vertices: PackedVector3Array = skin.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var center := Vector3.ZERO; var count := 0
+	for vertex in vertices:
+		if is_equal_approx(vertex.y, .285): center += torso.to_global(vertex); count += 1
+	if count == 0: return false
+	center /= count
+	var rig: Dictionary = scene.player.get_meta("render_kinematics")
+	var collar: Vector3 = scene.player.position + (rig["shoulders"][0] + rig["shoulders"][1]) * .5
+	return Vector2(center.x,center.z).distance_to(Vector2(collar.x,collar.z)) < .001
 
 func lifecycle() -> void:
 	# Whiffing opponent keeps moving while a real native player key release
@@ -817,7 +860,9 @@ func rigid_render(actor: Node3D) -> bool:
 		if (actor.get_meta("boots")[i].position + Vector3.UP * 0.03).distance_to(rig["ankles"][i]) > 0.00001: return false
 		var forefoot: Vector3 = rig["ankles"][i] - Vector3.UP * 0.095 + (rig["forward"] as Vector3).normalized().rotated(Vector3.UP, float(rig["pivots"][i])) * 0.08
 		if forefoot.distance_to(rig["feet"][i]) > 0.00001: return false
-	return endpoints(actor.get_meta("abdomen"), rig["pelvis"], actor.get_meta("mesh").position - actor.get_meta("mesh").basis.y * 0.285)
+	var waist: Vector3 = actor.get_meta("mesh").position - actor.get_meta("mesh").basis.y * 0.285
+	waist.x = rig["pelvis"].x; waist.z = rig["pelvis"].z
+	return endpoints(actor.get_meta("abdomen"), rig["pelvis"], waist)
 
 func native_anatomy() -> void:
 	for stepping in [false, true]:

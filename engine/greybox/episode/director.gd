@@ -7,6 +7,7 @@ const Locale := preload("res://episode/locale.gd")
 const Staging := preload("res://episode/staging.gd")
 const Broadcast := preload("res://episode/broadcast.gd")
 const RigSpace := preload("res://presentation/rig_space.gd")
+const FighterVisuals := preload("res://presentation/fighter_visuals.gd")
 const SAVE_PATH := "user://tnb_episode.json"
 var scene: Node
 var sandbox_sim
@@ -479,6 +480,7 @@ func finish_frame() -> void:
 		if from is Array:
 			for i in from.size(): to[i].transform = from[i].transform
 		else: to.transform = from.transform
+	FighterVisuals.torso_pose(world.actor, scene.player.get_meta("rib_shift", Vector3.ZERO), scene.player.get_meta("waist_shift", Vector3.ZERO))
 	scene.cam.global_position = scene.player.global_position + Vector3(3.5, 2.4, 4.5)
 	scene.cam.look_at(scene.player.global_position + Vector3.UP)
 	scene.cam.fov = 55

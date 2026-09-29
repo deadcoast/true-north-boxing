@@ -8,6 +8,10 @@ const CHASE := 1.8
 const HEAD_CLEARANCE := 0.6
 const FOV := 55.0
 const WINDUP_ALPHA := 0.4
+const PLAYER_DEPTH := """shader_type spatial;
+render_mode blend_mix, depth_draw_always, cull_back, unshaded, shadows_disabled;
+void fragment() { ALBEDO = vec3(0.0); ALPHA = 0.0; }
+"""
 const SILHOUETTE := """shader_type spatial;
 render_mode blend_mix, depth_draw_never, cull_back, shadows_disabled;
 uniform vec4 tint : source_color;
@@ -42,6 +46,7 @@ var hold_ticks := 1
 var offers := {}
 var travels := {}
 var before_positions := {}
+var player_depth: ShaderMaterial
 
 func _sync_clock(sim) -> void:
 	if clock_sim != sim or sim.tick < clock_tick:
@@ -388,20 +393,19 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	var body_height := 1.10 + minf(0, head.position.y - Sim.HEAD_H)
 	var torso_top := torso_origin + Vector3.UP * minf(float(head.position.y) - Space.HEAD_RADIUS - 0.025, maxf(body_height + 0.02, collar.y - 0.06))
 	var torso_bottom := torso_origin + Vector3.UP * minf(body_height - 0.02, maxf(body_height - 0.16, float(rig["pelvis"].y) + 0.02))
-	# Ribcage follows the delivered shoulder girdle, with the physical striking
-	# region as its pivot. A vertical cylinder erased the body's drive while
-	# leaving the shoulders to bridge the gap on their own. Limit the bend so
-	# the unchanged central hit surface stays within the torso skin.
-	var rib_shift := Vector3(collar.x - torso_origin.x, 0, collar.z - torso_origin.z)
-	rib_shift = rib_shift.limit_length(maxf(0, torso_top.y - body_height) * tan(deg_to_rad(18.0)))
-	torso_top += rib_shift
-	torso_bottom -= rib_shift * (body_height - torso_bottom.y) / maxf(0.02, torso_top.y - body_height)
 	_link(root.get_meta("abdomen"), rig["pelvis"], torso_bottom)
 	_link(body, torso_bottom, torso_top)
 	body.scale.y /= 0.57
 	body.rotate_object_local(Vector3.UP, facing + float(rig["chest_turn"]))
-	_link(root.get_meta("neck"), torso_top, head.position - Vector3.UP * 0.12)
-	for i in 2: _link(root.get_meta("clavicles")[i], torso_top, rig["shoulders"][i])
+	# Carry the upper ribs and waist with their connected joints while retaining
+	# the authoritative central striking band. Tilting the whole short torso
+	# instead moves that band away from the collision surface on power punches.
+	var rib_top := Vector3(collar.x, torso_top.y, collar.z)
+	var waist_bottom := Vector3(rig["pelvis"].x, torso_bottom.y, rig["pelvis"].z)
+	FighterVisuals.torso_pose(root, rib_top - torso_top, waist_bottom - torso_bottom)
+	_link(root.get_meta("abdomen"), rig["pelvis"], waist_bottom)
+	_link(root.get_meta("neck"), rib_top, head.position - Vector3.UP * 0.12)
+	for i in 2: _link(root.get_meta("clavicles")[i], rib_top, rig["shoulders"][i])
 	var hips: Node3D = root.get_meta("hips")
 	hips.position = rig["pelvis"]; hips.rotation.y = facing + float(rig["hips_turn"])
 	hips.scale = Vector3(float(profile["bulk"]), 1, 1)
@@ -519,7 +523,7 @@ func _player_visibility(player: Node3D, window: Vector4, windup_alpha: float, wi
 		var alpha := windup_alpha if windup and group != "head" and not working else 1.0
 		# Wind-up is 40%, including the clearance window, never 40% * 8%.
 		# Only the working chain bypasses clearance; neutral body remains legible.
-		_clear_window(groups[group], window, alpha, false, Vector3.ZERO, Vector3.ZERO, 1.0 if working else windup_alpha)
+		_clear_window(groups[group], window, alpha, false, Vector3.ZERO, Vector3.ZERO, 1.0 if working else windup_alpha, true)
 
 static func _visibility_group(field: String, index: int) -> String:
 	if field == "head": return "head"
@@ -527,7 +531,7 @@ static func _visibility_group(field: String, index: int) -> String:
 	if field == "joints" and index % 3 < 2: return "left" if index < 3 else "right"
 	return "body"
 
-func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only := false, origin := Vector3.ZERO, normal := Vector3.ZERO, window_alpha := 0.08) -> void:
+func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only := false, origin := Vector3.ZERO, normal := Vector3.ZERO, window_alpha := 0.08, self_depth := false) -> void:
 	# Every surface with the same source material receives the same window.
 	# Share its shader and update uniforms once, rather than repeating six
 	# render-server writes for every eyelid, seam and limb on every frame.
@@ -540,6 +544,17 @@ func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only 
 		if not part.material_override is ShaderMaterial or used.has(part.material_override):
 			var shader := Shader.new(); shader.code = SILHOUETTE
 			var material := ShaderMaterial.new(); material.shader = shader; part.material_override = material
+			if self_depth:
+				# The opaque world/opponent has already rendered. Establish the
+				# nearest player surface without changing that color, then blend
+				# only that surface. Sorting whole limbs cannot solve intersecting
+				# torso, face and kit geometry. next_pass obeys material priority,
+				# so every depth draw precedes every player color draw.
+				if player_depth == null:
+					var depth_shader := Shader.new(); depth_shader.code = PLAYER_DEPTH
+					player_depth = ShaderMaterial.new(); player_depth.shader = depth_shader
+					player_depth.render_priority = -1
+				material.next_pass = player_depth
 		materials[source] = part.material_override; used[part.material_override] = true
 		var tint: Color = source.albedo_color; tint.a = alpha
 		part.material_override.set_shader_parameter("tint", tint)
