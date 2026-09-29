@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "files": [
+    {
+      "path": "engine/greybox/presentation/fighter_cast.v1.json",
+      "FILE_rows": [
+        "OVR-1612"
+      ],
+      "sha256": "d107c1515ba0a672c0145654e8d7308ba0455d4e10c335d1e75171494babf74a"
+    },
+    {
+      "path": "engine/greybox/presentation/fighter_visuals.gd",
+      "FILE_rows": [
+        "OVR-1613"
+      ],
+      "sha256": "182cf22d113efe5274181683d3d970d93ecdc8c087cf867c9ffb2f14316c824a"
+    },
+    {
+      "path": "engine/greybox/presentation/fight_view.gd",
+      "FILE_rows": [
+        "OVR-1031"
+      ],
+      "sha256": "da1e84b5495a65706fb7106d463753b5e4259b9392633b767e72a82fc6ab2815"
+    },
+    {
+      "path": "engine/greybox/episode/harbourline.gd",
+      "FILE_rows": [
+        "OVR-1304"
+      ],
+      "sha256": "3a97c0a513f3043e649e43f48e9f5825e7b2b69c194dc595176ea87dd27b4000"
+    },
+    {
+      "path": "engine/greybox/tools/drive_fighter_visuals.gd",
+      "FILE_rows": [
+        "OVR-1616"
+      ],
+      "sha256": "2c3c65f9f6890d791390d8534352ec6850e9ee27bf9d83c9a5f6ee0a223d68ba"
+    },
+    {
+      "path": "engine/greybox/tools/drive_boxing_motion.gd",
+      "FILE_rows": [
+        "OVR-1067"
+      ],
+      "sha256": "d7a1d60d6d43c4400c3fa5441e2f9fd27fd2b6c5a65886856783d40143f68e70"
+    }
+  ],
+  "protected_sim_motion_tuning_diff": [],
+  "meaning": "Registered editable source; no simulation, planted motion solver, contact geometry or tuning changes. Runtime and visual checks recorded separately."
+}

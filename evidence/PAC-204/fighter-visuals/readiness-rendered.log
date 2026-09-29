@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+HARDWARE INPUTS []
+[PASS] controlled run has no external controller input
+[PASS] fixed clock aligns every 1/6 second boundary at 30 Hz
+[PASS] fixed clock aligns every 1/6 second boundary at 60 Hz
+[PASS] fixed clock aligns every 1/6 second boundary at 144 Hz
+[PASS] clock does not round a genuinely short tick forward
+[PASS] clock retains hitch cap and rejects negative delta
+[PASS] normal launch pauses before the bell
+[PASS] native Enter rings the first bell
+[PASS] rory-yuri / 30 Hz fixed anatomy throughout
+[PASS] rory-yuri / 30 Hz opponent stays clear of HUD
+[PASS] rory-yuri / 30 Hz authored tells remain visible
+[PASS] rory-yuri / 30 Hz repeated rendering is read-only
+[PASS] rory-yuri / 30 Hz exchanges include both offense and contact
+[PASS] rory-yuri / 30 Hz sustained fight time
+[PASS] rory-yuri / 30 Hz no input remains held
+SESSION {"case":"rory-yuri","commands":317,"events":{"backstep":39,"block":29,"block_press":24,"boss_act":57,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":2,"clinch_beat":8,"clinch_cue":8,"clinch_end":2,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":3,"feed":47,"flag":1,"guard_break":3,"hit":23,"matchup":2,"perfect_block":2,"pi":1,"pi_count":1,"punch":19,"recover":20,"reward_toast":1,"sealed":1,"seg_end":1,"segment_ko":1,"sensor":11,"taunt_b":5,"tell":23,"traits":2,"unbroken":2,"whiff":5,"xp":1},"fight_ticks":5732,"first_bad_camera":{},"hashes":317,"hz":30,"minimum_stamina":73.4366666666763,"modes":["FIGHT","EIGHT","OVER"],"recovered_stamina":47.7233333333228,"samples":53,"wall_seconds":7.422815,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] rory-yuri / 144 Hz fixed anatomy throughout
+[PASS] rory-yuri / 144 Hz opponent stays clear of HUD
+[PASS] rory-yuri / 144 Hz authored tells remain visible
+[PASS] rory-yuri / 144 Hz repeated rendering is read-only
+[PASS] rory-yuri / 144 Hz exchanges include both offense and contact
+[PASS] rory-yuri / 144 Hz sustained fight time
+[PASS] rory-yuri / 144 Hz no input remains held
+SESSION {"case":"rory-yuri","commands":317,"events":{"backstep":39,"block":29,"block_press":24,"boss_act":57,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":2,"clinch_beat":8,"clinch_cue":8,"clinch_end":2,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":3,"feed":47,"flag":1,"guard_break":3,"hit":23,"matchup":2,"perfect_block":2,"pi":1,"pi_count":1,"punch":19,"recover":20,"reward_toast":1,"sealed":1,"seg_end":1,"segment_ko":1,"sensor":11,"taunt_b":5,"tell":23,"traits":2,"unbroken":2,"whiff":5,"xp":1},"fight_ticks":5739,"first_bad_camera":{},"hashes":317,"hz":144,"minimum_stamina":73.4366666666763,"modes":["FIGHT","EIGHT","OVER"],"recovered_stamina":47.7233333333228,"samples":53,"wall_seconds":19.514135,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] rory-yuri identical state and native commands at 144 Hz
+READINESS VERDICT :: GREEN (23/23)

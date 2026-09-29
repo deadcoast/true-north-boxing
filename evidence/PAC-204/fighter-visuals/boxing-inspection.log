@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+Movie Maker mode enabled, recording movie in 1280×720 @ 60 FPS...
+[PASS] 60fps native film retains twelve commands and fixed attached anatomy
+FILM VERDICT :: GREEN (1/1)
+--------------------------------------------------------------------------------
+Done recording movie at path: C:/Users/ryanf/github/_games/true-north-boxing/engine/greybox/../../.PACER/fighter-visuals/optimized-boxing.avi
+506 frames at 60 FPS (movie length: 00:00:08:26), recorded in 00:00:15 (53% of real-time speed).
+CPU render time: 0.61 seconds (average: 1.20 ms/frame)
+GPU render time: 0.36 seconds (average: 0.72 ms/frame)
+Encoding time: 3.10 seconds (average: 6.14 ms/frame)
+--------------------------------------------------------------------------------

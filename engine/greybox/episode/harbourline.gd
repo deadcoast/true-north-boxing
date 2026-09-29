@@ -91,6 +91,9 @@ func setup(content: Dictionary, lang: String) -> void:
 	frame(1.0, true)
 
 func _identity(person: Node3D, name: String) -> void:
+	if View.FighterVisuals.apply(person, name, true):
+		_pose(person, 0, 0)
+		return
 	var head: Node3D = person.get_meta("head")
 	var hair := SphereMesh.new(); hair.radius = 0.18; hair.height = 0.2
 	var mat := StandardMaterial3D.new(); mat.albedo_color = Color("dad5c4") if name == "WHITLOCK" else Color("302a2a")
@@ -303,6 +306,14 @@ func walk(direction: Vector2, jog: bool, delta: float) -> void:
 	frame(delta)
 
 func _pose(person: Node3D, phase: float, strength: float) -> void:
+	# Shadowboxing hands this same rig back to exploration; reset the combat
+	# face orientation when the actor resumes facing with its world root.
+	person.get_meta("head").rotation = Vector3.ZERO
+	if person.get_meta("cast_key", "") != "":
+		person.get_meta("mesh").rotation = Vector3(0, PI, 0)
+		person.get_meta("mesh").scale = Vector3(1, 1, .70)
+		person.get_meta("hips").rotation = Vector3(0, PI, 0)
+		for boot in person.get_meta("boots"): boot.rotation = Vector3(0, PI, 0)
 	# Walking gait uses this cast's articulated hips, knees, ankles and shoulders.
 	# Combat fighters continue to use BoxingMotion and its planted support solver.
 	var bob := absf(sin(phase)) * 0.035 * strength
@@ -325,6 +336,8 @@ func _pose(person: Node3D, phase: float, strength: float) -> void:
 		View._link(person.get_meta("clavicles")[i], Vector3(0, 1.3 + bob, 0), shoulder)
 		View._link(person.get_meta("upper_arms")[i], shoulder, elbow); View._link(person.get_meta("arms")[i], elbow, hand)
 		person.get_meta("gloves")[i].position = hand
+		if person.get_meta("cast_key", "") != "":
+			person.get_meta("gloves")[i].quaternion = Quaternion(Vector3.FORWARD, (hand - elbow).normalized())
 		person.get_meta("joints")[i * 3].position = shoulder
 		person.get_meta("joints")[i * 3 + 1].position = elbow
 		person.get_meta("joints")[i * 3 + 2].position = knee

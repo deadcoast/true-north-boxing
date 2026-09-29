@@ -67,10 +67,11 @@ func capture(label: String) -> void:
 		scene.cam.look_at(scene.player.position + Vector3.UP * 0.9)
 		# Inspection camera only: remove the chase camera's visibility mask so
 		# the hips/trunk remain inspectable; restore every override afterward.
-		for part in scene.player.get_children():
+		for part in scene.player.get_children() + scene.player.get_meta("cast_parts", []):
 			if part is MeshInstance3D:
 				materials[part] = part.material_override
-				var opaque: StandardMaterial3D = part.mesh.material.duplicate()
+				var source: StandardMaterial3D = part.get_surface_override_material(0) if part.get_surface_override_material(0) != null else part.mesh.surface_get_material(0)
+				var opaque: StandardMaterial3D = source.duplicate()
 				opaque.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 				part.material_override = opaque
 	await process_frame; await RenderingServer.frame_post_draw
@@ -498,9 +499,10 @@ func _exchange_film(style := "") -> void:
 	scene.sim.B["comp"] = 10000; scene.sim.B["comp_max"] = 10000
 	var opaque_materials := {}
 	if "side" in OS.get_cmdline_user_args():
-		for part in scene.player.get_children():
+		for part in scene.player.get_children() + scene.player.get_meta("cast_parts", []):
 			if part is MeshInstance3D:
-				var opaque: StandardMaterial3D = part.mesh.material.duplicate()
+				var source: StandardMaterial3D = part.get_surface_override_material(0) if part.get_surface_override_material(0) != null else part.mesh.surface_get_material(0)
+				var opaque: StandardMaterial3D = source.duplicate()
 				opaque.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED; opaque_materials[part] = opaque
 	var sequence := [KEY_J, KEY_K, KEY_U, KEY_O, KEY_J, KEY_J, KEY_I, KEY_N, KEY_K, KEY_K, KEY_Y, KEY_L]
 	var issued := 0; var fired := 0; var journal := []; var fixed := true

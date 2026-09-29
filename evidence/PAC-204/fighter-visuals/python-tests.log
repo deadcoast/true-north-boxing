@@ -1,0 +1,52 @@
+test_shipped_audio_matches_retained_masters_and_authored_words (test_broadcast_assets.BroadcastAssets.test_shipped_audio_matches_retained_masters_and_authored_words) ... ok
+test_archive_filename_must_match_its_id (test_pacer_validator.ValidatorTests.test_archive_filename_must_match_its_id) ... ok
+test_canonical_archived_nodule_resolves_reciprocal_references (test_pacer_validator.ValidatorTests.test_canonical_archived_nodule_resolves_reciprocal_references) ... ok
+test_duplicate_live_and_archived_id_is_rejected (test_pacer_validator.ValidatorTests.test_duplicate_live_and_archived_id_is_rejected) ... ok
+test_external_source_path_is_rejected (test_pacer_validator.ValidatorTests.test_external_source_path_is_rejected) ... ok
+test_ragged_and_duplicate_headers_fail_closed (test_pacer_validator.ValidatorTests.test_ragged_and_duplicate_headers_fail_closed) ... ok
+test_retained_evidence_history_can_exceed_default_csv_limit (test_pacer_validator.ValidatorTests.test_retained_evidence_history_can_exceed_default_csv_limit) ... ok
+test_semicolon_cycle_is_detected (test_pacer_validator.ValidatorTests.test_semicolon_cycle_is_detected) ... ok
+test_semicolon_mixed_dependencies_enforce_hard_gate (test_pacer_validator.ValidatorTests.test_semicolon_mixed_dependencies_enforce_hard_gate) ... ok
+test_valid_utf8_repository (test_pacer_validator.ValidatorTests.test_valid_utf8_repository) ... ok
+test_approval_and_status_readiness (test_pacer_views.DependencyTests.test_approval_and_status_readiness) ... ok
+test_bad_dependency_grammar_fails_closed (test_pacer_views.DependencyTests.test_bad_dependency_grammar_fails_closed) ... ok
+test_empty_type_is_hard (test_pacer_views.DependencyTests.test_empty_type_is_hard) ... ok
+test_mixed_types_keep_hard_gate (test_pacer_views.DependencyTests.test_mixed_types_keep_hard_gate) ... ok
+test_semicolon_hard_dependencies (test_pacer_views.DependencyTests.test_semicolon_hard_dependencies) ... ok
+test_uniform_soft_and_optional (test_pacer_views.DependencyTests.test_uniform_soft_and_optional) ... ok
+test_canonical_and_existing_outputs_are_unchanged (test_pacer_views.ViewTests.test_canonical_and_existing_outputs_are_unchanged) ... ok
+test_empty_view_preserves_headers (test_pacer_views.ViewTests.test_empty_view_preserves_headers) ... ok
+test_hardlink_alias_is_unchanged (test_pacer_views.ViewTests.test_hardlink_alias_is_unchanged) ... ok
+test_header_only_source (test_pacer_views.ViewTests.test_header_only_source) ... ok
+test_malformed_csv_and_duplicate_ids (test_pacer_views.ViewTests.test_malformed_csv_and_duplicate_ids) ... ok
+test_new_canonical_name_is_rejected (test_pacer_views.ViewTests.test_new_canonical_name_is_rejected) ... ok
+test_utf8_multiline_round_trip (test_pacer_views.ViewTests.test_utf8_multiline_round_trip) ... ok
+test_archive_tampering_refused (test_package_import.ImportTests.test_archive_tampering_refused) ... ok
+test_case_collisions_refused (test_package_import.ImportTests.test_case_collisions_refused) ... ok
+test_corrupt_rollback_state_refuses_before_touching_source (test_package_import.ImportTests.test_corrupt_rollback_state_refuses_before_touching_source) ... ok
+test_document_paths_follow_current_layout (test_package_import.ImportTests.test_document_paths_follow_current_layout) ... ok
+test_import_writes_source_and_receipt (test_package_import.ImportTests.test_import_writes_source_and_receipt) ... ok
+test_interrupted_apply_can_roll_back_without_losing_original (test_package_import.ImportTests.test_interrupted_apply_can_roll_back_without_losing_original) ... ok
+test_local_deletion_is_a_conflict (test_package_import.ImportTests.test_local_deletion_is_a_conflict) ... ok
+test_omitted_file_is_preserved (test_package_import.ImportTests.test_omitted_file_is_preserved) ... ok
+test_overlapping_edits_refused_then_explicitly_resolved (test_package_import.ImportTests.test_overlapping_edits_refused_then_explicitly_resolved) ... ok
+test_real_commit_hook_rejects_zip_only_and_accepts_imported_source (test_package_import.ImportTests.test_real_commit_hook_rejects_zip_only_and_accepts_imported_source) ... ok
+test_rollback_preserves_subsequent_user_edits (test_package_import.ImportTests.test_rollback_preserves_subsequent_user_edits) ... ok
+test_rollback_restores_exact_original_and_state (test_package_import.ImportTests.test_rollback_restores_exact_original_and_state) ... ok
+test_second_writer_is_refused (test_package_import.ImportTests.test_second_writer_is_refused) ... ok
+test_several_conflicts_are_a_reviewable_plan (test_package_import.ImportTests.test_several_conflicts_are_a_reviewable_plan) ... ok
+test_staged_old_source_rejected_even_with_new_receipt (test_package_import.ImportTests.test_staged_old_source_rejected_even_with_new_receipt) ... warning: in the working copy of 'packages/import-state.json', LF will be replaced by CRLF the next time Git touches it
+ok
+test_stale_source_refuses_all_writes (test_package_import.ImportTests.test_stale_source_refuses_all_writes) ... ok
+test_stale_state_refused (test_package_import.ImportTests.test_stale_state_refused) ... ok
+test_three_way_merge_preserves_independent_edits (test_package_import.ImportTests.test_three_way_merge_preserves_independent_edits) ... ok
+test_traversal_windows_aliases_and_protected_registers (test_package_import.ImportTests.test_traversal_windows_aliases_and_protected_registers) ... ok
+test_unknown_existing_file_requires_resolution (test_package_import.ImportTests.test_unknown_existing_file_requires_resolution) ... ok
+test_zip_only_commit_is_rejected_from_staged_state (test_package_import.ImportTests.test_zip_only_commit_is_rejected_from_staged_state) ... ok
+test_alternate_task_registers_are_archived_only (test_register_bootstrap.BootstrapTests.test_alternate_task_registers_are_archived_only) ... ok
+test_original_task_ids_meaning_and_blockers_are_preserved (test_register_bootstrap.BootstrapTests.test_original_task_ids_meaning_and_blockers_are_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 46 tests in 4.372s
+
+OK

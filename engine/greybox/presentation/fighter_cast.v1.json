@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "basis": "NP_12A_EP01_SCRIPT and NP_04A_BOSS_ROSTER_ARC1: Rory protagonist, Marcus powerful football convert, Priya technical Out-Boxer, June compact pressure Swarmer, Cassidy female academy Out-Boxer, female R2. Palette, facial proportions, hairstyles and kit are original implementation designs, not additional lore. Shared rig reach and contact regions remain authoritative.",
+  "fighters": {
+    "RORY": {"aliases": ["RORY"], "skin": "d4aa88", "hair": "302a2a", "kit": "b99752", "shorts": "243747", "trim": "ebe0bb", "gloves": "b84638", "bulk": 1.0, "jaw": 1.0, "haircut": "swept", "crest": "north", "number": 1},
+    "PRIYA": {"aliases": ["PRIYA"], "skin": "ac7e62", "hair": "252328", "kit": "3e8794", "shorts": "253944", "trim": "e4d8a7", "gloves": "397f91", "bulk": 0.92, "jaw": 0.88, "haircut": "bun", "crest": "north", "number": 2},
+    "MARCUS": {"aliases": ["MARCUS"], "skin": "be8e70", "hair": "2c2523", "kit": "945047", "shorts": "332d39", "trim": "e2b974", "gloves": "974b38", "bulk": 1.12, "jaw": 1.1, "haircut": "crop", "crest": "north", "number": 3},
+    "JUNE": {"aliases": ["JUNE"], "skin": "e0bfa0", "hair": "24272d", "kit": "568b8c", "shorts": "233c46", "trim": "e4cf91", "gloves": "408c89", "bulk": 0.89, "jaw": 0.9, "haircut": "knot", "crest": "north", "number": 4},
+    "CASSIDY": {"aliases": ["CASSIDY", "cassidy_vane"], "skin": "dec0a7", "hair": "4b3630", "kit": "e0dfd3", "shorts": "313f58", "trim": "b79a60", "gloves": "ede3cb", "bulk": 0.94, "jaw": 0.87, "haircut": "braid", "crest": "academy", "number": 3},
+    "ASCENDANT_SEED": {"aliases": ["ASCENDANT · SEEDED OUT-BOXER", "ascendant_seed"], "skin": "a97961", "hair": "25272c", "kit": "39465f", "shorts": "283244", "trim": "d6bc84", "gloves": "ede3cb", "bulk": 0.98, "jaw": 1.02, "haircut": "fade", "crest": "academy", "number": 1},
+    "ASCENDANT_R2": {"aliases": ["ASCENDANT · R2", "ascendant_r2"], "skin": "c99a7c", "hair": "51322f", "kit": "39465f", "shorts": "283244", "trim": "d6bc84", "gloves": "ede3cb", "bulk": 1.06, "jaw": 0.94, "haircut": "braid", "crest": "academy", "number": 2}
+  }
+}

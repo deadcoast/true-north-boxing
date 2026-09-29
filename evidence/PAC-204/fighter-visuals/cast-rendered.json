@@ -1,0 +1,129 @@
+{
+  "captures": [
+    "user://cast-gym.png",
+    "user://cast-lineup.png",
+    "user://cast-portrait-0.png",
+    "user://cast-portrait-1.png",
+    "user://cast-portrait-2.png",
+    "user://cast-portrait-3.png",
+    "user://cast-portrait-4.png",
+    "user://cast-portrait-5.png",
+    "user://cast-portrait-6.png",
+    "user://cast-fight-RORY.png",
+    "user://cast-duck-RORY.png",
+    "user://cast-fight-PRIYA.png",
+    "user://cast-duck-PRIYA.png",
+    "user://cast-fight-MARCUS.png",
+    "user://cast-duck-MARCUS.png",
+    "user://cast-fight-JUNE.png",
+    "user://cast-duck-JUNE.png",
+    "user://cast-ascendant_seed.png",
+    "user://cast-ascendant_r2.png"
+  ],
+  "checks": 112,
+  "failures": [],
+  "performance": [
+    {
+      "adapter": "NVIDIA GeForce RTX 5090",
+      "frames": 180,
+      "main_process_ms_p95": 2.024,
+      "method": "Controlled native scene, 30 warm-up frames and 180 measured render frames; 1/60 simulation step per frame. Workstation render throughput, not physical latency or minimum-spec qualification.",
+      "render_interval_ms_p95": 3.052,
+      "scene": "rory-cassidy-native-models",
+      "viewport": "(1280, 720)"
+    }
+  ],
+  "scope": "Original source-native cast meshes; native input in controlled fight fixtures, real roster/generic-slot resolution, world/shadow continuity and opponent visibility. Not final art direction or boxing-feel acceptance.",
+  "surface_samples": [
+    {
+      "pose": "RORY-neutral",
+      "rays": 8,
+      "worst_surface_error_m": 0.00398158192634582
+    },
+    {
+      "pose": "cassidy-0",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "RORY-punch",
+      "rays": 8,
+      "worst_surface_error_m": 0.00145717620849609
+    },
+    {
+      "pose": "RORY-duck",
+      "rays": 8,
+      "worst_surface_error_m": 0.00398158192634582
+    },
+    {
+      "pose": "PRIYA-neutral",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "cassidy-1",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "PRIYA-punch",
+      "rays": 8,
+      "worst_surface_error_m": 0.00322803020477294
+    },
+    {
+      "pose": "PRIYA-duck",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519461035728447
+    },
+    {
+      "pose": "MARCUS-neutral",
+      "rays": 8,
+      "worst_surface_error_m": 0.00331758618354797
+    },
+    {
+      "pose": "cassidy-2",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "MARCUS-punch",
+      "rays": 8,
+      "worst_surface_error_m": 0.00261499643325805
+    },
+    {
+      "pose": "MARCUS-duck",
+      "rays": 8,
+      "worst_surface_error_m": 0.00331761598587035
+    },
+    {
+      "pose": "JUNE-neutral",
+      "rays": 8,
+      "worst_surface_error_m": 0.00307729005813598
+    },
+    {
+      "pose": "cassidy-3",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "JUNE-punch",
+      "rays": 8,
+      "worst_surface_error_m": 0.00369640350341796
+    },
+    {
+      "pose": "JUNE-duck",
+      "rays": 8,
+      "worst_surface_error_m": 0.00307726025581359
+    },
+    {
+      "pose": "ascendant_seed",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "ascendant_r2",
+      "rays": 8,
+      "worst_surface_error_m": 0.00331761598587035
+    }
+  ]
+}

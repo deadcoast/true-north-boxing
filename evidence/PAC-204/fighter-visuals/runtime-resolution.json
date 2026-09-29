@@ -1,0 +1,13 @@
+{
+  "initial_batch": {
+    "passed": 62,
+    "total": 63,
+    "failed": [
+      "drive_readiness"
+    ]
+  },
+  "final_affected_gates": 7,
+  "resolved_distinct_gates": 63,
+  "all_resolved": true,
+  "explanation": "Original 62/63 timeout retained. Final source reruns of motion, cast, readability, readiness, episode, continuity and documented input command resolve all gates. Shared sim, timing, hit geometry and tuning unchanged. This is a resolution across runs, not a claim that the first batch passed."
+}

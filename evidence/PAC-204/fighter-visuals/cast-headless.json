@@ -1,0 +1,99 @@
+{
+  "captures": [],
+  "checks": 93,
+  "failures": [],
+  "performance": [],
+  "scope": "Original source-native cast meshes; native input in controlled fight fixtures, real roster/generic-slot resolution, world/shadow continuity and opponent visibility. Not final art direction or boxing-feel acceptance.",
+  "surface_samples": [
+    {
+      "pose": "RORY-neutral",
+      "rays": 8,
+      "worst_surface_error_m": 0.00398158192634582
+    },
+    {
+      "pose": "cassidy-0",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "RORY-punch",
+      "rays": 8,
+      "worst_surface_error_m": 0.00145717620849609
+    },
+    {
+      "pose": "RORY-duck",
+      "rays": 8,
+      "worst_surface_error_m": 0.00398158192634582
+    },
+    {
+      "pose": "PRIYA-neutral",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "cassidy-1",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "PRIYA-punch",
+      "rays": 8,
+      "worst_surface_error_m": 0.00322803020477294
+    },
+    {
+      "pose": "PRIYA-duck",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519461035728447
+    },
+    {
+      "pose": "MARCUS-neutral",
+      "rays": 8,
+      "worst_surface_error_m": 0.00331758618354797
+    },
+    {
+      "pose": "cassidy-2",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "MARCUS-punch",
+      "rays": 8,
+      "worst_surface_error_m": 0.00261499643325805
+    },
+    {
+      "pose": "MARCUS-duck",
+      "rays": 8,
+      "worst_surface_error_m": 0.00331761598587035
+    },
+    {
+      "pose": "JUNE-neutral",
+      "rays": 8,
+      "worst_surface_error_m": 0.00307729005813598
+    },
+    {
+      "pose": "cassidy-3",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "JUNE-punch",
+      "rays": 8,
+      "worst_surface_error_m": 0.00369640350341796
+    },
+    {
+      "pose": "JUNE-duck",
+      "rays": 8,
+      "worst_surface_error_m": 0.00307726025581359
+    },
+    {
+      "pose": "ascendant_seed",
+      "rays": 8,
+      "worst_surface_error_m": 0.000519475936889641
+    },
+    {
+      "pose": "ascendant_r2",
+      "rays": 8,
+      "worst_surface_error_m": 0.00331761598587035
+    }
+  ]
+}

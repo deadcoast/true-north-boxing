@@ -3,6 +3,7 @@ extends RefCounted
 const Sim := preload("res://sim/core.gd")
 const Space := preload("res://presentation/rig_space.gd")
 const BoxingMotion := preload("res://presentation/boxing_motion.gd")
+const FighterVisuals := preload("res://presentation/fighter_visuals.gd")
 const CHASE := 1.8
 const HEAD_CLEARANCE := 0.6
 const FOV := 55.0
@@ -229,6 +230,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 		var hit: Dictionary = reactions.get(pair[0], {})
 		if int(hit.get("tick", -1)) == sim.tick - frozen_ticks: pair[1]["pos"] -= hit.get("displacement", Vector2.ZERO)
 	fighter["motion_identity"] = sim.pname() if who == "P" else sim.boss_label if not sim.bout.is_empty() or not sim.bgeneric.is_empty() else sim.boss_name
+	FighterVisuals.apply(root, str(fighter["motion_identity"]))
 	var profile := BoxingMotion.style_profile(fighter)
 	var identity := str(fighter["motion_identity"]) + ":" + str(fighter.get("style", ""))
 	if root.get_meta("motion_identity", "") != identity:
@@ -374,6 +376,9 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	head.position = rig["head"]
 	forward = (rig["forward"] as Vector3).normalized()
 	var facing := atan2(forward.x, forward.z)
+	# Faces look down -Z; the boxing torso and boots face +Z. Keep the eyes on
+	# the opponent through slips and weaving without adding a second pose clock.
+	if root.get_meta("cast_key", "") != "": head.rotation.y = facing + PI
 	var collar: Vector3 = (rig["shoulders"][0] + rig["shoulders"][1]) * 0.5
 	# Same 40% lateral / full retreat path as the body contact region, sampled
 	# from the interpolated head so the skin and aim point travel together.
@@ -394,7 +399,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	var gloves: Array = root.get_meta("gloves"); var arms: Array = root.get_meta("arms")
 	var uppers: Array = root.get_meta("upper_arms"); var thighs: Array = root.get_meta("thighs")
 	var legs: Array = root.get_meta("legs"); var boots: Array = root.get_meta("boots")
-	var glove_color: Color = (root.get_meta("mat") as StandardMaterial3D).albedo_color.lightened(0.16)
+	var glove_color: Color = root.get_meta("cast_glove_color") if root.get_meta("cast_key", "") != "" else (root.get_meta("mat") as StandardMaterial3D).albedo_color.lightened(0.16)
 	for index in 2:
 		var shoulder: Vector3 = rig["shoulders"][index]; var elbow: Vector3 = rig["elbows"][index]
 		root.get_meta("joints")[index * 3].position = shoulder
@@ -477,6 +482,7 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	parts.append_array(player.get_meta("joints")); parts.append_array(player.get_meta("clavicles"))
 	parts.append_array(player.get_meta("thighs")); parts.append(player.get_meta("hips"))
 	parts.append(player.get_meta("neck")); parts.append(player.get_meta("abdomen"))
+	parts.append_array(player.get_meta("cast_body", []))
 	for child in player.get_children():
 		if child.has_meta("kind") and str(child.get_meta("kind")) == "robe": parts.append(child)
 	_clear_window(parts, window, WINDUP_ALPHA)
@@ -487,14 +493,22 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	_clear_window(boundaries, window, 1.0, true, opponent.position, camera.position - opponent.position)
 
 func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only := false, origin := Vector3.ZERO, normal := Vector3.ZERO) -> void:
+	# Every surface with the same source material receives the same window.
+	# Share its shader and update uniforms once, rather than repeating six
+	# render-server writes for every eyelid, seam and limb on every frame.
+	var materials := {}; var used := {}
 	for part in parts:
-		if part.material_override == null:
+		var source: StandardMaterial3D = part.get_surface_override_material(0) if part.get_surface_override_material(0) != null else part.mesh.surface_get_material(0)
+		if materials.has(source):
+			if part.material_override != materials[source]: part.material_override = materials[source]
+			continue
+		if not part.material_override is ShaderMaterial or used.has(part.material_override):
 			var shader := Shader.new(); shader.code = SILHOUETTE
 			var material := ShaderMaterial.new(); material.shader = shader; part.material_override = material
-		var tint: Color = part.mesh.material.albedo_color; tint.a = alpha
+		materials[source] = part.material_override; used[part.material_override] = true
+		var tint: Color = source.albedo_color; tint.a = alpha
 		part.material_override.set_shader_parameter("tint", tint)
 		part.material_override.set_shader_parameter("clear_window", window)
-		var source: StandardMaterial3D = part.mesh.material
 		var aura := Vector3(source.emission.r, source.emission.g, source.emission.b) * source.emission_energy_multiplier if source.emission_enabled else Vector3.ZERO
 		part.material_override.set_shader_parameter("aura", aura)
 		part.material_override.set_shader_parameter("foreground_only", foreground_only)

@@ -1,0 +1,95 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+[PASS] automated audio is silent
+[PASS] world Rory has authored body
+[PASS] world squad uses cast appearance
+[PASS] world squad uses cast appearance
+[PASS] world squad uses cast appearance
+[PASS] rendered gym
+[PASS] cast resolves RORY
+[PASS] legacy collision proxies hidden RORY
+[PASS] authored surfaces share moving anchors RORY
+[FAIL] torso faces outward RORY
+[PASS] unchanged identity retains mesh instances RORY
+[PASS] cast resolves PRIYA
+[PASS] legacy collision proxies hidden PRIYA
+[PASS] authored surfaces share moving anchors PRIYA
+[FAIL] torso faces outward PRIYA
+[PASS] unchanged identity retains mesh instances PRIYA
+[PASS] cast resolves MARCUS
+[PASS] legacy collision proxies hidden MARCUS
+[PASS] authored surfaces share moving anchors MARCUS
+[FAIL] torso faces outward MARCUS
+[PASS] unchanged identity retains mesh instances MARCUS
+[PASS] cast resolves JUNE
+[PASS] legacy collision proxies hidden JUNE
+[PASS] authored surfaces share moving anchors JUNE
+[FAIL] torso faces outward JUNE
+[PASS] unchanged identity retains mesh instances JUNE
+[PASS] cast resolves cassidy_vane
+[PASS] legacy collision proxies hidden cassidy_vane
+[PASS] authored surfaces share moving anchors cassidy_vane
+[FAIL] torso faces outward cassidy_vane
+[PASS] unchanged identity retains mesh instances cassidy_vane
+[PASS] cast resolves ASCENDANT · SEEDED OUT-BOXER
+[PASS] legacy collision proxies hidden ASCENDANT · SEEDED OUT-BOXER
+[PASS] authored surfaces share moving anchors ASCENDANT · SEEDED OUT-BOXER
+[FAIL] torso faces outward ASCENDANT · SEEDED OUT-BOXER
+[PASS] unchanged identity retains mesh instances ASCENDANT · SEEDED OUT-BOXER
+[PASS] cast resolves ASCENDANT · R2
+[PASS] legacy collision proxies hidden ASCENDANT · R2
+[PASS] authored surfaces share moving anchors ASCENDANT · R2
+[FAIL] torso faces outward ASCENDANT · R2
+[PASS] unchanged identity retains mesh instances ASCENDANT · R2
+[PASS] rendered lineup
+[PASS] rendered portrait-0
+[PASS] rendered portrait-1
+[PASS] rendered portrait-2
+[PASS] rendered portrait-3
+[PASS] rendered portrait-4
+[PASS] rendered portrait-5
+[PASS] rendered portrait-6
+[PASS] rendering cannot change combat RORY
+[PASS] native roster selects player model RORY
+[PASS] native pattern selects Cassidy
+[PASS] head faces opponent
+[PASS] all player body details respect clear window
+[PASS] native right hand animates attached model
+[PASS] rendered fight-RORY
+[PASS] rendered duck-RORY
+[PASS] rendering cannot change combat PRIYA
+[PASS] native roster selects player model PRIYA
+[PASS] native pattern selects Cassidy
+[PASS] head faces opponent
+[PASS] all player body details respect clear window
+[PASS] native right hand animates attached model
+[PASS] rendered fight-PRIYA
+[PASS] rendered duck-PRIYA
+[PASS] rendering cannot change combat MARCUS
+[PASS] native roster selects player model MARCUS
+[PASS] native pattern selects Cassidy
+[PASS] head faces opponent
+[PASS] all player body details respect clear window
+[PASS] native right hand animates attached model
+[PASS] rendered fight-MARCUS
+[PASS] rendered duck-MARCUS
+[PASS] rendering cannot change combat JUNE
+[PASS] native roster selects player model JUNE
+[PASS] native pattern selects Cassidy
+[PASS] head faces opponent
+[PASS] all player body details respect clear window
+[PASS] native right hand animates attached model
+[PASS] rendered fight-JUNE
+[PASS] rendered duck-JUNE
+[PASS] generic segment replaces opponent geometry ascendant_seed
+[PASS] rendered ascendant_seed
+[PASS] generic segment replaces opponent geometry ascendant_r2
+[PASS] rendered ascendant_r2
+[PASS] other roster restores original rig
+[PASS] shadow keeps Rory appearance
+[PASS] shadow copies animated head to world actor
+[PASS] world resets face after boxing handoff
+[PASS] Master remains muted
+FIGHTER VISUALS 90 checks; 7 failures
+DRIVE :: RED

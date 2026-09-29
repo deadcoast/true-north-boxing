@@ -1,0 +1,49 @@
+{
+  "attempts": [
+    {
+      "evidence": "first-compile.log",
+      "finding": "Variant loop endpoint could not infer int indices; first invocation also lacked sandbox-local APPDATA.",
+      "resolution": "Explicit int indices and isolated local APPDATA for every subsequent command."
+    },
+    {
+      "evidence": "first-fixtures.log",
+      "finding": "Fixture advanced episode state on a standalone sim and tried to shadowbox as the 1976 archive card.",
+      "resolution": "Deactivate director only for isolated native fight fixtures; restore Campaign.present before real shadow handoff. Production journey independently passed."
+    },
+    {
+      "evidence": "teardown-diagnostics.log",
+      "finding": "Freeing mesh instances before detaching render bases emitted null-material diagnostics.",
+      "resolution": "CastSurface PREDELETE detaches its render base. Final headless/GPU runs contain no material errors."
+    },
+    {
+      "evidence": "first-winding.png",
+      "finding": "Rendered review exposed inside-out surfaces despite passing initial logic assertions.",
+      "resolution": "Reverse triangle winding and add outward normal checks at the geometric rightmost vertex."
+    },
+    {
+      "evidence": "first-normal-check.log",
+      "finding": "First normals regression sampled a hard-coded vertex index; SurfaceTool reindexes geometry.",
+      "resolution": "Select the actual rightmost vertex. The corrected check passes on all seven profiles and would reject the reversed mesh."
+    },
+    {
+      "evidence": "cast-rendered.json",
+      "finding": "Contact review found an earlier .15 m deep shirt inside the unchanged .21 m striking region.",
+      "resolution": "Keep central striking surface at shared radius; ray-test actual mesh triangles in 18 poses. Final gates rerun after correction."
+    },
+    {
+      "evidence": "readiness-timeout.log",
+      "finding": "Three-worker broad batch timed out at 240 seconds after 17 of 18 readiness sessions. No assertion failure or script error.",
+      "resolution": "Retain initial 62/63 batch and focused retry timeout. An uninterrupted run passed all 152 checks in 194.36 s. Then shared visibility shaders removed repeated per-part uniform writes; final affected gates rerun under the unchanged 240 s supervisor budget."
+    },
+    {
+      "evidence": "focused-timeout.log",
+      "finding": "Two-worker focused retry also timed out while GPU validation ran concurrently.",
+      "resolution": "Retained failure. No readiness checks or timeout were weakened; optimized-runtime results contain all final-source checks."
+    },
+    {
+      "evidence": "input-welcome-failure.log",
+      "finding": "Ad hoc focused runner incorrectly supplied welcome to drive_input; the deliberate paused entry correctly blocked fight inputs.",
+      "resolution": "Use the source driver header command: -- dummy. Unmodified input driver passed 98/98. No production input or entry behavior changed."
+    }
+  ]
+}

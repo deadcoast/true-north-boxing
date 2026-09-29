@@ -1,0 +1,1798 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] automated audio is silent
+[PASS] world Rory has authored body
+[PASS] world squad uses cast appearance
+[PASS] world squad uses cast appearance
+[PASS] world squad uses cast appearance
+[PASS] cast resolves RORY
+[PASS] legacy collision proxies hidden RORY
+[PASS] authored surfaces share moving anchors RORY
+[PASS] unchanged identity retains mesh instances RORY
+[PASS] cast resolves PRIYA
+[PASS] legacy collision proxies hidden PRIYA
+[PASS] authored surfaces share moving anchors PRIYA
+[PASS] unchanged identity retains mesh instances PRIYA
+[PASS] cast resolves MARCUS
+[PASS] legacy collision proxies hidden MARCUS
+[PASS] authored surfaces share moving anchors MARCUS
+[PASS] unchanged identity retains mesh instances MARCUS
+[PASS] cast resolves JUNE
+[PASS] legacy collision proxies hidden JUNE
+[PASS] authored surfaces share moving anchors JUNE
+[PASS] unchanged identity retains mesh instances JUNE
+[PASS] cast resolves cassidy_vane
+[PASS] legacy collision proxies hidden cassidy_vane
+[PASS] authored surfaces share moving anchors cassidy_vane
+[PASS] unchanged identity retains mesh instances cassidy_vane
+[PASS] cast resolves ASCENDANT · SEEDED OUT-BOXER
+[PASS] legacy collision proxies hidden ASCENDANT · SEEDED OUT-BOXER
+[PASS] authored surfaces share moving anchors ASCENDANT · SEEDED OUT-BOXER
+[PASS] unchanged identity retains mesh instances ASCENDANT · SEEDED OUT-BOXER
+[PASS] cast resolves ASCENDANT · R2
+[PASS] legacy collision proxies hidden ASCENDANT · R2
+[PASS] authored surfaces share moving anchors ASCENDANT · R2
+[PASS] unchanged identity retains mesh instances ASCENDANT · R2
+[PASS] rendering cannot change combat RORY
+[PASS] native roster selects player model RORY
+[PASS] native pattern selects Cassidy
+[PASS] head faces opponent
+[PASS] all player body details respect clear window
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+[PASS] native right hand animates attached model
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+[PASS] rendering cannot change combat PRIYA
+[PASS] native roster selects player model PRIYA
+[PASS] native pattern selects Cassidy
+[PASS] head faces opponent
+[PASS] all player body details respect clear window
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+[PASS] native right hand animates attached model
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+[PASS] rendering cannot change combat MARCUS
+[PASS] native roster selects player model MARCUS
+[PASS] native pattern selects Cassidy
+[PASS] head faces opponent
+[PASS] all player body details respect clear window
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+[PASS] native right hand animates attached model
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _run (res://tools/drive_fighter_visuals.gd:75)
+[PASS] rendering cannot change combat JUNE
+[PASS] native roster selects player model JUNE
+[PASS] native pattern selects Cassidy
+[PASS] head faces opponent
+[PASS] all player body details respect clear window
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:85)
+[PASS] native right hand animates attached model
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:89)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:91)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+SCRIPT ERROR: Invalid access to property or key 'metrics' on a base object of type 'Dictionary'.
+   at: advance (res://episode/director.gd:659)
+   GDScript backtrace (most recent call first):
+       [0] advance (res://episode/director.gd:659)
+       [1] _process (res://main.gd:1019)
+       [2] _run (res://tools/drive_fighter_visuals.gd:94)
+[PASS] generic segment replaces opponent geometry ascendant_seed
+[PASS] generic segment replaces opponent geometry ascendant_r2
+[PASS] other roster restores original rig
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _fight (res://episode/director.gd:365)
+       [4] _training (res://episode/director.gd:506)
+       [5] _run (res://tools/drive_fighter_visuals.gd:103)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _fight (res://episode/director.gd:365)
+       [4] _training (res://episode/director.gd:506)
+       [5] _run (res://tools/drive_fighter_visuals.gd:103)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _fight (res://episode/director.gd:365)
+       [4] _training (res://episode/director.gd:506)
+       [5] _run (res://tools/drive_fighter_visuals.gd:103)
+ERROR: Parameter "material" is null.
+   at: material_get_instance_shader_parameters (servers/rendering/dummy/storage/material_storage.cpp:264)
+   GDScript backtrace (most recent call first):
+       [0] apply (res://presentation/fighter_visuals.gd:26)
+       [1] pose (res://presentation/fight_view.gd:233)
+       [2] _render (res://main.gd:1161)
+       [3] _fight (res://episode/director.gd:365)
+       [4] _training (res://episode/director.gd:506)
+       [5] _run (res://tools/drive_fighter_visuals.gd:103)
+[FAIL] shadow keeps Rory appearance
+[PASS] shadow copies animated head to world actor
+[PASS] world resets face after boxing handoff
+[PASS] Master remains muted
+FIGHTER VISUALS 64 checks; 1 failures
+DRIVE :: RED

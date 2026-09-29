@@ -1,0 +1,154 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "name": "drive_boxing_motion",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_boxing_motion.gd",
+        "--",
+        "welcome"
+      ],
+      "errors": [],
+      "verdicts": [
+        "BOXING MOTION VERDICT :: GREEN (302/302)"
+      ]
+    },
+    {
+      "name": "drive_fighter_visuals",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_fighter_visuals.gd",
+        "--",
+        "episode"
+      ],
+      "errors": [],
+      "verdicts": [
+        "DRIVE :: GREEN"
+      ]
+    },
+    {
+      "name": "drive_readability",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_readability.gd",
+        "--",
+        "welcome"
+      ],
+      "errors": [],
+      "verdicts": [
+        "VERDICT :: GREEN (113/113)"
+      ]
+    },
+    {
+      "name": "drive_readiness",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_readiness.gd",
+        "--",
+        "welcome"
+      ],
+      "errors": [],
+      "verdicts": [
+        "READINESS VERDICT :: GREEN (152/152)"
+      ]
+    },
+    {
+      "name": "drive_episode",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_episode.gd",
+        "--",
+        "episode"
+      ],
+      "errors": [],
+      "verdicts": [
+        "DRIVE :: GREEN"
+      ]
+    },
+    {
+      "name": "drive_continuity",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_continuity.gd",
+        "--",
+        "episode"
+      ],
+      "errors": [],
+      "verdicts": [
+        "DRIVE :: GREEN"
+      ]
+    },
+    {
+      "name": "drive_input",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:/Users/ryanf/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_input.gd",
+        "--",
+        "dummy"
+      ],
+      "errors": [],
+      "verdicts": [
+        "INPUT DRIVE :: GREEN (98/98)"
+      ],
+      "evidence": "input.log"
+    }
+  ],
+  "resolution": "Six affected checks passed in optimized batch; input rerun with its documented dummy argument. Original erroneous welcome attempt retained separately."
+}
