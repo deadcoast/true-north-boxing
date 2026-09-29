@@ -37,12 +37,15 @@ var motion_solvers := {}
 var attacks := {}
 var tell_clock := {}
 var hold_ticks := 1
+var offers := {}
+var travels := {}
+var before_positions := {}
 
 func _sync_clock(sim) -> void:
 	if clock_sim != sim or sim.tick < clock_tick:
 		clock_sim = sim; frozen_ticks = 0; strikes.clear(); reactions.clear()
 		motion_solvers.clear()
-		attacks.clear(); tell_clock.clear(); hold_ticks = 1
+		attacks.clear(); tell_clock.clear(); offers.clear(); travels.clear(); before_positions.clear(); hold_ticks = 1
 	clock_tick = sim.tick
 
 func bump(root: Node3D, amount: float, sim) -> void:
@@ -52,6 +55,7 @@ func before_step(sim) -> void:
 	_sync_clock(sim)
 	# tick counts input opportunities through hitstop; animation counts fight time.
 	if sim.freeze_t > 0 or sim.mode != "FIGHT": frozen_ticks += 1
+	before_positions = {"P": sim.P["pos"], "B": sim.B["pos"]}
 
 func capture(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String) -> void:
 	_sync_clock(sim)
@@ -124,7 +128,17 @@ static func _link(mesh: Node3D, start: Vector3, end: Vector3) -> void:
 func observe(event: Dictionary, tick: int) -> void:
 	# Boss punches resolve on their VM tick. Hold the contact pose through hitstop,
 	# then retract on sim time. Player contact uses the same path after startup.
-	if event.get("kind") == "boss_act" and event.get("verb") == "punch":
+	if event.get("kind") == "boss_act" and event.get("verb") == "move" and clock_sim != null:
+		# VM travel is an authored instantaneous tactical edit. Carry that edit
+		# through a planted step visually, without changing its outcome/timer.
+		for who in ["P", "B"]:
+			var fighter: Dictionary = clock_sim.P if who == "P" else clock_sim.B
+			var delta: Vector2 = fighter["pos"] - before_positions.get(who, fighter["pos"])
+			if delta.length_squared() > 0.000001:
+				var remaining := _travel(who, clock_sim)
+				travels[who] = {"tick": tick - frozen_ticks, "sim_tick": tick, "prior": remaining, "offset": remaining - delta}
+				before_positions[who] = fighter["pos"]
+	elif event.get("kind") == "boss_act" and event.get("verb") == "punch":
 		var gap := int(clock_sim.btimer) if clock_sim != null and not clock_sim.bqueue.is_empty() else 48
 		strikes["B"] = {"tick": tick - frozen_ticks, "row": event["row"], "body": event.get("body", false), "retract": clampi(gap / 2, 4, 24), "gap": gap}
 	elif event.get("kind") == "punch":
@@ -162,6 +176,9 @@ static func _tell_attack(sim, name: String) -> Dictionary:
 	var string: Dictionary = sim.pattern.get("strings", {}).get(name, {})
 	for action in string.get("actions", []):
 		var verb := str(action).split("(")[0].split(" ")[0]
+		# A counter stance/clinch arms first; its later punch has its own VM
+		# delivery. Showing contact at the end of the tell invents a first hit.
+		if verb in ["COUNTER_STATE", "COUNTER_ON_BLOCK", "CLINCH_ATTEMPT"]: return {}
 		if Sim.PUNCH_VERBS.has(verb): return {"row": str(Sim.PUNCH_VERBS[verb]), "body": verb.begins_with("LT_")}
 		if verb in ["BODY_SERIES", "WALK_STRING"]: return {"row": "L_HOOK", "body": verb == "BODY_SERIES"}
 		# The VM chooses MIXED_STRING's hand later. Do not resolve it early or
@@ -180,14 +197,23 @@ static func _blend_rig(from: Dictionary, to: Dictionary, weight: float) -> Dicti
 			for i in to[channel].size(): out[channel][i] = lerp(from[channel][i], to[channel][i], weight)
 	return out
 
+func _travel(who: String, sim, previous := false) -> Vector2:
+	var travel: Dictionary = travels.get(who, {})
+	if travel.is_empty(): return Vector2.ZERO
+	if previous and sim.tick == int(travel["sim_tick"]): return travel["prior"]
+	var age: int = sim.tick - frozen_ticks - int(travel["tick"])
+	if previous and sim.freeze_t <= 0: age = maxi(0, age - 1)
+	return (travel["offset"] as Vector2) * (1.0 - BoxingMotion.ramp(float(age) / 12.0))
+
 func displacement(who: String, sim, previous := false) -> Vector2:
 	var hit: Dictionary = reactions.get(who, {})
-	if hit.is_empty() or (previous and sim.tick == int(hit.get("sim_tick", -1))): return Vector2.ZERO
+	var travel := _travel(who, sim, previous)
+	if hit.is_empty() or (previous and sim.tick == int(hit.get("sim_tick", -1))): return travel
 	var age: int = sim.tick - frozen_ticks - int(hit["tick"])
 	if previous and sim.freeze_t <= 0: age = maxi(0, age - 1)
 	# Freeze contact before the already-resolved push. Release the visible
 	# recoil over 12 active ticks; simulation herding/scoring remain unchanged.
-	return -(hit.get("displacement", Vector2.ZERO) as Vector2) * (1.0 - BoxingMotion.ramp(float(age) / 12.0))
+	return travel - (hit.get("displacement", Vector2.ZERO) as Vector2) * (1.0 - BoxingMotion.ramp(float(age) / 12.0))
 
 func position(from: Vector2, to: Vector2, who: String, sim, alpha: float) -> Vector2:
 	_sync_clock(sim)
@@ -196,6 +222,26 @@ func position(from: Vector2, to: Vector2, who: String, sim, alpha: float) -> Vec
 func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String, alpha := 1.0) -> void:
 	_sync_clock(sim)
 	fighter = fighter.duplicate(); other = other.duplicate()
+	var physical_fighter := fighter.duplicate(); var physical_other := other.duplicate()
+	# Hit events carry the post-resolution shove. Eligibility on the contact
+	# frame belongs to the pre-shove positions, as does the frozen impact pose.
+	for pair in [[who, physical_fighter], ["B" if who == "P" else "P", physical_other]]:
+		var hit: Dictionary = reactions.get(pair[0], {})
+		if int(hit.get("tick", -1)) == sim.tick - frozen_ticks: pair[1]["pos"] -= hit.get("displacement", Vector2.ZERO)
+	fighter["motion_identity"] = sim.pname() if who == "P" else sim.boss_label if not sim.bout.is_empty() or not sim.bgeneric.is_empty() else sim.boss_name
+	var profile := BoxingMotion.style_profile(fighter)
+	var identity := str(fighter["motion_identity"]) + ":" + str(fighter.get("style", ""))
+	if root.get_meta("motion_identity", "") != identity:
+		motion_solvers[who] = BoxingMotion.new(); root.remove_meta("previous_sim")
+		root.set_meta("motion_identity", identity); offers.erase(who)
+	var active_tick: int = sim.tick - frozen_ticks
+	var offer: Dictionary = offers.get(who, {"tick": active_tick, "weight": 0.0})
+	var motif := str(sim.pattern.get("strings", {}).get(sim.bstring, {}).get("tell", {}).get("motif", ""))
+	var gear_tell: bool = who == "B" and sim.bstate in ["TELL", "HOLD"] and motif.begins_with("glove_micro_turn")
+	offer["gear"] = move_toward(float(offer.get("gear", 0)), 1.0 if gear_tell else 0.0, maxi(0, active_tick - int(offer["tick"])) / 12.0)
+	offer["weight"] = move_toward(float(offer["weight"]), 1.0 if who == "B" and sim.hands_down_t > 0 else 0.0, maxi(0, active_tick - int(offer["tick"])) / 12.0)
+	offer["tick"] = active_tick; offers[who] = offer; fighter["motion_offer"] = offer["weight"]
+	fighter["motion_gear"] = offer["gear"]
 	fighter["pos"] += displacement(who, sim); other["pos"] += displacement("B" if who == "P" else "P", sim)
 	var fwd2: Vector2 = (other["pos"] - fighter["pos"]).normalized()
 	if fwd2.length_squared() < 0.1: fwd2 = Vector2(0, -1)
@@ -286,6 +332,12 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 		reaction = float(hit["weight"]) * maxf(0, 1.0 - age / 28.0)
 	var range_bonus := float(fighter.get("pending", {}).get("range_bonus", strike.get("range_bonus", 0)))
 	var region := sim.contact_region(fighter, other, row if row != "" else "L_STRAIGHT", body_target, range_bonus) as Dictionary
+	var physical_region: Dictionary = sim.contact_region(physical_fighter, physical_other, row if row != "" else "L_STRAIGHT", body_target, range_bonus)
+	# Travel compensation changes the drawn separation, never hit eligibility.
+	# Reach the drawn surface for a real hit; leave clearance for a real miss.
+	region["result"] = physical_region["result"]
+	if region["result"] == "HIT": region["reach"] = maxf(float(region["reach"]), float(region["d"]))
+	elif region["result"] == "MISS_REACH": region["reach"] = minf(float(region["reach"]), float(region["d"]) - 0.02)
 	var target := Space.contact(region)
 	if not motion_solvers.has(who): motion_solvers[who] = BoxingMotion.new()
 	var attack := {"row": row, "progress": punch_progress, "recovery": recovery, "body": body_target, "mods": mods.duplicate(), "target": target, "range_bonus": range_bonus, "preload": load if windup or strike.has("cancelled") else 0.0, "redirect": redirect, "redirect_weight": redirect_weight, "redirect_progress": redirect_progress}
@@ -338,6 +390,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	for i in 2: _link(root.get_meta("clavicles")[i], torso_top, rig["shoulders"][i])
 	var hips: Node3D = root.get_meta("hips")
 	hips.position = rig["pelvis"]; hips.rotation.y = facing + float(rig["hips_turn"])
+	hips.scale = Vector3(float(profile["bulk"]), 1, 1)
 	var gloves: Array = root.get_meta("gloves"); var arms: Array = root.get_meta("arms")
 	var uppers: Array = root.get_meta("upper_arms"); var thighs: Array = root.get_meta("thighs")
 	var legs: Array = root.get_meta("legs"); var boots: Array = root.get_meta("boots")
@@ -351,6 +404,8 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 		gloves[index].position = hand
 		gloves[index].quaternion = Quaternion(Vector3.FORWARD, (hand - elbow).normalized()) * Quaternion(Vector3.FORWARD, float(rig["twists"][index]))
 		_link(uppers[index], shoulder, elbow); _link(arms[index], elbow, hand)
+		for limb in [uppers[index], arms[index]]:
+			limb.scale.x = float(profile["bulk"]); limb.scale.z = float(profile["bulk"])
 		arms[index].rotate_object_local(Vector3.UP, float(rig["forearm_twists"][index]))
 		var hip: Vector3 = rig["hip_joints"][index]
 		var knee: Vector3 = rig["knees"][index]
@@ -358,6 +413,8 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 		boots[index].position = rig["ankles"][index] - Vector3.UP * 0.03
 		boots[index].rotation.y = facing + float(rig["pivots"][index])
 		_link(thighs[index], hip, knee); _link(legs[index], knee, boots[index].position + Vector3.UP * 0.03)
+		for limb in [thighs[index], legs[index]]:
+			limb.scale.x = float(profile["bulk"]); limb.scale.z = float(profile["bulk"])
 	for child in root.get_children():
 		if not child.has_meta("gear"): continue
 		var kind := str(child.get_meta("kind"))

@@ -8,10 +8,23 @@ const FOREARM := 0.36
 const THIGH := 0.43
 const SHIN := 0.42
 const STANCES := {
-	"BOXERPUNCHER": {"width": 0.19, "lead": 0.19, "crouch": 0.025, "guard": 0.0, "coil": 1.0},
-	"OUTBOXER": {"width": 0.17, "lead": 0.25, "crouch": 0.0, "guard": 0.08, "coil": 0.85},
-	"SWARMER": {"width": 0.21, "lead": 0.16, "crouch": 0.07, "guard": -0.03, "coil": 1.1},
-	"SLUGGER": {"width": 0.24, "lead": 0.22, "crouch": 0.035, "guard": -0.015, "coil": 1.15}}
+	# NP_06: neutral flex, mobile straight punching, compact pressure, loaded
+	# power. These shape normalized motion, never the sim's time or stat edits.
+	"BOXERPUNCHER": {"width": 0.19, "lead": 0.19, "crouch": 0.025, "guard": 0.0, "coil": 1.0, "turn": -0.22, "balance": 0.50, "step_ticks": 16.0, "lift": 0.055, "delivery": 0.0, "return": 1.15, "arc": 1.0, "cover": 0.0, "shoulder": 0.255, "bulk": 1.0},
+	"OUTBOXER": {"width": 0.17, "lead": 0.25, "crouch": 0.0, "guard": 0.10, "coil": 0.85, "turn": -0.38, "balance": 0.43, "step_ticks": 14.0, "lift": 0.045, "delivery": -0.12, "return": 1.30, "arc": 0.85, "cover": 0.12, "shoulder": 0.245, "bulk": 0.94},
+	"SWARMER": {"width": 0.21, "lead": 0.16, "crouch": 0.07, "guard": -0.03, "coil": 1.1, "turn": -0.10, "balance": 0.56, "step_ticks": 12.0, "lift": 0.035, "delivery": -0.06, "return": 1.40, "arc": 0.78, "cover": 0.38, "shoulder": 0.255, "bulk": 1.04},
+	"SLUGGER": {"width": 0.24, "lead": 0.22, "crouch": 0.035, "guard": -0.015, "coil": 1.15, "turn": -0.28, "balance": 0.46, "step_ticks": 18.0, "lift": 0.05, "delivery": 0.10, "return": 1.05, "arc": 1.12, "cover": 0.18, "shoulder": 0.275, "bulk": 1.10}}
+
+static func style_profile(fighter: Dictionary) -> Dictionary:
+	var profile: Dictionary = STANCES.get(str(fighter.get("style", "")), STANCES["BOXERPUNCHER"]).duplicate()
+	# NP_04 s8 supplies build descriptions, not anthropometric measurements.
+	# Express breadth through the girdle and limbs. Head/body hit surfaces and
+	# bone lengths remain the same combat contract for every build.
+	match str(fighter.get("motion_identity", "")).to_upper().replace(" ", "_").replace("-", "_"):
+		"YURI", "YURI_KOWALCHUK": profile.merge({"shoulder": 0.31, "bulk": 1.28, "width": 0.26}, true)
+		"SAM", "SAM_TAGAQ": profile.merge({"shoulder": 0.29, "bulk": 1.18, "width": 0.23, "cover": 0.55}, true)
+		"MARTA", "MARTA_OKONKWO_TREMBLAY": profile["cover"] = 0.48
+	return profile
 var last_tick := -1
 var feet: Array = []
 var step := {}
@@ -25,12 +38,13 @@ var elbow_history: Array = []
 var elbow_prior: Array = []
 var knee_history: Array = []
 var knee_prior: Array = []
+var inside_extent := 1.0
 
 static func ramp(value: float) -> float:
 	var x := clampf(value, 0, 1)
 	return x * x * (3 - 2 * x)
 
-static func chain(row: String, progress: float, recovery: float, coil := 1.0, mods: Array = []) -> Dictionary:
+static func chain(row: String, progress: float, recovery: float, coil := 1.0, mods: Array = [], delivery_bias := 0.0, return_rate := 1.15) -> Dictionary:
 	var active := 0.0 if row == "" else 1.0
 	var retract := 1.0 - ramp(recovery)
 	var side := -1.0 if row.begins_with("L_") else 1.0
@@ -42,8 +56,9 @@ static func chain(row: String, progress: float, recovery: float, coil := 1.0, mo
 	var load := sin(clampf(progress, 0, 1) * PI) * ((0.32 if hook or upper else 0.13) + power * 0.16 + haymaker * 0.30)
 	# A haymaker spends more of its already-authored startup loading the rear
 	# side, then releases. Contact still occurs exactly at sim progress == 1.
-	var delivery := clampf((progress - haymaker * 0.16) / (1.0 - haymaker * 0.16), 0, 1)
-	var arm_return := 1.0 - ramp(recovery * 1.15)
+	var shaped := clampf(progress - delivery_bias * sin(progress * PI), 0, 1)
+	var delivery := clampf((shaped - haymaker * 0.16) / (1.0 - haymaker * 0.16), 0, 1)
+	var arm_return := 1.0 - ramp(recovery * return_rate)
 	# Staggered onset: pressure/pivot, hips, ribcage, scapula, then delivery.
 	# All channels recover continuously and reach neutral at recovery == 1.
 	return {"plant": active * ramp(progress / 0.45) * retract,
@@ -126,7 +141,18 @@ static func constrain(rig: Dictionary) -> Dictionary:
 		var desired: Vector3 = rig["delivery_targets"][i]
 		var delivery := contact_goal(rig["shoulders"][i], desired, rig["contact_centers"][i], float(rig["contact_radii"][i]), float(rig["contact_hits"][i]) >= 0.5)
 		var hand: Vector3 = rig["hand_goals"][i] + (delivery - desired) * float(rig["contact_weights"][i])
-		var arm := joint(rig["shoulders"][i], hand, rig["arm_poles"][i], UPPER_ARM, FOREARM)
+		var pole: Vector3 = rig["arm_poles"][i]
+		if float(rig.get("knee_stability", 0)) > 0:
+			# Contact lean can move the shoulder after the preliminary pole was
+			# chosen. Reproject history about the final shoulder and wrist, as for
+			# planted knees, so close inside punches cannot flip the elbow plane.
+			var axis: Vector3 = (hand - rig["shoulders"][i]).normalized()
+			var prior: Vector3 = rig["support_elbows"][i] - rig["shoulders"][i]
+			prior -= axis * prior.dot(axis)
+			var wanted := pole - axis * pole.dot(axis)
+			if prior.length_squared() > 0.000001 and wanted.length_squared() > 0.000001:
+				pole = prior.normalized().slerp(wanted.normalized(), minf(0.4, 0.18 / maxf(prior.angle_to(wanted), 0.0001)))
+		var arm := joint(rig["shoulders"][i], hand, pole, UPPER_ARM, FOREARM)
 		if float(rig["arm_stability"][i]) > 0:
 			# Carry the covered elbow along the upper-arm sphere through root
 			# travel. Solve the forearm from it, rather than flipping IK branches.
@@ -172,7 +198,7 @@ func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stan
 			var i := 0 if (wanted[0] - wanted[1]).dot(velocity) >= 0 else 1
 			if absf(float(errors[0]) - float(errors[1])) > 0.06 or not moving: i = 0 if errors[0] > errors[1] else 1
 			if float(errors[i]) > (0.025 if moving else 0.09):
-				step = {"index": i, "from": feet[i], "to": wanted[i], "at": tick, "duration": 16.0}
+				step = {"index": i, "from": feet[i], "to": wanted[i], "at": tick, "duration": float(stance.get("step_ticks", 16.0))}
 		if not step.is_empty():
 			var i := int(step["index"])
 			var age := float(tick - int(step["at"]))
@@ -186,7 +212,7 @@ func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stan
 			spacing = target - feet[1 - i]
 			target -= forward * side * maxf(0, float(stance["lead"]) * 0.45 + spacing.dot(forward) * side)
 			step["to"] = (step["to"] as Vector3).move_toward(target, 0.06 * dt)
-			feet[i] = (step["from"] as Vector3).lerp(step["to"], ramp(t)) + Vector3.UP * sin(PI * t) * 0.055
+			feet[i] = (step["from"] as Vector3).lerp(step["to"], ramp(t)) + Vector3.UP * sin(PI * t) * float(stance.get("lift", 0.055))
 			var load := ramp(age / 3.0) * (1.0 - ramp((t - 0.72) / 0.28))
 			lead_weight = lerpf(balance, 0.82 if i == 1 else 0.18, load)
 			if t >= 1: step.clear()
@@ -201,7 +227,7 @@ func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stan
 	return [feet[0] - origin, feet[1] - origin]
 
 func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionary, head_offset: Vector3) -> Dictionary:
-	var style: Dictionary = STANCES.get(str(fighter.get("style", "")), STANCES["BOXERPUNCHER"])
+	var style := style_profile(fighter)
 	var at: Vector2 = fighter["pos"]; var delta: Vector2 = other["pos"] - at
 	var forward := Vector3(delta.x, 0, delta.y).normalized()
 	if forward.length_squared() < 0.1: forward = Vector3.FORWARD
@@ -216,14 +242,22 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	var row := str(attack.get("row", ""))
 	var progress := float(attack.get("progress", 0)); var recovery := float(attack.get("recovery", 0))
 	var mods: Array = attack.get("mods", [])
-	var motion := chain(row, progress, recovery, float(style["coil"]), mods)
+	var motion := chain(row, progress, recovery, float(style["coil"]), mods, float(style["delivery"]), float(style["return"]))
+	# Inside hooks/rising punches shorten their body arc. A full outside swing
+	# in the phone booth would drive the shoulder past the glove and reverse
+	# the elbow axis. Contact time and target stay authoritative.
+	var center: Vector3 = attack.get("target_center", forward * 1.0)
+	var compact := clampf((Vector2(center.x, center.z).length() - 0.35) / 0.35, 0.40, 1.0)
+	inside_extent = compact if last_tick < 0 else move_toward(inside_extent, compact, float(dt) * 0.035)
+	compact = inside_extent if motion["hook"] or motion["upper"] else 1.0
+	motion["hips"] *= compact; motion["core"] *= compact; motion["load"] *= compact
 	var preload_weight := float(attack.get("preload", 0)) * (1.0 - ramp(progress))
 	motion["hips"] -= float(motion["side"]) * preload_weight * 0.20
 	motion["core"] -= float(motion["side"]) * preload_weight * 0.12
 	motion["load"] += preload_weight * 0.22
 	var turns := [0.08, -0.08]
 	if row != "": turns[0 if row.begins_with("L_") else 1] += float(motion["side"]) * float(motion["plant"]) * (0.75 if motion["hook"] else 0.48) * float(motion["strength"])
-	var balance := clampf(0.5 - head_offset.dot(right) * 1.1 + head_offset.dot(forward) * 0.9, 0.2, 0.8)
+	var balance := clampf(float(style["balance"]) - head_offset.dot(right) * 1.1 + head_offset.dot(forward) * 0.9, 0.2, 0.8)
 	balance = clampf(balance + float(motion["drive"]) * (0.13 if row.begins_with("R_") else 0.06) - float(motion["load"]) * 0.12, 0.2, 0.8)
 	# Set the lead foot before committing the torso. Otherwise a VM lunge can
 	# arrive over a narrow base and force the fixed-length legs into a squat.
@@ -232,7 +266,7 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	# The punch chain already contains its foot-driven hip rotation. Add only
 	# the planted foot's lag behind that requested angle, not a second punch turn.
 	var support_turn := lerpf(float(foot_turns[1]) - float(turns[1]), float(foot_turns[0]) - float(turns[0]), lead_weight)
-	var base_turn := -0.22
+	var base_turn := float(style["turn"])
 	var hips_turn := base_turn + support_turn * 0.25 + float(motion["hips"])
 	var chest_turn := hips_turn + float(motion["core"])
 	var crouch := float(style["crouch"]) + maxf(0, -head_offset.y) * 0.60
@@ -247,18 +281,22 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	for i in 2:
 		var side := -1.0 if i == 0 else 1.0
 		var active := row.begins_with("L_") if i == 0 else row.begins_with("R_")
-		var shoulder := chest + (right * side * 0.255 + Vector3.UP * 0.11).rotated(Vector3.UP, chest_turn)
-		if active: shoulder += forward * float(motion["shoulder"]) * (0.07 if "STRAIGHT" in row or "FLARED" in row else 0.12) + Vector3.UP * float(motion["shoulder"]) * 0.035
+		var shoulder := chest + (right * side * float(style["shoulder"]) + Vector3.UP * 0.11).rotated(Vector3.UP, chest_turn)
+		if active: shoulder += forward * float(motion["shoulder"]) * (0.07 if "STRAIGHT" in row or "FLARED" in row else 0.12 * compact) + Vector3.UP * float(motion["shoulder"]) * 0.035
 		var neutral: Vector3 = shoulder + right * side * 0.025 + forward * (0.21 + (float(style["guard"]) if i == 0 else 0.0)) + Vector3.UP * 0.08
 		var covered := head_offset + Vector3.UP * 1.57 + right * side * 0.20 + forward * 0.17
 		# A punch exits the sim's block immediately, but its glove leaves the
 		# covered position continuously. The other glove protects the chin as
 		# the working shoulder rolls; this is pose only, never free sim blocking.
-		var cover := guard
+		var cover := maxf(guard, float(style["cover"]))
 		if active and "BLOCK_PUNCH" in mods: cover = maxf(cover, (1.0 - ramp(progress / 0.4)) * (1.0 - ramp(recovery)))
 		if not active and row != "": cover = maxf(cover, float(motion["shoulder"]))
 		var hand: Vector3 = neutral.lerp(covered, ramp(cover))
-		var twist := 0.0; var pronation := 0.0
+		# Marta's authored hands-down invitation is not a blocking state. Blend
+		# into/out of it on the same active clock, including hitstop.
+		hand -= Vector3.UP * 0.24 * float(fighter.get("motion_offer", 0)) * (1.0 - guard)
+		var twist := deg_to_rad(15.0) * float(fighter.get("motion_gear", 0)) if i == 0 else 0.0
+		var pronation := 0.0
 		if active:
 			var e := float(motion["upper_arm"])
 			var target: Vector3 = attack.get("target", forward * 0.65 + Vector3.UP * 1.55)
@@ -267,15 +305,17 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 			elif "FLARED" in row: curve.y = 0.42
 			# Recovery folds the elbow toward the ribs, instead of playing the
 			# outgoing hook/uppercut arc backwards. Every arc closes at contact.
-			curve *= (1.0 + (0.18 if "POWER" in mods else 0.0) + (0.32 if "HAYMAKER" in mods else 0.0)) * (1.0 - ramp(recovery * 2.0))
+			curve *= compact * float(style["arc"]) * (1.0 + (0.18 if "POWER" in mods else 0.0) + (0.32 if "HAYMAKER" in mods else 0.0)) * (1.0 - ramp(recovery * 2.0))
 			hand += -forward * float(motion["load"]) * 0.50
 			hand = hand.lerp(target, e) + curve * sin(e * PI)
 			if motion["upper"] or recovery > 0:
 				# Rising punches sweep in front of the chest. A lateral/downward
 				# arc alone can route the wrist through the advancing shoulder,
 				# collapsing the elbow axis. Clearance vanishes at exact contact.
-				var clearance := 0.32 * sqrt(maxf(0, sin(e * PI))) * (1.0 if motion["upper"] else ramp(recovery * 6.0))
-				hand += forward * maxf(0, clearance - (hand - shoulder).dot(forward)) * (1.0 - ramp((e - 0.9) / 0.1))
+				var returning := 1.0 if motion["upper"] else ramp(recovery * 6.0)
+				var outside_clearance := maxf(0, 0.32 * sqrt(maxf(0, sin(e * PI))) * returning - (hand - shoulder).dot(forward)) * (1.0 - ramp((e - 0.9) / 0.1))
+				var inside_clearance := maxf(0, 0.26 * maxf(0, sin(e * PI)) * returning - (hand - shoulder).dot(forward)) * sin(e * PI)
+				hand += forward * lerpf(inside_clearance, outside_clearance, ramp((compact - 0.4) / 0.6))
 			var turnover := side * (0.15 if motion["upper"] else PI * 0.5)
 			pronation = turnover * 0.70 * float(motion["forearm"])
 			twist = pronation + turnover * 0.30 * float(motion["fist"])

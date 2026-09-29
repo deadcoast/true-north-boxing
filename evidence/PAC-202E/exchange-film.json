@@ -1,0 +1,1564 @@
+{
+  "exchange-film-boxerpuncher": [
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 362
+      },
+      "frame": 180,
+      "time_s": 3.0
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 30,
+        "stepping": false,
+        "tick": 410
+      },
+      "frame": 204,
+      "time_s": 3.4
+    },
+    {
+      "event": {
+        "by": "B",
+        "kind": "block",
+        "tick": 439
+      },
+      "frame": 219,
+      "time_s": 3.65
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "POWER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_HOOK",
+        "startup": 50,
+        "stepping": false,
+        "tick": 476
+      },
+      "frame": 237,
+      "time_s": 3.95
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 16.2,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_HOOK",
+        "stepping": false,
+        "tick": 525
+      },
+      "frame": 262,
+      "time_s": 4.36666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_UPPERCUT",
+        "startup": 47,
+        "stepping": false,
+        "tick": 575
+      },
+      "frame": 287,
+      "time_s": 4.78333333333333
+    },
+    {
+      "event": {
+        "body": true,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 10.8,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "R_UPPERCUT",
+        "stepping": false,
+        "tick": 621
+      },
+      "frame": 310,
+      "time_s": 5.16666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 677
+      },
+      "frame": 338,
+      "time_s": 5.63333333333333
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 5.4,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_STRAIGHT",
+        "stepping": false,
+        "tick": 698
+      },
+      "frame": 348,
+      "time_s": 5.8
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 730
+      },
+      "frame": 364,
+      "time_s": 6.06666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "HAYMAKER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_HOOK",
+        "startup": 68,
+        "stepping": false,
+        "tick": 778
+      },
+      "frame": 388,
+      "time_s": 6.46666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_HOOKERCUT",
+        "startup": 49,
+        "stepping": false,
+        "tick": 887
+      },
+      "frame": 443,
+      "time_s": 7.38333333333333
+    },
+    {
+      "event": {
+        "body": true,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.001031, -0.199997)",
+        "dmg": 8.424,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_HOOKERCUT",
+        "stepping": false,
+        "tick": 935
+      },
+      "frame": 467,
+      "time_s": 7.78333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "POWER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 47,
+        "stepping": false,
+        "tick": 994
+      },
+      "frame": 496,
+      "time_s": 8.26666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 34,
+        "stepping": false,
+        "tick": 1081
+      },
+      "frame": 540,
+      "time_s": 9.0
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 8.1,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "R_STRAIGHT",
+        "stepping": false,
+        "tick": 1114
+      },
+      "frame": 556,
+      "time_s": 9.26666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_UPPERCUT",
+        "startup": 52,
+        "stepping": false,
+        "tick": 1160
+      },
+      "frame": 579,
+      "time_s": 9.65
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 12.15,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_UPPERCUT",
+        "stepping": false,
+        "tick": 1211
+      },
+      "frame": 605,
+      "time_s": 10.0833333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_FLARED",
+        "startup": 46,
+        "stepping": false,
+        "tick": 1273
+      },
+      "frame": 636,
+      "time_s": 10.6
+    },
+    {
+      "event": {
+        "by": "B",
+        "kind": "block",
+        "tick": 1318
+      },
+      "frame": 658,
+      "time_s": 10.9666666666667
+    }
+  ],
+  "exchange-film-outboxer": [
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 362
+      },
+      "frame": 180,
+      "time_s": 3.0
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 30,
+        "stepping": false,
+        "tick": 410
+      },
+      "frame": 204,
+      "time_s": 3.4
+    },
+    {
+      "event": {
+        "by": "B",
+        "kind": "block",
+        "tick": 439
+      },
+      "frame": 219,
+      "time_s": 3.65
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "POWER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_HOOK",
+        "startup": 50,
+        "stepping": false,
+        "tick": 476
+      },
+      "frame": 237,
+      "time_s": 3.95
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 14.58,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_HOOK",
+        "stepping": false,
+        "tick": 525
+      },
+      "frame": 262,
+      "time_s": 4.36666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_UPPERCUT",
+        "startup": 47,
+        "stepping": false,
+        "tick": 575
+      },
+      "frame": 287,
+      "time_s": 4.78333333333333
+    },
+    {
+      "event": {
+        "body": true,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 10.8,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "R_UPPERCUT",
+        "stepping": false,
+        "tick": 621
+      },
+      "frame": 310,
+      "time_s": 5.16666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 677
+      },
+      "frame": 338,
+      "time_s": 5.63333333333333
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 5.4,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_STRAIGHT",
+        "stepping": false,
+        "tick": 698
+      },
+      "frame": 348,
+      "time_s": 5.8
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 730
+      },
+      "frame": 364,
+      "time_s": 6.06666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "HAYMAKER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_HOOK",
+        "startup": 68,
+        "stepping": false,
+        "tick": 778
+      },
+      "frame": 388,
+      "time_s": 6.46666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_HOOKERCUT",
+        "startup": 49,
+        "stepping": false,
+        "tick": 887
+      },
+      "frame": 443,
+      "time_s": 7.38333333333333
+    },
+    {
+      "event": {
+        "body": true,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.001031, -0.199997)",
+        "dmg": 8.424,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_HOOKERCUT",
+        "stepping": false,
+        "tick": 935
+      },
+      "frame": 467,
+      "time_s": 7.78333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "POWER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 47,
+        "stepping": false,
+        "tick": 994
+      },
+      "frame": 496,
+      "time_s": 8.26666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 34,
+        "stepping": false,
+        "tick": 1081
+      },
+      "frame": 540,
+      "time_s": 9.0
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 8.1,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "R_STRAIGHT",
+        "stepping": false,
+        "tick": 1114
+      },
+      "frame": 556,
+      "time_s": 9.26666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_UPPERCUT",
+        "startup": 52,
+        "stepping": false,
+        "tick": 1160
+      },
+      "frame": 579,
+      "time_s": 9.65
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 12.15,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_UPPERCUT",
+        "stepping": false,
+        "tick": 1211
+      },
+      "frame": 605,
+      "time_s": 10.0833333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_FLARED",
+        "startup": 46,
+        "stepping": false,
+        "tick": 1273
+      },
+      "frame": 636,
+      "time_s": 10.6
+    },
+    {
+      "event": {
+        "by": "B",
+        "kind": "block",
+        "tick": 1318
+      },
+      "frame": 658,
+      "time_s": 10.9666666666667
+    }
+  ],
+  "exchange-film-slugger": [
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 24,
+        "stepping": false,
+        "tick": 362
+      },
+      "frame": 180,
+      "time_s": 3.0
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 33,
+        "stepping": false,
+        "tick": 412
+      },
+      "frame": 205,
+      "time_s": 3.41666666666667
+    },
+    {
+      "event": {
+        "by": "B",
+        "kind": "block",
+        "tick": 444
+      },
+      "frame": 221,
+      "time_s": 3.68333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "POWER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_HOOK",
+        "startup": 55,
+        "stepping": false,
+        "tick": 481
+      },
+      "frame": 240,
+      "time_s": 4.0
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 16.2,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_HOOK",
+        "stepping": false,
+        "tick": 535
+      },
+      "frame": 267,
+      "time_s": 4.45
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_UPPERCUT",
+        "startup": 52,
+        "stepping": false,
+        "tick": 585
+      },
+      "frame": 292,
+      "time_s": 4.86666666666667
+    },
+    {
+      "event": {
+        "body": true,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 10.8,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "R_UPPERCUT",
+        "stepping": false,
+        "tick": 636
+      },
+      "frame": 317,
+      "time_s": 5.28333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 24,
+        "stepping": false,
+        "tick": 692
+      },
+      "frame": 345,
+      "time_s": 5.75
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 5.4,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_STRAIGHT",
+        "stepping": false,
+        "tick": 715
+      },
+      "frame": 357,
+      "time_s": 5.95
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 24,
+        "stepping": false,
+        "tick": 747
+      },
+      "frame": 373,
+      "time_s": 6.21666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "HAYMAKER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_HOOK",
+        "startup": 75,
+        "stepping": false,
+        "tick": 797
+      },
+      "frame": 398,
+      "time_s": 6.63333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_HOOKERCUT",
+        "startup": 54,
+        "stepping": false,
+        "tick": 913
+      },
+      "frame": 456,
+      "time_s": 7.6
+    },
+    {
+      "event": {
+        "body": true,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.001031, -0.199997)",
+        "dmg": 8.424,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_HOOKERCUT",
+        "stepping": false,
+        "tick": 966
+      },
+      "frame": 482,
+      "time_s": 8.03333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "POWER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 52,
+        "stepping": false,
+        "tick": 1025
+      },
+      "frame": 512,
+      "time_s": 8.53333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 37,
+        "stepping": false,
+        "tick": 1117
+      },
+      "frame": 558,
+      "time_s": 9.3
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 8.1,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "R_STRAIGHT",
+        "stepping": false,
+        "tick": 1153
+      },
+      "frame": 576,
+      "time_s": 9.6
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_UPPERCUT",
+        "startup": 57,
+        "stepping": false,
+        "tick": 1199
+      },
+      "frame": 599,
+      "time_s": 9.98333333333333
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000516, -0.099999)",
+        "dmg": 12.15,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_UPPERCUT",
+        "stepping": false,
+        "tick": 1255
+      },
+      "frame": 627,
+      "time_s": 10.45
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_FLARED",
+        "startup": 51,
+        "stepping": false,
+        "tick": 1317
+      },
+      "frame": 658,
+      "time_s": 10.9666666666667
+    },
+    {
+      "event": {
+        "by": "B",
+        "kind": "block",
+        "tick": 1367
+      },
+      "frame": 683,
+      "time_s": 11.3833333333333
+    }
+  ],
+  "exchange-film-swarmer": [
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 362
+      },
+      "frame": 180,
+      "time_s": 3.0
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 30,
+        "stepping": false,
+        "tick": 410
+      },
+      "frame": 204,
+      "time_s": 3.4
+    },
+    {
+      "event": {
+        "by": "B",
+        "kind": "block",
+        "tick": 439
+      },
+      "frame": 219,
+      "time_s": 3.65
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "POWER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_HOOK",
+        "startup": 50,
+        "stepping": false,
+        "tick": 476
+      },
+      "frame": 237,
+      "time_s": 3.95
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000774, -0.149998)",
+        "dmg": 16.2,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_HOOK",
+        "stepping": false,
+        "tick": 525
+      },
+      "frame": 262,
+      "time_s": 4.36666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_UPPERCUT",
+        "startup": 47,
+        "stepping": false,
+        "tick": 575
+      },
+      "frame": 287,
+      "time_s": 4.78333333333333
+    },
+    {
+      "event": {
+        "body": true,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000774, -0.149998)",
+        "dmg": 10.8,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "R_UPPERCUT",
+        "stepping": false,
+        "tick": 621
+      },
+      "frame": 310,
+      "time_s": 5.16666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 677
+      },
+      "frame": 338,
+      "time_s": 5.63333333333333
+    },
+    {
+      "event": {
+        "body": false,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.000774, -0.149998)",
+        "dmg": 5.4,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_STRAIGHT",
+        "stepping": false,
+        "tick": 698
+      },
+      "frame": 348,
+      "time_s": 5.8
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_STRAIGHT",
+        "startup": 22,
+        "stepping": false,
+        "tick": 730
+      },
+      "frame": 364,
+      "time_s": 6.06666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "HAYMAKER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_HOOK",
+        "startup": 68,
+        "stepping": false,
+        "tick": 778
+      },
+      "frame": 388,
+      "time_s": 6.46666666666667
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_HOOKERCUT",
+        "startup": 44,
+        "stepping": false,
+        "tick": 887
+      },
+      "frame": 443,
+      "time_s": 7.38333333333333
+    },
+    {
+      "event": {
+        "body": true,
+        "center": true,
+        "counter": false,
+        "displacement": "(-0.001547, -0.299996)",
+        "dmg": 8.424,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_HOOKERCUT",
+        "stepping": false,
+        "tick": 930
+      },
+      "frame": 464,
+      "time_s": 7.73333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "POWER",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 47,
+        "stepping": false,
+        "tick": 984
+      },
+      "frame": 491,
+      "time_s": 8.18333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_STRAIGHT",
+        "startup": 34,
+        "stepping": false,
+        "tick": 1071
+      },
+      "frame": 535,
+      "time_s": 8.91666666666667
+    },
+    {
+      "event": {
+        "body": false,
+        "center": false,
+        "counter": false,
+        "displacement": "(-0.000774, -0.149998)",
+        "dmg": 8.1,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "R_STRAIGHT",
+        "stepping": false,
+        "tick": 1104
+      },
+      "frame": 551,
+      "time_s": 9.18333333333333
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BLOCK_PUNCH"
+        ],
+        "row": "L_UPPERCUT",
+        "startup": 52,
+        "stepping": false,
+        "tick": 1150
+      },
+      "frame": 574,
+      "time_s": 9.56666666666667
+    },
+    {
+      "event": {
+        "body": false,
+        "center": false,
+        "counter": false,
+        "displacement": "(-0.000774, -0.149998)",
+        "dmg": 12.15,
+        "flash": false,
+        "foul": false,
+        "hissatsu": false,
+        "kind": "hit",
+        "on": "B",
+        "row": "L_UPPERCUT",
+        "stepping": false,
+        "tick": 1201
+      },
+      "frame": 600,
+      "time_s": 10.0
+    },
+    {
+      "event": {
+        "kind": "punch",
+        "mods": [
+          "BODY",
+          "BLOCK_PUNCH"
+        ],
+        "row": "R_FLARED",
+        "startup": 46,
+        "stepping": false,
+        "tick": 1263
+      },
+      "frame": 631,
+      "time_s": 10.5166666666667
+    },
+    {
+      "event": {
+        "by": "B",
+        "kind": "block",
+        "tick": 1308
+      },
+      "frame": 653,
+      "time_s": 10.8833333333333
+    }
+  ],
+  "styles-marta_okonkwo_tremblay": [
+    {
+      "event": {
+        "kind": "boss_act",
+        "tick": 55,
+        "verb": "counter_state"
+      },
+      "tick": 55
+    },
+    {
+      "event": {
+        "kind": "boss_act",
+        "tick": 223,
+        "verb": "counter_state"
+      },
+      "tick": 223
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_STRAIGHT",
+        "tick": 351,
+        "verb": "punch"
+      },
+      "tick": 351
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_STRAIGHT",
+        "tick": 374,
+        "verb": "punch"
+      },
+      "tick": 374
+    },
+    {
+      "event": {
+        "dir": "away",
+        "kind": "boss_act",
+        "tick": 397,
+        "verb": "move"
+      },
+      "tick": 397
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_STRAIGHT",
+        "tick": 505,
+        "verb": "punch"
+      },
+      "tick": 505
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_STRAIGHT",
+        "tick": 523,
+        "verb": "punch"
+      },
+      "tick": 523
+    },
+    {
+      "event": {
+        "dir": "away",
+        "kind": "boss_act",
+        "tick": 541,
+        "verb": "move"
+      },
+      "tick": 541
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_STRAIGHT",
+        "tick": 685,
+        "verb": "punch"
+      },
+      "tick": 685
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_STRAIGHT",
+        "tick": 708,
+        "verb": "punch"
+      },
+      "tick": 708
+    },
+    {
+      "event": {
+        "dir": "away",
+        "kind": "boss_act",
+        "tick": 731,
+        "verb": "move"
+      },
+      "tick": 731
+    },
+    {
+      "event": {
+        "kind": "boss_act",
+        "tick": 892,
+        "verb": "counter_state"
+      },
+      "tick": 892
+    }
+  ],
+  "styles-sam_tagaq": [
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 61,
+        "verb": "move"
+      },
+      "tick": 61
+    },
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 87,
+        "verb": "move"
+      },
+      "tick": 87
+    },
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 269,
+        "verb": "move"
+      },
+      "tick": 269
+    },
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 295,
+        "verb": "move"
+      },
+      "tick": 295
+    },
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 437,
+        "verb": "move"
+      },
+      "tick": 437
+    },
+    {
+      "event": {
+        "kind": "boss_act",
+        "tick": 517,
+        "verb": "counter_state"
+      },
+      "tick": 517
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "R_STRAIGHT",
+        "tick": 535,
+        "verb": "punch"
+      },
+      "tick": 535
+    },
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 680,
+        "verb": "move"
+      },
+      "tick": 680
+    },
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 706,
+        "verb": "move"
+      },
+      "tick": 706
+    },
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 854,
+        "verb": "move"
+      },
+      "tick": 854
+    },
+    {
+      "event": {
+        "dir": "toward",
+        "kind": "boss_act",
+        "tick": 880,
+        "verb": "move"
+      },
+      "tick": 880
+    }
+  ],
+  "styles-yuri_kowalchuk": [
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "R_HOOKERCUT",
+        "tick": 73,
+        "verb": "punch"
+      },
+      "tick": 73
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_HOOK",
+        "tick": 111,
+        "verb": "punch"
+      },
+      "tick": 111
+    },
+    {
+      "event": {
+        "kind": "boss_act",
+        "tick": 144,
+        "verb": "wait"
+      },
+      "tick": 144
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "R_HOOKERCUT",
+        "tick": 353,
+        "verb": "punch"
+      },
+      "tick": 353
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_HOOK",
+        "tick": 391,
+        "verb": "punch"
+      },
+      "tick": 391
+    },
+    {
+      "event": {
+        "kind": "boss_act",
+        "tick": 424,
+        "verb": "wait"
+      },
+      "tick": 424
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "R_STRAIGHT",
+        "tick": 511,
+        "verb": "punch"
+      },
+      "tick": 511
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "R_UPPERCUT",
+        "tick": 536,
+        "verb": "punch"
+      },
+      "tick": 536
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "R_HOOKERCUT",
+        "tick": 699,
+        "verb": "punch"
+      },
+      "tick": 699
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "L_HOOK",
+        "tick": 737,
+        "verb": "punch"
+      },
+      "tick": 737
+    },
+    {
+      "event": {
+        "kind": "boss_act",
+        "tick": 770,
+        "verb": "wait"
+      },
+      "tick": 770
+    },
+    {
+      "event": {
+        "body": false,
+        "kind": "boss_act",
+        "row": "R_HOOKERCUT",
+        "tick": 950,
+        "verb": "punch"
+      },
+      "tick": 950
+    }
+  ]
+}

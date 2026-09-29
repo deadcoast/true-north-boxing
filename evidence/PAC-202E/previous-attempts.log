@@ -1,0 +1,722 @@
+RETAINED styles01.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+STYLE SIGNATURES delivery=[0.271, 0.5, 0.383, 0.114] return=[0.388, 0.282, 0.216, 0.463] steps=[0.04526, 0.04093, 0.03447, 0.03716]
+[PASS] four styles express distinct delivery
+[PASS] four styles express distinct recovery
+[PASS] four styles express distinct footwork cadence
+[PASS] BOXERPUNCHER ten punches keep authoritative contact and attached anatomy
+[PASS] BOXERPUNCHER delivery and return remain continuous
+[PASS] BOXERPUNCHER SLIP_L keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER SLIP_R keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER DUCK keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER WEAVE keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER LEAN keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX BOXERPUNCHER contacts=10 jump=0.19458709657192
+[PASS] OUTBOXER ten punches keep authoritative contact and attached anatomy
+[PASS] OUTBOXER delivery and return remain continuous
+[PASS] OUTBOXER SLIP_L keeps collision-aligned continuous defense
+[PASS] OUTBOXER SLIP_R keeps collision-aligned continuous defense
+[PASS] OUTBOXER DUCK keeps collision-aligned continuous defense
+[PASS] OUTBOXER WEAVE keeps collision-aligned continuous defense
+[PASS] OUTBOXER LEAN keeps collision-aligned continuous defense
+[PASS] OUTBOXER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX OUTBOXER contacts=10 jump=0.1300268471241
+[PASS] SWARMER ten punches keep authoritative contact and attached anatomy
+[PASS] SWARMER delivery and return remain continuous
+[PASS] SWARMER SLIP_L keeps collision-aligned continuous defense
+[PASS] SWARMER SLIP_R keeps collision-aligned continuous defense
+[PASS] SWARMER DUCK keeps collision-aligned continuous defense
+[PASS] SWARMER WEAVE keeps collision-aligned continuous defense
+[PASS] SWARMER LEAN keeps collision-aligned continuous defense
+[PASS] SWARMER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SWARMER contacts=10 jump=0.13640297949314
+[PASS] SLUGGER ten punches keep authoritative contact and attached anatomy
+[PASS] SLUGGER delivery and return remain continuous
+[PASS] SLUGGER SLIP_L keeps collision-aligned continuous defense
+[PASS] SLUGGER SLIP_R keeps collision-aligned continuous defense
+[PASS] SLUGGER DUCK keeps collision-aligned continuous defense
+[PASS] SLUGGER WEAVE keeps collision-aligned continuous defense
+[PASS] SLUGGER LEAN keeps collision-aligned continuous defense
+[PASS] SLUGGER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SLUGGER contacts=10 jump=0.23972283303738
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.41638299822807
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[FAIL] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.26499655842781
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[FAIL] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] Marta retains Mirror counter state
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.29653358459473
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[FAIL] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+STYLES VERDICT :: RED (41/44)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+
+RETAINED souls02.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+SOUL JUMP yuri_kowalchuk tick=533 part=16 jump=0.24778155982494 attack={ "row": "R_UPPERCUT", "progress": 0.84615384615385, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=534 part=23 jump=0.38131785392761 attack={ "row": "R_UPPERCUT", "progress": 0.92307692307692, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=694 part=23 jump=0.41638299822807 attack={ "row": "R_HOOKERCUT", "progress": 0.92105263157895, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.98228604752879, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=706 part=23 jump=0.32063123583794 attack={ "row": "R_HOOKERCUT", "progress": 1.0, "recovery": 0.1875, "body": false, "mods": [], "target": (0.0, 1.55, 0.069187), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.389187), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=734 part=6 jump=0.24040399491787 attack={ "row": "L_HOOK", "progress": 0.88235294117647, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=743 part=6 jump=0.33839580416679 attack={ "row": "L_HOOK", "progress": 1.0, "recovery": 0.14285714285714, "body": false, "mods": [], "target": (0.0, 1.55, 0.062778), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.382778), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=944 part=23 jump=0.25784331560135 attack={ "row": "R_HOOKERCUT", "progress": 0.89473684210526, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.96909170433008, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=945 part=23 jump=0.35753577947617 attack={ "row": "R_HOOKERCUT", "progress": 0.92105263157895, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.98228604752879, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=957 part=16 jump=0.28582769632339 attack={ "row": "R_HOOKERCUT", "progress": 1.0, "recovery": 0.1875, "body": false, "mods": [], "target": (0.0, 1.55, 0.069187), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.389187), "target_radius": 0.32, "contact_hit": true } events=[]
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.41638299822807 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[FAIL] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+SOUL JUMP marta_okonkwo_tremblay tick=396 part=16 jump=0.26267284154892 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.459666, 1.55, 0.81487), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.616888, 1.55, 1.093584), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "away", "kind": "boss_act", "tick": 397 }]
+SOUL JUMP marta_okonkwo_tremblay tick=540 part=6 jump=0.2638700902462 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.443807, 1.55, 0.641569), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.625855, 1.55, 0.904739), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "away", "kind": "boss_act", "tick": 541 }]
+SOUL JUMP marta_okonkwo_tremblay tick=730 part=6 jump=0.26499655842781 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.688825, 1.55, 0.632481), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.924533, 1.55, 0.84891), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "away", "kind": "boss_act", "tick": 731 }]
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.26499655842781 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[FAIL] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] Marta retains Mirror counter state
+SOUL JUMP sam_tagaq tick=60 part=6 jump=0.27882668375969 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.650667), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.970667), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "toward", "kind": "boss_act", "tick": 61 }]
+SOUL JUMP sam_tagaq tick=86 part=6 jump=0.26657438278198 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.390667), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.710667), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "toward", "kind": "boss_act", "tick": 87 }]
+SOUL JUMP sam_tagaq tick=268 part=6 jump=0.27495783567429 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "toward", "kind": "boss_act", "tick": 269 }]
+SOUL JUMP sam_tagaq tick=294 part=0 jump=0.26071026921272 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "toward", "kind": "boss_act", "tick": 295 }]
+SOUL JUMP sam_tagaq tick=436 part=6 jump=0.27498906850815 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "toward", "kind": "boss_act", "tick": 437 }]
+SOUL JUMP sam_tagaq tick=515 part=22 jump=0.29653358459473 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP sam_tagaq tick=679 part=16 jump=0.27152013778687 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "toward", "kind": "boss_act", "tick": 680 }]
+SOUL JUMP sam_tagaq tick=705 part=6 jump=0.26693752408028 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "toward", "kind": "boss_act", "tick": 706 }]
+SOUL JUMP sam_tagaq tick=853 part=6 jump=0.27495861053467 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true } events=[{ "verb": "move", "dir": "toward", "kind": "boss_act", "tick": 854 }]
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.29653358459473 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[FAIL] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+SOULS VERDICT :: RED (6/9)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+
+RETAINED souls03.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+SOUL JUMP yuri_kowalchuk tick=528 part=23 jump=0.26206731796265 attack={ "row": "R_UPPERCUT", "progress": 0.46153846153846, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=533 part=16 jump=0.24778155982494 attack={ "row": "R_UPPERCUT", "progress": 0.84615384615385, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=534 part=23 jump=0.36808380484581 attack={ "row": "R_UPPERCUT", "progress": 0.92307692307692, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=694 part=23 jump=0.40157678723335 attack={ "row": "R_HOOKERCUT", "progress": 0.92105263157895, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.98228604752879, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=706 part=16 jump=0.24690948426723 attack={ "row": "R_HOOKERCUT", "progress": 1.0, "recovery": 0.1875, "body": false, "mods": [], "target": (0.0, 1.55, 0.069187), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.389187), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=734 part=6 jump=0.24040399491787 attack={ "row": "L_HOOK", "progress": 0.88235294117647, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=743 part=6 jump=0.33839580416679 attack={ "row": "L_HOOK", "progress": 1.0, "recovery": 0.14285714285714, "body": false, "mods": [], "target": (0.0, 1.55, 0.062778), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.382778), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=944 part=23 jump=0.25709652900696 attack={ "row": "R_HOOKERCUT", "progress": 0.89473684210526, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.96909170433008, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=945 part=23 jump=0.35402211546898 attack={ "row": "R_HOOKERCUT", "progress": 0.92105263157895, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.98228604752879, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=957 part=16 jump=0.28582769632339 attack={ "row": "R_HOOKERCUT", "progress": 1.0, "recovery": 0.1875, "body": false, "mods": [], "target": (0.0, 1.55, 0.069187), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.389187), "target_radius": 0.32, "contact_hit": true } events=[]
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.40157678723335 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[FAIL] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.22964951395988 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] Marta retains Mirror counter state
+SOUL JUMP sam_tagaq tick=515 part=22 jump=0.29653358459473 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true } events=[]
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.29653358459473 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[FAIL] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+SOULS VERDICT :: RED (7/9)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+
+RETAINED souls05.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+SOUL JUMP yuri_kowalchuk tick=528 part=23 jump=0.25185397267342 attack={ "row": "R_UPPERCUT", "progress": 0.46153846153846, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=529 part=23 jump=0.26078048348427 attack={ "row": "R_UPPERCUT", "progress": 0.53846153846154, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=533 part=16 jump=0.28024771809578 attack={ "row": "R_UPPERCUT", "progress": 0.84615384615385, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=534 part=23 jump=0.29827442765236 attack={ "row": "R_UPPERCUT", "progress": 0.92307692307692, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+ARM TRACE yuri_kowalchuk 690 shoulders=[(0.264017, 1.216066, -0.114885), (-0.218375, 1.248944, 0.387321)] wrists=[(0.208744, 1.551469, 0.172912), (-0.522402, 1.127031, 0.446917)] elbows=[(0.365722, 1.236962, 0.250655), (-0.333038, 0.932952, 0.210116)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.81578947368421, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.91070126840647, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 691 shoulders=[(0.258532, 1.221595, -0.120996), (-0.206368, 1.25563, 0.405898)] wrists=[(0.205274, 1.559054, 0.172145), (-0.412795, 1.215321, 0.384506)] elbows=[(0.360885, 1.242557, 0.244359), (-0.267568, 0.922964, 0.232728)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.84210526315789, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.93308062399767, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 692 shoulders=[(0.252534, 1.227207, -0.126738), (-0.193656, 1.261971, 0.422939)] wrists=[(0.202922, 1.563956, 0.171248), (-0.304276, 1.302862, 0.321029)] elbows=[(0.357146, 1.24561, 0.238115), (-0.311525, 0.953312, 0.235226)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.86842105263158, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.95261699956262, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 693 shoulders=[(0.229161, 1.232859, -0.146996), (-0.197239, 1.267859, 0.423098)] wrists=[(0.200086, 1.569813, 0.170025), (-0.20574, 1.383609, 0.25676)] elbows=[(0.348546, 1.244754, 0.213567), (-0.333411, 1.073242, 0.126481)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.89473684210526, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.96909170433008, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 694 shoulders=[(0.205444, 1.23851, -0.166896), (-0.200261, 1.27351, 0.421936)] wrists=[(0.198641, 1.573191, 0.169818), (-0.12117, 1.452381, 0.204638)] elbows=[(0.339529, 1.24244, 0.18864), (-0.30987, 1.176308, 0.071311)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.92105263157895, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.98228604752879, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 695 shoulders=[(0.181568, 1.244113, -0.186448), (-0.202744, 1.279113, 0.420075)] wrists=[(0.198104, 1.574827, 0.170095), (-0.056013, 1.505035, 0.166481)] elbows=[(0.329663, 1.239792, 0.163479), (-0.279451, 1.248296, 0.049175)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.94736842105263, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.99198133838752, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 696 shoulders=[(0.157449, 1.249625, -0.205368), (-0.205006, 1.284625, 0.417648)] wrists=[(0.198144, 1.575194, 0.170493), (-0.014502, 1.538399, 0.143038)] elbows=[(0.318801, 1.237531, 0.138462), (-0.257628, 1.293123, 0.041405)] feet=[(0.26, 0.010396, 0.241666), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.97368421052632, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.99795888613501, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 697 shoulders=[(0.133188, 1.255, -0.223579), (-0.207207, 1.29, 0.414621)] wrists=[(0.198513, 1.574644, 0.170781), (0.0, 1.55, 0.135)] elbows=[(0.306903, 1.236101, 0.113861), (-0.252898, 1.312835, 0.03807)] feet=[(0.26, 0.020337, 0.245643), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 1.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+SOUL JUMP yuri_kowalchuk tick=734 part=6 jump=0.24040399491787 attack={ "row": "L_HOOK", "progress": 0.88235294117647, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=943 part=23 jump=0.24127253890038 attack={ "row": "R_HOOKERCUT", "progress": 0.86842105263158, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.95261699956262, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=959 part=23 jump=0.31838735938072 attack={ "row": "R_HOOKERCUT", "progress": 1.0, "recovery": 0.3125, "body": false, "mods": [], "target": (0.0, 1.55, 0.08634), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.40634), "target_radius": 0.32, "contact_hit": true } events=[]
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.31838735938072 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[FAIL] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.22964936494827 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] Marta retains Mirror counter state
+ARM TRACE sam_tagaq 513 shoulders=[(0.250747, 1.2551, 0.121221), (-0.268963, 1.2551, -0.136269)] wrists=[(0.2, 1.570001, 0.169999), (-0.199999, 1.570001, 0.17)] elbows=[(0.321557, 1.402173, 0.464376), (-0.350651, 1.249526, 0.234805)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.75, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 514 shoulders=[(0.250747, 1.2551, 0.121221), (-0.268963, 1.2551, -0.136269)] wrists=[(0.2, 1.570001, 0.169999), (-0.199999, 1.570001, 0.17)] elbows=[(0.32206, 1.402277, 0.464227), (-0.350228, 1.249346, 0.234895)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.75, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 515 shoulders=[(0.28301, 1.265, 0.063287), (-0.28301, 1.265, -0.063287)] wrists=[(0.193582, 1.5802, 0.156577), (-0.20821, 1.554053, 0.177029)] elbows=[(0.321673, 1.376643, 0.424453), (-0.361637, 1.256048, 0.308382)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 516 shoulders=[(0.28301, 1.265, 0.063287), (-0.28301, 1.265, -0.063287)] wrists=[(0.19584, 1.576735, 0.161392), (-0.2, 1.57, 0.17)] elbows=[(0.323909, 1.369403, 0.426367), (-0.34144, 1.27102, 0.312146)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "R_STRAIGHT", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.16780179738998 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+SOULS VERDICT :: RED (8/9)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+
+RETAINED souls07.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+SOUL JUMP yuri_kowalchuk tick=533 part=23 jump=0.2680162191391 attack={ "row": "R_UPPERCUT", "progress": 0.84615384615385, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.1805), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.5005), "target_radius": 0.32, "contact_hit": true } events=[]
+ARM TRACE yuri_kowalchuk 690 shoulders=[(0.338214, 1.237069, 0.05886), (-0.279466, 1.269947, 0.157543)] wrists=[(0.214441, 1.554558, 0.185479), (-0.255746, 1.357133, 0.280502)] elbows=[(0.411858, 1.356346, 0.412059), (-0.486286, 1.136387, 0.447003)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.81578947368421, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.91070126840647, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 691 shoulders=[(0.339967, 1.239871, 0.055633), (-0.276398, 1.273906, 0.16935)] wrists=[(0.209092, 1.560638, 0.180381), (-0.2013, 1.398171, 0.243636)] elbows=[(0.404733, 1.363211, 0.409176), (-0.396907, 1.298372, 0.528904)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.84210526315789, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.93308062399767, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 692 shoulders=[(0.34164, 1.242632, 0.052609), (-0.273137, 1.277397, 0.180596)] wrists=[(0.205565, 1.56433, 0.176593), (-0.148115, 1.438261, 0.210344)] elbows=[(0.399546, 1.367083, 0.406952), (-0.320383, 1.427956, 0.526283)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.86842105263158, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.95261699956262, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 693 shoulders=[(0.327245, 1.245328, 0.035668), (-0.285697, 1.280328, 0.176954)] wrists=[(0.200508, 1.569456, 0.170577), (-0.100755, 1.474912, 0.178315)] elbows=[(0.3948, 1.361555, 0.391094), (-0.277116, 1.493187, 0.491625)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.89473684210526, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.96909170433008, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 694 shoulders=[(0.312844, 1.247936, 0.018859), (-0.298052, 1.282936, 0.172719)] wrists=[(0.197214, 1.573151, 0.167015), (-0.059762, 1.505987, 0.1565)] elbows=[(0.391667, 1.353212, 0.375376), (-0.255294, 1.53056, 0.45777)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.92105263157895, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.98228604752879, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 695 shoulders=[(0.298545, 1.250434, 0.002138), (-0.310138, 1.285434, 0.168055)] wrists=[(0.195068, 1.575913, 0.165065), (-0.027842, 1.529733, 0.143422)] elbows=[(0.389227, 1.343171, 0.359316), (-0.24603, 1.554419, 0.428703)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.94736842105263, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.99198133838752, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 696 shoulders=[(0.284179, 1.252796, -0.014237), (-0.322178, 1.287796, 0.163111)] wrists=[(0.193731, 1.577973, 0.164202), (-0.007267, 1.544771, 0.136896)] elbows=[(0.386912, 1.332293, 0.342871), (-0.245973, 1.570675, 0.405128)] feet=[(0.26, 0.010396, 0.241666), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.97368421052632, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.99795888613501, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 697 shoulders=[(0.269748, 1.255, -0.030192), (-0.334229, 1.29, 0.15785)] wrists=[(0.192967, 1.579493, 0.164048), (0.0, 1.55, 0.135)] elbows=[(0.384347, 1.321157, 0.326025), (-0.254712, 1.582241, 0.387354)] feet=[(0.26, 0.020337, 0.245643), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 1.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.2680162191391 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[FAIL] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.22964936494827 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] Marta retains Mirror counter state
+ARM TRACE sam_tagaq 513 shoulders=[(0.250747, 1.2551, 0.121221), (-0.268963, 1.2551, -0.136269)] wrists=[(0.2, 1.570001, 0.169999), (-0.199999, 1.570001, 0.17)] elbows=[(0.321557, 1.402173, 0.464376), (-0.350651, 1.249526, 0.234805)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.75, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 514 shoulders=[(0.250747, 1.2551, 0.121221), (-0.268963, 1.2551, -0.136269)] wrists=[(0.2, 1.570001, 0.169999), (-0.199999, 1.570001, 0.17)] elbows=[(0.32206, 1.402277, 0.464227), (-0.350228, 1.249346, 0.234895)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.75, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 515 shoulders=[(0.28301, 1.265, 0.063287), (-0.28301, 1.265, -0.063287)] wrists=[(0.193582, 1.5802, 0.156577), (-0.20821, 1.554053, 0.177029)] elbows=[(0.321673, 1.376643, 0.424453), (-0.361637, 1.256048, 0.308382)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 516 shoulders=[(0.28301, 1.265, 0.063287), (-0.28301, 1.265, -0.063287)] wrists=[(0.19584, 1.576735, 0.161392), (-0.2, 1.57, 0.17)] elbows=[(0.323909, 1.369403, 0.426367), (-0.34144, 1.27102, 0.312146)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "R_STRAIGHT", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.16780179738998 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+SOULS VERDICT :: RED (8/9)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+
+RETAINED styles08.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+STYLE SIGNATURES delivery=[0.271, 0.5, 0.383, 0.114] return=[0.388, 0.282, 0.216, 0.463] steps=[0.04526, 0.04093, 0.03447, 0.03716]
+[PASS] four styles express distinct delivery
+[PASS] four styles express distinct recovery
+[PASS] four styles express distinct footwork cadence
+[PASS] BOXERPUNCHER ten punches keep authoritative contact and attached anatomy
+[FAIL] BOXERPUNCHER delivery and return remain continuous
+[PASS] BOXERPUNCHER SLIP_L keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER SLIP_R keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER DUCK keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER WEAVE keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER LEAN keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX BOXERPUNCHER contacts=10 jump=0.26425737142563
+[PASS] OUTBOXER ten punches keep authoritative contact and attached anatomy
+[PASS] OUTBOXER delivery and return remain continuous
+[PASS] OUTBOXER SLIP_L keeps collision-aligned continuous defense
+[PASS] OUTBOXER SLIP_R keeps collision-aligned continuous defense
+[PASS] OUTBOXER DUCK keeps collision-aligned continuous defense
+[PASS] OUTBOXER WEAVE keeps collision-aligned continuous defense
+[PASS] OUTBOXER LEAN keeps collision-aligned continuous defense
+[PASS] OUTBOXER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX OUTBOXER contacts=10 jump=0.18422073125839
+[PASS] SWARMER ten punches keep authoritative contact and attached anatomy
+[PASS] SWARMER delivery and return remain continuous
+[PASS] SWARMER SLIP_L keeps collision-aligned continuous defense
+[PASS] SWARMER SLIP_R keeps collision-aligned continuous defense
+[PASS] SWARMER DUCK keeps collision-aligned continuous defense
+[PASS] SWARMER WEAVE keeps collision-aligned continuous defense
+[PASS] SWARMER LEAN keeps collision-aligned continuous defense
+[PASS] SWARMER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SWARMER contacts=10 jump=0.13563585281372
+[PASS] SLUGGER ten punches keep authoritative contact and attached anatomy
+[FAIL] SLUGGER delivery and return remain continuous
+[PASS] SLUGGER SLIP_L keeps collision-aligned continuous defense
+[PASS] SLUGGER SLIP_R keeps collision-aligned continuous defense
+[PASS] SLUGGER DUCK keeps collision-aligned continuous defense
+[PASS] SLUGGER WEAVE keeps collision-aligned continuous defense
+[PASS] SLUGGER LEAN keeps collision-aligned continuous defense
+[PASS] SLUGGER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SLUGGER contacts=10 jump=0.27081042528152
+ARM TRACE yuri_kowalchuk 690 shoulders=[(0.338214, 1.237069, 0.05886), (-0.279466, 1.269947, 0.157543)] wrists=[(0.214527, 1.5546, 0.18545), (-0.255746, 1.357133, 0.280502)] elbows=[(0.413217, 1.357082, 0.411523), (-0.486286, 1.136387, 0.447003)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.81578947368421, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.91070126840647, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 691 shoulders=[(0.339967, 1.239871, 0.055633), (-0.276398, 1.273906, 0.16935)] wrists=[(0.209153, 1.560664, 0.180365), (-0.2013, 1.398171, 0.243636)] elbows=[(0.406061, 1.363937, 0.408676), (-0.396907, 1.298372, 0.528904)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.84210526315789, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.93308062399767, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 692 shoulders=[(0.34164, 1.242632, 0.052609), (-0.273137, 1.277397, 0.180596)] wrists=[(0.205607, 1.564344, 0.176587), (-0.148115, 1.438261, 0.210344)] elbows=[(0.400848, 1.367802, 0.406483), (-0.320383, 1.427956, 0.526283)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.86842105263158, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.95261699956262, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 693 shoulders=[(0.327245, 1.245328, 0.035668), (-0.285697, 1.280328, 0.176954)] wrists=[(0.200511, 1.569458, 0.170575), (-0.100755, 1.474912, 0.178315)] elbows=[(0.396035, 1.362229, 0.390636), (-0.277116, 1.493187, 0.491625)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.89473684210526, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.96909170433008, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 694 shoulders=[(0.312844, 1.247936, 0.018859), (-0.298052, 1.282936, 0.172719)] wrists=[(0.197193, 1.573147, 0.167017), (-0.059762, 1.505987, 0.1565)] elbows=[(0.392846, 1.353844, 0.374926), (-0.255294, 1.53056, 0.45777)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.92105263157895, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.98228604752879, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 695 shoulders=[(0.298545, 1.250434, 0.002138), (-0.310138, 1.285434, 0.168055)] wrists=[(0.195032, 1.575904, 0.165071), (-0.027842, 1.529733, 0.143422)] elbows=[(0.390357, 1.343765, 0.358873), (-0.24603, 1.554419, 0.428703)] feet=[(0.26, 0.0, 0.240312), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.94736842105263, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.99198133838752, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 696 shoulders=[(0.284179, 1.252796, -0.014237), (-0.322178, 1.287796, 0.163111)] wrists=[(0.193687, 1.577963, 0.16421), (-0.007267, 1.544771, 0.136896)] elbows=[(0.387997, 1.33285, 0.342433), (-0.245973, 1.570675, 0.405128)] feet=[(0.26, 0.010396, 0.241666), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 0.97368421052632, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 1.0, "redirect": {  }, "redirect_weight": 0.99795888613501, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE yuri_kowalchuk 697 shoulders=[(0.269748, 1.255, -0.030192), (-0.334229, 1.29, 0.15785)] wrists=[(0.19292, 1.579484, 0.164058), (0.0, 1.55, 0.135)] elbows=[(0.385391, 1.32168, 0.325589), (-0.254712, 1.582241, 0.387354)] feet=[(0.26, 0.020337, 0.245643), (-0.26, 0.0, -0.22)] attack={ "row": "R_HOOKERCUT", "progress": 1.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.135), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.455), "target_radius": 0.32, "contact_hit": true }
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.22921316325665 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[PASS] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.22964936494827 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] Marta retains Mirror counter state
+ARM TRACE sam_tagaq 513 shoulders=[(0.250747, 1.2551, 0.121221), (-0.268963, 1.2551, -0.136269)] wrists=[(0.2, 1.570001, 0.169999), (-0.199999, 1.570001, 0.17)] elbows=[(0.321557, 1.402173, 0.464376), (-0.350651, 1.249526, 0.234805)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.75, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 514 shoulders=[(0.250747, 1.2551, 0.121221), (-0.268963, 1.2551, -0.136269)] wrists=[(0.2, 1.570001, 0.169999), (-0.199999, 1.570001, 0.17)] elbows=[(0.32206, 1.402277, 0.464227), (-0.350228, 1.249346, 0.234895)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.75, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 515 shoulders=[(0.28301, 1.265, 0.063287), (-0.28301, 1.265, -0.063287)] wrists=[(0.193582, 1.5802, 0.156577), (-0.20821, 1.554053, 0.177029)] elbows=[(0.321673, 1.376643, 0.424453), (-0.361637, 1.256048, 0.308382)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+ARM TRACE sam_tagaq 516 shoulders=[(0.28301, 1.265, 0.063287), (-0.28301, 1.265, -0.063287)] wrists=[(0.19584, 1.576735, 0.161392), (-0.2, 1.57, 0.17)] elbows=[(0.323909, 1.369403, 0.426367), (-0.34144, 1.27102, 0.312146)] feet=[(0.23, 0.0, 0.19), (-0.23, 0.0, -0.19)] attack={ "row": "R_STRAIGHT", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.265), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 0.585), "target_radius": 0.32, "contact_hit": true }
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.16780179738998 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+STYLES VERDICT :: RED (42/44)
+
+RETAINED motion09.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+STYLE SIGNATURES delivery=[0.271, 0.5, 0.383, 0.114] return=[0.388, 0.282, 0.216, 0.463] steps=[0.04526, 0.04093, 0.03447, 0.03716]
+[PASS] four styles express distinct delivery
+[PASS] four styles express distinct recovery
+[PASS] four styles express distinct footwork cadence
+[PASS] BOXERPUNCHER ten punches keep authoritative contact and attached anatomy
+[FAIL] BOXERPUNCHER delivery and return remain continuous
+[PASS] BOXERPUNCHER SLIP_L keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER SLIP_R keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER DUCK keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER WEAVE keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER LEAN keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX BOXERPUNCHER contacts=10 jump=0.26425737142563
+[PASS] OUTBOXER ten punches keep authoritative contact and attached anatomy
+[PASS] OUTBOXER delivery and return remain continuous
+[PASS] OUTBOXER SLIP_L keeps collision-aligned continuous defense
+[PASS] OUTBOXER SLIP_R keeps collision-aligned continuous defense
+[PASS] OUTBOXER DUCK keeps collision-aligned continuous defense
+[PASS] OUTBOXER WEAVE keeps collision-aligned continuous defense
+[PASS] OUTBOXER LEAN keeps collision-aligned continuous defense
+[PASS] OUTBOXER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX OUTBOXER contacts=10 jump=0.18422073125839
+[PASS] SWARMER ten punches keep authoritative contact and attached anatomy
+[PASS] SWARMER delivery and return remain continuous
+[PASS] SWARMER SLIP_L keeps collision-aligned continuous defense
+[PASS] SWARMER SLIP_R keeps collision-aligned continuous defense
+[PASS] SWARMER DUCK keeps collision-aligned continuous defense
+[PASS] SWARMER WEAVE keeps collision-aligned continuous defense
+[PASS] SWARMER LEAN keeps collision-aligned continuous defense
+[PASS] SWARMER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SWARMER contacts=10 jump=0.13563585281372
+[PASS] SLUGGER ten punches keep authoritative contact and attached anatomy
+[FAIL] SLUGGER delivery and return remain continuous
+[PASS] SLUGGER SLIP_L keeps collision-aligned continuous defense
+[PASS] SLUGGER SLIP_R keeps collision-aligned continuous defense
+[PASS] SLUGGER DUCK keeps collision-aligned continuous defense
+[PASS] SLUGGER WEAVE keeps collision-aligned continuous defense
+[PASS] SLUGGER LEAN keeps collision-aligned continuous defense
+[PASS] SLUGGER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SLUGGER contacts=10 jump=0.27081042528152
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.22921316325665 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[PASS] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.22964936494827 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] Marta retains Mirror counter state
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.16780179738998 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+COMBINATION DISCONTINUITY L_HOOKERCUT variant=0 tick=30 attack={ "row": "L_HOOKERCUT", "progress": 0.81578947368421, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, -0.4275), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, -0.7475), "target_radius": 0.32, "contact_hit": true }
+PART 13 from=(-0.529137, 1.026928, -0.154286) to=(-0.558616, 1.234504, -0.315143)
+MODIFIER DETAIL variant=0 mid_chest=0.09145862978549
+MODIFIER MATRIX 0 contacts=10 max_jump=0.2642570734024
+[PASS] modifier matrix 0 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 0 delivers all ten native punches on the resolved surface
+[FAIL] modifier matrix 0 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 0 completes recovery with differentiated loading
+MODIFIER MATRIX 1 contacts=10 max_jump=0.13002309203148
+[PASS] modifier matrix 1 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 1 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 1 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 1 completes recovery with differentiated loading
+MODIFIER DETAIL variant=2 mid_chest=-0.02988634945486
+MODIFIER MATRIX 2 contacts=10 max_jump=0.14171992242336
+[PASS] modifier matrix 2 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 2 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 2 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 2 completes recovery with differentiated loading
+MODIFIER MATRIX 3 contacts=10 max_jump=0.13002577424049
+[PASS] modifier matrix 3 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 3 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 3 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 3 completes recovery with differentiated loading
+MODIFIER DETAIL variant=4 mid_chest=-0.19037295387458
+MODIFIER MATRIX 4 contacts=10 max_jump=0.13002353906631
+[PASS] modifier matrix 4 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 4 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 4 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 4 completes recovery with differentiated loading
+MODIFIER MATRIX 5 contacts=10 max_jump=0.20189741253853
+[PASS] modifier matrix 5 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 5 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 5 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 5 completes recovery with differentiated loading
+MODIFIER MATRIX 6 contacts=10 max_jump=0.24557803571224
+[PASS] modifier matrix 6 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 6 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 6 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 6 completes recovery with differentiated loading
+MODIFIER MATRIX 7 contacts=10 max_jump=0.17565152049065
+[PASS] modifier matrix 7 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 7 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 7 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 7 completes recovery with differentiated loading
+SUSTAINED tired=false rows=["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT", "L_STRAIGHT", "L_STRAIGHT", "L_HOOK", "L_HOOK", "R_STRAIGHT", "R_STRAIGHT", "R_HOOK", "R_HOOK"] hits=8 blocks=4 jump=0.13283126056194
+[PASS] sustained false alternating and same-hand buffer preserves twelve commands
+[PASS] sustained false guard, impact and exhausted recovery stay connected
+SUSTAINED tired=true rows=["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT", "L_STRAIGHT", "L_STRAIGHT", "L_HOOK", "L_HOOK", "R_STRAIGHT", "R_STRAIGHT", "R_HOOK", "R_HOOK"] hits=8 blocks=4 jump=0.13000133633614
+[PASS] sustained true alternating and same-hand buffer preserves twelve commands
+[PASS] sustained true guard, impact and exhausted recovery stay connected
+FOOTWORK DETAIL BOXERPUNCHER forward first=0 at=5 width=0.37999999523163 lead=0.12160819768906 slip=0.00000002980232 reach=0.56507486104965 jump=0.07307744026184
+[PASS] BOXERPUNCHER forward leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER forward reverses and settles without sliding or crossing
+[PASS] BOXERPUNCHER forward transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER retreat first=1 at=6 width=0.37999999523163 lead=0.12160933017731 slip=0.0 reach=0.56817138195038 jump=0.07146479934454
+[PASS] BOXERPUNCHER retreat leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER retreat reverses and settles without sliding or crossing
+[PASS] BOXERPUNCHER retreat transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER left first=0 at=5 width=0.22211557626724 lead=0.30171072483063 slip=0.00000002980232 reach=0.58289802074432 jump=0.0696961209178
+[PASS] BOXERPUNCHER left leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER left reverses and settles without sliding or crossing
+[PASS] BOXERPUNCHER left transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER right first=1 at=5 width=0.22464734315872 lead=0.26932811737061 slip=0.00000002980232 reach=0.56408816576004 jump=0.07019793242216
+[PASS] BOXERPUNCHER right leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER right reverses and settles without sliding or crossing
+[PASS] BOXERPUNCHER right transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER forward first=0 at=5 width=0.34000000357628 lead=0.27200761437416 slip=0.00000002980232 reach=0.58481645584106 jump=0.07586673647165
+[PASS] OUTBOXER forward leads with the travel-side foot promptly
+[PASS] OUTBOXER forward reverses and settles without sliding or crossing
+[PASS] OUTBOXER forward transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER retreat first=1 at=6 width=0.34000000357628 lead=0.2720074057579 slip=0.0 reach=0.69064491987228 jump=0.09064052253962
+[PASS] OUTBOXER retreat leads with the travel-side foot promptly
+[PASS] OUTBOXER retreat reverses and settles without sliding or crossing
+[PASS] OUTBOXER retreat transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER left first=0 at=5 width=0.19233480095863 lead=0.43493062257767 slip=0.00000002980232 reach=0.56741344928741 jump=0.07839980721474
+[PASS] OUTBOXER left leads with the travel-side foot promptly
+[PASS] OUTBOXER left reverses and settles without sliding or crossing
+[PASS] OUTBOXER left transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER right first=1 at=5 width=0.19612684845924 lead=0.41977918148041 slip=0.00000002980232 reach=0.58191215991974 jump=0.08648154884577
+[PASS] OUTBOXER right leads with the travel-side foot promptly
+[PASS] OUTBOXER right reverses and settles without sliding or crossing
+[PASS] OUTBOXER right transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER forward first=0 at=5 width=0.41999998688698 lead=0.12240633368492 slip=0.00000002980232 reach=0.52875876426697 jump=0.0823370218277
+[PASS] SWARMER forward leads with the travel-side foot promptly
+[PASS] SWARMER forward reverses and settles without sliding or crossing
+[PASS] SWARMER forward transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER retreat first=1 at=6 width=0.41999998688698 lead=0.12240636348724 slip=0.0 reach=0.55678862333298 jump=0.08693389594555
+[PASS] SWARMER retreat leads with the travel-side foot promptly
+[PASS] SWARMER retreat reverses and settles without sliding or crossing
+[PASS] SWARMER retreat transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER left first=0 at=5 width=0.24898909032345 lead=0.25843039155006 slip=0.00000002980232 reach=0.55384159088135 jump=0.08817559480667
+[PASS] SWARMER left leads with the travel-side foot promptly
+[PASS] SWARMER left reverses and settles without sliding or crossing
+[PASS] SWARMER left transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER right first=1 at=5 width=0.25179359316826 lead=0.24481102824211 slip=0.00000002980232 reach=0.5108460187912 jump=0.0882813334465
+[PASS] SWARMER right leads with the travel-side foot promptly
+[PASS] SWARMER right reverses and settles without sliding or crossing
+[PASS] SWARMER right transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER forward first=0 at=5 width=0.47999998927116 lead=0.1512094438076 slip=0.00000002980232 reach=0.64061492681503 jump=0.0674242824316
+[PASS] SLUGGER forward leads with the travel-side foot promptly
+[PASS] SLUGGER forward reverses and settles without sliding or crossing
+[PASS] SLUGGER forward transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER retreat first=1 at=6 width=0.47999998927116 lead=0.09899997711182 slip=0.0 reach=0.55479997396469 jump=0.06316342204809
+[PASS] SLUGGER retreat leads with the travel-side foot promptly
+[PASS] SLUGGER retreat reverses and settles without sliding or crossing
+[PASS] SLUGGER retreat transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER left first=0 at=5 width=0.28068971633911 lead=0.33841598033905 slip=0.00000002980232 reach=0.6617756485939 jump=0.074278190732
+[PASS] SLUGGER left leads with the travel-side foot promptly
+[PASS] SLUGGER left reverses and settles without sliding or crossing
+[PASS] SLUGGER left transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER right first=1 at=5 width=0.28478682041168 lead=0.32672506570816 slip=0.00000002980232 reach=0.64028358459473 jump=0.07118587195873
+[PASS] SLUGGER right leads with the travel-side foot promptly
+[PASS] SLUGGER right reverses and settles without sliding or crossing
+[PASS] SLUGGER right transfers support through attached continuous anatomy
+BOUNDARY DETAIL circle width=0.21708227694035 lead=0.38000005483627 slip=0.00000002980232 jump=0.08060704916716
+[PASS] circle maintains planted stance under guard
+[PASS] circle keeps fixed continuous joints through the stop
+BOUNDARY DETAIL ropes width=0.37999999523163 lead=0.38000011444092 slip=0.0 jump=0.08030515164137
+[PASS] ropes maintains planted stance under guard
+[PASS] ropes keeps fixed continuous joints through the stop
+BOUNDARY DETAIL corner width=0.37999993562698 lead=0.38000002503395 slip=0.0 jump=0.08030519634485
+[PASS] corner maintains planted stance under guard
+[PASS] corner keeps fixed continuous joints through the stop
+[PASS] SLIP_L carries defense from planted support into guard and movement
+[PASS] SLIP_R carries defense from planted support into guard and movement
+[PASS] DUCK carries defense from planted support into guard and movement
+[PASS] WEAVE carries defense from planted support into guard and movement
+[PASS] LEAN carries defense from planted support into guard and movement
+[PASS] movement-defense replay identical and read-only at 30 Hz
+[PASS] pivots remain anchored and head clears torso at 30 Hz
+[PASS] body aim remains on visible crouching torso at 30 Hz
+[PASS] movement-defense replay identical and read-only at 60 Hz
+[PASS] pivots remain anchored and head clears torso at 60 Hz
+[PASS] body aim remains on visible crouching torso at 60 Hz
+[PASS] movement-defense replay identical and read-only at 144 Hz
+[PASS] pivots remain anchored and head clears torso at 144 Hz
+[PASS] body aim remains on visible crouching torso at 144 Hz
+ANATOMY LENGTHS L_UPPERCUT min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.3600001335144, 0.4300000667572, 0.42000004649162]
+[PASS] L_UPPERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_HOOKERCUT min [0.37999993562698, 0.35999989509583, 0.42999991774559, 0.41999995708466] max [0.3800000846386, 0.36000007390976, 0.4300000667572, 0.42000004649162]
+[PASS] L_HOOKERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_HOOK min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.3600001335144, 0.4300000667572, 0.42000004649162]
+[PASS] L_HOOK preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_FLARED min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999995708466] max [0.38000011444092, 0.36000016331673, 0.4300000667572, 0.42000004649162]
+[PASS] L_FLARED preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_STRAIGHT min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.3600001335144, 0.4300000667572, 0.42000004649162]
+[PASS] L_STRAIGHT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_STRAIGHT min [0.37999990582466, 0.35999989509583, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_STRAIGHT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_FLARED min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_FLARED preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_HOOK min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.36000007390976, 0.4300000667572, 0.42000007629395]
+[PASS] R_HOOK preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_HOOKERCUT min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_HOOKERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_UPPERCUT min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_UPPERCUT preserves upper-arm forearm thigh and shin lengths
+CONTACT MATRIX BOXERPUNCHER body=false cases=750 worst=0.44812893867493 failures=0 examples=[]
+[PASS] BOXERPUNCHER head fixed-arm contact matrix
+CONTACT MATRIX BOXERPUNCHER body=true cases=750 worst=0.37480676174164 failures=0 examples=[]
+[PASS] BOXERPUNCHER body fixed-arm contact matrix
+CONTACT MATRIX OUTBOXER body=false cases=750 worst=0.62491971254349 failures=0 examples=[]
+[PASS] OUTBOXER head fixed-arm contact matrix
+CONTACT MATRIX OUTBOXER body=true cases=750 worst=0.49424970149994 failures=0 examples=[]
+[PASS] OUTBOXER body fixed-arm contact matrix
+CONTACT MATRIX SWARMER body=false cases=750 worst=0.36465689539909 failures=0 examples=[]
+[PASS] SWARMER head fixed-arm contact matrix
+CONTACT MATRIX SWARMER body=true cases=750 worst=0.42994117736816 failures=0 examples=[]
+[PASS] SWARMER body fixed-arm contact matrix
+CONTACT MATRIX SLUGGER body=false cases=750 worst=0.42021328210831 failures=0 examples=[]
+[PASS] SLUGGER head fixed-arm contact matrix
+CONTACT MATRIX SLUGGER body=true cases=750 worst=0.34048801660538 failures=0 examples=[]
+[PASS] SLUGGER body fixed-arm contact matrix
+NATIVE GAP L_UPPERCUT body=false region={ "result": "MISS_REACH", "d": 1.82500004768372, "l": 0.0, "h": 1.55, "reach": 1.75, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.0625) } view={ "result": "MISS_REACH", "d": 1.72499990463257, "l": 0.0, "h": 1.55, "reach": 1.70499990463257, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -0.9625) } hand=(0.0, 1.55, -0.78825)
+NATIVE GAP L_HOOKERCUT body=false region={ "result": "MISS_REACH", "d": 2.07500004768372, "l": 0.0, "h": 1.55, "reach": 1.9, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.2375) } view={ "result": "MISS_REACH", "d": 1.875, "l": 0.0, "h": 1.55, "reach": 1.855, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.0375) } hand=(0.0, 1.55, -0.88575)
+NATIVE GAP L_HOOK body=false region={ "result": "MISS_REACH", "d": 1.97500014305115, "l": 0.0, "h": 1.55, "reach": 1.9, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.1375) } view={ "result": "MISS_REACH", "d": 1.875, "l": 0.0, "h": 1.55, "reach": 1.855, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.0375) } hand=(0.0, 1.55, -0.88575)
+NATIVE GAP L_FLARED body=false region={ "result": "MISS_REACH", "d": 2.17499995231628, "l": 0.0, "h": 1.55, "reach": 2.0, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.2875) } view={ "result": "MISS_REACH", "d": 1.97499990463257, "l": 0.0, "h": 1.55, "reach": 1.95499990463257, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.0875) } hand=(0.0, 1.55, -0.95075)
+NATIVE GAP L_STRAIGHT body=false region={ "result": "MISS_REACH", "d": 2.125, "l": 0.0, "h": 1.55, "reach": 2.05, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.2125) } view={ "result": "MISS_REACH", "d": 2.02499985694885, "l": 0.0, "h": 1.55, "reach": 2.00499985694885, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.1125) } hand=(-0.023917, 1.520475, -0.891754)
+EDGE STRAIGHT L_STRAIGHT step=false angle=177.334591987251
+NATIVE GAP R_STRAIGHT body=false region={ "result": "MISS_REACH", "d": 2.125, "l": 0.0, "h": 1.55, "reach": 2.05, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.2125) } view={ "result": "MISS_REACH", "d": 2.02499985694885, "l": 0.0, "h": 1.55, "reach": 2.00499985694885, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.1125) } hand=(0.0, 1.55, -0.98325)
+EDGE STRAIGHT R_STRAIGHT step=false angle=161.079411121159
+NATIVE GAP R_FLARED body=false region={ "result": "MISS_REACH", "d": 2.17499995231628, "l": 0.0, "h": 1.55, "reach": 2.0, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.2875) } view={ "result": "MISS_REACH", "d": 1.97499990463257, "l": 0.0, "h": 1.55, "reach": 1.95499990463257, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.0875) } hand=(0.0, 1.55, -0.95075)
+NATIVE GAP R_HOOK body=false region={ "result": "MISS_REACH", "d": 1.97500014305115, "l": 0.0, "h": 1.55, "reach": 1.9, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.1375) } view={ "result": "MISS_REACH", "d": 1.875, "l": 0.0, "h": 1.55, "reach": 1.855, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.0375) } hand=(0.0, 1.55, -0.88575)
+NATIVE GAP R_HOOKERCUT body=false region={ "result": "MISS_REACH", "d": 2.07500004768372, "l": 0.0, "h": 1.55, "reach": 1.9, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.2375) } view={ "result": "MISS_REACH", "d": 1.875, "l": 0.0, "h": 1.55, "reach": 1.855, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.0375) } hand=(0.0, 1.55, -0.88575)
+NATIVE GAP R_UPPERCUT body=false region={ "result": "MISS_REACH", "d": 1.82500004768372, "l": 0.0, "h": 1.55, "reach": 1.75, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.0625) } view={ "result": "MISS_REACH", "d": 1.72499990463257, "l": 0.0, "h": 1.55, "reach": 1.70499990463257, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -0.9625) } hand=(0.0, 1.55, -0.78825)
+NATIVE CONTACT step=false body=false landed=10 gap=0.10619323730469
+[FAIL] native [false, false] every punch contacts at edge range
+[PASS] native [false, false] connected fixed bones at five interpolation phases
+[PASS] native [false, false] step reach is gradual body travel
+[PASS] native false edge straights extend while close straights fold
+NATIVE GAP L_UPPERCUT body=true region={ "result": "MISS_REACH", "d": 1.82500004768372, "l": 0.0, "h": 1.1, "reach": 1.75, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.0625) } view={ "result": "MISS_REACH", "d": 1.72499990463257, "l": 0.0, "h": 1.1, "reach": 1.70499990463257, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -0.9625) } hand=(0.0, 1.1, -0.75825)
+NATIVE GAP L_HOOKERCUT body=true region={ "result": "MISS_REACH", "d": 2.07500004768372, "l": 0.0, "h": 1.1, "reach": 1.9, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.2375) } view={ "result": "MISS_REACH", "d": 1.875, "l": 0.0, "h": 1.1, "reach": 1.855, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.0375) } hand=(0.0, 1.1, -0.85575)
+NATIVE GAP L_HOOK body=true region={ "result": "MISS_REACH", "d": 1.97500014305115, "l": 0.0, "h": 1.1, "reach": 1.9, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.1375) } view={ "result": "MISS_REACH", "d": 1.875, "l": 0.0, "h": 1.1, "reach": 1.855, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.0375) } hand=(0.0, 1.1, -0.85575)
+NATIVE GAP L_FLARED body=true region={ "result": "MISS_REACH", "d": 2.17499995231628, "l": 0.0, "h": 1.1, "reach": 2.0, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.2875) } view={ "result": "MISS_REACH", "d": 1.97499990463257, "l": 0.0, "h": 1.1, "reach": 1.95499990463257, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.0875) } hand=(0.0, 1.1, -0.92075)
+NATIVE GAP L_STRAIGHT body=true region={ "result": "MISS_REACH", "d": 2.125, "l": 0.0, "h": 1.1, "reach": 2.05, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.2125) } view={ "result": "MISS_REACH", "d": 2.02499985694885, "l": 0.0, "h": 1.1, "reach": 2.00499985694885, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.1125) } hand=(-0.014595, 1.114414, -0.899577)
+NATIVE GAP R_STRAIGHT body=true region={ "result": "MISS_REACH", "d": 2.125, "l": 0.0, "h": 1.1, "reach": 2.05, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.2125) } view={ "result": "MISS_REACH", "d": 2.02499985694885, "l": 0.0, "h": 1.1, "reach": 2.00499985694885, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.1125) } hand=(0.0, 1.1, -0.95325)
+NATIVE GAP R_FLARED body=true region={ "result": "MISS_REACH", "d": 2.17499995231628, "l": 0.0, "h": 1.1, "reach": 2.0, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.2875) } view={ "result": "MISS_REACH", "d": 1.97499990463257, "l": 0.0, "h": 1.1, "reach": 1.95499990463257, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.0875) } hand=(0.0, 1.1, -0.92075)
+NATIVE GAP R_HOOK body=true region={ "result": "MISS_REACH", "d": 1.97500014305115, "l": 0.0, "h": 1.1, "reach": 1.9, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.1375) } view={ "result": "MISS_REACH", "d": 1.875, "l": 0.0, "h": 1.1, "reach": 1.855, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.0375) } hand=(0.0, 1.1, -0.85575)
+NATIVE GAP R_HOOKERCUT body=true region={ "result": "MISS_REACH", "d": 2.07500004768372, "l": 0.0, "h": 1.1, "reach": 1.9, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.2375) } view={ "result": "MISS_REACH", "d": 1.875, "l": 0.0, "h": 1.1, "reach": 1.855, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.0375) } hand=(0.0, 1.1, -0.85575)
+NATIVE GAP R_UPPERCUT body=true region={ "result": "MISS_REACH", "d": 1.82500004768372, "l": 0.0, "h": 1.1, "reach": 1.75, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.0625) } view={ "result": "MISS_REACH", "d": 1.72499990463257, "l": 0.0, "h": 1.1, "reach": 1.70499990463257, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -0.9625) } hand=(0.0, 1.1, -0.75825)
+NATIVE CONTACT step=false body=true landed=10 gap=0.06717806458473
+[FAIL] native [false, true] every punch contacts at edge range
+[PASS] native [false, true] connected fixed bones at five interpolation phases
+[PASS] native [false, true] step reach is gradual body travel
+NATIVE GAP L_UPPERCUT body=false region={ "result": "MISS_REACH", "d": 1.80161499977112, "l": 0.0, "h": 1.55, "reach": 1.75, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.3125) } view={ "result": "MISS_REACH", "d": 1.70161497592926, "l": 0.0, "h": 1.55, "reach": 1.68161497592926, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.2125) } hand=(0.0, 1.55, -0.77305)
+NATIVE GAP L_HOOKERCUT body=false region={ "result": "MISS_REACH", "d": 2.05161666870117, "l": 0.0, "h": 1.55, "reach": 1.9, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.4875) } view={ "result": "MISS_REACH", "d": 1.85161662101746, "l": 0.0, "h": 1.55, "reach": 1.83161662101746, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.2875) } hand=(0.0, 1.55, -0.870551)
+NATIVE GAP L_HOOK body=false region={ "result": "MISS_REACH", "d": 1.95161664485931, "l": 0.0, "h": 1.55, "reach": 1.9, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.3875) } view={ "result": "MISS_REACH", "d": 1.85161662101746, "l": 0.0, "h": 1.55, "reach": 1.83161662101746, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.2875) } hand=(0.0, 1.55, -0.870551)
+NATIVE GAP L_FLARED body=false region={ "result": "MISS_REACH", "d": 2.15161561965942, "l": 0.0, "h": 1.55, "reach": 2.0, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.5375) } view={ "result": "MISS_REACH", "d": 1.95161557197571, "l": 0.0, "h": 1.55, "reach": 1.93161557197571, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.3375) } hand=(0.0, 1.55, -0.93555)
+NATIVE GAP L_STRAIGHT body=false region={ "result": "MISS_REACH", "d": 2.10161638259888, "l": 0.0, "h": 1.55, "reach": 2.05, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.4625) } view={ "result": "MISS_REACH", "d": 2.00161647796631, "l": 0.0, "h": 1.55, "reach": 1.98161647796631, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": false, "target": (0.0, -1.3625) } hand=(-0.024138, 1.520022, -0.909066)
+EDGE STRAIGHT L_STRAIGHT step=true angle=177.334591987251
+NATIVE GAP R_STRAIGHT body=false region={ "result": "MISS_REACH", "d": 2.10161542892456, "l": 0.0, "h": 1.55, "reach": 2.05, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.4625) } view={ "result": "MISS_REACH", "d": 2.00161552429199, "l": 0.0, "h": 1.55, "reach": 1.98161552429199, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.3625) } hand=(0.0, 1.55, -0.96805)
+EDGE STRAIGHT R_STRAIGHT step=true angle=146.213518053004
+NATIVE GAP R_FLARED body=false region={ "result": "MISS_REACH", "d": 2.15161561965942, "l": 0.0, "h": 1.55, "reach": 2.0, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.5375) } view={ "result": "MISS_REACH", "d": 1.95161557197571, "l": 0.0, "h": 1.55, "reach": 1.93161557197571, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.3375) } hand=(0.044818, 1.513104, -0.821376)
+NATIVE GAP R_HOOK body=false region={ "result": "MISS_REACH", "d": 1.95161664485931, "l": 0.0, "h": 1.55, "reach": 1.9, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.3875) } view={ "result": "MISS_REACH", "d": 1.85161662101746, "l": 0.0, "h": 1.55, "reach": 1.83161662101746, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.2875) } hand=(0.0, 1.55, -0.870551)
+NATIVE GAP R_HOOKERCUT body=false region={ "result": "MISS_REACH", "d": 2.05161666870117, "l": 0.0, "h": 1.55, "reach": 1.9, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.4875) } view={ "result": "MISS_REACH", "d": 1.85161662101746, "l": 0.0, "h": 1.55, "reach": 1.83161662101746, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.2875) } hand=(0.0, 1.55, -0.870551)
+NATIVE GAP R_UPPERCUT body=false region={ "result": "MISS_REACH", "d": 1.80161499977112, "l": 0.0, "h": 1.55, "reach": 1.75, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.3125) } view={ "result": "MISS_REACH", "d": 1.70161497592926, "l": 0.0, "h": 1.55, "reach": 1.68161497592926, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": false, "target": (0.0, -1.2125) } hand=(0.0, 1.55, -0.77305)
+NATIVE CONTACT step=true body=false landed=10 gap=0.1309260058403
+[FAIL] native [true, false] every punch contacts at edge range
+[PASS] native [true, false] connected fixed bones at five interpolation phases
+[PASS] native [true, false] step reach is gradual body travel
+[PASS] native true edge straights extend while close straights fold
+NATIVE GAP L_UPPERCUT body=true region={ "result": "MISS_REACH", "d": 1.80161499977112, "l": 0.0, "h": 1.1, "reach": 1.75, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.3125) } view={ "result": "MISS_REACH", "d": 1.70161497592926, "l": 0.0, "h": 1.1, "reach": 1.68161497592926, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.2125) } hand=(-0.0, 1.1, -0.74305)
+NATIVE GAP L_HOOKERCUT body=true region={ "result": "MISS_REACH", "d": 2.05161666870117, "l": 0.0, "h": 1.1, "reach": 1.9, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.4875) } view={ "result": "MISS_REACH", "d": 1.85161662101746, "l": 0.0, "h": 1.1, "reach": 1.83161662101746, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.2875) } hand=(0.0, 1.1, -0.840551)
+NATIVE GAP L_HOOK body=true region={ "result": "MISS_REACH", "d": 1.95161664485931, "l": 0.0, "h": 1.1, "reach": 1.9, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.3875) } view={ "result": "MISS_REACH", "d": 1.85161662101746, "l": 0.0, "h": 1.1, "reach": 1.83161662101746, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.2875) } hand=(0.0, 1.1, -0.840551)
+NATIVE GAP L_FLARED body=true region={ "result": "MISS_REACH", "d": 2.15161561965942, "l": 0.0, "h": 1.1, "reach": 2.0, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.5375) } view={ "result": "MISS_REACH", "d": 1.95161557197571, "l": 0.0, "h": 1.1, "reach": 1.93161557197571, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.3375) } hand=(0.0, 1.1, -0.90555)
+NATIVE GAP L_STRAIGHT body=true region={ "result": "MISS_REACH", "d": 2.10161638259888, "l": 0.0, "h": 1.1, "reach": 2.05, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.4625) } view={ "result": "MISS_REACH", "d": 2.00161647796631, "l": 0.0, "h": 1.1, "reach": 1.98161647796631, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": true, "body": true, "target": (0.0, -1.3625) } hand=(0.0, 1.1, -0.938051)
+NATIVE GAP R_STRAIGHT body=true region={ "result": "MISS_REACH", "d": 2.10161542892456, "l": 0.0, "h": 1.1, "reach": 2.05, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.4625) } view={ "result": "MISS_REACH", "d": 2.00161552429199, "l": 0.0, "h": 1.1, "reach": 1.98161552429199, "lat": [-0.18, 0.18], "heights": [1.35, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.3625) } hand=(-0.0, 1.1, -0.93805)
+NATIVE GAP R_FLARED body=true region={ "result": "MISS_REACH", "d": 2.15161561965942, "l": 0.0, "h": 1.1, "reach": 2.0, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.5375) } view={ "result": "MISS_REACH", "d": 1.95161557197571, "l": 0.0, "h": 1.1, "reach": 1.93161557197571, "lat": [-0.25, 0.25], "heights": [1.1, 1.85], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.3375) } hand=(0.032274, 1.121255, -0.826521)
+NATIVE GAP R_HOOK body=true region={ "result": "MISS_REACH", "d": 1.95161664485931, "l": 0.0, "h": 1.1, "reach": 1.9, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.3875) } view={ "result": "MISS_REACH", "d": 1.85161662101746, "l": 0.0, "h": 1.1, "reach": 1.83161662101746, "lat": [-0.15, 0.5], "heights": [1.35, 1.75], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.2875) } hand=(0.0, 1.1, -0.840551)
+NATIVE GAP R_HOOKERCUT body=true region={ "result": "MISS_REACH", "d": 2.05161666870117, "l": 0.0, "h": 1.1, "reach": 1.9, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.4875) } view={ "result": "MISS_REACH", "d": 1.85161662101746, "l": 0.0, "h": 1.1, "reach": 1.83161662101746, "lat": [-0.2, 0.55], "heights": [1.2, 1.8], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.2875) } hand=(0.0, 1.1, -0.840551)
+NATIVE GAP R_UPPERCUT body=true region={ "result": "MISS_REACH", "d": 1.80161499977112, "l": 0.0, "h": 1.1, "reach": 1.75, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.3125) } view={ "result": "MISS_REACH", "d": 1.70161497592926, "l": 0.0, "h": 1.1, "reach": 1.68161497592926, "lat": [-0.15, 0.15], "heights": [0.95, 1.9], "forward": (0.0, -1.0), "right": (1.0, 0.0), "left": false, "body": true, "target": (0.0, -1.2125) } hand=(0.0, 1.1, -0.74305)
+NATIVE CONTACT step=true body=true landed=10 gap=0.09371500611305
+[FAIL] native [true, true] every punch contacts at edge range
+[PASS] native [true, true] connected fixed bones at five interpolation phases
+[PASS] native [true, true] step reach is gradual body travel
+[PASS] hitstop suspends step-in travel and its remaining distance
+[PASS] feint cancels unspent step-in travel
+[PASS] native feint is emitted without a player contact
+[PASS] player feint preserves opponent recovery
+[PASS] player feint retains the cancelled hand for retraction
+[PASS] feint finishes its actual recovery without inventing a contact
+[PASS] S1 native jab preserves both fighters' motion at interrupt
+[PASS] S1 opponent windup and retraction hold through hitstop
+[PASS] S2 native jab preserves both fighters' motion at unbroken hit
+[PASS] S2 opponent windup and retraction hold through hitstop
+[PASS] authored body uppercut winds up toward the body
+VARIANT DETAIL delay max joint jump 0.20577192306519 contacts 1
+[PASS] delay feint has continuous whole-body transition
+[PASS] delay feint displays only the resolving hand at contact
+[PASS] delayed feint does not hold a false contact pose
+VARIANT DETAIL cancel max joint jump 0.19500131905079 contacts 1
+[PASS] cancel feint has continuous whole-body transition
+[PASS] cancel feint displays only the resolving hand at contact
+[PASS] false tell retracts its coil without a contact or neutral snap
+[PASS] native lifecycle replay is identical with 30 Hz renders
+[PASS] native lifecycle replay is identical with 60 Hz renders
+[PASS] native lifecycle replay is identical with 144 Hz renders
+[PASS] L_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] L_UPPERCUT visible contact matches the resolving tick
+[PASS] L_UPPERCUT keeps the elbow bent through delivery
+[PASS] L_UPPERCUT full rig holds through hitstop
+[PASS] L_UPPERCUT has no one-tick neutral snap
+PART JUMP L_HOOKERCUT tick=29 index=13 from=(-0.529135, 1.026926, -0.154288) to=(-0.558615, 1.234503, -0.315145)
+[PASS] L_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] L_HOOKERCUT visible contact matches the resolving tick
+[PASS] L_HOOKERCUT keeps the elbow bent through delivery
+[PASS] L_HOOKERCUT full rig holds through hitstop
+[FAIL] L_HOOKERCUT has no one-tick neutral snap
+[PASS] L_HOOK connects the ground, hips, trunk, elbow and fist
+[PASS] L_HOOK visible contact matches the resolving tick
+[PASS] L_HOOK keeps the elbow bent through delivery
+[PASS] L_HOOK full rig holds through hitstop
+[PASS] L_HOOK has no one-tick neutral snap
+[PASS] L_FLARED connects the ground, hips, trunk, elbow and fist
+[PASS] L_FLARED visible contact matches the resolving tick
+[PASS] L_FLARED full rig holds through hitstop
+[PASS] L_FLARED has no one-tick neutral snap
+[PASS] L_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[PASS] L_STRAIGHT visible contact matches the resolving tick
+[PASS] L_STRAIGHT shortens inside without changing bone lengths
+[PASS] L_STRAIGHT full rig holds through hitstop
+[PASS] L_STRAIGHT has no one-tick neutral snap
+[PASS] R_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[PASS] R_STRAIGHT visible contact matches the resolving tick
+[PASS] R_STRAIGHT shortens inside without changing bone lengths
+[PASS] R_STRAIGHT full rig holds through hitstop
+[PASS] R_STRAIGHT has no one-tick neutral snap
+[PASS] R_FLARED connects the ground, hips, trunk, elbow and fist
+[PASS] R_FLARED visible contact matches the resolving tick
+[PASS] R_FLARED full rig holds through hitstop
+[PASS] R_FLARED has no one-tick neutral snap
+[PASS] R_HOOK connects the ground, hips, trunk, elbow and fist
+[PASS] R_HOOK visible contact matches the resolving tick
+[PASS] R_HOOK keeps the elbow bent through delivery
+[PASS] R_HOOK full rig holds through hitstop
+[PASS] R_HOOK has no one-tick neutral snap
+[PASS] R_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] R_HOOKERCUT visible contact matches the resolving tick
+[PASS] R_HOOKERCUT keeps the elbow bent through delivery
+[PASS] R_HOOKERCUT full rig holds through hitstop
+[PASS] R_HOOKERCUT has no one-tick neutral snap
+[PASS] R_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] R_UPPERCUT visible contact matches the resolving tick
+[PASS] R_UPPERCUT keeps the elbow bent through delivery
+[PASS] R_UPPERCUT full rig holds through hitstop
+[PASS] R_UPPERCUT has no one-tick neutral snap
+[PASS] SLIP_L keeps limbs fixed and attached through entry and exit
+[PASS] SLIP_L renders the same moving target used by collision
+[PASS] SLIP_L enters and exits without teleporting
+[PASS] SLIP_R keeps limbs fixed and attached through entry and exit
+[PASS] SLIP_R renders the same moving target used by collision
+[PASS] SLIP_R enters and exits without teleporting
+[PASS] DUCK keeps limbs fixed and attached through entry and exit
+[PASS] DUCK renders the same moving target used by collision
+[PASS] DUCK enters and exits without teleporting
+[PASS] WEAVE_L keeps limbs fixed and attached through entry and exit
+[PASS] WEAVE_L renders the same moving target used by collision
+[PASS] WEAVE_L enters and exits without teleporting
+[PASS] WEAVE_R keeps limbs fixed and attached through entry and exit
+[PASS] WEAVE_R renders the same moving target used by collision
+[PASS] WEAVE_R enters and exits without teleporting
+[PASS] LEAN keeps limbs fixed and attached through entry and exit
+[PASS] LEAN renders the same moving target used by collision
+[PASS] LEAN enters and exits without teleporting
+[PASS] stance feet plant while the other foot steps
+[PASS] extra render frames neither advance motion nor alter combat
+[PASS] SLIP_L native defense earns and delivers a counter
+[PASS] SLIP_L counter keeps the whole-body transition continuous
+[PASS] SLIP_R native defense earns and delivers a counter
+[PASS] SLIP_R counter keeps the whole-body transition continuous
+[PASS] DUCK native defense earns and delivers a counter
+[PASS] DUCK counter keeps the whole-body transition continuous
+[PASS] WEAVE_R native defense earns and delivers a counter
+[PASS] WEAVE_R counter keeps the whole-body transition continuous
+[PASS] LEAN native defense earns and delivers a counter
+[PASS] LEAN counter keeps the whole-body transition continuous
+[PASS] PERFECT_BLOCK native defense earns and delivers a counter
+[PASS] PERFECT_BLOCK counter keeps the whole-body transition continuous
+[PASS] STEP_OUT native defense earns and delivers a counter
+[PASS] STEP_OUT counter keeps the whole-body transition continuous
+[PASS] range counter rejects stationary retreat credit
+[PASS] range counter rejects outside retreat credit
+[PASS] range counter rejects stopped retreat credit
+[PASS] active retreat eligibility survives save and deterministic hash
+[PASS] step-out grants the authored RFX-scaled window
+[PASS] restored retreat earns the same counter window
+[PASS] range counter rejects consumed retreat credit
+[PASS] range counter rejects approach retreat credit
+[PASS] range counter rejects circle retreat credit
+[PASS] range counter rejects reversed retreat credit
+SEQUENCE DETAIL guard 1.0 rows ["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT"] hits 4 jump=0.13293494284153
+[PASS] native covered jab-cross-hook-body sequence preserves all four inputs
+[PASS] alternating hands and returning guard have no whole-body snap
+[PASS] tired hands visibly recover for the authored recovery duration
+[PASS] live boss strings show the resolving hand on every contact
+BOXING MOTION VERDICT :: RED (288/296)
+WARNING: 3 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+
+RETAINED souls14.log
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.22993534803391 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[PASS] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+[PASS] yuri_kowalchuk scripted steps interpolate from the previous visible root
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.22964951395988 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] marta_okonkwo_tremblay scripted steps interpolate from the previous visible root
+[PASS] Marta retains Mirror counter state
+[PASS] Marta arms Mirror with the authored fifteen-degree left glove turn
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.16780179738998 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] sam_tagaq scripted steps interpolate from the previous visible root
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+[FAIL] named recruit and encounter labels preserve build identity
+SOULS VERDICT :: RED (13/14)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

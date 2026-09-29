@@ -1,0 +1,790 @@
+{
+  "task": "PAC-202E",
+  "result": "PASS",
+  "design_authority": [
+    "NP_06_AFFINITY s1.2",
+    "NP_04_OPPONENT s8.1-s8.3",
+    "NP_13_SCOPE P1/P2",
+    "PAC-202E DoD and user connected boxing requirements"
+  ],
+  "implementation": [
+    "Four shared-rig style profiles: neutral flex; mobile outboxer with extended lead guard and fast return; compact swarmer with quick low steps and short arcs; planted slugger with delayed release and heavier return. No combat timing/stat changes.",
+    "Yuri and Sam have broader shoulder/limb silhouettes, with fixed bone lengths and head/body contact surfaces. Named roster/encounter identities reset on reused actor nodes.",
+    "Marta retains high guard and hands-down invitation, with her authored 15-degree left glove adjustment during Mirror arming.",
+    "Scripted VM steps are drawn over 12 active ticks. Contact eligibility uses physical combat geometry, with resolved pre-shove geometry held through hitstop. Inside arcs avoid shoulder/elbow reversals."
+  ],
+  "changed_sources": {
+    "engine/greybox/presentation/boxing_motion.gd": "f9c21d9fc55a0996339e91c5e7ba7811a32434ec7476efae1084ec018f187664",
+    "engine/greybox/presentation/fight_view.gd": "1ed37a61379e0b40379da43e0d8ae4561472bdb921fb3b264f8a67009c1ef783",
+    "engine/greybox/tools/drive_boxing_motion.gd": "7d95443b3fde9e7598df80fdb69a5746a87ff8c304781786808f82c399989e73"
+  },
+  "authored_assets_unchanged": {
+    "data/academy.v1.json": {
+      "git_blob": "97affd31549dfa8f433740107b48bc2f56e8f5bf",
+      "sha256": "c5c06d350f55807446957c21a83ac28bffaaa43757e5af8ca215394db567a665"
+    },
+    "data/affinity.v1.json": {
+      "git_blob": "70210de64e40f096c79aaa6a4b0ec606d9df263a",
+      "sha256": "43a78f64c74c837734e9e01b488c7accc37ed3bc1d927b9db536388c0835f901"
+    },
+    "data/audit.v1.json": {
+      "git_blob": "a292a3a53f0d3b348abd9ace8c1b0765a3e237b7",
+      "sha256": "c4e1d6fb85dbf7a193f30ae8b91a7cd7a4d38dac1ce49ffd47f5dc7eba09b1a1"
+    },
+    "data/bouts.v1.json": {
+      "git_blob": "aad72905dc907bf7e40b2a31fcfb4d8e19df8d52",
+      "sha256": "77adfb1779da8d512a8bfba3c6b40de8b9dbc03cae3c714fa6aed22089035f9d"
+    },
+    "data/coaches.v1.json": {
+      "git_blob": "f02a0d94ed8afda61b037223210dc19feb9f1984",
+      "sha256": "bc0ce0e47b6a99ebe447409ce526cfc01d7543a3dc79cadb2a469dfd0244827a"
+    },
+    "data/combat_tuning.v1.json": {
+      "git_blob": "ebaa44bfdd9bd81ef6187ca47641e1df4d10596f",
+      "sha256": "a01185b62bd8779ebc2c6737a85654a5a4593a70a2b812baededd71894f5d2d9"
+    },
+    "data/economy.v1.json": {
+      "git_blob": "13b8148da405349edc319c8b070c9150b50ef091",
+      "sha256": "f2c1119da2e6093b0f2088a6ded339cfdb20f06697cecfa1529bcbab47640987"
+    },
+    "data/facilities.v1.json": {
+      "git_blob": "057e620d9ba6f14660446b7db04ba0384e5c383e",
+      "sha256": "e68ffa67a4cb4a471c4e3b03fa54393662960a43284ff9fdaae85aa1cab249cf"
+    },
+    "data/faucets.v1.json": {
+      "git_blob": "98701f398f034b96b3555389c1b867e474b3d994",
+      "sha256": "81dff3c6f7dbc857f8f3e03d87490c448760a983e37ad17245c9a5a146c83b49"
+    },
+    "data/feud_graph.v1.json": {
+      "git_blob": "ea69dedbaa77e679b110c94e010cb3332c6de519",
+      "sha256": "992976455780d8e0cd394fa04e834dce14b1ad84410d759744652a0aea68a5d9"
+    },
+    "data/formation.v1.json": {
+      "git_blob": "4f20b84caaebe7c1ccd8dc0f2ba7f74d4a82da19",
+      "sha256": "9b1fb0c37d6d4eb0e60de4b17bd79b567b5618e252d4724ed94637439fdd29f0"
+    },
+    "data/formats.v1.json": {
+      "git_blob": "d58ba36ff6f6bc171e1fee50708a906fcba540c9",
+      "sha256": "21636fce065efdf7675a5441d113cf3a1ea2357fc59b96a3e771269b22e34aec"
+    },
+    "data/gear.v1.json": {
+      "git_blob": "df87b5372a51529306c8b57928f07360192e3cd0",
+      "sha256": "41f57b94eccde69dffd78ecdbfdc2a55e10ee865e0dfd03613be24f52ccd0f40"
+    },
+    "data/growth.v1.json": {
+      "git_blob": "79892780a1e6658724ee8ae1361e0c25d7cc53f6",
+      "sha256": "5842ddb99e3a33a8fe07c612468eebad506b196a36191fc0534e6221c27743da"
+    },
+    "data/gym_wall.v1.json": {
+      "git_blob": "f0d17785789b906331b6ed7f0730e0d0fc58da41",
+      "sha256": "7b9b5bc657f90518ff7574b227091fe377a85f0e942412e74fcf169a88b24143"
+    },
+    "data/hissatsu_library.v1.json": {
+      "git_blob": "3006f0742d144d5714f4119caf93410187e85091",
+      "sha256": "1fab971d1cb825409e8d5b51e8d1455fb43dfa98dfeb828732792ebbcb1a100b"
+    },
+    "data/hissatsu_library.v2.json": {
+      "git_blob": "da0b740e444a5ec8abc70726cabd8d8a6acf2839",
+      "sha256": "7d29b17094519c42b623db3e69bf94bd1724358d5eb321cba00c49016142c169"
+    },
+    "data/houses.v1.json": {
+      "git_blob": "94323b3054944fe5b91572a78f9760aadb0458a3",
+      "sha256": "f77b6e7e75d00b7b07e4657bdf3d814c9c3a4c61b2955d91fb0a229adc74177d"
+    },
+    "data/hybrids.v1.json": {
+      "git_blob": "5b0757a1bc01f80b266dc8604464858aaa45a82d",
+      "sha256": "cc4fb95458bc5ab323b464606d60fec17a8ecd061562ed9c8a9db5e6f9940ecd"
+    },
+    "data/neutral.v1.json": {
+      "git_blob": "9f5669e52bedba69529a6ea2e7c5047605d4e031",
+      "sha256": "c600c4162c2611ee7e86956f61cd4e075a79ec272776ef2cd33efed9f69ba0f1"
+    },
+    "data/pattern_intel.v1.json": {
+      "git_blob": "7ba01f3a08a1675ef168529d431c7932da076fa4",
+      "sha256": "2873628003681252ada2456b336ae3bca4472e03684af6b63b6059080822f0be"
+    },
+    "data/pattern_pieces.v1.json": {
+      "git_blob": "8d09f59bd113a3b36101ddd72ca469ff6db52b1f",
+      "sha256": "dd33612d59078fb0624b71a6be10605148eb55f4ea882c251ae81e769bdcc713"
+    },
+    "data/patterns/README.md": {
+      "git_blob": "d52857531998df529ac2af8804cb48d3343f323a",
+      "sha256": "9508ee808a7b1cbc9d9cf3bd18a6df5c40d063f4ca01184db7a2b49656833ce4"
+    },
+    "data/patterns/ada_okafor.json": {
+      "git_blob": "2fae4c6ec42930060bbf942815ce3111d78bedbf",
+      "sha256": "70850ff88c32eb01d7e58babf1ebeb11c38ca91f5d7b1915a816e9dec7d00b3a"
+    },
+    "data/patterns/alfie_crane.json": {
+      "git_blob": "dc20fd2b7b5f728afe0fca517d4b404b92792461",
+      "sha256": "c5d9fbfcecbe5e03ffd4a2ed2b2cace2940c87290a1fe3bd45113b4c7f0709be"
+    },
+    "data/patterns/anders_vey.json": {
+      "git_blob": "19ffefb0dbe22d4f7275584613ded1db7e7a917c",
+      "sha256": "db1003ccc91c223021cdfe6cb1cf0b075a34f5158309dcc39c4641dfc0ed99e8"
+    },
+    "data/patterns/carter_okafor.json": {
+      "git_blob": "f462439972b10accc5fcaf9bce9aa3df362ac2c9",
+      "sha256": "7e833000908c00abd920183e138a03e7ca2c0bc4010ebe4350034e8fd46edc95"
+    },
+    "data/patterns/cassidy_vane.json": {
+      "git_blob": "4fe8de6c486c4526363b709efe2524a39bed6e9c",
+      "sha256": "f807972fdf4d4efa3e444c89b3ed8d0c6fbf6131ec0831a81a0c27244776877e"
+    },
+    "data/patterns/chiamaka_okafor.json": {
+      "git_blob": "e31f7f36423906d0e435b255a383fa208bc0b906",
+      "sha256": "c8fc42caa18fa083633b119bf84ef231a93ec914634a52064ef642a16aa869ce"
+    },
+    "data/patterns/commissioner_cal.json": {
+      "git_blob": "b1dc3a02badb457b78fa3a8ade5699aac4665f3c",
+      "sha256": "1fae565efef84b7f76fca136a8a0ef624c4e530032fbec63c57a4d57d5376cad"
+    },
+    "data/patterns/deshawn_vaughn.json": {
+      "git_blob": "8b3b3632dcdf0a2292ce66376793963952567c00",
+      "sha256": "78a0cb9b541e4b63de7af13aa2aba26591ac2d6481c6ff039d5186cc41a4a9fb"
+    },
+    "data/patterns/efua_osei.json": {
+      "git_blob": "da58535e029ed2a1f31d24449d5ef8e799c975d7",
+      "sha256": "a0553c99b8a055f68e20c87e1ede5b9c36ccfc5617091276970cc2fa57abd6d9"
+    },
+    "data/patterns/hc0_surety.json": {
+      "git_blob": "aeeab85f4c81fa862743c61a18dd441e241eb0d4",
+      "sha256": "884c33feac5f910d9a2e5071d729d242992364c6774840bca2c716233cec1c5e"
+    },
+    "data/patterns/hc4_cartographer.json": {
+      "git_blob": "19377c9fea8eb5863a395ca3b6f78749e74943ec",
+      "sha256": "931576463d629f00278899978875d1692c41dc1e1d2b4785a63415d519e213a9"
+    },
+    "data/patterns/hc7_echo.json": {
+      "git_blob": "97475e0d3b1675ace756408fa0e06e4ed3c503db",
+      "sha256": "8d3abba2969590306a7d01b9fb5a8ccc6adad1282f31d24d366e6e9af7728947"
+    },
+    "data/patterns/hc9_choir.json": {
+      "git_blob": "6d31ec78be24ceda0e5de151e428da7555657b08",
+      "sha256": "753a37bddfc15ca5024a243256e324d32dcb958aabcf2e8a3796e3605b5e220b"
+    },
+    "data/patterns/ioan_vasile.json": {
+      "git_blob": "1a5e2d65f2af1aefcddcc347606851721f4e3055",
+      "sha256": "d98ab5dec046bcad8a03cc47c1ed6ba961c210c81c9f2a7ac77ae35b8d7f378e"
+    },
+    "data/patterns/itzel_reyes_ortega.json": {
+      "git_blob": "6e156c496e01d489a1d300a63bbe2ccdf2c21089",
+      "sha256": "bdcf4cea7d46848f076d87ff82f8a712fc24723b718f63b1ac5b239eb05726e7"
+    },
+    "data/patterns/jean_guy_moreau.json": {
+      "git_blob": "ebc32324f3bd372302c8f7052755acb2a41020f1",
+      "sha256": "cefe67a8e74f6ba0fdbf03d483a45eaa2d3e5f1c84663d108c3565885cbd4325"
+    },
+    "data/patterns/marta_okonkwo_tremblay.json": {
+      "git_blob": "d899769f8ffe7f1cd71e9a95e5e4787f919f10b8",
+      "sha256": "b271039ed38d3fc8027eff016b7a01a2f4063f826712553287884cd432424350"
+    },
+    "data/patterns/moira_macisaac.json": {
+      "git_blob": "d627b9cb80c1425c74627ac8f9234dfc279ca959",
+      "sha256": "5d953a80f1a759bba36fa4b29efe61a83bd505e2cd2dba962073e22407da5801"
+    },
+    "data/patterns/remy_moreau.json": {
+      "git_blob": "2cca67f407bb776a307a1c1aa56001479c5555a0",
+      "sha256": "e192fe297f567f543b75f3c0ccc83cc0d2db8fe717b298d2a7b09fbaf0ba00de"
+    },
+    "data/patterns/sam_tagaq.json": {
+      "git_blob": "b83960c3b6b0b107dcb39dce79692b43fc6ddb67",
+      "sha256": "c998914687fae96020ecbf41e3ebaaf4266f0c994a45a243131fc4bfdc570ec9"
+    },
+    "data/patterns/sora_kannagi.json": {
+      "git_blob": "32839c8ad559212fdc46995419689061a90ff1e5",
+      "sha256": "238e209b54e864d8cfe0ebbe9821f1042a971fdfd45b38a2c79dbba880b86cb9"
+    },
+    "data/patterns/tam_nguyen_roy.json": {
+      "git_blob": "cf8f0b0e4bf4c6792feb6dbb22dfa0a02c3f2489",
+      "sha256": "10971a89ee4d4a7c67a81ff1c83fc04a4c12be28dbd2c67dd2d16d7a39deac94"
+    },
+    "data/patterns/yordanis_baro.json": {
+      "git_blob": "5dafa59cdab92d8cf0f03489aaaba3f72f42ff07",
+      "sha256": "604b82b0c4d501ed6ef8ffbbc50c5baf269bd108e5191a9310c0422841791f4c"
+    },
+    "data/patterns/yuri_kowalchuk.json": {
+      "git_blob": "4ee91ad1ba7237ea79a40063e7f2eff5e4432c2d",
+      "sha256": "9bffb23dfaa28e432375b2a03c6eac0c967ddbfd06cd55e34aefa7f410b5fefd"
+    },
+    "data/recruits.v1.json": {
+      "git_blob": "6acdf905d27ef71d74ac7f3c066d1e42aaa15642",
+      "sha256": "84e61ab884026ff34f2bfca27351133bc8ca91261451924f5fc0d03de237ced1"
+    },
+    "data/remixes.v1.json": {
+      "git_blob": "e984648e51144cf6f3b633344407cbbbc8793efc",
+      "sha256": "86ff24290c3e81a11ab4e0d27fd78ee97f2d3b6e41885806a717831662f0b96a"
+    },
+    "data/scrap_objectives.v1.json": {
+      "git_blob": "8888d73c2c6f34507ac59b78aef5a108723b30c6",
+      "sha256": "22c261e5eadc1b362579d3b69a7d597e1fbd6ac33e6ed6a35393dba4c9994989"
+    },
+    "data/staff.v1.json": {
+      "git_blob": "999fb8f8d10b330f1da5f0ef40990bfb075ac896",
+      "sha256": "bb364109ca8f86ee6fdc2285c6e8d34554d10a5367924c460242fd52ef4459fa"
+    },
+    "data/string_wall.v1.json": {
+      "git_blob": "09d70f9929e59e43b92f2aeda9f3578313492895",
+      "sha256": "15bbd87a8be7562a71f50fbde6790943b9221e05f65e7b1e5d0b9f030f721423"
+    },
+    "data/tactics.v1.json": {
+      "git_blob": "6bdba7bdca9d58e025aa259e3d3169893b88b4f1",
+      "sha256": "b3d60613954021c498951e891f3e32a47d12560b304f1a1fa5905895adfc0ca3"
+    },
+    "data/talk.v1.json": {
+      "git_blob": "950118bb5e5397b08f02be9ec5d4cdfb217151a0",
+      "sha256": "98b58377f1aa022bdfe8413fa442d12cfdec88ca9facd565036b533f0787ceb3"
+    },
+    "data/techniques.v1.json": {
+      "git_blob": "b12d4bbd6d1826acf6da2acd502b81dca3cc4fd3",
+      "sha256": "f0538a83be7377e44310c587351c1d2253e3a98864d4a170ec3497dd217185ef"
+    },
+    "data/transformations.v1.json": {
+      "git_blob": "6a434ba8f55097c0ade64113779b1891776f266a",
+      "sha256": "b69d92ff09a492d40fa8050a7c36810f29acd0b5b6af33cdb937d6ca3f218f4c"
+    },
+    "docs/NorthPaw-game_docs/NP_00_INDEX.md": {
+      "git_blob": "7ca30438e437cd13b5caca79d70b02561763f5a2",
+      "sha256": "40edb53314f2b9165698ae8952ad0550f73c6d767c46d73c3a4d31f004da568e"
+    },
+    "docs/NorthPaw-game_docs/NP_01_SPORT.md": {
+      "git_blob": "93ae1ededb6726eb5db2d0f86a283d231b9e8407",
+      "sha256": "d6328414ac3e58634ec0ee07c9646e54f1d2eca8bcf4569ffad86e77059ce079"
+    },
+    "docs/NorthPaw-game_docs/NP_02_TWO_LAYER.md": {
+      "git_blob": "6b1851f39d67ec6a9686ff6c7772d3f32287c25f",
+      "sha256": "74bf2bebfad4a0e5d1ae42e8091e3c023ce836c10af485c7c1048543a6b8c992"
+    },
+    "docs/NorthPaw-game_docs/NP_03_COMBAT_ENGINE.md": {
+      "git_blob": "4c5e3d2fa70d8c50178c9742b0c871b45905ed07",
+      "sha256": "39f092742e3d02d3c2a59a5e81648e34d6acf5d37cdaf74748eeb8164da309f5"
+    },
+    "docs/NorthPaw-game_docs/NP_04A_BOSS_ROSTER_ARC1.md": {
+      "git_blob": "6728c233c360edfeefd3c531eafb0fdf50fe1561",
+      "sha256": "eef4040412fdfb106b6de18c816eee6d852adf7c43133992b9f8a5dd4fc7f0e9"
+    },
+    "docs/NorthPaw-game_docs/NP_04B_BOSS_ROSTER_ARC23.md": {
+      "git_blob": "743b1c96a48984117f5dd5232fc846bc74d61cc4",
+      "sha256": "eafadc4ffce3e8b41dbf690be19bea11610b14b930643797fd10c18e0e3b528e"
+    },
+    "docs/NorthPaw-game_docs/NP_04_OPPONENT.md": {
+      "git_blob": "b90a92cb726e7035d7f9ee7cebf3586ebdd40791",
+      "sha256": "a7913fe535829d86b79a1b8b129b06dcdb9e12fc9224a71bf878b93e3e9fe6a0"
+    },
+    "docs/NorthPaw-game_docs/NP_05A_HISSATSU_LIBRARY.md": {
+      "git_blob": "ae0bd85b1b6b05c001c2cc59ede1c0ddc2a004ed",
+      "sha256": "0a7cc8ab9af271a6848e5555cfb451daf1c134086920d8d7759d5dbeb3866265"
+    },
+    "docs/NorthPaw-game_docs/NP_05_TENSION_HISSATSU.md": {
+      "git_blob": "335f3c64d37693dc04645dbaf69a2f45cfff6d77",
+      "sha256": "4ed8c34b34694a45596e062b41fa833cc163a15c83d3e228927a319550c3cc75"
+    },
+    "docs/NorthPaw-game_docs/NP_06_AFFINITY.md": {
+      "git_blob": "c78bf29eef91b8cf59adfbe97a8a90ac839280c5",
+      "sha256": "e1f63579cf46e04c51b588c7bb34b7c3ead7bac19b9de6210aa7664adbb97d51"
+    },
+    "docs/NorthPaw-game_docs/NP_07A_HOUSE_QUESTLINES.md": {
+      "git_blob": "5f926d7070d37bb64dbf6608b1e2036eb2c6c04a",
+      "sha256": "3432ec67d6970a8df229615125a6f0113ea7cbe7461b7ba80e718beb50731b64"
+    },
+    "docs/NorthPaw-game_docs/NP_07_HOUSES.md": {
+      "git_blob": "139576fb3a8648080beca34c63ac1e4b0c6f585c",
+      "sha256": "7e9cc78091ea1178fc5f42487aa38aec47b124a5a64fbe0976c0d6cc1705b4f6"
+    },
+    "docs/NorthPaw-game_docs/NP_08_STABLE.md": {
+      "git_blob": "08af402a9fb9a9575d271700cf4eeefc6b4d556a",
+      "sha256": "cdf09f2ef970c28360fb98a78bfa6354cc52343a466097ea7b9beed3d1d07b35"
+    },
+    "docs/NorthPaw-game_docs/NP_09_TRANSFORMATIONS.md": {
+      "git_blob": "1bbebd5771f87e5d593b48cd5ec9fb817257be08",
+      "sha256": "3c0ce3595adb8b6307585ec81812b2e4267fdc6b0827feee45907e2053b6b8d7"
+    },
+    "docs/NorthPaw-game_docs/NP_10_TACTICS.md": {
+      "git_blob": "b109187f1b68cc43f7146db557ff9217a447ac94",
+      "sha256": "ca46996c5b58681ca7748dc8a4156f3959ee1ec4f9e999bc715e7d9b8cfdcb13"
+    },
+    "docs/NorthPaw-game_docs/NP_11_PROGRESSION.md": {
+      "git_blob": "8d7aa5ad378896850f46b8728849c1ca3988cdad",
+      "sha256": "c0fa0abcc8bc41ce6fc75a872779a9a2259c13006f8d3a976cd030ef5a6ad51b"
+    },
+    "docs/NorthPaw-game_docs/NP_12A_EP01_SCRIPT.md": {
+      "git_blob": "9bd75b00d4f279474fb78a19721e7633d8c30e9e",
+      "sha256": "5e4e5ab4ca061e869ece9e2470ea2829ceb619096939099d105bcdb68c5b6126"
+    },
+    "docs/NorthPaw-game_docs/NP_12_NARRATIVE.md": {
+      "git_blob": "292634e6d53fc86444dbcc36b92ca42c84929ca1",
+      "sha256": "b2369d480616b24e4f051b96c0f4feddf3fd1a82c519065cd5888b0b7aa6e62d"
+    },
+    "docs/NorthPaw-game_docs/NP_13_SCOPE.md": {
+      "git_blob": "8c6fe3ec37e9bd767b14a2a997ebf0b1c3a3cea0",
+      "sha256": "2f1ac407a443486e873796537e9523def0e4a19bd9ce77e4a8ca7799ff2ba870"
+    },
+    "docs/NorthPaw-game_docs/NP_14_ENGINE_THEORY.md": {
+      "git_blob": "b2fb88e6cd6b15c8865f270ce9189db35fb2a4c9",
+      "sha256": "031f707d12e9df54e81586679946bf012e3f01570b0e93cc0fa3087dcd143529"
+    },
+    "docs/NorthPaw-game_docs/first.md": {
+      "git_blob": "7513cbe13478921020b88aeed48127a431a3cc9d",
+      "sha256": "09ad90212c0708f3273b05a7062bcada67b8a1eab3f88b10e524671e067ca621"
+    },
+    "engine/greybox/academy.v1.json": {
+      "git_blob": "97affd31549dfa8f433740107b48bc2f56e8f5bf",
+      "sha256": "c5c06d350f55807446957c21a83ac28bffaaa43757e5af8ca215394db567a665"
+    },
+    "engine/greybox/affinity.v1.json": {
+      "git_blob": "70210de64e40f096c79aaa6a4b0ec606d9df263a",
+      "sha256": "43a78f64c74c837734e9e01b488c7accc37ed3bc1d927b9db536388c0835f901"
+    },
+    "engine/greybox/audit.v1.json": {
+      "git_blob": "a292a3a53f0d3b348abd9ace8c1b0765a3e237b7",
+      "sha256": "c4e1d6fb85dbf7a193f30ae8b91a7cd7a4d38dac1ce49ffd47f5dc7eba09b1a1"
+    },
+    "engine/greybox/bouts.v1.json": {
+      "git_blob": "aad72905dc907bf7e40b2a31fcfb4d8e19df8d52",
+      "sha256": "77adfb1779da8d512a8bfba3c6b40de8b9dbc03cae3c714fa6aed22089035f9d"
+    },
+    "engine/greybox/coaches.v1.json": {
+      "git_blob": "f02a0d94ed8afda61b037223210dc19feb9f1984",
+      "sha256": "bc0ce0e47b6a99ebe447409ce526cfc01d7543a3dc79cadb2a469dfd0244827a"
+    },
+    "engine/greybox/combat_tuning.v1.json": {
+      "git_blob": "ebaa44bfdd9bd81ef6187ca47641e1df4d10596f",
+      "sha256": "a01185b62bd8779ebc2c6737a85654a5a4593a70a2b812baededd71894f5d2d9"
+    },
+    "engine/greybox/economy.v1.json": {
+      "git_blob": "13b8148da405349edc319c8b070c9150b50ef091",
+      "sha256": "f2c1119da2e6093b0f2088a6ded339cfdb20f06697cecfa1529bcbab47640987"
+    },
+    "engine/greybox/facilities.v1.json": {
+      "git_blob": "057e620d9ba6f14660446b7db04ba0384e5c383e",
+      "sha256": "e68ffa67a4cb4a471c4e3b03fa54393662960a43284ff9fdaae85aa1cab249cf"
+    },
+    "engine/greybox/faucets.v1.json": {
+      "git_blob": "98701f398f034b96b3555389c1b867e474b3d994",
+      "sha256": "81dff3c6f7dbc857f8f3e03d87490c448760a983e37ad17245c9a5a146c83b49"
+    },
+    "engine/greybox/feud_graph.v1.json": {
+      "git_blob": "ea69dedbaa77e679b110c94e010cb3332c6de519",
+      "sha256": "992976455780d8e0cd394fa04e834dce14b1ad84410d759744652a0aea68a5d9"
+    },
+    "engine/greybox/formation.v1.json": {
+      "git_blob": "4f20b84caaebe7c1ccd8dc0f2ba7f74d4a82da19",
+      "sha256": "9b1fb0c37d6d4eb0e60de4b17bd79b567b5618e252d4724ed94637439fdd29f0"
+    },
+    "engine/greybox/formats.v1.json": {
+      "git_blob": "d58ba36ff6f6bc171e1fee50708a906fcba540c9",
+      "sha256": "21636fce065efdf7675a5441d113cf3a1ea2357fc59b96a3e771269b22e34aec"
+    },
+    "engine/greybox/gear.v1.json": {
+      "git_blob": "df87b5372a51529306c8b57928f07360192e3cd0",
+      "sha256": "41f57b94eccde69dffd78ecdbfdc2a55e10ee865e0dfd03613be24f52ccd0f40"
+    },
+    "engine/greybox/growth.v1.json": {
+      "git_blob": "79892780a1e6658724ee8ae1361e0c25d7cc53f6",
+      "sha256": "5842ddb99e3a33a8fe07c612468eebad506b196a36191fc0534e6221c27743da"
+    },
+    "engine/greybox/gym_wall.v1.json": {
+      "git_blob": "f0d17785789b906331b6ed7f0730e0d0fc58da41",
+      "sha256": "7b9b5bc657f90518ff7574b227091fe377a85f0e942412e74fcf169a88b24143"
+    },
+    "engine/greybox/hissatsu_library.v2.json": {
+      "git_blob": "da0b740e444a5ec8abc70726cabd8d8a6acf2839",
+      "sha256": "7d29b17094519c42b623db3e69bf94bd1724358d5eb321cba00c49016142c169"
+    },
+    "engine/greybox/houses.v1.json": {
+      "git_blob": "94323b3054944fe5b91572a78f9760aadb0458a3",
+      "sha256": "f77b6e7e75d00b7b07e4657bdf3d814c9c3a4c61b2955d91fb0a229adc74177d"
+    },
+    "engine/greybox/hybrids.v1.json": {
+      "git_blob": "5b0757a1bc01f80b266dc8604464858aaa45a82d",
+      "sha256": "cc4fb95458bc5ab323b464606d60fec17a8ecd061562ed9c8a9db5e6f9940ecd"
+    },
+    "engine/greybox/neutral.v1.json": {
+      "git_blob": "9f5669e52bedba69529a6ea2e7c5047605d4e031",
+      "sha256": "c600c4162c2611ee7e86956f61cd4e075a79ec272776ef2cd33efed9f69ba0f1"
+    },
+    "engine/greybox/pattern_intel.v1.json": {
+      "git_blob": "7ba01f3a08a1675ef168529d431c7932da076fa4",
+      "sha256": "2873628003681252ada2456b336ae3bca4472e03684af6b63b6059080822f0be"
+    },
+    "engine/greybox/pattern_pieces.v1.json": {
+      "git_blob": "8d09f59bd113a3b36101ddd72ca469ff6db52b1f",
+      "sha256": "dd33612d59078fb0624b71a6be10605148eb55f4ea882c251ae81e769bdcc713"
+    },
+    "engine/greybox/patterns/ada_okafor.json": {
+      "git_blob": "2fae4c6ec42930060bbf942815ce3111d78bedbf",
+      "sha256": "70850ff88c32eb01d7e58babf1ebeb11c38ca91f5d7b1915a816e9dec7d00b3a"
+    },
+    "engine/greybox/patterns/alfie_crane.json": {
+      "git_blob": "dc20fd2b7b5f728afe0fca517d4b404b92792461",
+      "sha256": "c5d9fbfcecbe5e03ffd4a2ed2b2cace2940c87290a1fe3bd45113b4c7f0709be"
+    },
+    "engine/greybox/patterns/anders_vey.json": {
+      "git_blob": "19ffefb0dbe22d4f7275584613ded1db7e7a917c",
+      "sha256": "db1003ccc91c223021cdfe6cb1cf0b075a34f5158309dcc39c4641dfc0ed99e8"
+    },
+    "engine/greybox/patterns/carter_okafor.json": {
+      "git_blob": "f462439972b10accc5fcaf9bce9aa3df362ac2c9",
+      "sha256": "7e833000908c00abd920183e138a03e7ca2c0bc4010ebe4350034e8fd46edc95"
+    },
+    "engine/greybox/patterns/cassidy_vane.json": {
+      "git_blob": "4fe8de6c486c4526363b709efe2524a39bed6e9c",
+      "sha256": "f807972fdf4d4efa3e444c89b3ed8d0c6fbf6131ec0831a81a0c27244776877e"
+    },
+    "engine/greybox/patterns/chiamaka_okafor.json": {
+      "git_blob": "e31f7f36423906d0e435b255a383fa208bc0b906",
+      "sha256": "c8fc42caa18fa083633b119bf84ef231a93ec914634a52064ef642a16aa869ce"
+    },
+    "engine/greybox/patterns/commissioner_cal.json": {
+      "git_blob": "b1dc3a02badb457b78fa3a8ade5699aac4665f3c",
+      "sha256": "1fae565efef84b7f76fca136a8a0ef624c4e530032fbec63c57a4d57d5376cad"
+    },
+    "engine/greybox/patterns/deshawn_vaughn.json": {
+      "git_blob": "8b3b3632dcdf0a2292ce66376793963952567c00",
+      "sha256": "78a0cb9b541e4b63de7af13aa2aba26591ac2d6481c6ff039d5186cc41a4a9fb"
+    },
+    "engine/greybox/patterns/efua_osei.json": {
+      "git_blob": "da58535e029ed2a1f31d24449d5ef8e799c975d7",
+      "sha256": "a0553c99b8a055f68e20c87e1ede5b9c36ccfc5617091276970cc2fa57abd6d9"
+    },
+    "engine/greybox/patterns/hc0_surety.json": {
+      "git_blob": "aeeab85f4c81fa862743c61a18dd441e241eb0d4",
+      "sha256": "884c33feac5f910d9a2e5071d729d242992364c6774840bca2c716233cec1c5e"
+    },
+    "engine/greybox/patterns/hc4_cartographer.json": {
+      "git_blob": "19377c9fea8eb5863a395ca3b6f78749e74943ec",
+      "sha256": "931576463d629f00278899978875d1692c41dc1e1d2b4785a63415d519e213a9"
+    },
+    "engine/greybox/patterns/hc7_echo.json": {
+      "git_blob": "97475e0d3b1675ace756408fa0e06e4ed3c503db",
+      "sha256": "8d3abba2969590306a7d01b9fb5a8ccc6adad1282f31d24d366e6e9af7728947"
+    },
+    "engine/greybox/patterns/hc9_choir.json": {
+      "git_blob": "6d31ec78be24ceda0e5de151e428da7555657b08",
+      "sha256": "753a37bddfc15ca5024a243256e324d32dcb958aabcf2e8a3796e3605b5e220b"
+    },
+    "engine/greybox/patterns/ioan_vasile.json": {
+      "git_blob": "1a5e2d65f2af1aefcddcc347606851721f4e3055",
+      "sha256": "d98ab5dec046bcad8a03cc47c1ed6ba961c210c81c9f2a7ac77ae35b8d7f378e"
+    },
+    "engine/greybox/patterns/itzel_reyes_ortega.json": {
+      "git_blob": "6e156c496e01d489a1d300a63bbe2ccdf2c21089",
+      "sha256": "bdcf4cea7d46848f076d87ff82f8a712fc24723b718f63b1ac5b239eb05726e7"
+    },
+    "engine/greybox/patterns/jean_guy_moreau.json": {
+      "git_blob": "ebc32324f3bd372302c8f7052755acb2a41020f1",
+      "sha256": "cefe67a8e74f6ba0fdbf03d483a45eaa2d3e5f1c84663d108c3565885cbd4325"
+    },
+    "engine/greybox/patterns/marta_okonkwo_tremblay.json": {
+      "git_blob": "d899769f8ffe7f1cd71e9a95e5e4787f919f10b8",
+      "sha256": "b271039ed38d3fc8027eff016b7a01a2f4063f826712553287884cd432424350"
+    },
+    "engine/greybox/patterns/moira_macisaac.json": {
+      "git_blob": "d627b9cb80c1425c74627ac8f9234dfc279ca959",
+      "sha256": "5d953a80f1a759bba36fa4b29efe61a83bd505e2cd2dba962073e22407da5801"
+    },
+    "engine/greybox/patterns/remy_moreau.json": {
+      "git_blob": "2cca67f407bb776a307a1c1aa56001479c5555a0",
+      "sha256": "e192fe297f567f543b75f3c0ccc83cc0d2db8fe717b298d2a7b09fbaf0ba00de"
+    },
+    "engine/greybox/patterns/sam_tagaq.json": {
+      "git_blob": "b83960c3b6b0b107dcb39dce79692b43fc6ddb67",
+      "sha256": "c998914687fae96020ecbf41e3ebaaf4266f0c994a45a243131fc4bfdc570ec9"
+    },
+    "engine/greybox/patterns/sora_kannagi.json": {
+      "git_blob": "32839c8ad559212fdc46995419689061a90ff1e5",
+      "sha256": "238e209b54e864d8cfe0ebbe9821f1042a971fdfd45b38a2c79dbba880b86cb9"
+    },
+    "engine/greybox/patterns/tam_nguyen_roy.json": {
+      "git_blob": "cf8f0b0e4bf4c6792feb6dbb22dfa0a02c3f2489",
+      "sha256": "10971a89ee4d4a7c67a81ff1c83fc04a4c12be28dbd2c67dd2d16d7a39deac94"
+    },
+    "engine/greybox/patterns/yordanis_baro.json": {
+      "git_blob": "5dafa59cdab92d8cf0f03489aaaba3f72f42ff07",
+      "sha256": "604b82b0c4d501ed6ef8ffbbc50c5baf269bd108e5191a9310c0422841791f4c"
+    },
+    "engine/greybox/patterns/yuri_kowalchuk.json": {
+      "git_blob": "4ee91ad1ba7237ea79a40063e7f2eff5e4432c2d",
+      "sha256": "9bffb23dfaa28e432375b2a03c6eac0c967ddbfd06cd55e34aefa7f410b5fefd"
+    },
+    "engine/greybox/recruits.v1.json": {
+      "git_blob": "6acdf905d27ef71d74ac7f3c066d1e42aaa15642",
+      "sha256": "84e61ab884026ff34f2bfca27351133bc8ca91261451924f5fc0d03de237ced1"
+    },
+    "engine/greybox/remixes.v1.json": {
+      "git_blob": "e984648e51144cf6f3b633344407cbbbc8793efc",
+      "sha256": "86ff24290c3e81a11ab4e0d27fd78ee97f2d3b6e41885806a717831662f0b96a"
+    },
+    "engine/greybox/scrap_objectives.v1.json": {
+      "git_blob": "8888d73c2c6f34507ac59b78aef5a108723b30c6",
+      "sha256": "22c261e5eadc1b362579d3b69a7d597e1fbd6ac33e6ed6a35393dba4c9994989"
+    },
+    "engine/greybox/staff.v1.json": {
+      "git_blob": "999fb8f8d10b330f1da5f0ef40990bfb075ac896",
+      "sha256": "bb364109ca8f86ee6fdc2285c6e8d34554d10a5367924c460242fd52ef4459fa"
+    },
+    "engine/greybox/string_wall.v1.json": {
+      "git_blob": "09d70f9929e59e43b92f2aeda9f3578313492895",
+      "sha256": "15bbd87a8be7562a71f50fbde6790943b9221e05f65e7b1e5d0b9f030f721423"
+    },
+    "engine/greybox/tactics.v1.json": {
+      "git_blob": "6bdba7bdca9d58e025aa259e3d3169893b88b4f1",
+      "sha256": "b3d60613954021c498951e891f3e32a47d12560b304f1a1fa5905895adfc0ca3"
+    },
+    "engine/greybox/talk.v1.json": {
+      "git_blob": "950118bb5e5397b08f02be9ec5d4cdfb217151a0",
+      "sha256": "98b58377f1aa022bdfe8413fa442d12cfdec88ca9facd565036b533f0787ceb3"
+    },
+    "engine/greybox/techniques.v1.json": {
+      "git_blob": "b12d4bbd6d1826acf6da2acd502b81dca3cc4fd3",
+      "sha256": "f0538a83be7377e44310c587351c1d2253e3a98864d4a170ec3497dd217185ef"
+    },
+    "engine/greybox/transformations.v1.json": {
+      "git_blob": "6a434ba8f55097c0ade64113779b1891776f266a",
+      "sha256": "b69d92ff09a492d40fa8050a7c36810f29acd0b5b6af33cdb937d6ca3f218f4c"
+    },
+    "pbn/README.md": {
+      "git_blob": "32f583594eef5e3703bfa975abd0a9ad605c6821",
+      "sha256": "7501b429f0841eb7d12fa4e26aa4084e00542be4902a1657a786e7cab28a3568"
+    },
+    "pbn/ada_okafor.pbn": {
+      "git_blob": "6919ff3350955abcf8b6a81423ae1c6457a912c6",
+      "sha256": "66ef8c1248a2392a29bdfa98dec3f855e9c1ff1630d14ed0cf05c0fb2ac9cc84"
+    },
+    "pbn/alfie_crane.pbn": {
+      "git_blob": "2383d51fdca3b2a6706ce5a894016743ab1d83b3",
+      "sha256": "3207f4c7e7f038a136acd56740ac4bf3ebe5d3bd568e1c24a28019da1c04464b"
+    },
+    "pbn/anders_vey.pbn": {
+      "git_blob": "99bc4122a70c38c1705487eb73c49480f7e40a25",
+      "sha256": "a8804a6dd9aa64b15232fdfd3924d785b3b0749f9af38d06f487bd21efdb84dd"
+    },
+    "pbn/carter_okafor.pbn": {
+      "git_blob": "7dccf6f9b9dec8b0c5a760972dc8007d90d626f4",
+      "sha256": "244000560e3df9a2b69139a2e4837b334de5a9dbc87272eb86dadec717f829f1"
+    },
+    "pbn/cassidy_vane.pbn": {
+      "git_blob": "8e3593330e3aa58803a132b594182205f5bbaeea",
+      "sha256": "7eac6137b0ab7ce8abeb0b1554681572aba90a540394dd26c83a39ec9e7e2b2a"
+    },
+    "pbn/chiamaka_okafor.pbn": {
+      "git_blob": "94108c7fe18b8546f0cb7c4b6c02d4c8c334ff0f",
+      "sha256": "47f143741dc451ff260e860786710a4fab843faa3ac56e9331d6edfc30421918"
+    },
+    "pbn/commissioner_cal.pbn": {
+      "git_blob": "8f73067cfc2ee70208e65fdd346beb92bbb2653e",
+      "sha256": "d5c41810712f04de1ed16ea6fb8b976cbec5c8d3747e22eee4d935b88fd175c8"
+    },
+    "pbn/deshawn_vaughn.pbn": {
+      "git_blob": "0795839392921be9e804ceca1aff304bc6473b7b",
+      "sha256": "38ddd11a00f20c90b3a703ba67ece758e906645c4b94bb83bd81f9ffc331007b"
+    },
+    "pbn/efua_osei.pbn": {
+      "git_blob": "e6c2eee5129abb4c28f3e4be6f9698fee8964b2b",
+      "sha256": "ae402106e6f4d685cdcf5d76896ecf6b9165ab6c28d6c9ee8baef05a720080ea"
+    },
+    "pbn/hc0_surety.pbn": {
+      "git_blob": "55294fa858e804f95104730ef0935f8fab5fb750",
+      "sha256": "3398b405e7c64691aa0fd46f488b28d9218208c67a24d41d728e39d54331d727"
+    },
+    "pbn/hc4_cartographer.pbn": {
+      "git_blob": "4157bcfe994e9c1e8fa5b88aabdf116ef74b2925",
+      "sha256": "1385cc805f5ba611e35d6b2fc089ce32b0e42e1324fdd58e6d5f466c3498dbd5"
+    },
+    "pbn/hc7_echo.pbn": {
+      "git_blob": "90f150526f4a4346729426bc2b622c8fb8b43c25",
+      "sha256": "d2e7b352960ec6daed8afc128a5299b56737e28f9c67420505b16fe9d6ff2ffe"
+    },
+    "pbn/hc9_choir.pbn": {
+      "git_blob": "d392d12b99bc21b3e535606b8c87d59f7fe196e0",
+      "sha256": "2130f2612bbe2199352f315d5a7bf91560dccced15fdc0c8fc076b4a26186f5a"
+    },
+    "pbn/ioan_vasile.pbn": {
+      "git_blob": "b0d774971aecc217263fa9e3d11ff68ab4e39cae",
+      "sha256": "018b29b1c7853f6d1aa5db7f5d47058698f4b5d5a0f29779fbfa1a63a55443b6"
+    },
+    "pbn/itzel_reyes_ortega.pbn": {
+      "git_blob": "f7702ef3df1ec2b5ecb9b80a9b8a9f9aa99240dd",
+      "sha256": "3e84a38c685e8ab935e8941dde09040f18994cb775d95ee7e603b8d2a3ba6e04"
+    },
+    "pbn/jean_guy_moreau.pbn": {
+      "git_blob": "915ddfe2d91b8ab0fb1f1ef853d83f8d2a3d166c",
+      "sha256": "2db3070d45a8249f8e88958799ebdce9a0bb51341dcf85194da0bdbf4d067895"
+    },
+    "pbn/marta_okonkwo_tremblay.pbn": {
+      "git_blob": "6c04aa9105de63c6cd29b0bb956e7d90e2e10d2d",
+      "sha256": "7edda663cbc6629a878eaa309ae5d9c620a8d4ad32ef66425265583b4a2df951"
+    },
+    "pbn/moira_macisaac.pbn": {
+      "git_blob": "2d0eec76bc380476b8d293d713b74a3c7e5c92e8",
+      "sha256": "b8f69bfe30d1649bddca060df6fda1c5199281d501c48ae5d7b69bafef1f01db"
+    },
+    "pbn/pbn_compiler.py": {
+      "git_blob": "575bb8aabe74353890a1b0d90d756748ef1d75a1",
+      "sha256": "0793d3841743bb5f6cb8451ba8b37bed040a961554e44cd4d13e350c4efdc40b"
+    },
+    "pbn/remy_moreau.pbn": {
+      "git_blob": "0a00a32515547a6a1b1d9028e0d53d4aab41c10d",
+      "sha256": "02c24ba4c6fa126b6088f43a26ef5fa277ba3ac1c479338be17eb2c644c54c16"
+    },
+    "pbn/sam_tagaq.pbn": {
+      "git_blob": "d52d448a1c0270784797bf051d9eab0cab182699",
+      "sha256": "512d2a407734d3ace7c057b61b2f3db0d2a2e9cf5a14841918fab9e73f06814f"
+    },
+    "pbn/sora_kannagi.pbn": {
+      "git_blob": "a67ded590f213f9ad49e87017dc7dca0fa30fa55",
+      "sha256": "cdd31cf058e5ae2e75af6c11499db0340b3824e51a4d82b50fb533f4783a8bbb"
+    },
+    "pbn/tam_nguyen_roy.pbn": {
+      "git_blob": "c68d166d370b44ac89678af3a3d2eaf36bdb7468",
+      "sha256": "e8fd6780b67ee6c76372f7207e7981cbe13cd514a2c29132122b14445070c233"
+    },
+    "pbn/yordanis_baro.pbn": {
+      "git_blob": "7e53b3ddc11ddda0f7de4b9ca0dbe80c08c3acd4",
+      "sha256": "418255dd191a72a5423805f5dada1dde7b7d13d9926664f4a41a20f0dd806369"
+    },
+    "pbn/yuri_kowalchuk.pbn": {
+      "git_blob": "b9e95a948776dbacdf5e96141d56d1bb39d6562b",
+      "sha256": "e2dfa9bcdd60c7e97eb3ba198feae90b118033492d718d9e0ac58b7cede527ce"
+    }
+  },
+  "verification": {
+    "runtime": "55/55 jobs, 24 bosses each 454/454, determinism 57/57",
+    "input": "98/98",
+    "combat": "67/67",
+    "readability": "113/113",
+    "motion_batch": "299/299",
+    "final_style_checks": "50/50",
+    "final_gpu": "513/513 (301 mechanical checks plus 212 captures)",
+    "named_contacts": "4500 cases, 6/6 groups",
+    "style_contacts": "6000 cases, 8/8 groups",
+    "python": "44/44",
+    "film": "18/18; 4202 frames at 60 fps, 70.033 seconds, H264 1280x720",
+    "travel_contacts": "360 displaced/moving-target cases, 1/1 group"
+  },
+  "boundaries": [
+    "The 55-job batch motion run preceded the final named-label normalization and Marta glove micro-turn additions. Final headless style checks and the full final GPU motion driver cover both additions; simulation and authored data remained unchanged throughout.",
+    "Native input is synthetic keyboard events through the normal adapter. Three Souls compares 960 fixed ticks per opponent with an unrendered seeded control, including forced authored S1/S2 sequences; this is not a human bout.",
+    "Game-speed movie rendered at 60 fps and reviewed through sampled frames. No professional boxing authenticity, physical input latency, human enjoyment or full connected game acceptance claimed.",
+    "Windows root certificate diagnostic and retained ObjectDB exit warnings do not claim warning-free or leak-free execution. No script errors in accepted runs.",
+    "Final review added a passing 360-case scripted travel/contact matrix to the standard driver and reran the final headless style suite (50/50). This changed only test coverage; production source matches the accepted 513-check GPU and 18-check film runs."
+  ],
+  "visual_review": {
+    "method": "Agent inspection of native game-speed movie samples and full-driver captures; static frame inspection, not continuous human viewing.",
+    "checked": [
+      "Four style stance and recovery samples",
+      "Planted support and attached elbows/knees",
+      "Yuri broad loaded delivery",
+      "Marta high guard and glove tell",
+      "Sam guarded advance",
+      "Chase camera and opaque side inspection"
+    ],
+    "film": "styles-game-speed.mp4",
+    "frames": 4202,
+    "fps": 60,
+    "duration_seconds": 70.033333
+  },
+  "failures_retained": "previous-attempts.log plus original ignored .PACER/PAC-202E run directories; no thresholds, DoD, authored packages, patterns, stats or seeds changed to pass.",
+  "artifacts": {
+    "combat.log": {
+      "sha256": "f31022372717a1e8dcd2c18ce03942f228ef2838a90c0ac05d4b842651a6f039",
+      "bytes": 3297
+    },
+    "exchange-film.json": {
+      "sha256": "184b797a282a4f6aa5e4656c340f925a93834bfcb6ba4ed0da1141c1202711a9",
+      "bytes": 31957
+    },
+    "film.log": {
+      "sha256": "4eb318c127ce22255858839a928a99c2d7f1d49feca4f730e3a79f98e6e4b849",
+      "bytes": 2774
+    },
+    "input-evidence.json": {
+      "sha256": "3bb6f6ca8be122db9d497c731c278475c51e7dbb09a66e7cab2eec0536a51270",
+      "bytes": 11675
+    },
+    "input.log": {
+      "sha256": "b22f54d28c772fd0fdd6559690ec00e03a2ed181ffc008a196f36fe0eb2699fd",
+      "bytes": 4094
+    },
+    "marta.png": {
+      "sha256": "fec9fec173408087b5ddab154d651aba214cffa8be49e8b4c9f8a84e3198d5cd",
+      "bytes": 119748
+    },
+    "motion.log": {
+      "sha256": "446b9223aa688e212b7ac3604d923fdee0751ed47462f8f29ea838e2160e64b3",
+      "bytes": 27420
+    },
+    "named-contacts.log": {
+      "sha256": "ea4cd3284013d72a0535e45adb540fdc336d2069f39f7c6d5c5e05baae82bdf5",
+      "bytes": 1135
+    },
+    "presentation-evidence.json": {
+      "sha256": "f6c85a03bd388e6ce0459561dfe49034555a196e3bfcd880696dd11c199f37a4",
+      "bytes": 11799
+    },
+    "previous-attempts.log": {
+      "sha256": "ab863197af7467dfcb38651d2035c710a09af70e79098ab155cc4b94da8a4f9d",
+      "bytes": 103148
+    },
+    "python-tests.log": {
+      "sha256": "8772f574c69afccd6a277230798ea885ec7edcd9065f35d500ad6bd4350e75fe",
+      "bytes": 5695
+    },
+    "readability.log": {
+      "sha256": "03ac6333855bd089b2315fc865ffc56253df71074444567adc3292ee2c3251ac",
+      "bytes": 5925
+    },
+    "rendered.log": {
+      "sha256": "504a2569ef3d1b53ac26e471db90b7899caffd67a8f74fc456dfa9d4036360ed",
+      "bytes": 36467
+    },
+    "runtime-evidence.json": {
+      "sha256": "9617f6e50ffa7416e12f082ad96084b37d02186a958b96d60eb41ffb0058c49e",
+      "bytes": 14147
+    },
+    "runtime-results.json": {
+      "sha256": "18f1dbfa2bcb64610a94af37d927f2e05618c7d9c2cb5a2c6882a4f1f6f63bc2",
+      "bytes": 47275
+    },
+    "sam.png": {
+      "sha256": "c95679cbdd139c190a76220acd82522b5496a57c1e6a6750e444852dd34ec183",
+      "bytes": 109271
+    },
+    "style-boxerpuncher.png": {
+      "sha256": "66648df2f24538d49b537335316844fdb0651bacab1fe1b34ba4896f664234fb",
+      "bytes": 87512
+    },
+    "style-outboxer.png": {
+      "sha256": "d5f72503221393f6dac009ab917804201c4b55f823de3376dd6bdba382edeec6",
+      "bytes": 89471
+    },
+    "style-slugger.png": {
+      "sha256": "4e593afb0a546068ce0c8975f5cb6a696e4b968f8e72f06e13eff7f3bb4b7a90",
+      "bytes": 88527
+    },
+    "style-swarmer.png": {
+      "sha256": "25521011ff9c8fd0b50b88f31ff40e22b1ba762c48859267442029f5aeefeaff",
+      "bytes": 87898
+    },
+    "styles-baseline.log": {
+      "sha256": "6c70cf9c9a383ca0e905e2ed33ca63e09465c0558fe54c5296fadc66ae15e550",
+      "bytes": 633
+    },
+    "styles-game-speed.mp4": {
+      "sha256": "7a92516a76850794da7123f9cb3f1a3169eb5960d040eccd8e8a516c9cbb4f1d",
+      "bytes": 11968604
+    },
+    "styles.log": {
+      "sha256": "fbf1e4fca231f37052b03531c2ca00b923d1bb842e1e231489624ef0430c2531",
+      "bytes": 4528
+    },
+    "travel-contacts.log": {
+      "sha256": "de813e4c8554b5b25f348bbe279a395e7c5c1d79144b58646cccccf9fe6e999f",
+      "bytes": 382
+    },
+    "yuri.png": {
+      "sha256": "0db32fe672d91e3b5f00c1d8a2849d54dace706326aa488a061f8ef366e23605",
+      "bytes": 116580
+    }
+  }
+}

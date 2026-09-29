@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+CONTACT MATRIX yuri_kowalchuk body=false cases=750 worst=0.41579034924507 failures=0 examples=[]
+[PASS] yuri_kowalchuk head fixed-arm contact matrix
+CONTACT MATRIX yuri_kowalchuk body=true cases=750 worst=0.338563144207 failures=0 examples=[]
+[PASS] yuri_kowalchuk body fixed-arm contact matrix
+CONTACT MATRIX marta_okonkwo_tremblay body=false cases=750 worst=0.62491971254349 failures=0 examples=[]
+[PASS] marta_okonkwo_tremblay head fixed-arm contact matrix
+CONTACT MATRIX marta_okonkwo_tremblay body=true cases=750 worst=0.49424970149994 failures=0 examples=[]
+[PASS] marta_okonkwo_tremblay body fixed-arm contact matrix
+CONTACT MATRIX sam_tagaq body=false cases=750 worst=0.44722834229469 failures=0 examples=[]
+[PASS] sam_tagaq head fixed-arm contact matrix
+CONTACT MATRIX sam_tagaq body=true cases=750 worst=0.39779809117317 failures=0 examples=[]
+[PASS] sam_tagaq body fixed-arm contact matrix
+NAMED CONTACTS VERDICT :: GREEN (6/6)

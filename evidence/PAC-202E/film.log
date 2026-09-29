@@ -1,0 +1,39 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+Movie Maker mode enabled, recording movie in 1280×720 @ 60 FPS...
+[PASS] 60fps native film retains twelve commands and fixed attached anatomy
+FILM VERDICT :: GREEN (1/1)
+[PASS] 60fps native film retains twelve commands and fixed attached anatomy
+FILM VERDICT :: GREEN (2/2)
+[PASS] 60fps native film retains twelve commands and fixed attached anatomy
+FILM VERDICT :: GREEN (3/3)
+[PASS] 60fps native film retains twelve commands and fixed attached anatomy
+FILM VERDICT :: GREEN (4/4)
+THREE SOULS yuri_kowalchuk offense=9 verbs=["punch", "wait"] mirror=false wall=false jump=0.22993534803391 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[PASS] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+[PASS] yuri_kowalchuk scripted steps interpolate from the previous visible root
+THREE SOULS marta_okonkwo_tremblay offense=6 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.22964951395988 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] marta_okonkwo_tremblay scripted steps interpolate from the previous visible root
+[PASS] Marta retains Mirror counter state
+[PASS] Marta arms Mirror with the authored fifteen-degree left glove turn
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.16780179738998 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] sam_tagaq scripted steps interpolate from the previous visible root
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+[PASS] named recruit and encounter labels preserve build identity
+STYLE FILM VERDICT :: GREEN (18/18)
+--------------------------------------------------------------------------------
+Done recording movie at path: C:\Users\ryanf\github\_games\true-north-boxing\.PACER\PAC-202E\styles-verified.avi
+4202 frames at 60 FPS (movie length: 00:01:10:02), recorded in 00:01:20 (87% of real-time speed).
+CPU render time: 3.34 seconds (average: 0.80 ms/frame)
+GPU render time: 3.20 seconds (average: 0.76 ms/frame)
+Encoding time: 24.99 seconds (average: 5.95 ms/frame)
+--------------------------------------------------------------------------------
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)

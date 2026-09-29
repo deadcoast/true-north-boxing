@@ -12,6 +12,8 @@ var failures := []
 var trace := []
 var keys := {}
 var anatomy_diagnostics := 0
+var film_label: Label
+var film_canvas: CanvasLayer
 
 func _initialize() -> void: _run.call_deferred()
 
@@ -79,6 +81,33 @@ func _run() -> void:
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
 	await process_frame
 	scene.controls_menu.close(); scene.begin_fight(false)
+	if "styles-film" in OS.get_cmdline_user_args():
+		film_canvas = CanvasLayer.new(); film_canvas.layer = 20; root.add_child(film_canvas)
+		film_label = Label.new(); film_label.position = Vector2(24, 146); film_label.add_theme_font_size_override("font_size", 24); film_canvas.add_child(film_label)
+		for style in Motion.STANCES: await _exchange_film(style)
+		await _souls()
+		print("STYLE FILM VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); film_canvas.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "styles-baseline" in OS.get_cmdline_user_args():
+		_style_signatures()
+		print("STYLES BASELINE :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "styles-only" in OS.get_cmdline_user_args():
+		_style_signatures(); await _styles(); await _souls()
+		print("STYLES VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "souls-only" in OS.get_cmdline_user_args():
+		await _souls()
+		print("SOULS VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "named-contacts" in OS.get_cmdline_user_args():
+		await contacts(true)
+		print("NAMED CONTACTS VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "travel-contacts" in OS.get_cmdline_user_args():
+		_travel_contacts()
+		print("TRAVEL CONTACTS VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
 	if "film" in OS.get_cmdline_user_args():
 		await _exchange_film()
 		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
@@ -86,6 +115,7 @@ func _run() -> void:
 		await transitions()
 		print("TRANSITIONS VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
 		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	_style_signatures(); await _styles(); await _souls()
 	await _connected_combinations()
 	if "combinations-only" in OS.get_cmdline_user_args():
 		print("COMBINATIONS VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
@@ -310,10 +340,161 @@ func _anatomy_ok(rig: Dictionary) -> bool:
 		if absf(rig["knees"][i].distance_to(rig["ankles"][i]) - Motion.SHIN) > 0.00001: return false
 	return true
 
-func _exchange_film() -> void:
+func _travel_contacts() -> void:
+	var bad := []; var count := 0
+	for row in scene.combat_input.ROWS:
+		for body in [false, true]:
+			for dodge in ["", "SLIP", "LEAN"]:
+				for distance in [1.3, 1.9, 2.3]:
+					for who in ["P", "B"]:
+						fresh(); tests.place(scene.sim, distance)
+						var a: Dictionary = scene.sim.P if who == "P" else scene.sim.B
+						var d: Dictionary = scene.sim.B if who == "P" else scene.sim.P
+						d["dodge"] = dodge; d["dodge_t"] = 12 if dodge != "" else 0; d["dodge_dir"] = 1
+						var physical: Dictionary = scene.sim.contact_region(a, d, row, body)
+						scene.fight_view.travels[who] = {"tick": scene.sim.tick, "sim_tick": scene.sim.tick, "prior": Vector2.ZERO, "offset": Vector2(0.4, 0.3)}
+						scene.fight_view.strikes[who] = {"tick": scene.sim.tick, "row": row, "body": body, "retract": 24}
+						scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
+						var actor: Node3D = scene.player if who == "P" else scene.boss
+						var rig: Dictionary = actor.get_meta("kinematics"); var hand := 0 if row.begins_with("L_") else 1
+						var gap: float = rig["wrists"][hand].distance_to(rig["contact_centers"][hand]) - float(rig["contact_radii"][hand])
+						count += 1
+						if not (absf(gap) < 0.001 if physical["result"] == "HIT" else gap > 0.00001): bad.append([row, body, dodge, distance, who, physical["result"], gap])
+	print("TRAVEL CONTACT MATRIX count=", count, " failures=", bad.size(), " examples=", bad.slice(0, 12))
+	check("scripted travel preserves physical eligibility and drawn contact with moving targets", bad.is_empty())
+
+func _style_signatures() -> void:
+	_travel_contacts()
+	var deliveries := []; var returns := []; var steps := []
+	for style in Motion.STANCES:
+		var solver := Motion.new()
+		var fighter := {"pos": Vector2.ZERO, "style": style}
+		var other := {"pos": Vector2(0, -1.5)}
+		var launched: Dictionary = solver.sample(fighter, other, 0, {"row": "R_STRAIGHT", "progress": 0.5}, Vector3.ZERO)
+		var returned: Dictionary = solver.sample(fighter, other, 1, {"row": "R_STRAIGHT", "progress": 1.0, "recovery": 0.5}, Vector3.ZERO)
+		deliveries.append(snappedf(launched["chain"]["upper_arm"], 0.001)); returns.append(snappedf(returned["chain"]["upper_arm"], 0.001))
+		solver = Motion.new()
+		for tick in 12:
+			fighter["pos"] = Vector2(0, -tick * 0.012)
+			solver.sample(fighter, other, tick, {}, Vector3.ZERO)
+		steps.append(snappedf(solver.feet[0].y, 0.00001))
+	print("STYLE SIGNATURES delivery=", deliveries, " return=", returns, " steps=", steps)
+	for pair in [[deliveries, "delivery"], [returns, "recovery"], [steps, "footwork cadence"]]:
+		var unique := {}
+		for value in pair[0]: unique[value] = true
+		check("four styles express distinct " + pair[1], unique.size() == 4)
+
+func _styles() -> void:
+	for style in Motion.STANCES:
+		var fixed := true; var contacts := 0; var jump := 0.0; var head_agrees := true
+		for row in scene.combat_input.ROWS:
+			fresh(); scene.sim.P["style"] = style
+			scene.sim.P["pkg"] = scene.sim.AFF["style"]["packages"][style].duplicate()
+			scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
+			scene._render(1); var old := snapshot()
+			for tick in 130:
+				var events := step({"punch": row} if tick == 0 else {})
+				if tick == 0: tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
+				jump = maxf(jump, pose_jump(old, snapshot())); old = snapshot()
+				var rig: Dictionary = scene.player.get_meta("kinematics")
+				fixed = fixed and _anatomy_ok(rig)
+				for event in events:
+					if event.get("kind") == "hit" and event.get("on") == "B":
+						var hand := 0 if row.begins_with("L_") else 1
+						var center: Vector3 = rig["contact_centers"][hand]
+						if absf(rig["wrists"][hand].distance_to(center) - float(rig["contact_radii"][hand])) < 0.001: contacts += 1
+				if tick % 8 == 0:
+					scene._render(0.5); fixed = fixed and rigid_render(scene.player); scene._render(1)
+				if row == "R_STRAIGHT" and tick in [0, 12, 28, 44, 100]: await capture("side-style-" + style.to_lower() + "-%03d" % tick)
+		check(style + " ten punches keep authoritative contact and attached anatomy", contacts == 10 and fixed)
+		check(style + " delivery and return remain continuous", jump < 0.25)
+		for pair in [[KEY_Q, "SLIP_L"], [KEY_E, "SLIP_R"], [KEY_DOWN, "DUCK"], [KEY_V, "WEAVE"], [KEY_B, "LEAN"], [KEY_SPACE, "GUARD"]]:
+			fresh(); scene.sim.P["style"] = style; scene.sim.P["pkg"] = scene.sim.AFF["style"]["packages"][style].duplicate()
+			scene._render(1); var old := snapshot(); var defense_jump := 0.0
+			for tick in 72:
+				key(pair[0], tick < 24 if pair[1] == "GUARD" else tick == 0); native_step()
+				var rig: Dictionary = scene.player.get_meta("kinematics")
+				var physical: Dictionary = scene.sim._head_world(scene.sim.P, scene.sim.B)
+				head_agrees = head_agrees and (scene.player.position + rig["head"]).distance_to(Space.ground(physical["p"]) + Vector3.UP * float(physical["h"])) < 0.0001
+				fixed = fixed and rigid_render(scene.player)
+				defense_jump = maxf(defense_jump, pose_jump(old, snapshot())); old = snapshot()
+			check(style + " " + pair[1] + " keeps collision-aligned continuous defense", fixed and head_agrees and defense_jump < 0.25)
+		print("STYLE MATRIX ", style, " contacts=", contacts, " jump=", jump)
+
+func _souls() -> void:
+	for name in ["yuri_kowalchuk", "marta_okonkwo_tremblay", "sam_tagaq"]:
+		fresh(Sim.BOSSES.find(name))
+		# Same seeded simulation with the same forced authored strings and native
+		# input, but no presentation. Rendering must never change its outcome.
+		scene.sim = tests.make_sim(Sim.BOSSES.find(name), 731)
+		var control = tests.make_sim(Sim.BOSSES.find(name), 731)
+		scene.fight_view.clock_sim = null; scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
+		var same := true; var fixed := true; var aligned := true; var offense := 0; var moves := []; var journal := []; var interpolation := true
+		var mirror := false; var wall := false; var old := snapshot(scene.boss); var jump := 0.0; var micro_turn := 0.0
+		for tick in 960:
+			if tick in [0, 450]:
+				var string := "S1" if tick == 0 else "S2"
+				force_tell(string); control.events.clear(); control._force_string(string, 1.0, false)
+			key(KEY_J, tick == 125); key(KEY_SPACE, tick >= 450 and tick < 600)
+			var intent: Dictionary = scene._intent()
+			var previous_roots := [scene.player.position, scene.boss.position]
+			var events := step(intent); control.step(intent)
+			same = same and scene.sim.hash_state() == control.hash_state()
+			fixed = fixed and rigid_render(scene.boss) and rigid_render(scene.player)
+			var current := snapshot(scene.boss)
+			if pose_jump(old, current) > 0.24:
+				var part := 0
+				for i in old.size():
+					if current[i].origin.distance_to(old[i].origin) > current[part].origin.distance_to(old[part].origin): part = i
+				print("SOUL JUMP ", name, " tick=", tick, " part=", part, " jump=", pose_jump(old, current), " attack=", scene.fight_view.attacks["B"], " events=", events)
+			jump = maxf(jump, pose_jump(old, current)); old = current
+			mirror = mirror or int(scene.sim.B["counter_state_t"]) > 0
+			if name.begins_with("marta") and tick < 40: micro_turn = maxf(micro_turn, absf(scene.boss.get_meta("kinematics")["twists"][0]))
+			wall = wall or float(scene.sim.wall.get("B", {}).get("pts", 0)) > 0
+			for event in events:
+				if event.get("kind") == "boss_act":
+					if event.get("verb") == "move":
+						scene._render(0)
+						interpolation = interpolation and scene.player.position.distance_to(previous_roots[0]) < 0.0001 and scene.boss.position.distance_to(previous_roots[1]) < 0.0001
+						scene._render(1)
+					journal.append({"tick": scene.sim.tick, "event": event})
+					if not event.get("verb", "") in moves: moves.append(event.get("verb", ""))
+					if event.get("verb") == "punch":
+						offense += 1
+						var hand := 0 if str(event["row"]).begins_with("L_") else 1
+						var rig: Dictionary = scene.boss.get_meta("kinematics")
+						var gap: float = rig["wrists"][hand].distance_to(rig["contact_centers"][hand]) - float(rig["contact_radii"][hand])
+						aligned = aligned and (absf(gap) < 0.001 if float(rig["contact_hits"][hand]) > 0.5 else gap > 0.00001)
+			if tick in [0, 24, 60, 126, 475, 540]: await capture("front-soul-" + name + "-%03d" % tick)
+			if "styles-film" in OS.get_cmdline_user_args() and tick % 2 == 1:
+				film_label.text = "Three Souls | " + name.replace("_", " ").capitalize()
+				scene._render(0.5)
+				await process_frame; await RenderingServer.frame_post_draw
+				if tick % 120 == 1: root.get_texture().get_image().save_png("user://soul-film-" + name + "-%04d.png" % tick)
+		print("THREE SOULS ", name, " offense=", offense, " verbs=", moves, " mirror=", mirror, " wall=", wall, " jump=", jump, " fixed=", fixed, " aligned=", aligned)
+		check(name + " renders authored offense without changing the seeded simulation", same and offense > 0)
+		check(name + " keeps fixed connected anatomy and resolved contact", fixed and aligned and jump < 0.25)
+		check(name + " scripted steps interpolate from the previous visible root", interpolation)
+		if name.begins_with("marta"): check("Marta retains Mirror counter state", mirror)
+		if name.begins_with("marta"): check("Marta arms Mirror with the authored fifteen-degree left glove turn", is_equal_approx(micro_turn, deg_to_rad(15.0)))
+		if name.begins_with("sam"): check("Sam retains Wall Gauge", wall)
+		var f := FileAccess.open("user://styles-" + name + ".json", FileAccess.WRITE); f.store_string(JSON.stringify(journal, "  ")); f.close()
+	# Build changes are applied to existing live actor nodes, including roster
+	# swaps; they must not retain the preceding fighter's mesh proportions.
+	fresh(); var widths := []
+	for name in ["YURI", "MARTA", "SAM", "RORY"]:
+		scene.sim.lineup[scene.sim.seg_idx]["name"] = name; scene._render(1)
+		widths.append(scene.player.get_meta("upper_arms")[0].scale.x)
+	check("live roster swaps apply and reset named build breadth", widths[0] > widths[2] and widths[2] > widths[1] and is_equal_approx(widths[3], 1.0))
+	check("named recruit and encounter labels preserve build identity", is_equal_approx(Motion.style_profile({"motion_identity": "Yuri Kowalchuk"})["bulk"], widths[0]) and is_equal_approx(Motion.style_profile({"motion_identity": "Sam Tagaq"})["bulk"], widths[2]))
+
+func _exchange_film(style := "") -> void:
 	# --write-movie at 60 fps records exactly two fixed 120 Hz combat steps per
 	# frame. This is an isolated native-input exchange, not an AI/player trial.
 	fresh(); scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
+	if style != "":
+		scene.sim.P["style"] = style; scene.sim.P["pkg"] = scene.sim.AFF["style"]["packages"][style].duplicate()
+		scene._render(1); film_label.text = "Boxing style | " + style
 	scene.sim.B["comp"] = 10000; scene.sim.B["comp_max"] = 10000
 	var opaque_materials := {}
 	if "side" in OS.get_cmdline_user_args():
@@ -326,7 +507,10 @@ func _exchange_film() -> void:
 	key(KEY_SPACE, true)
 	for frame in 900:
 		for substep in 2:
-			if scene.sim.tick > 8 and issued < sequence.size() and fired == issued and scene.sim.P["pending"].is_empty() and scene.sim.P["busy_t"] <= 3:
+			if style != "" and scene.sim.tick < 360:
+				key(KEY_D, scene.sim.tick < 45); key(KEY_A, scene.sim.tick >= 45 and scene.sim.tick < 90)
+				for defense in [[KEY_Q, 110], [KEY_E, 155], [KEY_DOWN, 200], [KEY_V, 245], [KEY_B, 305]]: key(defense[0], scene.sim.tick == defense[1])
+			if scene.sim.tick > (360 if style != "" else 8) and issued < sequence.size() and fired == issued and scene.sim.P["pending"].is_empty() and scene.sim.P["busy_t"] <= 3:
 				if issued > 0: key(sequence[issued - 1], false)
 				key(KEY_C, issued % 4 == 3); key(KEY_SHIFT, issued in [2, 8]); key(KEY_ALT, issued == 6)
 				if issued == 6: scene.combat_input.since["windup"] = Time.get_ticks_usec() - 200000
@@ -344,13 +528,13 @@ func _exchange_film() -> void:
 			for part in opaque_materials:
 				production_materials[part] = part.material_override; part.material_override = opaque_materials[part]
 		await process_frame; await RenderingServer.frame_post_draw
-		if frame % 30 == 0: root.get_texture().get_image().save_png("user://film-%04d.png" % frame)
+		if frame % 30 == 0: root.get_texture().get_image().save_png("user://film-" + style.to_lower() + "-%04d.png" % frame)
 		# The next production frame updates ShaderMaterial uniforms. Restore
 		# those materials immediately after this inspection frame is drawn.
 		for part in production_materials: part.material_override = production_materials[part]
 		if fired == sequence.size() and scene.sim.P["busy_t"] == 0: break
 	check("60fps native film retains twelve commands and fixed attached anatomy", fired == sequence.size() and fixed)
-	var f := FileAccess.open("user://exchange-film.json", FileAccess.WRITE)
+	var f := FileAccess.open("user://exchange-film" + ("-" + style.to_lower() if style != "" else "") + ".json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(journal, "  ")); f.close()
 	print("FILM VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
 
@@ -557,11 +741,12 @@ func anatomy() -> void:
 		print("ANATOMY LENGTHS ", row, " min ", minimum, " max ", maximum)
 		check(row + " preserves upper-arm forearm thigh and shin lengths", fixed)
 
-func contacts() -> void:
+func contacts(named := false) -> void:
 	# Resolve at the same pose clock as the real contact. This matrix includes
 	# both actors, every authored family, body/head, moving targets and the
 	# range edges. Native startup travel is covered separately. It does not infer contact from extension == 1.
-	for style in ["BOXERPUNCHER", "OUTBOXER", "SWARMER", "SLUGGER"]:
+	for identity in (["yuri_kowalchuk", "marta_okonkwo_tremblay", "sam_tagaq"] if named else ["BOXERPUNCHER", "OUTBOXER", "SWARMER", "SLUGGER"]):
+		var style: String = {"yuri_kowalchuk": "SLUGGER", "marta_okonkwo_tremblay": "OUTBOXER", "sam_tagaq": "BOXERPUNCHER"}.get(identity, identity)
 		for body in [false, true]:
 			var cases := 0; var bad := []; var worst := 0.0
 			for row in scene.combat_input.ROWS:
@@ -571,7 +756,8 @@ func contacts() -> void:
 						for dodge in ["", "SLIP", "DUCK", "LEAN", "WEAVE"]:
 							for who in ["P", "B"]:
 								if who == "B" and not mods.is_empty(): continue # Boss VM authors rows, not player modifier chords.
-								fresh()
+								fresh(Sim.BOSSES.find(identity) if named else 0)
+								if named: scene.sim.lineup[scene.sim.seg_idx]["name"] = str(identity).split("_")[0].to_upper()
 								var attacker: Dictionary = scene.sim.P if who == "P" else scene.sim.B
 								var defender: Dictionary = scene.sim.B if who == "P" else scene.sim.P
 								attacker["style"] = style
@@ -599,8 +785,8 @@ func contacts() -> void:
 									await capture("side-contact-" + row.to_lower() + ("-body" if body else "-head") + ("-step" if bonus > 0 else ""))
 								if not agrees:
 									bad.append([row, mods, range_case, dodge, who, region["result"], error, surface_gap])
-			print("CONTACT MATRIX ", style, " body=", body, " cases=", cases, " worst=", worst, " failures=", bad.size(), " examples=", bad.slice(0, 16))
-			check(style + " " + ("body" if body else "head") + " fixed-arm contact matrix", bad.is_empty())
+			print("CONTACT MATRIX ", identity, " body=", body, " cases=", cases, " worst=", worst, " failures=", bad.size(), " examples=", bad.slice(0, 16))
+			check(identity + " " + ("body" if body else "head") + " fixed-arm contact matrix", bad.is_empty())
 
 func same_pose(a: Array, b: Array) -> bool:
 	if a.size() != b.size(): return false
