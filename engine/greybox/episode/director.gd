@@ -173,6 +173,7 @@ func _sandbox() -> void:
 func new_episode(lang: String) -> void:
 	if FileAccess.file_exists(SAVE_PATH) and DirAccess.copy_absolute(SAVE_PATH, SAVE_PATH + ".previous") != OK:
 		status = text("Could not preserve the previous episode. New episode was not started.", "Impossible de conserver l’épisode précédent. Nouvelle partie annulée."); _title(); return
+	scene.set_practice(false); training = {}; pending.clear(); archive_drop.clear()
 	language = lang; _language(); scene.sim = Campaign.fresh(scene.content, language, 1976)
 	broadcast.reset()
 	handoff_t = -1; handoff_parts.clear()
@@ -221,7 +222,7 @@ func next_line() -> void:
 		"binders": Campaign.mark(scene.sim, "binders"); _world()
 		"survival": _board()
 		"vane": _fight(false)
-		"tag": _ep()["phase"] = "complete"; _end_card()
+		"tag": _closing_wall()
 		_: _world()
 	save_episode()
 
@@ -486,8 +487,8 @@ func finish_frame() -> void:
 		scene.cam.global_transform = handoff_camera.interpolate_with(scene.cam.global_transform, camera_weight)
 		scene.cam.fov = lerpf(handoff_fov, 55, camera_weight)
 
-func _training(game: String, intro: bool) -> void:
-	training = {"game":game, "intro":intro, "t":0.0, "score":0.0, "beats":0, "hit":false, "accepted":0, "sequence":["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_HOOK", "L_UPPERCUT", "R_UPPERCUT"], "index":0}
+func _training(game: String, intro: bool, restored := {}) -> void:
+	training = restored if not restored.is_empty() else {"game":game, "intro":intro, "t":0.0, "score":0.0, "beats":0, "hit":false, "accepted":0, "sequence":["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_HOOK", "L_UPPERCUT", "R_UPPERCUT"], "index":0}
 	_ep()["training"] = training; _ep()["phase"] = "shadow" if intro else "world"
 	if game == "roadwork":
 		state = "training"; _page(text("HARBOUR ROADWORK", "COURSE DU QUAI"), "")
@@ -499,10 +500,12 @@ func _training(game: String, intro: bool) -> void:
 	else:
 		# A completed scrap is OVER. A coaching round starts its own unscored
 		# practice bout instead of leaving punch input dead in that verdict state.
-		if not scene.sim.bout.is_empty(): scene.sim.end_bout()
-		scene.sim.start_spar(0, [], {}, "", "COACHING", {"fighter":"RORY", "authored":true})
-		_fight(); state = "training"; _ep()["fight"] = ""; scene.set_practice(true)
-		scene.boss.visible = game == "mitts"; scene.sim.P["pos"] = Vector2(0, 0.8); scene.sim.B["pos"] = Vector2(0, -0.8)
+		if restored.is_empty():
+			if not scene.sim.bout.is_empty(): scene.sim.end_bout()
+			scene.sim.start_spar(0, [], {}, "", "COACHING", {"fighter":"RORY", "authored":true})
+		_fight(restored.is_empty()); state = "training"; _ep()["fight"] = ""; scene.set_practice(true)
+		scene.boss.visible = game == "mitts"
+		if restored.is_empty(): scene.sim.P["pos"] = Vector2(0, 0.8); scene.sim.B["pos"] = Vector2(0, -0.8)
 		quest.text = ""; hint.text = ""
 		if game == "shadow":
 			scene.get_meta("arena").hide(); scene.fight_hud.hide()
@@ -538,6 +541,7 @@ func observe(event: Dictionary) -> void:
 func _event(event: Dictionary) -> void:
 	var kind := str(event.get("kind", "")); var fight := str(_ep().get("fight", ""))
 	broadcast.observe(event, fight)
+	staging.observe(event)
 	if fight != "":
 		var metrics: Dictionary = _ep()["metrics"]
 		if kind == "hit" and event.get("on") == "B" and event.get("counter", false): metrics["counters"] = int(metrics.get("counters", 0)) + 1
@@ -618,8 +622,17 @@ func _corner() -> void:
 	_button("bank", text("Save the bar", "Conserver la réserve"), func(): scene.sim.corner_action({"kind":"save_bar"}); _corner(); save_episode(), "" if int(options["actions_left"]) > 0 else text("No actions left", "Plus d’actions"))
 	_button("send", text("Send the next fighter", "Envoyer le prochain boxeur"), func(): scene.q_corner = 1; _fight(false))
 
+func _closing_wall() -> void:
+	if not Campaign.has(scene.sim, "survival"): return
+	transition_t = 0
+	state = "outro"; _ep()["closing_wall"] = true; _ep()["phase"] = "tag"
+	_ep()["dialogue"] = ""; panel.hide(); quest.hide(); hint.text = ""; broadcast.clear()
+	freeze_t = staging.begin("wall_close"); save_episode()
+
 func _end_card() -> void:
 	state = "complete"; _show_world(); world.sync(scene.sim)
+	_ep().erase("closing_wall"); _ep()["phase"] = "complete"
+	staging.begin("end_card")
 	_page(text("EPISODE 1 — THE LETTER", "ÉPISODE 1 — LA LETTRE"), text("CHARTER STANDS\nA letter. A carbon copy. Four cards. A lot of empty board.\n\nNext season leads: ranked spars at the Annex, Regionals registration, scrap objectives 4–9.", "CHARTE MAINTENUE\nUne lettre. Un double carbone. Quatre fiches. Beaucoup de place sur le mur.\n\nPistes de saison : combats classés à l’Annexe, inscription aux régionales, objectifs de défi 4–9."))
 	_button("return", text("Return to Millbrook", "Retourner à Millbrook"), _world)
 	_button("title", text("Title screen", "Écran titre"), _title)
@@ -656,6 +669,7 @@ func advance(delta: float) -> bool:
 					vignette.color.a = 0; next_line()
 			elif state == "freeze":
 				vignette.color.a = 0; scene.sim = Campaign.present(scene.content, scene.sim); _show_world(); _dialogue("present")
+			elif state == "outro": _end_card()
 	if state == "world":
 		var move := Vector2(float(keys.get(KEY_D, false)) - float(keys.get(KEY_A, false)), float(keys.get(KEY_S, false)) - float(keys.get(KEY_W, false)))
 		var devices := Input.get_connected_joypads()
@@ -762,10 +776,10 @@ func _load_episode_path(path: String) -> void:
 	language = ep["language"]; _language(); world.restore(ep["position"]); world.visited = ep.get("visits", []).duplicate(); world.sync(scene.sim)
 	training = {}; pending.assign(ep.get("pending_events", [])); freeze_t = 0
 	handoff_t = -1; handoff_parts.clear()
-	if ep.get("dialogue", "") != "": _show_world(); _dialogue(ep["dialogue"], true)
+	if ep.get("closing_wall", false): _show_world(); _closing_wall()
+	elif ep.get("dialogue", "") != "": _show_world(); _dialogue(ep["dialogue"], true)
 	elif ep.get("training", {}).size() > 0:
-		var saved: Dictionary = ep["training"].duplicate(true); _training(saved["game"], saved["intro"]); training = saved; _ep()["training"] = training
-		save_episode()
+		var saved: Dictionary = ep["training"].duplicate(true); _training(saved["game"], saved["intro"], saved)
 	elif ep["phase"] == "board": _board()
 	elif ep["phase"] == "complete": _end_card()
 	elif ep["phase"] == "tag": _show_world(); _dialogue("tag")

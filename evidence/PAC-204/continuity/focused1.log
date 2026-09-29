@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] automated output uses Dummy and muted Master
+[PASS] entrance begins during live shadow boxing en
+[PASS] breath is emitted beside Rory's mouth en
+[PASS] controls freeze entrance, breath and boxing en
+[PASS] coach arrives holding an opened envelope en
+[PASS] entrance grants no shadow credit en
+[FAIL] live shadow save restores exact simulation en
+[FAIL] loaded entrance keeps the coach at his arrived position en
+[FAIL] coach watches a complete native combination en
+[PASS] watching does not skip the shadow round en

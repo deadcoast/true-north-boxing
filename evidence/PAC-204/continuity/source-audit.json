@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "files": [
+    {
+      "path": "engine/greybox/episode/breath.gd",
+      "FILE_rows": [
+        "OVR-1561"
+      ],
+      "sha256": "3f3a66c194d0d5ee23fcb4cdbf3d35372b3fc167ac4a89ed5ce75b5c0738b856"
+    },
+    {
+      "path": "engine/greybox/episode/campaign.gd",
+      "FILE_rows": [
+        "OVR-1303"
+      ],
+      "sha256": "cc2f38c086207d9127487e6db0dc2e6c971f7edf7730427d06147fe5f4908a3d"
+    },
+    {
+      "path": "engine/greybox/episode/director.gd",
+      "FILE_rows": [
+        "OVR-1305"
+      ],
+      "sha256": "643a9806b471b204b0b274a5e0fb5d79391054b9e6d5d469579fe227a86a12fb"
+    },
+    {
+      "path": "engine/greybox/episode/harbourline.gd",
+      "FILE_rows": [
+        "OVR-1304"
+      ],
+      "sha256": "b99dd4d5557d447435dfec0efda833d7d54f653e9bc6f86ecf8f3bc8093f04f5"
+    },
+    {
+      "path": "engine/greybox/episode/staging.gd",
+      "FILE_rows": [
+        "OVR-1383"
+      ],
+      "sha256": "b388e58fa8fa975d5cd1b501ed47e6ba4ebdf1ce549ee35324cb6ca5cd266fd0"
+    },
+    {
+      "path": "engine/greybox/tools/drive_continuity.gd",
+      "FILE_rows": [
+        "OVR-1569"
+      ],
+      "sha256": "91cf962baa142adb54d57b817004a399bad850ef0b1acc6adfaa323e1609d449"
+    },
+    {
+      "path": "engine/greybox/tools/drive_episode.gd",
+      "FILE_rows": [
+        "OVR-1335"
+      ],
+      "sha256": "28dcdd188105b38437e72d892cd69992bdc57ecff8891084ce672f260b083e61"
+    }
+  ],
+  "protected_sim_motion_tuning_diff": [],
+  "meaning": "Source registration and unchanged protected core paths; not a substitute for regression or visual acceptance."
+}

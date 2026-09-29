@@ -76,6 +76,15 @@ func _render_sample(label: String) -> void:
 
 func _dialogue() -> void:
 	for safety in 60:
+		if episode.state == "outro":
+			await _capture("closing-wall")
+			var tick: int = scene.sim.tick
+			for i in 60: _tick()
+			_check("earned wall cuts to black before end card", episode.state == "outro" and episode.staging.black.visible and not episode.panel.visible)
+			await _capture("closing-black")
+			while episode.freeze_t > 0: _tick()
+			_check("closing composition reaches end card without advancing combat", episode.state == "complete" and episode.staging.black.visible and scene.sim.tick == tick)
+			return
 		if episode.state != "dialogue": return
 		var shot: String = episode.staging.shot
 		var before_tick: int = scene.sim.tick
@@ -260,9 +269,11 @@ func _training() -> void:
 		if episode.state != "training": break
 		var key: int = [KEY_J, KEY_K, KEY_U, KEY_I, KEY_Y, KEY_O][int(episode.training["index"]) % 6]
 		_held([key] if step % 30 < 20 else []); _tick()
+		if step == 145: await _capture("coach-watching-shadow")
 		if step % 300 == 0: await process_frame
 	_held([])
 	_check("shadow drill requires and records twelve accepted punches", episode.state == "dialogue" and episode._ep().get("flags", {}).get("shadow", false))
+	_check("Whitlock enters and watches a complete real combination before his first line", episode.staging.coach_entered and episode.staging.coach_watched > 0)
 
 func _roundtrip_world() -> void:
 	_held([]); _key(KEY_TAB, true); _key(KEY_TAB, false); await process_frame
@@ -398,7 +409,7 @@ func _run() -> void:
 		for i in cycle.size(): _check("R2 third-exchange right lead at opener %d" % (i + 1), (cycle[i] == "TAPE_RIGHT") == (i % 3 == 2))
 	if episode.state == "dialogue": await _dialogue()
 	await _capture("survival-verdict")
-	for shot in ["archive:1", "freeze:0", "present:0", "letter:3", "letter:11", "tag:0", "tag:2"]:
+	for shot in ["archive:1", "freeze:0", "present:0", "letter:3", "letter:11", "tag:0", "tag:2", "wall_close:0", "end_card:0"]:
 		_check("authored audiovisual action reached " + shot, episode.staging.visited.has(shot))
 	_finish()
 

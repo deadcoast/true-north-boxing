@@ -1,0 +1,17 @@
+{
+  "captures": [
+    "user://continuity-en-entrance.png",
+    "user://continuity-en-watching.png",
+    "user://continuity-en-wall.png",
+    "user://continuity-en-black.png",
+    "user://continuity-en-end-card.png",
+    "user://continuity-fr_CA-entrance.png",
+    "user://continuity-fr_CA-watching.png",
+    "user://continuity-fr_CA-wall.png",
+    "user://continuity-fr_CA-black.png",
+    "user://continuity-fr_CA-end-card.png"
+  ],
+  "checks": 66,
+  "failures": [],
+  "scope": "Native punch/Continue input within explicit scene fixtures. Earned progression is separately checked by drive_episode. No physical input-to-photon or final art/animation acceptance."
+}

@@ -95,6 +95,13 @@ func _identity(person: Node3D, name: String) -> void:
 	var hair := SphereMesh.new(); hair.radius = 0.18; hair.height = 0.2
 	var mat := StandardMaterial3D.new(); mat.albedo_color = Color("dad5c4") if name == "WHITLOCK" else Color("302a2a")
 	View._part(head, hair, mat, Vector3(0, 0.13, 0.015))
+	if name == "WHITLOCK":
+		var parka := StandardMaterial3D.new(); parka.albedo_color = Color("374b46"); parka.roughness = 0.95
+		var suit := StandardMaterial3D.new(); suit.albedo_color = Color("292e39")
+		var coat := BoxMesh.new(); coat.size = Vector3(0.54, 0.72, 0.40)
+		View._part(person.get_meta("mesh"), coat, parka, Vector3(0, -0.05, 0.035))
+		var jacket := BoxMesh.new(); jacket.size = Vector3(0.21, 0.42, 0.025)
+		View._part(person.get_meta("mesh"), jacket, suit, Vector3(0, 0.04, -0.18))
 	var skin: StandardMaterial3D = head.mesh.material.duplicate(); skin.albedo_color = {"PRIYA":Color("ac7e62"), "MARCUS":Color("be8e70"), "JUNE":Color("e0bfa0"), "RORY":Color("d4aa88")}.get(name, Color("c7b09b"))
 	head.mesh = head.mesh.duplicate(); head.mesh.material = skin
 	var eye := SphereMesh.new(); eye.radius = 0.017; eye.height = 0.034
@@ -226,13 +233,30 @@ func sync(sim) -> void:
 	var flags: Dictionary = sim.rewards.get("episode", {}).get("flags", {})
 	binders.visible = flags.get("joined_PRIYA", false)
 	if not flags.get("letter", false): return
-	var letter := _box(Vector3(0.55, 0.8, 0.04), Vector3(-6.1, 1.7, -5.18), Color("ece2bd")); letter.reparent(cards)
+	var letter := _box(Vector3(0.55, 0.8, 0.04), Vector3(-6.1, 1.7, -5.18), Color("ece2bd")); letter.reparent(cards); letter.name = "letter"
+	_wall_paper(letter, "MILLBROOK", "TWO SEGMENT VICTORIES\nDEUX SEGMENTS GAGNÉS")
 	for i in sim.stable.size():
 		var card := _box(Vector3(0.4, 0.6, 0.06), Vector3(-5.65 + i * 0.42, 1.35, -4.7), Color("e2c78e"))
 		card.reparent(cards); card.name = "card_" + str(sim.stable[i]["name"])
+		_wall_paper(card, str(sim.stable[i]["name"]), "MILLBROOK")
 		var label := _label(str(sim.stable[i]["name"]), card.position + Vector3(0, 0.5, 0), 17); label.reparent(cards)
 	if sim.rewards.get("episode", {}).get("flags", {}).get("survival", false):
 		var carbon := _box(Vector3(0.55, 0.8, 0.04), Vector3(-4.7, 1.6, -5.18), Color("a8c8e1")); carbon.reparent(cards); carbon.name = "charter"
+		_wall_paper(carbon, "CARBON / DOUBLE", "CHARTER STANDS\nCHARTE MAINTENUE")
+
+func _wall_paper(face: MeshInstance3D, title: String, footer: String) -> void:
+	# Printed content stays on the paper during close-ups; floating navigation
+	# labels can be hidden without turning the earned wall into blank blocks.
+	var size: Vector3 = face.mesh.size
+	for item in [[title, 0.20, 0.0015], [footer, -0.20, 0.0011]]:
+		var ink := Label3D.new(); ink.text = item[0]; ink.font_size = 24
+		ink.pixel_size = item[2]; ink.position = Vector3(0, item[1], size.z * 0.5 + 0.004)
+		ink.modulate = Color("293d47"); ink.outline_size = 0; ink.no_depth_test = false
+		face.add_child(ink)
+	var material := StandardMaterial3D.new(); material.albedo_color = Color("717366")
+	for i in 6:
+		var stroke := BoxMesh.new(); stroke.size = Vector3(size.x * (0.73 if i % 3 != 2 else 0.52), 0.006, 0.002)
+		View._part(face, stroke, material, Vector3(-size.x * 0.04, 0.10 - i * 0.036, size.z * 0.5 + 0.003))
 
 func _clear(at: Vector2) -> bool:
 	if at.x < -41 or at.x > 41 or at.y < -33 or at.y > 47: return false

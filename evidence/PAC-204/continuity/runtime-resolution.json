@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "verified_runs": 62,
+  "initial_batch_passed": false,
+  "initial_batch_passes": 61,
+  "initial_results": "runtime-initial-results.json",
+  "resolutions": [
+    {
+      "name": "determinism",
+      "exit": 0,
+      "passed": true,
+      "verdict": "DETERMINISM VERDICT :: GREEN (57/57)",
+      "log": "determinism-retry.log",
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--path",
+        "engine/greybox",
+        "--",
+        "determinism"
+      ],
+      "method": "Rerun alone after six-worker batch timed out at 240s with green assertions. Exact timeout cause not established. Runtime code and runner timeout unchanged."
+    }
+  ]
+}

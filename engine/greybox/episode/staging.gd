@@ -2,6 +2,7 @@ extends Node
 ## Authored screen action over the live episode. No simulation, rewards or saves
 ## are advanced here. PCM and film noise have a private seed, never the sim RNG.
 const View := preload("res://presentation/fight_view.gd")
+const Breath := preload("res://episode/breath.gd")
 var director
 var film: ColorRect
 var material: ShaderMaterial
@@ -28,6 +29,12 @@ var sound_hole_seconds := 0.0
 var archive_camera := Transform3D.IDENTITY
 var archive_position := Vector3.ZERO
 var archive_rotation := 0.0
+var breath: Node3D
+var black: ColorRect
+var coach_entered := false
+var coach_watched := 0
+var coach_sequence := 0
+var shadow_sim
 
 func setup(owner) -> void:
 	director = owner
@@ -49,6 +56,10 @@ void fragment() {
                min(1.0, noise * 0.065 + scan + burn * damage));
 }"""
 	material = ShaderMaterial.new(); material.shader = shader; film.material = material; film.hide()
+	black = ColorRect.new(); black.color = Color.BLACK; black.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	director.surface.add_child(black); director.surface.move_child(black, 0)
+	black.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); black.hide()
+	breath = Breath.new(); director.world.add_child(breath); breath.setup()
 	props = Node3D.new(); director.world.add_child(props)
 	# Two hinged halves retain their printed columns while the sheet folds.
 	paper = MeshInstance3D.new(); props.add_child(paper)
@@ -138,6 +149,7 @@ func clear() -> void:
 	fold.rotation.z = 0; paper.rotation = Vector3.ZERO; paper.scale = Vector3.ONE
 	envelope.hide(); form.hide(); pen.hide()
 	film.hide(); ambience.stream_paused = false; sound_hole = false
+	black.hide()
 	director.world.camera.fov = 48
 	if director.world.cards.has_node("charter"): director.world.cards.get_node("charter").show()
 	for child in director.world.cards.get_children():
@@ -172,6 +184,11 @@ func begin(id: String, index := 0) -> float:
 		_place(world.actor, archive_position, archive_rotation)
 		_hand(world.actor, Vector3(0.32, 2.05, -0.07))
 		world.camera.global_transform = archive_camera; world.camera.fov = 40; world.camera.make_current()
+	elif id in ["wall_close", "end_card"]:
+		world.stage("tag"); _ambient("room")
+		_camera(Vector3(-5.25, 3.1, -3.0), Vector3(-5.25, 1.6, -5.0), 54)
+		if id == "end_card": black.show(); ambience.stop(); foley.stop()
+		else: length = 1.2
 	elif id == "letter":
 		_ambient("room"); props.show(); stamp.hide(); observer.hide(); paper.show()
 		apron.show(); apron.position = Vector3(-0.7, 0.40, 2.5)
@@ -217,8 +234,16 @@ func begin(id: String, index := 0) -> float:
 	return length
 
 func frame(delta: float) -> void:
-	if not director.active: film.hide(); ambience.stop(); foley.stop(); return
+	if not director.active: film.hide(); black.hide(); breath.clear(); ambience.stop(); foley.stop(); return
 	var previous := elapsed; elapsed += delta
+	var shadow: bool = director.state == "training" and director.training.get("game") == "shadow" and director.training.get("intro", false)
+	var cold: bool = shot.begins_with("present:") or shot.begins_with("letter:") or shadow or (director.state == "world" and director.world.district == "gym")
+	breath.frame(delta, director.world.actor, cold and director.world.actor.is_visible_in_tree(), shadow)
+	if shadow: _coach_entrance()
+	if shot == "wall_close:0":
+		# An authored cut, not an unmotivated dissolve over the unlock screen.
+		black.visible = elapsed >= 0.8
+		if black.visible: ambience.stop(); foley.stop()
 	var archive: bool = director._ep().get("fight", "") == "archive" and director.state in ["fight", "freeze"] or shot.begins_with("archive:")
 	film.visible = archive
 	material.set_shader_parameter("clock", 0.0 if sound_hole else elapsed)
@@ -286,3 +311,30 @@ func frame(delta: float) -> void:
 				card.rotation.z = lerpf(0.13, 0, smoothstep(4.4, 5.6, elapsed))
 				_hand(june, june.to_local(card.global_position + Vector3(0.18, 0, 0)))
 				world.squad[1].rotation.y = lerpf(-0.35, -1.2, smoothstep(5.5, 6.3, elapsed))
+
+func _coach_entrance() -> void:
+	var world = director.world
+	var coach: Node3D = world.cast["WHITLOCK"]
+	if shadow_sim != director.scene.sim:
+		shadow_sim = director.scene.sim; coach_entered = false; coach_watched = 0; coach_sequence = 0
+	var t: float = director.training.get("t", 0)
+	var weight := smoothstep(0.0, 2.2, t)
+	var at := Vector3(2.4, 0, 7.6).lerp(Vector3(-1.5, 0, 2.8), weight)
+	_place(coach, at, atan2(at.x - world.actor.position.x, at.z - world.actor.position.z))
+	world._pose(coach, weight * 15.4, sin(PI * clampf(t / 2.2, 0, 1)))
+	coach_entered = t >= 2.2
+	# The already-open envelope travels with his hand throughout the entrance.
+	props.show()
+	for prop in props.get_children(): prop.visible = prop == envelope
+	envelope.position = props.to_local(coach.to_global(Vector3(0.3, 1.0, -0.28)))
+	envelope.rotation = Vector3(0, coach.rotation.y, 0.18)
+	_hand(coach, coach.to_local(envelope.global_position + Vector3(0.18, 0, 0)))
+
+func observe(event: Dictionary) -> void:
+	if not coach_entered or director.state != "training" or director.training.get("game") != "shadow" or not director.training.get("intro", false) or event.get("kind") != "punch": return
+	var sequence: Array = director.training.get("sequence", [])
+	if sequence.is_empty(): return
+	if event.get("row") == sequence[coach_sequence]:
+		coach_sequence += 1
+		if coach_sequence == sequence.size(): coach_watched += 1; coach_sequence = 0
+	else: coach_sequence = 1 if event.get("row") == sequence[0] else 0

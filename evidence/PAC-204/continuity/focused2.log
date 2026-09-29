@@ -1,0 +1,58 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] automated output uses Dummy and muted Master
+[PASS] entrance begins during live shadow boxing en
+[PASS] breath is emitted beside Rory's mouth en
+[PASS] controls freeze entrance, breath and boxing en
+[PASS] coach arrives holding an opened envelope en
+[PASS] entrance grants no shadow credit en
+[FAIL] live shadow save restores exact simulation en
+[PASS] loaded entrance keeps the coach at his arrived position en
+[FAIL] coach watches a complete native combination en
+[PASS] watching does not skip the shadow round en
+[PASS] breath drifts independently after emission en
+[PASS] archive has no present-day breath en
+[PASS] title clears scene atmosphere and envelope en
+[PASS] an unearned charter cannot enter the closing shot en
+[PASS] last authored native Continue reaches wall composition en
+[PASS] wall carries letter, carbon and all four earned cards en
+[PASS] closing save validates en
+[PASS] wall remains visible before cut en
+[PASS] closing reload preserves exact sim and safely restarts composition en
+[PASS] black precedes the end card en
+[PASS] controls pause the closing cut en
+[PASS] end card remains on black without moving boxing en
+[FAIL] completed save restores black end card en
+[PASS] reject malformed closing marker en
+[PASS] reject marker on wrong scene en
+[PASS] return to gym clears black and restores breathing en
+[PASS] entrance begins during live shadow boxing fr_CA
+[FAIL] breath is emitted beside Rory's mouth fr_CA
+[PASS] controls freeze entrance, breath and boxing fr_CA
+[PASS] coach arrives holding an opened envelope fr_CA
+[PASS] entrance grants no shadow credit fr_CA
+[FAIL] live shadow save restores exact simulation fr_CA
+[PASS] loaded entrance keeps the coach at his arrived position fr_CA
+[FAIL] coach watches a complete native combination fr_CA
+[PASS] watching does not skip the shadow round fr_CA
+[PASS] breath drifts independently after emission fr_CA
+[PASS] archive has no present-day breath fr_CA
+[PASS] title clears scene atmosphere and envelope fr_CA
+[PASS] an unearned charter cannot enter the closing shot fr_CA
+[PASS] last authored native Continue reaches wall composition fr_CA
+[PASS] wall carries letter, carbon and all four earned cards fr_CA
+[PASS] closing save validates fr_CA
+[PASS] wall remains visible before cut fr_CA
+[PASS] closing reload preserves exact sim and safely restarts composition fr_CA
+[PASS] black precedes the end card fr_CA
+[PASS] controls pause the closing cut fr_CA
+[PASS] end card remains on black without moving boxing fr_CA
+[FAIL] completed save restores black end card fr_CA
+[PASS] reject malformed closing marker fr_CA
+[PASS] reject marker on wrong scene fr_CA
+[PASS] return to gym clears black and restores breathing fr_CA
+[PASS] Master stays muted
+CONTINUITY 52 checks; 7 failures
+DRIVE :: RED

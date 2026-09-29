@@ -1,0 +1,35 @@
+{
+  "retained_failures": [
+    {
+      "file": "focused1.log",
+      "reason": "Fixture retained present dialogue so reload resumed dialogue; stopped bounded run and corrected setup."
+    },
+    {
+      "file": "focused2.log",
+      "reason": "Actual coaching reload rebuilt the saved practice bout; changed restore to reuse typed simulation. Fixture also carried old training into ending."
+    },
+    {
+      "file": "focused3.log",
+      "reason": "Fixed native punch cadence missed uppercut while recovering; use bounded retries of displayed requested hand."
+    },
+    {
+      "file": "focused4.log",
+      "reason": "Confirmed accepted=5 and observed sequence=5; corrected driver cadence without modifying combat timing."
+    }
+  ],
+  "render_review": [
+    {
+      "file": "first-wall-occlusion.png",
+      "reason": "Squad hid the wall. Reframed above cast and printed permanent paper content."
+    },
+    {
+      "file": "first-breath-visibility.png",
+      "reason": "Puffs were too faint/occluded. Increased mouth clearance, drift and density; inspected final live-camera result."
+    }
+  ],
+  "production_repairs": [
+    "Continue restores the exact saved coaching simulation instead of starting another practice bout.",
+    "New Episode clears prior coaching and pending events."
+  ],
+  "boundary": "All attempts remain in .PACER/PAC-204-continuity; selected evidence retained here. These fixes do not establish final character art or boxing-feel acceptance."
+}

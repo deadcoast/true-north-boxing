@@ -160,4 +160,7 @@ static func validate(ep) -> String:
 			if bout is Dictionary and bout.get("fight") == "survival" and int(bout.get("segment_wins", 0)) >= 2 and bout.get("won", false): qualified = true
 		if not qualified: return "Charter result missing"
 	if ep["phase"] in ["tag", "complete"] and not ep["flags"].get("survival", false): return "Charter not earned"
+	if ep.has("closing_wall"):
+		if not ep["closing_wall"] is bool: return "Invalid closing scene"
+		if ep["closing_wall"] and (ep["phase"] != "tag" or dialogue != "" or not ep["flags"].get("survival", false)): return "Closing scene not earned"
 	return ""
