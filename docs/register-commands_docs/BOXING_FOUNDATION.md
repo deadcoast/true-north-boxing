@@ -138,7 +138,7 @@ Clinch entry, the timed scramble, position/reset choice, separation, DROP, stand
 | Source | Responsibility in this design |
 | --- | --- |
 | `sim/core.gd`, tuning and pattern data | Legal action/state, timing, resources, geometry, authored opponent decisions and outcomes |
-| `presentation/combat_input.gd`, `main.gd`, fixed clock | Device intent, buffering, pause/resume and consistent simulation stepping |
+| `input/combat_input.gd`, `main.gd`, fixed clock | Device intent, buffering, pause/resume and consistent simulation stepping |
 | `presentation/boxing_motion.gd` | Connected support, rotation, joint paths, defense and recovery; one coherent pose |
 | `presentation/fight_view.gd`, `rig_space.gd` | Render interpolation, geometric alignment, camera composition and visibility |
 | `presentation/fighter_visuals.gd`, cast profiles | Visible anatomy/kit attached to that pose, with per-hand visibility classification |

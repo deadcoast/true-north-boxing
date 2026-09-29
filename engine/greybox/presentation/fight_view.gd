@@ -12,6 +12,7 @@ const SILHOUETTE := """shader_type spatial;
 render_mode blend_mix, depth_draw_never, cull_back, shadows_disabled;
 uniform vec4 tint : source_color;
 uniform vec4 clear_window;
+uniform float window_alpha = 0.08;
 uniform vec3 aura;
 uniform bool foreground_only = false;
 uniform vec3 clear_origin;
@@ -24,7 +25,7 @@ void fragment() {
     if (foreground_only) { inside *= step(0.0, dot(world_position - clear_origin, clear_normal)); }
     ALBEDO = tint.rgb;
     EMISSION = aura;
-    ALPHA = tint.a * mix(1.0, 0.08, inside);
+    ALPHA = mix(tint.a, window_alpha, inside);
     ROUGHNESS = 0.85;
 }"""
 var orbit := Vector3.ZERO
@@ -387,6 +388,14 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	var body_height := 1.10 + minf(0, head.position.y - Sim.HEAD_H)
 	var torso_top := torso_origin + Vector3.UP * minf(float(head.position.y) - Space.HEAD_RADIUS - 0.025, maxf(body_height + 0.02, collar.y - 0.06))
 	var torso_bottom := torso_origin + Vector3.UP * minf(body_height - 0.02, maxf(body_height - 0.16, float(rig["pelvis"].y) + 0.02))
+	# Ribcage follows the delivered shoulder girdle, with the physical striking
+	# region as its pivot. A vertical cylinder erased the body's drive while
+	# leaving the shoulders to bridge the gap on their own. Limit the bend so
+	# the unchanged central hit surface stays within the torso skin.
+	var rib_shift := Vector3(collar.x - torso_origin.x, 0, collar.z - torso_origin.z)
+	rib_shift = rib_shift.limit_length(maxf(0, torso_top.y - body_height) * tan(deg_to_rad(18.0)))
+	torso_top += rib_shift
+	torso_bottom -= rib_shift * (body_height - torso_bottom.y) / maxf(0.02, torso_top.y - body_height)
 	_link(root.get_meta("abdomen"), rig["pelvis"], torso_bottom)
 	_link(body, torso_bottom, torso_top)
 	body.scale.y /= 0.57
@@ -429,16 +438,16 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 			if kind == "wraps": child.position.y -= 0.13
 			else: glove_color = child.get_meta("color")
 		elif kind == "mouthguard": child.position = head.position + forward * 0.17 - Vector3.UP * 0.08
-	# Player silhouette stays translucent in neutral too: visibility cannot wait
-	# until the opponent has already begun its cue. Active hands remain opaque.
+	# Source materials stay opaque. The camera applies state-aware clearance
+	# per anatomical group, so shared skin cannot fade the working arm.
 	if who == "P":
 		for material in [root.get_meta("mat"), head.mesh.material]:
-			material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-			material.albedo_color.a = WINDUP_ALPHA
+			material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+			material.albedo_color.a = 1.0
 		var hands: StandardMaterial3D = root.get_meta("glove_mat")
 		hands.albedo_color = glove_color
-		hands.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		hands.albedo_color.a = 1.0 if row != "" else WINDUP_ALPHA
+		hands.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+		hands.albedo_color.a = 1.0
 	elif windup or sim.tick < int(root.get_meta("cue_until", 0)):
 		var hands: StandardMaterial3D = root.get_meta("glove_mat")
 		hands.albedo_color = Color(1.0, 0.75, 0.32).lightened(0.25 if sim.pi_cue() else 0.0)
@@ -449,6 +458,11 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	root.set_meta("extension", extension)
 
 func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, boundaries: Array = []) -> void:
+	var tuning: Dictionary = clock_sim.T.get("camera", {}) if clock_sim != null else {}
+	var chase_base := float(tuning.get("chase_behind_m", CHASE))
+	var clearance := float(tuning.get("above_head_m", HEAD_CLEARANCE))
+	var windup_alpha := float(tuning.get("windup_alpha_pct", WINDUP_ALPHA * 100.0)) / 100.0
+	camera.fov = float(tuning.get("fov_deg", FOV))
 	var wanted := (player.position - opponent.position).normalized()
 	if wanted.length_squared() < 0.1: wanted = Vector3(0, 0, 1)
 	if orbit == Vector3.ZERO or tick < last_tick: orbit = wanted
@@ -463,12 +477,12 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	# Solve the chase ray against the minimum opponent framing radius instead.
 	var separation := player.position - opponent.position
 	var along := separation.dot(orbit)
-	var chase := maxf(CHASE, -along + sqrt(maxf(0, along * along + 2.8 * 2.8 - separation.length_squared())))
-	camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + HEAD_CLEARANCE)
+	var chase := maxf(chase_base, -along + sqrt(maxf(0, along * along + 2.8 * 2.8 - separation.length_squared())))
+	camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + clearance)
 	# At close contact a stale orbit can cross the opponent: use the current
 	# chase direction for safety. Ordinary circling stays rate-limited.
 	if camera.position.distance_to(opponent.position + Vector3.UP) < 1.9:
-		orbit = wanted; camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + HEAD_CLEARANCE)
+		orbit = wanted; camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + clearance)
 	camera.look_at(opponent.position + Vector3.UP)
 	# D2: clear a soft window through the player's silhouette over the enemy.
 	# Arms remain full opacity when punching; they are the action being shown.
@@ -477,22 +491,43 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	var bottom := camera.unproject_position(opponent.position)
 	var half_width := absf(bottom.y - top.y) * 0.36
 	var window := Vector4((top.x - half_width) / size.x, top.y / size.y, (top.x + half_width) / size.x, bottom.y / size.y)
-	var parts: Array = [player.get_meta("mesh"), player.get_meta("head")]
-	parts.append_array(player.get_meta("legs"))
-	parts.append_array(player.get_meta("joints")); parts.append_array(player.get_meta("clavicles"))
-	parts.append_array(player.get_meta("thighs")); parts.append(player.get_meta("hips"))
-	parts.append(player.get_meta("neck")); parts.append(player.get_meta("abdomen"))
-	parts.append_array(player.get_meta("cast_body", []))
-	for child in player.get_children():
-		if child.has_meta("kind") and str(child.get_meta("kind")) == "robe": parts.append(child)
-	_clear_window(parts, window, WINDUP_ALPHA)
+	_player_visibility(player, window, windup_alpha, bool(opponent.get_meta("windup", false)))
 	# The fixed chase may sit outside the ropes at a corner. Clear only the
 	# foreground boundaries over the opponent; keep the far side of the ring.
 	# Per-fragment depth: a long rope's center can be behind the opponent while
 	# its near end crosses the camera. Object-center classification is insufficient.
 	_clear_window(boundaries, window, 1.0, true, opponent.position, camera.position - opponent.position)
 
-func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only := false, origin := Vector3.ZERO, normal := Vector3.ZERO) -> void:
+func _player_visibility(player: Node3D, window: Vector4, windup_alpha: float, windup: bool) -> void:
+	var groups := {"body": [], "head": [], "left": [], "right": []}
+	for field in FighterVisuals.ANCHORS:
+		var value = player.get_meta(field)
+		var anchors: Array = value if value is Array else [value]
+		for i in anchors.size():
+			var group := _visibility_group(field, i)
+			if anchors[i].layers != 0: groups[group].append(anchors[i])
+			for child in anchors[i].get_children():
+				if child is MeshInstance3D and child.layers != 0: groups[group].append(child)
+	for child in player.get_children():
+		if child.has_meta("kind"):
+			var kind := str(child.get_meta("kind"))
+			if kind == "robe": groups["body"].append(child)
+			elif kind in ["gloves", "wraps"]: groups["left" if int(child.get_meta("hand_index", 0)) == 0 else "right"].append(child)
+	var row := str(player.get_meta("pose_row", ""))
+	for group in groups:
+		var working: bool = (group == "left" and row.begins_with("L_")) or (group == "right" and row.begins_with("R_"))
+		var alpha := windup_alpha if windup and group != "head" and not working else 1.0
+		# Wind-up is 40%, including the clearance window, never 40% * 8%.
+		# Only the working chain bypasses clearance; neutral body remains legible.
+		_clear_window(groups[group], window, alpha, false, Vector3.ZERO, Vector3.ZERO, 1.0 if working else windup_alpha)
+
+static func _visibility_group(field: String, index: int) -> String:
+	if field == "head": return "head"
+	if field in ["gloves", "arms", "upper_arms", "clavicles"]: return "left" if index == 0 else "right"
+	if field == "joints" and index % 3 < 2: return "left" if index < 3 else "right"
+	return "body"
+
+func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only := false, origin := Vector3.ZERO, normal := Vector3.ZERO, window_alpha := 0.08) -> void:
 	# Every surface with the same source material receives the same window.
 	# Share its shader and update uniforms once, rather than repeating six
 	# render-server writes for every eyelid, seam and limb on every frame.
@@ -509,6 +544,7 @@ func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only 
 		var tint: Color = source.albedo_color; tint.a = alpha
 		part.material_override.set_shader_parameter("tint", tint)
 		part.material_override.set_shader_parameter("clear_window", window)
+		part.material_override.set_shader_parameter("window_alpha", window_alpha)
 		var aura := Vector3(source.emission.r, source.emission.g, source.emission.b) * source.emission_energy_multiplier if source.emission_enabled else Vector3.ZERO
 		part.material_override.set_shader_parameter("aura", aura)
 		part.material_override.set_shader_parameter("foreground_only", foreground_only)

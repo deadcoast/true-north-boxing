@@ -114,6 +114,9 @@ static func _material(color: String, roughness := 0.9) -> StandardMaterial3D:
 static func _surface(root: Node3D, field: String, shape: Mesh, material: StandardMaterial3D, index := -1, body := true) -> MeshInstance3D:
 	var parent = root.get_meta(field) if index < 0 else root.get_meta(field)[index]
 	var node := CastSurface.new(); node.mesh = shape; node.set_surface_override_material(0, material)
+	# Visibility follows anatomy, including details sharing a skin/kit material.
+	# A working arm must remain one visible chain from clavicle to glove.
+	node.set_meta("rig_anchor", field); node.set_meta("rig_index", index)
 	parent.add_child(node); root.get_meta("cast_parts").append(node)
 	if body: root.get_meta("cast_body").append(node)
 	return node
