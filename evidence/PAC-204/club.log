@@ -1,0 +1,275 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+
+
+[PASS] scripted capture has no external controller
+
+[PASS] normal entry opens the club before a simulation tick
+
+[PASS] club decisions pause combat
+
+[PASS] navigation reaches Recruit
+
+[PASS] scouting names price and rejects empty wallet
+
+[PASS] disabled native purchase cannot debit wallet
+
+[PASS] navigation reaches Training
+
+[PASS] native action available: partner:PRIYA
+
+[PASS] controls pause owns focus
+
+[PASS] closing controls restores club focus
+
+[PASS] native action available: roadwork
+
+[PASS] training locks navigation and save until result
+
+[PASS] played rhythm commits one training slot
+
+[PASS] training returns focus and unlocks navigation
+
+[PASS] roadwork earns typed Beans and partner bond
+
+[PASS] native action available: roadwork
+
+[PASS] training locks navigation and save until result
+
+[PASS] played rhythm commits one training slot
+
+[PASS] training returns focus and unlocks navigation
+
+[PASS] navigation reaches Stable
+
+[PASS] native action available: section:Bean jar
+
+[PASS] native action available: raise:STA
+
+[PASS] earned Beans buy a persistent stat raise at authored cost
+
+[PASS] unaffordable next raise is disabled and explained
+
+[PASS] native action available: section:Ability board
+
+[PASS] native action available: node:sp1
+
+[PASS] ability node uses earned board points
+
+[PASS] navigation reaches Training
+
+[PASS] native action available: roadwork
+
+[PASS] training locks navigation and save until result
+
+[PASS] played rhythm commits one training slot
+
+[PASS] training returns focus and unlocks navigation
+
+[PASS] daily training cap is enforced through UI
+
+[PASS] native action available: rest
+
+[PASS] rest changes day and refreshes slots with explicit feedback
+
+[PASS] navigation reaches Bouts
+
+[PASS] native action available: bout:scrap_1
+
+[PASS] earned-scrap-0 ends through normal combat and returns to club
+
+[PASS] earned-scrap-0 shows verdict and earned reward
+
+[PASS] native action available: bout:scrap_1
+
+[PASS] earned-scrap-1 ends through normal combat and returns to club
+
+[PASS] earned-scrap-1 shows verdict and earned reward
+
+[PASS] native action available: bout:scrap_1
+
+[PASS] earned-scrap-2 ends through normal combat and returns to club
+
+[PASS] earned-scrap-2 shows verdict and earned reward
+
+[PASS] native action available: bout:scrap_1
+
+[PASS] earned-scrap-3 ends through normal combat and returns to club
+
+[PASS] earned-scrap-3 shows verdict and earned reward
+
+[PASS] native action available: bout:scrap_1
+
+[PASS] earned-scrap-4 ends through normal combat and returns to club
+
+[PASS] earned-scrap-4 shows verdict and earned reward
+
+[PASS] repeated native scraps earn scouting currency
+
+[PASS] navigation reaches Recruit
+
+[PASS] native action available: scout
+
+[PASS] scout debits authored price and produces a lead
+
+[PASS] navigation reaches Training
+
+[PASS] native action available: rest
+
+[PASS] native action available: rest
+
+[PASS] native action available: rest
+
+[PASS] native action available: rest
+
+[PASS] native action available: rest
+
+[PASS] navigation reaches Recruit
+
+[PASS] native action available: sign:0
+
+[PASS] open mat signs the earned recruit into the stable
+
+[PASS] navigation reaches Stable
+
+[PASS] native action available: fighter:HILL 1
+
+[PASS] native action available: section:Roles
+
+[PASS] native action available: role:SCOUT
+
+[PASS] recruit works an existing bench role
+
+[PASS] navigation reaches Bouts
+
+[PASS] native action available: dual
+
+[PASS] native action available: slot:0
+
+[PASS] native action available: dress:HILL 1
+
+[PASS] formation dresses recruited fighter and persists chosen starter
+
+[PASS] dressed recruit's bench role pauses
+
+[PASS] native action available: staff:old_cutman
+
+[PASS] overfull staff choice is refused without changing board
+
+[PASS] native action available: staff:sportsmed
+
+[PASS] native action available: staff:janitor
+
+[PASS] native action available: staff:retired_boxer
+
+[PASS] formation can deliberately field no staff
+
+[PASS] save confirms the current board
+
+[PASS] native action available: order:1
+
+[PASS] continue restores formation and complete ledger exactly
+
+[PASS] rejected save preserves live state and offers previous save
+
+[PASS] previous save recovers the exact board
+
+[PASS] navigation reaches Formation
+
+[PASS] native action available: seal
+
+[PASS] chosen recruit enters the live dual
+
+[PASS] in-flight bout blocks replacement
+
+[PASS] navigation reaches Training
+
+[PASS] in-flight bout blocks training and calendar changes
+
+[PASS] incompatible fight snapshot cannot replace current simulation
+
+[PASS] mid-fight continue restores exact simulation
+
+[PASS] native action available: send
+
+[PASS] native action available: send
+
+[PASS] full-dual ends through normal combat and returns to club
+
+[PASS] full-dual shows verdict and earned reward
+
+[PASS] navigation reaches Stable
+
+[PASS] native action available: fighter:PRIYA
+
+[PASS] native action available: use_fighter
+
+[PASS] native action available: opponent:MARCUS
+
+[PASS] native action available: spar
+
+[PASS] selected fighter faces selected stablemate with shared rules
+
+[PASS] stablemate-spar ends through normal combat and returns to club
+
+[PASS] stablemate-spar shows verdict and earned reward
+
+[PASS] fresh launch restores completed journey and earned recruit
+
+[PASS] completed-bout save preserves deliberately empty staff
+
+[PASS] restored result retains earned reward feedback
+
+[PASS] navigation reaches Bouts
+
+[PASS] layout contains Bouts at (960, 540)
+
+[PASS] navigation reaches Stable
+
+[PASS] layout contains Stable at (960, 540)
+
+[PASS] navigation reaches Recruit
+
+[PASS] layout contains Recruit at (960, 540)
+
+[PASS] navigation reaches Formation
+
+[PASS] layout contains Formation at (960, 540)
+
+[PASS] navigation reaches Training
+
+[PASS] layout contains Training at (960, 540)
+
+[PASS] navigation reaches Scout Book
+
+[PASS] layout contains Scout Book at (960, 540)
+
+[PASS] navigation reaches Bouts
+
+[PASS] layout contains Bouts at (640, 480)
+
+[PASS] navigation reaches Stable
+
+[PASS] layout contains Stable at (640, 480)
+
+[PASS] navigation reaches Recruit
+
+[PASS] layout contains Recruit at (640, 480)
+
+[PASS] navigation reaches Formation
+
+[PASS] layout contains Formation at (640, 480)
+
+[PASS] navigation reaches Training
+
+[PASS] layout contains Training at (640, 480)
+
+[PASS] navigation reaches Scout Book
+
+[PASS] layout contains Scout Book at (640, 480)
+
+CLUB JOURNEY VERDICT :: GREEN (133/133)
+
+ERROR: Failed to read the root certificate store.
+
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)

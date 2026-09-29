@@ -1,0 +1,26 @@
+{
+  "requirement": "OGM-015",
+  "meaning": "5e766a7b104d171c7285e4adabca5018e81f371627476825844975997992dbc6",
+  "sources": {
+    "tests/test_register_bootstrap.py": "f5f1b069d9a7651527b7943cfc989a4980384cbd46c433d5c2114b311e822938",
+    "tests/test_pacer_validator.py": "48a8ba9c7fd2b7d0f8888f91415edbf4737f6e124d75a976596add415fb6f5b9",
+    "tests/test_pacer_views.py": "fec16f3e0df4110950748e07ffb036b7b343046f1903c09aa014c4099fea4992",
+    "pacer_views.py": "fc3a7f064b20d66b22a4a7af92288b44a85dbe8d53f78cb4cb1472c285f37a0c",
+    "tools/pacer_validator.py": "ad72028a76ef37eff50da7dbfaca6efb086867ba9cbc17b0b431096833895d12",
+    "pacer_validator.py": "18813171ce0dca4fbe4dc2e0f826ca0c145d1aca4eaa70010fe91d3a10203380",
+    "tools/pacer_views.py": "ba7c72406950a634bfd8931e54b7b0087783bdc542c1643088603078d0d72a6f"
+  },
+  "result": "PASS",
+  "command": [
+    ".venv/Scripts/python.exe -m unittest discover -s tests -v",
+    ".venv/Scripts/python.exe pacer_validator.py",
+    ".venv/Scripts/python.exe tools/pacer_validator.py",
+    ".venv/Scripts/python.exe pacer_views.py --ready --out .PACER/PAC-204/ready-final.csv"
+  ],
+  "verification": "45 Python tests pass including a new test that reproduced the retained-history field limit before repair; direct and compatibility-proxy validators green; non-destructive ready view generated. No evidence history removed or validation rules weakened.",
+  "evidence": [
+    "evidence/PAC-204/validator.log",
+    "evidence/PAC-204/python-tests.log",
+    "evidence/PAC-204/previous-attempts.log"
+  ]
+}

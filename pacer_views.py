@@ -6,6 +6,9 @@ from pathlib import Path
 
 
 def load(path):
+    # Append-only acceptance history exceeds Python's 128 KiB CSV default.
+    # Preserve the evidence; keep strict quoting, column and ID validation.
+    csv.field_size_limit(max(csv.field_size_limit(), 16 * 1024 * 1024))
     with Path(path).open(encoding="utf-8-sig", newline="") as stream:
         reader = csv.reader(stream, strict=True)
         try:

@@ -88,9 +88,12 @@ func _draw() -> void:
 		draw_arc(at, 44, 0, TAU, 72, Color("89c9fa"), 5, true)
 		draw_arc(at, 44 + float(timing["phase"]) * 24, 0, TAU, 72, color, 3, true)
 		var font := ThemeDB.fallback_font
-		var label := "RELEASE" if timing["locked"] else ("TAP" if ready else str(timing["label"]))
+		var label := tr("RELEASE" if timing["locked"] else ("TAP" if ready else str(timing["label"])))
 		draw_string(font, at + Vector2(-font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 20).x * 0.5, 7), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 20, color)
 		var caption := str(timing["count"])
+		if TranslationServer.get_locale().begins_with("fr"):
+			if scene.sim.mode == "EIGHT": caption = tr("%d beats to stand") % int(scene.sim.eight.get("beats_left", 0))
+			elif not scene.sim.clinch.is_empty(): caption = tr("%d / %d clean beats") % [int(scene.sim.clinch.get("beats", 0)), int(scene.sim.clinch.get("need", 0))]
 		draw_string(font, at + Vector2(-font.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x * 0.5, 91), caption, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
 	var elapsed: int = scene.sim.tick - impact_tick
 	if elapsed >= 0 and elapsed < 18 and timing.is_empty():

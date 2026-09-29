@@ -1,0 +1,11 @@
+PACER VALIDATOR :: AGENTS.md s7
+==========================================================
+  [ OK ]  parse / columns / unique IDs
+  [ OK ]  todo: lifecycle + dependency gate
+  [ OK ]  overlord: edge symmetry + paths
+  [ OK ]  organism: status + evidence gate
+  [ OK ]  nodule: lifecycle + lane exclusivity
+  [ OK ]  cross-file: reference resolution
+==========================================================
+  rows :: todo 119 | overlord 1381 | organism 25 | nodule 13   checks run :: 9365
+  VERDICT :: GREEN - registers commit-safe

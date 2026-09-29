@@ -87,6 +87,15 @@ class ValidatorTests(unittest.TestCase):
         result = self.run_validator()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_retained_evidence_history_can_exceed_default_csv_limit(self):
+        self.write("organism.PACER.csv", [{
+            "ID": "OGM-001", "Title": "Retained history", "Status": "SCAFFOLD",
+            "Requirement": "Future behavior",
+            "Notes": 'Previous run: "Québec, reviewed"\n' * 6000,
+        }])
+        result = self.run_validator()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_semicolon_mixed_dependencies_enforce_hard_gate(self):
         self.tasks += [self.task("PAC-002"), self.task("PAC-003")]
         self.tasks[0].update(

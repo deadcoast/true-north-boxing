@@ -19,6 +19,31 @@ uses Godot 4.5.1. See [prototype instructions](prototype/README.md) for launch a
 headless verification commands. Physical input-to-screen latency is unmeasured;
 PAC-002 remains open until its original acceptance criteria are met.
 
+Open **Play True North Boxing.cmd** to launch the authored
+**Episode 1 — The Letter**, or run this from the project root:
+
+```powershell
+godot --path engine/greybox
+```
+
+The title screen offers English / Français (Canada), New Episode, Continue and
+the existing Club sandbox. The episode connects the 1976 opening, the Letter,
+four Harbourline districts, the three teaching scraps, Priya's trial, the
+four-person squad, coaching and scouting, and the three-segment Survival Dual.
+Two actual segment victories qualify for the closing scene; a loss offers a retry.
+
+Walk with WASD or the left stick, jog with Shift, and interact with E / A.
+Tab / Start opens the journal; Esc opens controls and pauses. F10 saves the
+episode. Combat bindings and the accessibility preset are available in Controls.
+The episode uses `user://tnb_episode.json`, with a previous-save backup and
+retained damaged-save file on recovery. The Club sandbox keeps its existing save.
+Explicit `-- club` and `-- welcome` launch paths and all regression modes remain.
+
+The [PAC-204 verification report](evidence/PAC-204/episode-evidence.json) records
+the native journey, rendered captures, performance samples and remaining demo
+acceptance limits. Automated boxing and source checks do not establish new-player
+playtime, professional animation quality or physical input-to-screen latency.
+
 ```powershell
 uv run --no-sync --locked python pacer_views.py --ready
 uv run --no-sync --locked python pacer_validator.py

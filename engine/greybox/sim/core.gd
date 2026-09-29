@@ -724,6 +724,12 @@ func _anchor_class(name: String) -> bool:
 	return boss_role(name) >= 5 or m.has("wall_gauge") or m.has("migrant_wall")
 
 func _build_enemy_lineup() -> void:
+	# NP-12A's signed mini-dual: the authored opponents stay in their sealed slots.
+	# The ledger scopes this to the episode; sandbox formats keep their roster rules.
+	if rewards.get("episode", {}).get("fight", "") == "survival" and gpatterns.has("ascendant_r2"):
+		blineup = ["ascendant_seed", "ascendant_r2", "cassidy_vane"]
+		bdressed = blineup.duplicate(); breserves = []
+		return
 	# NP_01 s2/s7 + NP_10 s2: he dresses enemy_dressed fighters from the boss you asked for on; R1 stays that boss,
 	# the coach's archetype orders the slots he controls. STANDARD: the two highest roles close (hammer, anchor),
 	# the lowest open. AMBUSH: the ace opens the slots he controls. WALL_FIRST: anchor-class first, then STANDARD.
@@ -849,6 +855,7 @@ func _coach_super(actions: Array) -> void:
 			if tell == "burns_super_after_flash_drop" or tell == "hostile_crowd_first_corner": _ev("coach_tell", {"coach": coach["id"], "tell": tell})
 
 func _coach_swap(actions: Array) -> void:
+	if rewards.get("episode", {}).get("fight", "") == "survival": return
 	# the reserve or a not-yet-fought slot into the upcoming one, judged on the rings against your next card
 	var tell := str(coach.get("tell", "none"))
 	var up := _up_slot()
@@ -6414,7 +6421,8 @@ func training_mult() -> float:
 func train_why(game: String, who: String, partner: String = "") -> String:
 	# why this slot cannot run now ("" when it can): between duals, the minigame, the card, the gym's tier, its flag, a page, the partner, the day
 	if FAC.is_empty() or _training().is_empty(): return "no training in this build"
-	if mode != "OVER" and bell_rung(): return "training is between duals"
+	var between := _between("training is")
+	if between != "": return between
 	var g: Dictionary = _training().get("games", {}).get(game, {})
 	if g.is_empty(): return "no minigame '%s'" % game
 	if _club_card(who).is_empty(): return "%s is not in the club" % who
@@ -6760,6 +6768,8 @@ func node_cost(name: String, id: String) -> int:
 	return c
 
 func _between(what: String) -> String:
+	var episode: Dictionary = rewards.get("episode", {})
+	if episode.get("phase", "") == "world" and episode.get("fight", "") == "": return ""
 	return ("%s between duals" % what) if mode != "OVER" and bell_rung() else ""
 
 func node_why(name: String, id: String) -> String:
@@ -9748,6 +9758,14 @@ func _boss_step() -> void:
 			for k in w:
 				r -= w[k]
 				if r <= 0.0: bstring = k; break
+			# Priya's tape observation is executable pattern data: a right lead on
+			# every third exchange. Only a pattern explicitly carrying a cycle uses it.
+			var cycle: Array = pattern.get("select", {}).get("cycle", [])
+			if not cycle.is_empty():
+				var cycle_index := int(pattern["select"].get("cycle_index", 0))
+				var scheduled := str(cycle[cycle_index % cycle.size()])
+				if w.has(scheduled):
+					bstring = scheduled; pattern["select"]["cycle_index"] = cycle_index + 1
 			var s: Dictionary = pattern["strings"][bstring]
 			if bmods["cooldown_ms"].has(bstring): bcooldown_until[bstring] = tick + ms(float(bmods["cooldown_ms"][bstring]))   # Marta's greedy Mirror
 			# Tam's borrowed clothes: some tells are performances with nothing behind them, until the phase line says true pattern only

@@ -13,9 +13,9 @@ if (-not $engine) {
 }
 if (-not $engine) { throw 'Godot 4 is required. Install it or put godot.exe on PATH, then run this launcher again.' }
 if ($Verify) {
-    [pscustomobject]@{ Engine = $engine; Project = $project; Scene = 'res://main.tscn'; Entry = 'Before the bell' } | ConvertTo-Json
+    [pscustomobject]@{ Engine = $engine; Project = $project; Scene = 'res://main.tscn'; Entry = 'Episode 1 - The Letter; Club sandbox available from title' } | ConvertTo-Json
     exit 0
 }
-# Launch the actual working source, with its normal saved controls and first bell.
+# Launch the working source episode title with its normal saved controls.
 & $engine --path $project
 exit $LASTEXITCODE

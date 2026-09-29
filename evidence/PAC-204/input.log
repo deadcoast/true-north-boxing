@@ -1,0 +1,209 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+
+
+[PASS] keyboard L_UPPERCUT
+
+[PASS] scene input executes L_UPPERCUT
+
+[PASS] keyboard L_HOOKERCUT
+
+[PASS] scene input executes L_HOOKERCUT
+
+[PASS] keyboard L_HOOK
+
+[PASS] scene input executes L_HOOK
+
+[PASS] keyboard L_FLARED
+
+[PASS] scene input executes L_FLARED
+
+[PASS] keyboard L_STRAIGHT
+
+[PASS] scene input executes L_STRAIGHT
+
+[PASS] keyboard R_STRAIGHT
+
+[PASS] scene input executes R_STRAIGHT
+
+[PASS] keyboard R_FLARED
+
+[PASS] scene input executes R_FLARED
+
+[PASS] keyboard R_HOOK
+
+[PASS] scene input executes R_HOOK
+
+[PASS] keyboard R_HOOKERCUT
+
+[PASS] scene input executes R_HOOKERCUT
+
+[PASS] keyboard R_UPPERCUT
+
+[PASS] scene input executes R_UPPERCUT
+
+[PASS] press and release in one render frame preserve modifier snapshot
+
+[PASS] release follows the same-frame press
+
+[PASS] keyboard auto-repeat never repeats an attack
+
+[PASS] two presses retain event order
+
+[PASS] mouse gesture L_UPPERCUT
+
+[PASS] stick gesture L_UPPERCUT
+
+[PASS] mouse gesture L_HOOKERCUT
+
+[PASS] stick gesture L_HOOKERCUT
+
+[PASS] mouse gesture L_HOOK
+
+[PASS] stick gesture L_HOOK
+
+[PASS] mouse gesture L_FLARED
+
+[PASS] stick gesture L_FLARED
+
+[PASS] mouse gesture L_STRAIGHT
+
+[PASS] stick gesture L_STRAIGHT
+
+[PASS] mouse gesture R_STRAIGHT
+
+[PASS] stick gesture R_STRAIGHT
+
+[PASS] mouse gesture R_FLARED
+
+[PASS] stick gesture R_FLARED
+
+[PASS] mouse gesture R_HOOK
+
+[PASS] stick gesture R_HOOK
+
+[PASS] mouse gesture R_HOOKERCUT
+
+[PASS] stick gesture R_HOOKERCUT
+
+[PASS] mouse gesture R_UPPERCUT
+
+[PASS] stick gesture R_UPPERCUT
+
+[PASS] subframe stick pulse survives
+
+[PASS] slow stick drift is not a flick
+
+[PASS] staggered axis reports settle before classification
+
+[PASS] 150ms pull-back then forward is one haymaker
+
+[PASS] accessible chord R_STRAIGHT
+
+[PASS] accessible chord R_FLARED
+
+[PASS] accessible chord R_HOOK
+
+[PASS] accessible chord R_HOOKERCUT
+
+[PASS] accessible chord R_UPPERCUT
+
+[PASS] accessible chord L_STRAIGHT
+
+[PASS] accessible chord L_FLARED
+
+[PASS] accessible chord L_HOOK
+
+[PASS] accessible chord L_HOOKERCUT
+
+[PASS] accessible chord L_UPPERCUT
+
+[PASS] haymaker charge cannot fire early
+
+[PASS] button haymaker uses the authored charge
+
+[PASS] rebind supported
+
+[PASS] remapped punch reaches the live scene
+
+[PASS] old binding is removed
+
+[PASS] bindings persist
+
+[PASS] bindings and preset restore
+
+[PASS] restored binding works
+
+[PASS] authored frame data L_UPPERCUT
+
+[PASS] authored frame data L_HOOKERCUT
+
+[PASS] authored frame data L_HOOK
+
+[PASS] authored frame data L_FLARED
+
+[PASS] authored frame data L_STRAIGHT
+
+[PASS] authored frame data R_STRAIGHT
+
+[PASS] authored frame data R_FLARED
+
+[PASS] authored frame data R_HOOK
+
+[PASS] authored frame data R_HOOKERCUT
+
+[PASS] authored frame data R_UPPERCUT
+
+[PASS] body power haymaker block-punch startup stacks
+
+[PASS] body power haymaker damage stacks
+
+[PASS] moving toward out-of-range opponent activates step
+
+[PASS] step reaches and multiplies damage
+
+[PASS] standing out of range does not invent a stepping punch
+
+[PASS] all five modifiers stack
+
+[PASS] unaffordable power preserves base punch
+
+[PASS] unaffordable hissatsu preserves base punch
+
+[PASS] block-punch exits guard instantly
+
+[PASS] held guard stays down during punch startup
+
+[PASS] power whiff opens exactly authored vulnerability
+
+[PASS] blocked power opens authored vulnerability
+
+[PASS] modifiers read hot-reloaded data rather than literals
+
+[PASS] scene hot reload restores authored values within one second
+
+[PASS] opening controls clears pending/held input
+
+[PASS] held stick cannot punch when resuming controls
+
+[PASS] stick returns after neutral and a fresh flick
+
+[PASS] down-flick release age 50000us
+
+[PASS] down-flick release age 100000us
+
+[PASS] dummy disables authored opponent decisions
+
+[PASS] leaving practice restores opponent behavior
+
+[PASS] modifier intent replay remains deterministic
+
+INPUT DRIVE :: GREEN (98/98)
+
+ERROR: Failed to read the root certificate store.
+
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+
+   at: cleanup (core/object/object.cpp:2536)

@@ -1,0 +1,92 @@
+{
+  "schema": "TheLetter/1",
+  "authority": "NP_12A_EP01_SCRIPT; VS_SCOPE; NP_02_TWO_LAYER; NP_13_SCOPE",
+  "scenes": {
+    "archive": [
+      ["GORD PETTY · 1976", "Fifth rotation, folks. Whole season, one segment. And walking out for Millbrook —", "Cinquième rotation, mesdames et messieurs. Toute une saison dans un seul segment. Et pour Millbrook, voici —"],
+      ["", "[The tape loses one second of sound. The name is gone.]", "[Une seconde de son manque sur la bande. Le nom a disparu.]"],
+      ["GORD", "— and this building believes, I can tell you that much.", "— et ici, on y croit encore. Ça, je peux vous le dire."]
+    ],
+    "present": [
+      ["MILLBROOK · 7:00 AM", "The same glove. Fifty years down. Finish Rory’s shadow round.", "Le même gant. Cinquante ans plus tard. Termine la ronde de boxe dans le vide de Rory."]
+    ],
+    "letter": [
+      ["WHITLOCK", "Your left drops when you get tired.", "Ta gauche baisse quand tu fatigues."],
+      ["RORY", "It’s seven in the morning.", "Il est sept heures du matin."],
+      ["WHITLOCK", "Punches happen then too.", "Les coups attendent pas midi."],
+      ["CRBF · TEXTE FAISANT FOI", "À défaut de démontrer la compétitivité du club — au moins deux (2) victoires de segment dans un duel sanctionné avant la fin de la saison — la charte de Millbrook sera dissoute et son patrimoine transféré à l’établissement d’accueil.", "À défaut de démontrer la compétitivité du club — au moins deux (2) victoires de segment dans un duel sanctionné avant la fin de la saison — la charte de Millbrook sera dissoute et son patrimoine transféré à l’établissement d’accueil."],
+      ["CRBF · ENGLISH COLUMN", "Failing demonstration of a competitive club — minimum two (2) segment victories in a sanctioned dual before season’s end — the Millbrook charter, oldest in the federation, shall be dissolved and its history transferred to the receiving institution.", "Colonne anglaise : même clause. Deux victoires de segment avant la fin de la saison. Le texte français fait foi."],
+      ["RORY", "Receiving institution.", "L’établissement d’accueil."],
+      ["WHITLOCK", "Ascendant. Toronto. They collect charters like ours the way you’d collect stamps. They’ve requested the dual for Saturday. Their B-squad. They mean it as paperwork.", "Ascendant. Toronto. Ils collectionnent nos chartes comme des timbres. Ils ont demandé le duel pour samedi. Leur équipe B. Pour eux, c’est de la paperasse."],
+      ["RORY", "Sanctioned dual needs four dressed.", "Il faut quatre boxeurs en tenue pour un duel sanctionné."],
+      ["WHITLOCK", "It does.", "Oui."],
+      ["RORY", "We have one.", "On en a un."],
+      ["WHITLOCK", "You have five days.", "T’as cinq jours."],
+      ["WHITLOCK’S NOTE", "Four dressed by Saturday. Start with someone smarter than us.", "Quatre en tenue samedi. Commence par quelqu’un de plus brillant que nous."]
+    ],
+    "priya": [
+      ["PRIYA", "— because their R2 leads with her right on the third exchange. Every time. It’s on tape four times and nobody in that building has noticed. You’re the boxing club.", "— parce que leur deuxième part de la droite au troisième échange. À chaque fois. Quatre reprises au ralenti, même ouverture, personne la voit. T’es le club de boxe."],
+      ["RORY", "You know the boxing club?", "Tu connais le club?"],
+      ["PRIYA", "I know everything about the boxing club. Charter 1961 — recognized retroactive to ’58, it’s a whole thing. Four provincial titles, one national, February ’76. I’ve watched the ’76 dual eleven times. The tape’s damaged. The R5 fighter — no name on the card, no name on the call, nothing in the CRBF digest. You’d think someone would have written it down.", "Je connais toute la fiche. Charte de 1961, reconnue rétroactivement à 58 — longue histoire. Quatre titres provinciaux, un national, février 76. Le duel de 76, je l’ai vu onze fois. La bande est maganée. Le cinquième boxeur : pas de nom sur la fiche, pas de nom à l’antenne, rien au bulletin de la CRBF. Quelqu’un aurait pu le noter."],
+      ["RORY", "Coach says we fold Saturday unless we field four.", "Coach dit qu’on ferme samedi si on n’en trouve pas quatre."],
+      ["PRIYA", "You fold Saturday anyway. Ascendant B runs five dressed, all seeded, coached off a tablet. You have a captain with dropping-left-syndrome and an empty locker room. Two segment wins though. That’s the clause? Two of three?", "Même à quatre, ça ferme. Ascendant B en habille cinq, tous têtes de série, coachés sur tablette. Vous avez un capitaine dont la gauche tombe et un vestiaire vide. Mais deux segments gagnés... C’est ça, la clause? Deux sur trois?"],
+      ["RORY", "You read the letter?", "T’as lu la lettre?"],
+      ["PRIYA", "I read the regulation the letter cites. The letter paraphrases it badly. R1 is unwinnable for us, so it’s a bank. R2 is winnable on points if — if the person who’s only ever watched can actually do any of it.", "J’ai lu le règlement cité dans la lettre. Elle le résume mal. Le premier segment, on mise sur la réserve. Le deuxième se gagne aux points, si... si la fille qui a toujours regardé est capable de le faire pour vrai."],
+      ["RORY", "One way to find out.", "Y a une façon de le savoir."]
+    ],
+    "priya_join": [
+      ["PRIYA", "That is different from the tape.", "C’est pas pareil que sur la bande."],
+      ["RORY", "Better or worse?", "Mieux ou pire?"],
+      ["PRIYA", "Louder. I’m in. I want the R2 slot and I want your film room, such as it is.", "Plus bruyant. J’embarque. Je veux le deuxième segment et votre salle vidéo, dans l’état où elle est."]
+    ],
+    "marcus_join": [
+      ["MARCUS", "Football didn’t want the temper. You want the temper?", "Le football voulait pas du caractère. Vous le voulez, vous?"],
+      ["RORY", "We want the hands. Temper’s coaching.", "On veut les mains. Le caractère, ça se coache."]
+    ],
+    "june_join": [
+      ["JUNE", "Again.", "Encore."],
+      ["RORY", "Saturday. Bring that exact sentence.", "Samedi. Garde exactement cette phrase-là."]
+    ],
+    "binders": [
+      ["PRIYA", "Their corner calls the strings out loud. Code numbers. She fires what the tablet says, when it says.", "Le coin annonce les séquences à voix haute. Des numéros. Elle lance ce que la tablette demande, au moment demandé."],
+      ["WHITLOCK", "Then Saturday we learn their language.", "Alors samedi, on apprend leur langue."],
+      ["PRIYA", "That’s — yes. That’s exactly the assignment.", "C’est... oui. C’est exactement le devoir."]
+    ],
+    "survival": [
+      ["GORD PETTY", "Sanctioned mini-dual, three segments, and the stakes could not be simpler: two wins keeps the oldest charter in the federation alive.", "Un mini-duel sanctionné, trois segments. L’enjeu est simple : deux victoires pour garder en vie la plus vieille charte de la fédération."],
+      ["DANIELLE FERLAND", "Et si Millbrook échoue, Gord, la charte part à Toronto dans une valise.", "Et si Millbrook échoue, Gord, la charte part à Toronto dans une valise."]
+    ],
+    "vane": [
+      ["CASSIDY", "Nothing personal. You’re a checkbox.", "Rien de personnel. Vous êtes une case à cocher."],
+      ["RORY", "Whose?", "Sur la liste de qui?"]
+    ],
+    "tag": [
+      ["OBSERVATEUR · TEXTE FAISANT FOI", "Deux segments. La charte demeure en vigueur. Le calendrier de la saison sera affiché jeudi.", "Deux segments. La charte demeure en vigueur. Le calendrier de la saison sera affiché jeudi."],
+      ["OBSERVER", "Two segments. Charter stands. Season schedule posts Thursday.", "Deux victoires de segment. Charte maintenue. Calendrier jeudi."],
+      ["", "By the door, Director Vey looks at the 1976 flip board. Then he is gone. Priya pins the carbon copy beside the letter and four fighter cards. June straightens hers. Marcus pretends he didn’t.", "À la porte, le directeur Vey regarde le tableau de 1976. Puis il repart. Priya épingle le double carbone à côté de la lettre et des quatre fiches. June redresse la sienne. Marcus fait semblant de ne rien voir."],
+      ["WHITLOCK", "Left still drops when you’re tired.", "Ta gauche baisse encore quand tu fatigues."],
+      ["RORY", "Punches happen then too.", "Les coups attendent pas midi."]
+    ]
+  },
+  "places": [
+    {"id":"gym", "en":"THE OLD GYM", "fr_CA":"LE VIEUX GYMNASE", "at":[0,0], "colour":"374c59"},
+    {"id":"school", "en":"MILLBROOK SECONDARY", "fr_CA":"ÉCOLE SECONDAIRE MILLBROOK", "at":[-30,-24], "colour":"734b3d"},
+    {"id":"community", "en":"COMMUNITY CENTRE", "fr_CA":"CENTRE COMMUNAUTAIRE", "at":[30,-24], "colour":"3e6761"},
+    {"id":"harbour", "en":"HARBOURLINE TRANSIT", "fr_CA":"TRANSIT HARBOURLINE", "at":[0,32], "colour":"365a70"}
+  ],
+  "objects": [
+    {"id":"letter", "en":"Whitlock · The letter", "fr_CA":"Whitlock · La lettre", "at":[-5,4], "person":"WHITLOCK"},
+    {"id":"wall", "en":"The Gym Wall", "fr_CA":"Le mur du club", "at":[-5,-5]},
+    {"id":"locker", "en":"Stable locker", "fr_CA":"Vestiaire de l’écurie", "at":[5,-5]},
+    {"id":"film", "en":"Scout Book · Priya’s binders", "fr_CA":"Carnet · Les cartables de Priya", "at":[5,4]},
+    {"id":"mitts", "en":"Coach’s mitts", "fr_CA":"Pattes d’ours", "at":[-5,-1]},
+    {"id":"shadow", "en":"Shadow rounds", "fr_CA":"Boxe dans le vide", "at":[5,-1]},
+    {"id":"board", "en":"Saturday · Seal the order", "fr_CA":"Samedi · Sceller l’ordre", "at":[0,-5]},
+    {"id":"scrap_1", "en":"Bike-rack challenger", "fr_CA":"Défi près des vélos", "at":[-26,-18], "person":"CHALLENGER"},
+    {"id":"priya", "en":"Priya · Library", "fr_CA":"Priya · Bibliothèque", "at":[-34,-25], "person":"PRIYA"},
+    {"id":"scrap_2", "en":"Marcus · Open mat", "fr_CA":"Marcus · Entraînement libre", "at":[25,-22], "person":"MARCUS"},
+    {"id":"scrap_3", "en":"June · Open mat", "fr_CA":"June · Entraînement libre", "at":[35,-22], "person":"JUNE"},
+    {"id":"roadwork", "en":"Harbour roadwork route", "fr_CA":"Course du quai", "at":[-4,29]},
+    {"id":"transit", "en":"Harbourline departures", "fr_CA":"Départs de Harbourline", "at":[4,34]}
+  ]
+}

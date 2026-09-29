@@ -183,9 +183,9 @@ static func write_text(sim, with_dual: bool = true) -> String:
 	return JSON.stringify(d, "  ", true, true)
 
 static func read_text(text: String) -> Dictionary:
-	var parsed = JSON.parse_string(text)
-	if parsed == null: return {"ok": false, "why": "not JSON"}
-	return read(parsed)
+	var parser := JSON.new()
+	if parser.parse(text) != OK: return {"ok": false, "why": "not JSON"}
+	return read(parser.data)
 
 static func write_file(path: String, sim, with_dual: bool = true) -> bool:
 	var f := FileAccess.open(path, FileAccess.WRITE)

@@ -7,6 +7,8 @@ const FightView := preload("res://presentation/fight_view.gd")
 const FightHUD := preload("res://presentation/fight_hud.gd")
 const FightFeedback := preload("res://presentation/fight_feedback.gd")
 const ClubFlow := preload("res://presentation/club_flow.gd")
+const EpisodeDirector := preload("res://episode/director.gd")
+var episode: CanvasLayer
 var fight_feedback: Control
 var club_flow: CanvasLayer
 var fight_view := FightView.new()
@@ -512,7 +514,9 @@ func _ready() -> void:
 
 	_render(1.0); _hud()
 	# Explicit CLI demos, tests and resumed saves retain their existing entry path.
-	if args.is_empty() or "club" in args:
+	if args.is_empty() or "episode" in args:
+		episode = EpisodeDirector.new(); add_child(episode); episode.setup(self)
+	elif "club" in args:
 		club_flow.open()
 	elif "welcome" in args:
 		fight_hud.show_entry()
@@ -620,6 +624,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_ESCAPE:
 		controls_menu.open(); return
 	if controls_menu.opened or sim == null: return
+	if episode != null and episode.handle(e): return
 	if club_flow != null and club_flow.visible: return
 	if fight_hud != null and fight_hud.entry.visible: return
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F1 and e.ctrl_pressed:
@@ -999,6 +1004,7 @@ func _hold_dummy() -> void:
 # ============================== LOOP ======================================
 func _process(delta: float) -> void:
 	if sim == null or controls_menu.opened: return
+	if episode != null and episode.advance(delta): return
 	if club_flow != null and club_flow.pauses_fight():
 		_hud(); return
 	if fight_hud != null and fight_hud.entry.visible:
@@ -1184,6 +1190,7 @@ func _consume_events() -> void:
 		fight_view.observe(ev, sim.tick)
 		fight_feedback.observe(ev, sim.tick)
 		club_flow.observe(ev)
+		if episode != null: episode.observe(ev)
 		fx_counts[ev["kind"]] = int(fx_counts.get(ev["kind"], 0)) + 1
 		match ev["kind"]:
 			"feed": feed.text = ev["text"]
@@ -1761,5 +1768,6 @@ func _hud() -> void:
 	hud.text += "\nESC controls / remap  |  %s%s" % ["BUTTON CHORDS" if combat_input.preset == "chords" else "STICK / MOUSE FLICKS", "  |  PRACTICE DUMMY" if practice_dummy else ""]
 
 	fight_hud.update(sim, practice_dummy, feed.text)
+	if episode != null and episode.active: episode.refresh_hud()
 	club_flow.track()
 	fight_feedback.update_state(sim)

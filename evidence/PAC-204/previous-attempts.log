@@ -1,0 +1,204 @@
+.PACER\PAC-204\journey-01.log
+raw sha256: 5cddad5bdf104349fd472755affcf15a1fd09ed8b3e2f734e85235b68fc47bdd
+1: Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2:
+3: SCRIPT ERROR: Parse Error: Cannot infer the type of "before" variable because the value doesn't have a set type.
+4:    at: GDScript::reload (res://tools/drive_episode.gd:60)
+5: ERROR: Failed to load script "res://tools/drive_episode.gd" with error "Parse error".
+6:    at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+
+.PACER\PAC-204\journey-02.log
+raw sha256: daae23a00342b68e4e7fa3eefefba4915330b422614ea18cc0d73f82c514dda7
+10: [PASS] archive gives authored legend build and 80 initial tension
+11: ARCHIVE LESSON 0 tick 2 tension 80.0
+12: ARCHIVE LESSON 1 tick 102 tension 87.0
+13: [FAIL] archive sequence completed through actual boxing
+14: EPISODE JOURNEY 7 checks; 1 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-204/journey-02/Godot/app_userdata/TNB Greybox/episode-journey.json
+15: WARNING: 6 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+16:    at: cleanup (core/object/object.cpp:2536)
+
+.PACER\PAC-204\journey-03.log
+raw sha256: a4b0adf3227be879c7dd9aa251b226b388397d076e8d8758779c3962956d9376
+11: ARCHIVE LESSON 0 tick 2 tension 80.0
+12: ARCHIVE LESSON 1 tick 102 tension 87.0
+13: ARCHIVE DEBUG {"B":{"block_t":0,"blocking":false,"busy_t":0,"charge_t":0,"cmd":{},"comp":92.0,"comp_max":92.0,"counter_state_t":0,"counter_t":0,"dodge":"","dodge_at":0,"dodge_dir":1,"dodge_plan":[],"dodge_t":0,"drops":0,"element":"NONE","flash_t":0,"guard":94.2020202020202,"guard_max":100.20202020202,"guard_open_t":0,"guard_t":0,"house":"none","no_regen_t":0,"pb_streak":0,"pending":{},"pkg":{"comp_pool_mult":1.15,"power_shred_mult":1.3,"ropes_dmg_mult":1.1,"slip_window_mult":0.85,"startup_mult":1.1},"pos":"(0.0, 2.6)","stamina":100.0,"stats":{"BLK":40,"CHN":40,"HRT":40,"PWR":40,"RFX":40,"SPD":40,"STA":40},"style":"SLUGGER","trait":{}},"P":{"block_t":0,"blocking":false,"busy_t":0,"charge_t":0,"cmd":{},"comp":-2.12500000000012,"comp_max":190.0,"counter_state_t":0,"counter_t":0,"dodge":"","dodge_at":0,"dodge_dir":-1,"dodge_plan":[],"dodge_t":0,"drops":3,"element":"FROST","flash_t":0,"guard":127.979797979798,"guard_max":127.979797979798,"guard_open_t":0,"guard_t":0,"house":"none","house_status":"","no_regen_t":0,"pb_streak":0,"pending":{},"pkg":{},"pos":"(0.0, 3.5)","stamina":100.0,"stats":{"BLK":95,"CHN":95,"HRT":99,"PWR":95,"RFX":95,"SPD":95,"STA":95},"style":"BOXERPUNCHER","trait":{}},"fx":{"boss_act":66,"card_pinned":5,"crowd":3,"decoration_unlocked":1,"drop":3,"dual_end":1,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":14,"feed":55,"feint":14,"flag":4,"generic":1,"hit":42,"interrupt":1,"matchup":3,"pi":1,"pi_count":1,"punch":16,"recover":32,"reward_toast":1,"sealed":3,"seg_end":1,"segment_ko":1,"sensor":36,"tell":34,"whiff":1,"xp":2},"lesson":1,"mode":"OVER","pattern":{"bait":[],"desperation":{},"file":"assembled","id":"generic:lakehead_1976","idle":[],"interrupt":[{"response":"stagger(800)","strings":["S1","S2"]}],"meta":{"dialect":"gym","element":"NONE","generic":true,"house":"none","label":"LAKEHEAD · 1976","pieces":["sl1a","sl1c"],"seed":1976,"slot":"R1","style":"SLUGGER","tier":1},"phases":[],"punish":[{"piece":"slp1","response":"S1 toward_corner","trigger":"player_corner_entry"}],"select":{"reweights":[],"weights":{"S1":65,"S2":35}},"strings":{"S1":{"actions":["L_HOOK","R_HAY"],"class":"loud","label":"Lumber","piece":"sl1a","tags":[],"tell":{"channel":"visual-body","motif":"chin_dip","ms":900},"tier":1},"S2":{"actions":["ADVANCE(40cm)","R_HOOK"],"class":"loud","label":"Woodpile","piece":"sl1c","tags":[],"tell":{"channel":"visual-body","motif":"glove_tap","ms":900},"tier":1}}},"state":"inspect"}
+14: [FAIL] archive sequence completed through actual boxing
+15: EPISODE JOURNEY 7 checks; 1 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-204/journey-03/Godot/app_userdata/TNB Greybox/episode-journey.json
+16: WARNING: 6 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+17:    at: cleanup (core/object/object.cpp:2536)
+
+.PACER\PAC-204\journey-04.log
+raw sha256: 6dbf2285c0ec0be693afd97fa33357c6d983fe61349552468f585255dc25e511
+85: [PASS] walking never steps the fight clock
+86: [PASS] walk reaches (0.0, -13.0) using native movement
+87: [PASS] walking never steps the fight clock
+88: [FAIL] walk reaches (0.0, 12.0) using native movement
+89: [PASS] walking never steps the fight clock
+90: [FAIL] walk reaches (0.0, 6.0) using native movement
+91: [FAIL] walking never steps the fight clock
+92: [FAIL] walk reaches (5.0, 4.0) using native movement
+93: [PASS] walking never steps the fight clock
+94: [FAIL] physical interaction target film
+95: [FAIL] walk reaches (0.0, 4.0) using native movement
+96: [PASS] walking never steps the fight clock
+97: [FAIL] walk reaches (0.0, -5.0) using native movement
+98: [FAIL] walking never steps the fight clock
+99: [FAIL] physical interaction target board
+100: [FAIL] Survival Dual preserves sealed authored opponents
+101: [FAIL] native episode action: bell
+102: [PASS] Survival qualification matches actual segment wins
+103: EPISODE JOURNEY 93 checks; 11 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-204/journey-04/Godot/app_userdata/TNB Greybox/episode-journey.json
+
+.PACER\PAC-204\journey-05.log
+raw sha256: 8297583fda517e7d08cfe896312189696e24275ea421cdcc636c1b916a185b7f
+108: [PASS] native episode action: bell
+109: [PASS] native episode action: talk:plan
+110: [PASS] native episode action: send
+111: [FAIL] native episode action: talk:fire
+112: [PASS] native episode action: send
+113: [PASS] Survival qualification matches actual segment wins
+114: [PASS] native episode action: next
+115: [PASS] native episode action: next
+
+.PACER\PAC-204\journey-06.log
+raw sha256: b30dcff19204338a1b4f6963356a439e468807ff8c2e5a2fbdb160ac20fdc29e
+10: [PASS] archive gives authored legend build and 80 initial tension
+11: ARCHIVE LESSON 0 tick 0 tension 80.0
+12: ARCHIVE DEBUG {"B":{"block_t":0,"blocking":false,"busy_t":0,"charge_t":0,"cmd":{},"comp":46.0,"comp_max":92.0,"counter_state_t":0,"counter_t":0,"dodge":"","dodge_at":0,"dodge_dir":1,"dodge_plan":[],"dodge_t":0,"drops":3,"element":"NONE","flash_t":0,"guard":63.2020202020202,"guard_max":100.20202020202,"guard_open_t":0,"guard_t":0,"house":"none","no_regen_t":1200,"pb_streak":0,"pending":{},"pkg":{"comp_pool_mult":1.15,"power_shred_mult":1.3,"ropes_dmg_mult":1.1,"slip_window_mult":0.85,"startup_mult":1.1},"pos":"(0.0, -0.923081)","stamina":100.0,"stats":{"BLK":40,"CHN":40,"HRT":40,"PWR":40,"RFX":40,"SPD":40,"STA":40},"style":"SLUGGER","trait":{}},"P":{"block_t":0,"blocking":false,"busy_t":41,"charge_t":0,"cmd":{},"comp":156.312500000015,"comp_max":190.0,"counter_state_t":0,"counter_t":0,"dodge":"","dodge_at":0,"dodge_dir":1,"dodge_plan":[],"dodge_t":0,"drops":0,"element":"FROST","flash_t":84,"guard":127.979797979798,"guard_max":127.979797979798,"guard_open_t":0,"guard_t":0,"house":"none","house_status":"","no_regen_t":0,"pb_streak":0,"pending":{},"pkg":{},"pos":"(0.0, -0.123081)","stamina":43.1050000000044,"stats":{"BLK":95,"CHN":95,"HRT":99,"PWR":95,"RFX":95,"SPD":95,"STA":95},"style":"BOXERPUNCHER","trait":{}},"fx":{"block":6,"boss_act":12,"card_pinned":5,"clinch":1,"clinch_beat":4,"clinch_cue":4,"clinch_end":1,"crowd":10,"decoration_unlocked":2,"drop":3,"dual_end":1,"feed":38,"feint":1,"flag":2,"generic":1,"hit":20,"interrupt":7,"level_up":2,"matchup":3,"pi":1,"pi_count":1,"punch":25,"recover":4,"reward_toast":1,"sealed":3,"seg_end":1,"segment_ko":1,"sensor":9,"survival_grab":1,"tell":11,"whiff":7,"xp":2},"lesson":0,"mode":"OVER","pattern":{"bait":[],"desperation":{},"file":"assembled","id":"generic:lakehead_1976","idle":[],"interrupt":[{"response":"stagger(800)","strings":["S1","S2"]}],"meta":{"dialect":"gym","element":"NONE","generic":true,"house":"none","label":"LAKEHEAD · 1976","pieces":["sl1a","sl1c"],"seed":1976,"slot":"R1","style":"SLUGGER","tier":1},"phases":[],"punish":[{"piece":"slp1","response":"S1 toward_corner","trigger":"player_corner_entry"}],"select":{"reweights":[],"weights":{"S1":65,"S2":35}},"strings":{"S1":{"actions":["JAB","L_HOOK","R_HAY"],"class":"loud","label":"Lumber","piece":"sl1a","tags":[],"tell":{"channel":"visual-body","motif":"chin_dip","ms":900},"tier":1},"S2":{"actions":["JAB","ADVANCE(40cm)","R_HOOK"],"class":"loud","label":"Woodpile","piece":"sl1c","tags":[],"tell":{"channel":"visual-body","motif":"glove_tap","ms":900},"tier":1}}},"state":"inspect"}
+13: [FAIL] archive sequence completed through actual boxing
+14: EPISODE JOURNEY 7 checks; 1 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-204/journey-06/Godot/app_userdata/TNB Greybox/episode-journey.json
+15: WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+16:    at: cleanup (core/object/object.cpp:2536)
+
+.PACER\PAC-204\journey-07.log
+raw sha256: 562c378257821972fccb85069a8075fd0bedfccca7ce971a6f5e6350d9d5647e
+21: ARCHIVE HIT R_STRAIGHT frame 1293
+22: ARCHIVE HIT R_STRAIGHT frame 1390
+23: ARCHIVE DEBUG {"B":{"block_t":0,"blocking":false,"busy_t":0,"charge_t":0,"cmd":{},"comp":46.0,"comp_max":92.0,"counter_state_t":0,"counter_t":0,"dodge":"","dodge_at":0,"dodge_dir":1,"dodge_plan":[],"dodge_t":0,"drops":3,"element":"NONE","flash_t":0,"guard":63.2020202020202,"guard_max":100.20202020202,"guard_open_t":0,"guard_t":0,"house":"none","no_regen_t":1200,"pb_streak":0,"pending":{},"pkg":{"comp_pool_mult":1.15,"power_shred_mult":1.3,"ropes_dmg_mult":1.1,"slip_window_mult":0.85,"startup_mult":1.1},"pos":"(0.0, -0.923081)","stamina":100.0,"stats":{"BLK":40,"CHN":40,"HRT":40,"PWR":40,"RFX":40,"SPD":40,"STA":40},"style":"SLUGGER","trait":{}},"P":{"block_t":0,"blocking":false,"busy_t":41,"charge_t":0,"cmd":{},"comp":156.312500000015,"comp_max":190.0,"counter_state_t":0,"counter_t":0,"dodge":"","dodge_at":0,"dodge_dir":1,"dodge_plan":[],"dodge_t":0,"drops":0,"element":"FROST","flash_t":84,"guard":127.979797979798,"guard_max":127.979797979798,"guard_open_t":0,"guard_t":0,"house":"none","house_status":"","no_regen_t":0,"pb_streak":0,"pending":{},"pkg":{},"pos":"(0.0, -0.123081)","stamina":43.1050000000044,"stats":{"BLK":95,"CHN":95,"HRT":99,"PWR":95,"RFX":95,"SPD":95,"STA":95},"style":"BOXERPUNCHER","trait":{}},"fx":{"block":6,"boss_act":12,"card_pinned":5,"clinch":1,"clinch_beat":4,"clinch_cue":4,"clinch_end":1,"crowd":10,"decoration_unlocked":2,"drop":3,"dual_end":1,"feed":38,"feint":1,"flag":2,"generic":1,"hit":20,"interrupt":7,"level_up":2,"matchup":3,"pi":1,"pi_count":1,"punch":25,"recover":4,"reward_toast":1,"sealed":3,"seg_end":1,"segment_ko":1,"sensor":9,"survival_grab":1,"tell":11,"whiff":7,"xp":2},"lesson":0,"mode":"OVER","pattern":{"bait":[],"desperation":{},"file":"assembled","id":"generic:lakehead_1976","idle":[],"interrupt":[{"response":"stagger(800)","strings":["S1","S2"]}],"meta":{"dialect":"gym","element":"NONE","generic":true,"house":"none","label":"LAKEHEAD · 1976","pieces":["sl1a","sl1c"],"seed":1976,"slot":"R1","style":"SLUGGER","tier":1},"phases":[],"punish":[{"piece":"slp1","response":"S1 toward_corner","trigger":"player_corner_entry"}],"select":{"reweights":[],"weights":{"S1":65,"S2":35}},"strings":{"S1":{"actions":["JAB","L_HOOK","R_HAY"],"class":"loud","label":"Lumber","piece":"sl1a","tags":[],"tell":{"channel":"visual-body","motif":"chin_dip","ms":900},"tier":1},"S2":{"actions":["JAB","ADVANCE(40cm)","R_HOOK"],"class":"loud","label":"Woodpile","piece":"sl1c","tags":[],"tell":{"channel":"visual-body","motif":"glove_tap","ms":900},"tier":1}}},"state":"inspect"}
+24: [FAIL] archive sequence completed through actual boxing
+25: EPISODE JOURNEY 7 checks; 1 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-204/journey-07/Godot/app_userdata/TNB Greybox/episode-journey.json
+26: WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+27:    at: cleanup (core/object/object.cpp:2536)
+
+.PACER\PAC-204\journey-08.log
+raw sha256: 04a9e66eea7ff9702aec6051b3872dfc987ab5abde76727a9b70918eba88b0d7
+44: [PASS] native episode action: glove_up
+45: [PASS] body shots earn the first lesson
+46: [PASS] native episode action: back
+47: [FAIL] walk reaches (-30.0, -18.0) using native movement
+48: [PASS] walking never steps the fight clock
+49: [PASS] walk reaches (-34.0, -25.0) using native movement
+50: [PASS] walking never steps the fight clock
+51: [PASS] physical interaction target priya
+61: [PASS] native episode action: next
+62: [PASS] native episode action: next
+63: [PASS] fought trial recruits Priya
+64: [FAIL] walk reaches (-30.0, -18.0) using native movement
+65: [PASS] walking never steps the fight clock
+66: [PASS] walk reaches (-30.0, -13.0) using native movement
+67: [PASS] walking never steps the fight clock
+68: [PASS] walk reaches (30.0, -13.0) using native movement
+76: [PASS] native episode action: next
+77: [PASS] native episode action: next
+78: [PASS] survival lesson recruits Marcus
+79: [FAIL] walk reaches (35.0, -22.0) using native movement
+80: [PASS] walking never steps the fight clock
+81: [FAIL] physical interaction target scrap_3
+82: [PASS] native episode action: glove_up
+83: [PASS] native episode action: next
+84: [PASS] native episode action: next
+85: [FAIL] centre exchange recruits June
+86: [FAIL] walk reaches (30.0, -20.0) using native movement
+87: [FAIL] walking never steps the fight clock
+88: [PASS] walk reaches (30.0, -13.0) using native movement
+89: [PASS] walking never steps the fight clock
+90: [PASS] walk reaches (12.0, -13.0) using native movement
+91: [PASS] walking never steps the fight clock
+105: [PASS] walking never steps the fight clock
+106: [PASS] walk reaches (0.0, 12.0) using native movement
+107: [PASS] walking never steps the fight clock
+108: [FAIL] walk reaches (0.0, 25.0) using native movement
+109: [PASS] walking never steps the fight clock
+110: [FAIL] walk reaches (-4.0, 29.0) using native movement
+111: [PASS] walking never steps the fight clock
+112: [FAIL] physical interaction target roadwork
+113: [FAIL] native episode action: train
+114: [FAIL] Harbour roadwork books a real paid training slot
+115: [FAIL] native episode action: back
+116: [FAIL] walk reaches (0.0, 25.0) using native movement
+117: [PASS] walking never steps the fight clock
+118: [PASS] walk reaches (0.0, 12.0) using native movement
+119: [PASS] walking never steps the fight clock
+120: [PASS] walk reaches (0.0, 6.0) using native movement
+123: [PASS] walking never steps the fight clock
+124: [PASS] physical interaction target mitts
+125: [PASS] native episode action: train
+126: [FAIL] Mitts scores actual called punches under tempo
+127: [PASS] native episode action: back
+128: [PASS] walk reaches (0.0, 4.0) using native movement
+129: [PASS] walking never steps the fight clock
+130: [PASS] walk reaches (5.0, -5.0) using native movement
+139: [PASS] Canadian French is an in-game language choice
+140: [PASS] native episode action: save
+141: [PASS] native episode action: load
+142: [FAIL] world save preserves earned ledgers and location
+143: [PASS] EN/FR authored line archive
+144: [PASS] EN/FR authored line archive
+145: [PASS] EN/FR authored line archive
+146: [PASS] EN/FR authored line present
+202: [PASS] walk reaches (0.0, -5.0) using native movement
+203: [PASS] walking never steps the fight clock
+204: [PASS] physical interaction target board
+205: [FAIL] Survival Dual preserves sealed authored opponents
+206: [FAIL] native episode action: bell
+207: [PASS] Survival qualification matches actual segment wins
+208: EPISODE JOURNEY 188 checks; 18 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/PAC-204/journey-08/Godot/app_userdata/TNB Greybox/episode-journey.json
+
+.PACER\PAC-204\journey-10.log
+raw sha256: bd609b7eac1486893c48345770443d3566010b64b6f5e5efb8d3b9805851fc3b
+234: [PASS] native episode action: next
+235: [PASS] losing the actual dual cannot award the charter or tag
+236: [PASS] native episode action: retry_survival
+237: [FAIL] failure offers a real retry with the recruited squad preserved
+238: [FAIL] native episode action: bell
+239: [PASS] Survival qualification matches actual segment wins
+240: [PASS] R2 tape fact actually occurs in combat
+241: [PASS] R2 third-exchange right lead at opener 1
+242: [PASS] R2 third-exchange right lead at opener 2
+
+.PACER\PAC-204\native-release.log
+raw sha256: 73052291338c60989ec089e1928b01bb9373f6183bc2f41c51b83fb76c839920
+154: [PASS] native episode action: step
+155: [PASS] Harbour roadwork books a real paid training slot
+156: [PASS] native episode action: back
+157: [FAIL] physical interaction target roadwork
+158: [FAIL] native episode action: train
+159: [FAIL] native episode action: cancel
+160: [PASS] cancelled roadwork cannot survive in the episode save
+161: [PASS] native episode action: save
+162: [PASS] native episode action: load
+163: [PASS] world save preserves earned ledgers and location
+
+.PACER\PAC-204\render-release.stdout.log
+raw sha256: 959ab89cbf8e7be29a5f37aa80da94d91c89919db599cf758202e02cbaf78352
+168: [PASS] Harbour roadwork books a real paid training slot
+169: [PASS] rendered harbour-training
+170: [PASS] native episode action: back
+171: [FAIL] physical interaction target roadwork
+172: [FAIL] native episode action: train
+173: [FAIL] native episode action: cancel
+174: [PASS] cancelled roadwork cannot survive in the episode save
+175: [PASS] native episode action: save
+176: [PASS] native episode action: load
+177: [PASS] world save preserves earned ledgers and location
+
+.PACER\PAC-204\validator-before.log
+raw sha256: 6299e63db858512263bf72b12118bdf8e5c0b8fa6046571f9783bb9190d87f44
+8:     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+9: AssertionError: 1 != 0 : PACER VALIDATOR :: AGENTS.md s7
+10: ==========================================================
+11:   [FAIL]  parse / columns / unique IDs       +1 violation(s)
+12:   [ OK ]  todo: lifecycle + dependency gate
+13:   [ OK ]  overlord: edge symmetry + paths
+14:   [ OK ]  organism: status + evidence gate
+15:   [ OK ]  nodule: lifecycle + lane exclusivity

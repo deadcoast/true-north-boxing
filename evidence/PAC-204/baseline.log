@@ -1,0 +1,921 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+
+
+SMOKE :: TNBSim core, boss=cassidy_vane
+
+  [ OK ]  tuning + 24 patterns loaded
+
+  [ OK ]  action VM executes every verb the compiler emits (24 patterns) 39 verbs known
+
+  phase-trigger vocabulary: 13 forms executable, 0 not yet: {}
+
+  [ OK ]  dual opens FIGHT / R1 RORY
+
+  [ OK ]  C3 free fighter executes on the same tick      busy=45
+
+  [ OK ]  C3 punch issued 3 ticks early fires on recovery-end tick
+
+  [ OK ]  C3 punch issued 8 ticks early expires unexecuted
+
+  [ OK ]  C2 straight reaches a neutral head at 1.6m
+
+  [ OK ]  C2 straight falls short at 2.3m
+
+  [ OK ]  tracker flags the repeated 2-gram              tier=1
+
+  [ OK ]  stamina drains on punches                      87.6
+
+  [ OK ]  C7 flag raises the boss read probability       0.30 -> 0.55
+
+  [ OK ]  C7 boss offense byte-identical across the flag
+
+  [ OK ]  C7 counter window lowers the read (fear is a number)
+
+  [ OK ]  interrupt breaks the tell (S1, tagged INTERRUPT) state=IDLE
+
+  [ OK ]  interrupt opens the flash window               84 ticks
+
+  [ OK ]  interrupt pays tension                         17.0
+
+  [ OK ]  boss took damage
+
+  [ OK ]  C5 hitstop is sim state (freeze ticks queued)  5 ticks
+
+  [ OK ]  C5 frozen tick advances no clock
+
+  [ OK ]  C3 a punch pressed during hitstop is buffered, not eaten
+
+  [ OK ]  a string the block does not tag (S2) takes the jab and keeps coming: no stagger, no flash window, no +5 - the hit still lands
+
+  [ OK ]  only a jab-class hit breaks a string: a hook in the tell lands and does not (NP_04 s4)
+
+  [ OK ]  DROP scored at composure<=0 (+1)               1-0 score 1-0
+
+  [ OK ]  post-drop composure resets to 50pct
+
+  [ OK ]  FLASH DROP scores 2 (NP_01 s3)                 score 3-0
+
+  [ OK ]  third drop = SEGMENT KO (+1 +3), segment ends (card), dual continues score 7-0 mode=CARD
+
+  [ OK ]  player drop enters the standing-eight
+
+  [ OK ]  standing-eight: three rise beats on the count get up comp=45.0 halt=1200 ticks
+
+  [ OK ]  crowd surge pays tension on the rise           0.0 -> 8.0
+
+  [ OK ]  guard break opens the fighter                  72 ticks
+
+  [ OK ]  guard refills after the break                  40.1
+
+  [ OK ]  perfect block inside 150ms opens a counter window 60 ticks
+
+  [ OK ]  hissatsu casts on LB + its family's motion; the wrong family throws the normal punch
+
+  [ OK ]  hissatsu costs its tier's Tension (T1 = 35 x0.9, his element is beaten), never the whole bar 68.5 left
+
+  [ OK ]  the caster is locked for the cinematic windup (216 ticks)
+
+  [ OK ]  ABB resolves from its record: x2.5 packet + ropes displacement + freeze state
+
+  [ OK ]  insufficient Tension: the motion executes as its normal punch (never a whiff-lockout)
+
+  [ OK ]  boss agent runs strings on its own (4s)        tells=3 state=RECOVER string=S2
+
+  [ OK ]  action VM executes the selected strings        actions=5
+
+  [ OK ]  VM expands composite verbs (WALK_STRING 2_hooks -> 4 acts, MIXED_STRING(4) -> 4 punches, HERD(50cm) -> 0.5m)
+
+  [ OK ]  VM COUNTER_STATE: a punch into his guard is answered at once state=ACTING queue=1
+
+  [ OK ]  VM CLINCH_ATTEMPT starts a scramble; untapped, he wins and drags you ropeward x 2.00 -> 2.50
+
+  [ OK ]  sensor: player_passive fires at this boss's own threshold (6s), never early fired after 735 steps (threshold 720 fight ticks)
+
+  [ OK ]  segment end shows the 4s broadcast card first
+
+  [ OK ]  relay CHARGED at >=25 contributed (chain 1)
+
+  [ OK ]  the card times out into the CORNER (45s, 2 actions)
+
+  [ OK ]  send: rotation loads the next fighter          PRIYA
+
+  [ OK ]  tension persists across segments (+5 if the segment was won on EP) 42
+
+  [ OK ]  CHARGED entrance: 10s surge (+10%% feet), first hissatsu half cost, T3 unlocked Marginalia T0 costs 4.5
+
+  [ OK ]  no relay under 25 contributed; an empty segment breaks the chain
+
+  [ OK ]  corner staff: Loosen Up sends MARCUS out at a 110 stamina cap MARCUS stam=110
+
+  [ OK ]  dual verdict on score after 3 segments
+
+  [ OK ]  new dual resets to R1
+
+  [ OK ]  zone classification (4 zones)
+
+  [ OK ]  corner damage x1.5 vs center                   18.0/12.0
+
+  [ OK ]  trapped slip window x1.4                       67 ticks
+
+  [ OK ]  landed punches herd him back                   -0.80 -> -0.90
+
+  [ OK ]  his punches herd you back                      0.80 -> 0.92
+
+  [ OK ]  C2 slip evades the straight + opens a window
+
+  [ OK ]  C2 duck eats the uppercut
+
+  [ OK ]  C2 weave-away evades the hook + escapes the trap
+
+  [ OK ]  counter window is consumed by the attempt
+
+  [ OK ]  counter lands through the fear-reduced read
+
+  [ OK ]  sensor locks_to_single_tempo: 6 equal intervals fire, 5 never
+
+  [ OK ]  sensor locks_to_single_tempo: a varied cadence never fires
+
+  [ OK ]  sensor neutral_reset_attempt: fires on the 120th tick out of range, not the 119th
+
+  [ OK ]  sensor casts_moreau_native: Fevrier at Remy fires and forces Ingot (S3) state=TELL string=S3
+
+  [ OK ]  sensor casts_moreau_native: Aurora Borealis Breaker (no house) never fires
+
+  [ OK ]  sensor trap_stance_hands_down: she offers the stance idle; a punch into it forces Mirror (S1) stance after 1 ticks, state=TELL
+
+  [ OK ]  sensor trap_stance_hands_down: hands up, no bait
+
+  [ OK ]  sensor reacts_to_fake_tell: phase-1 fakes exist (7 in 20s); ignoring one is safe; flinching forces S2
+
+  [ OK ]  sensor reacts_to_fake_tell: phase 2 (clock>30s) retires the borrowed clothes - 'true_pattern_only' (0 fakes in 20s, S1 retired)
+
+  [ OK ]  sensor audio_assist_reliance: fires on the 3rd fast reaction with the assist on, not the 2nd
+
+  [ OK ]  sensor audio_assist_reliance: the same reactions without the assist never fire
+
+  [ OK ]  sensor clinch_input_spam: third grab in 8s fires + referee holding call (-2 EP); two do not
+
+  [ OK ]  sensor sprint_approach: a sprint-step toward him fires; 0.8m closed, -4 stamina closed 0.80m
+
+  [ OK ]  sensor straight_line_retreat: fires on the step that completes 1.2m, never before 1.195m before the firing step
+
+  [ OK ]  sensor straight_line_retreat: an angled retreat never fires
+
+  [ OK ]  sensor backstep_chain3: the third back-step fires, the second does not
+
+  [ OK ]  sensor rope_backing: backing onto the ropes fires; sliding sideways onto them is only rope_touch
+
+  [ OK ]  referee: Alfie banks warning 1 (free), warning 2 (-5 EP), and never a third warnings 1/2/2 ep_b -5
+
+  [ OK ]  phase trigger warnings_banked==2 reached (dirty flirtation stops) phase=2
+
+  [ OK ]  phase-trigger vocabulary fully executable (13/13 forms) 13 forms
+
+  [ OK ]  clinch scramble: alternating taps on the cue win position (he is walked ropeward); ENTER parity + BODY wins a reset (+5 stamina)
+
+  [ OK ]  clinch scramble: no taps loses it (dragged ropeward)
+
+  [ OK ]  clinch cue shrinks (84,151,205,248 ticks) and every window stays above the RFX floor (14) windows 25,20,16,14
+
+  [ OK ]  RFX decides the last cue: RFX 70 gets a wider final window than RFX 50 16 vs 14 ticks
+
+  [ OK ]  clinch: the wrong side spends the cue; mashing ahead of the cue locks it - both lose
+
+  [ OK ]  foul: a body punch into his lean-back is a LOW BLOW (half damage, warning 1, no EP); the same punch clean is not 3.60 vs 7.20
+
+  [ OK ]  foul: a head punch into the lean-back is legal
+
+  [ OK ]  foul: the overhand onto a ducked head is BEHIND THE HEAD; the uppercut lands clean; the straight misses {"R_FLARED":[1,1],"R_STRAIGHT":[0,0],"R_UPPERCUT":[1,0]}
+
+  [ OK ]  referee ladder runs against the player: warning / -5 EP / DROP awarded (no knockdown counted, fight continues) [[1,0,0],[2,-5,0],[3,-5,1]]
+
+  [ OK ]  foul: a clean boss pulls the body shot off your lean; Alfie takes the low blow until his cap, then pulls it
+
+  [ OK ]  survival grab: a wobbled boss grabs at 0-range, once per segment; the next segment re-arms it
+
+  [ OK ]  survival grab: never from outside 0-range
+
+  [ OK ]  wobble: below 35pct composure the feet move at 70pct 0.325/0.462
+
+  [ OK ]  effect VM has a handler for every effect type / STATE / BUFF in the library (87 moves, 3 sealed)
+
+  [ OK ]  every boss desperation resolves to a library record (21 cast by name, 3 authored-absent) []
+
+  [ OK ]  boss desperation casts BY NAME from the library; a jab inside the window breaks it (+5 Tension, flash window)
+
+  [ OK ]  after the window the cast is committed: it resolves (DMG x2.0 + SHRED 40 x1.43 rings on your guard) guard 102.7 -> 45.5
+
+  [ OK ]  only jab-class punches interrupt: a hook in the window does not
+
+  [ OK ]  s9 resolve: full 51.5, perfect slip chips 40% (20.6), block takes 60% + heavy shred (30.9, guard -50% on top of the move's own SHRED 40) counter window after the slip: 48 ticks
+
+  [ OK ]  Rush Hour lands as 5 packets; the PISTON profile lets a perfect slip evade in full
+
+  [ OK ]  WALL: not interruptible; your punches are walled; a T1 cast breaks it at cost parity (no damage either way)
+
+  [ OK ]  perfect WALL: the LB+RT hold casts it; his punches are walled; his T1 cast is negated and breaks the wall
+
+  [ OK ]  DISPLACE: Undertow throws you 1.5m toward the nearest rope 2.40m
+
+  [ OK ]  BURN: Heat Advisory burns 20 stamina x1.43 (Ada's own element and house on her native) 28.6
+
+  [ OK ]  STATE foot_freeze_slow: First Snap slows his feet to 60% 0.120/0.200
+
+  [ OK ]  STATE tell_jam on him: Black Ice drops his read to 5% for 3s
+
+  [ OK ]  STATE tell_jam on you: after Harmattan his tells are emitted jammed (drawn blind)
+
+  [ OK ]  STATE counter_stance: Sorry Eh arms you; his next punch into your guard opens a flash window
+
+  [ OK ]  STATE averages_incoming_damage: under The Mean your haymaker lands for the jab's average (0.0 vs 0.0)
+
+  [ OK ]  BUFF stamina_regen_x2: Long Winter doubles your stamina regen for 4s 8.80 vs 4.40
+
+  [ OK ]  BUFF forward_glide: Chinook Rush moves you at 150% for 2s
+
+  [ OK ]  BUFF tension_plus_on_hit: Perfect Score pays +5 Tension when it lands
+
+  [ OK ]  STATE two_hit_echo: The Forks lands twice
+
+  [ OK ]  beats_duck_reads: a RISE into a ducking head lands full (the duck eats the uppercut by geometry, C2)
+
+  [ OK ]  T3 needs the CHARGED unlock and North Star the FULL RELAY; it scales with the relay chain (base 1.6 + 0.8 x 3 links) 59.40 vs 59.40
+
+  [ OK ]  arm_only: the Commissioner arms [SEALED-SECRET] and casts The Commissioner's Due
+
+  [ OK ]  gauge: jabs do 0 (and Sam's literacy hook fires); counters x1.0, power x0.8, body x0.6; his composure is shielded 100 -> 85.6 -> 72.6 -> 67.5
+
+  [ OK ]  gauge break: TRUE OPEN 8s at x1.25, reforms 60 then 30, three breaks end it for good
+
+  [ OK ]  migrant wall: HC-0's 60-pt wall leaves him at 40 and meets you again on the next boss next boss wall 26
+
+  [ OK ]  feint edge: a release at 80ms (10 ticks) cancels the hook for 1 stamina; at 11 ticks the hook goes release@10 -> feints 1 hits 0 stamina 1.00; release@11 -> feints 0 hits 1
+
+  [ OK ]  feint draws his read: 19/30 seeds bit (13 slipped at air, 6 flinched a 400ms guard); every drawn feint drains 1 guard; nothing lands
+
+  [ OK ]  feint spam: the 4th identical feint in 10s draws nothing (he cancels the read), another row still draws, 10s later the first draws again [true,true,true,false,false]
+
+  [ OK ]  a feint never breaks a cast: only a landed jab does
+
+  [ OK ]  feints are tracker tokens: four feinted hooks flag the F_R_HOOK 2-gram like punches would tier=1 tokens=["F_R_HOOK","F_R_HOOK","F_R_HOOK","F_R_HOOK"]
+
+  [ OK ]  a drawn feint herds him 10cm and fires the feint sensors (player_feint, player_feint_hook) -0.70 -> -0.80
+
+  [ OK ]  corner timer: 45s runs out -> overrun, PRIYA comes out at 80 stamina stam=80
+
+  [ OK ]  corner budget: two actions land, the third is refused; Raise the Roof converted 30 crowd heat into +8 Tension
+
+  [ OK ]  send before the clock: the next fighter comes out at full stamina
+
+  [ OK ]  swap: reserve JUNE in (free), then MARCUS up (-15 Tension) -> R2 is MARCUS; a broke second swap and a fought fighter are refused options ["JUNE","MARCUS"] -> R2 MARCUS
+
+  [ OK ]  tactic: Body Doctrine (-10) doubles body drain next segment (12.0); on cooldown the corner after, another tactic still goes
+
+  [ OK ]  tactic: Second Wind Call needs 20 Tension - refused at 5
+
+  [ OK ]  super: Iron Resolve holds the fighter up for 30s (wobbled at 1 composure), then drops resume; the super is once per dual
+
+  [ OK ]  save the bar: the cast is refused next segment; winning it anyway banks +5 on top of the segment win's +5 (NP_05 s2) 60
+
+  [ OK ]  relay chain: [1,1,2] (30 links, a lost 12 keeps, 26 links); an empty 4 breaks it; three links = FULL RELAY, T4 costs 75 x0.9 (element edge)
+
+  [ OK ]  afterimage: PRIYA's T3 cast in R2 carries RORY as the spirit afterimage (the relay's Coast to Coast, opened by the CHARGED entrance)
+
+  [ OK ]  segment-end card: EP totals, segment winner, Tension carried
+
+  [ OK ]  tactic: High Guard Order halves guard decay under a held block (2.00 vs 4.00 over 2s)
+
+  [ OK ]  tactic: Cut the Ring - the sprint-step costs nothing and a hook herds 0.20m instead of 0.10m
+
+  [ OK ]  tactic: Feint Storm - the feint costs 0 and his punish hooks are off for 30s suppress=3600 stamina 100.00->100.00
+
+  [ OK ]  tactic: Ice the Clock runs the clock at 1/0.8 while leading (150 ticks per 120) and normally when not (120)
+
+  [ OK ]  tactic: Read the Corner draws his tell longer (S1: 72 -> 90 ticks, x1.25)
+
+  [ OK ]  tactic: Open Season - guard cap x0.8 (84.2 vs 105.3) and the slip window is 500ms + the triangle's 50 (66 ticks)
+
+  [ OK ]  tactic: Second Wind Call (-20) tops an overrun fighter back up from 80 to 100 stam=100
+
+  [ OK ]  super: The Perfect Round - 10 Tension earned lands as 20
+
+  [ OK ]  super: Switch-Up - ten clean jabs score 22 EP (x1.1) and the slip window reads 450ms ep=22 window=54
+
+  [ OK ]  super: Hostile Crowd is recorded on the segment (enemy_corner_lock) - there is no enemy corner to lock yet
+
+  [ OK ]  staff: Patch Job spends its two charges (a fresh fighter has nothing to restore), the third is refused
+
+  [ OK ]  staff: The Reveal names the next slot (yuri_kowalchuk)
+
+  [ OK ]  staff: Chalk Talk - 15s of tell highlight, the first tell carries it, then it is gone
+
+  [ OK ]  rings: 24/24 patterns and 4/4 cards dress to style/element/house keys (2 authored-neutral elements: varies/rotating); the matchup card fires at every segment load
+
+  [ OK ]  triangle: OUT-BOXER over SLUGGER - ten clean jabs score 22 EP, the slip window is 450ms; his ten score 20 (no debuff on him) ep 22 win 54 his 20
+
+  [ OK ]  triangle: SLUGGER over SWARMER - his ten score 22; yours score 20 and your slip window stays 400ms (disadvantage is his edge, not your debuff) ep 20 win 48 his 22
+
+  [ OK ]  triangle: BOXER-PUNCHER is outside it (20/20 vs the slugger); a mirror is a mirror; two boxer-punchers are the purist's matchup
+
+  [ OK ]  Switch-Up: the lie makes a SWARMER count as advantaged vs Yuri (22 EP, 450ms) while his own edge stands (22); on a true edge it adds nothing (22, 450ms) lie 22/54 his 22; truth 22/54
+
+  [ OK ]  element: FROST card + FROST move vs GALE = x1.43 (1.3 spike x 1.1 edge), cost 35 -> 31.5; GALE card = x1.0 at 35; TIMBER neutral x1.0; GRANITE (beaten) x1.0 at 35
+
+  [ OK ]  element: the multiplier is real damage - the FROST card's Breaker lands 41.8 vs the GALE card's 29.3 (x1.43)
+
+  [ OK ]  element: the beaten side's walls stand +1s - Marta's Premiere Neige is 6s against a GALE card, 5s against GRANITE; your FROST wall is 6s against Vane's GALE
+
+  [ OK ]  house + cap: a Tremblay's Premiere Neige is x1.43 (spike x native) vs Sam and would be x1.573 vs Vane - clamped to the x1.5 cap; a Moreau throwing it gets no home bonus (x1.3)
+
+  [ OK ]  feud: House Tremblay vs House Moreau earns 12.5 for 10 (x1.25) and the card says so; vs Kowalchuk 10; MacIsaac vs a Reyes origin line is a feud; an Okafor DEBT to Petrov is not
+
+  [ OK ]  package SWARMER: hook 4.0 inside (x0.8 of 5.0) and 5.0 at range; clinch windows x1.25 ([31,25,20,16] vs [25,20,16,14]); herds 0.15m (x1.5); a 1.95m straight is out of reach (x0.9) where the control lands; guard cap x0.9
+
+  [ OK ]  package OUT-BOXER: a 2.2m straight lands (x1.12) where the control and a hook miss; sprint-step costs 3.4 (x0.85); back-step covers 1.19m vs 0.98m (85% vs 70%); power punch 12.2 vs 13.5 (x0.9); weave arc 0.363 vs 0.403 (x0.9)
+
+  [ OK ]  package SLUGGER: a blocked power straight shreds 7.8 vs 6.0 (x1.3); composure pool 103 vs 90 (x1.15); on the ropes 12.4 vs 11.3 (x1.1); straight startup 29 ticks (x1.1 of 26); slip window 40 ticks (x0.85)
+
+  [ OK ]  boss packages: Yuri's chin 138 vs Sam's 120 (x1.15) and his haymaker shreds 11.7 vs 9.0 (x1.3); Alfie's guard 97.0 vs 107.8 (x0.9), his jab pushes 0.18m vs 0.12m (x1.5) and his 1.95m straight misses; Vane's 2.2m straight lands where Sam's misses and his haymaker is x0.9 (14.0 vs 15.6)
+
+  [ OK ]  coaches: 24/24 duals open with a corner record (archetype, trigger, tell, a library the boss side consumes); R1 stays the boss asked for; STANDARD ["cassidy_vane","yuri_kowalchuk","sam_tagaq"] / AMBUSH ["hc0_surety","hc7_echo","hc4_cartographer"] / WALL_FIRST ["sam_tagaq","anders_vey","alfie_crane"]
+
+  [ OK ]  the Academy corner: ["super:switch_up","swap:commissioner_cal"] - Cal swapped up for Carter (free) against your slugger card, Switch-Up burned in corner 1, and his lie scores 22 for ten ep 22
+
+  [ OK ]  the True North corner: ["super:iron_resolve"] - never swaps (Ada was the better card; the tell fired), burns Iron Resolve the corner after a drop conceded (Vey wobbles at 1 instead of going down); no drop, no Super
+
+  [ OK ]  the Grain Kings corner burns Iron Resolve after conceding a FLASH DROP (tell fires) and sits on it after a plain DROP
+
+  [ OK ]  the Ascendant B corner: corner 1 [] (no tactic before R3, the tell), corner 2 ["tactic:body_doctrine"] - Body Doctrine paid 10 (30 + 5 for his segment win - 10 = 27) and his body hook drains 12
+
+  [ OK ]  the Montréal corner: ["super:switch_up","tactic:ice_the_clock"] - ices the clock when ahead (tell), Switch-Up on when_leading; his segment clock runs 150 per 120 while he leads on EP, 120 when you do
+
+  [ OK ]  Hostile Crowd: yours locks his next corner (he takes nothing, the lock is spent); the Hollow Circuit's ["super:hostile_crowd","swap:hc4_cartographer"] locks yours - 0 actions, refused as locked out (tell fired)
+
+  [ OK ]  The Reveal names the post-swap slot: the Academy swapped Cal in, the reveal says Cal
+
+  [ OK ]  his bar: a clean hit in CENTER +2, off-center +0, a counter +3, his read that beat your punch +2, the CENTER hit that dropped you +12, his segment win +5; his desperation pays 35 from his bar and still goes at 0 center 2 plain 0 counter 3 slip 2 drop 12 cast 5 floor 0 win 5
+
+  [ OK ]  your bar on the canonical table: clean hit in CENTER +2, off-center +0, counter +3, flash +5, slip +2, perfect block +2 (segment win +5 is gated above) center 2 plain 0 counter 3 flash 5 slip 2 pb 2
+
+  [ OK ]  feud: House Tremblay vs Moreau pays him 12.5 for 10 too; the Netmen corner trailing burns Perfect Round (["super:perfect_round","swap:tam_nguyen_roy"]) and his next segment earns 20 for 10; 30 banked sends his next fighter out CHARGED (10s, feet x1.1)
+
+  [ OK ]  formats: five records load; the sanctioned dual dresses 5 + 3 both sides (his STANDARD order ["cassidy_vane","carter_okafor","ada_okafor","sam_tagaq","anders_vey"], bench ["yuri_kowalchuk","jean_guy_moreau","alfie_crane"]), the mini 3 + 1, the Iron dual repeats 3 across 5 slots both sides, the Gauntlet is one fighter five times vs five, blind is a sanctioned shape
+
+  [ OK ]  sanctioned: corner 1 offers ["DEX","YURI","MARTA","PRIYA","MARCUS","SAM"]; DEX in for JUNE (free) then SAM up for DEX (-15) -> ["RORY","SAM","PRIYA","MARCUS","DEX"], reserves ["JUNE","YURI","MARTA"]; five segments end the dual (modes after R2..R5: ["CARD","CARD","CARD","OVER"])
+
+  [ OK ]  segment wins by EP majority: you scored the DROP (1-0) but lost the exchanges 0-6 - the segment and its +5 are his
+
+  [ OK ]  ladder: equal score -> segment wins decide (DUAL OVER :: MILLBROOK WINS ON SEGMENTS   SCORE 0-0 (drops 0-0)   segments 2-1   counters 0-0   EP 8-4); equal segments -> counter hits decide (DUAL OVER :: MILLBROOK WINS ON COUNTERS   SCORE 0-0 (drops 0-0)   segments 0-0   counters 3-1   EP 0-0)
+
+  [ OK ]  Golden DROP: three drawn segments tie the ladder -> the card names your freshest (MARCUS); the pick is free from anyone dressed (["RORY","PRIYA","JUNE"]); PRIYA enters as she left R2 (30 guard, 30 composure; her 40 stamina +15 from the cutman on the stool since PAC-074 = 55), no clock; his pick was his freshest (yuri_kowalchuk); the first DROP ends it: DUAL OVER :: MILLBROOK WINS - GOLDEN DROP   SCORE 1-0 (drops 1-0)   segments 0-0   counters 0-0   EP 2-0
+
+  [ OK ]  Golden DROP the other way: his first DROP ends it - DUAL OVER :: ASCENDANT WINS - GOLDEN DROP   SCORE 0-1 (drops 0-1)   segments 0-0   counters 0-0   EP 0-2
+
+  [ OK ]  Iron dual: the corner before R4 offers everyone else dressed (["PRIYA","MARCUS"]); Patch Job +30 and Second Wind +40 land on RORY's carried 20 / 40 with the cutman's +15 on the stool since PAC-074 (-> 50 composure, 95 stamina, guard 30 as left); Vane comes back at the 50 he left with; Loosen Up's 110 cap does not top up a carried 40 (+15: 55)
+
+  [ OK ]  Gauntlet: the swap is refused (no one else is dressed); RORY carries 50 into R2 and 30 into R3 against a fresh boss each time, the cutman's +15 on top at each corner since PAC-074 (65, 45)
+
+  [ OK ]  Blind dual: The Reveal is refused (charge kept), the corner shows '?' for his slot, and the matchup card still names him at the bell
+
+  [ OK ]  delegation: a free corner call - 'delegate' hands PRIYA R2 (the card plays, your punch is ignored at the bell, the corner keys still open the corner), 'delegate_all' the rest, 'hands_on' takes it back
+
+  [ OK ]  AI segments earn 85% (10 -> 8.5; 10 hands-on); the profile casts into an open wobbled boss with a full bar (3 casts in 10s) and never spends a held bar (0)
+
+  [ OK ]  profile SWARMER: lives at 0.98m (the phone booth), 68% hooks and uppercuts, 29% to the body, 28 punches, 17 landed
+
+  [ OK ]  profile OUT-BOXER: holds 1.86m (jab range), 78% straights, 9 feints, 45 punches, 18 landed
+
+  [ OK ]  profile SLUGGER: 1.64m, 37% power punches, 47% haymakers, 19 punches, 11 landed
+
+  [ OK ]  profile BOXER-PUNCHER: 1.60m, no family over 39%, 31 punches, 11 landed
+
+  [ OK ]  profile vs a live Yuri on his neutral game, two 30s fights each: every archetype reads his tells and lands in both, and lands a jab in a tell (per fight [[2,0,2,2],[4,6,2,5]]); spacing swarmer 0.97 < slugger 1.18 < out-boxer 1.56 (seed 8) and the same order at seed 7
+
+  [ OK ]  profile on the count: RORY (HRT 99) rises on every beat; in the scramble an RFX 99 card taps all four cues and wins the position (beats 4)
+
+  [ OK ]  scrap rules: 24 objectives with a known form each; a 30s cap, no Tension (10 earned -> 0), no corner; SCR-24 needs a coached NPC - offered on Yuri, refused on Vane
+
+  [ OK ]  the cap: 30s without the objective is judged on EP - SCRAP - Break his guard once :: SCRAP WON on EP at the cap (6-0)   EP 6-0   drops 0-0 / SCRAP - Break his guard once :: SCRAP LOST on EP at the cap (0-6)   EP 0-6   drops 0-0
+
+  [ OK ]  count forms: SCR-01 three body shots (2 not enough, the third ends it WON), SCR-04 a counter (a plain hit is not), SCR-21 three counters, SCR-03 one CENTER exchange (an off-center hit is not)
+
+  [ OK ]  count forms: SCR-05 a guard break (12 power haymakers into his guard), SCR-13 two perfect blocks in a row, SCR-14 the scramble won, SCR-15 a stepping punch (moving toward him from 2.6m earns the reach; standing still there or from 1.4m does not)
+
+  [ OK ]  count forms: SCR-02 two misses drawn by slips (a whiff from range is not one), SCR-09 his special - Baro's S3 broken (a normal tell's is not; offered vs Yuri whose Elevator breaks in its window, refused vs Marta), SCR-17 the ladder Loud then Standard (Standard first does not count)
+
+  [ OK ]  SCR-06 survive 20s (met on the tick, not before; a DROP fails it), SCR-10 corner him 3s (not at 2.99), SCR-12 first blood both ways, SCR-18 five hits reset by a flag, SCR-16 the corner left unblocked (not after a block), SCR-20 the House read (Grain Elevator is Kowalchuk's: met for kowalchuk, not for tremblay), SCR-24 his coach shouts (1 heard live)
+
+  [ OK ]  finishers: SCR-07 the drop off an uppercut (a hook fails it), SCR-22 off a body shot (a head shot fails it); constraints: SCR-08 six different punches (a repeat fails), SCR-11 a block press fails and the cap wins on EP, SCR-19 a right hand fails (left hands hold), SCR-23 a step back fails (forward and lateral hold)
+
+  [ OK ]  spar: the meter caps at 50 (60 earned -> 50), T4 is locked and T1 is not, infinite stamina holds 100 through a power haymaker (100), tell-highlight outlines every tell, no corner, the 90s end is judged on drops then EP - SPAR :: SPAR: MILLBROOK WINS on EP 15-12   EP 15-12   drops 0-0
+
+  [ OK ]  Ep1 by name: SCRAP 1 vs the bike-rack CHALLENGER (SCR-01), SCRAP 2 vs MARCUS on a Slugger's strings (SCR-06, his chin from his card), SCRAP 3 vs JUNE (SCR-03), the PRIYA TRIAL as a tell-highlight spar met by going the distance; end_bout returns to the mini-dual
+
+  [ OK ]  PI data: the rungs as NP_02 s3's table (3 scraps or 1 spar -> 1; 6 / 3 / a dual segment -> 2), every dialect of the 24 with an authored habit; the dialect key is his House, his own id without one (Vane), the card's when it names one (the school); a fresh ledger is PI 0 vs kowalchuk; `-- pi=` seeds a ledger
+
+  [ OK ]  the scrap track: two won scraps vs Kowalchuk leave PI 0, the third is PI 1, the sixth PI 2 (not the fifth), a seventh crosses nothing; a scrap lost on a constraint or at the cap pays nothing, one won at the cap on EP pays one; the real path (three body shots) counts one
+
+  [ OK ]  the spar track: one spar to its end vs Kowalchuk is PI 1, the third PI 2 (a count-out still counts - the lab is the lesson); one dual segment fought and lost is PI 2 at once and marks nobody beaten
+
+  [ OK ]  the boss track: a segment won vs Yuri on EP marks him beaten - PI 3, his Scout Book page (his 3 tells, strings, phase notes, the desperation, his corner's tell); his KO marks it too; Moira has no page and a ledger with Yuri beaten is PI 3 vs Yuri and PI 0 vs Moira
+
+  [ OK ]  PI 2 vs Kowalchuk: Yuri's S1 tell 72 -> 79 ticks (+10%), his tell event carries the cue; PI 0 and PI 1 leave it at 72 with no cue; Ada's (an Okafor) stays 48 on the same ledger; PI 3 is no wider than PI 2; his own selected tell comes at +10% too; the slip / duck / perfect-block / flash windows are untouched at PI 3
+
+  [ OK ]  the commentator calls the Kowalchuk habit before the segment at PI 1 (the authored line), says nothing at PI 0, and at PI 2 the line carries the cue; a dialect with no authored line falls back to his most-weighted tell's motif (Watch the shoulder load corner shout - Nobody shows it before every string)
+
+  [ OK ]  the profile reads more of a dialect it knows: of 300 tells RORY (RFX 50) reads 172 at PI 0, 199 at PI 2, 228 at PI 3 (read bonus 0.20 at 3, 0 at 0)
+
+  [ OK ]  the ledger rides with the sim: SCRAP 1 vs the bike-rack CHALLENGER pays the school dialect, end_bout and new_dual keep it, and two sims differ in hash by the ledger alone
+
+  [ OK ]  the INTERRUPT block as data across the 24: every pattern has a breakable string, 34 strings hold (8 of them ARMORED, none of those breaks), Yuri breaks on S1 alone, Echo's ARMORED S1 holds while S2 / S3 break, the Cartographer breaks on all five; the block's response parsed (Vey stagger 700, Yuri 800 + tension_bonus, Ada desync 3s, Chiamaka 1.5s); 'his special' breakable for Yuri (the Elevator) and Baro (S3), not Marta
+
+  [ OK ]  the block's response executes: Ada's S1 broken staggers 800ms and DESYNCs her 3s (she stalls the whole 3s, her next tell is +100ms wider); her phase-2 line 'desync 3s->2s' shortens the stall to 2s; Vey staggers 700
+
+  [ OK ]  phase directives execute through one executor: Yuri's phase 2 at 55% (speed x1.1 -> his recoveries /1.1, tighten(S1, 500ms), add S3 selectable) with the original pattern untouched; Tam's 'retire S1' at clock>30; Moreau's 'tighten_all_tells -60ms' floors his SPECIAL at 700 and ARMORED at 1000 and 'movement +10pct' moves him; across the 24, 47 directive lines execute and 0 are carried
+
+  [ OK ]  a tell is never set under its class floor (NP_04 s1): tighten(S1, 100ms) on Ada stops at 400, her SPECIAL S3 at 700; 'tells -900ms' on Echo leaves his ARMORED S1 at 1000 and the normals at 400
+
+  [ OK ]  the remix as a layer: Yuri's rematch loads over a copy (S1 feints 300ms late at 40%, burns after 3; S2 tell 450; weights 40/40/20; four notes on the card) and the original in `patterns` is untouched; '' restores the original; a remix refuses another boss's base; every authored remix loads on its base
+
+  [ OK ]  feint(S1) delay on the remixed Yuri: the tell plays as S1's, then he HITCHES 300ms (36 ticks) before the haymaker comes; at 0% the string comes straight off the tell; a jab in the feint's tell still breaks it (S1 is tagged)
+
+  [ OK ]  feint(S2) cancel on the remixed Moira: the tell is the net-haul's, the hands are Left Hook's - the first act is S1's L_HOOK, never S2's overhand
+
+  [ OK ]  burn(S1, 3) - NP_04 s4: after two interrupts of Freight it still comes straight (), after the third it only feints (delay); the count is his segment's (3)
+
+  [ OK ]  the profile with Yuri's page (PI 3) never jabs Coupling's tell (S2 does not break: 0 jabs of 300, 218 slips / blocks) where at PI 0 it wastes 91 jabs on it; Freight's tell (S1 breaks) it still jabs (122)
+
+  [ OK ]  newstring / tighten on Carter (S4 'Tape Study' at 450ms, weight 25, its actions parse, not tagged breakable; S2 420), phase_shift on Moreau (phase 2 at composure<70 fires at 65% where the original does not, and his new string rides in), phase_directives on Tam (phase 2 no longer retires S1); the remix beaten earns its own Scout Book page (4 notes) and the original keeps its own unearned
+
+  [ OK ]  the phase scripts, all of them: 47 of 47 authored directive lines execute and 0 are carried; the META bases are read (Ada's metronome 800, Chiamaka's tempos 600 / 900, Echo's splice every 2nd string, 500ms open); the SELECT block's phase lines and 'punish_only' execute (9) and 6 others are carried (Ada's SwarmProtocol weight 0: never selected on her own) ["yuri_kowalchuk: after_hit_taken: w(S1)+=20 for 6s","sam_tagaq: clock>60s: all_speed x1.1","alfie_crane: target_zone==ROPES: w(S3)+=25","carter_okafor: segment_clock<30s: all_speed x1.12","marta_okonkwo_tremblay: player_passive>8s: w(S2)+=30","moira_macisaac: target_zone==ROPES: w(S3)+=25"]
+
+  [ OK ]  Ada attacks on the metronome: 96 / 96 ticks between strings (800ms, no roll), 78 in phase 2 (650ms); Chiamaka's polyrhythm alternates 72 / 108 / 72 ticks (600 / 900), 66 / 102 in phase 2 (550 / 850)
+
+  [ OK ]  Vane's phase 2 hides the corner calls a tier (700 -> 550, 600 -> 450, S3 added); Cal's phase 2 loudens his a tier (480 -> 630, 700 -> 850) and opens the corner dialogue; his phase 3 drifts SELECT +25 toward the string you have read most (S2 read 4 times: 35 -> 60)
+
+  [ OK ]  Alfie at warnings_banked==2: 'dirty_flirtation_stops' - the next low blow is pulled, the count stays at two, and w(S1)+=15 lands (45 -> 60)
+
+  [ OK ]  Vey's kits: at 70%% the Swarmer / Gale kit (P1 retired, P2 live at 55 / 45, a swap matchup card, condition kept as a fraction), at 40%% the Slugger / Granite kit; Vasile's clock kits: Granite at 30s with the 700ms neutral seam (both fighters reset to 1.8m, he idles the seam), Gale at 60s, and the finale under 10%% locks to F1 / F2 with no element
+
+  [ OK ]  the Cartographer at 70%% speaks erased Berube (S1 / S2 retired, S3 / S4 at 50 / 50, the dialect key turns), at 40%% erased Oduya (S5 at 100); Echo's machine splice: OPEN 500ms after his 2nd string and not his 1st, after every 3rd in phase 2
+
+  [ OK ]  Carter's S2 gains its second body hook at 50%; Deshawn's Pileup grows to five hits; Osei's Shell holds 3.0s then 4.0s in phase 2; Marta's Mirror holds 2.5s then 3.5s in phase 2 and cannot be picked again for 6s after a use (S1 off the SELECT while it cools)
+
+  [ OK ]  Remy's phase 2 opens the shame dialogue and w(S3)+=10; Sora's 'no_changes_by_design' executes and changes nothing (strings, weights and modifiers identical); Baro's corrections come twice as often in phase 2 (a punish cooldown of 240 ticks, 480 before) with his tells -40ms
+
+  [ OK ]  pattern_coverage over the 24: every META key executed (120) or presentational (34), every SELECT line executed (15), every directive (47), every tag; and since PAC-071 the IDLE lines too (0 carried) [][][]
+
+  [ OK ]  the SELECT block's lines: Yuri's Freight goes 50 -> 70 after a hit taken and back to 50 after 6s; Moira's Gaff is off the SELECT at centre and on it at 45 on the ropes, Alfie's Sunday Best at 45 on the ropes and off at centre; Marta's Frost Line 45 -> 75 once you refuse to lead for 8s
+
+  [ OK ]  the clock lines: Carter's speed x1.12 with under 30s left (1.00 -> 1.12), Sam's x1.1 past the minute (1.00 -> 1.10); Alfie's herding walks you back 0.875m on a 50cm step where Vane's walks you 0.500m (+75%)
+
+  [ OK ]  PI transfer: against Vey's Out-Boxer / Frost kit a Tremblay ledger applies, against his Swarmer / Gale kit an Okafor one (PI 2 at half: the tell x1.05, the read bonus 0.05, the cue on), against his Slugger / Granite kit a Kowalchuk one; his own Petrov PI applies in full (x1.10); Remy's extraction half-transfers Moreau PI (x1.05) where Jean-Guy takes it whole (x1.10); the Cartographer strips PI (a PI 3 ledger reads 0) and his page is half-blank - phases and hooks, no tells, no string names
+
+  [ OK ]  Deshawn has no idle weight: 18 / 18 ticks between strings (150ms, no roll); Reyes' target split sends her elbow cross to the body 30 of 40 times (80 / 20 on a head verb) where Vane's jabs go to the body 0 of 60 times
+
+  [ OK ]  Osei's Deep Roots lands 33.3 at 70% against 47.5 at full (0.70) and she stumbles on the exit - OPEN 60 ticks; Baro at 20% holds Graduacion while Examen has not landed, casts it once it has
+
+  [ OK ]  Cal's corner assist: every tell of his is called by name (Whitlock: Article12); Vasile's corner intel: Vey calls the Granite kit at 28s (not at 27.9), the Gale kit at 58s, two calls in all - and calls nothing for Vey's composure phases
+
+  [ OK ]  the economy as data: a fresh ledger is empty (level 1 at 0 XP); the level curve is NP_11 s2's quadratic-gentle (48 L^2): 4,800 XP -> level 10, 119,999 -> 49, 120,000 -> 50, 400,000 -> 50 (cap 50)
+
+  [ OK ]  XP from the fight itself: two clean hits 2, a counter makes 4, a DROP scored 15; the segment won credits (15 + 25) x1.10 x the pace = 119 to RORY (houseless +10%) with an xp event; a segment lost credits the events alone (3)
+
+  [ OK ]  the scrap pays: SCR-01 won three times - 45 XP each and +2 Prestige (tier 1: NP_12A's '+2 Prestige'), the third toast naming the PI tick (SCRAP: 45 XP, +2 Prestige, PI tick vs Kowalchuk); a scrap lost pays the trickle (15) and no Prestige; a tier-3 objective pays +3 at the cap
+
+  [ OK ]  the spar pays: fought to the end 119 XP and 2 Spirits (the toast says so, and names the PI tick a first spar earns); won 178 XP, 2 Spirits, 10 HBP; the tell-highlight lab pays half (59); sparring a stablemate bonds +3 a time ([3,6,9,12,15,15]) to the +15/day soft cap, and a new day pays again (18)
+
+  [ OK ]  the dual pays: three segments won then the verdict - each fighter 74 per segment and 297 at the close, JUNE on the bench 50% of the dual's 1113 (612), 8 Spirits, 50 HBP, the adjacent pairs RORY+PRIYA and PRIYA+MARCUS +8 each and RORY+MARCUS nothing; a dual lost pays 119 at the close, 5 Spirits, no HBP, the pairs +5
+
+  [ OK ]  Kizuna: at 25 pts RORY & PRIYA are Corner Voices (Lv2) and RORY fights at +2% stats with her dressed; at 50 Adjacent Trust (Lv3) - RORY in R1 beside PRIYA in R2 fights at +5% and CHARGES at 20; RORY & MARCUS at Lv3 are not adjacent (R1 / R3): +2% and 25; the levels by the thresholds [0,1,2,3,4,5]; an ALLIED pair (Kowalchuk & Whitecloud) bonds x1.25 (6 for 5) where an unallied one takes 5
+
+  [ OK ]  a segment's XP carries RORY from 4,780 past 4,800: level 10, a level_up event; the ledger rides through end_bout and new_dual, and two sims differ in hash by the reward ledger alone
+
+  [ OK ]  the SaveGame (NP_11 s9) from the ledgers: every schema key; RORY level 10 at 4808 XP with bonds [{"fighter_id":"PRIYA","kizuna":25,"level":2}], JUNE a reserve; currencies {"beans":0,"hbp":20,"prestige":4,"spirits":5}; the Scout Book's pi_map is the PI ledger with 1 page (yuri_kowalchuk); the remix set; format mini, boss 1, day 1; writing it leaves the sim's hash alone
+
+  [ OK ]  the round trip: the text (16259 bytes) read and built into a new sim writes back byte-equal; the PI and reward ledgers equal with their ints (a JSON float comes back the int it was); the four cards dressed; Yuri's rematch live from the bell; no dual beneath a save written between fights
+
+  [ OK ]  the ledgers through a fight: three scraps won, a stablemate spar, R1 won on EP (Yuri beaten), a new day - saved and built: PI 2 vs Kowalchuk and Yuri's page, RORY 387 XP, RORY+PRIYA 3, 6 Prestige, day 2 with the daily cap cleared
+
+  [ OK ]  the DualState: a snapshot at tick 3,000 (70 KB) restored into a sim built on another boss, seed, roster and format lands on the same hash (1747855657), the saved sim untouched; both run the log to 5,000 and every one of the 20 hashes is the unbroken run's
+
+  [ OK ]  the DualState's fields read as NP_11 s9 names them - segment 1, clock 69.7s, score [0,2], tension [6.0,44.0], relay {"away_chain":0,"away_charged":false,"chain":0,"charged":false}, lineups sealed / revealed ["RORY","PRIYA","MARCUS"] / ["RORY"], the corner budget, cooldowns, supers, zones {"away":"CENTER","home":"CENTER"}, the adaptation window and flags, crowd heat, condition - and the restored sim reads identically
+
+  [ OK ]  refused, naming why: a SaveGame at v0.9 ('schema SaveGame/NP_11-s9/v0.9 is not readable (this build writes SaveGame/NP_11-s9/v1.0)'); a DualState under other content ('made under other content (stamp 12345, this data 2276867548)'), from another build, with a blob that is not a state, at v0.1; the sim they were refused into keeps its hash
+
+  [ OK ]  the content tables are not state: the content stamp (2276867548) is the same before and after 5,000 ticks of the log, and the same for every sim loaded from the data - a snapshot carries none of it and restores only under it
+
+  [ OK ]  the file: a dual in flight at tick 2,500 written to user:// (86 KB), read back, built and restored to hash 2955373852, then run 500 more ticks in step with the sim that wrote it; the bond beneath it kept; a missing file refused
+
+  [ OK ]  the piece library (NP_04 s9): 63 pieces - 36 strings (3 per Style per tier), 12 punish hooks (3 per Style), 15 tell dialects (a channel, 3 motifs, a SPECIAL motif each; every roster House but the sealed one has one); every action verb parses, every hook's trigger keys a sensor; no piece shares a label or an action sequence with any of the 24 bosses' 79 strings
+
+  [ OK ]  the rules over 48 assemblies (4 Styles x 3 tiers x 4 dialects): 2 strings at tier 1 and 3 above, an opener first, the SPECIAL last at tier 3 and never lower, no piece over the tier; one PUNISH resolved to the strings assembled (48 responses known, 0 unknown); every tell on the dialect's channel with one of its motifs; the Style's preset weights; the interrupt block by tier (all normals / the first two / the opener); nothing carried under pattern_coverage (336 executed META keys, 0 carried, 0 idle)
+
+  [ OK ]  deterministic from the spec: the same spec assembles byte-equal twice; eight seeds of one spec give 8 distinct assemblies; a spec with no seed takes its name's hash (2801545323) and assembles the same in another sim
+
+  [ OK ]  the knob: tier 1's tells are Loud ([600,670]), tier 3's normals Subtle ([400,400,700]) with its SPECIAL at 700; tell_ms shifts 450 to 600 / 450 / 400 across the tiers and holds a SPECIAL at 700 under Subtle; every one of the 48 assemblies' tells clears its class floor; the stat block 40 at tier 1, 70 at tier 3 (a card's stats override)
+
+  [ OK ]  the sim fights a generic card (DOCKHAND, a tier-2 Slugger of the Kowalchuk dialect): the spar opens on his assembled strings (["S1","S2","S3"]), he tells 13 of them in 20s and lands 0; his hook (player_whiffed_body_shot -> immediate S2) answers its trigger; his opener breaks to a jab in its tell; three scraps won pay 135 XP and tick Kowalchuk to PI 1; SCR-09 is refused against him (no breakable special)
+
+  [ OK ]  Ep1 by card: MARCUS fights on two Slugger strings of his own (["Lumber","Woodpile"] - none of Yuri's), his chin from his card, the slot still Yuri's; JUNE on two Swarmer strings on the gym's channel, the CHALLENGER on the school's motifs (sneaker_squeak), PRIYA's trial on three Out-Boxer strings at tier 2; a card is the same pattern in any sim
+
+  [ OK ]  a filler slot: R1 is fought by 'Dock Filler', an assembled tier-2 Out-Boxer of the Tremblay dialect (FROST, House Tremblay, the matchup card read), Yuri's slot borrowed; R1 won ticks Tremblay to PI 2, books no page and pays 74 XP; R2 is sam_tagaq, a named boss; two sims with the slot hash alike and a seed apart differ
+
+  [ OK ]  the save carries a filler: a dual with 'Dock Filler' in R1 snapshotted at tick 600 restores into another sim on the same hash, his assembled pattern with it (["FILLER"]), and runs 300 more ticks in step
+
+  [ OK ]  the neutral game as data (NP_04 s2 IDLE): 41 verbs ({"audio":2,"bias":1,"clock":3,"guard":10,"move":23,"reveal":1,"scene":1}) for the 24 bosses' 52 IDLE lines - every verb used known, every table verb used; pattern_coverage: 49 lines executed, 3 presentational (jean_guy_moreau: silent, itzel_reyes_ortega: bell_in_corner, marta_okonkwo_tremblay: footwork_audio_drops_when_arming), 0 carried; every boss authors a move verb, a generic authors none (the shared approach)
+
+  [ OK ]  how he closes from 3.4m (m/s): {"alfie_crane":1.3,"deshawn_vaughn":1.5,"efua_osei":0.7,"hc0_surety":0.7,"hc7_echo":1.2,"hc9_choir":1.2,"itzel_reyes_ortega":1.0,"jean_guy_moreau":0.45,"moira_macisaac":0.7,"remy_moreau":0.45,"sam_tagaq":0.8}, stopping at {"alfie_crane":1.49,"deshawn_vaughn":1.3,"efua_osei":2.0,"hc0_surety":2.0,"hc7_echo":1.89,"hc9_choir":1.89,"itzel_reyes_ortega":1.89,"jean_guy_moreau":1.9,"remy_moreau":1.9,"sam_tagaq":1.89}; Moreau's glacial walk with his neutral game frozen is the shared approach (1.20), and so is a generic's (1.20); against a player strafing 1.370m the Choir leads the step (0.285m sideways in 0.5s) where the Echo walks at where you are (0.132m)
+
+  [ OK ]  how he circles at range (m/s, signed): Yuri -0.50 one way, Carter 1.20 the other; Marta -0.80 at 2.1m; Vane -0.50 then 0.50 after 2.5s, the Cartographer -0.60 then 0.60 after 3s, Sora -0.70 then 0.70 after 4s, Baro -0.60 then 0.60 after a string; from 1.6m Marta steps back out to 2.07m, Yuri stays in at 1.60m
+
+  [ OK ]  the rhythms: Ada moves 48 ticks of 192 - the first 200ms of each 800ms beat, 0 off it; at 650ms 48 of 156, 0 off; Chiamaka 48 of 180 on her 600 / 900 tempos, 0 off; the angle: Tam comes in 34.3 degrees off the line, then -34.3 after 1.5s, at 0.77 m/s (1.1 on his slow tempo, x0.7)
+
+  [ OK ]  the stances: Vasile from 1.4m steps back to 1.71, from 2.6m in to 2.09, at 1.85m stands (0.0000m moved); Vey mirrors a strafing player 1.00 to 1; Cal on the centre with you at 2.15m stands (0.00m off it), with you at 3.0m comes to 2.23 and no closer, off-centre goes back to it (0.02m away); Moira from the side ends 1.91m from you on the centre side (0.11m from the centre, you at 1.80)
+
+  [ OK ]  the guards (head / body): {"guard_high (Vane)":[0.5,0.15],"guard_low_bait (Tam)":[0.1,0.6],"guard_mid (Yuri)":[0.35,0.35],"guard_perfect (Sora)":[0.5,0.5],"guard_rough (Alfie)":[0.25,0.25],"guard_textbook (Baro)":[0.4,0.4],"guard_tight (Ada)":[0.45,0.45],"none (Vey)":[0.35,0.35],"shell_stance (Osei)":[0.6,0.1]}; wobbled, Yuri's halves to 0.175 while Cal's (0.35) and Surety's (0.35) are composed; Sam walking in at 2.2m 0.80, in range 0.35; Osei with her neutral game frozen 0.35; live, Osei's shell turns 61% of the unread head jabs and 10% of the body jabs (211 / 212 samples)
+
+  [ OK ]  the clocks: in 25s Yuri taunts 3 times and Carter 2, Vane none in 60s (0), Ada none (0); at Yuri's first (tick 960) his guard is open 60 ticks and his read 0.05, and a jab lands (1 hit, 0 blocked); a taunt in his recover holds the next string 83 ticks; Tam's tempo flips at [720,1440,2160,2880] and his gaps between strings run [34,36,52,49] fast and [116,107,91,130,70] slow (ticks)
+
+  [ OK ]  presentational flags and the reveal: footwork audio Jean-Guy false, the Choir false, Yuri true; Marta true idle, false while she arms, true after; Reyes rings her bell (1, together false) and two with a Reyes dressed (together true), Yuri rings none; in a blind dual Remy's slot reads 'remy_moreau' and the rest '?', a sanctioned dual names them all; the corner before a blind R2 names Remy ('remy_moreau') and hides Yuri ('?')
+
+  [ OK ]  The Talk as data (NP_10 s4): the approaches ["plan","fire","arm"], +5% for a right read; the eight Millbrook cards each carry a profile ({"DEX":"arm","JUNE":"fire","MARCUS":"arm","MARTA":"plan","PRIYA":"plan","RORY":"fire","SAM":"arm","YURI":"fire"} - {"arm":3,"fire":3,"plan":2}) and three lines of their own; Priya's is the plan (NP_12A: the projection confirmed, never comfort)
+
+  [ OK ]  the right read: the corner offers PRIYA three lines ("Your projection holds. Third exchange, he leads right." / "Go take his head off." / "You don't have to be perfect out there."); the plan lands - one action spent (1 left), no Tension, the talk done for the corner; in R2 PRIYA fights at PWR 36.75 / RFX 73.50 (35 / 70 x1.05) with a talk_effect event; in R3 MARCUS is at 70, untouched
+
+  [ OK ]  the wrong read costs nothing: the arm around Priya is heard (true), the action spent (1 left), and once she is out the state hashes equal to the dual where nobody talked (PWR 35); each of the eight cards has one read that lands, its own: {"DEX":["arm"],"JUNE":["fire"],"MARCUS":["arm"],"MARTA":["plan"],"PRIYA":["plan"],"RORY":["fire"],"SAM":["arm"],"YURI":["fire"]}
+
+  [ OK ]  refused, spending nothing: ["PRIYA has heard you already this corner","no read on PRIYA yet - no talk profile on the card","no such talk: 'shout'"]; and with no actions left, in a locked corner, in a fight, in a scrap (no corner)
+
+  [ OK ]  a talk is to a fighter: the plan said to Priya, then JUNE swapped in - JUNE fights at PWR 30 and the talk goes unheard; JUNE swapped in first - the corner talks to JUNE, the fire lands, PWR 31.50
+
+  [ OK ]  bond levels reveal the read: none without a bond ({}); RORY & PRIYA at Gymmates rule out fire; at Corner Voices name plan; with MARCUS at Adjacent Trust too, MARCUS speaks (Lv3: plan); SAM at Duo but not dressed says nothing; the hint is an event when the corner opens
+
+  [ OK ]  the save carries the read: personality.talk_profile per card {"DEX":"arm","JUNE":"fire","MARCUS":"arm","MARTA":"plan","PRIYA":"plan","RORY":"fire","SAM":"arm","YURI":"fire"}, back on the cards after a round trip; a corner saved after the plan to Priya restores into another sim (true) and she goes out at PWR 36.75
+
+  [ OK ]  the formation as data (NP_10 s2-3): the named orders ["STANDARD","AMBUSH","WALL_FIRST","RELAY_LADDER"], how readable each is {"AMBUSH":30,"RELAY_LADDER":25,"STANDARD":40,"WALL_FIRST":35}; the ace read as PWR+SPD+RFX, the anchor-class as CHN+BLK+STA; the tactician +15, PI +5 a level, cap 95, silhouettes under 35; PRIYA scouts ["ascendant_a","ascendant_b"]; the Ep1 board ["MARCUS","PRIYA","RORY"]; the decoy rate on the corners that run decoys {"ascendant_a":0.5,"hollow_circuit":0.4}
+
+  [ OK ]  the named orders as presets, the ace and the anchor read from the cards: the mini's (ace PRIYA, anchor-class MARCUS) {"AMBUSH":["PRIYA","RORY","MARCUS"],"RELAY_LADDER":["MARCUS","RORY","PRIYA"],"STANDARD":["RORY","MARCUS","PRIYA"],"WALL_FIRST":["MARCUS","RORY","PRIYA"]}; the sanctioned dual's (ace PRIYA, anchor-class SAM) {"AMBUSH":["PRIYA","RORY","JUNE","MARCUS","SAM"],"RELAY_LADDER":["MARCUS","RORY","JUNE","PRIYA","SAM"],"STANDARD":["RORY","JUNE","MARCUS","PRIYA","SAM"],"WALL_FIRST":["SAM","RORY","JUNE","PRIYA","MARCUS"]}; RORY at PWR 90 is the ace and Standard puts him at R4 ["JUNE","PRIYA","MARCUS","RORY","SAM"]; bonded RORY-SAM-MARCUS, the Relay Ladder chains them at R2-R3-R4 toward R5 ["JUNE","RORY","SAM","MARCUS","PRIYA"] (2 Adjacent Trust pairs beside each other, the card order 1)
+
+  [ OK ]  the board sealed at setup (NP_01 s7): Ambush over the eight - R1..R5 ["PRIYA","RORY","JUNE","MARCUS","SAM"], reserves ["DEX","YURI","MARTA"], the seal on the events; the five go out in that order ["PRIYA","RORY","JUNE","MARCUS","SAM"]; the same board sealed from the formation screen before the bell is the same dual (true, hash and RNG); a board of the card order hashes as no board at all (true)
+
+  [ OK ]  refused, naming why, nothing changed: ["sealed at the bell - the corner's swap reorders from here","BOB is not dressed","RORY is in two slots","4 slots for a 5-segment dual with 8 dressed (it takes 5)","no order archetype 'PHALANX' (STANDARD, AMBUSH, WALL_FIRST, RELAY_LADDER)","no staff 'the_ghost'","4 staff on a board of 3 staff slots","the reserves are the dressed not in a slot (DEX, YURI, MARTA), not DEX, YURI, RORY","no board named 'ep9'"]; a bad board at setup leaves the card order (["RORY","JUNE","PRIYA","MARCUS","SAM"])
+
+  [ OK ]  after the seal the corner reorders: DEX swapped into R2 goes out (DEX); the DualState's lineups sealed ["PRIYA","RORY","JUNE","MARCUS","SAM"] / revealed ["PRIYA","DEX"]; a scrap still sends RORY and the dual after it is the board again ["PRIYA","RORY","JUNE","MARCUS","SAM"]; the save writes the stable in the board's order ["PRIYA","RORY","JUNE","MARCUS","SAM","DEX","YURI","MARTA"] (reserves ["DEX","YURI","MARTA"]) and a load dresses the same five ["PRIYA","RORY","JUNE","MARCUS","SAM"]
+
+  [ OK ]  Ep1's order-sealing tutorial reproduced: Millbrook's four vs the Ascendant B corner - the order at 70%, every slot [70,70,70], from the Ascendant B corner reads Standard +40 + PRIYA's scouting (toronto) +30; the Ep1 board from the data ["MARCUS","PRIYA","RORY"] (reserve ["JUNE"]) is sealed and projects the same 70%; the feed: "ORDERS SEALED - yours R1 RORY, R2 PRIYA, R3 MARCUS; theirs projected at 70%"
+
+  [ OK ]  each source moves the confidence by its own amount: a journeyman's Standard [40,40,40]; the Grain Kings' Ambush [30,30,30], every slot a silhouette; Priya not dressed [40,40,40]; the tactician on the board [85,85,85] (and his Reveal in the corner: ["patch_job","the_reveal","raise_the_roof"], true; after R1 raised his PI the read sealed against stays [85,85,85], R1 revealed as cassidy_vane, R2 not yet); PI 2 on Yuri's dialect [70,80,70] (the order 73%); three pages (PI 3) and the tactician, capped [95,95,95]; the blind dual projects nothing (true)
+
+  [ OK ]  the percentage is honest: at 70% the projected names are right 849 of 1200 (70.8%), at 40% 489 of 1200 (40.8%); every wrong name is one of his dressed and none is shown twice (true); the fight's RNG is not drawn; your board sealed does not move his projection (true)
+
+  [ OK ]  the decoy seal: Vey's corner runs one in 203 of 400 duals - there every projected name is shifted a slot and wrong (true) at the honest 70% (true), while the honest duals are right 685 of 985; the order he fights is the one he sealed in every dual (true) and the dual with his decoys taken out is the same fight, to the hash (true); a Lv1 tactician adds 15 (85%) and is fooled (true), a Lv3 reads it - every slot a DECOY silhouette (true)
+
+  [ OK ]  the overlay: MARCUS vs Vane - B / B, EP -10%, hissatsu -10%: "Cassidy Vane eats sluggers for breakfast"; PRIYA vs Yuri - EP +10%: "Both rings ours - this one we win on points"; RORY vs Sam: "The purist's matchup - no rings, pure sim"; worked example 2 - his style, FEUD Tension +25%: "Bad wind for us, but this segment will PRINT Tension"; on the Ep1 board 3 shown pairings read as pairing() does, silhouettes as unknown; the Grain Kings' board all unknown (true); 10 segments fought, the overlay's rings equal to the matchup card at each bell (true, 1 with a FEUD, Vey in his opening kit)
+
+  [ OK ]  the staff as data (NP_10 s6): 5 roles ["Cutman","Tactician","Hype","Conditioning coach","The Professor"], each a passive and a second at Lv3; a corps of 10 (cap 10) {"Conditioning coach":3,"Cutman":2,"Hype":2,"Tactician":2,"The Professor":1}, each carrying his role's active; levels by use {"2":3.0,"3":8.0}; the crowd {"counter":5.0,"drop":20.0,"eight_up":15.0,"flash":10.0,"hissatsu":8.0,"interrupt":6.0}, Raise the Roof converting 30; the default dressed three ["sportsmed","janitor","retired_boxer"]
+
+  [ OK ]  the board dresses the corps: ["old_cutman","sportsmed","rival_cornerman"]; Patch Job pooled at 4 charges by ["the old cutman Lv1","the sports-med student Lv1"]; the named cutman and the pool (uses [2,0] after two, [2,2] after four), the fifth refused (false), an undressed staffer refused (false); a board of staff alone keeps the card order ["RORY","JUNE","PRIYA","MARCUS","SAM"]; refused: ["the Professor is dressed twice","no staff 'nobody'","4 staff on a board of 3 staff slots","a staffer's level is earned by use (the ledger), not declared on a board"]
+
+  [ OK ]  levels by use: eight duals of the Reveal - ["Lv2 at use 3","Lv3 at use 8 (reads a decoy seal)"]; the ledger holds 8 uses and Lv3 across new duals; in dual 9 Vey's corner runs a decoy: the earned Lv3 reads it (true), the same board unearned is fooled
+
+  [ OK ]  the cutman on the stool: RORY back for R4 of an Iron dual at the 40 stamina / 20 composure he left with - no cutman [40.0,20.0], the sports-med student [55.0,20.0], two cutmen [70.0,20.0], the student at Lv3 [55.0,30.0]; PRIYA fresh in R2 at 100 with no restore
+
+  [ OK ]  the conditioning coach: two seconds' rest from 50 stamina regains 8.000 bare, 8.800 with the retired boxer (x1.100), 10.400 with three coaches (x1.300); an overrun corner sends the next fighter out at 80, at 90 with the retired boxer at Lv3
+
+  [ OK ]  the crowd: drop / flash / counter / interrupt / up at eight / hissatsu heat the building [20.0,10.0,5.0,6.0,15.0,8.0] bare, [24.0,12.0,6.0,7.2,18.0,9.6] with the janitor (x1.2), and his spectacle nothing; Raise the Roof at 20 heat refused, charge and action kept (true), at 36 it lands: +8 Tension, heat left 6; the janitor at Lv3 starts the dual at 10 Tension (his 0), the Lv1 janitor at 0
+
+  [ OK ]  the Professor: a dual segment vs Yuri counts 2 on Kowalchuk (1 without him); a spar 1 at Lv1, 2 at Lv3; the tactician's richer page on Yuri {"boss":"yuri_kowalchuk","by":["the rival cornerman"],"decoy_rate":0.0,"order":"Ambush","slot":"R4"} (none without one: {}); two tacticians on a journeyman's board [70,70,70]
+
+  [ OK ]  the save writes the corps: 10 Staff records, dressed ["professor@0 Lv3","old_cutman@1 Lv1","rival_cornerman@2 Lv2"], the Professor {"active":"chalk_talk","passives":["PI gains x2 during duals","PI gains x2 in scraps and spars too"],"uses":8}; a load dresses ["professor","old_cutman","rival_cornerman"] at Lv 3 / 1 / 2; a default dual's save loads with no board (["sportsmed","janitor","retired_boxer"])
+
+  [ OK ]  recruitment as data (NP_08 s2): 25 records - 13 conditions, 12 closed by the docs (none - the anti-you until Arc 3 resolves him) - every boss covered (missing []), every source cited; the grammar's 11 forms, the sim reading ["BEAT_IN","STYLE_PROOF","PI_LEVEL","BOND","STAT_PROOF","WITNESS","REP"], the overworld's flags ["QUEST","FEUD_RESOLVED","BLESSING","ITEM"]; the conditions use ["BEAT_IN","QUEST","FEUD_RESOLVED","BOND","PI_LEVEL","REP","WITNESS"]; the new cards ["MOIRA SLUGGER/TIMBER/macisaac 70","TAM OUTBOXER/GALE/nguyen-roy 70","CARTER SWARMER/GALE/okafor 70","ADA SWARMER/GALE/okafor 70","EFUA SWARMER/TIMBER/osei 70","CASSIDY OUTBOXER/GALE/none 70","CHOIR SWARMER/FROST/none 70","REMY SLUGGER/FROST/moreau 70","JEAN-GUY SLUGGER/FROST/moreau 70"] []
+
+  [ OK ]  a dual won flags the squad's recruitables: vs ["yuri_kowalchuk","jean_guy_moreau","sam_tagaq","ada_okafor"] DUAL OVER :: MILLBROOK WINS ON SEGMENTS  -> ["yuri_kowalchuk","jean_guy_moreau","sam_tagaq","ada_okafor"]; a dual lost []; the sanctioned eight vs the same squad (SAM and YURI already in the stable: joined / joined) -> ["jean_guy_moreau","ada_okafor","carter_okafor"]; vs ["marta_okonkwo_tremblay","moira_macisaac","remy_moreau","sora_kannagi"] -> ["marta_okonkwo_tremblay","moira_macisaac","dex","remy_moreau"] (DEX surfacing with MOIRA, the cap of 4); before the approach Ada shows approachable and no condition
+
+  [ OK ]  the approach: YURI's condition surfaces - ["BEAT_IN(dual[segment]) 1/1 met"]; ADA's ["BOND(Carter, 4) 0/4 sim","QUEST(okafor_table) 0/1 overworld"]; refused: ["moira_macisaac is not approachable - beat his club in a dual first","anders_vey: none - the anti-you until Arc 3 resolves him","yuri_kowalchuk has been approached - his condition stands"]; YURI met raises recruit_ready and stays approached, not in the stable
+
+  [ OK ]  the recruit: ADA refused (ada_okafor is not ready - BOND(Carter, 4) (0 of 4); QUEST(okafor_table) (0 of 1)); YURI joins (true) - the stable ["RORY","PRIYA","MARCUS","JUNE","YURI"], the dressed still ["RORY","PRIYA","MARCUS","JUNE"], the toast YURI JOINS THE STABLE (5 cards); over a new dual the stable holds; a board dressing him from the stable seals (true) and he fights R1 (YURI, reserve ["MARCUS"]); refused: BOB is not in the stable / a squad of 3 for a dual that dresses 4
+
+  [ OK ]  the forms: MARTA's spar won by RORY ["1/1","1/1","0/1"], by PRIYA joins (true); DEX (a scrap vs the Netmen + his quest) joins (true) and MOIRA's BOND(Dex, 3) goes ["0/3","1/1"] -> joins at Adjacent Trust (true); CARTER's scrap x3 / REP 3 at two scraps and REP 2 ["2/3","2/3"], at three and 3 joins (true); TAM's PI (the dual's segment against him took Nguyen-Roy to 2) and his spar ["2/2","1/1"], VANE's WITNESS ["1/1","0/1"] -> a second dual won: both join (true); PI_LEVEL(whitecloud, 2) 0/2; STAT_PROOF PWR>=60 70/60, >=90 70/90, STYLE_PROOF(out-boxer) 2/1, an unknown form false
+
+  [ OK ]  the save: 6 Fighter records, undressed ["YURI","SAM"], the recruit ledger ["yuri_kowalchuk","jean_guy_moreau","sam_tagaq","ada_okafor","hc9_choir"], the story flags {"quest:okafor_table":true,"rep:rink_district":2}; a load dresses ["RORY","PRIYA","MARCUS","JUNE"], the stable ["RORY","PRIYA","MARCUS","JUNE","YURI","SAM"], YURI joined
+
+  [ OK ]  every content table (29) rides outside the snapshot ([] inside) and inside the stamp: a changed staff table or recruit table changes it (true / true), restored it is the same (true)
+
+  [ OK ]  the String Wall as data (NP_08 s2.3): 6 maps, 43 nodes ({"fighter":16,"house":13,"lead":14}), 42 strings; problems []; the authored BOND conditions strung: ["DEX -> MOIRA strung","CARTER -> ADA strung","SAM -> CHOIR strung"]; a changed wall table changes the content stamp (true); a fresh club's wall 0 of 43 up, no lines
+
+  [ OK ]  family: ADA before face down; CARTER joins (true) -> ["CARTER -> ADA, NNEKA OKAFOR, CHIAMAKA, HOUSE OKAFOR"]; ADA approached via carter_okafor, her condition ["BOND(Carter, 4) 0/4","QUEST(okafor_table) 1/1"] (one recruit_condition by the string: 1), NNEKA lead, CHIAMAKA never, House Okafor unblessed, House Petrov face down (true); NNEKA's approach: NNEKA OKAFOR is a lead on the String Wall (staff: Hype) - no card in the sim; the overworld signs a lead; ADA signed through the string (true) adds 1 string (since C31 her line blesses House Okafor: ["the Okafor blessing -> HOUSE PETROV"]). The other way: JEAN-GUY face down before, REMY joins (true) -> JEAN-GUY approached via remy_moreau ["1/1","0/1"], refused while E05 is open (jean_guy_moreau is not ready - FEUD_RESOLVED(moreau, tremblay) (0 of 1)); E05 closed -> READY (true), signs (true), the stable ["RORY","PRIYA","MARCUS","JUNE","REMY","JEAN-GUY"]
+
+  [ OK ]  master: SAM joins (true) -> ["SAM -> THE JUNIOR, CHOIR, HOUSE TAGAQ"]; CHOIR approached via sam_tagaq, her condition ["BOND(Sam, 4) 0/4","QUEST(choir_name) 0/1"]; THE JUNIOR lead, House Tagaq unblessed, House Whitecloud face down (true); one way - CHOIR signed, SAM not: the wall 1 up (joined), the junior face down, SAM face down, no string (0)
+
+  [ OK ]  house: YURI joins -> House Kowalchuk unblessed, the cousins face down (true); blessing:kowalchuk -> ["the Kowalchuk blessing -> HOUSE KOWALCHUK, YURI, THE KOWALCHUK COUSINS, HOUSE WHITECLOUD"] (YURI approached via blessing:kowalchuk, House Whitecloud unblessed, its elder face down true, House Reyes face down true); blessing:moreau -> ["the Moreau blessing -> HOUSE MOREAU, JEAN-GUY, REMY, HOUSE IRON","HOUSE IRON -> VERA IRON"] (JEAN-GUY approached, REMY approached, VERA lead ["ITEM(iron_gym_stencil_bag) 0/1","QUEST(estate_sale) 0/1"], House Tremblay face down true); the lines ["COLD STORAGE 5/7: HOUSE MOREAU [blessed <- the Moreau blessing], JEAN-GUY [approached <- the Moreau blessing], REMY [approached <- the Moreau blessing], HOUSE IRON [no blessing <- the Moreau blessing], VERA IRON [lead <- HOUSE IRON] ITEM(iron_gym_stencil_bag) 0/1 AND QUEST(estate_sale) 0/1","HOUSES: HOUSE IRON = HOUSE MOREAU (DEBT)"]
+
+  [ OK ]  the ledger's view and the save: the three chairs 5/5, 9 strings, BOND strings ["BOND(Carter, 4)"], the leads ["ada_okafor<-carter_okafor","nneka_okafor<-carter_okafor","chiamaka_okafor<-carter_okafor","house_okafor<-carter_okafor","house_petrov<-blessing:okafor"], the line THREE CHAIRS AT THE TABLE 5/5: CARTER [in the stable], ADA [in the stable <- CARTER], NNEKA OKAFOR [lead <- CARTER], CHIAMAKA [closed <- CARTER], HOUSE OKAFOR [blessed <- CARTER]; the Moreau blessing's save - 6 maps, 5 cards up, 5 leads; a load turns 0 cards, its wall equal and the save text written again byte-equal
+
+  [ OK ]  houses as data (NP_07 s2, NP_07A): 14 houses, 12 blessing lines (Iron none, the sealed house its own), every line the String Wall's and in the grammar ([]); natives off the library {"delacroix-cardinal":2,"iron":0,"kowalchuk":2,"macisaac":2,"moreau":2,"nguyen-roy":2,"okafor":2,"osei":2,"petrov":2,"reyes":2,"sealed":2,"tagaq":2,"tremblay":2,"whitecloud":2}; the feud graph's flips {"held":5,"on":6,"refused":1}, provisional ["E13"]; a fresh club: 0 edges mutated, 0 houses blessed; a changed house table changes the stamp (true)
+
+  [ OK ]  the patriarch attends: after the first dual Kowalchuk's line ["1/1","0/1"]; YURI joins UNSANCTIONED, natives 0, the house unblessed, its crest unblessed; the next dual won -> ["kowalchuk met [\"YURI\"]"] (sanctioned 1), YURI NATIVE with ["Grain Elevator","Full Load"]; the blessing turns up ["the Kowalchuk blessing -> THE KOWALCHUK COUSINS, HOUSE WHITECLOUD"]; House Tagaq (SAM only flagged) witnessed 0; the lines ["KOWALCHUK [blessed]  | YURI NATIVE","WHITECLOUD [unblessed] REP(the_hill, 3) 0/3 AND PI_LEVEL(whitecloud, 2) 0/2"]; the wall's crest card ["BEAT_IN(dual[segment]) 2/1 ok","WITNESS(patriarch attends a home dual) 1/1 ok"]
+
+  [ OK ]  the quiet corner: SAM joins UNSANCTIONED, Tagaq's line ["3/3","0/1"]; a dual won with 30 heat converted -> ["3/3","0/1"] (unblessed); one won without -> blessed, SAM NATIVE with ["Sorry Eh","Still Water"]
+
+  [ OK ]  the open ledger: E13 ["E13 petrov-ascendant"] at the quest; Petrov's line after a spar over Yuri by System Jab ["1/1","0/1"], over Vane with no cast ["1/1","0/1"], by System Jab and Grain Elevator ["1/1","0/1"] (unblessed); over Vane by System Jab alone ["1/1","1/1"] -> ["petrov met []"]; the blessing turns up ["the Petrov blessing -> HOUSE PETROV, COACH PETROV, A PETROV STUDENT (1 of 3), A PETROV STUDENT (2 of 3), A PETROV STUDENT (3 of 3), ANDERS, BARO, HOUSE OKAFOR, HOUSE OSEI"]
+
+  [ OK ]  the Reyes code: blessed by the flag (blessed); La Campana at 100.0 stamina -> revoked (reyes_code, the wall's crest revoked); at 30 -> blessed; broken before the blessing, the flag later -> revoked
+
+  [ OK ]  around the family: her line ["0/1","0/1"], around ["1/1"] (ready around: 1); joins (true) UNSANCTIONED, natives []; Shell Game: EFUA is UNSANCTIONED - House Osei has not blessed the club, the natives stay locked; her Deep Roots x1.300 (UNSANCTIONED true); blessed (blessed) -> sanctioned 1; equip ["ok","Harvest Moon is not a House Osei move - a card equips its own house's natives as its move (the rest of the library goes in the kit, NP_11 s8)","ok","ok"]; YURI's Harvest Moon: Harvest Moon is House Kowalchuk's SECRET - its gate event gives it, not the blessing; her Deep Roots x1.430 (NATIVE)
+
+  [ OK ]  the live graph: Moreau vs Tremblay a feud before (true), after ["E05 FEUD->ALLIED","E11 refused"]; FEUD_RESOLVED(moreau, tremblay) 1/1 (E05 on the feud graph: ALLIED); E02 on its flag alone FEUD, with both final beats ALLIED; Kowalchuk vs Reyes still a feud (true); an Okafor-Petrov pair's +8 -> 8, E04 repaid -> 10; the Moreau blessing with E05 flipped -> ["the Moreau blessing -> HOUSE MOREAU, JEAN-GUY, REMY, HOUSE TREMBLAY, HOUSE IRON","HOUSE IRON -> VERA IRON"]
+
+  [ OK ]  the save: the codex ["kowalchuk","whitecloud"] (Kowalchuk blessed by met, members [{"card":"YURI","status":"NATIVE"}]); the graph 1 mutation(s) [{"a":"moreau","b":"tremblay","day":1,"id":"E05","relation":"ALLIED","was":"FEUD"}]; YURI's record NATIVE ["Grain Elevator","Full Load"], RORY's <null>; a load grants 0, flips 0, and the text written again byte-equal
+
+  [ OK ]  house traits as data (NP_07 s3): 9 authored, 3 variants named; the 24's carriers {"ada_okafor":"harvest","carter_okafor":"harvest","chiamaka_okafor":"harvest","efua_osei":"deep_roots","itzel_reyes_ortega":"debt_of_honour","marta_okonkwo_tremblay":"first_frost","moira_macisaac":"tide_discipline","sam_tagaq":"never_twice","tam_nguyen_roy":"open_door","yuri_kowalchuk":"load_bearing"}; the Millbrook eight {"DEX":"tide_discipline","MARTA":"first_frost","SAM":"never_twice","YURI":"load_bearing"}; a disowned Tagaq heir {}; the Moreau variant executed runs {"house":"moreau","id":"load_bearing","name":"Load-Bearing variant","trait":"load_bearing_variant","x":1}
+
+  [ OK ]  Never Twice: SAM's drops through three knockdowns [1,1,2] (the second a wobble: true, 1 NEVER TWICE), Sam's [1,1,2], a new dual's second 1
+
+  [ OK ]  Deep Roots: EFUA's guard regen level 0.0500, trailing on drops 0.0750 (x1.50); RORY's 0.0500 / 0.0500; EFUA recruited around her family UNSANCTIONED carries Deep Roots
+
+  [ OK ]  the stats: MARCUS of Whitecloud PWR 70 in R1, 77.0 in R4 (MARCUS); Itzel's PWR vs YURI 75, vs RORY 60, vs DEX 75, with E02 flipped 60; a Reyes card vs Yuri 56.25; an Iron MARCUS doubled in R4 84
+
+  [ OK ]  First Frost: MARTA's slip window 60 ticks opening, 48 after (RORY 48 / 48); Harvest: ADA's clean hit +3.00 Tension (+2.00 without the trait), Carter's +3.00 (+2.00)
+
+  [ OK ]  Load-Bearing: Yuri takes 10.0 on the ropes, 12.0 in the middle; YURI 10.0 in the corner, 12.0 in the middle; Tide Discipline: a lean at 12 stamina leaves Moira 10.0, DEX 10.0, Vane 7.0
+
+  [ OK ]  Open Door: TAM and PRIYA +12 for 8, PRIYA and MARCUS +8; TAM and an ALLIED partner +12; an ALLIED pair without him +10
+
+  [ OK ]  in play: the traits at the bell ["Load-Bearing / Never Twice"]; YURI's Fighter record carries Load-Bearing, RORY's <null>; the codex's Kowalchuk trait live true, a Moreau house's false
+
+  [ OK ]  the Gym Wall as data (NP_08 s7): GymWall/NP_08-s7/v1.0, 8 x 4 cells, decorations ["poster","stub","polaroid","graffiti","renovation","crest","feat"]; the four pinned {"JUNE":[4,0],"MARCUS":[3,0],"PRIYA":[2,0],"RORY":[1,0]}; the eight {"DEX":[6,0],"JUNE":[2,0],"MARCUS":[4,0],"MARTA":[0,1],"PRIYA":[3,0],"RORY":[1,0],"SAM":[5,0],"YURI":[7,0]}; hanging ["Whitlock's letter - 'Four dressed by Saturday' (0.5, 0.5)"]; a changed wall table changes the content stamp (true), restored the same (true)
+
+  [ OK ]  the player's hand: refused ["BOB is not in the stable","(8, 0) is off the wall (8 x 4 cells)","PRIYA's card is on (2, 0)"]; RORY pinned to [0,3] and back (true / true); a decoration refused ["(9.0, 1.0) is off the wall","no decoration 'poster-1'"]; the letter moved to (7.5, 5.5) (true); 2 pins by hand, 3 refusals as events
+
+  [ OK ]  the wall's suggestion: ["RORY","MARCUS","PRIYA"] (walk 2.0, reserves ["JUNE"]; ["R1 RORY - the walk's first card","R2 MARCUS - 1.0 cells from RORY on the wall","R3 PRIYA - 1.0 cells from MARCUS on the wall"]); the pins alone leave ["RORY","PRIYA","MARCUS"]; sealed (true) ["RORY","MARCUS","PRIYA"] - YOUR BOARD [The Gym Wall]: R1 RORY  R2 MARCUS  R3 PRIYA | re; Ambush sealed ["PRIYA","RORY","MARCUS"], the cards moved ["PRIYA","RORY","MARCUS"] (the wall suggests ["RORY","MARCUS","PRIYA"]), at the bell no suggestion (true); the sanctioned five ["RORY","JUNE","PRIYA","MARCUS","SAM"] (walk 4.0), SAM under RORY ["MARCUS","PRIYA","JUNE","RORY","SAM"] (walk 4.0)
+
+  [ OK ]  the Kizuna lines: ["RORY-PRIYA Lv2 Corner Voices 0.20","PRIYA-MARCUS Lv5 Sworn 1.00 GILDED","MARCUS-JUNE Lv0  0.50"] (LINES: RORY-PRIYA Corner Voices 20%, PRIYA-MARCUS Sworn GILDED, MARCUS-JUNE 50%); a wall of 2 cells hangs {"PRIYA":[0,0],"RORY":[1,0]}, the locker ["MARCUS","JUNE"] (["IN THE LOCKER (no cell free): MARCUS, JUNE"]), 2 wall_full; its suggestion ["RORY","PRIYA","MARCUS"] (walk 101)
+
+  [ OK ]  decorations from play: a dual won vs Yuri's squad hangs ["Whitlock's letter - 'Four dressed by Saturday'","MILLBROOK vs Prairie Grain Kings - Yuri Kowalchuk","Prairie Grain Kings"]; lost to them next ["letter","poster","stub","polaroid","polaroid"] (2 polaroids for 2 levels held); a bond crossing a level hangs 'JUNE & RORY - Gymmates'; a first dual lost vs Sam's squad ["Whitlock's letter - 'Four dressed by Saturday'","True North Club"]; CARTER signs at [5,0] (true), pinned to (5, 2), ADA signs (true) at [5,1] beside him - the wall ["Whitlock's letter - 'Four dressed by Saturday'","MILLBROOK vs Carter Okafor's squad - Carter Okafor","Carter Okafor's squad","CARTER's wraps","ADA's wraps"], 1 unlocked
+
+  [ OK ]  zero stats: a wall rearranged and decorated (4 decorations, the cards {"JUNE":[7,3],"MARCUS":[5,1],"PRIYA":[2,0],"RORY":[0,2]}) leaves the hash where it was (true) and the same 1,200 ticks hash identically (20 of 20), the stats and the ledger the same
+
+  [ OK ]  the save: gym_wall ["layout","decorations"] - 6 cards, 3 lines, 5 decorations (["letter","poster","stub","graffiti","graffiti"]); a load hangs the same wall (true) and the text written again byte-equal; a save without the wall loads {"ADA":[6,0],"CARTER":[5,0],"JUNE":[4,0],"MARCUS":[3,0],"PRIYA":[2,0],"RORY":[1,0]}
+
+  [ OK ]  the Duo as data (NP_08 s5.2 Lv4, NP_05 s7): the variants {"Double Overtime":"sync_500ms","Relay: Aurora Chain":1,"Relay: Coast to Coast":5,"Two-Hand Winter":"sync_500ms"}; Lv4 carries it; the named T3s ["Whiteout / Relay: Coast to Coast / T3 HAYMAKER / vfx_duo_any / DMG+DISPLACE+STATE:afterimage_partner","Freeze-Up / Relay: Aurora Chain / T3 ARC / vfx_duo_frost / DMG+STATE:arena_freeze_vfx+STATE:afterimage_partner","Aurora Chain - RORY & SAM / Relay: Aurora Chain / T3 ARC / vfx_duo_frost / DMG+STATE:arena_freeze_vfx+STATE:afterimage_partner","Coast to Coast - MARCUS & SAM / Relay: Coast to Coast / T3 HAYMAKER / vfx_duo_any / DMG+DISPLACE+STATE:afterimage_partner","none"]
+
+  [ OK ]  the Duo's relay: at 89 R2 PRIYA {}; at 90 R1 none, R2 PRIYA (Whiteout; 1 event, 'DUO :: RORY -> PRIYA (Lv4 Duo): WHITEOUT is live - LB + HAYMAKER, a T3 at 45 Tension, RORY's afterimage joining (Relay: Coast to Coast)'); at 150 Lv5 Whiteout; R3 MARCUS {}; JUNE swapped in after RORY (true) Freeze-Up; PRIYA sent first, R2 RORY Whiteout from PRIYA; RORY and MARCUS at 150 across PRIYA 0 / 0
+
+  [ OK ]  the Duo's cast: PRIYA at 60 arms Whiteout (CHARGED false, afterimage RORY, pair PRIYA|RORY, vfx_duo_any), 15 left - 'PRIYA ARMS WHITEOUT (T3 HAYMAKER, 45 Tension) - DUO: RORY's afterimage joins (Relay: Coast to Coast)'; at 89 punch; RORY after PRIYA at 60 / 40 / 20: ["Whiteout","Aurora Borealis Breaker","punch"]; CHARGED at 30 Whiteout (7.5 left)
+
+  [ OK ]  the Duo's effect: Whiteout [27.3273,"(0.0, -2.17)"] against Relay: Coast to Coast [27.3273,"(0.0, -2.17)"] - the same damage and push, the afterimage state true / false
+
+  [ OK ]  the Duo delegated: PRIYA's first cast Whiteout (at 89 Marginalia); the whiteboard 'DUO RELAYS: R1 RORY -> R2 PRIYA (Whiteout)', Ambush sealed ["PRIYA","RORY","MARCUS"] 'DUO RELAYS: R1 PRIYA -> R2 RORY (Whiteout)'; a DualState in R2 restores Whiteout (true) on the same hash (true)
+
+  [ OK ]  the relay's own T3 as data (NP_05 s6): the sources {"full_relay_exclusive":["Relay: North Star"],"relay:charged":["Relay: Coast to Coast","Relay: Aurora Chain"]}; R2 PRIYA out CHARGED (card Marginalia) opens ["Relay: Coast to Coast","Relay: Aurora Chain"] (1 event, families ["HAYMAKER","ARC"], afterimage RORY; 'RELAY :: PRIYA opens Relay: Coast to Coast (LB + HAYMAKER, 22), Relay: Aurora Chain (LB + ARC, 22) - RORY's afterimage joins'); not CHARGED []; sanctioned R3 at 2 links ["Relay: Coast to Coast","Relay: Aurora Chain"], R4 MARCUS at 3 links (FULL RELAY true) ["Relay: North Star","Relay: Coast to Coast","Relay: Aurora Chain"]
+
+  [ OK ]  the relay's T3 by the motion: CHARGED PRIYA's HAYMAKER / ARC / PISTON / RISE at 60 ["Relay: Coast to Coast","Relay: Aurora Chain","Marginalia","punch"] (the afterimage RORY); not CHARGED HAYMAKER punch; RORY CHARGED after PRIYA at 30 / 20 / 10 ["Relay: Coast to Coast","Aurora Borealis Breaker","punch"]; FULL RELAY R4 MARCUS's RISE Relay: North Star, 84.000 composure at 3 links, 100.800 at 4 (x1.200; his gauge set aside)
+
+  [ OK ]  the Duo over its base, and a stolen CHARGED: at Duo the relay opens ["Whiteout","Relay: Aurora Chain"], HAYMAKER Whiteout, ARC Relay: Aurora Chain; stolen (T3 unlocked false, 0 open) ARC punch, HAYMAKER Whiteout; stolen without a Duo HAYMAKER punch
+
+  [ OK ]  the relay's T3 in manager mode and on record: the profile's picks ["Relay: Coast to Coast","Relay: Aurora Chain","Relay: North Star","Whiteout","none"]; delegated, PRIYA's first cast Relay: Coast to Coast; the whiteboard 'RELAY OPENS (R2 PRIYA, chain 1): Relay: Coast to Coast (LB + HAYMAKER, 22), Relay: Aurora Chain (LB + ARC, 22)'; a DualState on the FULL RELAY restores ["Relay: North Star","Relay: Coast to Coast","Relay: Aurora Chain"] (true) on the same hash (true)
+
+  [ OK ]  the Zone as data (NP_09 s1, s3): Transformations/NP_09/v1.0 - the whole bar 100 (FULL RELAY 75), the cinematic 2500 ms, 1 per fighter per dual, the Comedown 10s at 85%; the Zone 20s, {"auto_slip_every_s":3.0,"counter_window_plus_ms":200.0,"punch_speed_pct":15.0,"stamina_frozen":true,"time_scale":0.75}; unlocked at level 20 + story:provincials_semifinal; named, not run []; the stamp moves with it (true); RORY at 19 'RORY is level 19 - the Zone opens at 20', at 20 without the flag 'the Zone is taught at the Provincials semifinal (story:provincials_semifinal)', at 20 with it zone
+
+  [ OK ]  the SURGE: at 99 'the bar is at 99 - a transformation takes the whole bar (100)'; at 100 true, the bar 0, the camera hold 300 ticks - his timers held, the Zone's clock held, the Zone from tick true (the hold done); 'IN THE ZONE :: RORY - the whole bar (100 of 100); 20s: the world at x0.75, the first punch every 3s slipped, stamina frozen at 100, counter windows +200ms, punches +15% speed'; the FULL RELAY true for 75, the bar 0; again 'RORY is already in the Zone'; after the Zone 'RORY has transformed this dual (NP_09 s1: one per fighter per dual)'; a new dual 'the bar is at 0 - a transformation takes the whole bar (100)'; a spar 'no transformation in a spar'
+
+  [ OK ]  the Zone's effects against the same sim without it: his timers 300 / 400 ticks of 400; the punches [["slip","hit","slip"],["hit","hit","hit"]]; stamina [[60.04,60.04,60.04],[60.0,14.53,21.25]]; counter windows +24 / +24 ticks; R_STRAIGHT startup / busy [[23,54],[26,62]]
+
+  [ OK ]  the end: at 19.99 s in the Zone true; at 20 s the Comedown (true): PWR 45.0 -> 38.25, 'COMEDOWN 10.0s (85%)', stamina 100.00 -> 88.49; 10 s on PWR 45.0; the events ["zone_end","comedown_end"]; a segment ended mid-Zone: R2 PRIYA, Zone {}, Comedown {}
+
+  [ OK ]  the Zone and the manager, on record: delegated with a full bar 0 SURGEs of his own, the manager's passes through (true); the HUD 'IN THE ZONE 15.8s | stamina frozen 100 | auto-slip ready'; a DualState mid-Zone restores (true) IN THE ZONE 15.8s | stamina frozen 100 | auto-slip ready on the same hash (true), the record {"RORY":"zone"}; R2 PRIYA ''
+
+  [ OK ]  the Manifest as data (NP_09 s4): tier 3, 30s, {"damage_mult":1.4,"displace_mult":2.0,"echo_delay_s":0.3,"echo_pct":30.0,"manifest_meter":50.0}; the Comedown the shared one (["text"]); unlocked {"flag":"story:manifest:{name}"} / {"flag":"mastery:zone:{name}","level":35.0}; the Clash executed true (5s at x0.5); named, not run []; generic manifests ["the Frost manifest","the Gale manifest","the Granite manifest","the Timber manifest"]; the tier chosen - RORY with the Zone only zone, with his Arc 2 flag manifest, with the flag alone at level 1 manifest, at 35 with a Zone mastery flag zone; GENERIC at 35 + mastery manifest, at 34 zone, without mastery zone, with a named flag zone; the figures RORY's manifest / the Gale manifest
+
+  [ OK ]  the SURGE with the Manifest unlocked: manifest - the bar 0, manifest, meter 50, 3600 ticks, the hold 300, the record {"RORY":"manifest"}; 'SPIRIT MANIFESTATION :: RORY - the whole bar (100 of 100); 30s: RORY's manifest - all damage x1.40, hissatsu from its own 50-point meter, every clean punch echoed at 0.3s for +30%, displacement x2'; again 'RORY is already manifested'; after it (his tier still manifest, the Zone unlocked beneath it) 'RORY has transformed this dual (NP_09 s1: one per fighter per dual)'; a new dual 'the bar is at 0 - a transformation takes the whole bar (100)'
+
+  [ OK ]  the Manifest's effects against the same sim without it: R_STRAIGHT [[12.6,0,1,3.78,true],[9.0,0,0,0.0,false]] (hit, echoes by 0.29 s, at 0.3 s, the echo, his composure down); blocked 1, echoes queued 0; one in flight 1, after a drop 0; the hissatsu [[true,58.5585,2.86,31.5,40.0,0],[true,41.8275,1.43,31.5,8.5,0]] (cast, damage, DISPLACE m, paid, the team bar, echoes)
+
+  [ OK ]  the manifest meter against the team bar: the price 31.5; with the team bar at 100 and held the Manifest casts true ('RORY ARMS AURORA BOREALIS BREAKER (T1 HAYMAKER, 31 from the manifest's meter, 18 left)') -> meter, bar [18.5,100.0]; the meter short: cast false, the punch thrown 1; the control held false; broken in the window true: the meter 18.50 -> 34.25; after it [false,true]
+
+  [ OK ]  the end, the manager, the record: 'MANIFEST 30.0s | RORY's manifest | meter 50/50 | echo +30% at 0.3s | damage x1.4'; at 29.99 s true, at 30 s the Comedown true (PWR 45.0 -> 38.25, 'THE MANIFEST ENDS - RORY's manifest leaves him (50 of its meter unspent); 10s at 85%', 'COMEDOWN 10.0s (85%)'), 10 s on PWR 45.0, ["zone_end manifest","comedown_end"]; delegated 0 SURGEs of his own, the manager's -> manifest, the card's casts from the meter 1; a DualState with 1 echo in flight restores true on the same hash true, the echo lands 1 / 1, hashes true
+
+  [ OK ]  Inheritance as data (NP_09 s5): tier 4, 25s, {"inherit_trait":true,"meter_pays":"inherited","misread":true,"own_stats":true,"private_meter":50.0}; the Comedown ["dialect_scrambled_s","text"]; unlocked true; the second house at 75, the order ["legacy","sworn","second_house"]; the departed coach's house <null>; Sworn the economy's Lv5; named, not run []; the sources - at 149 [] (), at 150 ["sworn:SAM:tagaq"] (inheritance), three bonds ["sworn:YURI:kowalchuk","sworn:SAM:tagaq"], a Tagaq with a Tagaq [] / [], the legacy's flag set with no house ["sworn:SAM:tagaq"] and with one ["legacy:THE OLD COACH:whitecloud","sworn:SAM:tagaq"], a dual-house MARTA ["second_house:MARTA:okafor"] at 75.0 (RORY 100.0), with SAM Sworn too ["sworn:SAM:tagaq","second_house:MARTA:okafor"]
+
+  [ OK ]  the SURGE with a source: inheritance over the Manifest and the Zone -> inheritance; the bar 0, meter 50 paying 'inherited', the trait never_twice (his own 0), the hold 300, the record {"RORY":"inheritance"}; the event tagaq from SAM (Never Twice, ["Sorry Eh","Still Water"], dressed true); 'INHERITANCE :: RORY - the whole bar (100 of 100); 25s: House Tagaq from SAM (Sworn) - the trait Never Twice, the natives Sorry Eh / Still Water from a 50-point meter, the Tagaq dialect worn (the enemy misreads RORY); RORY's own stats'; again 'RORY is already inheriting'; MARTA's second house at 74 'the bar is at 74 - a transformation takes the whole bar (75)', at 80 true for 75 -> [0.0,"second_house","[\"Pressure Cooker\",\"Heat Advisory\"]",1.0,1.0]; 'INHERITANCE :: MARTA - the whole bar (75 of 80); 25s: House Okafor - MARTA's second house - the trait Harvest, the natives Pressure Cooker / Heat Advisory from a 50-point meter, the Okafor dialect worn (the enemy misreads MARTA); MARTA's own stats'; the legacy legacy THE OLD COACH whitecloud (["Long Winter","First Light"]), dressed false
+
+  [ OK ]  Inheritance's effects against the same sim without it: a second drop [["FIGHT",1,1],["EIGHT",2,0]]; LB + ARC ["Sorry Eh<-SAM",""] ('RORY ARMS SORRY EH (T1 ARC, 31 from the inherited meter, 18 left)'; meter 50 -> [18.5,40.0]), then LB + HAYMAKER Aurora Borealis Breaker -> meter 18.50, bar 8.50; the WALL motion Premiere Neige from the meter (27.5 left, the price 22.5); PWR 57.4 against 45.9 (Debt of Honour x1.25), at its end 39.02 (the Comedown's 45.9 kept); reads over 24 straights [[{"dodge":0,"guard":0,"misread":20,"none":4},20],[{"dodge":20,"guard":0,"misread":0,"none":4},0]]
+
+  [ OK ]  the end: 'INHERITANCE 25.0s | House Tagaq from SAM (Sworn) | Never Twice | meter 50/50 | Sorry Eh, Still Water | the enemy misreads you'; at 24.99 s true; at 25 s [true,true,0.0,39.02,1200] ('THE INHERITANCE ENDS - SAM's House Tagaq style leaves RORY (50 of the meter unspent); 10s at 85%, RORY's own dialect scrambled 10s', 'COMEDOWN 10.0s (85%) | own dialect scrambled 10.0s'); a feint in his Comedown drawn false (1 scrambled), in a Zone's Comedown (true) true; 10 s on [true,true,1], the feint true; zone_end 1
+
+  [ OK ]  Inheritance and the manager, on record: delegated 0 SURGEs of his own, the manager's -> inheritance, the card's casts from the inherited meter 1; a DualState mid-Inheritance restores true on the same hash true (the trait never_twice, 'INHERITANCE 20.0s | House Tagaq from SAM (Sworn) | Never Twice | meter 50/50 | Sorry Eh, Still Water | the enemy misreads you'), both the same at its end; R2 JUNE: {}, trait {}
+
+  [ OK ]  Awakening as data (NP_09 s6): tier 5, 40s, {"drop_refund":15.0,"hybrid_slot":1.0,"ring_cap":1.75,"stack_pct":75.0}, 15 stacking rules; the Comedown ["text"]; the gate ["secret:{name}","story:trial:{name}"], the protagonist RORY ["story:sealed_house_resolved"]; named, not run []; RORY with the Zone only zone, with his SECRET and trial zone, with the sealed house too awakening stacking zone; PRIYA with hers awakening, with nothing to stack ''; with the Manifest manifest, Sworn with SAM inheritance, his choice the Zone zone, his choice the Manifest he lacks zone
+
+  [ OK ]  the SURGE Awakened: true awakening - the bar 0, manifest, 4800 ticks, the hold 300, the record {"RORY":"awakening"}, the meter 37.5; the effects {"damage_mult":1.3,"displace_mult":1.75,"drop_refund":15.0,"echo_delay_s":0.3,"echo_pct":22.5,"hybrid_slot":1.0,"manifest_meter":37.5,"ring_cap":1.75,"stack_pct":75.0}; 'AWAKENING :: RORY - the whole bar (100 of 100); 40s: Spirit Manifestation at 75% (RORY's manifest - damage x1.3, hissatsu from a 37.5-point meter, clean punches echoed +22.5%, displacement x1.75); the rings' caps x1.75; every drop scored +15 Tension back; the hybrid slot open on nothing'; again 'RORY is already awakened'; the choice in the fight 'between duals only'; between duals ["ok","an Awakening stacks a prior tier - the Zone, the Manifest or Inheritance","PRIYA has not unlocked Spirit Manifestation","ok"]; his SURGE zone ('SURGE: In the Zone (100) - his choice'), his form manifest; the save zone / manifest; back to his highest awakening ('SURGE: Awakening (100) - Manifest-Awakening at 75%'); the next dual's SURGE zone
+
+  [ OK ]  Awakening's effects at 75 %, against full strength and without: a straight (Manifest-Awakening, the Manifest, neither) [[11.7,2.6325],[12.6,3.78],[9.0,0.0]]; his timers 325 / 400 of 400; four punches at him [["slip","hit","hit","slip"],["hit","hit","hit","hit"]]; stamina spent on four power hookercuts 11.48 / 45.47; the slip window +18 ticks; reads over 24 straights [{"dodge":2,"guard":0,"misread":18,"none":4},{"dodge":20,"guard":0,"misread":0,"none":4}]; MARTA's Miroir d'Hiver x1.5730 Awakened (awakening) against x1.5000; a drop scored [[25.0,1],[10.0,0]]
+
+  [ OK ]  the end: 'AWAKENED 40.0s | Inheritance-Awakening at 75% | ring caps x1.75 | a drop +15 | House Tagaq from SAM (Sworn) | Never Twice | meter 37/37 | Sorry Eh, Still Water | the enemy misreads you (75%)'; at 39.99 s true; at 40 s [true,true,0.0,39.02,0] ('THE AWAKENING ENDS - RORY comes down from the Inheritance-Awakening: 10s at 85%', 'COMEDOWN 10.0s (85%)'); a drop in the Comedown [10.0,0]; 10 s on [true,true,1]
+
+  [ OK ]  Awakening and the manager, on record: delegated 0 SURGEs of his own, the manager's -> awakening manifest; a DualState mid-Awakening restores true on the same hash true ('AWAKENED 35.0s | Manifest-Awakening at 75% | ring caps x1.75 | a drop +15 | RORY's manifest | meter 37/37 | echo +22% at 0.3s | damage x1.3'), both the same at its end; R2 PRIYA: {}
+
+  [ OK ]  his transformation as data and on the page (NP_09 s1): castable ["zone","manifest"], the tell floor 1000 ms, 1 per boss per dual; the Clash {"delegated_hit_pct":60.0,"exchanges":5.0,"executed":true,"seconds":5.0,"text":"both active fighters manifested at once (the player's Manifest, or his Manifest-Awakening, and a boss's): the fight stops for a 5 s scripted clash sub-duel of five alternating counter-window exchanges at x0.5 time - he defends first (block or slip on the cue), then strikes (a punch on the cue), and so on; each window 180 ms at x0.5 time (360 ms); a press outside the window loses the exchange; pure timing, zero stats. Three exchanges win it: the winner's manifest ends the loser's early, into the loser's Comedown; every exchange he wins weathers the boss's (s7). Manager mode's card hits each cue six times in ten","time_scale":0.5,"to_win":3.0,"window_ms":180.0}; the weathering ["actions","shave_s","damage_mult","feat","text","stood_in_the_storm"]; authored ["ioan_vasile"]: {"line":"VEY: he has stopped breathing out loud - that is his Zone coming. Weather it.","tell":{"motif":"breath_held","ms":1500.0},"tier":"zone","trigger":"composure<50"}; at 51% [0,"IDLE"]; at 49% [180,"SURGE",180,1,"GATHERING 1.5s | VEY: he has stopped breathing out loud - that is his Zone coming. Weather it."], the tell breath_held 'VEY: he has stopped breathing out loud - that is his Zone coming. Weather it.'; 180 ticks of gathering under 6 jabs, his state held true, 0 answers, 12 sensors; then [300,0.0,"zone",2400,1,0,12] ('ENEMY ZONE 20.0s | weathered 0 (-0.0s)'); 31 s on [0,0]; under the trigger again 0; the next dual 180
+
+  [ OK ]  his Zone against his line stripped: his timers (idle, in a tell, acting) [[533,400],[400,400],[613,400]] of 400; four punches at him [["slip","hit","slip","hit"],["hit","hit","hit","hit"]]; his stamina after -30 [0.0,-29.97]; after 2400 ticks his Comedown [1200,51.0,46.75,"ENEMY COMEDOWN 10.0s (85%) - your window",false,0,"THE ENEMY'S ZONE ENDS - ioan_vasile comes down: 10s at 85% - YOUR WINDOW (weathered 0, 0.0s shaved)"]; 1200 fight ticks on (hitstop aside) [1200,true,1,""]
+
+  [ OK ]  his Manifest (Moira, the test's line): 'ENEMY MANIFEST 30.0s | weathered 0 (-0.0s) | the test manifest', his meter false; a clean hook and its echo [20.16,6.048,"P"] against [14.4,0.0,""]; the Undertow (cast, displacement, damage) [true,4.5,65.52] against [true,2.25,46.8]; a drop with 1 echo queued -> [0,true]; a line naming the Awakening: 0 gathering
+
+  [ OK ]  the Clash: 301 ticks after his SURGE, 'MANIFEST CLASH 1/5 | BLOCK or SLIP in 0.50s | won 0 lost 0', cues [60,180,300,420,540] ["defend","attack","defend","attack","defend"], window 43; perfect ["won","won","won","won","won"] -> P, the clock 10677/10677, his 3598 -> -1, mine 3599 -> 3599, suppressed true, weathered 5, feats 0, then 'ENEMY COMEDOWN 10.0s (85%) - your window'; none ["missed","missed","missed","missed","missed"] -> B, mine  (Comedown true), his 3598 -> 3598; early ["early","early","early","early","early"] -> B; the edge and a slip ["won","missed","won","missed","won"] -> P; two ["won","won","missed","missed","missed"] -> B; the card ["won","missed","missed","missed","missed"] (1 won)
+
+  [ OK ]  weathering his Zone: his clean hook 14.4 (without his line 14.4); a perfect block [1,1,120,"ENEMY ZONE 19.0s | weathered 1 (-1.0s) | damage to you halved"]; his hook after 7.200; a slip [1,120,2]; 2160 ticks on [2,true], the feat Stood in the Storm, the ledger {"count":1,"day":1,"last":"ioan_vasile"}, 'STOOD IN THE STORM - RORY weathered ioan_vasile's transformation without answering'; answered ["manifest",true,1,0,0]; knocked down ["EIGHT",true,"FIGHT",0,0]; the DualState [true,true,"ENEMY ZONE 14.0s | weathered 1 (-1.0s) | damage to you halved","{\"clash\":false,\"comedown_t\":0,\"gathering\":0,\"t\":1680,\"tier\":\"zone\",\"transformed\":{\"ioan_vasile\":\"zone\"},\"weathered\":1}"], both at the end the same; saved and loaded {"stood_in_the_storm":{"count":1,"day":1,"last":"ioan_vasile"}}
+
+  [ OK ]  hybrid research as data (NP_08 s6): the Forge [40.0,30.0], ceiling 8, discounts [["E07","quest:third_bridge",50.0,4.0]], the composer's floor 2.4 +0.1, seconds cap 2, cinematic 2100+100, x1.25 relayed, 13 motifs; Sworn's ["inheritance","hybrid","text"] (Lv5); authored ["Two Rivers [\"nguyen-roy\",\"delacroix-cardinal\"]","Grain & Snow [\"kowalchuk\",\"tremblay\"]"]; learned [["Grain Elevator","Full Load"],["Premiere Neige","Miroir d'Hiver"],[],["Grain Elevator","Full Load","Harvest Moon"]]; refused ["NOBODY is not in the club","a hybrid takes two fighters","RORY carries no house (a hybrid crosses two houses)","YURI and YURI2 are both House Kowalchuk (a hybrid crosses two houses)","IRONSIDE knows no native of House Iron","SAM & YURI are at Lv4 Duo (90) - the Forge opens at Lv5 Sworn",""]; a short purse 'the Forge costs 40 Spirits and 30 Beans (the ledger holds 39 and 40)', in the fight 'the Forge is between duals' / 'the Forge is between duals'
+
+  [ OK ]  the Forge: true -> Grain & Snow ('THE FORGE :: YURI & MARTA (House Kowalchuk x House Tremblay, Lv5 Sworn) forge GRAIN & SNOW - a T3 HAYMAKER of both: DMG x2.5, guard shred 40, auto slip 2s; 40 Spirits, 30 Beans (the ledger 20 / 10); hybrid 1 of 8'), the ledger [20,10,1]; the composer on the same pair differs in [], named 'Grain & Snow - MARTA & YURI'; then Grain & Snow - MARTA & YURI2 / Tide & Snow, SAM & YURI would be Grain & Silence HAYMAKER [{"params":{"composure_bypass_pct":0,"mult":2.5},"type":"DMG"},{"params":{"guard":40},"type":"SHRED"},{"params":{"name":"counter_stance","seconds":2},"type":"STATE"}]; the registry ["HIS-074 Grain & Snow MARTA|YURI authored","HYB-02 Grain & Snow - MARTA & YURI2 MARTA|YURI2 composed","HYB-03 Tide & Snow DEX|MARTA composed"]; across E07 ["","TAM & DC_STANDIN are at Lv3 Adjacent Trust (50) - the Forge opens at Lv4 Duo","TAM & DC_STANDIN are at Lv4 Duo (90) - the Forge opens at Lv5 Sworn"], then 'THE FORGE :: TAM & DC_STANDIN (House Nguyen-Roy x House Delacroix-Cardinal, Lv4 Duo, E07 MARRIAGE) forge TWO RIVERS - a T3 ARC of both: DMG x2.4, afterimage partner 3s; 20 Spirits, 15 Beans (E07 MARRIAGE, -50%) (the ledger 40 / 25); hybrid 1 of 8' (Two Rivers); the save [2,40,true,true,"YURI & MARTA have forged Grain & Snow"]
+
+  [ OK ]  the cast: R1 [0,"charged",2.5,"HYBRID: Grain & Snow (LB + HAYMAKER, 50) - the CHARGED relay opens it"]; R2 ["MARTA","relayed","YURI","HYBRID: Grain & Snow (LB + HAYMAKER, 50) - relayed from YURI - YURI's afterimage joins, x1.25",3.125,"{\"params\":{\"name\":\"afterimage_partner\",\"seconds\":3},\"type\":\"STATE\"}","HAYMAKER"]; the cast ["Grain & Snow","MARTA|YURI","relayed","YURI",["FROST","GRANITE"]] ('MARTA ARMS GRAIN & SNOW (T3 HAYMAKER, 50 Tension) - HYBRID of MARTA & YURI: relayed from YURI - YURI's afterimage joins, x1.25'), 1 debut, the registry [1,1]; its hit [34.125,40.0,true] against [27.3,40.0] (Grain & Snow charged) unrelayed; R3 ["SAM",0]; the other way ["YURI","relayed","MARTA"]; across a slot ["MARTA",0]
+
+  [ OK ]  the Awakening's slot and the choice: forged ["Grain & Snow","Silence & Snow","[{\"params\":{\"composure_bypass_pct\":0,\"mult\":2.4},\"type\":\"DMG\"},{\"params\":{\"name\":\"counter_stance\",\"seconds\":2},\"type\":\"STATE\"},{\"params\":{\"name\":\"auto_slip\",\"seconds\":2},\"type\":\"STATE\"}]","ARC","the hybrid slot holds Grain & Snow"]; the choice ["MARTA has no hybrid Tide & Snow",true,"the hybrid slot holds Silence & Snow","between duals only"]; the record's slot 'Silence & Snow'; out first 0 live, CHARGED Silence & Snow; Awakened 'AWAKENING :: MARTA - the whole bar (100 of 100); 40s: Inheritance at 75% (House Tagaq from SAM (Sworn) - the trait Never Twice at 75%, the natives from a 37.5-point meter, 75% of the enemy's reads misreads); the rings' caps x1.75; every drop scored +15 Tension back; the hybrid slot holds Silence & Snow', 1 slot event, Silence & Snow awakened x2.40, LB + ARC Silence & Snow (awakened); 40 s on [true,0]
+
+  [ OK ]  the manager and the record: the profile's T3 Grain & Snow, its cast Grain & Snow; the Forge's lines ["SAM & YURI -> Grain & Silence: [F] 40 Spirits, 30 Beans","YURI & MARTA -> Grain & Snow: [F] 40 Spirits, 30 Beans"], '*' Grain & Silence, then ["forged 1 of 8: Grain & Silence (SAM & YURI)","YURI & MARTA -> Grain & Snow: the Forge costs 40 Spirits and 30 Beans (the ledger holds 20 and 10)"]; at eight ["the Forge's ceiling is reached (8 of 8 hybrids)","no pair of the club can forge - the Forge's ceiling is reached (8 of 8 hybrids)"]; a DualState in R2 [true,true,true,"HYBRID: Grain & Snow (LB + HAYMAKER, 50) - relayed from YURI - YURI's afterimage joins, x1.25"]
+
+  [ OK ]  the Exhibition 2v2 as data and as set up: {"blind":false,"condition_carries":false,"dressed":2.0,"enemy_dressed":2.0,"label":"Exhibition 2v2","manager_duo_bar":90.0,"partner_answer_ms":250.0,"repeat_slots":false,"segment_s":90.0,"segments":1.0,"simultaneous":true,"sudden_death":false,"sync_ms":500.0,"where":"festival content (the summer boardwalk, NP_02 s1): two fighters per side in the ring at once, one segment - the duo hissatsu showcase (NP_05 s7)"}; the pad RORY vs yuri_kowalchuk (hands), the partner PRIYA vs jean_guy_moreau (profile); lineups ["RORY","PRIYA"] / ["PRIYA","RORY"]; Adjacent Trust true, CHARGED at 20; DUO SYNC: RORY & PRIYA Lv3 - it opens at Lv4
+
+  [ OK ]  one bar, one bell, one ledger: the team's bar [55.0,55.0,55.0] (40 + 10 + 5, both engagements), the enemy's [10.0,10.0]; RORY in hitstop 10 ticks - the ring clock ran [10,10,20]; RORY's XP read in PRIYA's engagement 36
+
+  [ OK ]  the duo sync: RORY's motion ["RISE","Double Overtime",true,0,true]; PRIYA's at 400 ms [{"bar":50.0,"by":"hands","cost":50.0,"fam":"RISE","first":"A","id":"PRIYA|RORY#1","kind":"duo_cast","move":"Double Overtime","ms":400,"pair":"PRIYA|RORY","tick":49}] -> ["Double Overtime","Double Overtime","PRIYA|RORY",25.0,25.0], the bar [50.0,50.0,50.0]; it lands [39.69,30.87,1,1]; at 600 ms ["PRIYA never answered inside 500 ms t61","RORY never answered inside 500 ms t61"] (RORY's flick thrown ["R_UPPERCUT@62"]), her late window 'B'; the other way [{"bar":50.0,"by":"hands","cost":50.0,"fam":"RISE","first":"B","id":"PRIYA|RORY#1","kind":"duo_cast","move":"Double Overtime","ms":200,"pair":"PRIYA|RORY","tick":25}]; on her profile [{"bar":50.0,"by":"ai","cost":50.0,"fam":"RISE","first":"A","id":"PRIYA|RORY#1","kind":"duo_cast","move":"Double Overtime","ms":250,"pair":"PRIYA|RORY","tick":30}]; at Adjacent Trust [true,1,0]
+
+  [ OK ]  Two-Hand Winter: the hold ["WALL",0,true]; [{"bar":50.0,"by":"ai","cost":50.0,"fam":"WALL","first":"A","id":"PRIYA|RORY#1","kind":"duo_cast","move":"Two-Hand Winter","ms":250,"pair":"PRIYA|RORY","tick":77}] -> ["Two-Hand Winter","Two-Hand Winter",50.0]; the gauge [true,"A",39.0,1]; a body hook on PRIYA chips 6.91 off it (her composure untouched true); broken from RORY's side [960,10,1,"B",10]
+
+  [ OK ]  the verdict and the pay: PRIYA's pair KO'd ["OVER","FIGHT",false,1]; the DualState [true,true,true,true]; on the bell [true,"ASCENDANT WINS THE EXHIBITION","score",1,0,95,5,119,119]; again [false,"FIGHT","FIGHT",true,95]; the pad ["B","PRIYA",true,false], handed back ["A",false,2]; the manager's seat [{"bar":45.0,"by":"manager","cost":50.0,"fam":"RISE","first":"A","id":"PRIYA|RORY#1","kind":"duo_cast","move":"Double Overtime","ms":0,"pair":"PRIYA|RORY","tick":1}]
+
+  [ OK ]  club facilities as data (NP_10 s7): [["bags_mitts","the_ring","film_room","the_wall","front_of_house"],0,[150,5,"story:charter_saved"],[400,15,"quest:gym_funding"],[800,30,"story:nationals"],{"bags_mitts":0,"film_room":0,"front_of_house":0,"the_ring":0,"the_wall":0}]; refused ["Bags & Mitts T1 waits on the story - the charter saved (NP_12 s4 beat 2: the Survival Dual) (story:charter_saved)","Bags & Mitts T1 costs 150 HBP and 5 Spirits (the ledger holds 0 and 0)","Bags & Mitts is at T3, the top","no facility 'nowhere'","the renovations are between duals"]; paid [true,1,1850,95,1,["Bags & Mitts T1 - the bags rehung: Mitts and the Heavy Bag open"]]; '*' {"ok":true,"tier":1,"track":"the_ring","why":""}; the save [{"bags_mitts":3,"film_room":0,"front_of_house":0,"the_ring":1,"the_wall":0},true,true]
+
+  [ OK ]  Bags & Mitts: as found [4,"Mitts needs Bags & Mitts T1 (the gym's is T0)","Net Haul opens with quest:macisaac_harbour"], the harbour 8; the day ["the day's 3 training slots are used (day 1)",3,14,true]; at T2 [8,6,"Shadow Rounds needs Bags & Mitts T3 (the gym's is T2)"]; at T3 ["the Forge costs 40 Spirits and 30 Beans (the ledger holds 40 and 0)","15","yuri_kowalchuk",15,true,0] (the Forge on trained Beans, the jar after)
+
+  [ OK ]  The Ring: the lab as found [[],"the lab flags are The Ring's (T1) - the gym's ring is at T0"], the Priya trial ["tell_highlight"], at T1 ["tell_highlight","infinite_stamina"]; the ranked board [false,"the ranked spar board is The Ring's (T3) - the gym's ring is at T2",true,"RANKED SPAR","ranked"]; the exhibition at home [["festival",false,false,"the Exhibition 2v2 is hosted at The Ring (T2) - the gym's ring is at T1: the festival's boardwalk instead","EXHIBITION 2v2 (festival) "],["home",true,true,"","EXHIBITION 2v2 (at home)  "]]
+
+  [ OK ]  Film Room: the shelf [6,["anders_vey"],0,3,true,1,6,3,1,12]; a seeded eight [6,2]; the grind at T1 / T2 [[0,1,1],[1,2,2]]; the tape at T3 / T2 [[false,1,true,1],[false,1,false,0]]
+
+  [ OK ]  The Wall and Front of House: the wall [["C32","C33"],8,0,10,[9,0],[],["House Moreau's crest","Stood in the Storm - ioan_vasile"],2]; the Forge at T2 'the Forge is hosted at The Wall (T3) - the gym's wall is at T2'; the entrance [[],["music sting"],["music sting","banner","crowd chant","La Campana (NP_07A: the Reyes bell at your entrances)"]]; a hosted crowd [20.0,0.0,0.0]; the hosted Prestige [[5,true],[0,false]]
+
+  [ OK ]  the ability boards (NP_11 s3): [["SWARMER",61,61,["ring_cutter","second_gear","iron_jaw","sparkplug","cheap_trick","closer","wallflower"]],["OUTBOXER",61,61,["snap","tight_guard","second_gear","sparkplug","cheap_trick","closer","wallflower"]],["SLUGGER",61,61,["iron_jaw","ring_cutter","tight_guard","sparkplug","cheap_trick","closer","wallflower"]],["BOXERPUNCHER",61,61,["tight_guard","snap","sparkplug","cheap_trick","closer","wallflower"]]]; RORY's board 63 nodes (Borealis Wind-up (RORY's own)), a recruit's ["PWR+3","SPD+3"]; points 20 / 2; ["+3 PWR does not touch a node RORY has taken","true",true,16,["tight_guard"],2,"+2 STA costs 1 Board Points - JUNE has 0 of 2 free (level 1)","the board is worked between duals",[99,2]]; the soft cap [2,2,2,4,6,2,1,80,6]; the socket and respec ["the respec is the Film Room's (T2) - the gym's is at T1","the off-style socket is the Boxer-Puncher's (PRIYA's board is the Out-Boxer's)","RORY has not taken the socket node yet","Tight Guard is on RORY's own board - the socket is for an off-style one","Sparkplug is a Spirit passive - the socket takes a craft one",true,["iron_jaw"],11,11,[],"",1]
+
+  [ OK ]  each live passive against the same sim without it: Tight Guard's guard lost [0.999999999999943,0.800000000000125], Snap's jab [5.40000000000001,7.02000000000001], Ring Cutter's push [0.100000023841858,0.125], Iron Jaw's wobble ticks [541,379], Second Gear [[0.75,0.7,4.05000000000001,0.9,0.55],[0.875,0.85,4.72499999999999,0.9,0.55]], Sparkplug [[10.0,10.0],[11.5,11.5]], Cheap Trick [[10.0,0.0],[8.0,2.0]], Closer [[25.0,false],[20.0,true]], Wallflower [[480,480,0],[600,600,0]]; each on RORY at the bell true, and nothing else moved true
+
+  [ OK ]  typed Beans and the raises (NP_11 s6, s7): the slots [[8,{"SPD":8}],[8,{"PWR":6,"RFX":2}],[9,{},"PWR 6, SPD 8, RFX 2, 9 untyped",25]]; RORY's raises [5,true,"PWR 6, SPD 3, RFX 2, 9 untyped",6,true,"PWR 6, RFX 2, 6 untyped","+1 SPD costs 7 Beans - the jar holds 0 SPD and 6 untyped",""]; PRIYA's ["MARCUS's PWR stands at 70 - the Club cap is 70",true,true,true,true,"+1 BLK costs 9 Beans - the jar holds 0 BLK and 4 untyped","PRIYA's RFX stands at 70 - the Club cap is 70","SPD 4, 4 untyped"]; the Forge's cut PWR 2, SPD 5, 0 untyped; at the bell [47,45,45]; in the fight 'the raises are between duals'
+
+  [ OK ]  rarity ascension (NP_11 s4): ["RORY's trial for Circuit waits - win a spar","Circuit costs 10 Spirits (the ledger holds 5)",true,190,80,2,"RORY's trial for National waits - weather a transform (Stood in the Storm)"]; the trials in play [["spar_won"],["storm"]]; the mirror [true,"PRIYA","PRIYA'S MIRROR",true,62,62,true] -> ["spar_won","mirror"]; National and Legend [true,90,"RORY's trial for Legend waits - beat the mirror in a spar",true,105,99,3,"RORY is a Legend (tier 4), the top",3]; the Awakening flag [false,false,true,true,true,true]
+
+  [ OK ]  the save's Fighter.board (NP_11 s9): RORY [2,{"layout_id":"BOXERPUNCHER","nodes_taken":["sp1","sp2","sp3","sp4","sp5","sp6","sp7","c1"],"points_free":8,"socket":"second_gear"},["second_gear"],true,2]; PRIYA [1,{"layout_id":"OUTBOXER","nodes_taken":["c1"],"points_free":10,"socket":null},{"SPD":1},61]; written back byte-equal; the load walks out on {"BLK":52,"CHN":52,"HRT":99,"PWR":59,"RFX":60,"SPD":60,"STA":55} with ["second_gear"]
+
+  [ OK ]  the technique slots (NP_11 s2, NP_05 s3): [0,0,1,1,2,5,5] at level; the kits [["Snowblind","Landslide"],["Root Bind"],[]]; refused ["RORY's technique slots are full (2 of 2) - level 25 opens the next","the T0 slot opens at level 5 - MARCUS is level 4","PRIYA carries a T0 already (Marginalia) - one T0, the identity move (NP_05 s3)","Relay: North Star is cast by its own rule - the FULL RELAY's (C35)","Rush Hour is not the club's to learn - a worlds boss's desperation - no recruitment authored","RORY has not learned Root Bind","RORY carries Aurora Borealis Breaker already (the card's own move)"]; down and up [["Landslide"],["Landslide","Updraft"]]; in the fight 'the kit is set between duals'; YURI's natives ["Full Load"] beside ["Snowblind","Full Load"]
+
+  [ OK ]  the HBP shop and the fight tapes (NP_11 s8): the shelves [["First Snap","Cornerstone","Gust Step","Sapling"],["Chinook Rush","Snowblind","Landslide","Root Bind","Updraft"],["Thunder Bay","White Squall","Overtime"]]; refused ["the shop's t2 shelf opens with the Regionals (NP_12 s4 beat 4) (story:regionals) or DOWNTOWN rep 10 (0 now)","Grain Elevator is not in the HBP shop","the shop's t3 shelf opens with the Provincials (beat 6) (story:provincials_semifinal) or DOWNTOWN rep 25 (0 now)"]; bought [true,100,{"Snowblind":"shop"},["Snowblind"],"Landslide costs 400 HBP (the ledger holds 100)","RORY knows Snowblind already","Pressure Cooker is not in the HBP shop"]; the tapes [{"Black Ice":1,"Portage":1},1,0]; used [true,{"Portage":"tape"},["Portage"],"the club holds no tape of Portage",true,["Black Ice"],{}]; the saved ledger again [{},0]
+
+  [ OK ]  the masters (NP_11 s8): Whitlock before the eight 'Whitlock's Eight Count Answer: RORY has not survived a standing-eight yet', the eight ["FIGHT",1], then [true,true,{"Eight Count Answer":"master:WHITLOCK","Timberfall":"master:WHITLOCK"},0,"Whitlock's Eight Count Answer: JUNE has not survived a standing-eight yet"]; refused ["Whitlock's Timberfall: it waits on quest:coach_questline","","the conditioning coach teaches while one is dressed - no Conditioning coach on the staff"]; DEX, CARTER, CASSIDY ["DEX's Prodigal: DEX teaches it at Kizuna Lv2 - DEX & RORY are at Lv1","CARTER is not in the stable","CASSIDY is not in the stable","DEX is the master - a lesson needs another learner"]; taught true; CARTER in the stable ["CARTER's Empty Net: it wants SPD 60 - RORY has 50",true,{"Empty Net":"master:CARTER"}]
+
+  [ OK ]  the re-teach (NP_11 s8): [0,true,1,{"Snowblind":"taught:RORY"},{"Snowblind":"seed"},["Snowblind"],true,true,3]; the fourth and the refusals ["the day's 3 training slots are used (day 1)","MARCUS has not learned Chinook Rush to pass on (a card's own move and its natives are not re-taught)","RORY is the teacher - the re-teach needs another stablemate","PRIYA knows Snowblind already",3]
+
+  [ OK ]  the kit in the fight and the save (NP_11 s9): LB + PISTON Snowblind / without punch, LB + HAYMAKER Aurora Borealis Breaker; PRIYA at 1 punch, at 5 Marginalia; RORY's profile with his own move shut Snowblind / without the kit none; RORY's record [["Aurora Borealis Breaker","Snowblind"],"Cornerstone",2,{"Cornerstone":"seed","Snowblind":"seed"}], PRIYA's [["Marginalia"],"Marginalia",1], YURI's [["Grain Elevator","Updraft"],["Full Load"]]; written back byte-equal, the built RORY's kit ["Snowblind","Cornerstone"]
+
+  [ OK ]  the academy as data (NP_07 s10): ["Toronto Ascendant Academy","ascendant_a",0.85,3,[["ASCENDANT 1","SWARMER","okafor",3],["ASCENDANT 2","OUTBOXER","tremblay",3],["ASCENDANT 3","SLUGGER","kowalchuk",3],["ASCENDANT 4","BOXERPUNCHER","delacroix-cardinal",3],["ASCENDANT 5","BOXERPUNCHER","petrov",3]]]; 15 house pairs over 12 houses (of 12 with natives, 0 in fewer than two); a prodigy's card ["ASCENDANT 1","SWARMER","okafor","GALE","none",3,3,"ASCENDANT 1"]
+
+  [ OK ]  the synthesis (NP_07 s10: slightly weaker per move, overwhelming in breadth): ["Synthesis Grain-Snow","HAYMAKER","HAYMAKER",2.13,2.5,2.5,true,"T3",50,"synthesis:academy","vfx_synth",false,false,true,700]; the squad's 15 syntheses (15 distinct, the Forge's ceiling 8), x2.04 to x2.13
+
+  [ OK ]  the academy's cast rule: Synthesis Tide-Heat, the bar after 10; then Synthesis Heat-Bell; at 40 none; out of reach none; 2 syntheses cast; a jab in the windup [1,true,10.0]
+
+  [ OK ]  the matchup (NP_07 s10's melting-pot argument): [["ASCENDANT 1","ASCENDANT 2","ASCENDANT 3"],"ascendant_a","ACADEMY: ASCENDANT 1 carries 3 syntheses - Synthesis Tide-Heat (LB + HAYMAKER, x2.04), Synthesis Heat-Bell (LB + ARC, x2.04), Synthesis Heat-Light (LB + ARC, x2.04) - no bond, no afterimage, no history","THESIS: your forged Grain & Snow (MARTA & YURI) x2.5 (x3.13 relayed) against his best synthesis Synthesis Tide-Heat x2.04"]; dressed ["ASCENDANT 1","ASCENDANT 2","ASCENDANT 3"], the bench []; R2 MARTA vs ASCENDANT 2: 'THESIS: your forged Grain & Snow (MARTA & YURI) x2.5 - relayed now, x3.13 with YURI's afterimage against his best synthesis Synthesis Bridge-Snow x2.04' (her hybrid x3.13); mid-dual 'the squad is set between duals'; off [true,"yuri_kowalchuk","grain_kings",false,""]
+
+  [ OK ]  the save: settings {"academy":true,"audio_assist":false,"boss":1,"format":"mini"}, written back byte-equal, the built squad ["ASCENDANT 1","ASCENDANT 2","ASCENDANT 3"] (ascendant_a); the DualState after a synthesis restored true on the same hash (true), his rotation at 1
+
+  [ OK ]  the record (the tracker's, kept): [10,1,{"L_STRAIGHT":6,"R_HOOK":1,"R_STRAIGHT":3},3,3,2,["L_STRAIGHT,L_STRAIGHT","L_STRAIGHT,R_STRAIGHT","L_STRAIGHT,L_STRAIGHT,R_STRAIGHT"],1,true,{"R_HOOK":1}]; the feint kept once, as the tracker keeps it (the sequences through it; its start taken back, the tracker's too) [true,false,true,false]; the tracker 11 tokens -> 1 at the next bell, PRIYA's own record 1, RORY's still 10
+
+  [ OK ]  the copy (NP_02 s2.2): [["S1","HABIT JAB > JAB > R_STR",["JAB","JAB","R_STR"],"normal",600,"visual-body"],["S2","HABIT L_HOOK > R_HOOK",["L_HOOK","R_HOOK"],"normal",600,"visual-body"]], SELECT {"S1":71,"S2":29}, punish [["player_power_whiff","immediate S1"]], interrupt [{"response":"stagger(800)","strings":["S1","S2"]}]; reads [["L_STRAIGHT,L_STRAIGHT,R_STRAIGHT",3],["L_HOOK,R_HOOK",3],["L_STRAIGHT,L_STRAIGHT",3]], counter ["R_HOOK",0.67]; in another sim byte-equal; another record ["HABIT L_HOOK > R_HOOK","HABIT feint JAB > L_HAY > L_OVERHAND"] -> [["L_HOOK",["L_HOOK"]],["R_HOOK",["R_HOOK"]],["DELAY(200)",["wait"]],["L_HAY",["L_HOOKERCUT"]],["L_OVERHAND",["L_FLARED"]]], at Circuit (tier 2) ["HABIT L_HOOK > R_HOOK","HABIT feint JAB > L_HAY > L_OVERHAND","HABIT R_UPC > L_HOOK"]; no record: ["name","hissatsu","talk","style","element","house","stats","generic","tier"], its strings the Style's ["bp1a","bp1b"]; coverage carried 0
+
+  [ OK ]  the lab's flag and the bell: at T0 [true,"yuri_kowalchuk",[],1]; at T1 [true,"RORY","RORY'S MIRROR","MIRROR SPAR - RORY",["mirror"],["HABIT JAB > JAB > R_STR","HABIT L_HOOK > R_HOOK"],{"L_HOOK,R_HOOK":[3,0],"L_STRAIGHT,L_STRAIGHT,R_STRAIGHT":[3,0]},"R_HOOK",0.67,1,"MIRROR: RORY'S MIRROR learned from 34 punches - throws HABIT JAB > JAB > R_STR (71%), HABIT L_HOOK > R_HOOK (29%); reads JAB > JAB > R_STR (3), L_HOOK > R_HOOK (3) from the bell; counters with your R_HOOK (67%)"]
+
+  [ OK ]  his read and his answer (C7's read, defense only): on his sequence tier 3, read 1.05; unread tier 0, read 0.3; offense byte-identical true; the reads after 24 s unrepeated gone; your counter at the rate 1 [1,1,[["R_HOOK",1.3]],"ACTING"], at 0 [1,0,[],"IDLE"]
+
+  [ OK ]  the spar's end, the save and the aid: trials ["spar_won","mirror"], no PI true (a plain spar's ticks true), the record learning in it (35 punches); written back byte-equal, the record the same; the DualState true on the same hash true, the copy ["HABIT JAB > JAB > R_STR","HABIT L_HOOK > R_HOOK"], its reads restored; the aid [true,"RORY'S MIRROR",true,true,"FIGHT",true,"PRIYA'S MIRROR"]; with the objective ["RORY'S MIRROR","OVER",true,1]
+
+  [ OK ]  the gear as data (NP_11 s5): cap 3%, {"festival":3,"prize":3,"shop":10,"signature":2}; the kinds against their boards [["gloves","jab_dmg","snap",3,30.0],["wraps","guard_decay","tight_guard",3,20.0],["mouthguard","wobble_time","iron_jaw",3,30.0],["robe","tension_earn","sparkplug",2,15.0]]; over the cap []; the house gifts 12 by rule ["Tremblay colours - gloves (jab damage +2%)","Okafor colours - wraps (guard decay while holding -2%)","Kowalchuk colours - mouthguard (wobble duration -2%)","Tagaq colours - robe (personal Tension contribution +2%)"]; ["Pro Gloves (jab damage +3%)","Gel Wraps (guard decay while holding -2%)","Custom Guard (wobble duration -3%)","Satin Robe (personal Tension contribution +2%)","Gym Robe (cosmetic)"]
+
+  [ OK ]  the slots and the rules (NP_11 s4-s5): slots by rarity [1,2,3,3]; ["the club holds no Pro Gloves",true,"RORY's accessory slots are full (1 of 1) - Circuit opens the next","Grain-Sack Wraps is YURI's - signature gear, his alone","the club's Tape Wraps are all worn (1 of 1)",true,"RORY wears wraps already (Tape Wraps)",true,["tape_wraps","gym_robe"],"the gear is set between duals",true,["tape_wraps"],true,["gym_robe"],["tape_wraps"],{"guard_decay":0.99}]
+
+  [ OK ]  the sources: the shop [true,220,true,2,"the gear shop's t2 shelf opens with the Regionals (story:regionals) or DOWNTOWN rep 10 (0 now)","the gear shop (t1, 80 HBP)","Club Gloves costs 60 HBP (the ledger holds 50)","Regionals Robe is not sold - a circuit prize","Grain-Sack Wraps is not sold - signature gear, never sold"]; the story's [["grain_sack_wraps","nationals_guard","regionals_robe","gift:tremblay"],"the circuit's prize (story:regionals)","House Tremblay's gift, its blessing given (NP_07 s4)"] (announced 4 then 0); a signature without and with its questline [] / ["mothers_wraps"]; the festival [["festival",["boardwalk_robe"]],["festival",[]],["home",[]]], in turn ["boardwalk_robe","festival_wraps","summer_gloves",""]
+
+  [ OK ]  the gear at the bell, each kind against no gear: the jab x1.03, the guard lost x0.98, the wobble's ticks 541 -> 524 (x0.97), the Tension x1.02 - each its own number true; with Snap on the board x1.34; ["GEAR: RORY - Pro Gloves (jab damage +3%)","GEAR: RORY - Gel Wraps (guard decay while holding -2%)","GEAR: RORY - Custom Guard (wobble duration -3%)","GEAR: RORY - Satin Robe (personal Tension contribution +2%)"]; his opponent untouched
+
+  [ OK ]  the save and the aid: the Fighter records [["RORY",["leather_gloves","regionals_robe"]],["JUNE",[]],["YURI",["grain_sack_wraps"]]]; written back byte-equal, the built RORY at the bell ["leather_gloves","regionals_robe"]; the DualState true on the same hash true; the aid 7 steps, worn [["regionals_robe"],["fitted_guard"],["fitted_guard"],["boil_bite_guard"]], HBP 20
+
+  [ OK ]  the audit as data (NP_11 s10): [["PRIYA","DEX","YURI"],[0,1,1],["cassidy_vane","remy_moreau","jean_guy_moreau","hc9_choir"],[2,2,2,3],["alfie_crane","chiamaka_okafor","deshawn_vaughn","ioan_vasile","itzel_reyes_ortega","sora_kannagi","yordanis_baro"],35,[110,140,1700],0.5,[["PRIYA","OUTBOXER","none"],["DEX","SLUGGER","macisaac"],["YURI","SLUGGER","kowalchuk"]]]
+
+  [ OK ]  a build on live systems only: ["YURI",58800,35,4,69,70,7,16,4,["Palisade","Chinook Rush","Landslide","Snowblind","Roadwork"],[],4,4,"Roadwork",3,[]]; ["PRIYA",64680,36,4,72,72,7,14,3,["Palisade","Timberfall","Chinook Rush","Landslide"],[],4,4,"Marginalia",3,[]]; on 50 Spirits [3,"Legend costs 60 Spirits (the ledger holds 19)"]
+
+  [ OK ]  the kit's rule and the builder: [[["Updraft"],["Updraft"]],[["Snowblind"],["Snowblind"]],[["Snowblind","First Snap"],[]],[["First Snap","Snowblind"],["Snowblind"]]]; the builder's kits ["Palisade (BOARD, T2 WALL)","Chinook Rush (shop, T1 ARC)","Landslide (shop, T1 HAYMAKER)","Snowblind (shop, T1 PISTON)","Roadwork (CONDITIONING, T0 PISTON)"] / ["Palisade (BOARD, T2 WALL)","Timberfall (WHITLOCK, T1 RISE)","Chinook Rush (shop, T1 ARC)","Landslide (shop, T1 HAYMAKER)"], each move a family of its own true
+
+  [ OK ]  the fight: {"boss":"alfie_crane","ep":[26,4],"hash":2850205695,"score":[6,0],"seed":11,"ticks":3432,"won":true}; again the same; another seed another
+
+  [ OK ]  the verdict names the system: [[0,["the fight itself (tuning, PAC-052's lane)"]],[0,["growth - the board and the raises (NP_11 s3, s6)"]],[0,["rarity (NP_11 s4)"]],[0,["techniques (NP_11 s2, s8)"]],[1,[]]]; the report ["AUDIT :: PRIYA (NP_12 s4 beat 1 (Ep1 - The Letter)) - L36, tier 4; board 72 of 72 points, 7 passives; kit 4 of 4 slots + T0 Marginalia, every move answers; gear 3 of 3; the endgame 1 of 1 (100%) - NOT VIABLE: 1 of 1 segments won against the endgame's bosses (100%, the bar 101%) - the fight itself (tuning, PAC-052's lane)","  reference CASSIDY - tier 4, total 556, kit 4 of 4 slots, the endgame 1 of 1 (100%)"]
+
+  [ OK ]  the fixes as data (NP_11 s1, NP_05 s3): totals [420,490,490]; ["SWARMER:s15","OUTBOXER:s15","SLUGGER:s15","BOXERPUNCHER:s15"]; the board teaches [["Shield Wall","wall"],["Windbreak","wall"],["Palisade","wall"]]; the walls [["slot","T2","WALL",25],["slot","T2","WALL",25],["slot","T2","WALL",25]]; a T2 wants the wall node; board:anchor open
+
+  [ OK ]  stat totals by rarity (NP_11 s1): PRIYA [370,420,490,490], as dressed at Club true, her shape kept [true,true,true,true], RFX at National and Legend [90,93]; SAM [475,490]; RORY [99,420]; CASSIDY [490,true]; a raise on top [493,3]; the totals taken out 370; PRIYA's Legend {"BLK":66,"CHN":53,"HRT":79,"PWR":46,"RFX":93,"SPD":80,"STA":73}
+
+  [ OK ]  the defensive board (NP_05 s3): ["a T2 wall wants a defensive board - PRIYA has not taken the Anchor Wall (NP_05 s3)","a T2 wall wants a defensive board - PRIYA has not taken the Anchor Wall (NP_05 s3)","Anchor Wall does not touch a node PRIYA has taken",true,11,["Shield Wall","Windbreak","Palisade"],true,"master:BOARD",["Windbreak"],[],"a T2 wall wants a defensive board - RORY has not taken the Anchor Wall (NP_05 s3)",["Palisade"],[],true,"a T2 wall wants a defensive board - PRIYA has not taken the Anchor Wall (NP_05 s3)","PRIYA","Windbreak","Windbreak",[[0.0,5.0]]]
+
+  [ OK ]  the aid and the builder: wanted at 25 / 35 [false,true,true]; RORY's picks at 20 with and without the wall the same (25 nodes); PRIYA's kit ["Palisade","Timberfall","Chinook Rush","Landslide"], the wall ["Palisade"], short []; without the board's walls 3 of 4, short ["kit"]
+
+  [ OK ]  growth viability on every authored seed: PRIYA (total 550) vs Chiamaka [{"boss":"chiamaka_okafor","ep":[36,48],"hash":2156150232,"score":[6,2],"seed":11,"ticks":5316,"won":true},{"boss":"chiamaka_okafor","ep":[30,46],"hash":268679863,"score":[2,5],"seed":22,"ticks":3700,"won":false}]; without totals (total 454) [{"boss":"chiamaka_okafor","ep":[20,44],"hash":1352305834,"score":[0,6],"seed":11,"ticks":3439,"won":false},{"boss":"chiamaka_okafor","ep":[44,52],"hash":931566639,"score":[2,6],"seed":22,"ticks":8212,"won":false}]; verdict [1,[]] / [0,["growth - the board and the raises (NP_11 s3, s6)"]]
+
+  [ OK ]  the faucet audit as data (NP_11 s6): [0.7,0.15,75,45,[5.0,1.5,1.0],[["arc1_club",6,"mini",1],["arc1_circuit",18,"sanctioned",1],["arc2",24,"blind",2]],48,80.0,"RORY",35,8,1,["xp","spirits","hbp","prestige","beans"]]
+
+  [ OK ]  a segment's own XP (the sim's event_xp): [1,2,3,10,0,0,0,0]; R1 PRIYA of a delegated dual paid 220 for events worth 49 +25 won (x1.1 x the pace -> 220); the sample ["PRIYA","alfie_crane",true,54,{"drop":3,"hit":18}] -> won 54, lost 54 (no lost fight in the sample: the won median stands in)
+
+  [ OK ]  the faucet through the sim's own paths: arc1_club - 6 duals (5 won), 50 scraps (45 won), 15 spars (11 won), 10 slots (mitts); paid {"beans":50,"hbp":1160,"prestige":139,"spirits":75,"xp":7296}, the table's arithmetic {"beans":50,"hbp":1160,"prestige":139,"spirits":75,"xp":7296}; L12; all three phases [48,80.0,[12,24,35]]
+
+  [ OK ]  the sinks priced from the live tables: the gym {"hbp":6750,"spirits":250}, the Forge {"beans":30,"spirits":40}; PRIYA {"beans":137,"gear":[],"gear_hbp":0,"hbp":800,"kit":["Chinook Rush","Landslide"],"kit_hbp":800,"name":"PRIYA","spirits":95} (budget less left: Spirits 91, Beans 137); the squad of 8 wants {"beans":1126,"hbp":13150,"prestige":1400,"spirits":1050}
+
+  [ OK ]  the verdict names the currency: the fixed economy GREEN []; as PAC-097 found it ["spirits","hbp","beans","prestige","xp"] -> RED; every bar opened GREEN; the report 19 lines
+
+  [ OK ]  the fixes as data (NP_11 s2, s6; NP_08 s2.4): [2.7,[2,2,5,8],[50,30],[10,10],[7,10,100,7],[110,140,1700],[612,770,9440],[110,140,1700]]
+
+  [ OK ]  XP's pace: a scrap won pays RORY 45 and SAM 41; three segments won - the dual's total 1113, JUNE on the bench 612 (half at the pace once, x1.1); the faucet's captain at Arc 3 level 35, without the pace 21
+
+  [ OK ]  the story's pay: quest, story beat, blessing [30,50,0], again refused true, the ledger 80 HBP, the blessing on it true; Remy met before / after quest:cold_storage [false,true,1,true]; a seeded flag pays 0
+
+  [ OK ]  the scouting machine and the open mat: ["a pull costs 10 Prestige (the ledger holds 0)",14,9,9,true,"approachable",10,false,false,"the open mat is every 7th day (day 1) - its priority costs 10 Prestige (the ledger holds 0)",true,10,0,true,true,true,0,true,true,true,0,true]
+
+  [ OK ]  each fix against its absence: fixed []; the pace out ["xp"]; the old spar Spirits ["spirits"]; the story's HBP out ["hbp"]; the machine out ["prestige"]; the jar at 100 ["beans"]
+
+  [ OK ]  the roles as data (NP_08 s1, NP_11 s9): [["FIGHTER","TRAINING","SCOUT","CORNER_TRAINEE"],[10,3],[1,20],1,12,["school","school","school","school","north","maritimes","prairies","montreal"],["hill","hill"],["FIGHTER","FIGHTER","FIGHTER","FIGHTER","FIGHTER","FIGHTER","FIGHTER","FIGHTER","FIGHTER"]]
+
+  [ OK ]  the roles set: refused ["RORY is dressed - a role is worked from the bench","no role 'MANAGER' (FIGHTER / TRAINING / SCOUT / CORNER_TRAINEE)","NOBODY is not in the stable","nobody on the bench without a role (the bench 4)","YURI is already training partner","roles are set between duals"]; the aid's picks ["YURI:TRAINING","HILL 1:SCOUT","RINK 2:SCOUT","HILL 3:CORNER_TRAINEE"]; back to the ring HILL 3 (FIGHTER)
+
+  [ OK ]  the training partner against its absence (JUNE, the heavy bag): YURI the partner [8,"YURI",3,{"PWR":8},3]; no role [5,"",0,{"PWR":5},0]; YURI named without the role [5,"YURI",0,{"PWR":5},0]; at the mitts [5,"",0,{"SPD":5},0]; YURI dressed [5,"",0,{"PWR":5},0]; a tier-1 generic [6,"HILL 1",1,{"PWR":6},1]
+
+  [ OK ]  the scout against its absence: a day's Prestige [0,1,1,2,3,2] (the last day ["hill","rink"], the ledger's roles paid 9); vs grain_kings the order [30,30,30], HILL 1 scouting [30,30,30], YURI scouting [50,50,50] - "YURI scouting prairies (the stable role)"
+
+  [ OK ]  the cornerman-in-training against its absence: the dressed three's uses [[0,0,0],[0,0,0],[1,1,0]]; the corps' next fed ["old_cutman","rival_cornerman"]; a use to Lv2 ["sportsmed",2]; dressed, the uses 1 -> 1
+
+  [ OK ]  the roles in the save: the records {"HILL 1":["SCOUT","hill",false],"HILL 3":["FIGHTER","hill",false],"JUNE":["FIGHTER","school",true],"MARCUS":["FIGHTER","school",true],"PRIYA":["FIGHTER","school",true],"RINK 2":["CORNER_TRAINEE","rink",false],"RORY":["FIGHTER","school",true],"YURI":["TRAINING","prairies",false]}; loaded ["TRAINING","SCOUT","CORNER_TRAINEE","FIGHTER","hill","rink",true]
+
+  [ OK ]  the faucet's bench against its absence: ["HILL 1:TRAINING:T1","HARBOUR 2:SCOUT:T1","RINK 3:CORNER_TRAINEE:T1"] from arc1_circuit paid {"beans":0,"prestige":24,"uses":42}; Prestige 1184 vs 1160 without (the share 85% vs 83%), the rest the same; the verdict [] / []
+
+  [ OK ]  the release against its absence: HILL 1 [stable, the wraps free, on the wall, role] [8,0,true,"SCOUT"] -> [7,1,false,"FIGHTER"] (XP 500 kept, grudge, take back until day 4); refused ["RORY is the story's own - the club began with RORY","JUNE is the story's own - the club began with JUNE","NOBODY is not in the stable","SAM is dressed - release a card from the bench","WALK-ON has no road back (no recruit record, not a generic)","the locker room is visited between duals"]
+
+  [ OK ]  three days to take it back: taken back on day 3 [true,3,true,"SCOUT",0,true,true,8]; released again on day 3, waiting on days 3-5 [true,true,true], settled on day 6 - taken back HILL 1 is not waiting on a release; the open mat ["HILL 1:grudge"]; remembered {"bond":"","day":3,"flag":"grudge","times":1}
+
+  [ OK ]  the road back and the flag: YURI with a grudge ["approachable","grudge",false,false,["BEAT_IN 1/1","GRUDGE 0/1"],true,true,true,"T2","grudge",true]; with warmth ["RORY",true,["WARMTH"],true]; the open mat - HILL 3 warm, HILL 1 a grudge [true,0,7,"HILL 1 left with a grudge - signing back costs the priority, 10 Prestige (the ledger holds 0)",true,10,false]
+
+  [ OK ]  the cap given its valve: at 100 the open mat refused "the stable holds 100 - NP_08 s1's cap", a recruit refused "the stable holds 100 - NP_08 s1's cap (the locker room releases a card)"; one released, the open mat signs true (the stable 100)
+
+  [ OK ]  the browse and the comparison card: [["houseless: RORY, PRIYA, MARCUS, JUNE, HILL 1, RINK 2, HILL 3","House Kowalchuk: YURI"],["BOXERPUNCHER: RORY, HILL 1, RINK 2, HILL 3","OUTBOXER: PRIYA","SLUGGER: MARCUS, YURI","SWARMER: JUNE"],["FROST: RORY, JUNE","GALE: PRIYA","GRANITE: MARCUS, YURI","NONE: HILL 1, RINK 2, HILL 3"],["1 bond: RORY, YURI","0 bonds: PRIYA, MARCUS, JUNE, HILL 1, RINK 2, HILL 3"],["dressed: RORY, PRIYA, MARCUS, JUNE","training partner: YURI","on the bench: HILL 1, RINK 2, HILL 3"]]; "YURI - House Kowalchuk, SLUGGER, GRANITE, PRAIRIES; training partner | PWR 80 SPD 40 CHN 70 RFX 40 BLK 45 STA 60 HRT 75 | kit Grain Elevator | trait Load-Bearing | dialect kowalchuk | bonds RORY Lv1"
+
+  [ OK ]  the locker in the save: YURI's record remembers {"bond":"","day":1,"flag":"grudge","times":1}; loaded [true,["HILL 1"],true,true,"grudge"]
+
+  [ OK ]  district rep: the table [1,1,[[3.0,1.0],[10.0,1.0],[25.0,2.0]],"hill","sim"]; three scrap wins in the Rink District [rep, by alias, Prestige, milestones paid, the milestone's event, placed nowhere a ledger, its Prestige, a scrap lost] [3,3,7,1,1,false,6,0]; fled to 2 and won again [rep, paid, best] [3,1,3]
+
+  [ OK ]  the flee: before the first exchange [true,false,5,"OVER",0,0,1,0]; after it ["OVER",4,1]; at 0 [0,0]; refused ["only a scrap is fled (NP_02 s2.1) - a spar or a dual is fought out","only a scrap is fled (NP_02 s2.1) - a spar or a dual is fought out","the scrap is over"]
+
+  [ OK ]  REP() on the ledger: Carter placed nowhere ["BEAT_IN 3/3","REP 0/3"]; in the Rink District ["BEAT_IN 6/3","REP 3/3"] (ready true); a seeded flag true; the Hill for the Whitecloud blessing false -> true
+
+  [ OK ]  the rep in the save: loaded [rep, the hash, the scrap's district, byte-equal] [3,true,"rink",true]; fled after the load, the rink 2
+
+  [ OK ]  the faucet's districts against their absence: the rep by Arc 3 {"centre":22,"downtown":90,"harbour":67,"hill":90,"rink":68,"school":23}, the milestones 20 Prestige; Prestige 1184 vs 1164 without (the share 85% vs 83%, a session 14.8 vs 14.6), the rest the same; the verdict [] / []
+
+  [ OK ]  the anti-you against its absence: the turns ["story:nationals","story:hollow_circuit"], 3 a turn; Yuri's squad beaten flags ["yuri_kowalchuk","jean_guy_moreau","sam_tagaq","ada_okafor"]; a beat that turns no arc signs 0; the Nationals signs ["YURI","JEAN-GUY","SAM"] (states ["academy","academy","academy","approachable"]); again refused; the approach "yuri_kowalchuk signed with Toronto Ascendant Academy at story:nationals - beat the academy first"; a rare lead false; seeded 0; without the table 0
+
+  [ OK ]  a released rival at the academy: taken ["yuri_kowalchuk"]; the RECRUITS line "YURI (yuri_kowalchuk): signed by Toronto Ascendant Academy at story:nationals (day 4) - released by the club with a grudge - beat the academy and the rival comes over"; the String Wall academy
+
+  [ OK ]  the academy's squad with the rivals it signed: ["yuri_kowalchuk","jean_guy_moreau","sam_tagaq"] (a sanctioned dual ["jean_guy_moreau","ada_okafor","carter_okafor","ASCENDANT 4","ASCENDANT 5"]), Vey's corner ascendant_a; R1 yuri_kowalchuk carries ["Synthesis Tide-Heat","Synthesis Heat-Bell","Synthesis Heat-Light"] (ASCENDANT 1's ["Synthesis Tide-Heat","Synthesis Heat-Bell","Synthesis Heat-Light"]); R2's kit is ASCENDANT 2's true
+
+  [ OK ]  the academy beaten: lost, it holds ["YURI","JEAN-GUY","SAM"]; won, ["YURI","JEAN-GUY","SAM"] come over ["approachable","approachable","approachable"] (the turn remembered story:nationals); YURI's approach ["BEAT_IN","GRUDGE"]
+
+  [ OK ]  the academy in the save: loaded [true,"academy",true,false]
+
+  [ OK ]  the vendor tiers against their absence: the tables ["downtown",10,25,"downtown",10,25]; at DOWNTOWN 9 [["techniques:t1","gear:t1"],"the gear shop's t2 shelf opens with the Regionals (story:regionals) or DOWNTOWN rep 10 (9 now)"]; a scrap won downtown [rep, t2, gear t2, t3, the rep's shelves] [10,"rep","rep","closed",["the technique shop's t2 shelf","the gear shop's t2 shelf"]]; the rink's 30 ["techniques:t1","gear:t1"]; without the rep ["techniques:t1","gear:t1"]; a seeded flag rep; the Regionals [t2, t3] ["flag","closed"]; -- rep= by alias {"downtown":9,"rink":3}
+
+  [ OK ]  a shelf opened on the rep and closed below it: at DOWNTOWN 10 [Snowblind, Leather Gloves, HBP] [true,true,850]; fled [rep, closed, open, Gel Wraps, kept, kept] [9,["the technique shop's t2 shelf","the gear shop's t2 shelf"],["techniques:t1","gear:t1"],"the gear shop's t2 shelf opens with the Regionals (story:regionals) or DOWNTOWN rep 10 (9 now)",true,1]; won again [10,2,""]
+
+  [ OK ]  the shops' lines: at DOWNTOWN 9 after the Regionals ["THE TECHNIQUE SHOP (DOWNTOWN, rep 9): t1 open, t2 open (the Regionals), t3 at the Provincials or rep 25 (9/25)","THE GEAR SHOP (DOWNTOWN, rep 9): t1 open, t2 open (the Regionals), t3 at the Provincials or rep 25 (9/25)"]; at 25 ["THE TECHNIQUE SHOP (DOWNTOWN, rep 25): t1 open, t2 open (DOWNTOWN rep 10), t3 open (DOWNTOWN rep 25)","THE GEAR SHOP (DOWNTOWN, rep 25): t1 open, t2 open (DOWNTOWN rep 10), t3 open (DOWNTOWN rep 25)"]; the aid's gear off the rep's shelves ["t3"], without ["t1"]; the technique shop's pick ["Thunder Bay","t3"]
+
+  [ OK ]  the tiers in the save: loaded [true,"rep","",true]
+
+  [ OK ]  the faucet's vendor tiers: at story pace {"gear:t2":{"by":"flag","phase":"arc1_circuit"},"gear:t3":{"by":"flag","phase":"arc1_circuit"},"techniques:t2":{"by":"flag","phase":"arc1_circuit"},"techniques:t3":{"by":"flag","phase":"arc1_circuit"}} (DOWNTOWN {"arc1_circuit":0,"arc1_club":0,"arc2":90} by phase); the Strip scrapped in the club phase {"gear:t2":{"by":"rep","phase":"arc1_club"},"gear:t3":{"by":"rep","phase":"arc1_club"},"techniques:t2":{"by":"rep","phase":"arc1_club"},"techniques:t3":{"by":"rep","phase":"arc1_club"}} (DOWNTOWN {"arc1_circuit":45,"arc1_club":45,"arc2":135}); the paid alike true
+
+  [ OK ]  punish-response grammar resolves for every hook (24 patterns) 53 responses
+
+  [ OK ]  punish hook executes its response (force)      player_power_whiff -> S2 tell 55/84 ticks (x0.60, PI 3 tell x1.10)
+
+  [ OK ]  a punished string never comes slower than its full tell
+
+  [ OK ]  bait hook answers (or authored-absent)
+
+  [ OK ]  baited string comes at full tell
+
+SMOKE VERDICT :: GREEN (454/454)
+
+ERROR: Failed to read the root certificate store.
+
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
