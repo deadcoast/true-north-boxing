@@ -5,6 +5,7 @@ const World := preload("res://episode/harbourline.gd")
 const Save := preload("res://sim/save.gd")
 const Locale := preload("res://episode/locale.gd")
 const Staging := preload("res://episode/staging.gd")
+const Broadcast := preload("res://episode/broadcast.gd")
 const RigSpace := preload("res://presentation/rig_space.gd")
 const SAVE_PATH := "user://tnb_episode.json"
 var scene: Node
@@ -43,6 +44,7 @@ var freeze_t := 0.0
 var episode_environment: WorldEnvironment
 var sandbox_environment: Environment
 var staging: Node
+var broadcast: Node
 var archive_drop := {}
 var handoff_t := -1.0
 var handoff_camera := Transform3D.IDENTITY
@@ -95,6 +97,7 @@ func setup(owner_scene: Node) -> void:
 	vignette = ColorRect.new(); vignette.color = Color(0.9, 0.95, 1, 0); vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	surface.add_child(vignette); vignette.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	staging = Staging.new(); add_child(staging); staging.setup(self)
+	broadcast = Broadcast.new(); add_child(broadcast); broadcast.setup(self)
 	_title()
 	scene.controls_menu.closed.connect(func():
 		keys.clear()
@@ -136,6 +139,7 @@ func _focus_button(button) -> void:
 		button.grab_focus()
 
 func _title() -> void:
+	if broadcast != null: broadcast.clear()
 	if staging != null: staging.clear()
 	state = "title"; _show_world()
 	_page("TRUE NORTH BOXING", text("EPISODE 1 — THE LETTER\nMillbrook. Five days. Four dressed. Two segment victories to keep the charter.", "ÉPISODE 1 — LA LETTRE\nMillbrook. Cinq jours. Quatre en tenue. Deux segments gagnés pour sauver la charte."))
@@ -147,6 +151,7 @@ func _title() -> void:
 	if status != "": _label(column, status, 16)
 
 func _language() -> void:
+	if broadcast != null: broadcast.clear()
 	Locale.use(language)
 	world.language = language
 	for object in data["objects"]: world.labels[object["id"]].text = object[language]
@@ -157,6 +162,7 @@ func _language() -> void:
 			if child.text in [place["en"], place["fr_CA"]]: child.text = place[language]
 
 func _sandbox() -> void:
+	broadcast.clear()
 	staging.clear(); staging.ambience.stop(); staging.foley.stop()
 	Locale.use("en")
 	scene.sim = sandbox_sim; scene.controls_menu.practice.disabled = false
@@ -168,6 +174,7 @@ func new_episode(lang: String) -> void:
 	if FileAccess.file_exists(SAVE_PATH) and DirAccess.copy_absolute(SAVE_PATH, SAVE_PATH + ".previous") != OK:
 		status = text("Could not preserve the previous episode. New episode was not started.", "Impossible de conserver l’épisode précédent. Nouvelle partie annulée."); _title(); return
 	language = lang; _language(); scene.sim = Campaign.fresh(scene.content, language, 1976)
+	broadcast.reset()
 	handoff_t = -1; handoff_parts.clear()
 	scene.controls_menu.practice.disabled = true
 	scene.club_flow.enabled = false; scene.club_flow.close(); scene.fight_hud.dismiss_entry()
@@ -185,6 +192,7 @@ func _dialogue(id: String, resume := false) -> void:
 	_label(column, "%02d / %02d" % [index + 1, lines.size()], 14)
 	_button("next", text("Continue", "Continuer"), next_line)
 	freeze_t = staging.begin(id, index)
+	broadcast.dialogue(id, index)
 	if freeze_t > 0:
 		buttons["next"].disabled = true
 		panel.hide(); hint.text = ""
@@ -198,6 +206,7 @@ func _dialogue(id: String, resume := false) -> void:
 
 func next_line() -> void:
 	if state != "dialogue" or freeze_t > 0: return
+	broadcast.finish_dialogue()
 	var id := str(_ep()["dialogue"]); _ep()["line"] = int(_ep()["line"]) + 1
 	if int(_ep()["line"]) < data["scenes"][id].size(): _dialogue(id, true); return
 	_ep()["dialogue"] = ""; _ep()["line"] = 0
@@ -234,6 +243,7 @@ func _swing(from: Transform3D, to: Transform3D, target: String) -> void:
 	keys.clear(); scene.combat_input.clear(true)
 
 func _world() -> void:
+	broadcast.clear()
 	state = "world"; _ep()["phase"] = "world"; _ep()["dialogue"] = ""; _ep()["fight"] = ""
 	training = {}; panel.hide(); quest.show(); _show_world(); world.sync(scene.sim)
 	_ep().erase("training")
@@ -527,6 +537,7 @@ func observe(event: Dictionary) -> void:
 
 func _event(event: Dictionary) -> void:
 	var kind := str(event.get("kind", "")); var fight := str(_ep().get("fight", ""))
+	broadcast.observe(event, fight)
 	if fight != "":
 		var metrics: Dictionary = _ep()["metrics"]
 		if kind == "hit" and event.get("on") == "B" and event.get("counter", false): metrics["counters"] = int(metrics.get("counters", 0)) + 1
@@ -581,8 +592,6 @@ func _event(event: Dictionary) -> void:
 		if not _ep()["metrics"].has("r2_tells"): _ep()["metrics"]["r2_tells"] = []
 		_ep()["metrics"]["r2_tells"].append(str(event.get("string", "")))
 		if not _ep()["metrics"].get("r2_cycles", []).is_empty(): _ep()["metrics"]["r2_cycles"][-1].append(str(event.get("string", "")))
-	if fight == "survival" and kind == "drop" and event.get("who") == "B" and scene.sim.seg_idx == 2:
-		status = text("GORD · DOWN GOES THE CHECKBOX — I’m sorry, down goes VANE, and Memorial Gym remembers what it’s for!", "GORD · LA CASE EST AU TAPIS — pardon, VANE EST AU TAPIS! Le Memorial se rappelle pourquoi il existe!")
 
 func _corner() -> void:
 	state = "corner"; _page(text("WHITLOCK · YOUR CORNER", "WHITLOCK · TON COIN"), text("Two actions. Keep the bar for the next fighter. Priya wants a plan; Rory wants the fire.", "Deux actions. Garde la réserve pour le prochain. Priya veut un plan; Rory veut du feu."))
@@ -748,6 +757,7 @@ func _load_episode_path(path: String) -> void:
 	# would then replace the exact pending-event state and change its hash.
 	ep = Campaign.state(scene.sim)
 	scene.fight_feedback.sync_audio(true)
+	broadcast.reset(true)
 	scene.controls_menu.practice.disabled = true
 	language = ep["language"]; _language(); world.restore(ep["position"]); world.visited = ep.get("visits", []).duplicate(); world.sync(scene.sim)
 	training = {}; pending.assign(ep.get("pending_events", [])); freeze_t = 0

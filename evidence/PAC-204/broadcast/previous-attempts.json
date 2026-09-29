@@ -1,0 +1,7 @@
+{
+  "external_synthesis": "Automatic approval rejected edge-tts because it would export non-public authored dialogue without explicit authorization. No dialogue was sent. The completed path downloads public Piper/model files and synthesizes locally; no export workaround.",
+  "first_french_model": "fr_FR-mls_1840-low lacked combining nasal phoneme U+0303 in its model mapping. Four rejected masters and original model card retained under .PACER/PAC-204-broadcast/first-masters. Replaced by fr_FR-tom-medium; final synthesis emits no missing-phoneme diagnostics.",
+  "first_import": "Explicit bool annotation required for advance_archive. Initial compiler log retained.",
+  "first_fixture": "Called nonexistent _start_segment instead of existing _load_segment. A stopped/no-stream foley is silent but does not retain stream_paused=true; corrected silence assertion to stopped OR paused. No combat rules changed. The first failure log is retained.",
+  "scope": "No audible automation, listening-quality acceptance, Canadian accent/casting acceptance, or minimum-spec/human qualification is claimed."
+}

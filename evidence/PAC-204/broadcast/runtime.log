@@ -1,0 +1,62 @@
+{"name": "smoke-04", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-05", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-03", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-00", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-02", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-01", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-08", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-06", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-09", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-07", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-10", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-11", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-13", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-15", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-17", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-12", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-14", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-16", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-18", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-19", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-23", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-20", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-22", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "smoke-21", "passed": true, "verdicts": ["SMOKE VERDICT :: GREEN (454/454)"], "errors": []}
+{"name": "geometry", "passed": true, "verdicts": ["GEOMETRY VERDICT :: GREEN (5/5)"], "errors": []}
+{"name": "drive_academy", "passed": true, "verdicts": ["ACADEMY DRIVE :: GREEN (7/7)"], "errors": []}
+{"name": "drive_anti", "passed": true, "verdicts": ["ANTI-YOU DRIVE :: GREEN (6/6)"], "errors": []}
+{"name": "drive_automation_audio", "passed": true, "verdicts": ["DRIVE :: GREEN"], "errors": []}
+{"name": "drive_awaken", "passed": true, "verdicts": ["AWAKENING DRIVE :: GREEN (6/6)"], "errors": []}
+{"name": "faucets", "passed": true, "verdicts": ["FAUCETS VERDICT :: GREEN"], "errors": []}
+{"name": "drive_bzone", "passed": true, "verdicts": ["ENEMY TRANSFORMATION DRIVE :: GREEN (7/7)"], "errors": []}
+{"name": "drive_broadcast", "passed": true, "verdicts": ["DRIVE :: GREEN"], "errors": []}
+{"name": "drive_clash", "passed": true, "verdicts": ["MANIFEST CLASH DRIVE :: GREEN (5/5)"], "errors": []}
+{"name": "drive_corner_calls", "passed": true, "verdicts": ["DRIVE :: GREEN"], "errors": []}
+{"name": "drive_combat_loop", "passed": true, "verdicts": ["COMBAT LOOP VERDICT :: GREEN (67/67)"], "errors": []}
+{"name": "drive_duo", "passed": true, "verdicts": ["DUO DRIVE :: GREEN (6/6)"], "errors": []}
+{"name": "drive_exhibition", "passed": true, "verdicts": ["EXHIBITION DRIVE :: GREEN (7/7)"], "errors": []}
+{"name": "drive_facilities", "passed": true, "verdicts": ["FACILITIES DRIVE :: GREEN (6/6)"], "errors": []}
+{"name": "drive_forge", "passed": true, "verdicts": ["FORGE DRIVE :: GREEN (7/7)"], "errors": []}
+{"name": "drive_formation", "passed": true, "verdicts": ["FORMATION DRIVE :: GREEN (12/12)"], "errors": []}
+{"name": "audit", "passed": true, "verdicts": ["AUDIT VERDICT :: GREEN (3 of 3 viable)"], "errors": []}
+{"name": "drive_gear", "passed": true, "verdicts": ["GEAR DRIVE :: GREEN (7/7)"], "errors": []}
+{"name": "drive_growth", "passed": true, "verdicts": ["GROWTH DRIVE :: GREEN (8/8)"], "errors": []}
+{"name": "drive_inherit", "passed": true, "verdicts": ["INHERITANCE DRIVE :: GREEN (6/6)"], "errors": []}
+{"name": "drive_club_journey", "passed": true, "verdicts": ["CLUB JOURNEY VERDICT :: GREEN (133/133)"], "errors": []}
+{"name": "drive_input", "passed": true, "verdicts": ["INPUT DRIVE :: GREEN (98/98)"], "errors": []}
+{"name": "drive_manifest", "passed": true, "verdicts": ["MANIFEST DRIVE :: GREEN (6/6)"], "errors": []}
+{"name": "drive_locker", "passed": true, "verdicts": ["LOCKER DRIVE :: GREEN (10/10)"], "errors": []}
+{"name": "drive_mirror", "passed": true, "verdicts": ["MIRROR DRIVE :: GREEN (8/8)"], "errors": []}
+{"name": "drive_readability", "passed": true, "verdicts": ["VERDICT :: GREEN (113/113)"], "errors": []}
+{"name": "drive_recruit", "passed": true, "verdicts": ["RECRUIT DRIVE :: GREEN (8/8)"], "errors": []}
+{"name": "drive_rep", "passed": true, "verdicts": ["REP DRIVE :: GREEN (6/6)"], "errors": []}
+{"name": "drive_roles", "passed": true, "verdicts": ["ROLES DRIVE :: GREEN (8/8)"], "errors": []}
+{"name": "drive_scouting", "passed": true, "verdicts": ["SCOUTING DRIVE :: GREEN (8/8)"], "errors": []}
+{"name": "drive_techniques", "passed": true, "verdicts": ["TECHNIQUES DRIVE :: GREEN (10/10)"], "errors": []}
+{"name": "drive_vendors", "passed": true, "verdicts": ["VENDORS DRIVE :: GREEN (7/7)"], "errors": []}
+{"name": "drive_zone", "passed": true, "verdicts": ["ZONE DRIVE :: GREEN (6/6)"], "errors": []}
+{"name": "drive_boxing_motion", "passed": true, "verdicts": ["BOXING MOTION VERDICT :: GREEN (302/302)"], "errors": []}
+{"name": "drive_episode", "passed": true, "verdicts": ["DRIVE :: GREEN"], "errors": []}
+{"name": "determinism", "passed": true, "verdicts": ["DETERMINISM VERDICT :: GREEN (57/57)"], "errors": []}
+{"name": "drive_readiness", "passed": true, "verdicts": ["READINESS VERDICT :: GREEN (152/152)"], "errors": []}
+61/61 runs passed.

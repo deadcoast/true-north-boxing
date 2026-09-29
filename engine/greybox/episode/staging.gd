@@ -153,7 +153,7 @@ func begin(id: String, index := 0) -> float:
 		_camera(Vector3(4, 3.3, 7), Vector3(0, 1, 0), 45)
 		if index == 1:
 			# Hold the same image and mute the tape for exactly one second.
-			sound_hole = true; sound_hole_seconds = 0; ambience.stream_paused = true; length = 1
+			sound_hole = true; sound_hole_seconds = 0; ambience.stream_paused = true; foley.stream_paused = true; length = 1
 	elif id == "freeze":
 		film.show(); _ambient("crowd"); length = 2
 		var player: Node3D = director.scene.player

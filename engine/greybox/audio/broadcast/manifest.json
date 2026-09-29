@@ -1,0 +1,169 @@
+{
+  "provenance": "Locally synthesized provisional broadcast performance, Piper 1.4.2. US English and France French voice accents, authored EN/FR-CA text. Offline masters retained; Canadian casting, final direction and human listening acceptance remain open.",
+  "authority": "docs/NorthPaw-game_docs/NP_12A_EP01_SCRIPT.md",
+  "build": "tools/build_broadcast.py --ffmpeg <ffmpeg>",
+  "cues": {
+    "archive_open": {
+      "speaker": "GORD PETTY · 1976",
+      "clips": {
+        "en": {
+          "text": "Fifth rotation, folks. Whole season, one segment. And walking out for Millbrook —",
+          "voice": "en_US-john-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/archive_open_en.wav",
+          "master": "assets/audio/broadcast/source/archive_open_en.wav",
+          "seconds": 5.793375,
+          "peak": 0.794464111328125,
+          "sha256": "059a4d7e34add222b8b470c7f525a5e2c3ac94796d05bbb219030d01c2ac3eca",
+          "master_sha256": "45419b2178f651dfe04e1429e0a89ec6daf040a2b0bd82de014c6a19c42659f1"
+        },
+        "fr_CA": {
+          "text": "Cinquième rotation, mesdames et messieurs. Toute une saison dans un seul segment. Et pour Millbrook, voici —",
+          "voice": "fr_FR-tom-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/archive_open_fr_CA.wav",
+          "master": "assets/audio/broadcast/source/archive_open_fr_CA.wav",
+          "seconds": 6.838291666666667,
+          "peak": 0.79364013671875,
+          "sha256": "1d1e0ea2432850c3d2da2d956deab42bb63b26c9b2ad4be583e5c487378ae5d1",
+          "master_sha256": "b66ee647d65686c4419b39eacfa3a736d4c0c98f5cd3dd48e7a6b9880710f5f4"
+        }
+      }
+    },
+    "archive_believes": {
+      "speaker": "GORD PETTY · 1976",
+      "clips": {
+        "en": {
+          "text": "— and this building believes, I can tell you that much.",
+          "voice": "en_US-john-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/archive_believes_en.wav",
+          "master": "assets/audio/broadcast/source/archive_believes_en.wav",
+          "seconds": 3.471416666666667,
+          "peak": 0.794342041015625,
+          "sha256": "8a37b669309a7e2eaa9bd6b637e0e8044d1091e7f4512686636d7783fd983a2d",
+          "master_sha256": "8bf0d5cbe03712f2e92443a66cef315f41604e294df3cc372c75eff35bf0c202"
+        },
+        "fr_CA": {
+          "text": "— et ici, on y croit encore. Ça, je peux vous le dire.",
+          "voice": "fr_FR-tom-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/archive_believes_fr_CA.wav",
+          "master": "assets/audio/broadcast/source/archive_believes_fr_CA.wav",
+          "seconds": 4.295708333333334,
+          "peak": 0.79937744140625,
+          "sha256": "d2e5c1898208415d9fb2ec4c94e03b8eb55ef0cff23a4676060799a15ff7e5a4",
+          "master_sha256": "0c85b11a9167a95fc976446682059a79630278c3127a78be4989fa43bd45e9c9"
+        }
+      }
+    },
+    "survival_stakes": {
+      "speaker": "GORD PETTY",
+      "clips": {
+        "en": {
+          "text": "Sanctioned mini-dual, three segments, and the stakes could not be simpler: two wins keeps the oldest charter in the federation alive.",
+          "voice": "en_US-john-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/survival_stakes_en.wav",
+          "master": "assets/audio/broadcast/source/survival_stakes_en.wav",
+          "seconds": 7.952833333333333,
+          "peak": 0.794464111328125,
+          "sha256": "3cbcc61c0306fe3f1a405a78e9cc236b35ac0cbb83bb9f0d11deb77fe3f7f985",
+          "master_sha256": "82b00f0d2ead777e6ddc65d3653a3d170ea6106b6082beb5d77eec261a66cc4f"
+        },
+        "fr_CA": {
+          "text": "Un mini-duel sanctionné, trois segments. L’enjeu est simple : deux victoires pour garder en vie la plus vieille charte de la fédération.",
+          "voice": "fr_FR-tom-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/survival_stakes_fr_CA.wav",
+          "master": "assets/audio/broadcast/source/survival_stakes_fr_CA.wav",
+          "seconds": 7.796125,
+          "peak": 0.8074951171875,
+          "sha256": "f55c503b35c9e4f9d9504fd65c99a81c952b320d6bdca06cf74f9e65c9aa3f8b",
+          "master_sha256": "220c185dcce815cc0d60b74a7c11ef99be3279fb6a1ff07f73cad3c89209b7e7"
+        }
+      }
+    },
+    "survival_charter": {
+      "speaker": "DANIELLE FERLAND",
+      "clips": {
+        "en": {
+          "text": "Et si Millbrook échoue, Gord, la charte part à Toronto dans une valise.",
+          "voice": "fr_FR-siwis-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/survival_charter_fr_CA.wav",
+          "master": "assets/audio/broadcast/source/survival_charter_fr_CA.wav",
+          "seconds": 4.702041666666666,
+          "peak": 0.778076171875,
+          "sha256": "8a1e4e9b7f2b95aaaf70185b690c1e99d4bbe5ec800cb5f0aa2f2ac7258358f1",
+          "master_sha256": "db02b44142e0a1b6c802a531daa06a66a0871c0e936a2824e229a116decbe869"
+        },
+        "fr_CA": {
+          "text": "Et si Millbrook échoue, Gord, la charte part à Toronto dans une valise.",
+          "voice": "fr_FR-siwis-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/survival_charter_fr_CA.wav",
+          "master": "assets/audio/broadcast/source/survival_charter_fr_CA.wav",
+          "seconds": 4.702041666666666,
+          "peak": 0.778076171875,
+          "sha256": "8a1e4e9b7f2b95aaaf70185b690c1e99d4bbe5ec800cb5f0aa2f2ac7258358f1",
+          "master_sha256": "db02b44142e0a1b6c802a531daa06a66a0871c0e936a2824e229a116decbe869"
+        }
+      }
+    },
+    "marcus_loss": {
+      "speaker": "DANIELLE FERLAND",
+      "clips": {
+        "en": {
+          "text": "Il perd le segment. Il ne perd pas la soirée — regardez la jauge.",
+          "voice": "fr_FR-siwis-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/marcus_loss_fr_CA.wav",
+          "master": "assets/audio/broadcast/source/marcus_loss_fr_CA.wav",
+          "seconds": 3.7616666666666667,
+          "peak": 0.590728759765625,
+          "sha256": "7a68f934cd36633efd2962067076cb22dba2f738fd088ceb75de51fb85f0d2ed",
+          "master_sha256": "5e8db0b06f9d1b5e68860a75e13f08e114de37e103ddcfa74c3a0e4bf773f840"
+        },
+        "fr_CA": {
+          "text": "Il perd le segment. Il ne perd pas la soirée — regardez la jauge.",
+          "voice": "fr_FR-siwis-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/marcus_loss_fr_CA.wav",
+          "master": "assets/audio/broadcast/source/marcus_loss_fr_CA.wav",
+          "seconds": 3.7616666666666667,
+          "peak": 0.590728759765625,
+          "sha256": "7a68f934cd36633efd2962067076cb22dba2f738fd088ceb75de51fb85f0d2ed",
+          "master_sha256": "5e8db0b06f9d1b5e68860a75e13f08e114de37e103ddcfa74c3a0e4bf773f840"
+        }
+      }
+    },
+    "vane_down": {
+      "speaker": "GORD PETTY",
+      "clips": {
+        "en": {
+          "text": "DOWN GOES THE CHECKBOX — I’m sorry, down goes VANE, and Memorial Gym remembers what it’s for!",
+          "voice": "en_US-john-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/vane_down_en.wav",
+          "master": "assets/audio/broadcast/source/vane_down_en.wav",
+          "seconds": 5.770166666666666,
+          "peak": 0.79437255859375,
+          "sha256": "22ecf1310ec236c762d9930400e8effc00ac6e88a4f4e089bf048f82a9b4dee0",
+          "master_sha256": "1f3992946bf55ad0c5da57866381ef221ffdbee8fa1812ceca6a06524f953bee"
+        },
+        "fr_CA": {
+          "text": "LA CASE EST AU TAPIS — pardon, VANE EST AU TAPIS! Le Memorial se rappelle pourquoi il existe!",
+          "voice": "fr_FR-tom-medium",
+          "length_scale": 0.94,
+          "file": "res://audio/broadcast/vane_down_fr_CA.wav",
+          "master": "assets/audio/broadcast/source/vane_down_fr_CA.wav",
+          "seconds": 6.350666666666666,
+          "peak": 0.799896240234375,
+          "sha256": "35fa878897720593a228fa6ba92afe3397ccf1201aec756427bfdaebe9c40799",
+          "master_sha256": "0052a524efaa987e1961fdf60594eaa8f2368ecfe445441107ab9a6a29236a7b"
+        }
+      }
+    }
+  }
+}

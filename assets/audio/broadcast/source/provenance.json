@@ -1,0 +1,106 @@
+{
+  "engine": "Piper 1.4.2 (offline)",
+  "length_scale": 0.94,
+  "clips": [
+    {
+      "cue": "archive_open",
+      "language": "en",
+      "text": "Fifth rotation, folks. Whole season, one segment. And walking out for Millbrook —",
+      "spoken": "Fifth rotation, folks. Whole season, one segment. And walking out for Millbrook —",
+      "model": "en_US-john-medium",
+      "model_sha256": "789c6c875726e627ddee93d51d8727859abe9c091c3d141591f4b83c2072e988",
+      "config_sha256": "af60f177b6b550f3d7a302720c0fb89e7f94a82b5dca464775ef63b1c69ba09a",
+      "master_sha256": "45419b2178f651dfe04e1429e0a89ec6daf040a2b0bd82de014c6a19c42659f1"
+    },
+    {
+      "cue": "archive_open",
+      "language": "fr_CA",
+      "text": "Cinquième rotation, mesdames et messieurs. Toute une saison dans un seul segment. Et pour Millbrook, voici —",
+      "spoken": "Cinquième rotation, mesdames et messieurs. Toute une saison dans un seul segment. Et pour Millbrook, voici —",
+      "model": "fr_FR-tom-medium",
+      "model_sha256": "bf65074ccdeeeeaa832e75edb1c0a513c01c9a972bdf085ff8a6e71ea234fd41",
+      "config_sha256": "2f7f885ad5a0aad802e3cc24e4f57239febdcb142b4876de5d238094674361cc",
+      "master_sha256": "b66ee647d65686c4419b39eacfa3a736d4c0c98f5cd3dd48e7a6b9880710f5f4"
+    },
+    {
+      "cue": "archive_believes",
+      "language": "en",
+      "text": "— and this building believes, I can tell you that much.",
+      "spoken": "— and this building believes, I can tell you that much.",
+      "model": "en_US-john-medium",
+      "model_sha256": "789c6c875726e627ddee93d51d8727859abe9c091c3d141591f4b83c2072e988",
+      "config_sha256": "af60f177b6b550f3d7a302720c0fb89e7f94a82b5dca464775ef63b1c69ba09a",
+      "master_sha256": "8bf0d5cbe03712f2e92443a66cef315f41604e294df3cc372c75eff35bf0c202"
+    },
+    {
+      "cue": "archive_believes",
+      "language": "fr_CA",
+      "text": "— et ici, on y croit encore. Ça, je peux vous le dire.",
+      "spoken": "— et ici, on y croit encore. Ça, je peux vous le dire.",
+      "model": "fr_FR-tom-medium",
+      "model_sha256": "bf65074ccdeeeeaa832e75edb1c0a513c01c9a972bdf085ff8a6e71ea234fd41",
+      "config_sha256": "2f7f885ad5a0aad802e3cc24e4f57239febdcb142b4876de5d238094674361cc",
+      "master_sha256": "0c85b11a9167a95fc976446682059a79630278c3127a78be4989fa43bd45e9c9"
+    },
+    {
+      "cue": "survival_stakes",
+      "language": "en",
+      "text": "Sanctioned mini-dual, three segments, and the stakes could not be simpler: two wins keeps the oldest charter in the federation alive.",
+      "spoken": "Sanctioned mini-dual, three segments, and the stakes could not be simpler: two wins keeps the oldest charter in the federation alive.",
+      "model": "en_US-john-medium",
+      "model_sha256": "789c6c875726e627ddee93d51d8727859abe9c091c3d141591f4b83c2072e988",
+      "config_sha256": "af60f177b6b550f3d7a302720c0fb89e7f94a82b5dca464775ef63b1c69ba09a",
+      "master_sha256": "82b00f0d2ead777e6ddc65d3653a3d170ea6106b6082beb5d77eec261a66cc4f"
+    },
+    {
+      "cue": "survival_stakes",
+      "language": "fr_CA",
+      "text": "Un mini-duel sanctionné, trois segments. L’enjeu est simple : deux victoires pour garder en vie la plus vieille charte de la fédération.",
+      "spoken": "Un mini-duel sanctionné, trois segments. L’enjeu est simple : deux victoires pour garder en vie la plus vieille charte de la fédération.",
+      "model": "fr_FR-tom-medium",
+      "model_sha256": "bf65074ccdeeeeaa832e75edb1c0a513c01c9a972bdf085ff8a6e71ea234fd41",
+      "config_sha256": "2f7f885ad5a0aad802e3cc24e4f57239febdcb142b4876de5d238094674361cc",
+      "master_sha256": "220c185dcce815cc0d60b74a7c11ef99be3279fb6a1ff07f73cad3c89209b7e7"
+    },
+    {
+      "cue": "survival_charter",
+      "language": "fr_CA",
+      "text": "Et si Millbrook échoue, Gord, la charte part à Toronto dans une valise.",
+      "spoken": "Et si Millbrook échoue, Gord, la charte part à Toronto dans une valise.",
+      "model": "fr_FR-siwis-medium",
+      "model_sha256": "641d1ab097da2b81128c076810edb052b385decc8be3381814802a64a73baf99",
+      "config_sha256": "39479916c2db192b5ac9764daddd0c744d83e023ad890c6976c0633ae4df8959",
+      "master_sha256": "db02b44142e0a1b6c802a531daa06a66a0871c0e936a2824e229a116decbe869"
+    },
+    {
+      "cue": "marcus_loss",
+      "language": "fr_CA",
+      "text": "Il perd le segment. Il ne perd pas la soirée — regardez la jauge.",
+      "spoken": "Il perd le segment. Il ne perd pas la soirée — regardez la jauge.",
+      "model": "fr_FR-siwis-medium",
+      "model_sha256": "641d1ab097da2b81128c076810edb052b385decc8be3381814802a64a73baf99",
+      "config_sha256": "39479916c2db192b5ac9764daddd0c744d83e023ad890c6976c0633ae4df8959",
+      "master_sha256": "5e8db0b06f9d1b5e68860a75e13f08e114de37e103ddcfa74c3a0e4bf773f840"
+    },
+    {
+      "cue": "vane_down",
+      "language": "en",
+      "text": "DOWN GOES THE CHECKBOX — I’m sorry, down goes VANE, and Memorial Gym remembers what it’s for!",
+      "spoken": "down goes the checkbox — i’m sorry, down goes vane, and memorial gym remembers what it’s for!",
+      "model": "en_US-john-medium",
+      "model_sha256": "789c6c875726e627ddee93d51d8727859abe9c091c3d141591f4b83c2072e988",
+      "config_sha256": "af60f177b6b550f3d7a302720c0fb89e7f94a82b5dca464775ef63b1c69ba09a",
+      "master_sha256": "1f3992946bf55ad0c5da57866381ef221ffdbee8fa1812ceca6a06524f953bee"
+    },
+    {
+      "cue": "vane_down",
+      "language": "fr_CA",
+      "text": "LA CASE EST AU TAPIS — pardon, VANE EST AU TAPIS! Le Memorial se rappelle pourquoi il existe!",
+      "spoken": "la case est au tapis — pardon, vane est au tapis! le memorial se rappelle pourquoi il existe!",
+      "model": "fr_FR-tom-medium",
+      "model_sha256": "bf65074ccdeeeeaa832e75edb1c0a513c01c9a972bdf085ff8a6e71ea234fd41",
+      "config_sha256": "2f7f885ad5a0aad802e3cc24e4f57239febdcb142b4876de5d238094674361cc",
+      "master_sha256": "0052a524efaa987e1961fdf60594eaa8f2368ecfe445441107ab9a6a29236a7b"
+    }
+  ]
+}

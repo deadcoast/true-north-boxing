@@ -1,0 +1,50 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[PASS] Dummy driver and muted Master protect speakers
+[PASS] authored wording archive_open:en
+[PASS] complete offline clip archive_open:en
+[PASS] authored wording archive_open:fr_CA
+[PASS] complete offline clip archive_open:fr_CA
+[PASS] authored wording archive_believes:en
+[PASS] complete offline clip archive_believes:en
+[PASS] authored wording archive_believes:fr_CA
+[PASS] complete offline clip archive_believes:fr_CA
+[PASS] authored wording survival_stakes:en
+[PASS] complete offline clip survival_stakes:en
+[PASS] authored wording survival_stakes:fr_CA
+[PASS] complete offline clip survival_stakes:fr_CA
+[PASS] authored wording survival_charter:en
+[PASS] complete offline clip survival_charter:en
+[PASS] authored wording survival_charter:fr_CA
+[PASS] complete offline clip survival_charter:fr_CA
+[PASS] authored wording marcus_loss:en
+[PASS] complete offline clip marcus_loss:en
+[PASS] authored wording marcus_loss:fr_CA
+[PASS] complete offline clip marcus_loss:fr_CA
+[PASS] authored wording vane_down:en
+[PASS] complete offline clip vane_down:en
+[PASS] authored wording vane_down:fr_CA
+[PASS] complete offline clip vane_down:fr_CA
+[PASS] Danielle remains authored French in both locales survival_charter
+[PASS] Danielle remains authored French in both locales marcus_loss
+[PASS] Gord begins with the real archive page
+[PASS] controls pause narration and tape together
+[PASS] closing controls resumes the same line
+[PASS] completed opening naturally reaches the missing-name hole
+[FAIL] hole keeps all tape channels silent and hides the name
+[PASS] controls cannot consume the missing-name second
+[PASS] name is still absent at 990ms
+[PASS] Gord resumes after one second, without a revealed name
+[PASS] native Continue can skip narration cleanly into boxing
+[PASS] actual R1 loss selects Danielle en
+[PASS] duplicate loss does not replay or alter combat en
+[PASS] corner page carries the subtitle without overlay overlap en
+[PASS] resolved corner reload is exact and does not repeat commentary en
+[PASS] no invented loss or wrong-round commentary en
+SCRIPT ERROR: Invalid call. Nonexistent function '_start_segment' in base 'RefCounted (core.gd)'.
+   at: _run (res://tools/drive_broadcast.gd:100)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/drive_broadcast.gd:100)
+       [1] _press_next (res://tools/drive_broadcast.gd:23)

@@ -1011,6 +1011,10 @@ func _process(delta: float) -> void:
 	# that freezes combat. Call sync before the early returns, including Escape.
 	var story_paused: bool = episode != null and episode.active and episode.state != "fight" and (episode.state != "training" or episode.training.get("game", "") == "roadwork")
 	fight_feedback.sync_audio(controls_menu.opened or formation_open or story_paused or fight_hud.entry.visible or (club_flow != null and club_flow.pauses_fight()))
+	if episode != null:
+		episode.broadcast.sync(controls_menu.opened or episode.state == "inspect")
+		episode.staging.ambience.stream_paused = controls_menu.opened or episode.staging.sound_hole
+		episode.staging.foley.stream_paused = controls_menu.opened or episode.staging.sound_hole
 	if controls_menu.opened: return
 	if episode != null and episode.advance(delta): return
 	if club_flow != null and club_flow.pauses_fight():
@@ -1199,7 +1203,9 @@ func _consume_events() -> void:
 		fight_view.observe(ev, sim.tick)
 		fight_feedback.observe(ev, sim.tick)
 		club_flow.observe(ev)
-		if episode != null: episode.observe(ev)
+		if episode != null:
+			episode.observe(ev)
+			episode.broadcast.sync(controls_menu.opened or episode.state == "inspect")
 		fx_counts[ev["kind"]] = int(fx_counts.get(ev["kind"], 0)) + 1
 		match ev["kind"]:
 			"feed": feed.text = ev["text"]

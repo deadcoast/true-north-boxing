@@ -1,0 +1,12 @@
+{
+  "authority": "docs/NorthPaw-game_docs/NP_12A_EP01_SCRIPT.md",
+  "provenance": "Locally synthesized provisional broadcast performance, Piper 1.4.2. US English and France French voice accents, authored EN/FR-CA text. Offline masters retained; Canadian casting, final direction and human listening acceptance remain open.",
+  "cues": {
+    "archive_open": {"speaker": "GORD PETTY · 1976", "scene": "archive", "line": 0, "archive": true},
+    "archive_believes": {"speaker": "GORD PETTY · 1976", "scene": "archive", "line": 2, "archive": true},
+    "survival_stakes": {"speaker": "GORD PETTY", "scene": "survival", "line": 0},
+    "survival_charter": {"speaker": "DANIELLE FERLAND", "scene": "survival", "line": 1, "bilingual": true},
+    "marcus_loss": {"speaker": "DANIELLE FERLAND", "bilingual": true, "en": "Il perd le segment. Il ne perd pas la soirée — regardez la jauge.", "fr_CA": "Il perd le segment. Il ne perd pas la soirée — regardez la jauge."},
+    "vane_down": {"speaker": "GORD PETTY", "en": "DOWN GOES THE CHECKBOX — I’m sorry, down goes VANE, and Memorial Gym remembers what it’s for!", "fr_CA": "LA CASE EST AU TAPIS — pardon, VANE EST AU TAPIS! Le Memorial se rappelle pourquoi il existe!"}
+  }
+}
