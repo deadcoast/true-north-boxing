@@ -79,6 +79,10 @@ func _run() -> void:
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
 	await process_frame
 	scene.controls_menu.close(); scene.begin_fight(false)
+	await planted_movement()
+	if "footwork-only" in OS.get_cmdline_user_args():
+		print("FOOTWORK VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
 	if "anatomy-only" in OS.get_cmdline_user_args():
 		await anatomy()
 		await contacts()
@@ -127,6 +131,8 @@ func _run() -> void:
 					trace.append({"row": row, "tick": scene.sim.tick, "extension": scene.player.get_meta("extension"), "chain": rig["chain"], "joints": str(rig)})
 			if row in ["R_STRAIGHT", "L_HOOK", "R_UPPERCUT"] and tick in [0, 3, 7, 12, 18, 24, 36, 48]:
 				await capture(row.to_lower() + "-%02d" % tick)
+				await capture("side-" + row.to_lower() + "-%02d" % tick)
+			if row in ["L_HOOKERCUT", "R_HOOKERCUT"] and tick in [24, 28, 30, 32, 36]:
 				await capture("side-" + row.to_lower() + "-%02d" % tick)
 		check(row + " connects the ground, hips, trunk, elbow and fist", foot_pivot > 0.15 and hip_turn > 0.05 and shoulder_roll > 0.03 and moving and fist_turn > 0.1)
 		check(row + " visible contact matches the resolving tick", reached and pose_at_hit)
@@ -435,6 +441,8 @@ func rigid_render(actor: Node3D) -> bool:
 		if not endpoints(actor.get_meta("legs")[i], rig["knees"][i], rig["ankles"][i]): return false
 		if actor.get_meta("gloves")[i].position.distance_to(rig["wrists"][i]) > 0.00001: return false
 		if (actor.get_meta("boots")[i].position + Vector3.UP * 0.03).distance_to(rig["ankles"][i]) > 0.00001: return false
+		var forefoot: Vector3 = rig["ankles"][i] - Vector3.UP * 0.095 + (rig["forward"] as Vector3).normalized().rotated(Vector3.UP, float(rig["pivots"][i])) * 0.08
+		if forefoot.distance_to(rig["feet"][i]) > 0.00001: return false
 	return endpoints(actor.get_meta("abdomen"), rig["pelvis"], actor.get_meta("mesh").position - actor.get_meta("mesh").basis.y * 0.285)
 
 func native_anatomy() -> void:
@@ -444,6 +452,9 @@ func native_anatomy() -> void:
 			var landed := 0; var highest_gap := 0.0
 			for row in scene.combat_input.ROWS:
 				fresh()
+				# IDLE still approaches above ENGAGE_DIST. Hold the native VM in
+				# its empty ACTING queue so this fixture actually contacts at range.
+				scene.sim.bstate = "ACTING"
 				var reach: float = scene.sim.contact_region(scene.sim.P, scene.sim.B, row, body)["reach"]
 				tests.place(scene.sim, reach + Sim.LUNGE_P + (0.5 if stepping else 0.0) - 0.025)
 				scene.fight_view.motion_solvers.clear(); scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
@@ -472,6 +483,7 @@ func native_anatomy() -> void:
 							if "STRAIGHT" in row and not body:
 								var angle := rad_to_deg((rig["shoulders"][i] - rig["elbows"][i]).angle_to(rig["wrists"][i] - rig["elbows"][i]))
 								print("EDGE STRAIGHT ", row, " step=", stepping, " angle=", angle)
+								if angle <= 140: print("EDGE POSE shoulder=", rig["shoulders"][i], " wrist=", rig["wrists"][i], " pelvis=", rig["pelvis"], " support=", rig.get("support_shift"), " feet=", rig["feet"], " region=", region)
 								extended = extended and angle > 140
 							if row in ["R_STRAIGHT", "L_HOOK"]:
 								await capture("native-" + row.to_lower() + ("-body" if body else "-head") + ("-step" if stepping else ""))
@@ -497,3 +509,124 @@ func native_anatomy() -> void:
 	var cancelled: Vector2 = scene.sim.P["pos"]
 	for i in 12: step()
 	check("feint cancels unspent step-in travel", tests.count_events(events, "feint") == 1 and scene.sim.P["pending"].is_empty() and scene.sim.P["pos"] == cancelled)
+
+func planted_movement() -> void:
+	# Native key input, actual clamping/separation, fixed-clock poses and the
+	# visible interpolated rig. No fake root trajectory or animation-only pawn.
+	for style in Motion.STANCES:
+		for direction in [KEY_W, KEY_S, KEY_A, KEY_D]:
+			fresh(); tests.place(scene.sim, 2.8); scene.sim.P["style"] = style
+			scene.fight_view.motion_solvers.clear(); scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
+			var first_foot := -1; var first_tick := -1; var slip := 0.0; var width := INF; var lead := INF
+			var reach := 0.0; var jump := 0.0; var fixed := true; var weighted := false; var last_feet := []; var last_pose := snapshot()
+			var opposite: int = {KEY_W: KEY_S, KEY_S: KEY_W, KEY_A: KEY_D, KEY_D: KEY_A}[direction]
+			for tick in 180:
+				if tick == 0: key(direction, true)
+				if tick == 55: key(direction, false); key(opposite, true)
+				if tick == 110: key(opposite, false)
+				native_step()
+				var rig: Dictionary = scene.player.get_meta("kinematics")
+				var world := [scene.player.position + rig["feet"][0], scene.player.position + rig["feet"][1]]
+				var fwd: Vector3 = rig["forward"]; var right := fwd.cross(Vector3.UP)
+				width = minf(width, (world[1] - world[0]).dot(right)); lead = minf(lead, (world[0] - world[1]).dot(fwd))
+				for i in 2:
+					if first_foot < 0 and world[i].y > 0.002: first_foot = i; first_tick = tick
+					if not last_feet.is_empty() and world[i].y < 0.00001 and last_feet[i].y < 0.00001:
+						slip = maxf(slip, world[i].distance_to(last_feet[i]))
+					reach = maxf(reach, (rig["feet"][i] as Vector3).length())
+				last_feet = world
+				jump = maxf(jump, pose_jump(last_pose, snapshot())); last_pose = snapshot()
+				weighted = weighted or absf(float(rig.get("lead_weight", 0.5)) - 0.5) > 0.12
+				for alpha in [0.0, 0.5, 1.0]: scene._render(alpha); fixed = fixed and rigid_render(scene.player)
+				if style == "BOXERPUNCHER" and direction == KEY_D and tick in [12, 55, 61, 75, 120]:
+					await capture("side-footwork-reversal-%03d" % tick)
+			var expected := 0 if direction in [KEY_W, KEY_A] else 1
+			var label := str(style) + " " + str({KEY_W: "forward", KEY_S: "retreat", KEY_A: "left", KEY_D: "right"}[direction])
+			print("FOOTWORK DETAIL ", label, " first=", first_foot, " at=", first_tick, " width=", width, " lead=", lead, " slip=", slip, " reach=", reach, " jump=", jump)
+			check(label + " leads with the travel-side foot promptly", first_foot == expected and first_tick < 12)
+			check(label + " reverses and settles without sliding or crossing", slip < 0.0001 and width > 0.12 and lead > 0.035 and reach < 0.72)
+			check(label + " transfers support through attached continuous anatomy", weighted and fixed and jump < 0.25)
+	# Full circles and rope/corner stops keep the same support rules.
+	for location in ["circle", "ropes", "corner"]:
+		fresh()
+		if location == "circle": tests.place(scene.sim, 1.9)
+		else:
+			scene.sim.P["pos"] = Vector2(0, 3.4) if location == "ropes" else Vector2(3.3, 3.3)
+			scene.sim.B["pos"] = Vector2(0, 1.5) if location == "ropes" else Vector2(1.8, 1.8)
+		scene.fight_view.motion_solvers.clear(); scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
+		var width := INF; var lead := INF; var slip := 0.0; var last := []; var fixed := true; var jump := 0.0; var old := snapshot()
+		for tick in 420:
+			if tick == 0: key(KEY_D if location == "circle" else KEY_S, true); key(KEY_SPACE, true)
+			if tick == 280: key(KEY_D, false); key(KEY_S, false)
+			native_step()
+			var rig: Dictionary = scene.player.get_meta("kinematics")
+			var world := [scene.player.position + rig["feet"][0], scene.player.position + rig["feet"][1]]
+			width = minf(width, (world[1] - world[0]).dot(rig["forward"].cross(Vector3.UP)))
+			lead = minf(lead, (world[0] - world[1]).dot(rig["forward"]))
+			for i in 2:
+				if not last.is_empty() and world[i].y < 0.00001 and last[i].y < 0.00001: slip = maxf(slip, world[i].distance_to(last[i]))
+			last = world; jump = maxf(jump, pose_jump(old, snapshot())); old = snapshot()
+			scene._render(0.5); fixed = fixed and rigid_render(scene.player); scene._render(1)
+			if tick in [36, 144, 288] : await capture("side-footwork-" + location + "-%03d" % tick)
+		print("BOUNDARY DETAIL ", location, " width=", width, " lead=", lead, " slip=", slip, " jump=", jump)
+		check(location + " maintains planted stance under guard", width > 0.12 and lead > 0.035 and slip < 0.0001 and float(scene.player.get_meta("kinematics")["guard"]) > 0.99)
+		check(location + " keeps fixed continuous joints through the stop", fixed and jump < 0.25)
+	for pair in [[KEY_Q, "SLIP_L"], [KEY_E, "SLIP_R"], [KEY_DOWN, "DUCK"], [KEY_V, "WEAVE"], [KEY_B, "LEAN"]]:
+		fresh(); var before: Dictionary = scene.player.get_meta("kinematics").duplicate(true)
+		# Head collision remains authoritative while the support carries the torso.
+		var fixed := true; var head_agrees := true; var slip := 0.0; var prior := []; var jump := 0.0; var old := snapshot(); var hip_shift := 0.0
+		for tick in 90:
+			if tick == 0: key(pair[0], true)
+			if tick == 1: key(pair[0], false)
+			if tick == 55: key(KEY_D, true); key(KEY_SPACE, true)
+			native_step()
+			var rig: Dictionary = scene.player.get_meta("kinematics")
+			var physical: Dictionary = scene.sim._head_world(scene.sim.P, scene.sim.B)
+			head_agrees = head_agrees and (scene.player.position + rig["head"]).distance_to(Space.ground(physical["p"]) + Vector3.UP * float(physical["h"])) < 0.0001
+			hip_shift = maxf(hip_shift, (rig["pelvis"] as Vector3).distance_to(before["pelvis"]))
+			var world := [scene.player.position + rig["feet"][0], scene.player.position + rig["feet"][1]]
+			for i in 2:
+				if not prior.is_empty() and world[i].y < 0.00001 and prior[i].y < 0.00001: slip = maxf(slip, world[i].distance_to(prior[i]))
+			prior = world; jump = maxf(jump, pose_jump(old, snapshot())); old = snapshot()
+			for alpha in [0.0, 0.5, 1.0]: scene._render(alpha); fixed = fixed and rigid_render(scene.player)
+			if tick in [6, 18, 36]: await capture("side-footwork-" + str(pair[1]).to_lower() + "-%03d" % tick)
+		check(str(pair[1]) + " carries defense from planted support into guard and movement", fixed and head_agrees and slip < 0.0001 and hip_shift > 0.04 and jump < 0.25 and float(scene.player.get_meta("kinematics")["guard"]) > 0.99)
+	# A single input journey is replayed with different render schedules,
+	# including direction changes during a swing and movement into defense.
+	var reference := []
+	for hz in [30, 60, 144]:
+		fresh(); tests.place(scene.sim, 1.9); scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
+		var render_time := 0.0; var replay := []; var fixed := true; var clear := true; var body_agrees := true; var unchanged := true
+		for tick in 360:
+			if tick == 0: key(KEY_D, true)
+			if tick == 25: key(KEY_D, false); key(KEY_A, true)
+			if tick == 33: key(KEY_A, false); key(KEY_D, true)
+			if tick == 55: key(KEY_Q, true)
+			if tick == 56: key(KEY_Q, false)
+			if tick == 100: key(KEY_DOWN, true)
+			if tick == 101: key(KEY_DOWN, false)
+			if tick == 145: key(KEY_V, true)
+			if tick == 146: key(KEY_V, false)
+			if tick == 200: key(KEY_B, true)
+			if tick == 201: key(KEY_B, false)
+			if tick == 250: key(KEY_D, false); key(KEY_SPACE, true)
+			native_step()
+			var hash_before: int = scene.sim.hash_state()
+			while render_time < float(tick + 1) / 120:
+				scene._render(fposmod(render_time * 120, 1)); render_time += 1.0 / hz
+				fixed = fixed and rigid_render(scene.player)
+				var body: Node3D = scene.player.get_meta("mesh")
+				var top: Vector3 = body.position + body.basis.y * 0.285
+				var head: Vector3 = scene.player.get_meta("head").position
+				clear = clear and top.y <= head.y - Space.HEAD_RADIUS - 0.02
+			scene._render(1)
+			var region: Dictionary = scene.sim.contact_region(scene.sim.B, scene.sim.P, "L_STRAIGHT", true)
+			var expected := Space.ground(region["target"] - scene.sim.P["pos"]) + Vector3.UP * float(region["h"])
+			var body: Node3D = scene.player.get_meta("mesh")
+			body_agrees = body_agrees and absf(body.position.x - expected.x) < 0.0001 and absf(body.position.z - expected.z) < 0.0001 and expected.y >= body.position.y - body.scale.y * 0.285 and expected.y <= body.position.y + body.scale.y * 0.285
+			unchanged = unchanged and hash_before == scene.sim.hash_state()
+			replay.append([hash_before, scene.player.get_meta("kinematics").duplicate(true), scene.boss.get_meta("kinematics").duplicate(true)])
+		if reference.is_empty(): reference = replay
+		check("movement-defense replay identical and read-only at %d Hz" % hz, replay == reference and unchanged)
+		check("pivots remain anchored and head clears torso at %d Hz" % hz, fixed and clear)
+		check("body aim remains on visible crouching torso at %d Hz" % hz, body_agrees)

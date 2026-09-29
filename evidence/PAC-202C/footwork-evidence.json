@@ -1,0 +1,95 @@
+{
+  "task": "PAC-202C",
+  "result": "PASS",
+  "scope": "Planted footwork, pivots, weight transfer and connected defense stage",
+  "sources": {
+    "engine/greybox/presentation/boxing_motion.gd": "de7480e43b7b72af29e8cec5c99e8dc500a82a198d384a18c698bf80733352c6",
+    "engine/greybox/presentation/fight_view.gd": "9671cdb3e9f45d7d8a3aa1c836246c9d8b86978f21e3d7f1b9629876316a01ef",
+    "engine/greybox/sim/core.gd": "f1b66505db9a5817307520a5fd522b670ab65b6840c85f8f6cc176f6897bfac1",
+    "engine/greybox/tools/drive_boxing_motion.gd": "6327403e720880b1eaf96787a9d4fb8cecbd3bf018c6eaa41e5073f719158746"
+  },
+  "command": [
+    "Godot_v4.7.2-stable_win64_console.exe --path engine/greybox -s tools/drive_boxing_motion.gd -- welcome capture",
+    "Godot_v4.7.2-stable_win64_console.exe --headless --path engine/greybox -s tools/drive_boxing_motion.gd -- welcome",
+    ".venv/Scripts/python.exe -m unittest discover -s tests -v"
+  ],
+  "results": {
+    "original_footwork_baseline": "13/59",
+    "motion_checks": "202/202",
+    "new_movement_defense_checks": "68/68",
+    "rendered_checks_and_captures": "347/347 (202 checks + 145 saved frames)",
+    "python": "44/44",
+    "contact_matrix_cases": 2400,
+    "native_edge_contacts": 40,
+    "render_rates_hz": [
+      30,
+      60,
+      144
+    ],
+    "full_runtime": "55/55 jobs; 24 bosses at 454/454 and determinism at 57/57"
+  },
+  "movement_metrics": {
+    "scenarios": 16,
+    "minimum_stance_width_model_units": 0.1927275210619,
+    "minimum_lead_separation_model_units": 0.07199999690056,
+    "maximum_grounded_forefoot_drift_model_units": 2.980232e-08,
+    "maximum_foot_distance_from_root_model_units": 0.63075298070908,
+    "maximum_single_tick_joint_travel_model_units": 0.0970593392849
+  },
+  "checks": [
+    "Native forward, retreat, left and right with reversals and settling for four stance presets.",
+    "Native circling, rope and corner clamping while guarding.",
+    "Slip left/right, duck, weave and lean carry the pelvis and return into guard/movement.",
+    "Movement into defense and rapid reversals replay identically at 30/60/144 Hz; rendering does not mutate combat.",
+    "Fixed bone lengths and attached mesh endpoints at interpolated poses; actual forefoot reconstructed from rendered ankle and pivot.",
+    "Body aim lies on crouching torso; visible head stays clear of torso; authoritative head coordinates retained.",
+    "All ten punch families, contact/recovery, native cancellation/interrupts and hitstop pass the existing motion gates."
+  ],
+  "design_reconciliation": {
+    "body_aim": "Standing 1.10 height now follows existing downward head compression. Body eligibility has no vertical test, so every hit/miss rule is unchanged. This removes the deep-duck head/torso overlap.",
+    "edge_fixture": "An IDLE boss still approaches; the native edge fixture now holds its empty ACTING queue and retains the original >140 degree edge extension check.",
+    "delivery_repair": "Rising punches sweep in front of the advancing shoulder, with clearance released before exact contact. This repairs a wrist-near-shoulder IK singularity exposed by weight transfer."
+  },
+  "render_review": {
+    "inspected_files": [
+      "side-footwork-circle-144.png",
+      "side-footwork-duck-018.png",
+      "side-footwork-lean-018.png",
+      "side-footwork-reversal-061.png",
+      "side-l_hookercut-28.png",
+      "side-l_hookercut-30.png",
+      "side-r_hookercut-32.png",
+      "step-sequence-20.png"
+    ],
+    "observations": "Inspected reversal support, circling guard, lowered duck, rearward lean, consecutive hookercut frames and native chase step-in. Foot plants and fixed limb connections remain coherent; duck head is clear of torso.",
+    "boundary": "These are procedural rig inspection scenes. Some HUD feedback persists between synthetic fixtures; these frames are not a fresh-player usability session."
+  },
+  "limitations": [
+    "Stage completion is not professional boxing authenticity, player fun, physical input latency, final character art or full ecosystem acceptance.",
+    "PAC-202D combinations, PAC-202E authored style/build expression, PAC-202F integrated readiness and PAC-203/PAC-204 remain scheduled.",
+    "Existing Windows root-certificate diagnostic and ObjectDB exit warnings are retained in raw logs; no leak-free claim."
+  ],
+  "raw_evidence": ".PACER/PAC-202C (earlier failed attempts and all 145 rendered frames retained locally)",
+  "retained_artifacts": {
+    "combat.log": "3e0d6a164a1a5903872ade662df03bad8084532efb5618745d673b109fde91f9",
+    "footwork-baseline.log": "197c8341288d4225da9983b6e10425ba5f515317a70dc850ad48507d9152eecc",
+    "input-evidence.json": "60e032345cdd1d0dc4024797eef9d7c3f3efb5d7f27f968b5c070ebc576f2692",
+    "input.log": "33f8ef6b987fa2bbc4f0433b695a6e9090b9d6f338d48e2c18f1ee0ab0138542",
+    "motion.log": "c478ce4fabcd82832ede9518609c226196a7ee67f1b8118a0d5c99ba9acbbf8e",
+    "presentation-evidence.json": "fc8a96e85f8a30e794962c69180064b7f65f19b62ea5a4f8c5befbfff13a0ac6",
+    "previous-attempts.log": "666cc2fa0668f2c72a42164a6ae219a59df5804091538efce136a4e581204461",
+    "python-tests.log": "66b98ccbfbb7283984e4cecabcb691e47a5eb04fed6039da7b5a84fd62725178",
+    "readability.log": "03ac6333855bd089b2315fc865ffc56253df71074444567adc3292ee2c3251ac",
+    "rendered.log": "edbe45c3f0d90ebbaa9e8a4dae46746249e383600cd21d46cf72426d1475ca44",
+    "runtime-evidence.json": "712dd09a9a692329496a1f519120919b54b3bc352c18fc3ab0623b0710af32f1",
+    "runtime-results.json": "16eaa15e70d3574c7a5e7cc778bac206349d005a99ae81c9f77867ce14f1246e",
+    "side-footwork-circle-144.png": "1766fd97f805d7d5436096fcbe39a2946a7a88c25ab334eb8c1541ce85c866f4",
+    "side-footwork-duck-018.png": "95bb028324e78ab1ebeab814f376ef24509020605664d38f9209d1575b9b8d58",
+    "side-footwork-lean-018.png": "b2128800273381b5ceed1f871eada0d00ef3b47b17487170eb788bd7a333876d",
+    "side-footwork-reversal-061.png": "6a497082c0e611e2a77b6a1541d4081137fc053049c047227202a3f9f0247ec9",
+    "side-l_hookercut-28.png": "df1f396f0fdac6747fa7238a8842ee0452c08405e070c80f2d5f1f86c17c666e",
+    "side-l_hookercut-30.png": "7c192eee3bfae883e94098b635eab35491be595c3f4821a9e3a53b4f964dae6a",
+    "side-r_hookercut-32.png": "2923d03ef3da609724d13dcca7e519d84401fc44ad7d48e9eeb44d3dedb959f3",
+    "step-sequence-20.png": "d060948239013f7095d084940873e6bb96c9281d220f3231a4413c06a9284265"
+  }
+}

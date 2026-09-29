@@ -1159,7 +1159,8 @@ func contact_region(A: Dictionary, D: Dictionary, row: String, body: bool, range
 	var target := _head_world(D, A)
 	var tp: Vector2 = target["p"]; var th: float = target["h"]
 	if body:
-		# torso: lateral follows the head at 40%, height fixed - slips barely move the body
+		# Torso follows lateral head movement at 40%. Its aim height follows
+		# crouch compression; body eligibility still has no vertical band.
 		var fwdD: Vector2 = -fwd
 		var rightD := Vector2(-fwdD.y, fwdD.x)
 		var lat := 0.0; var back := 0.0
@@ -1168,7 +1169,7 @@ func contact_region(A: Dictionary, D: Dictionary, row: String, body: bool, range
 			back = float(DODGE[D["dodge"]]["back"])
 			lat *= dodge_weight(D); back *= dodge_weight(D)
 		tp = D["pos"] + fwd * back + rightD * lat     # fwd here points A->D, so +fwd*back moves D away
-		th = 1.10
+		th = 1.10 + minf(0, th - HEAD_H)
 	var rel: Vector2 = tp - A["pos"]
 	var d := rel.dot(fwd)
 	var l := rel.dot(rightA)

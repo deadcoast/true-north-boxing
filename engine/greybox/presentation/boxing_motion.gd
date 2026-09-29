@@ -15,9 +15,11 @@ const STANCES := {
 var last_tick := -1
 var feet: Array = []
 var step := {}
-var next_foot := 0
 var guard := 0.0
 var previous_origin := Vector3.ZERO
+var foot_yaw: Array = []
+var lead_weight := 0.5
+var support_shift := Vector3.ZERO
 var elbow_tick := -1
 var elbow_history: Array = []
 var elbow_prior: Array = []
@@ -80,6 +82,11 @@ static func contact_goal(shoulder: Vector3, desired: Vector3, target: Vector3, r
 	return goal
 
 static func constrain(rig: Dictionary) -> Dictionary:
+	# Reconstruct the heel around the planted forefoot after interpolation;
+	# lerping ankle positions independently cuts across the pivot's arc.
+	var forward: Vector3 = rig["forward"].normalized()
+	for i in 2:
+		rig["ankles"][i] = rig["feet"][i] + Vector3.UP * 0.095 - forward.rotated(Vector3.UP, float(rig["pivots"][i])) * 0.08
 	# Keep planted ankles reachable by lowering the pelvis, never lengthening
 	# a thigh/shin or moving a planted boot to satisfy IK.
 	var lower := 0.0
@@ -126,23 +133,50 @@ static func constrain(rig: Dictionary) -> Dictionary:
 		rig["ankles"][i] = leg["end"]
 	return rig
 
-func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stance: Dictionary) -> Array:
+func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stance: Dictionary, turns: Array = [], balance := 0.5) -> Array:
 	var wanted: Array = []
 	for i in 2:
 		wanted.append(origin + right * (-1 if i == 0 else 1) * float(stance["width"]) + forward * (1 if i == 0 else -1) * float(stance["lead"]))
 	if feet.is_empty() or origin.distance_to(previous_origin) > 0.7 or tick < last_tick:
-		feet = wanted.duplicate(); step.clear(); next_foot = 0
+		feet = wanted.duplicate(); step.clear()
+		foot_yaw = [atan2(forward.x, forward.z) + 0.08, atan2(forward.x, forward.z) - 0.08]
+		lead_weight = 0.5; support_shift = Vector3.ZERO; previous_origin = origin
 	if tick != last_tick:
+		var dt := maxi(1, tick - last_tick) if last_tick >= 0 else 1
+		var velocity := ((origin - previous_origin) * 120.0 / dt).limit_length(3.0)
+		var moving := velocity.length() > 0.05
 		if step.is_empty():
-			var i := next_foot
-			if (feet[i] as Vector3).distance_to(wanted[i]) > 0.22 or (feet[1 - i] as Vector3).distance_to(wanted[1 - i]) > 0.38:
-				if (feet[1 - i] as Vector3).distance_to(wanted[1 - i]) > 0.38: i = 1 - i
-				var velocity := (origin - previous_origin) * 120.0 / maxf(1, tick - last_tick)
-				step = {"index": i, "from": feet[i], "to": wanted[i] + velocity.limit_length(2.5) * 0.07, "at": tick}
+			var errors := [(feet[0] as Vector3).distance_to(wanted[0]), (feet[1] as Vector3).distance_to(wanted[1])]
+			# Open in the travel direction; then gather the trailing foot. A new
+			# direction is judged against the actual stance, not an alternating timer.
+			var i := 0 if (wanted[0] - wanted[1]).dot(velocity) >= 0 else 1
+			if absf(float(errors[0]) - float(errors[1])) > 0.06 or not moving: i = 0 if errors[0] > errors[1] else 1
+			if float(errors[i]) > (0.025 if moving else 0.09):
+				step = {"index": i, "from": feet[i], "to": wanted[i], "at": tick, "duration": 16.0}
 		if not step.is_empty():
-			var t := clampf(float(tick - int(step["at"])) / 18, 0, 1)
-			feet[int(step["index"])] = (step["from"] as Vector3).lerp(step["to"], ramp(t)) + Vector3.UP * sin(PI * t) * 0.065
-			if t >= 1: next_foot = 1 - int(step["index"]); step.clear()
+			var i := int(step["index"])
+			var age := float(tick - int(step["at"]))
+			# Three ticks of pressure transfer precede toe-off. The airborne foot
+			# can redirect toward a stop/reversal; its planted partner never slides.
+			var t := clampf((age - 3.0) / (float(step["duration"]) - 3.0), 0, 1)
+			var target: Vector3 = wanted[i] + velocity * 0.055
+			var side := -1.0 if i == 0 else 1.0
+			var spacing: Vector3 = target - feet[1 - i]
+			target += right * side * maxf(0, float(stance["width"]) * 1.25 - spacing.dot(right) * side)
+			spacing = target - feet[1 - i]
+			target -= forward * side * maxf(0, float(stance["lead"]) * 0.45 + spacing.dot(forward) * side)
+			step["to"] = (step["to"] as Vector3).move_toward(target, 0.06 * dt)
+			feet[i] = (step["from"] as Vector3).lerp(step["to"], ramp(t)) + Vector3.UP * sin(PI * t) * 0.055
+			var load := ramp(age / 3.0) * (1.0 - ramp((t - 0.72) / 0.28))
+			lead_weight = lerpf(balance, 0.82 if i == 1 else 0.18, load)
+			if t >= 1: step.clear()
+		else: lead_weight = move_toward(lead_weight, balance, float(dt) / 12)
+		for i in 2:
+			var desired := atan2(forward.x, forward.z) + (float(turns[i]) if turns.size() == 2 else (0.08 if i == 0 else -0.08))
+			foot_yaw[i] = float(foot_yaw[i]) + clampf(wrapf(desired - float(foot_yaw[i]), -PI, PI), -0.10 * dt, 0.10 * dt)
+		var center: Vector3 = (feet[1] as Vector3).lerp(feet[0], lead_weight) - origin
+		center.y = 0
+		support_shift = support_shift.move_toward(center.limit_length(0.12), 0.018 * dt)
 		previous_origin = origin
 	return [feet[0] - origin, feet[1] - origin]
 
@@ -165,15 +199,22 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	motion["hips"] -= float(motion["side"]) * preload_weight * 0.20
 	motion["core"] -= float(motion["side"]) * preload_weight * 0.12
 	motion["load"] += preload_weight * 0.22
+	var turns := [0.08, -0.08]
+	if row != "": turns[0 if row.begins_with("L_") else 1] += float(motion["side"]) * float(motion["plant"]) * (0.75 if motion["hook"] else 0.48)
+	var balance := clampf(0.5 - head_offset.dot(right) * 1.1 + head_offset.dot(forward) * 0.9, 0.2, 0.8)
+	var soles := footwork(origin, forward, right, tick, style, turns, balance)
+	var foot_turns := [wrapf(float(foot_yaw[0]) - atan2(forward.x, forward.z), -PI, PI), wrapf(float(foot_yaw[1]) - atan2(forward.x, forward.z), -PI, PI)]
+	# The punch chain already contains its foot-driven hip rotation. Add only
+	# the planted foot's lag behind that requested angle, not a second punch turn.
+	var support_turn := lerpf(float(foot_turns[1]) - float(turns[1]), float(foot_turns[0]) - float(turns[0]), lead_weight)
 	var base_turn := -0.22
-	var hips_turn := base_turn + float(motion["hips"])
+	var hips_turn := base_turn + support_turn * 0.25 + float(motion["hips"])
 	var chest_turn := hips_turn + float(motion["core"])
 	var crouch := float(style["crouch"]) + maxf(0, -head_offset.y) * 0.60
 	var spring := float(motion["load"]) * (0.20 if motion["upper"] else 0.06)
 	var drive := forward * float(motion["drive"]) * 0.06
-	var pelvis := Vector3.UP * (0.79 - crouch - spring) + head_offset * Vector3(0.30, 0, 0.30) + drive
+	var pelvis := Vector3.UP * (0.79 - crouch - spring) + head_offset * Vector3(0.30, 0, 0.30) + drive + support_shift
 	var chest := pelvis + Vector3.UP * 0.39 + head_offset * Vector3(0.48, 0.25, 0.48)
-	var soles := footwork(origin, forward, right, tick, style)
 	var delivery_targets := []; var contact_centers := []; var contact_radii := []; var contact_hits := []; var contact_weights := []
 	var support_elbows := []; var arm_stability := []
 	var arm_poles: Array = []; var leg_poles: Array = []; var hip_joints: Array = []; var ankles: Array = []
@@ -195,6 +236,12 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 			elif "FLARED" in row: curve.y = 0.42
 			hand += -forward * float(motion["load"]) * 0.50
 			hand = hand.lerp(target, e) + curve * sin(e * PI)
+			if motion["upper"]:
+				# Rising punches sweep in front of the chest. A lateral/downward
+				# arc alone can route the wrist through the advancing shoulder,
+				# collapsing the elbow axis. Clearance vanishes at exact contact.
+				var clearance := 0.32 * sqrt(maxf(0, sin(e * PI)))
+				hand += forward * maxf(0, clearance - (hand - shoulder).dot(forward)) * (1.0 - ramp((e - 0.9) / 0.1))
 			var turnover := side * (0.15 if motion["upper"] else PI * 0.5)
 			pronation = turnover * 0.70 * float(motion["forearm"])
 			twist = pronation + turnover * 0.30 * float(motion["fist"])
@@ -211,20 +258,23 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 			prior -= axis * prior.dot(axis)
 			var wanted := bend - axis * bend.dot(axis)
 			if prior.length_squared() > 0.000001 and wanted.length_squared() > 0.000001:
-				bend = prior.normalized().slerp(wanted.normalized(), 0.4 if active else 0.05)
+				# A hookercut can pass close to the arm axis while weight changes
+				# sides. Bound plane rotation instead of flipping the elbow branch.
+				var angle := prior.angle_to(wanted)
+				var blend := minf(0.4 if active else 0.05, 0.18 / maxf(angle, 0.0001))
+				bend = prior.normalized().slerp(wanted.normalized(), blend)
 		support_elbows.append(elbow_prior[i] - origin if not elbow_prior.is_empty() else shoulder)
 		arm_stability.append(1.0 if not active and not elbow_prior.is_empty() else 0.0)
 		arm_poles.append(bend)
 		shoulders.append(shoulder); elbows.append(Vector3.ZERO); wrists.append(hand); twists.append(twist); forearm_twists.append(pronation)
-		var foot_turn := -side * 0.08
-		if active: foot_turn += side * float(motion["plant"]) * (0.75 if motion["hook"] else 0.48)
+		var foot_turn := float(foot_turns[i])
 		pivots.append(foot_turn)
 		var hip := pelvis + (right * side * 0.14).rotated(Vector3.UP, hips_turn)
 		hip_joints.append(hip); ankles.append(soles[i] + Vector3.UP * 0.095 - forward.rotated(Vector3.UP, foot_turn) * 0.08)
-		leg_poles.append(forward * 1.2 + right * side * 0.1); knees.append(Vector3.ZERO)
+		leg_poles.append(forward.rotated(Vector3.UP, foot_turn) * 1.2 + right * side * 0.1); knees.append(Vector3.ZERO)
 	last_tick = tick
 	var result := constrain({"support_elbows": support_elbows, "arm_stability": arm_stability, "hand_goals": wrists.duplicate(), "delivery_targets": delivery_targets, "contact_centers": contact_centers, "contact_radii": contact_radii, "contact_hits": contact_hits, "contact_weights": contact_weights, "arm_poles": arm_poles, "leg_poles": leg_poles, "hip_joints": hip_joints, "ankles": ankles, "forward": forward, "head": head_offset + Vector3.UP * 1.55, "pelvis": pelvis, "chest": chest, "hips_turn": hips_turn, "chest_turn": chest_turn, "shoulders": shoulders,
-		"elbows": elbows, "wrists": wrists, "twists": twists, "forearm_twists": forearm_twists, "feet": soles, "pivots": pivots, "knees": knees, "chain": motion, "guard": guard})
+		"elbows": elbows, "wrists": wrists, "twists": twists, "forearm_twists": forearm_twists, "feet": soles, "pivots": pivots, "knees": knees, "chain": motion, "guard": guard, "lead_weight": lead_weight, "support_shift": support_shift})
 
 	elbow_history = [origin + result["elbows"][0], origin + result["elbows"][1]]
 	return result

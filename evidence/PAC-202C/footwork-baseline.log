@@ -1,0 +1,83 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+FOOTWORK DETAIL BOXERPUNCHER 87 first=0 at=15 width=0.37999999523163 lead=0.09120917320251 slip=0.00000002980232 reach=0.7410951256752 jump=0.10237944126129
+[FAIL] BOXERPUNCHER 87 leads with the travel-side foot promptly
+[FAIL] BOXERPUNCHER 87 reverses and settles without sliding or crossing
+[FAIL] BOXERPUNCHER 87 transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER 83 first=0 at=21 width=0.37999999523163 lead=0.06719493865967 slip=0.0 reach=0.6188622713089 jump=0.08704080432653
+[FAIL] BOXERPUNCHER 83 leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER 83 reverses and settles without sliding or crossing
+[FAIL] BOXERPUNCHER 83 transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER 65 first=0 at=16 width=0.05364567786455 lead=0.21532741189003 slip=0.00000005960464 reach=0.76996338367462 jump=0.06278160214424
+[FAIL] BOXERPUNCHER 65 leads with the travel-side foot promptly
+[FAIL] BOXERPUNCHER 65 reverses and settles without sliding or crossing
+[FAIL] BOXERPUNCHER 65 transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER 68 first=0 at=16 width=-0.0698277503252 lead=0.24326542019844 slip=0.00000011920929 reach=0.65385288000107 jump=0.07376480102539
+[FAIL] BOXERPUNCHER 68 leads with the travel-side foot promptly
+[FAIL] BOXERPUNCHER 68 reverses and settles without sliding or crossing
+[FAIL] BOXERPUNCHER 68 transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER 87 first=0 at=15 width=0.34000000357628 lead=0.21120911836624 slip=0.00000002980232 reach=0.79471409320831 jump=0.07856139540672
+[FAIL] OUTBOXER 87 leads with the travel-side foot promptly
+[FAIL] OUTBOXER 87 reverses and settles without sliding or crossing
+[FAIL] OUTBOXER 87 transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER 83 first=0 at=21 width=0.34000000357628 lead=0.18719494342804 slip=0.0 reach=0.67083311080933 jump=0.08024094998837
+[FAIL] OUTBOXER 83 leads with the travel-side foot promptly
+[PASS] OUTBOXER 83 reverses and settles without sliding or crossing
+[FAIL] OUTBOXER 83 transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER 65 first=0 at=17 width=-0.02453867346048 lead=0.33468410372734 slip=0.00000002980232 reach=0.7887134552002 jump=0.08732430636883
+[FAIL] OUTBOXER 65 leads with the travel-side foot promptly
+[FAIL] OUTBOXER 65 reverses and settles without sliding or crossing
+[FAIL] OUTBOXER 65 transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER 68 first=0 at=17 width=-0.15033006668091 lead=0.3634350001812 slip=0.00000011920929 reach=0.6721311211586 jump=0.07642644643784
+[FAIL] OUTBOXER 68 leads with the travel-side foot promptly
+[FAIL] OUTBOXER 68 reverses and settles without sliding or crossing
+[FAIL] OUTBOXER 68 transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER 87 first=0 at=15 width=0.41999998688698 lead=0.03120917081833 slip=0.00000002980232 reach=0.717738032341 jump=0.0854274854064
+[FAIL] SWARMER 87 leads with the travel-side foot promptly
+[FAIL] SWARMER 87 reverses and settles without sliding or crossing
+[FAIL] SWARMER 87 transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER 83 first=0 at=21 width=0.41999998688698 lead=0.00719487667084 slip=0.0 reach=0.59714090824127 jump=0.06728275865316
+[FAIL] SWARMER 83 leads with the travel-side foot promptly
+[FAIL] SWARMER 83 reverses and settles without sliding or crossing
+[FAIL] SWARMER 83 transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER 65 first=0 at=16 width=0.10392460227013 lead=0.1482197791338 slip=0.00000002980232 reach=0.77951675653458 jump=0.05876065790653
+[FAIL] SWARMER 65 leads with the travel-side foot promptly
+[FAIL] SWARMER 65 reverses and settles without sliding or crossing
+[FAIL] SWARMER 65 transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER 68 first=0 at=16 width=-0.01852834969759 lead=0.1762930303812 slip=0.00000002980232 reach=0.66561812162399 jump=0.05896382406354
+[FAIL] SWARMER 68 leads with the travel-side foot promptly
+[FAIL] SWARMER 68 reverses and settles without sliding or crossing
+[FAIL] SWARMER 68 transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER 87 first=0 at=15 width=0.47999998927116 lead=0.15120914578438 slip=0.00000002980232 reach=0.78396195173264 jump=0.12297748029232
+[FAIL] SLUGGER 87 leads with the travel-side foot promptly
+[FAIL] SLUGGER 87 reverses and settles without sliding or crossing
+[FAIL] SLUGGER 87 transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER 83 first=0 at=21 width=0.47999998927116 lead=0.1271950006485 slip=0.0 reach=0.66385531425476 jump=0.08066917955875
+[FAIL] SLUGGER 83 leads with the travel-side foot promptly
+[PASS] SLUGGER 83 reverses and settles without sliding or crossing
+[FAIL] SLUGGER 83 transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER 65 first=0 at=17 width=0.14156097173691 lead=0.24539387226105 slip=0.00000002980232 reach=0.84218019247055 jump=0.08004162460566
+[FAIL] SLUGGER 65 leads with the travel-side foot promptly
+[FAIL] SLUGGER 65 reverses and settles without sliding or crossing
+[FAIL] SLUGGER 65 transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER 68 first=0 at=17 width=-0.00120568275452 lead=0.28192111849785 slip=0.00000011920929 reach=0.71093219518661 jump=0.06875342130661
+[FAIL] SLUGGER 68 leads with the travel-side foot promptly
+[FAIL] SLUGGER 68 reverses and settles without sliding or crossing
+[FAIL] SLUGGER 68 transfers support through attached continuous anatomy
+BOUNDARY DETAIL circle width=-0.13537074625492 lead=0.36234965920448 slip=0.00000005960464 jump=0.08749487251043
+[FAIL] circle maintains planted stance under guard
+[PASS] circle keeps fixed continuous joints through the stop
+BOUNDARY DETAIL ropes width=0.37999999523163 lead=0.38000011444092 slip=0.0 jump=0.06422420591116
+[PASS] ropes maintains planted stance under guard
+[PASS] ropes keeps fixed continuous joints through the stop
+BOUNDARY DETAIL corner width=0.37999999523163 lead=0.37999999523163 slip=0.0 jump=0.06422410905361
+[PASS] corner maintains planted stance under guard
+[PASS] corner keeps fixed continuous joints through the stop
+[PASS] SLIP_L carries defense from planted support into guard and movement
+[PASS] SLIP_R carries defense from planted support into guard and movement
+[PASS] DUCK carries defense from planted support into guard and movement
+[PASS] WEAVE carries defense from planted support into guard and movement
+[PASS] LEAN carries defense from planted support into guard and movement
+FOOTWORK VERDICT :: RED (13/59)

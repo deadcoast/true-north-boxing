@@ -319,10 +319,13 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	forward = (rig["forward"] as Vector3).normalized()
 	var facing := atan2(forward.x, forward.z)
 	var collar: Vector3 = (rig["shoulders"][0] + rig["shoulders"][1]) * 0.5
-	var torso_region: Dictionary = sim.contact_region(other, fighter, "L_STRAIGHT", true)
-	var torso_origin := Space.ground(torso_region["target"] - fighter["pos"])
-	var torso_top := torso_origin + Vector3.UP * maxf(1.12, collar.y - 0.06)
-	var torso_bottom := torso_origin + Vector3.UP * minf(1.08, maxf(0.94, float(rig["pelvis"].y) + 0.02))
+	# Same 40% lateral / full retreat path as the body contact region, sampled
+	# from the interpolated head so the skin and aim point travel together.
+	var right := forward.cross(Vector3.UP)
+	var torso_origin := forward * head.position.dot(forward) + right * head.position.dot(right) * 0.4
+	var body_height := 1.10 + minf(0, head.position.y - Sim.HEAD_H)
+	var torso_top := torso_origin + Vector3.UP * minf(float(head.position.y) - Space.HEAD_RADIUS - 0.025, maxf(body_height + 0.02, collar.y - 0.06))
+	var torso_bottom := torso_origin + Vector3.UP * minf(body_height - 0.02, maxf(body_height - 0.16, float(rig["pelvis"].y) + 0.02))
 	_link(root.get_meta("abdomen"), rig["pelvis"], torso_bottom)
 	_link(body, torso_bottom, torso_top)
 	body.scale.y /= 0.57
