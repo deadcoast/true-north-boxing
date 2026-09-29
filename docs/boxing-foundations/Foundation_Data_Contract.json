@@ -1,0 +1,326 @@
+{
+  "document_type": "engine_independent_design_contract",
+  "title": "True North Boxing Foundation",
+  "status": "Design complete for local integration; not an implemented or validated engine configuration",
+  "authority": {
+    "project": "Existing True North Boxing project",
+    "primary_document": "True_North_Boxing_Foundation.md",
+    "source_image": "reference/connor-stance-1.png",
+    "new_project": false,
+    "lore_expansion": false,
+    "future_abilities_in_scope": false
+  },
+  "invariants": [
+    "One shared combat path for player, AI, sandbox and live match",
+    "Camera derives from a world-space fighter, never the reverse",
+    "Actual feet and support remain active outside the camera view",
+    "Body and punch inputs remain independent",
+    "Punch effects require authoritative contact",
+    "No compulsory idle reset between compatible actions",
+    "No unbounded animation cancel, homing, momentum bonus or input queue",
+    "No per-character combat-engine fork"
+  ],
+  "input_design": {
+    "kind": "Proposed default; bind to existing project actions",
+    "body": {
+      "shape": "continuous radial disk",
+      "x_negative": "anatomical left slip",
+      "x_positive": "anatomical right slip",
+      "y_positive": "forward-down dip",
+      "y_negative": "backward pull",
+      "diagonals": "continuous combined movement",
+      "neutral": "supported recovery",
+      "up_convention": "controller diagram up, explicitly convert platform coordinates"
+    },
+    "punches": {
+      "shape": "directional stroke on continuous radial disk",
+      "angle_zero": "up",
+      "angle_direction": "clockwise",
+      "sectors": [
+        {
+          "start_deg": 0,
+          "end_exclusive_deg": 60,
+          "hand": "right",
+          "family": "straight"
+        },
+        {
+          "start_deg": 60,
+          "end_exclusive_deg": 120,
+          "hand": "right",
+          "family": "hook"
+        },
+        {
+          "start_deg": 120,
+          "end_exclusive_deg": 180,
+          "hand": "right",
+          "family": "uppercut"
+        },
+        {
+          "start_deg": 180,
+          "end_exclusive_deg": 240,
+          "hand": "left",
+          "family": "uppercut"
+        },
+        {
+          "start_deg": 240,
+          "end_exclusive_deg": 300,
+          "hand": "left",
+          "family": "hook"
+        },
+        {
+          "start_deg": 300,
+          "end_exclusive_deg": 360,
+          "hand": "left",
+          "family": "straight"
+        }
+      ],
+      "activation_radius_seed": 0.6,
+      "rearm_radius_seed": 0.25,
+      "thresholds_are_provisional": true,
+      "held_edge_repeats": false
+    },
+    "modifiers": {
+      "RT": "guard",
+      "LT": "body target and body guard emphasis",
+      "RB": "committed power",
+      "LB": "bounded step request with left stick"
+    },
+    "steps": {
+      "continuous_free_circling": false,
+      "neutral_to_rearm": true,
+      "world_root_motion_required": true
+    },
+    "buffer": {
+      "max_fresh_followups": 1,
+      "expiry": "Time-bounded tuning value to be measured in the existing game",
+      "rejection_reason_required": true
+    }
+  },
+  "northern_rising": {
+    "id": "northern_rising",
+    "canon": "Canadian technical counterpunching foundation; rangy rising punches, compact uppercut combinations and exit stepping; commonly hybridized in the modern era",
+    "stance": {
+      "base": "moderately bladed staggered stance",
+      "rear_glove": "at jaw/cheek",
+      "lead_upper_arm": "forward without shoulder lock",
+      "lead_elbow": "bent",
+      "lead_forearm": "angled upward, more upright than reference",
+      "lead_glove": "thumb side uppermost, supported wrist, below eye line",
+      "feet": "grounded support with available pivots and steps",
+      "mirrored_stances": true
+    },
+    "priorities": [
+      "counter timing",
+      "continuous head and torso movement",
+      "supported rising trajectories",
+      "compact uppercut links",
+      "actual range exit",
+      "protection during recovery"
+    ],
+    "vulnerabilities": [
+      "intercepted preparation",
+      "overextended rising miss",
+      "crowding without support",
+      "readable repeated exits",
+      "body attack during extreme movement"
+    ],
+    "move_families": [
+      "lead_probe_uppercut",
+      "long_lead_rising",
+      "long_rear_rising",
+      "compact_lead_uppercut",
+      "compact_rear_uppercut",
+      "body_rising_variant",
+      "hook_uppercut_link",
+      "uppercut_hook_link",
+      "covering_exit_punch"
+    ],
+    "signature_examples": [
+      {
+        "id": "northern_rising_counter",
+        "sequence": [
+          "pull_or_outside_slip",
+          "long_rising_counter",
+          "supported_diagonal_exit"
+        ],
+        "failure": "Invalid range, obstruction or interruption can prevent the next stage"
+      },
+      {
+        "id": "northern_ladder",
+        "sequence": [
+          "compact_lead_uppercut",
+          "compact_rear_uppercut",
+          "optional_hook_or_exit"
+        ],
+        "failure": "Each stage remains independently committed and interruptible"
+      },
+      {
+        "id": "rising_exit",
+        "sequence": [
+          "inside_rising_punch",
+          "outward_step",
+          "compatible_covering_punch"
+        ],
+        "failure": "A blocked exit cannot move the actor through ring geometry"
+      }
+    ]
+  },
+  "entity_contracts": {
+    "character": [
+      "id",
+      "version",
+      "physical_profile_ref",
+      "attribute_profile_ref",
+      "primary_style_ref",
+      "secondary_components",
+      "skill_proficiencies",
+      "trait_refs",
+      "move_refs",
+      "signature_refs",
+      "behavior_profile_ref",
+      "generation_seed",
+      "resolved_source_versions"
+    ],
+    "physical_profile": [
+      "limb_proportions",
+      "mass_category",
+      "stance_dimensions",
+      "joint_and_motion_limits"
+    ],
+    "attribute_profile": [
+      "current_capacities",
+      "trainable_ceilings",
+      "allocation_budget",
+      "growth_policy_ref"
+    ],
+    "style": [
+      "id",
+      "version",
+      "stance_defaults",
+      "body_envelope_ref",
+      "footwork_preferences",
+      "guard_preferences",
+      "move_variant_refs",
+      "skill_emphasis",
+      "component_compatibility"
+    ],
+    "skill": [
+      "id",
+      "family_or_transition",
+      "proficiency",
+      "bounded_execution_effects",
+      "prerequisites"
+    ],
+    "trait": [
+      "id",
+      "eligibility",
+      "observed_events",
+      "bounded_runtime_state",
+      "gain_and_decay",
+      "break_conditions",
+      "allowed_effects",
+      "cap"
+    ],
+    "move": [
+      "id",
+      "version",
+      "family",
+      "hand_rule",
+      "targets",
+      "preconditions",
+      "preparation",
+      "trajectory",
+      "root_motion_owner",
+      "phases",
+      "guard_behavior",
+      "contact_policy",
+      "costs",
+      "continuations",
+      "interruption",
+      "presentation_refs",
+      "evidence"
+    ],
+    "signature": [
+      "id",
+      "entry_conditions",
+      "move_nodes",
+      "conditional_links",
+      "exits",
+      "failure_behavior",
+      "mastery_effect_limits"
+    ],
+    "behavior": [
+      "preferred_range",
+      "counter_preference",
+      "aggression",
+      "target_preferences",
+      "angle_preference",
+      "perception_constraints",
+      "risk_policy"
+    ],
+    "runtime": [
+      "root_and_facing",
+      "feet_and_support",
+      "body_pose_and_velocity",
+      "guard_state",
+      "action_phases",
+      "current_requests",
+      "effort",
+      "fatigue",
+      "balance",
+      "damage_and_stun",
+      "contact_history",
+      "trait_state"
+    ]
+  },
+  "composition_precedence": [
+    "physical and anatomical limits",
+    "primary style defaults",
+    "explicit compatible secondary domain overrides",
+    "skill proficiency",
+    "bounded traits",
+    "current runtime feasibility"
+  ],
+  "alternating_hook_trait": {
+    "example_only": true,
+    "opposite_hand_compatible_hook_continues": true,
+    "same_hand_hook_breaks_this_bonus": true,
+    "same_hand_hook_remains_legal": true,
+    "quality_terms": [
+      "timing_fit",
+      "support_fit",
+      "range_fit",
+      "posture_fit"
+    ],
+    "bounded": true,
+    "interruptions": [
+      "pause",
+      "wrong_family",
+      "same_hand",
+      "missed_transition",
+      "meaningful_stagger"
+    ],
+    "interpretation": "coordinated reloading and rhythm, not conserved angular momentum across rotation reversal"
+  },
+  "implementation_packages": [
+    "trace existing repository and baseline",
+    "world/body/camera",
+    "punch/contact/defence",
+    "transitions/pocket loop",
+    "Northern Rising",
+    "composition sandbox",
+    "full-round qualification"
+  ],
+  "reserved_future": [
+    "deeper shonen skills and abilities",
+    "6ix Slide content",
+    "optional Quest 3 motion-reference experiment"
+  ],
+  "verification_status": {
+    "specification_checked": true,
+    "engine_inspected": false,
+    "implemented": false,
+    "playtested": false,
+    "performance_measured": false
+  }
+}
