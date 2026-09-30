@@ -1,0 +1,187 @@
+{
+  "task": "PAC-205",
+  "verdict": "AUDIT_COMPLETE_FOUNDATION_NOT_ACCEPTED",
+  "authority": "User explicitly prioritizes boxing and says the supplied overview is rough, simplified and NOT ABSOLUTE. Styles are specialized techniques and skills. Numeric/layout examples remain provisional.",
+  "baseline_commit": "b63eab4ae060fd0a4b31d4bd0be64334a23878b9",
+  "source_sha256": {
+    "engine/greybox/main.gd": "2e54d496f5f56e102d553118a82f6384d91cd35acc61c2bf8df5916af39f3e56",
+    "engine/greybox/input/combat_input.gd": "3cceb21d20ec6617a0994ea69dfb35644127d6599c3e09663fc80d7a7e37f651",
+    "engine/greybox/sim/core.gd": "7a35c53095721a08356f759bc24afef647ff4ade25649f2de86535a06876e785",
+    "engine/greybox/presentation/boxing_motion.gd": "e284094e01e6e98af2080fb69be88127b44ae52d6d7916b63acfa84c07763466",
+    "engine/greybox/presentation/fight_view.gd": "c004b010123d8e2f8051562bc23643bb7f5619e450f94ee4b07bcb25b6d212e7",
+    "engine/greybox/presentation/rig_space.gd": "8c6784b1ad5357983463bdfd4ae22711cf14863e22f802fe08ad81f9cd5adbdc",
+    "engine/greybox/sim/profile.gd": "35a83f91874ba5eb2aa30cfc9b66659404d59e1ea094b30dcb2caeaafd1f3629",
+    "engine/greybox/sim/save.gd": "d5938ace5d036a366e5d1e1028886c92e245b035a57edc324fad7c6ce8855083"
+  },
+  "supplied_reference_sha256": {
+    "docs/boxing-foundations/Boxing_Styles.md": "df52222b83b20aa05cb12a7d123b8e32e11cb10648e78eff4c6a7750644045d2",
+    "docs/boxing-foundations/Foundation_Data_Contract.json": "f0ac9270f316479411e3613b126583f8795f22c7c01483efa149fb303bd9d236",
+    "docs/boxing-foundations/Northern_Rising_Boxing_Style.md": "76ffc6e88e609f78b80b1eca704b6aef1f28206d1eaceb4ac86cebfad25de242",
+    "docs/boxing-foundations/reference/connor-stance-1.png": "44b6ccb36addf99af025b9b5f646cc83bbdbd8065c340d9ace5cbcb8932c1c4b",
+    "docs/boxing-foundations/SHA256.json": "2d39067dc4abf9f5ce46f22dfa71302b637a6da1bd34e0bfa9a1f7be5c06b56a",
+    "docs/boxing-foundations/START_HERE.md": "e3b152300f61cdd0eff3bfb779e4427bd039ab7521bcdd6d3eac60e86d934b41",
+    "docs/boxing-foundations/True_North_Boxing_Foundation.md": "be0ff3fd23425b8aa60316735b59441c67df5275cb0cd7d546c7ffafe5caad28"
+  },
+  "entry": [
+    "Play True North Boxing.cmd",
+    "tools/play_boxing.ps1",
+    "engine/greybox/project.godot: res://main.tscn",
+    "engine/greybox/main.gd: _ready, _process, _intent"
+  ],
+  "integration_map": [
+    {
+      "responsibility": "input",
+      "path": "engine/greybox/input/combat_input.gd",
+      "symbols": [
+        "handle_event",
+        "stick_sample",
+        "take_intent"
+      ],
+      "observed": "Ten-family stroke parser and keyboard/chords; body stick feeds unrestricted move; dodge keys queue timed actions. Guard/body/power modifiers already independent. LB currently owns special arm, so proposed LB-step layout conflicts."
+    },
+    {
+      "responsibility": "punch execution",
+      "path": "engine/greybox/sim/core.gd",
+      "symbols": [
+        "_queue_punch",
+        "_try_execute_cmd",
+        "_land_player_punch",
+        "_land_boss_punch",
+        "_step_inner"
+      ],
+      "observed": "Player has one timed command buffer and startup/recovery; boss uses authored action VM. Timer resolution asks geometric region then guard logic; sides have separate launch paths."
+    },
+    {
+      "responsibility": "body and contact",
+      "path": "engine/greybox/sim/core.gd",
+      "symbols": [
+        "_set_dodge",
+        "dodge_weight",
+        "_head_world",
+        "contact_region",
+        "resolve_geometry"
+      ],
+      "observed": "Timed dodge smoothly moves head and 40-percent torso, but no continuous body axis. Hit is target-centre reach/lateral/height region at resolution; no swept glove/guard intersection."
+    },
+    {
+      "responsibility": "reaction/counter",
+      "path": "engine/greybox/sim/core.gd",
+      "symbols": [
+        "_land_boss_punch",
+        "_land_player_punch"
+      ],
+      "observed": "Damage, shove, guard, stagger, hitstop, knockdown and events connected. Timed dodge miss grants window without proving neutral pose was threatened; continuous-body counter causality absent."
+    },
+    {
+      "responsibility": "rendered pose",
+      "path": "engine/greybox/presentation/fight_view.gd",
+      "symbols": [
+        "observe",
+        "capture",
+        "pose"
+      ],
+      "observed": "Reads sim and events, reconstructs punch progress and post-impact pre-shove target. Region result then selects a visible endpoint, reversing required pose-to-contact authority."
+    },
+    {
+      "responsibility": "support/limbs",
+      "path": "engine/greybox/presentation/boxing_motion.gd",
+      "symbols": [
+        "footwork",
+        "sample",
+        "constrain",
+        "style_profile"
+      ],
+      "observed": "Existing fixed-limb IK, plants/pivots and connected torso worth retaining. Support is presentation-owned; four archetype presets plus named silhouette overrides are not layered trained techniques."
+    },
+    {
+      "responsibility": "contact projection",
+      "path": "engine/greybox/presentation/rig_space.gd",
+      "symbols": [
+        "ground",
+        "contact"
+      ],
+      "observed": "Ground uses uniform 0.65 conversion; body height separate. contact constructs a region-fitting surface endpoint, not a committed scoring trajectory."
+    },
+    {
+      "responsibility": "camera",
+      "path": "engine/greybox/presentation/fight_view.gd",
+      "symbols": [
+        "frame",
+        "_player_visibility"
+      ],
+      "observed": "Third-person chase with transparent silhouette and world-oriented orbit. Does not implement embodied eye anchor."
+    },
+    {
+      "responsibility": "AI",
+      "path": "engine/greybox/sim/profile.gd",
+      "symbols": [
+        "intent"
+      ],
+      "observed": "Delegated player shares intent interface; opponent remains pattern VM with separate action scheduling. Both must eventually use shared execution and contact primitives."
+    },
+    {
+      "responsibility": "persistence",
+      "path": "engine/greybox/sim/core.gd",
+      "symbols": [
+        "state_vars",
+        "snapshot",
+        "restore",
+        "hash_state"
+      ],
+      "observed": "Typed fighter dictionaries ride exact snapshot. New body state must participate in hash and restore; existing character ledgers must remain intact."
+    }
+  ],
+  "packages": [
+    {
+      "task": "PAC-206",
+      "status": "OPEN",
+      "gap": "Continuous body disk, deliberate supported steps, explicit frames and embodied camera absent."
+    },
+    {
+      "task": "PAC-207",
+      "status": "OPEN",
+      "gap": "Authoritative committed scoring paths, moving swept guard/target contact and real side-specific coverage absent."
+    },
+    {
+      "task": "PAC-208",
+      "status": "OPEN",
+      "gap": "Pose/support-based transitions and geometric counter causality incomplete; continuous recovery must replace timer-only links."
+    },
+    {
+      "task": "PAC-209",
+      "status": "OPEN",
+      "gap": "Northern Rising corrected stance, compact/rangy variants and conditional signatures absent."
+    },
+    {
+      "task": "PAC-210",
+      "status": "OPEN",
+      "gap": "Trainable technique/domain composition with conflict handling and shared runtime sandbox absent."
+    },
+    {
+      "task": "PAC-211",
+      "status": "OPEN",
+      "gap": "No current full-foundation technical, visual or feel acceptance."
+    }
+  ],
+  "baseline_checks": {
+    "command": "Godot --headless --audio-driver Dummy --path engine/greybox -s tools/drive_boxing_motion.gd -- welcome",
+    "result": "330/330 historical motion assertions pass; 2 ObjectDB exit leaks reported",
+    "log": ".PACER/boxing-foundation-v2/baseline/motion.log",
+    "meaning": "Existing motion contracts only; these assertions do not cover the supplied model."
+  },
+  "retained_previous_exchange": {
+    "report": "evidence/PAC-204/boxing-foundation/report.json",
+    "frames": [
+      "evidence/PAC-204/boxing-foundation/native-10s.png",
+      "evidence/PAC-204/boxing-foundation/native-30s.png"
+    ],
+    "meaning": "Previous native evidence preserved, not a newly played or accepted foundation."
+  },
+  "decisions": [
+    "Reuse existing PAC-204A / NDL-013 scope; no overlapping nodule.",
+    "Defer further campaign/environment/ability/progression development until boxing qualification.",
+    "Retain ten-family punch controls rather than blindly substitute six example sectors.",
+    "Keep existing special controls; choose a separate explicit step modifier and document it.",
+    "No new claims about real-fighter mechanics without observed film/source provenance."
+  ]
+}

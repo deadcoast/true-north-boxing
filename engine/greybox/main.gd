@@ -27,13 +27,13 @@ const TNBExhibition := preload("res://sim/exhibition.gd")
 # render-independent fixed-step accumulator (sim/clock.gd); the capsules are
 # drawn at the interpolated position between the last two sim ticks.
 #
-# PAD: LS move | RS flick punch (angle = punch) | LT+LS slip/weave/lean | LT+punch body
+# PAD: LS continuous body | L3 + LS deliberate step | RS flick punch (angle = punch) | LT+punch body
 #      RB power | RT block | LB hold + haymaker-flick at 100 Tension = A.B.B.
 #      L3 sprint-step | R3 clinch | A = beat tap (count / clinch cue) / send (corner) | X = rest (corner) | DPAD-UP taunt
 # KEYS: WASD | J/K straights, F/L flared, U/I hooks, N/; hookercuts, Y/O uppercuts | Esc controls
 #       Alt held 150ms + punch haymaker | mouse left-button flick | tap-release within 80ms FEINT | Space block
 #       Q/E slip | V weave | B lean | T taunt | Shift power | C body | H hissatsu-arm
-#       Ctrl sprint-step | G clinch | ENTER beat tap | F8 audio-assist cue toggle
+#       Ctrl + WASD deliberate step | Ctrl+F2 inspect both boxers | G clinch | ENTER beat tap | F8 audio-assist cue toggle
 # CORNER (45s, 2 actions): 1 send | 2/3/4 equipped tactics | 5 super | 6/7/8 staff | 9 save the bar | 0 swap (first option)
 #       pad: A send | X swap | Y super | B save the bar | DPAD L/R tactics 1/2 | DPAD DOWN staff 1
 # META: F1-F4 switch boss (Vane/Yuri/Moreau/Sam) | F6/F7 prev/next of all 24 | R reload tuning | F5 new dual
@@ -632,6 +632,10 @@ func _unhandled_input(e: InputEvent) -> void:
 	if fight_hud != null and fight_hud.entry.visible: return
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F1 and e.ctrl_pressed:
 		fight_hud.show_details = not fight_hud.show_details; return
+	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F2 and e.ctrl_pressed:
+		fight_view.inspection_view = not fight_view.inspection_view
+		fight_view.orbit = Vector3.ZERO; fight_view.last_tick = -1
+		return
 	# H+Y remains SURGE; ordinary Y now also exposes the left uppercut.
 	if e is InputEventKey and e.keycode == KEY_Y and e.pressed and (combat_input.down("lb") or Input.is_key_pressed(KEY_H)):
 		q_surge = true; return

@@ -3,6 +3,7 @@ extends RefCounted
 ## The channels decompose the user's connected pivot/core/shoulder/arm sequence;
 ## they are implementation stages, not a claim of biomechanical validation.
 const Space := preload("res://presentation/rig_space.gd")
+const BodyControl := preload("res://sim/body_control.gd")
 const UPPER_ARM := 0.38
 const FOREARM := 0.36
 const THIGH := 0.43
@@ -236,7 +237,7 @@ func footwork(origin: Vector3, forward: Vector3, right: Vector3, tick: int, stan
 
 func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionary, head_offset: Vector3) -> Dictionary:
 	var style := style_profile(fighter)
-	var at: Vector2 = fighter["pos"]; var delta: Vector2 = other["pos"] - at
+	var at: Vector2 = fighter["pos"]; var delta: Vector2 = BodyControl.forward(fighter, other)
 	var forward := Vector3(delta.x, 0, delta.y).normalized()
 	if forward.length_squared() < 0.1: forward = Vector3.FORWARD
 	var right := forward.cross(Vector3.UP)
@@ -272,7 +273,21 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	# ordinary punch releases its base only as recovery unloads the drive.
 	var plant_hand := (0 if row.begins_with("L_") else 1) if row != "" and recovery < 0.5 and not "STEPPING" in mods else -1
 	var advance := maxf(0, float(motion["drive"])) * 0.13
-	var soles := footwork(origin, forward, right, tick, style, turns, balance, advance, plant_hand)
+	var soles: Array
+	var body_state: Dictionary = fighter.get("body_control", {})
+	if body_state.has("feet"):
+		# The simulation owns support in the continuous foundation controller.
+		# Sampling or dropping render frames cannot take a foot off the floor.
+		soles = []
+		foot_yaw = []
+		for i in 2:
+			soles.append(Space.ground(body_state["feet"][i]) - origin + Vector3.UP * float(body_state["foot_lift"][i]))
+			foot_yaw.append(PI * 0.5 - float(body_state["foot_yaw"][i]))
+		lead_weight = float(body_state["weight_lead"])
+		support_shift = Vector3(soles[1]).lerp(soles[0], lead_weight).limit_length(0.12)
+		support_shift.y = 0
+	else:
+		soles = footwork(origin, forward, right, tick, style, turns, balance, advance, plant_hand)
 	var foot_turns := [wrapf(float(foot_yaw[0]) - atan2(forward.x, forward.z), -PI, PI), wrapf(float(foot_yaw[1]) - atan2(forward.x, forward.z), -PI, PI)]
 	# The punch chain already contains its foot-driven hip rotation. Add only
 	# the planted foot's lag behind that requested angle, not a second punch turn.

@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bp38wehgf5ycl"
+
+[deps]
+
+files=["res://todo.PACER.Title.translation", "res://todo.PACER.Phase.translation", "res://todo.PACER.Status.translation", "res://todo.PACER.Priority.translation", "res://todo.PACER.Assignee.translation", "res://todo.PACER.DoD.translation", "res://todo.PACER.BlockedBy.translation", "res://todo.PACER.DependencyType.translation", "res://todo.PACER.DependencyReason.translation", "res://todo.PACER.UnblockingStrategy.translation", "res://todo.PACER.Context.translation", "res://todo.PACER.Instructions.translation", "res://todo.PACER.ExpectedOutput.translation", "res://todo.PACER.ValidationCriteria.translation", "res://todo.PACER.ErrorHandling.translation", "res://todo.PACER.PreviousAttempts.translation", "res://todo.PACER.RelatedWork.translation", "res://todo.PACER.LearningNotes.translation", "res://todo.PACER.Notes.translation", "res://todo.PACER.StartedAt.translation", "res://todo.PACER.DoneAt.translation", "res://todo.PACER.OVRRefs.translation", "res://todo.PACER.OGMRefs.translation", "res://todo.PACER.NDLRefs.translation", "res://todo.PACER.Tags.translation", "res://todo.PACER.UpdatedAt.translation", "res://todo.PACER.NextAction.translation", "res://todo.PACER.ContextCheckpoint.translation", "res://todo.PACER.ApprovalState.translation", "res://todo.PACER.ApprovalEvidence.translation", "res://todo.PACER.ApprovalActor.translation", "res://todo.PACER.ApprovedAt.translation", "res://todo.PACER.ApprovalBasis.translation", "res://todo.PACER.ApprovalHistory.translation"]
+
+source_file="res://todo.PACER.csv"
+dest_files=["res://todo.PACER.Title.translation", "res://todo.PACER.Phase.translation", "res://todo.PACER.Status.translation", "res://todo.PACER.Priority.translation", "res://todo.PACER.Assignee.translation", "res://todo.PACER.DoD.translation", "res://todo.PACER.BlockedBy.translation", "res://todo.PACER.DependencyType.translation", "res://todo.PACER.DependencyReason.translation", "res://todo.PACER.UnblockingStrategy.translation", "res://todo.PACER.Context.translation", "res://todo.PACER.Instructions.translation", "res://todo.PACER.ExpectedOutput.translation", "res://todo.PACER.ValidationCriteria.translation", "res://todo.PACER.ErrorHandling.translation", "res://todo.PACER.PreviousAttempts.translation", "res://todo.PACER.RelatedWork.translation", "res://todo.PACER.LearningNotes.translation", "res://todo.PACER.Notes.translation", "res://todo.PACER.StartedAt.translation", "res://todo.PACER.DoneAt.translation", "res://todo.PACER.OVRRefs.translation", "res://todo.PACER.OGMRefs.translation", "res://todo.PACER.NDLRefs.translation", "res://todo.PACER.Tags.translation", "res://todo.PACER.UpdatedAt.translation", "res://todo.PACER.NextAction.translation", "res://todo.PACER.ContextCheckpoint.translation", "res://todo.PACER.ApprovalState.translation", "res://todo.PACER.ApprovalEvidence.translation", "res://todo.PACER.ApprovalActor.translation", "res://todo.PACER.ApprovedAt.translation", "res://todo.PACER.ApprovalBasis.translation", "res://todo.PACER.ApprovalHistory.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

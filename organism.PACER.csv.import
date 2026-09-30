@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://buy25g62orppw"
+
+[deps]
+
+files=["res://organism.PACER.Title.translation", "res://organism.PACER.Domain.translation", "res://organism.PACER.Status.translation", "res://organism.PACER.Requirement.translation", "res://organism.PACER.AcceptanceEvidence.translation", "res://organism.PACER.OVRRefs.translation", "res://organism.PACER.PACRefs.translation", "res://organism.PACER.BlockedByOGM.translation", "res://organism.PACER.AbsorbedFromNDL.translation", "res://organism.PACER.Tags.translation", "res://organism.PACER.Notes.translation", "res://organism.PACER.UpdatedAt.translation", "res://organism.PACER.NDLRefs.translation", "res://organism.PACER.Authority.translation", "res://organism.PACER.OriginText.translation", "res://organism.PACER.RuleType.translation", "res://organism.PACER.EvidenceBindings.translation", "res://organism.PACER.EvidenceArtifact.translation"]
+
+source_file="res://organism.PACER.csv"
+dest_files=["res://organism.PACER.Title.translation", "res://organism.PACER.Domain.translation", "res://organism.PACER.Status.translation", "res://organism.PACER.Requirement.translation", "res://organism.PACER.AcceptanceEvidence.translation", "res://organism.PACER.OVRRefs.translation", "res://organism.PACER.PACRefs.translation", "res://organism.PACER.BlockedByOGM.translation", "res://organism.PACER.AbsorbedFromNDL.translation", "res://organism.PACER.Tags.translation", "res://organism.PACER.Notes.translation", "res://organism.PACER.UpdatedAt.translation", "res://organism.PACER.NDLRefs.translation", "res://organism.PACER.Authority.translation", "res://organism.PACER.OriginText.translation", "res://organism.PACER.RuleType.translation", "res://organism.PACER.EvidenceBindings.translation", "res://organism.PACER.EvidenceArtifact.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

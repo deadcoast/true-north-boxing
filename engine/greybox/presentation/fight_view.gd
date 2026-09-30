@@ -47,6 +47,8 @@ var offers := {}
 var travels := {}
 var before_positions := {}
 var player_depth: ShaderMaterial
+var observer_view := false
+var inspection_view := false
 
 func _sync_clock(sim) -> void:
 	if clock_sim != sim or sim.tick < clock_tick:
@@ -462,6 +464,14 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	root.set_meta("extension", extension)
 
 func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, boundaries: Array = []) -> void:
+	player.get_meta("head").visible = observer_view or inspection_view
+	player.get_meta("neck").visible = observer_view or inspection_view
+	if inspection_view:
+		_inspection_frame(camera, player, opponent, tick, boundaries)
+		return
+	if not observer_view:
+		_embodied_frame(camera, player, opponent, tick)
+		return
 	var tuning: Dictionary = clock_sim.T.get("camera", {}) if clock_sim != null else {}
 	var chase_base := float(tuning.get("chase_behind_m", CHASE))
 	var clearance := float(tuning.get("above_head_m", HEAD_CLEARANCE))
@@ -501,6 +511,40 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	# Per-fragment depth: a long rope's center can be behind the opponent while
 	# its near end crosses the camera. Object-center classification is insufficient.
 	_clear_window(boundaries, window, 1.0, true, opponent.position, camera.position - opponent.position)
+
+func _embodied_frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int) -> void:
+	# Eye anchor derives from the same posed head used by contact. Dampen vertical
+	# bob only; range and lateral shifts remain situated in the actual world.
+	var head: Vector3 = player.get_meta("head").position
+	var forward: Vector3 = player.get_meta("render_kinematics", {}).get("forward", Vector3.FORWARD)
+	var eye := player.position + Vector3(head.x, lerpf(Sim.HEAD_H, head.y, 0.7), head.z)
+	eye += forward * 0.055 + Vector3.UP * 0.045
+	var focus: Vector3 = opponent.position + opponent.get_meta("head").position - Vector3.UP * 0.15
+	var wanted := (focus - eye).normalized()
+	var elapsed := maxf(0, float(tick - last_tick) / Sim.TICK_HZ) if last_tick >= 0 else 0.0
+	if orbit == Vector3.ZERO or tick < last_tick: orbit = wanted
+	var angle := orbit.angle_to(wanted)
+	if angle > 0.00001: orbit = orbit.slerp(wanted, minf(1, deg_to_rad(220) * elapsed / angle)).normalized()
+	camera.position = eye; camera.near = 0.035; camera.fov = 76.0
+	camera.look_at(eye + orbit, Vector3.UP); last_tick = tick
+	# Actual arms, without an independently animated or enlarged viewmodel.
+	# Restore materials after returning from the observer's transparency mask.
+	for part in player.get_children() + player.get_meta("cast_parts", []):
+		if part is MeshInstance3D: part.material_override = null
+
+func _inspection_frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, boundaries: Array) -> void:
+	var forward := (opponent.position - player.position).normalized()
+	if forward.length_squared() < 0.01: forward = Vector3.FORWARD
+	var side := forward.cross(Vector3.UP)
+	var center := (player.position + opponent.position) * 0.5
+	camera.position = center + side * 3.4 - forward * 0.9 + Vector3.UP * 1.8
+	camera.near = 0.035; camera.fov = 62.0
+	camera.look_at(center + Vector3.UP * 0.90); last_tick = tick
+	for actor in [player, opponent]:
+		for part in actor.get_children() + actor.get_meta("cast_parts", []):
+			if part is MeshInstance3D: part.material_override = null
+	# Foreground ropes are cleared, never the boxer being inspected.
+	_clear_window(boundaries, Vector4(0, 0, 1, 1), 1.0, true, center, camera.position - center)
 
 func _player_visibility(player: Node3D, window: Vector4, windup_alpha: float, windup: bool) -> void:
 	var groups := {"body": [], "head": [], "left": [], "right": []}

@@ -10,6 +10,7 @@ extends RefCounted
 const TNBProfile := preload("res://sim/profile.gd")   # the fighter who plays without you (NP_10 s8)
 const TNBObjectives := preload("res://sim/objectives.gd")   # the scrap's micro-objective, judged from events (NP_02 s2.1)
 const TNBAssembler := preload("res://sim/assembler.gd")   # the generic opponent assembler (NP_04 s9)
+const BodyControl := preload("res://sim/body_control.gd")
 
 const TICK_HZ := 120
 const DT := 1.0 / 120.0
@@ -1142,7 +1143,7 @@ static func dodge_weight(F: Dictionary) -> float:
 
 func _head_world(F: Dictionary, other: Dictionary) -> Dictionary:
 	# defender's head as a world point + height, displaced by its active dodge
-	var fwd: Vector2 = (other["pos"] - F["pos"]).normalized()      # defender facing attacker
+	var fwd: Vector2 = BodyControl.forward(F, other)              # actor's current anatomical frame
 	var rightD := Vector2(-fwd.y, fwd.x)                             # defender's right
 	var lat := 0.0; var h := HEAD_H; var back := 0.0
 	if F["dodge"] != "":
@@ -1151,6 +1152,11 @@ func _head_world(F: Dictionary, other: Dictionary) -> Dictionary:
 		if F["dodge"] == "WEAVE": lat *= float(F.get("pkg", {}).get("weave_arc_mult", 1.0))      # the out-boxer's narrower weave (s1.2)
 		var weight := dodge_weight(F)
 		lat *= weight; back *= weight; h = lerpf(HEAD_H, h, weight)
+	var body_offset: Vector3 = BodyControl.offsets(F)["head"]
+	# Legacy discrete requests and continuous motion share one bounded envelope.
+	lat = clampf(lat + body_offset.x, -0.55, 0.55)
+	back = clampf(back - body_offset.z, -0.12, 0.55)
+	h = maxf(0.82, h + body_offset.y)
 	var head: Vector2 = F["pos"] - fwd * back + rightD * lat
 	return {"p": head, "h": h}
 
@@ -1168,14 +1174,17 @@ func contact_region(A: Dictionary, D: Dictionary, row: String, body: bool, range
 	if body:
 		# Torso follows lateral head movement at 40%. Its aim height follows
 		# crouch compression; body eligibility still has no vertical band.
-		var fwdD: Vector2 = -fwd
+		var fwdD: Vector2 = BodyControl.forward(D, A)
 		var rightD := Vector2(-fwdD.y, fwdD.x)
 		var lat := 0.0; var back := 0.0
 		if D["dodge"] != "":
 			lat = float(DODGE[D["dodge"]]["lat"]) * float(D["dodge_dir"]) * 0.4 * (float(D.get("pkg", {}).get("weave_arc_mult", 1.0)) if D["dodge"] == "WEAVE" else 1.0)
 			back = float(DODGE[D["dodge"]]["back"])
 			lat *= dodge_weight(D); back *= dodge_weight(D)
-		tp = D["pos"] + fwd * back + rightD * lat     # fwd here points A->D, so +fwd*back moves D away
+		var body_offset: Vector3 = BodyControl.offsets(D)["torso"]
+		lat = clampf(lat + body_offset.x, -0.22, 0.22)
+		back = clampf(back - body_offset.z, -0.12, 0.55)
+		tp = D["pos"] - fwdD * back + rightD * lat
 		th = 1.10 + minf(0, th - HEAD_H)
 	var rel: Vector2 = tp - A["pos"]
 	var d := rel.dot(fwd)
@@ -1558,6 +1567,16 @@ func _land_boss_punch(mult: float) -> void:
 	if geo == "HIT" and _auto_slips("P", brow, body): geo = "AUTO_SLIP"
 	if geo != "HIT":
 		var wide := 1.4 if trapped_p else 1.0
+		var body_axis: Vector2 = P.get("body_control", {}).get("axis", Vector2.ZERO)
+		if body_axis.length() > 0.05:
+			var neutral := P.duplicate(true)
+			neutral["body_control"]["axis"] = Vector2.ZERO
+			# Credit the actual displaced target only if this same attack would
+			# have intersected neutral. Body input alone earns no counter reward.
+			if resolve_geometry(B, neutral, brow, body) == "HIT":
+				var response := "duck" if body_axis.y > absf(body_axis.x) else "slip"
+				P["counter_t"] = _window(response, wide)
+				_ev("body_evade", {"axis": body_axis, "ticks": P["counter_t"], "why": geo})
 		if geo == "MISS_REACH" and P["dodge"] == "" and retreat_origin is Dictionary:
 			var before_step := P.duplicate(); before_step["pos"] = retreat_origin["player"]
 			var attacker_before := B.duplicate(); attacker_before["pos"] = retreat_origin["attacker"]
@@ -9853,6 +9872,11 @@ func step(inp: Dictionary) -> void:
 				_say("OBJECTIVE %s - %s" % ["MET" if obj["met"] else "FAILED", str(obj["why"])])
 				P["pending"] = {}; bpending = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
 				_end_bout()
+	if mode != "FIGHT" or not clinch.is_empty():
+		# A count, break, or clinch ends an uncompleted pocket step. Its old
+		# travel/queued stroke must not resume after the restart bell.
+		for fighter in [P, B]:
+			fighter.erase("frozen_step"); fighter.erase("body_control")
 
 func _step_inner(inp: Dictionary) -> void:
 	tick += 1
@@ -9921,6 +9945,9 @@ func _step_inner(inp: Dictionary) -> void:
 		freeze_t -= 1                                       # C5 hitstop: everyone frozen...
 		var frozen_pr: String = inp.get("punch", "")
 		if frozen_pr != "": _queue_punch(frozen_pr, inp)    # ...but the buffer (C3) never eats an input
+		if inp.has("pocket_step"):
+			# Keep one fresh intent without advancing the frozen body/support clock.
+			P["frozen_step"] = {"direction": inp["pocket_step"], "remaining": BodyControl.STEP_BUFFER_SECONDS}
 		return
 	clock_acc += 1.0
 	if tactic_fx.has("clock_mult_leading") and (ep_p - int(seg_score0[2])) > (ep_b - int(seg_score0[3])):
@@ -9934,7 +9961,8 @@ func _step_inner(inp: Dictionary) -> void:
 	for F in [P, B]:
 		var fk := "P" if F == P else "B"
 		var guarding: bool = bool(inp.get("block", false)) if F == P else (bool(F["blocking"]) or int(F["guard_t"]) > 0)
-		var acting: bool = F["busy_t"] > 0 or guarding or int(F["dodge_t"]) > 0
+		var body_active: bool = Vector2(F.get("body_control", {}).get("axis", Vector2.ZERO)).length() > 0.02 or not F.get("body_control", {}).get("step", {}).is_empty()
+		var acting: bool = F["busy_t"] > 0 or guarding or int(F["dodge_t"]) > 0 or body_active
 		if F["busy_t"] > 0: F["busy_t"] -= 1
 		var sreg := 1.0
 		if buffs[fk].has("stamina_regen_x2"): sreg = 2.0
@@ -10043,6 +10071,14 @@ func _step_inner(inp: Dictionary) -> void:
 	var right := Vector2(-fwd.y, fwd.x)
 	var before: Vector2 = P["pos"]
 	var dist0: float = B["pos"].distance_to(P["pos"])
+	if inp.has("body_axis") or inp.has("pocket_step") or P.has("body_control") or P.has("frozen_step"):
+		var step_request: Vector2 = inp.get("pocket_step", Vector2.ZERO)
+		var allowed: bool = not casting_p and P["pending"].is_empty() and int(P["busy_t"]) <= 0 and not dodging
+		if P.has("frozen_step"):
+			if step_request == Vector2.ZERO: step_request = P["frozen_step"]["direction"]
+			P.erase("frozen_step")
+		var result := BodyControl.advance(P, B, inp.get("body_axis", Vector2.ZERO), step_request, DT, allowed, RING_HALF)
+		if not result.is_empty(): _ev("footwork", result)
 	P["pos"] += (right * mv.x - fwd * mv.y) * spd * DT * (float(P["pkg"].get("backpedal_mult", T["movement"].get("backpedal_mult", 0.7))) if mv.y > 0 else 1.0)
 	_clamp(P)
 	# sprint-step (NP_03 s2.4): 0.8m burst, -4 stamina; toward him it is an approach, away it is a back-step
@@ -10188,4 +10224,9 @@ func hash_state() -> int:
 		pi, bdialect, bremix.get("id", ""), bmods, binterrupts, bfeint, bdesync_widen, bdesync_ms,
 		btempo_i, bstrings_done, bcooldown_until, breads, bdialogue, btrue_pattern, btransient, bcalled_phases, blanded,
 		rewards, seg_xp, dual_xp, duo.get("pair", ""), tform, comedown, transformed, btsurge, btform, bcomedown, btransformed, mclash, bgeneric.get("name", ""), bgeneric.get("seed", 0), generic_slots, neutral_on, bneutral_t, btaunts, btaunt_t, btempo_fast, bfootwork_audio, sealed_p, sealed_b, crowd_heat, stable.map(func(f): return str(f["name"])), rng.state]
+	# Preserve legacy snapshots without body state; new exchanges bind every
+	# body/footwork value, including a queued step and support, into replay.
+	if P.has("body_control") or B.has("body_control") or P.has("frozen_step"):
+		v.append(P.get("body_control", {})); v.append(B.get("body_control", {}))
+		v.append(P.get("frozen_step", {}))
 	return v.hash()

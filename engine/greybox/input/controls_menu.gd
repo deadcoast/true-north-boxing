@@ -29,7 +29,7 @@ func setup(input_adapter: RefCounted) -> void:
 	var title := Label.new(); title.text = "TWO HANDS  /  CONTROLS"; title.add_theme_font_size_override("font_size", 24); box.add_child(title)
 	var description := Label.new()
 	description.autowrap_mode = TextServer.AUTOWRAP_WORD
-	description.text = "Mouse: hold left button and flick.  Alt + punch: charged haymaker.\nChords: Back selects left hand; A / B / X / Y / D-pad Up select the punch.\nHold D-pad Down to wind up. All presets use the same combat rules."
+	description.text = "WASD / left stick: move the body. Up dips; down pulls; left/right slip.\nHold Ctrl / left-stick click and stroke a direction to step. Return to centre for another step.\nMouse: hold left button and flick. Alt + punch: haymaker. Space / RT: guard; C / LT: body target.\nChords: Back selects left hand; A / B / X / Y / D-pad Up select punches. H / LB retains specials."
 	box.add_child(description)
 	var preset := OptionButton.new(); preset_choice = preset; preset.add_item("Stick flicks + keyboard / mouse"); preset.add_item("Accessible button chords + keyboard / mouse")
 	preset.select(1 if adapter.preset == "chords" else 0); box.add_child(preset)
@@ -49,7 +49,7 @@ func setup(input_adapter: RefCounted) -> void:
 func _build_rows() -> void:
 	for child in rows.get_children(): rows.remove_child(child); child.queue_free()
 	for action in adapter.actions:
-		var label := Label.new(); label.text = ("Hissatsu arm" if action == "lb" else str(action).replace("L_", "Left ").replace("R_", "Right ").replace("_", " ").capitalize()); label.size_flags_horizontal = Control.SIZE_EXPAND_FILL; rows.add_child(label)
+		var label := Label.new(); label.text = ("Hissatsu arm" if action == "lb" else "Footwork modifier" if action == "sprint" else str(action).replace("L_", "Left ").replace("R_", "Right ").replace("_", " ").capitalize()); label.size_flags_horizontal = Control.SIZE_EXPAND_FILL; rows.add_child(label)
 		var button := Button.new(); button.text = _binding_text(action); button.custom_minimum_size.x = 330; rows.add_child(button)
 		button.pressed.connect(_begin_bind.bind(action, button))
 

@@ -3,6 +3,7 @@ extends RefCounted
 ## Edges are queued, never inferred solely from the last rendered frame.
 
 const PREFIX := "tnb_"
+const BodyControl := preload("res://sim/body_control.gd")
 const SETTINGS := "user://controls.cfg"
 const ROWS := ["L_UPPERCUT", "L_HOOKERCUT", "L_HOOK", "L_FLARED", "L_STRAIGHT",
 	"R_STRAIGHT", "R_FLARED", "R_HOOK", "R_HOOKERCUT", "R_UPPERCUT"]
@@ -27,6 +28,8 @@ var mouse_vector := Vector2.ZERO
 var mouse_down := false
 var mouse_fired := false
 var require_neutral := false
+var step_armed := true
+var body_blocked := false
 
 func _init() -> void:
 	reset_bindings()
@@ -44,6 +47,8 @@ func reset_bindings() -> void:
 	for pair in [["rise", JOY_BUTTON_A], ["power", JOY_BUTTON_RIGHT_SHOULDER], ["lb", JOY_BUTTON_LEFT_SHOULDER], ["windup", JOY_BUTTON_DPAD_DOWN]]:
 		var e := InputEventJoypadButton.new(); e.button_index = pair[1]; e.device = -1
 		InputMap.action_add_event(PREFIX + str(pair[0]), e)
+	var footwork := InputEventJoypadButton.new(); footwork.button_index = JOY_BUTTON_LEFT_STICK; footwork.device = -1
+	InputMap.action_add_event(PREFIX + "sprint", footwork)
 	for pair in [["block", JOY_AXIS_TRIGGER_RIGHT], ["body", JOY_AXIS_TRIGGER_LEFT]]:
 		var e := InputEventJoypadMotion.new(); e.axis = pair[1]; e.axis_value = 1.0; e.device = -1
 		InputMap.action_add_event(PREFIX + str(pair[0]), e)
@@ -91,6 +96,7 @@ func load_settings(path: String = SETTINGS) -> Error:
 
 func clear(wait_for_neutral: bool = false) -> void:
 	require_neutral = wait_for_neutral
+	body_blocked = wait_for_neutral; step_armed = not wait_for_neutral
 	held.clear(); since.clear(); queue.clear(); sticks.clear()
 	mouse_down = false; mouse_fired = false; mouse_vector = Vector2.ZERO
 
@@ -130,8 +136,9 @@ func handle_event(e: InputEvent, now: int, combat: bool = true) -> bool:
 			consumed = true
 		elif pressed and action in ["slip_left", "slip_right", "weave", "lean", "duck"]:
 			queue.append({"dodge": {"slip_left": "SLIP_L", "slip_right": "SLIP_R", "weave": "WEAVE_R", "lean": "LEAN", "duck": "DUCK"}[action]}); consumed = true
-		elif pressed and action in ["sprint", "clinch", "taunt"]:
+		elif pressed and action in ["clinch", "taunt"]:
 			queue.append({action: true}); consumed = true
+		elif action == "sprint": consumed = true # held footwork modifier; no legacy burst edge
 	if not combat: return false
 	if e is InputEventJoypadMotion and e.axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:
 		var v: Vector2 = sticks.get(e.device, {}).get("v", Vector2.ZERO)
@@ -205,6 +212,17 @@ func take_intent() -> Dictionary:
 	for device in Input.get_connected_joypads():
 		var pad := Vector2(Input.get_joy_axis(device, JOY_AXIS_LEFT_X), Input.get_joy_axis(device, JOY_AXIS_LEFT_Y))
 		if pad.length() > 0.2: movement += pad; break
-	var result := {"move": movement.limit_length(1.0), "block": down("block"), "body": down("body"), "power": down("power"), "lb": down("lb"), "rise": down("rise")}
+	# The body disk is anatomical x/right and y/up, explicitly converted from
+	# Godot's down-positive stick. Root travel has its own deliberate stroke.
+	var axis := BodyControl.radial(Vector2(movement.x, -movement.y))
+	if body_blocked:
+		if movement.length() <= BodyControl.DEADZONE: body_blocked = false; step_armed = true
+		axis = Vector2.ZERO
+	var step_direction := Vector2.ZERO
+	if axis.length() < 0.20: step_armed = true
+	if down("sprint") and axis.length() >= 0.55 and step_armed:
+		step_direction = axis; step_armed = false
+	var result := {"body_axis": Vector2.ZERO if down("sprint") else axis, "block": down("block"), "body": down("body"), "power": down("power"), "lb": down("lb"), "rise": down("rise")}
+	if step_direction != Vector2.ZERO: result["pocket_step"] = step_direction
 	if not queue.is_empty(): result.merge(queue.pop_front(), true)
 	return result
