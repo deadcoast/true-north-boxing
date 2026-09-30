@@ -49,7 +49,10 @@ func _run() -> void:
 			var before: Vector2 = scene.sim.P["pos"]
 			scene.combat_input.clear(); key(KEY_A if direction < 0 else KEY_D, true)
 			scene.sim.step(scene._intent()); key(KEY_A if direction < 0 else KEY_D, false)
-			check("screen lateral %s / %s" % [angle, direction], (scene.sim.P["pos"] - before).dot(camera_right) * direction > 0)
+			check("anatomical body lateral %s / %s" % [angle, direction], (scene.sim._head_world(scene.sim.P,scene.sim.B)["p"] - before).dot(camera_right) * direction > 0 and scene.sim.P["pos"].is_equal_approx(before))
+			scene._intent(); key(KEY_CTRL, true); key(KEY_A if direction < 0 else KEY_D, true)
+			scene.sim.step(scene._intent()); key(KEY_A if direction < 0 else KEY_D, false); key(KEY_CTRL, false)
+			check("deliberate lateral step %s / %s" % [angle, direction], (scene.sim.P["pos"] - before).dot(camera_right) * direction > 0)
 			var f = fresh(); f.P["pos"] = away; f.B["pos"] = -away
 			f._set_dodge(f.P, "SLIP", int(direction))
 			check("screen slip %s / %s" % [angle, direction], (f._head_world(f.P, f.B)["p"] - f.P["pos"]).dot(camera_right) * direction > 0)
@@ -92,12 +95,21 @@ func _run() -> void:
 		var before_hits: int = scene.fx_counts.get("hit", 0)
 		for row in scene.combat_input.ROWS:
 			var code: int = scene.combat_input.KEYS[row]
+			var counts: Dictionary = scene.fx_counts.duplicate()
+			var at_start: Vector2 = scene.sim.P["pos"]
+			# Maintain range with actual native footwork after herding. Punches
+			# no longer supply an invisible approach step on every key press.
+			if scene.sim.P["pos"].distance_to(scene.sim.B["pos"]) > 1.4:
+				key(KEY_CTRL, true); key(KEY_W, true)
+				for frame in int(hz * 0.5): scene._process(1.0 / hz)
+				key(KEY_W, false); key(KEY_CTRL, false)
 			key(code, true)
 			for frame in int(hz * 1.4):
 				scene._process(1.0 / hz)
 				if hz == 60 and row == "R_HOOK" and frame in [0, 5, 10, 14, 18, 24]: await capture("hook-%02d" % frame)
 			key(code, false)
 			for frame in int(hz * 0.2): scene._process(1.0 / hz)
+			if hz == 30: print("NATIVE RANGE ", row, " range=", scene.sim.P["pos"].distance_to(scene.sim.B["pos"]), " root_travel=", at_start.distance_to(scene.sim.P["pos"]), " hits=", int(scene.fx_counts.get("hit",0))-int(counts.get("hit",0)), " whiffs=", int(scene.fx_counts.get("whiff",0))-int(counts.get("whiff",0)), " blocks=", int(scene.fx_counts.get("block",0))-int(counts.get("block",0)))
 		check("all ten native punch keys commit at %d Hz" % hz, int(scene.fx_counts.get("punch", 0)) - before_punches == 10)
 		check("sustained exchange resolves hits at %d Hz" % hz, int(scene.fx_counts.get("hit", 0)) - before_hits >= 6)
 	# Follow the visible timing state, using native key edges, not forced beats.

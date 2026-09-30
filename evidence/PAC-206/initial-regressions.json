@@ -1,0 +1,1711 @@
+{
+  "passed": false,
+  "runs": [
+    {
+      "name": "smoke-00",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-00.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=0"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-01",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-01.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=1"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-02",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-02.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=2"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-03",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-03.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=3"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-04",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-04.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=4"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-05",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-05.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=5"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-06",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-06.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=6"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-07",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-07.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=7"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-08",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-08.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=8"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-09",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-09.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=9"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-10",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-10.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=10"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-11",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-11.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=11"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-12",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-12.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=12"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-13",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-13.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=13"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-14",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-14.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=14"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-15",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-15.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=15"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-16",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-16.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=16"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-17",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-17.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=17"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-18",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-18.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=18"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-19",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-19.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=19"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-20",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-20.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=20"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-21",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-21.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=21"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-22",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-22.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=22"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "smoke-23",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\smoke-23.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "smoke",
+        "boss=23"
+      ],
+      "verdicts": [
+        "SMOKE VERDICT :: GREEN (454/454)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "determinism",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\determinism.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "determinism"
+      ],
+      "verdicts": [
+        "DETERMINISM VERDICT :: GREEN (57/57)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "geometry",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\geometry.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "geometry"
+      ],
+      "verdicts": [
+        "GEOMETRY VERDICT :: GREEN (5/5)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "audit",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\audit.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "audit"
+      ],
+      "verdicts": [
+        "AUDIT VERDICT :: GREEN (3 of 3 viable)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "faucets",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\faucets.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "--",
+        "faucets"
+      ],
+      "verdicts": [
+        "FAUCETS VERDICT :: GREEN"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_academy",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_academy.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_academy.gd",
+        "--",
+        "academy",
+        "format=sanctioned",
+        "kizuna=YURI+MARTA:150",
+        "purse=spirits:40,beans:30",
+        "facility=wall:3",
+        "forge=YURI+MARTA",
+        "board=YURI,MARTA,RORY,PRIYA,SAM"
+      ],
+      "verdicts": [
+        "ACADEMY DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_anti",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_anti.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_anti.gd",
+        "--",
+        "boss=19"
+      ],
+      "verdicts": [
+        "ANTI-YOU DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_automation_audio",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_automation_audio.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_automation_audio.gd",
+        "--",
+        "episode"
+      ],
+      "verdicts": [
+        "DRIVE :: GREEN"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_awaken",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_awaken.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_awaken.gd",
+        "--",
+        "level=RORY:20",
+        "flag=story:provincials_semifinal,story:manifest:RORY,secret:RORY,story:trial:RORY,story:sealed_house_resolved",
+        "form=RORY:manifest"
+      ],
+      "verdicts": [
+        "AWAKENING DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_boxing_motion",
+      "passed": false,
+      "exit": 1,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_boxing_motion.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_boxing_motion.gd",
+        "--",
+        "welcome"
+      ],
+      "verdicts": [
+        "BOXING MOTION VERDICT :: RED (283/330)"
+      ],
+      "errors": [
+        "[FAIL] modifier matrix 0 keeps the whole working arm visible",
+        "[FAIL] modifier matrix 0 keeps stationary punch drive planted through delivery",
+        "[FAIL] modifier matrix 1 keeps the whole working arm visible",
+        "[FAIL] modifier matrix 1 keeps stationary punch drive planted through delivery",
+        "[FAIL] modifier matrix 2 keeps the whole working arm visible",
+        "[FAIL] modifier matrix 2 keeps stationary punch drive planted through delivery",
+        "[FAIL] modifier matrix 3 keeps the whole working arm visible",
+        "[FAIL] modifier matrix 3 keeps stationary punch drive planted through delivery",
+        "[FAIL] modifier matrix 4 keeps the whole working arm visible",
+        "[FAIL] modifier matrix 4 keeps stationary punch drive planted through delivery",
+        "[FAIL] modifier matrix 5 keeps the whole working arm visible",
+        "[FAIL] modifier matrix 5 keeps stationary punch drive planted through delivery",
+        "[FAIL] modifier matrix 6 keeps the whole working arm visible",
+        "[FAIL] modifier matrix 7 keeps the whole working arm visible",
+        "[FAIL] BOXERPUNCHER forward leads with the travel-side foot promptly",
+        "[FAIL] BOXERPUNCHER forward transfers support through attached continuous anatomy",
+        "[FAIL] BOXERPUNCHER retreat leads with the travel-side foot promptly",
+        "[FAIL] BOXERPUNCHER retreat transfers support through attached continuous anatomy",
+        "[FAIL] BOXERPUNCHER left leads with the travel-side foot promptly",
+        "[FAIL] BOXERPUNCHER right leads with the travel-side foot promptly",
+        "[FAIL] OUTBOXER forward leads with the travel-side foot promptly",
+        "[FAIL] OUTBOXER forward transfers support through attached continuous anatomy",
+        "[FAIL] OUTBOXER retreat leads with the travel-side foot promptly",
+        "[FAIL] OUTBOXER retreat transfers support through attached continuous anatomy",
+        "[FAIL] OUTBOXER left leads with the travel-side foot promptly",
+        "[FAIL] OUTBOXER right leads with the travel-side foot promptly",
+        "[FAIL] SWARMER forward leads with the travel-side foot promptly",
+        "[FAIL] SWARMER forward transfers support through attached continuous anatomy",
+        "[FAIL] SWARMER retreat leads with the travel-side foot promptly",
+        "[FAIL] SWARMER retreat transfers support through attached continuous anatomy",
+        "[FAIL] SWARMER left leads with the travel-side foot promptly",
+        "[FAIL] SWARMER right leads with the travel-side foot promptly",
+        "[FAIL] SLUGGER forward leads with the travel-side foot promptly",
+        "[FAIL] SLUGGER forward transfers support through attached continuous anatomy",
+        "[FAIL] SLUGGER retreat leads with the travel-side foot promptly",
+        "[FAIL] SLUGGER retreat transfers support through attached continuous anatomy",
+        "[FAIL] SLUGGER left leads with the travel-side foot promptly",
+        "[FAIL] SLUGGER right leads with the travel-side foot promptly",
+        "[FAIL] LEAN counter keeps the whole-body transition continuous",
+        "[FAIL] STEP_OUT native defense earns and delivers a counter",
+        "[FAIL] STEP_OUT counter keeps the whole-body transition continuous",
+        "[FAIL] range counter rejects stopped retreat credit",
+        "[FAIL] step-out grants the authored RFX-scaled window",
+        "[FAIL] range counter rejects consumed retreat credit",
+        "[FAIL] range counter rejects approach retreat credit",
+        "[FAIL] range counter rejects circle retreat credit",
+        "[FAIL] range counter rejects reversed retreat credit"
+      ],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_broadcast",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_broadcast.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_broadcast.gd",
+        "--",
+        "episode"
+      ],
+      "verdicts": [
+        "DRIVE :: GREEN"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_bzone",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_bzone.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_bzone.gd",
+        "--",
+        "boss=16"
+      ],
+      "verdicts": [
+        "ENEMY TRANSFORMATION DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_clash",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_clash.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_clash.gd",
+        "--",
+        "boss=19",
+        "btransform=manifest@composure<80",
+        "level=RORY:20",
+        "flag=story:provincials_semifinal,story:manifest:RORY"
+      ],
+      "verdicts": [
+        "MANIFEST CLASH DRIVE :: GREEN (5/5)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_club_journey",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_club_journey.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_club_journey.gd",
+        "--",
+        "club"
+      ],
+      "verdicts": [
+        "CLUB JOURNEY VERDICT :: GREEN (133/133)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_combat_loop",
+      "passed": false,
+      "exit": 1,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_combat_loop.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_combat_loop.gd",
+        "--",
+        "welcome"
+      ],
+      "verdicts": [
+        "COMBAT LOOP VERDICT :: RED (58/67)"
+      ],
+      "errors": [
+        "[FAIL] screen lateral 0.0 / -1.0",
+        "[FAIL] screen lateral 0.0 / 1.0",
+        "[FAIL] screen lateral 1.5707963267949 / -1.0",
+        "[FAIL] screen lateral 1.5707963267949 / 1.0",
+        "[FAIL] screen lateral 3.14159265358979 / -1.0",
+        "[FAIL] screen lateral 3.14159265358979 / 1.0",
+        "[FAIL] screen lateral 4.71238898038469 / -1.0",
+        "[FAIL] screen lateral 4.71238898038469 / 1.0",
+        "[FAIL] visible clinch cues accept all four native alternating taps"
+      ],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_continuity",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_continuity.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_continuity.gd",
+        "--",
+        "episode"
+      ],
+      "verdicts": [
+        "DRIVE :: GREEN"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_corner_calls",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_corner_calls.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_corner_calls.gd",
+        "--",
+        "episode"
+      ],
+      "verdicts": [
+        "DRIVE :: GREEN"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_duo",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_duo.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_duo.gd",
+        "--",
+        "kizuna=RORY+PRIYA:90"
+      ],
+      "verdicts": [
+        "DUO DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_environment",
+      "passed": false,
+      "exit": 1,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_environment.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_environment.gd",
+        "--",
+        "episode"
+      ],
+      "verdicts": [
+        "DRIVE :: RED"
+      ],
+      "errors": [
+        "[FAIL] native walk reaches (0.0, 10.0)",
+        "[FAIL] native walk reaches (11.0, 10.0)",
+        "[FAIL] native walk reaches (11.0, -14.0)",
+        "[FAIL] native walk reaches (-30.0, -14.0)",
+        "[FAIL] native walk reaches (-30.0, -24.0)",
+        "[FAIL] native walk reaches (-34.0, -24.0)",
+        "[FAIL] native walk reaches (-30.0, -24.0)",
+        "[FAIL] native walk reaches (-30.0, -14.0)",
+        "[FAIL] native walk reaches (30.0, -14.0)",
+        "[FAIL] native walk reaches (30.0, -22.0)",
+        "[FAIL] native walk reaches (30.0, -14.0)",
+        "[FAIL] native walk reaches (11.0, -14.0)",
+        "[FAIL] native walk reaches (11.0, 18.0)",
+        "[FAIL] native walk reaches (0.0, 18.0)",
+        "[FAIL] native walk reaches (0.0, 32.0)"
+      ],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_episode",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_episode.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_episode.gd",
+        "--",
+        "episode"
+      ],
+      "verdicts": [
+        "DRIVE :: GREEN"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_exhibition",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_exhibition.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_exhibition.gd",
+        "--",
+        "format=exhibition_2v2",
+        "kizuna=RORY+PRIYA:90"
+      ],
+      "verdicts": [
+        "EXHIBITION DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_facilities",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_facilities.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_facilities.gd",
+        "--",
+        "purse=hbp:3000,spirits:150",
+        "flag=story:charter_saved,quest:gym_funding,story:nationals"
+      ],
+      "verdicts": [
+        "FACILITIES DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_fighter_visuals",
+      "passed": false,
+      "exit": -999,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_fighter_visuals.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_fighter_visuals.gd",
+        "--",
+        "episode"
+      ],
+      "verdicts": [],
+      "errors": [
+        "[FAIL] neutral player remains visible outside opponent clearance",
+        "SCRIPT ERROR: Attempt to call function 'get_shader_parameter' in base 'null instance' on a null instance."
+      ],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_forge",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_forge.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_forge.gd",
+        "--",
+        "format=sanctioned",
+        "kizuna=YURI+MARTA:150",
+        "purse=spirits:40,beans:30",
+        "facility=wall:3",
+        "board=YURI,MARTA,RORY,PRIYA,SAM"
+      ],
+      "verdicts": [
+        "FORGE DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_formation",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_formation.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_formation.gd",
+        "--",
+        "formation"
+      ],
+      "verdicts": [
+        "FORMATION DRIVE :: GREEN (12/12)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_foundation",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_foundation.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_foundation.gd",
+        "--",
+        "welcome"
+      ],
+      "verdicts": [
+        "FOUNDATION VERDICT :: GREEN (38/38)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_gear",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_gear.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_gear.gd",
+        "--",
+        "purse=hbp:600",
+        "flag=story:regionals",
+        "gear=tape_wraps"
+      ],
+      "verdicts": [
+        "GEAR DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_growth",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_growth.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_growth.gd",
+        "--",
+        "level=RORY:10,PRIYA:10",
+        "purse=spirits:40,beans:20",
+        "beans=PWR:6",
+        "facility=film:2",
+        "growth=RORY:trial:spar_won"
+      ],
+      "verdicts": [
+        "GROWTH DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_inherit",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_inherit.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_inherit.gd",
+        "--",
+        "format=sanctioned",
+        "kizuna=RORY+SAM:150"
+      ],
+      "verdicts": [
+        "INHERITANCE DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_input",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_input.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_input.gd",
+        "--",
+        "dummy"
+      ],
+      "verdicts": [
+        "INPUT DRIVE :: GREEN (98/98)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_locker",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_locker.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_locker.gd",
+        "--",
+        "purse=prestige:60"
+      ],
+      "verdicts": [
+        "LOCKER DRIVE :: GREEN (10/10)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_manifest",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_manifest.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_manifest.gd",
+        "--",
+        "level=RORY:20",
+        "flag=story:provincials_semifinal,story:manifest:RORY"
+      ],
+      "verdicts": [
+        "MANIFEST DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_mirror",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_mirror.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_mirror.gd",
+        "--",
+        "habits=RORY:L_STRAIGHT+L_STRAIGHT+R_STRAIGHT*8,RORY:L_HOOK+R_HOOK*5,RORY:counter=R_HOOK*6/6"
+      ],
+      "verdicts": [
+        "MIRROR DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_readability",
+      "passed": false,
+      "exit": 1,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_readability.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_readability.gd",
+        "--",
+        "welcome"
+      ],
+      "verdicts": [
+        "VERDICT :: RED (72/113)"
+      ],
+      "errors": [
+        "[FAIL] full body (1280, 720) distance 0.7 angle 0.0",
+        "[FAIL] full body (1280, 720) distance 0.7 angle 1.6",
+        "[FAIL] full body (1280, 720) distance 0.7 angle 3.1",
+        "[FAIL] full body (1280, 720) distance 0.7 angle 4.7",
+        "[FAIL] full body (1280, 720) distance 1.0 angle 0.0",
+        "[FAIL] full body (1280, 720) distance 1.0 angle 1.6",
+        "[FAIL] full body (1280, 720) distance 1.0 angle 3.1",
+        "[FAIL] full body (1280, 720) distance 1.0 angle 4.7",
+        "[FAIL] full body (1280, 720) distance 1.5 angle 0.0",
+        "[FAIL] full body (1280, 720) distance 1.5 angle 1.6",
+        "[FAIL] full body (1280, 720) distance 1.5 angle 3.1",
+        "[FAIL] full body (1280, 720) distance 1.5 angle 4.7",
+        "[FAIL] full body (1280, 720) distance 2.0 angle 0.0",
+        "[FAIL] full body (1280, 720) distance 2.0 angle 1.6",
+        "[FAIL] full body (1280, 720) distance 2.0 angle 3.1",
+        "[FAIL] full body (1280, 720) distance 2.0 angle 4.7",
+        "[FAIL] corner full body (1280, 720)",
+        "[FAIL] all corner boundaries use per-fragment foreground clearance (1280, 720)",
+        "[FAIL] full body (960, 600) distance 0.7 angle 0.0",
+        "[FAIL] full body (960, 600) distance 0.7 angle 1.6",
+        "[FAIL] full body (960, 600) distance 0.7 angle 3.1",
+        "[FAIL] full body (960, 600) distance 0.7 angle 4.7",
+        "[FAIL] full body (960, 600) distance 1.0 angle 0.0",
+        "[FAIL] full body (960, 600) distance 1.0 angle 1.6",
+        "[FAIL] full body (960, 600) distance 1.0 angle 3.1",
+        "[FAIL] full body (960, 600) distance 1.0 angle 4.7",
+        "[FAIL] full body (960, 600) distance 1.5 angle 0.0",
+        "[FAIL] full body (960, 600) distance 1.5 angle 1.6",
+        "[FAIL] full body (960, 600) distance 1.5 angle 3.1",
+        "[FAIL] full body (960, 600) distance 1.5 angle 4.7",
+        "[FAIL] full body (960, 600) distance 2.0 angle 0.0",
+        "[FAIL] full body (960, 600) distance 2.0 angle 1.6",
+        "[FAIL] full body (960, 600) distance 2.0 angle 3.1",
+        "[FAIL] full body (960, 600) distance 2.0 angle 4.7",
+        "[FAIL] full body (960, 600) distance 4.0 angle 0.0",
+        "[FAIL] full body (960, 600) distance 4.0 angle 1.6",
+        "[FAIL] full body (960, 600) distance 4.0 angle 3.1",
+        "[FAIL] full body (960, 600) distance 4.0 angle 4.7",
+        "[FAIL] corner full body (960, 600)",
+        "[FAIL] all corner boundaries use per-fragment foreground clearance (960, 600)",
+        "[FAIL] ordinary orbit respects its presentation cap"
+      ],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_readiness",
+      "passed": false,
+      "exit": 1,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_readiness.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_readiness.gd",
+        "--",
+        "welcome"
+      ],
+      "verdicts": [
+        "READINESS VERDICT :: RED (131/152)"
+      ],
+      "errors": [
+        "[FAIL] rory-yuri / 30 Hz opponent stays clear of HUD",
+        "[FAIL] rory-yuri / 60 Hz opponent stays clear of HUD",
+        "[FAIL] rory-yuri / 144 Hz opponent stays clear of HUD",
+        "[FAIL] priya-marta / 30 Hz opponent stays clear of HUD",
+        "[FAIL] priya-marta / 60 Hz opponent stays clear of HUD",
+        "[FAIL] priya-marta / 144 Hz opponent stays clear of HUD",
+        "[FAIL] marcus-sam / 30 Hz opponent stays clear of HUD",
+        "[FAIL] marcus-sam / 60 Hz opponent stays clear of HUD",
+        "[FAIL] marcus-sam / 144 Hz opponent stays clear of HUD",
+        "[FAIL] june-dual / 30 Hz opponent stays clear of HUD",
+        "[FAIL] june-dual / 60 Hz opponent stays clear of HUD",
+        "[FAIL] june-dual / 144 Hz opponent stays clear of HUD",
+        "[FAIL] ep1-scrap / 30 Hz opponent stays clear of HUD",
+        "[FAIL] ep1-scrap / 60 Hz opponent stays clear of HUD",
+        "[FAIL] ep1-scrap / 144 Hz opponent stays clear of HUD",
+        "[FAIL] fatigue-recovery / 30 Hz opponent stays clear of HUD",
+        "[FAIL] fatigue-recovery / 30 Hz gassed through real costs then recovered",
+        "[FAIL] fatigue-recovery / 60 Hz opponent stays clear of HUD",
+        "[FAIL] fatigue-recovery / 60 Hz gassed through real costs then recovered",
+        "[FAIL] fatigue-recovery / 144 Hz opponent stays clear of HUD",
+        "[FAIL] fatigue-recovery / 144 Hz gassed through real costs then recovered"
+      ],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_recruit",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_recruit.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_recruit.gd",
+        "--",
+        "boss=1"
+      ],
+      "verdicts": [
+        "RECRUIT DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_rep",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_rep.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_rep.gd",
+        "--",
+        "boss=7",
+        "scrap=SCR-01",
+        "district=rink"
+      ],
+      "verdicts": [
+        "REP DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_roles",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_roles.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_roles.gd",
+        "--",
+        "purse=prestige:70",
+        "flag=story:regionals,story:nationals",
+        "facility=bags:1"
+      ],
+      "verdicts": [
+        "ROLES DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_scouting",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_scouting.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_scouting.gd",
+        "--",
+        "purse=prestige:100"
+      ],
+      "verdicts": [
+        "SCOUTING DRIVE :: GREEN (8/8)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_techniques",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_techniques.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_techniques.gd",
+        "--",
+        "level=RORY:15,PRIYA:5",
+        "purse=hbp:1000",
+        "flag=story:regionals,quest:coach_questline",
+        "facility=bags:1",
+        "tapes=Black Ice:1"
+      ],
+      "verdicts": [
+        "TECHNIQUES DRIVE :: GREEN (10/10)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_vendors",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_vendors.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_vendors.gd",
+        "--",
+        "boss=7",
+        "scrap=SCR-01",
+        "district=downtown",
+        "rep=downtown:9",
+        "purse=hbp:1500",
+        "level=RORY:15"
+      ],
+      "verdicts": [
+        "VENDORS DRIVE :: GREEN (7/7)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    },
+    {
+      "name": "drive_zone",
+      "passed": true,
+      "exit": 0,
+      "command": [
+        "C:\\Users\\ryanf\\AppData\\Local\\Microsoft\\WinGet\\Packages\\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\\Godot_v4.7.2-stable_win64_console.exe",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\.PACER\\boxing-foundation-v2\\runtime01\\drive_zone.engine.log",
+        "--path",
+        "C:\\Users\\ryanf\\github\\_games\\true-north-boxing\\engine\\greybox",
+        "-s",
+        "tools/drive_zone.gd",
+        "--",
+        "level=RORY:20",
+        "flag=story:provincials_semifinal"
+      ],
+      "verdicts": [
+        "ZONE DRIVE :: GREEN (6/6)"
+      ],
+      "errors": [],
+      "environment_diagnostics": []
+    }
+  ]
+}

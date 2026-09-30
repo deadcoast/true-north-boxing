@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[PASS] automated episode output is muted before playback
+[PASS] normal episode entry pauses simulation
+[PASS] native episode action: new
+[PASS] native episode action: next
+[PASS] the missing name mutes a real tape audio stream
+[PASS] tape sound hole lasts exactly a second
+[PASS] native episode action: next
+[PASS] archive gives authored legend build and 80 initial tension
+ARCHIVE LESSON 0 tick 2 tension 80.0
+ARCHIVE HIT L_STRAIGHT frame 160
+ARCHIVE LESSON 1 tick 124 tension 87.0
+ARCHIVE DEBUG {"B":{"block_t":0,"blocking":false,"busy_t":0,"charge_t":0,"cmd":{},"comp":92.0,"comp_max":92.0,"counter_state_t":0,"counter_t":0,"dodge":"","dodge_at":0,"dodge_dir":1,"dodge_plan":[],"dodge_t":0,"drops":0,"element":"NONE","flash_t":0,"guard":100.20202020202,"guard_max":100.20202020202,"guard_open_t":0,"guard_t":0,"house":"none","no_regen_t":0,"pb_streak":0,"pending":{},"pkg":{"comp_pool_mult":1.15,"power_shred_mult":1.3,"ropes_dmg_mult":1.1,"slip_window_mult":0.85,"startup_mult":1.1},"pos":"(0.0, 2.8)","stamina":7.85833333333401,"stats":{"BLK":40,"CHN":40,"HRT":40,"PWR":40,"RFX":40,"SPD":40,"STA":40},"style":"SLUGGER","trait":{}},"P":{"block_t":0,"blocking":false,"busy_t":0,"charge_t":0,"cmd":{},"comp":84.11,"comp_max":190.0,"counter_state_t":0,"counter_t":0,"dodge":"","dodge_at":0,"dodge_dir":-1,"dodge_plan":[],"dodge_t":0,"drops":2,"element":"FROST","flash_t":0,"guard":127.979797979798,"guard_max":127.979797979798,"guard_open_t":0,"guard_t":0,"house":"none","house_status":"","no_regen_t":695,"pb_streak":0,"pending":{},"pkg":{},"pos":"(0.0, 3.5)","stamina":100.0,"stats":{"BLK":95,"CHN":95,"HRT":99,"PWR":95,"RFX":95,"SPD":95,"STA":95},"style":"BOXERPUNCHER","trait":{}},"fx":{"boss_act":87,"boss_windup":76,"card_pinned":5,"crowd":3,"decoration_unlocked":1,"drop":2,"dual_end":1,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":11,"feed":23,"generic":1,"hit":66,"interrupt":1,"matchup":3,"pi":1,"pi_count":1,"punch":2,"recover":29,"reward_toast":1,"sealed":3,"seg_end":1,"sensor":3,"tell":30,"whiff":1,"xp":2},"lesson":1,"mode":"OVER","pattern":{"bait":[],"desperation":{},"file":"assembled","id":"generic:lakehead_1976","idle":[],"interrupt":[{"response":"stagger(800)","strings":["S1","S2"]}],"meta":{"dialect":"gym","element":"NONE","generic":true,"house":"none","label":"LAKEHEAD · 1976","pieces":["sl1a","sl1c"],"seed":1976,"slot":"R1","style":"SLUGGER","tier":1},"phases":[],"punish":[{"piece":"slp1","response":"S1 toward_corner","trigger":"player_corner_entry"}],"select":{"reweights":[],"weights":{"S1":65,"S2":35}},"strings":{"S1":{"actions":["JAB","L_HOOK","R_HAY"],"class":"loud","label":"Lumber","piece":"sl1a","tags":[],"tell":{"channel":"visual-body","motif":"chin_dip","ms":900},"tier":1},"S2":{"actions":["JAB","ADVANCE(40cm)","R_HOOK"],"class":"loud","label":"Woodpile","piece":"sl1c","tags":[],"tell":{"channel":"visual-body","motif":"glove_tap","ms":900},"tier":1}}},"state":"inspect"}
+[FAIL] archive sequence completed through actual boxing
+[PASS] automated episode cannot leave its output unmuted
+EPISODE JOURNEY 10 checks; 1 failures; C:/Users/ryanf/github/_games/true-north-boxing/.PACER/boxing-foundation-v3/runtime-final/user-data/drive_episode/Godot/app_userdata/TNB Greybox/episode-journey.json
+DRIVE :: RED

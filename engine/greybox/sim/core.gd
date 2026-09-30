@@ -11,6 +11,8 @@ const TNBProfile := preload("res://sim/profile.gd")   # the fighter who plays wi
 const TNBObjectives := preload("res://sim/objectives.gd")   # the scrap's micro-objective, judged from events (NP_02 s2.1)
 const TNBAssembler := preload("res://sim/assembler.gd")   # the generic opponent assembler (NP_04 s9)
 const BodyControl := preload("res://sim/body_control.gd")
+const PunchContact := preload("res://sim/punch_contact.gd")
+const RigSpace := preload("res://presentation/rig_space.gd")
 
 const TICK_HZ := 120
 const DT := 1.0 / 120.0
@@ -595,7 +597,7 @@ func _load_segment() -> void:
 	if P["trait"].size() > 0 or B["trait"].size() > 0:
 		_ev("traits", {"p": P["trait"], "b": B["trait"], "p_stats_mult": pmx, "b_stats_mult": bmx})
 		_say("TRAITS :: %s" % " | ".join(PackedStringArray([P, B].filter(func(F): return F["trait"].size() > 0).map(func(F): return "%s %s%s" % [pname() if F == P else boss_name, str(F["trait"]["name"]), " (doubled)" if int(F["trait"]["x"]) > 1 else ""]))))
-	bstate = "IDLE"; btimer = ms(600); bqueue = []; bphase = 1; bdesp_used = false; bpending = {}
+	bstate = "IDLE"; btimer = ms(600); bqueue = []; bphase = 1; bdesp_used = false; bpending = {}; B["pending"] = {}
 	contributed = 0.0
 	tokens = []; flags = {}; htokens = []
 	center_hold_t = 0; block_hold_t = 0; punch_ticks = []; punch_rows = []
@@ -1289,6 +1291,95 @@ func read_prob(tier: int, counter: bool, flash: bool, hiss: bool) -> float:
 	if hiss: p = 0.0
 	return p
 
+func _boxing_ensure() -> void:
+	P["motion_identity"] = pname(); B["motion_identity"] = boss_name
+	for pair in [[P,B],[B,P]]:
+		if not pair[0].has("boxing"):
+			PunchContact.sample(pair[0],pair[1],_head_world(pair[0],pair[1]),0)
+
+func _boxing_begin(who: String, row: String, mods: Array, startup: int, recovery: int) -> void:
+	_boxing_ensure()
+	var actor: Dictionary = P if who == "P" else B
+	var defender: Dictionary = B if who == "P" else P
+	var region := contact_region(actor,defender,row,"BODY" in mods)
+	var target := RigSpace.ground(region["target"]) + Vector3.UP * float(region["h"])
+	PunchContact.begin(actor,defender,row,mods,startup,recovery,target,float(region["reach"]))
+
+func _boxing_tick(boss_ticks: int) -> void:
+	_boxing_ensure()
+	_boxing_recoil(B,boss_ticks)
+	var travel: Dictionary = B["boxing"].get("travel",{})
+	if not travel.is_empty():
+		var before := float(travel["t"])/int(travel["duration"])
+		travel["t"] = mini(int(travel["duration"]),int(travel["t"])+boss_ticks)
+		var phase := float(travel["t"])/int(travel["duration"])
+		B["pos"] += (Vector2(travel["to"])-Vector2(travel["from"])) * (phase*phase*(3.0-2.0*phase)-before*before*(3.0-2.0*before)); _clamp(B); _separate()
+		if phase >= 1: B["boxing"].erase("travel")
+	BodyControl.advance(B,P,Vector2.ZERO,Vector2.ZERO,DT*boss_ticks,false,RING_HALF)
+	var preparation := {}
+	if bstate in ["TELL","HOLD"] and B["pending"].is_empty():
+		var upcoming := []
+		for source in pattern.get("strings",{}).get(bstring,{}).get("actions",[]): upcoming.append_array(parse_action(str(source)))
+		for item in upcoming:
+			if item.get("kind","") in ["counter_state","clinch"]: break
+			if item.get("kind","") == "punch":
+				var row: String = item["row"]
+				var duration := maxi(1,ms(float(pattern.get("strings",{}).get(bstring,{}).get("tell",{}).get("ms",700))))
+				var amount := clampf(1.0 - float(btimer)/duration,0,1)
+				var reg := contact_region(B,P,row,bool(item.get("body",false)))
+				preparation = {"row":row,"mods":["BODY"] if item.get("body",false) else [],"progress":0.22 * amount,"preload":amount,"target":RigSpace.contact(reg),"target_center":RigSpace.ground(reg["target"] - B["pos"]) + Vector3.UP * float(reg["h"])}
+				break
+	elif bstate == "ACTING" and B["pending"].is_empty() and not bqueue.is_empty():
+		preparation = B["boxing"].get("preparation",{})
+	B["motion_offer"] = move_toward(float(B.get("motion_offer",0)),1.0 if hands_down_t > 0 else 0.0,boss_ticks/12.0)
+	var motif := str(pattern.get("strings",{}).get(bstring,{}).get("tell",{}).get("motif",""))
+	B["motion_gear"] = move_toward(float(B.get("motion_gear",0)),1.0 if bstate in ["TELL","HOLD"] and motif.begins_with("glove_micro_turn") else 0.0,boss_ticks/12.0)
+	PunchContact.sample(P,B,_head_world(P,B),1)
+	PunchContact.sample(B,P,_head_world(B,P),boss_ticks,preparation)
+	# Sample both movers before applying either result. A late committed hand
+	# can trade within this interval; an early interrupted hand cannot finish.
+	var contacts := []
+	for who in ["P","B"]:
+		var actor: Dictionary = P if who == "P" else B
+		var defender: Dictionary = B if who == "P" else P
+		var result := PunchContact.contact(actor,defender)
+		if not result.is_empty(): contacts.append({"who":who,"contact":result,"pending":actor["pending"].duplicate(true)})
+	contacts.sort_custom(func(a,b): return float(a["contact"]["time"]) < float(b["contact"]["time"]))
+	for entry in contacts:
+		if mode != "FIGHT" or not clinch.is_empty(): break
+		var who: String = entry["who"]; var result: Dictionary = entry["contact"]
+		var actor: Dictionary = P if who == "P" else B
+		if actor["pending"].is_empty() and float(result["progress"]) < 0.8: continue
+		PunchContact.finish(actor,result)
+		_ev("boxing_contact", {"by":who,"contact":result})
+		if who == "P":
+			P["pending"] = entry["pending"]
+			_land_player_punch(result)
+		else:
+			var delivered: Dictionary = entry["pending"]
+			bpending = {"row":delivered["row"],"body":delivered["body"]}
+			_ev("boss_act", {"verb":"punch","row":delivered["row"],"body":delivered["body"],"recovery":delivered["recovery"],"contact":result})
+			_land_boss_punch(float(delivered["mult"]),result)
+
+func _boxing_recoil(fighter: Dictionary, ticks: int) -> void:
+	var state: Dictionary = fighter.get("boxing",{})
+	var recoil: Dictionary = state.get("recoil",{})
+	if recoil.is_empty(): return
+	var before := float(recoil["t"]) / 12.0
+	recoil["t"] = mini(12,int(recoil["t"])+ticks)
+	var after := float(recoil["t"]) / 12.0
+	fighter["pos"] += Vector2(recoil["offset"]) * (after*after*(3-2*after)-before*before*(3-2*before))
+	_clamp(fighter)
+	if recoil["t"] == 12: state.erase("recoil")
+
+func _boxing_push(fighter: Dictionary, offset: Vector2) -> void:
+	var state: Dictionary = fighter.get("boxing",{})
+	var existing: Dictionary = state.get("recoil",{})
+	if not existing.is_empty():
+		var t := float(existing["t"])/12.0
+		offset += Vector2(existing["offset"]) * (1-t*t*(3-2*t))
+	state["recoil"] = {"offset":offset,"t":0}
+
 func _try_execute_cmd() -> bool:
 	if P["cmd"].is_empty() or P["busy_t"] > 0: return false
 	var c: Dictionary = P["cmd"]; P["cmd"] = {}
@@ -1314,7 +1405,11 @@ func _try_execute_cmd() -> bool:
 	var st_cost := float(row["stamina"]) * (float(mod_table["POWER"]["stamina_mult"]) if "POWER" in c["mods"] else 1.0)
 	var fam_c := _punch_family(c["row"])
 	var reach_c := float(GEO[fam_c]["reach"]) * float(P["pkg"].get("reach_mult", 1.0)) * (float(P["pkg"].get("straight_reach_mult", 1.0)) if fam_c == "STRAIGHT" else 1.0)
-	var stepping: bool = bool(c.get("toward", false)) and P["pos"].distance_to(B["pos"]) > reach_c
+	var pocket: Dictionary = P.get("body_control", {}).get("step", {})
+	var native_body := P.has("body_control")
+	# Native entry is the committed foot stroke, never a body lean or a second
+	# automatic lunge. The legacy move API remains readable by old recordings.
+	var stepping: bool = Vector2(pocket.get("direction", Vector2.ZERO)).dot(BodyControl.forward(P, B)) > 0.5 if native_body else bool(c.get("toward", false)) and P["pos"].distance_to(B["pos"]) > reach_c
 	if stepping: c["mods"].append("STEPPING")
 	var hand_speed := float(_gassed(P)["hand_speed"])
 	var startup_mult: float = float(P["pkg"].get("startup_mult", 1.0)) * _zone_punch_mult() / hand_speed
@@ -1322,18 +1417,22 @@ func _try_execute_cmd() -> bool:
 		if modifier in c["mods"]: startup_mult *= float(mod_table[modifier]["startup_mult"])
 	if stepping: startup_mult *= float(mod_table["STEPPING"]["telegraph_mult"])
 	var startup := ms(float(row["startup_ms"]) * startup_mult)
+	var guard_start := clampf(float(P["block_t"]) / 6.0, 0.0, 1.0)
 	P["blocking"] = false; P["block_t"] = 0
-	_ev("punch", {"row": c["row"], "mods": c["mods"].duplicate(), "stepping": stepping, "startup": startup})
+	_ev("punch", {"row": c["row"], "mods": c["mods"].duplicate(), "stepping": stepping, "startup": startup, "guard_start":guard_start})
 	if (fam_c == "HOOK" or fam_c == "UPPERCUT") and P["pos"].distance_to(B["pos"]) <= float(AFF.get("style", {}).get("inside_range_m", 1.3)):
 		st_cost *= float(P["pkg"].get("inside_hook_upper_stamina_mult", 1.0))         # the swarmer's phone booth (s1.2)
 	P["pending"] = {"row": c["row"], "t": startup, "startup": startup, "mods": c["mods"], "hissatsu": hiss,
+		"guard_start":guard_start,
 		"counter": P["counter_t"] > 0, "flash": P["flash_t"] > 0, "stamina_cost": st_cost, "read": "none", "stepping": stepping,
-		"range_bonus": 0.0, "step_remaining": float(mod_table["STEPPING"]["range_bonus_m"]) if stepping else 0.0,
+		"range_bonus": 0.0, "step_remaining": float(mod_table["STEPPING"]["range_bonus_m"]) if stepping and not native_body else 0.0,
 		"step_direction": (B["pos"] - P["pos"]).normalized()}
 	P["counter_t"] = 0                                     # window spent by the attempt
 	P["busy_t"] = startup + ms(float(row["recovery_ms"]) * _zone_punch_mult() / hand_speed)
+	if native_body: _boxing_begin("P",c["row"],c["mods"],startup,int(P["busy_t"])-startup)
 	P["stamina"] = maxf(_sfloor(P), P["stamina"] - st_cost)
-	P["pos"] += (B["pos"] - P["pos"]).normalized() * LUNGE_P; _clamp(P)
+	if not native_body:
+		P["pos"] += (B["pos"] - P["pos"]).normalized() * LUNGE_P; _clamp(P)
 	passive_t = 0
 	if "BODY" in c["mods"]: head_streak = 0
 	else:
@@ -1424,10 +1523,13 @@ func _feint() -> void:
 	_fire_event("player_feint")
 	_fire_event("player_feint_" + _punch_family(row).to_lower())
 
-func _land_player_punch() -> void:
+func _land_player_punch(contact: Dictionary = {}) -> void:
 	var pd: Dictionary = P["pending"]; P["pending"] = {}
 	var body: bool = "BODY" in pd["mods"]
 	var geo := resolve_geometry(P, B, pd["row"], body, float(pd.get("range_bonus", 0.0)))
+	if not contact.is_empty():
+		geo = "MISS_PATH" if contact["kind"] == "miss" else "HIT"
+		body = contact["target"] == "body"
 	if geo != "HIT":
 		_power_open(pd)
 		if geo == "MISS_REACH" and ("POWER" in pd["mods"] or pd["row"].ends_with("HOOKERCUT")):
@@ -1460,14 +1562,15 @@ func _land_player_punch() -> void:
 	var src := {"counter": pd["counter"], "flash": pd["flash"], "power": "POWER" in pd["mods"], "body": body, "hissatsu": false, "jab": _punch_family(pd["row"]) == "STRAIGHT" and not ("POWER" in pd["mods"])}
 	if src["jab"] and _pas(P, "snap"): dmg *= float(_pv("snap", "jab_dmg_mult", 1.0))                  # PAC-090: Snap (NP_11 s3)
 	if src["jab"]: dmg *= _gear_mult(P, "jab_dmg")                                                     # PAC-094: his gloves (NP_11 s5, 3% at most)
-	if (B["blocking"] or B["guard_t"] > 0) and B["guard_open_t"] <= 0 and not pd["hissatsu"]:
+	var guarded: bool = contact["kind"] in ["guard","deflect"] if not contact.is_empty() else (B["blocking"] or B["guard_t"] > 0) and B["guard_open_t"] <= 0 and not pd["hissatsu"]
+	if guarded:
 		B["blocking"] = false
 		B["guard"] -= float(row["guard_dmg"]) * (0.8 if body else 1.0) * (float(P["pkg"].get("power_shred_mult", 1.0)) if _power_class(pd["row"], "POWER" in pd["mods"]) else 1.0)
 		_comp_damage("B", dmg * float(T["guard"]["chip_pct"]) / 100.0, src)
 		if B["guard"] <= 0.0:
 			B["guard_open_t"] = ms(float(T["guard"]["break_open_ms"])); B["guard_t"] = 0; wall_broken = true
 			_say("HIS GUARD IS BROKEN"); _ev("guard_break", {"who": "B"})
-		_ev("block", {"by": "B"})
+		_ev("block", {"by": "B", "contact":contact})
 		_power_open(pd)
 		_counter_state_trigger()
 		return
@@ -1476,7 +1579,7 @@ func _land_player_punch() -> void:
 		dmg *= 0.5
 		_foul("P", pf)
 	_on_hit_taken()
-	if bstate == "TELL":                                    # INTERRUPT (NP_04 s4): a clean jab-class hit breaks a string the pattern tags breakable; ARMORED never breaks
+	if bstate == "TELL" or not B["pending"].is_empty():       # Native committed startup remains interruptible under the same string rules.
 		if (src["jab"] or pd["hissatsu"]) and _interruptible(bstring):
 			var ib := _interrupt_block(bstring)
 			var stagger := ms(float(ib.get("stagger_ms", REMIX.get("stagger_ms_default", 800))))
@@ -1485,6 +1588,7 @@ func _land_player_punch() -> void:
 			binterrupts[bstring] = int(binterrupts.get(bstring, 0)) + 1
 			breads[bstring] = int(breads.get(bstring, 0)) + 1
 			bstate = "IDLE"; btimer = maxi(stagger, ms(desync_s * 1000.0)); bqueue = []; bfeint = ""
+			B["pending"] = {}; B["busy_t"] = stagger
 			if desync_s > 0.0: bdesync_widen = true; _ev("desync", {"string": bstring, "seconds": desync_s})
 			P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"]))
 			if not pd["hissatsu"]: _earn_tension(float(T.get("tension", {}).get("interrupt", 5)))
@@ -1503,7 +1607,8 @@ func _land_player_punch() -> void:
 	var push := (0.2 if pd["row"].ends_with("HOOKERCUT") or pd["row"].ends_with("FLARED") else 0.1) * float(tactic_fx.get("herd_mult", 1.0)) * float(P["pkg"].get("herd_mult", 1.0))
 	if _pas(P, "ring_cutter"): push *= float(_pv("ring_cutter", "herd_mult", 1.0))                     # PAC-090: Ring Cutter (NP_11 s3)
 	var before_push: Vector2 = B["pos"]
-	B["pos"] += (B["pos"] - P["pos"]).normalized() * push; _clamp(B)
+	if not contact.is_empty(): _boxing_push(B,(B["pos"] - P["pos"]).normalized() * push)
+	else: B["pos"] += (B["pos"] - P["pos"]).normalized() * push; _clamp(B)
 	var tier := _flag_tier()
 	if tier == 0 and not pd["hissatsu"]:
 		var tt: Dictionary = T.get("tension", {})
@@ -1552,21 +1657,31 @@ func _counter_state_trigger() -> void:
 	_say("COUNTERED - you punched into the trap")
 
 # ============================ BOSS OFFENSE =================================
-func _land_boss_punch(mult: float) -> void:
+func _land_boss_punch(mult: float, contact: Dictionary = {}) -> void:
 	var brow: String = bpending.get("row", "R_STRAIGHT")
 	var body: bool = bpending.get("body", false)
-	bpending = {}
+	bpending = {}; B["pending"] = {}
 	# A range counter requires a continuous retreat from a threatened position
 	# during this attack. Consume the origin on every resolution so another
 	# out-of-range swing cannot pay again for the same step.
 	var retreat_origin = P.get("range_step_from", null)
 	P.erase("range_step_from")
 	var geo := resolve_geometry(B, P, brow, body)
+	if not contact.is_empty():
+		geo = "MISS_PATH" if contact["kind"] == "miss" else "HIT"
+		body = contact["target"] == "body"
 	var row: Dictionary = T["punch_matrix"][brow]
 	if geo == "HIT" and _walled("P", brow, body): return
 	if geo == "HIT" and _auto_slips("P", brow, body): geo = "AUTO_SLIP"
 	if geo != "HIT":
 		var wide := 1.4 if trapped_p else 1.0
+		if not contact.is_empty():
+			if contact.get("evaded",false):
+				var response := "range_step" if contact.get("root_evaded",false) else "slip"
+				P["counter_t"] = _window(response,wide)
+				_ev("range_step" if response == "range_step" else "body_evade",{"ticks":P["counter_t"],"contact":contact})
+			_ev("evade",{"by":"P","why":geo,"contact":contact})
+			return
 		var body_axis: Vector2 = P.get("body_control", {}).get("axis", Vector2.ZERO)
 		if body_axis.length() > 0.05:
 			var neutral := P.duplicate(true)
@@ -1615,9 +1730,10 @@ func _land_boss_punch(mult: float) -> void:
 			return
 		dmg *= 0.5
 		_foul("B", bf)
-	if P["blocking"] and P["guard_open_t"] <= 0:
+	var guarded: bool = contact["kind"] in ["guard","deflect"] if not contact.is_empty() else P["blocking"] and P["guard_open_t"] <= 0
+	if guarded:
 		var wide := 1.4 if trapped_p else 1.0
-		if P["block_t"] <= ms(float(T["guard"]["perfect_block_window_ms"])):
+		if P["block_t"] <= ms(float(T["guard"]["perfect_block_window_ms"])) and (contact.is_empty() or contact["kind"] == "guard" and P["blocking"]):
 			P["counter_t"] = _window("perfect_block", wide)
 			P["pb_streak"] += 1
 			if P["counter_state_t"] > 0: P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"])); P["counter_state_t"] = 0
@@ -1633,13 +1749,18 @@ func _land_boss_punch(mult: float) -> void:
 		if P["counter_state_t"] > 0: P["flash_t"] = ms(float(T["counter_windows_ms"]["flash"]["base"])); P["counter_state_t"] = 0
 		if P["guard"] <= 0.0:
 			P["guard_open_t"] = ms(float(T["guard"]["break_open_ms"])); _say("GUARD BREAK - you're OPEN"); _ev("guard_break", {"who": "P"})
-		_ev("block", {"by": "P"})
+		_ev("block", {"by": "P", "contact":contact})
 		return
 	if P["guard_open_t"] > 0: dmg *= float(T["guard"]["break_open_dmg_mult"])
 	if bstring != "": blanded[bstring] = int(blanded.get(bstring, 0)) + 1                       # the string landed clean (Baro's Examen gate)
 	if cast.size() > 0 and cast["who"] == "P" and _punch_family(brow) == "STRAIGHT": _interrupt_cast("B")
 	if bf == "": _becho_queue(dmg, {"counter": mult > 1.0, "flash": false, "power": false, "body": body, "hissatsu": false, "jab": _punch_family(brow) == "STRAIGHT"}, brow)   # PAC-086: his manifest's echo
 	dmg = _comp_damage("P", dmg, {"counter": mult > 1.0, "flash": false, "power": false, "body": body, "hissatsu": false, "jab": _punch_family(brow) == "STRAIGHT"})
+	if not contact.is_empty() and _punch_family(brow) == "STRAIGHT" and not P["pending"].is_empty():
+		var action: Dictionary = P.get("boxing",{}).get("action",{})
+		if float(action.get("progress",1)) < 0.8:
+			P["pending"] = {}; P["cmd"] = {}
+			_ev("punch_interrupted",{"who":"P","by":"B","row":action.get("row",""),"progress":action.get("progress",0)})
 	if body: P["stamina"] = maxf(_sfloor(P), P["stamina"] - float(T["modifiers"]["BODY"]["enemy_stamina_drain"]) * float(btactic_fx.get("body_drain_mult", 1.0)))
 	clean_t = 0
 	if bf == "":
@@ -1651,7 +1772,9 @@ func _land_boss_punch(mult: float) -> void:
 		if _tx(B, "harvest") > 0: earn_b += float(HOUSES["traits"]["harvest"]["tension_on_exchange_win"]) * _tx(B, "harvest")   # PAC-078: Harvest, his side
 		if earn_b > 0.0: _earn_tension_b(earn_b)
 	var before_push: Vector2 = P["pos"]
-	P["pos"] += (P["pos"] - B["pos"]).normalized() * 0.12 * float(B["pkg"].get("herd_mult", 1.0)) * float(btactic_fx.get("herd_mult", 1.0)); _clamp(P)
+	var push: Vector2 = (P["pos"] - B["pos"]).normalized() * 0.12 * float(B["pkg"].get("herd_mult", 1.0)) * float(btactic_fx.get("herd_mult", 1.0))
+	if not contact.is_empty(): _boxing_push(P,push)
+	else: P["pos"] += push; _clamp(P)
 	freeze_t = maxi(freeze_t, ms(float(T["hit_feel"]["hitstop_ms"]["normal"])))
 	_ev("hit", {"on": "P", "dmg": dmg, "body": body, "displacement": P["pos"] - before_push})
 	if P["comp"] <= 0.0: _drop(true)
@@ -1668,6 +1791,10 @@ func _drop(player_down: bool, flash: bool = false) -> void:
 		_ev("iron_resolve_b", {"left": bno_drop_t}); _say("IRON RESOLVE - %s will not go down (%.1fs left)" % [boss_name, bno_drop_t / float(TICK_HZ)])
 		return
 	if _never_twice(P if player_down else B, "P" if player_down else "B"): return                       # PAC-078: Never Twice - the second drop is a wobble
+	if P.has("body_control"):
+		# A real drop ends this exchange. Neither hand may finish an attack
+		# which belonged to the stance before the count/reset.
+		P["pending"] = {}; B["pending"] = {}; bpending = {}
 	if tform.has("echoes"): tform["echoes"] = []                                                         # PAC-083: a drop cancels the manifest's echoes in flight
 	if btform.has("echoes"): btform["echoes"] = []                                                       # PAC-086: his too
 	if player_down and btform.size() > 0: btform["dropped"] = true                                      # PAC-086: knocked down inside his storm - not weathered
@@ -1742,7 +1869,7 @@ func _eight_step(rise: bool) -> void:
 
 # ============================ DUAL FLOW ====================================
 func _end_segment(why: String) -> void:
-	P["pending"] = {}; bpending = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
+	P["pending"] = {}; bpending = {}; B["pending"] = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
 	charged = contributed >= _charged_threshold()
 	if charged: relay_chain += 1
 	elif contributed < 10.0: relay_chain = 0                # a lost segment keeps the chain; an empty one breaks it
@@ -2201,6 +2328,8 @@ func _neutral_reset(ms_v: float) -> void:
 	if dir.length() < 0.5: dir = Vector2(0, -1)
 	P["pos"] = mid - dir * 0.9; B["pos"] = mid + dir * 0.9; _clamp(P); _clamp(B)
 	bstate = "IDLE"; btimer = ms(ms_v); bqueue = []; bforce_opts = {}; bfeint = ""
+	B["pending"] = {}; B["busy_t"] = 0
+	B.erase("boxing")
 	_ev("neutral_reset", {"ms": ms_v}); _say("the kit turns - a %dms seam, he resets to neutral" % int(ms_v))
 
 func _tier_shift(n: int) -> void:
@@ -3549,7 +3678,7 @@ func _boss_transform_check() -> bool:
 	if not TRANS.get("tiers", {}).has(tid) or not bool(TRANS["tiers"][tid].get("executed", false)) or not tid in TRANS.get("boss", {}).get("tiers", []): return false
 	if not _phase_trigger_met(str(tf.get("trigger", ""))): return false
 	btsurge = {"tier": tid, "t": ms(float(tf.get("tell", {}).get("ms", 1000))), "line": str(tf.get("line", ""))}
-	bstate = "SURGE"; btimer = 1 << 30; bqueue = []; bpending = {}; bstring = ""
+	bstate = "SURGE"; btimer = 1 << 30; bqueue = []; bpending = {}; B["pending"] = {}; bstring = ""
 	B["guard_t"] = int(btsurge["t"]); B["counter_state_t"] = 0                                        # he gathers behind his guard - no trap in it
 	_ev("boss_transform_tell", {"who": boss_label, "tier": tid, "ticks": int(btsurge["t"]), "line": str(btsurge["line"]), "motif": str(tf.get("tell", {}).get("motif", ""))})
 	_say("!! %s GATHERS - %s" % [boss_label.to_upper(), str(btsurge["line"])])
@@ -3650,7 +3779,7 @@ func _clash_start() -> void:
 	var win := ms(float(cl.get("window_ms", 180)) / maxf(0.01, float(cl.get("time_scale", 0.5))))
 	mclash = {"t": 0, "dur": dur, "cues": cues, "kinds": kinds, "window": win, "i": 0, "won": [], "block_prev": true, "p": str(tform.get("manifest", "")), "b": str(btform.get("manifest", ""))}
 	tform["clashed"] = true; btform["clashed"] = true
-	mode = "CLASH"; P["cmd"] = {}; P["pending"] = {}; bqueue = []; bpending = {}; bstate = "IDLE"; btimer = ms(400); cast = {}
+	mode = "CLASH"; P["cmd"] = {}; P["pending"] = {}; bqueue = []; bpending = {}; B["pending"] = {}; bstate = "IDLE"; btimer = ms(400); cast = {}
 	_ev("clash_start", {"p": str(mclash["p"]), "b": str(mclash["b"]), "exchanges": n, "window": win, "cues": cues, "kinds": kinds})
 	_say("MANIFEST CLASH - %s against %s: %d exchanges, the enemy strikes first - block or slip on theirs, punch on yours" % [str(mclash["p"]), str(mclash["b"]), n])
 
@@ -5128,7 +5257,7 @@ func flee() -> Dictionary:
 	var d := str(bout.get("district", ""))
 	var cost := int(_rp().get("flee", 1)) if engaged and d != "" else 0
 	mode = "OVER"
-	P["pending"] = {}; bpending = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
+	P["pending"] = {}; bpending = {}; B["pending"] = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
 	var shv: Dictionary = _rep_add(d, -cost, "fled") if cost > 0 else {"opened": [], "closed": []}
 	var v := ("SCRAP FLED - %s rep -%d" % [district_label(d), cost]) if cost > 0 else ("SCRAP FLED - %s" % ("after the first exchange, placed nowhere: no rep" if engaged else "before the first exchange: free"))
 	_ev("fled", {"engaged": engaged, "district": d, "rep": -cost, "objective": str(bout.get("objective", "")), "closed": shv["closed"].map(func(x): return shelf_label(x))})
@@ -9108,8 +9237,23 @@ func _boss_act(act: Dictionary) -> int:
 			if P["busy_t"] > 0 and float(act["mult"]) > 1.0: mult *= 1.15      # a true counter finds a committed fighter
 			var to_body: bool = bool(act["body"]) or bool(opts.get("body", false))
 			if not to_body and float(bmods["target_body_pct"]) > 0.0 and rng.randf() < float(bmods["target_body_pct"]): to_body = true   # Reyes: the body is the truth (80 / 20)
+			if P.has("body_control"):
+				# The native match owns an actual startup on both sides. An authored
+				# string gap must not squeeze a heavy punch into a few drawn frames
+				# or grant contact before the opponent has delivered his hand.
+				var hand_speed := float(_gassed(B)["hand_speed"])
+				var startup := maxi(1, ms(float(row["startup_ms"]) * float(B["pkg"].get("startup_mult", 1.0)) / hand_speed))
+				var recovery := maxi(1, int(ms(float(row["recovery_ms"])) * 0.7 / _bspeed() / hand_speed))
+				B["pending"] = {"row":act["row"], "body":to_body, "mods":["BODY"] if to_body else [], "mult":mult, "t":startup, "startup":startup, "recovery":recovery}
+				B["busy_t"] = startup + recovery
+				B["blocking"] = false; B["block_t"] = 0; B["guard_t"] = 0
+				B["stamina"] = maxf(_sfloor(B), float(B["stamina"]) - float(row["stamina"]))
+				_boxing_begin("B",act["row"],B["pending"]["mods"],startup,recovery)
+				_ev("boss_windup", {"row":act["row"], "body":to_body, "startup":startup, "recovery":recovery})
+				return startup + recovery
 			bpending = {"row": act["row"], "body": to_body}
-			B["pos"] += (P["pos"] - B["pos"]).normalized() * LUNGE_B; _clamp(B)
+			if not P.has("body_control"):
+				B["pos"] += (P["pos"] - B["pos"]).normalized() * LUNGE_B; _clamp(B)
 			_ev("boss_act", {"verb": "punch", "row": act["row"], "body": to_body})
 			_land_boss_punch(mult)
 			return maxi(1, int(ms(float(row["recovery_ms"])) * 0.7 / _bspeed()))
@@ -9121,6 +9265,12 @@ func _boss_act(act: Dictionary) -> int:
 				"away": step_v = -fwd * float(act["dist"])
 				"lateral": step_v = Vector2(-fwd.y, fwd.x) * float(act["dist"]) * (1.0 if rng.randf() < 0.5 else -1.0)
 				"center": step_v = (Vector2.ZERO - B["pos"]).limit_length(float(act["dist"]))
+			if P.has("body_control"):
+				_boxing_ensure()
+				B["boxing"]["travel"] = {"from":B["pos"],"to":B["pos"]+step_v,"t":0,"duration":ms(220)}
+				if act["guard"]: B["guard_t"] = ms(700)
+				_ev("boss_act",{"verb":"move","dir":act["dir"]})
+				return ms(220)
 			B["pos"] += step_v; _clamp(B)
 			if B["pos"].distance_to(P["pos"]) < 0.9:                                   # bodies meet: he walks you back (Alfie: +75% of the step on top)
 				P["pos"] = B["pos"] + (P["pos"] - B["pos"]).normalized() * 0.9 + fwd * step_v.length() * (float(bmods["herd_mult"]) - 1.0); _clamp(P)
@@ -9166,7 +9316,7 @@ func _start_clinch(by: String, drag: float = 0.5, need: int = 2) -> void:
 	clinch_t = int(clinch["end"])
 	P["busy_t"] = maxi(P["busy_t"], clinch_t); P["cmd"] = {}; P["pending"] = {}
 	P["dodge"] = ""; P["dodge_t"] = 0; P["blocking"] = false
-	bqueue = []; bpending = {}; bstate = "IDLE"; btimer = clinch_t + ms(300)
+	bqueue = []; bpending = {}; B["pending"] = {}; bstate = "IDLE"; btimer = clinch_t + ms(300)
 	_ev("clinch", {"by": by, "need": need})
 	_say("CLINCH%s - alternate L/R on the cue (%d beats to win it)" % [" - he grabs you" if by == "B" else "", need])
 
@@ -9177,7 +9327,7 @@ func _clinch_step(inp: Dictionary) -> void:
 	var i: int = clinch["i"]
 	var cues: Array = clinch["cues"]
 	# the tap: a stick edge past 0.6 on either side, or the button parity path
-	var mx := float(inp.get("move", Vector2.ZERO).x)
+	var mx := float(inp.get("body_axis", inp.get("move", Vector2.ZERO)).x)
 	var tap := ""
 	if mx > 0.6 and float(clinch["mx_prev"]) <= 0.6: tap = "R"
 	elif mx < -0.6 and float(clinch["mx_prev"]) >= -0.6: tap = "L"
@@ -9319,7 +9469,7 @@ func _start_cast(who: String, mv: Dictionary, arm_only: String = "") -> void:
 	if who == "P" and _meter_pays(mv): cast["purse"] = "meter"
 	A["busy_t"] = maxi(A["busy_t"], total + ms(300)); A["dodge"] = ""; A["dodge_t"] = 0; A["dodge_plan"] = []; A["dodge_at"] = 0
 	if who == "B":
-		bstate = "CAST"; btimer = 1 << 30; bqueue = []; bpending = {}; bstring = ""
+		bstate = "CAST"; btimer = 1 << 30; bqueue = []; bpending = {}; B["pending"] = {}; bstring = ""
 	var shown := arm_only if arm_only != "" else str(mv["name"])
 	var ghost := ""
 	if who == "P" and str(mv["tier"]) == "T3" and seg_idx > 0: ghost = str(lineup[seg_idx - 1]["name"])   # s7: the previous fighter joins as a spirit afterimage
@@ -9740,6 +9890,14 @@ func phase_coverage(pats: Dictionary) -> Dictionary:
 	return {"known": known.keys(), "unknown": unknown}
 
 func _boss_step() -> void:
+	if not B["pending"].is_empty():
+		B["pending"]["t"] -= 1
+		if int(B["pending"]["t"]) <= 0 and not B["pending"].get("trajectory",false):
+			var delivered: Dictionary = B["pending"]; B["pending"] = {}
+			bpending = {"row":delivered["row"], "body":delivered["body"]}
+			_ev("boss_act", {"verb":"punch", "row":delivered["row"], "body":delivered["body"], "recovery":delivered["recovery"]})
+			_land_boss_punch(float(delivered["mult"]))
+			if mode != "FIGHT": return
 	_corner_intel_tick()
 	if neutral_on and bool(bidle.get("authored", false)): _neutral_clock()
 	var phases: Array = pattern.get("phases", [])
@@ -9870,13 +10028,13 @@ func step(inp: Dictionary) -> void:
 			if (obj["met"] or obj["failed"]) and str(bout["kind"]) == "scrap":
 				_ev("objective", {"id": str(obj["id"]), "met": obj["met"], "why": str(obj["why"])})
 				_say("OBJECTIVE %s - %s" % ["MET" if obj["met"] else "FAILED", str(obj["why"])])
-				P["pending"] = {}; bpending = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
+				P["pending"] = {}; bpending = {}; B["pending"] = {}; eight = {}; cast = {}; clinch = {}; clinch_t = 0
 				_end_bout()
 	if mode != "FIGHT" or not clinch.is_empty():
 		# A count, break, or clinch ends an uncompleted pocket step. Its old
 		# travel/queued stroke must not resume after the restart bell.
 		for fighter in [P, B]:
-			fighter.erase("frozen_step"); fighter.erase("body_control")
+			fighter.erase("frozen_step"); fighter.erase("body_control"); fighter.erase("boxing")
 
 func _step_inner(inp: Dictionary) -> void:
 	tick += 1
@@ -10040,6 +10198,7 @@ func _step_inner(inp: Dictionary) -> void:
 	if block_edge: _ev("block_press", {})
 	block_prev = block_now
 	P["blocking"] = block_now and not dodging and P["pending"].is_empty() and int(P["guard_open_t"]) <= 0
+	P["guard_body"] = bool(inp.get("body",false))
 	if P["blocking"]:
 		P["block_t"] += 1; block_hold_t += 1
 		var decay := float(T["guard"]["hold_decay_per_s"]) * (float(T["zones"]["CORNER"]["guard_decay_mult"]) if zone(P["pos"]) == "CORNER" else 1.0) * float(tactic_fx.get("guard_decay_mult", 1.0))
@@ -10077,6 +10236,7 @@ func _step_inner(inp: Dictionary) -> void:
 		if P.has("frozen_step"):
 			if step_request == Vector2.ZERO: step_request = P["frozen_step"]["direction"]
 			P.erase("frozen_step")
+		_boxing_recoil(P,1)
 		var result := BodyControl.advance(P, B, inp.get("body_axis", Vector2.ZERO), step_request, DT, allowed, RING_HALF)
 		if not result.is_empty(): _ev("footwork", result)
 	P["pos"] += (right * mv.x - fwd * mv.y) * spd * DT * (float(P["pkg"].get("backpedal_mult", T["movement"].get("backpedal_mult", 0.7))) if mv.y > 0 else 1.0)
@@ -10098,7 +10258,8 @@ func _step_inner(inp: Dictionary) -> void:
 				backstep_ticks = []; _fire_event("player_backstep_chain3")
 	if mv.y > 0.2 and tick - backstep_ev_t > 20: _ev("backstep", {"sprint": false}); backstep_ev_t = tick   # a backward step, once per 20 ticks
 	p_vel = (P["pos"] - before) / DT
-	if bstate in ["TELL", "HOLD", "ACTING"] and mv.y > 0.0 and p_vel.dot((P["pos"] - B["pos"]).normalized()) > 0.0:
+	var pocket_retreat: bool = Vector2(P.get("body_control", {}).get("step", {}).get("direction", Vector2.ZERO)).dot(-fwd) > 0.5
+	if bstate in ["TELL", "HOLD", "ACTING"] and (mv.y > 0.0 or pocket_retreat) and p_vel.dot((P["pos"] - B["pos"]).normalized()) > 0.0:
 		if not P.has("range_step_from"): P["range_step_from"] = {"player": before, "attacker": B["pos"]}
 	else: P.erase("range_step_from")
 	# straight-line retreat: backing without an angle, 1.2m of it
@@ -10153,7 +10314,7 @@ func _step_inner(inp: Dictionary) -> void:
 		P["pending"]["step_remaining"] = maxf(0, float(P["pending"].get("step_remaining", 0.0)) - travel)
 		_clamp(P)
 		P["pending"]["t"] -= 1
-		if P["pending"]["t"] <= 0: _land_player_punch()
+		if P["pending"]["t"] <= 0 and not P["pending"].get("trajectory",false): _land_player_punch()
 	# ---- positional reads ----
 	var zp := zone(P["pos"])
 	if zp != last_zone_p:
@@ -10197,11 +10358,14 @@ func _step_inner(inp: Dictionary) -> void:
 		rate /= bts
 		if bstate == "ACTING": rate *= 1.0 + float(_bfx().get("punch_speed_pct", 0.0)) / 100.0
 	boss_acc += rate
+	var boss_ticks := 0
 	while boss_acc >= 1.0:
 		boss_acc -= 1.0
+		boss_ticks += 1
 		_boss_step()
 		if mode != "FIGHT": break
 	_separate()
+	if P.has("body_control") and mode == "FIGHT" and clinch.is_empty(): _boxing_tick(boss_ticks)
 	if clock_t <= 0 and mode == "FIGHT": _end_segment("clock")
 
 func hash_state() -> int:
@@ -10227,6 +10391,9 @@ func hash_state() -> int:
 	# Preserve legacy snapshots without body state; new exchanges bind every
 	# body/footwork value, including a queued step and support, into replay.
 	if P.has("body_control") or B.has("body_control") or P.has("frozen_step"):
+		v.append(B["pending"])
+		v.append(P.get("boxing",{})); v.append(B.get("boxing",{}))
+		v.append([P.get("guard_body",false),B.get("guard_body",false),B.get("motion_offer",0),B.get("motion_gear",0)])
 		v.append(P.get("body_control", {})); v.append(B.get("body_control", {}))
 		v.append(P.get("frozen_step", {}))
 	return v.hash()

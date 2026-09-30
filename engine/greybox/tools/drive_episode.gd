@@ -171,8 +171,14 @@ func _policy() -> Array:
 	var wanted: Array = []
 	var distance: float = s.P["pos"].distance_to(s.B["pos"])
 	var fight: String = episode._ep().get("fight", "")
-	var threat: bool = s.bstate in ["TELL", "HOLD"] and s.btimer <= 10 or (s.bstate == "ACTING" and not s.bqueue.is_empty() and s.bqueue[0].get("kind") == "punch" and s.btimer <= 10)
-	if distance > 1.2: wanted.append(KEY_W)
+	# Native punches now own their startup clock. A VM tell ending is preparation,
+	# not contact; defend against the delivering hand's remaining startup.
+	var incoming: Dictionary = s.B.get("pending", {})
+	var threat: bool = not incoming.is_empty() and int(incoming["t"]) <= 10
+	# Range must be earned through a real step and a neutral rearm. Holding W
+	# alone moves the body inside the stance and cannot pursue a pushed opponent.
+	if distance > 1.2 and frame % 40 < 20:
+		wanted.append(KEY_CTRL); wanted.append(KEY_W)
 	if fight == "archive":
 		var lesson: int = episode._ep().get("lesson", 0)
 		if lesson == 0:
@@ -190,7 +196,7 @@ func _policy() -> Array:
 			if frame % 50 < 25: wanted.append(KEY_J)
 			elif frame % 50 < 48: wanted.append(KEY_K)
 		return wanted
-	if float(s.P["stamina"]) < 25: return [KEY_S] if distance < 2.8 else []
+	if float(s.P["stamina"]) < 25: return [KEY_CTRL, KEY_S] if distance < 2.8 and frame % 40 < 20 else []
 	if fight == "scrap_1":
 		wanted.append(KEY_C)
 		if frame % 50 < 25: wanted.append(KEY_J)

@@ -317,8 +317,8 @@ func _ready() -> void:
 	controls_menu = ControlsMenu.new(); add_child(controls_menu); controls_menu.setup(combat_input)
 	controls_menu.practice_changed.connect(set_practice)
 	controls_menu.practice.set_pressed_no_signal(practice_dummy)
-	Input.joy_connection_changed.connect(func(_device, connected):
-		if not connected: combat_input.clear())
+	Input.joy_connection_changed.connect(func(_device, _connected):
+		combat_input.clear(true))
 	var boss_idx := 0
 	for a in args:
 		if a.begins_with("boss="): boss_idx = clampi(int(a.split("=")[1]), 0, TNBSim.BOSSES.size() - 1)
@@ -627,15 +627,15 @@ func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_ESCAPE:
 		controls_menu.open(); return
 	if controls_menu.opened or sim == null: return
+	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F2 and e.ctrl_pressed:
+		fight_view.inspection_view = not fight_view.inspection_view
+		fight_view.orbit = Vector3.ZERO; fight_view.last_tick = -1
+		return
 	if episode != null and episode.handle(e): return
 	if club_flow != null and club_flow.visible: return
 	if fight_hud != null and fight_hud.entry.visible: return
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F1 and e.ctrl_pressed:
 		fight_hud.show_details = not fight_hud.show_details; return
-	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F2 and e.ctrl_pressed:
-		fight_view.inspection_view = not fight_view.inspection_view
-		fight_view.orbit = Vector3.ZERO; fight_view.last_tick = -1
-		return
 	# H+Y remains SURGE; ordinary Y now also exposes the left uppercut.
 	if e is InputEventKey and e.keycode == KEY_Y and e.pressed and (combat_input.down("lb") or Input.is_key_pressed(KEY_H)):
 		q_surge = true; return
@@ -753,10 +753,8 @@ func _unhandled_input(e: InputEvent) -> void:
 		elif e.button_index == JOY_BUTTON_LEFT_SHOULDER and sim.mode == "CORNER": q_action = {"kind": "talk", "option": "plan"}
 		elif e.button_index == JOY_BUTTON_RIGHT_SHOULDER and sim.mode == "CORNER": q_action = {"kind": "talk", "option": "fire"}
 		elif e.button_index == JOY_BUTTON_BACK and sim.mode == "CORNER": q_action = {"kind": "talk", "option": "arm"}
-	if e is InputEventJoypadMotion and _trigger(JOY_AXIS_TRIGGER_LEFT, KEY_C):
-		if e.axis == JOY_AXIS_LEFT_X and absf(e.axis_value) > 0.7: q_dodge = "SLIP_R" if e.axis_value > 0.0 else "SLIP_L"
-		elif e.axis == JOY_AXIS_LEFT_Y and e.axis_value < -0.7: q_dodge = "WEAVE_R"
-		elif e.axis == JOY_AXIS_LEFT_Y and e.axis_value > 0.7: q_dodge = "LEAN"
+	# Left-stick body intent remains continuous while LT chooses a punch's body
+	# target. It must not also manufacture a second, timed legacy dodge here.
 
 func _set_remix_arg(v: String) -> void:
 	if v == "all":

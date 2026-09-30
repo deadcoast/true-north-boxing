@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SOUL JUMP yuri_kowalchuk tick=71 part=16 jump=0.33926999568939 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.9085), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 1.2285), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=422 part=16 jump=0.3347886800766 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.16594, 1.55, 0.89854), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.224054, 1.55, 1.213219), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=771 part=16 jump=0.33700436353683 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.272998, 1.55, 0.87217), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.368588, 1.55, 1.177559), "target_radius": 0.32, "contact_hit": true } events=[]
+THREE SOULS yuri_kowalchuk offense=7 verbs=["punch", "wait"] mirror=false wall=false jump=0.33926999568939 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[FAIL] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+[PASS] yuri_kowalchuk scripted steps interpolate from the previous visible root
+THREE SOULS marta_okonkwo_tremblay offense=4 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.12447372823954 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] marta_okonkwo_tremblay scripted steps interpolate from the previous visible root
+[PASS] Marta retains Mirror counter state
+[PASS] Marta arms Mirror with the authored fifteen-degree left glove turn
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.12601916491985 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] sam_tagaq scripted steps interpolate from the previous visible root
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+[PASS] named recruit and encounter labels preserve build identity
+SOULS VERDICT :: RED (13/14)

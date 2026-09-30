@@ -1,0 +1,248 @@
+{
+  "status": "PARTIAL_IMPLEMENTATION_FOUNDATION_NOT_ACCEPTED",
+  "updated_at": "2026-09-30T10:15:40.429261+00:00",
+  "tasks": [
+    "PAC-206",
+    "PAC-207"
+  ],
+  "parent": "PAC-204A",
+  "nodule": "NDL-013",
+  "source_head": "d74551aa55bcf6e129d2f55a3431570a7417e04d",
+  "source_basis": "Uncommitted continuation preserves earlier local changes. Hashes identify the current files, not an accepted release or promoted package.",
+  "source_sha256": {
+    "engine/greybox/input/combat_input.gd": "466fe11a4c9a1346c26059018d50b278a2994601ec26063948a5d860d0f0a2cb",
+    "engine/greybox/input/controls_menu.gd": "cc0a71a1665c81cca0c26f42c8522482594d3dbaa33893fb308ef54417c6b7b9",
+    "engine/greybox/main.gd": "d930dd87fd6289e18d124919fecb8016b81283b4d7b80e54ca2721af76067340",
+    "engine/greybox/sim/core.gd": "dc6766bee1747d57d9b1e3498708b3c976496ae87ab71539ca8a806ea2d7af47",
+    "engine/greybox/sim/body_control.gd": "920a8dc6b60c69f4d123bc992d5a017f284afbf9c556edb6867f09063adec20c",
+    "engine/greybox/presentation/boxing_motion.gd": "e5fd0093798c39d5c7f9c6c794c99b5efbf675da0374c46f2a62c77fc85430fd",
+    "engine/greybox/presentation/fight_view.gd": "1af5c4d696444254df31713b629a9ccdb5ceddc7465dc9b50fdffa873f754436",
+    "engine/greybox/tools/drive_foundation.gd": "4143ebe6b493ea3a137978fe7575309d4dd54ed9ccdca90f76d3f838a063d70d",
+    "engine/greybox/tools/drive_boxing_motion.gd": "0711f28311492b871020f4a333eedf1dd640f86e2c20fe54251b1e2a54bfff9e",
+    "engine/greybox/tools/drive_combat_loop.gd": "59e05047014129a7d7dc7383de0743d6b4697a34e44459b09e257ace374f9dae",
+    "engine/greybox/tools/drive_readiness.gd": "064e9250a55f025a1d47e95af28667b22eb2e21c39edb6d897c69527382279f3",
+    "engine/greybox/tools/drive_readability.gd": "1225e5fb5970e90ed01131a9b0a1e28a62d0978990599b751c626fa5df448389",
+    "engine/greybox/tools/drive_fighter_visuals.gd": "151dc0f73b5fc2ee990a3fc6263848bb8981cca19ee9fbbe503d4803ea9585d4",
+    "engine/greybox/tools/drive_episode.gd": "1aa4a8585218254db8910bb66e10efb8565a3dd880a8152f7ac7b009facaa788"
+  },
+  "authority": "Core boxing first. Supplied foundation overview is guidance, not absolute tuning. Styles are trained specialized techniques, not four mutually exclusive archetypes. No new campaign, environment or ability implementation.",
+  "implemented": [
+    "Keyboard/controller neutral events between fixed ticks now rearm a new step. Rim reversal and modifier repress without neutral still do not rearm.",
+    "Native punches no longer add hidden root lunges or a second stepping displacement. Body compression cannot substitute for footwork; the committed step owns entry/exit travel.",
+    "Step-out counter test now returns from mutual reach using a real entry. A separate longer-opponent case earns its opening but correctly misses beyond player reach; counter credit does not extend reach.",
+    "Both native fighters use continuous shoulder/wrist solving across the old hit-region boundary. Repeated constraints no longer accumulate chest lean or pelvis lowering.",
+    "Guard-punch delivery starts from actual guard height, removing the simultaneous block/punch full-guard snap.",
+    "Native opponent actions now schedule saved/hashed startup and recovery with effort costs. Contact is deferred until startup completes, with hitstop and boss-clock behavior retained.",
+    "Valid interruption, actual knockdown, clinch, cast, encounter transitions and reset cancel stale opponent startup. Tell preparation continues into delivery instead of squeezing an uppercut into a tiny VM gap.",
+    "Regression boxers pursue and rest with real controls and defend against actual pending startup. Recovery is available for returns. No test thresholds, damage tuning or story/progression assertions were weakened."
+  ],
+  "behavior_change_to_qualify": "Native opponent startup now follows the authored tell, so native string cadence is slower than the old instant-contact VM. This is an intentional timing correction requiring further boxing-feel qualification.",
+  "checks": [
+    {
+      "scope": "Full repository headless run",
+      "result": "62/65 passed; RED preserved",
+      "artifact": "runtime-results.json",
+      "failures": [
+        "drive_environment: same 15 traversal failures already reproduced on pre-foundation b63eab4",
+        "drive_episode: old scripted defense clock; corrected targeted rerun below",
+        "drive_readiness: 240-second runner timeout plus three scrap offense-count failures; corrected policy rerun recorded separately"
+      ],
+      "limit": "This original result is not rewritten as a green full run."
+    },
+    {
+      "scope": "Full boxing-motion driver",
+      "result": "334/334 GREEN",
+      "artifact": "boxing-motion.log"
+    },
+    {
+      "scope": "Native combat-loop driver",
+      "result": "75/75 GREEN",
+      "artifact": "combat-loop.log"
+    },
+    {
+      "scope": "Focused foundation, continuous controls, real travel, opponent clock, lifecycle, restore and POV clearance",
+      "result": "61/61 GREEN",
+      "artifact": "foundation.log",
+      "structured_artifact": "foundation.json"
+    },
+    {
+      "scope": "Episode integration using actual boxing and unchanged progression assertions",
+      "result": "361 checks; 0 failures",
+      "artifact": "episode.log"
+    },
+    {
+      "scope": "Sustained readiness across six encounters at 30/60/144 Hz",
+      "result": "152/152 GREEN",
+      "artifact": "readiness.log",
+      "structured_artifact": "readiness.json",
+      "limit": "Existing chase-camera framing plus native controls and exact state/command parity at 30/60/144 Hz; not embodied-camera feel acceptance."
+    },
+    {
+      "scope": "GPU recording and seven rendered snapshots",
+      "result": "68/68 GREEN",
+      "artifact": "film.log",
+      "limit": "Recording preceded the later observation-only sightline/eye-clearance driver additions. Runtime input/simulation/presentation source was unchanged. Current driver was separately checked headless."
+    }
+  ],
+  "recording": {
+    "artifact": "live-exchange.mp4",
+    "codec": "h264",
+    "resolution": [
+      1280,
+      720
+    ],
+    "fps": 60,
+    "frames": 1200,
+    "seconds": 20,
+    "audio_streams": 0,
+    "simulation_ticks": 2400,
+    "player_punches": 20,
+    "opponent_punches": 18,
+    "ending_mode": "FIGHT",
+    "views": "0-10 seconds embodied POV; 10-20 seconds full-body observer. Same native production scene and simulation.",
+    "inspection": "Selected POV and observer frames inspected; this is not a claimed human playtest or full perceptual acceptance of the film.",
+    "snapshots": [
+      "live-pov.png",
+      "live-observer.png",
+      "pov-close-glove.png"
+    ]
+  },
+  "pov_observation": {
+    "finding": "Frame 0088 shows substantial close incoming-glove occlusion. Central-ray inspection at simulation tick 177 identified the opponent lead glove, with AABB surface about 0.139 m from the eye. No glove transparency, hidden opponent mesh or camera workaround was applied.",
+    "headless_full_exchange": {
+      "close_glove_ticks": 1148,
+      "live_ticks": 2400,
+      "longest_close_glove_run_ticks": 60,
+      "minimum_eye_glove_clearance_m": 0.0600000774860382,
+      "mode": "FIGHT",
+      "opponent_punches": 18,
+      "player_punches": 20
+    },
+    "limit": "The 0.15 m band counts proximity to any glove, including the player guard; it is not screen occlusion duration. Glove clearance is a sphere-radius approximation. Positive clearance does not establish comfortable visibility or camera feel."
+  },
+  "preserved_failed_approaches": [
+    {
+      "artifact": "before-step-counter.log",
+      "finding": "Original retreat fixture began beyond the player return reach; do not lengthen reach or reset the counter window to make it pass."
+    },
+    {
+      "artifact": "before-combination.log",
+      "finding": "Fatigue exposed unpaid pursuit and simultaneous guard/punch snapping. Use real effort/rest and actual guard height."
+    },
+    {
+      "artifact": "before-opponent-motion.log",
+      "finding": "Native opponent delivery was compressed into a short VM gap, producing a large uppercut jump. Give the hand a real startup/recovery."
+    },
+    {
+      "artifact": "before-drop-cancel.log",
+      "finding": "Knockdown initially left opponent startup pending. Real drop now cancels the old exchange."
+    },
+    {
+      "artifact": "before-episode-policy.log",
+      "finding": "Episode automation defended at the old tell boundary and could not complete its counter lesson."
+    },
+    {
+      "artifact": "before-readiness-policy.log",
+      "finding": "Readiness automation guarded throughout ACTING, including recovery; it discarded return openings. Full-run 240-second timeout also retained."
+    }
+  ],
+  "open_foundation_work": [
+    "PAC-206 remains DOING: complete connected movement/POV qualification is not established. Opponent/delegated root movement still includes legacy VM travel and normal-camera readability/feel remain open.",
+    "PAC-207 remains DOING: contact is still timer/region based. Punch endpoints are still reconstructed from the current target. Authoritative committed paths, swept target/guard contact, earliest one-hit resolution, guard-side coverage and trades are not implemented.",
+    "Tell preparation and reaction presentation still contain renderer-owned state. Typed simulation restoration is tested; full reconstructed visual pose continuity is not qualified.",
+    "PAC-208: shared phase/support transitions, combination compatibility, deceleration, feints and recovery flow remain open.",
+    "PAC-209/PAC-210: Northern Rising and trained-technique composition remain open; the existing four style presets are not the final design.",
+    "PAC-211/parent: sustained end-to-end boxing, physical latency, perceptual/feel gates and model acceptance remain open. Green regressions cannot satisfy these."
+  ],
+  "diagnostics": [
+    "ObjectDB exit-leak warnings remain in several drivers (including focused foundation and combat loop); no resource-clean claim.",
+    "Existing pre-foundation environment traversal failure remains outside this boxing change; see ../pre-foundation-environment.log.",
+    "Automated Godot runs used --audio-driver Dummy and isolated user data; no mixer state was changed.",
+    "PACER3 connector transport was closed. Compatible retained PACER0.5 command service applied atomic validated changes under repository authority, without schema migration."
+  ],
+  "next_implementation": "Move punch trajectory and guard geometry into shared simulation state, then derive both contact and rendered hand paths from that committed state. Keep the complete foundation open until these physical exchanges and their connected support/recovery flow are qualified.",
+  "regression_followup_coverage": {
+    "covered_green": 64,
+    "total_original_runs": 65,
+    "method": "62 original green jobs plus corrected episode and readiness reruns; production code unchanged between these runs. Original 62/65 result retained, not relabeled.",
+    "still_red": "drive_environment: previously established traversal failure"
+  },
+  "artifact_manifest": {
+    "before-combination.log": {
+      "bytes": 12054,
+      "sha256": "b2f09c88c8e3b56d8cf28276743d44a2543a61c68d63e23717a0c398a6b65fc9"
+    },
+    "before-drop-cancel.log": {
+      "bytes": 3964,
+      "sha256": "cee0196201f3817742158f96848aac1c334ab3f95de82b9bae0e82628f7b05f3"
+    },
+    "before-episode-policy.log": {
+      "bytes": 3368,
+      "sha256": "61b5f1cdfa8a814e98377146aa2b01098e9ed395d8a7fbdd49f7b0649a0f96e2"
+    },
+    "before-opponent-motion.log": {
+      "bytes": 2693,
+      "sha256": "05742bd767d3dfa2a186966ecf02b255192f4319fa5c90ee09e3276a8fed2399"
+    },
+    "before-readiness-policy.log": {
+      "bytes": 18461,
+      "sha256": "ba28668e4bde5bec11a80b64899167bda4d1664f06e51b5422c74f562dd3324c"
+    },
+    "before-step-counter.log": {
+      "bytes": 2885,
+      "sha256": "7f85c3e0867f1210fbba97cff3ba5ed10c2a3bf9857f2129d85a2ecc46dd972f"
+    },
+    "boxing-motion.log": {
+      "bytes": 30758,
+      "sha256": "c0ab2fb00354e91c2bf755ef214d47d80c43c76f10cc8785b87eb067f0f71dca"
+    },
+    "combat-loop.log": {
+      "bytes": 4729,
+      "sha256": "55a38170cd31b25b4d6bb87536ff35732a20efcbd59785f15f0e047824644dec"
+    },
+    "episode.log": {
+      "bytes": 16925,
+      "sha256": "57243676a1730f8636fe91428c2c1982b4dfe873120f36e168cb5e55aa02179d"
+    },
+    "film.log": {
+      "bytes": 4358,
+      "sha256": "aec0ce199788d4f1b01bde62a37a1a967d8ff1c973963fae12adad24386e4d89"
+    },
+    "foundation.json": {
+      "bytes": 1406,
+      "sha256": "4f65f0091072f56d5e7ba922dac98249aa8ba5ac45cfee4e7aa0d5ec2932014c"
+    },
+    "foundation.log": {
+      "bytes": 5144,
+      "sha256": "6ce8b1b0518a904db8e359fb2c63b3a2b435ce601c78af888899b79f63453994"
+    },
+    "live-exchange.mp4": {
+      "bytes": 4299488,
+      "sha256": "4c05ad2fa052e43efec706f30eed3b672d908c5b993b58ff4a6026669b0d460f"
+    },
+    "live-observer.png": {
+      "bytes": 108480,
+      "sha256": "2cddc23f1bced18ab60772b8b72941d2c56dfd695e7ae52053ad9ba4d543f425"
+    },
+    "live-pov.png": {
+      "bytes": 136058,
+      "sha256": "5447485ca5ddaf867790e792f7f684bf357ed6a2f236475c822b40c43452373f"
+    },
+    "pov-close-glove.png": {
+      "bytes": 192298,
+      "sha256": "a82aa7eb09552c84854d20520ac0d57386159eae5a3cd05a9dd8b169fb991539"
+    },
+    "readiness.json": {
+      "bytes": 517737,
+      "sha256": "947eff5f12313eaf40be948dfbdeea779d14aa48cfc4292602e4d845d6de522b"
+    },
+    "readiness.log": {
+      "bytes": 22826,
+      "sha256": "8c64e402a374e25e4cce0b949e7bf44652bcf15861a45c3b6325a8ccc8313e75"
+    },
+    "runtime-results.json": {
+      "bytes": 55897,
+      "sha256": "1fb29ac0db1617c300d6a936c4f05f421de4840bffe2a5ab87637756d5512c2e"
+    }
+  }
+}

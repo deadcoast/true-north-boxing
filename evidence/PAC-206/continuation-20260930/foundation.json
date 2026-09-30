@@ -1,0 +1,64 @@
+{
+	"checks": 61,
+	"failures": [],
+	"samples": [
+		{
+			"axis": "(1.0, 0.0)",
+			"head": "(0.019933, 1.55, 0.0)",
+			"support": 0.989999999478459,
+			"tick": 1
+		},
+		{
+			"axis": "(-0.0, 1.0)",
+			"head": "(0.019746, 1.072382, -0.051742)",
+			"support": 0.85041598379612,
+			"tick": 91
+		},
+		{
+			"axis": "(-1.0, -0.0)",
+			"head": "(-0.297516, 1.5183, -0.003434)",
+			"support": 0.85041598379612,
+			"tick": 181
+		},
+		{
+			"axis": "(0.0, -1.0)",
+			"head": "(-0.019746, 1.470397, 0.278113)",
+			"support": 0.85041598379612,
+			"tick": 271
+		},
+		{
+			"axis": "(1.0, 0.0)",
+			"head": "(0.297516, 1.544717, 0.018458)",
+			"support": 0.85041598379612,
+			"tick": 361
+		},
+		{
+			"axis": "(0.0, 1.0)",
+			"head": "(0.019746, 1.072382, -0.051742)",
+			"support": 0.85041598379612,
+			"tick": 451
+		},
+		{
+			"axis": "(-1.0, -0.0)",
+			"head": "(-0.297516, 1.5183, -0.003434)",
+			"support": 0.85041598379612,
+			"tick": 541
+		},
+		{
+			"axis": "(-0.0, -1.0)",
+			"head": "(-0.019746, 1.470397, 0.278113)",
+			"support": 0.85041598379612,
+			"tick": 631
+		},
+		{
+			"close_glove_ticks": 1148,
+			"live_ticks": 2400,
+			"longest_close_glove_run_ticks": 60,
+			"minimum_eye_glove_clearance_m": 0.0600000774860382,
+			"mode": "FIGHT",
+			"opponent_punches": 18,
+			"player_punches": 20
+		}
+	],
+	"scope": "continuous body/pocket stepping/POV only; swept punch/guard and whole-foundation acceptance remain open"
+}

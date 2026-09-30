@@ -46,6 +46,10 @@ static func _support(fighter: Dictionary, dt: float) -> void:
 			var index := 0 if error0 > error1 else 1
 			if moving and absf(error0 - error1) < 0.025:
 				index = 0 if Vector2(state["step"]["direction"]).dot(wanted[0] - wanted[1]) >= 0 else 1
+			var punch: Dictionary = fighter.get("pending", {})
+			if not punch.is_empty() and not "STEPPING" in punch.get("mods", []):
+				var driving := 0 if str(punch["row"]).begins_with("L_") else 1
+				if index == driving: index = 1 - index
 			gait = {"index": index, "from": feet[index], "to": wanted[index], "elapsed": 0.0, "duration": 0.16}
 			state["gait"] = gait
 	var body_axis: Vector2 = state["axis"]
@@ -153,7 +157,7 @@ static func advance(fighter: Dictionary, other: Dictionary, axis: Vector2,
 		candidate = candidate.clamp(Vector2(-ring_half, -ring_half), Vector2(ring_half, ring_half))
 		# Stop the mover at the opponent's space; do not drag the other fighter.
 		var separation: Vector2 = candidate - other["pos"]
-		if separation.length() < MIN_SEPARATION:
+		if separation.length() < MIN_SEPARATION and separation.length() < before.distance_to(other["pos"]):
 			candidate = before
 		fighter["pos"] = candidate
 		step["travel"] += before.distance_to(candidate)

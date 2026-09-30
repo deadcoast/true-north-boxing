@@ -1,0 +1,209 @@
+{
+  "status": "PARTIAL_IMPLEMENTATION_FOUNDATION_NOT_ACCEPTED",
+  "updated_at": "2026-09-30T00:23:35.903459+00:00",
+  "task": "PAC-206",
+  "parent": "PAC-204A",
+  "source_sha256": {
+    "engine/greybox/input/combat_input.gd": "cd834b3a5c432b6d6c71f9b50ad78bfa68343716abe4647060235ebf8db32b3b",
+    "engine/greybox/input/controls_menu.gd": "cc0a71a1665c81cca0c26f42c8522482594d3dbaa33893fb308ef54417c6b7b9",
+    "engine/greybox/main.gd": "d930dd87fd6289e18d124919fecb8016b81283b4d7b80e54ca2721af76067340",
+    "engine/greybox/sim/core.gd": "086bb80ed8ff63e809ca0c910439d8009aeb2798fbf5aaa84859850f931d09f8",
+    "engine/greybox/sim/body_control.gd": "920a8dc6b60c69f4d123bc992d5a017f284afbf9c556edb6867f09063adec20c",
+    "engine/greybox/presentation/boxing_motion.gd": "6523483ddf9e65098359200e69b9dd8c605202338c7fc3fabc3feb8cf26093d8",
+    "engine/greybox/presentation/fight_view.gd": "3b417417aff71f47abde4878f21cf334096df4dc1a6ea1e146a70fcd4a6ae4b7",
+    "engine/greybox/tools/drive_foundation.gd": "4fe8305e70010081aa88ff85ddb07404894d709e8ad7e34c5de67dcb80bd6d2f",
+    "engine/greybox/tools/drive_boxing_motion.gd": "6aaf822bad104fa606005402e039958434dbd2ad95764afafc13a6de69f200a5",
+    "engine/greybox/tools/drive_readiness.gd": "6d9ce6ed0a0f9afae857f4f9487c18e746fca81f3bde017e484a619821e43f78",
+    "engine/greybox/tools/drive_combat_loop.gd": "b310fd36b56776f9e7836c537c02c9a03a742847bf7198b806bb38eb864b606f",
+    "engine/greybox/tools/drive_readability.gd": "1225e5fb5970e90ed01131a9b0a1e28a62d0978990599b751c626fa5df448389",
+    "engine/greybox/tools/drive_fighter_visuals.gd": "151dc0f73b5fc2ee990a3fc6263848bb8981cca19ee9fbbe503d4803ea9585d4"
+  },
+  "user_direction": "Core boxing is the prerequisite. No additional campaign, environment, progression or ability scope until the complete boxing foundation is qualified. The supplied overview is guidance, not absolute; specialized trained techniques are not four archetype presets.",
+  "implemented": [
+    "Native left-stick/WASD continuous body disk with independent guard, target and attack; no normal free root locomotion.",
+    "Ctrl/left-stick-click plus one directional stroke requests a bounded step; neutral rearms it. Facing, body axis/velocity, feet, support, recovery and one expiring step request are saved simulation state.",
+    "Head/torso offsets affect actual existing hit regions and the rendered target. This is not yet swept punch/guard geometry.",
+    "Foot plants, gather, weight transfer and lift are read by rendering; fixed limb constraints retained. Ring/root collision shortens the mover; starting inside the minimum spacing does not trap an outward step.",
+    "Hitstop preserves new step intent without advancing body/support clocks. Counts and clinches cancel stale footwork. Pad reconnection requires neutral.",
+    "Default eye camera follows the player head in the world. Ctrl+F2 inspects both boxers and their feet. Existing chase-camera tests explicitly select that retained view.",
+    "Native input tests now distinguish body movement from modifier-driven footwork; directional clinch taps remain functional."
+  ],
+  "controls": {
+    "body": "WASD / left stick; forward dip, backward pull, lateral slip",
+    "step": "hold Ctrl / left-stick click, stroke, return to neutral",
+    "inspect": "Ctrl+F2",
+    "unchanged": "Ten punch families, existing punch modifiers and H/LB special arm remain available."
+  },
+  "checks": [
+    {
+      "scope": "new foundation focused + rendered snapshots + live native exchange",
+      "result": "48/48",
+      "artifact": "body-control.log",
+      "details": {
+        "checks": 48,
+        "failures": [],
+        "samples": [
+          {
+            "axis": "(1.0, 0.0)",
+            "head": "(0.019933, 1.55, 0.0)",
+            "support": 0.989999999478459,
+            "tick": 1
+          },
+          {
+            "axis": "(-0.0, 1.0)",
+            "head": "(0.019746, 1.072382, -0.051742)",
+            "support": 0.85041598379612,
+            "tick": 91
+          },
+          {
+            "axis": "(-1.0, -0.0)",
+            "head": "(-0.297516, 1.5183, -0.003434)",
+            "support": 0.85041598379612,
+            "tick": 181
+          },
+          {
+            "axis": "(0.0, -1.0)",
+            "head": "(-0.019746, 1.470397, 0.278113)",
+            "support": 0.85041598379612,
+            "tick": 271
+          },
+          {
+            "axis": "(1.0, 0.0)",
+            "head": "(0.297516, 1.544717, 0.018458)",
+            "support": 0.85041598379612,
+            "tick": 361
+          },
+          {
+            "axis": "(0.0, 1.0)",
+            "head": "(0.019746, 1.072382, -0.051742)",
+            "support": 0.85041598379612,
+            "tick": 451
+          },
+          {
+            "axis": "(-1.0, -0.0)",
+            "head": "(-0.297516, 1.5183, -0.003434)",
+            "support": 0.85041598379612,
+            "tick": 541
+          },
+          {
+            "axis": "(-0.0, -1.0)",
+            "head": "(-0.019746, 1.470397, 0.278113)",
+            "support": 0.85041598379612,
+            "tick": 631
+          },
+          {
+            "live_ticks": 2400,
+            "mode": "FIGHT",
+            "opponent_punches": 20,
+            "player_punches": 18
+          }
+        ],
+        "scope": "continuous body/pocket stepping/POV only; swept punch/guard and whole-foundation acceptance remain open"
+      }
+    },
+    {
+      "scope": "sustained native sessions at 30/60/144 Hz using new step strokes and retained chase framing",
+      "result": "152/152",
+      "artifact": "readiness-regression.log",
+      "limit": "Existing readiness assertions; not the full boxing reference acceptance."
+    },
+    {
+      "scope": "combat-loop input/resource and clinch integration",
+      "result": "75/75",
+      "log": ".PACER/boxing-foundation-v2/recheck02/drive_combat_loop.log"
+    },
+    {
+      "scope": "retained chase-camera readability",
+      "result": "113/113",
+      "log": ".PACER/boxing-foundation-v2/recheck02/drive_readability.log"
+    },
+    {
+      "scope": "fighter visuals in episode runtime",
+      "result": "104 checks, 0 failures",
+      "log": ".PACER/boxing-foundation-v2/final-fixtures/drive_fighter_visuals.log"
+    },
+    {
+      "scope": "full intermediate regression run",
+      "result": "59/65 runs passed; RED",
+      "artifact": "initial-regressions.json",
+      "limit": "Intermediate source revisions, before targeted repairs; not a final aggregate pass count."
+    },
+    {
+      "scope": "motion suite after native-step fixture migration",
+      "result": "327/330; RED",
+      "artifact": "motion-regression.log",
+      "limit": "Subsequent transition-only rerun below establishes corrected spawn baseline; do not rewrite this failed historical run."
+    },
+    {
+      "scope": "current transition subset with stance initialized after fixture relocation",
+      "result": "27/28; RED",
+      "artifact": "control-transitions.log",
+      "failure": "STEP_OUT earns a counter window but does not deliver its follow-up hit. Counter-entry/support/recovery compatibility remains unresolved."
+    },
+    {
+      "scope": "unmodified pre-foundation source b63eab4ae060fd0a4b31d4bd0be64334a23878b9 traversal comparison",
+      "result": "15/30; RED, same 15 traversal failures",
+      "artifact": "pre-foundation-environment.log",
+      "limit": "Separate pre-existing environment issue, not repaired or called accepted."
+    }
+  ],
+  "visual_review": {
+    "inspected": [
+      "live-pov.png",
+      "live-observer.png"
+    ],
+    "findings": [
+      "Live guard, body/root movement and both boxers are visible in their respective views.",
+      "Observer exposes both feet and opaque connected anatomy.",
+      "High guard still occupies substantial peripheral view; camera comfort needs normal-speed review.",
+      "These snapshots do not prove committed glove/contact correspondence, realistic technique, or satisfying gameplay."
+    ],
+    "normal_speed_video": "Not delivered in this pass."
+  },
+  "open_foundation_gates": [
+    {
+      "task": "PAC-206",
+      "state": "DOING",
+      "remaining": "Resolve remaining step-out/counter integration and complete review of boundary/support and camera comfort before accepting the component."
+    },
+    {
+      "task": "PAC-207",
+      "state": "TODO",
+      "remaining": "Shared player/opponent committed glove paths; moving guard/head/torso sweeps; earliest contact; remove region-fitted rendering and instantaneous opponent scoring."
+    },
+    {
+      "task": "PAC-208",
+      "state": "TODO",
+      "remaining": "Phase/posture/support-based combinations and actual counter-entry compatibility; per-hand availability; feedback for buffered/rejected requests."
+    },
+    {
+      "task": "PAC-209",
+      "state": "TODO",
+      "remaining": "Northern Rising corrected guard, two rising variants, both stances and three conditional signatures on the shared model."
+    },
+    {
+      "task": "PAC-210",
+      "state": "TODO",
+      "remaining": "Physical profiles, capability ceilings, trained techniques, guard/footwork/move/trait composition, explicit conflicts and shared AI/sandbox."
+    },
+    {
+      "task": "PAC-211",
+      "state": "TODO",
+      "remaining": "Full connected qualification, normal-speed footage, performance evidence and separate physical/human feel acceptance."
+    }
+  ],
+  "preserved_failures": [
+    "First targeted model run counted events after presentation consumed them, producing a false zero-exchange failure. Driver now captures actual emitted events before consumption; old body-gpu03 retained.",
+    "First live script released punches within the feint window. Native hold duration corrected; old capture retained.",
+    "Blanket driving-foot gate rejected otherwise valid buffered combinations. Removed rather than pretending it was the final phase/support model; preserved recheck02 failure.",
+    "A fighter-visual rerun incorrectly used welcome instead of its documented episode argument; nil episode failure preserved in recheck02 and correct rerun passed.",
+    "Existing ObjectDB exit-leak warnings remain in the logs. They are not erased or counted as clean resource-lifecycle acceptance."
+  ],
+  "acceptance": {
+    "component": "IN_PROGRESS",
+    "whole_boxing": "NOT_ACCEPTED",
+    "physical_gamepad": "NOT_TESTED_THIS_PASS",
+    "latency": "NOT_MEASURED_THIS_PASS",
+    "human_feel": "NOT_ACCEPTED"
+  }
+}

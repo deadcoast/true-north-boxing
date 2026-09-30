@@ -76,14 +76,15 @@ func _policy(slice: int) -> Array:
 	if s.mode in ["CARD", "CORNER"]: return [KEY_1] if slice % 2 == 0 else []
 	if s.mode != "FIGHT": return []
 	if active_case == "fatigue-recovery":
-		# Price real heavy punches, repeated sprint-steps and leans; then spend
+		# Price real heavy punches, deliberate steps and leans; then spend
 		# a sustained neutral interval recovering under the live opponent.
 		if slice < 120:
-			var heavy: Array = [KEY_SHIFT, KEY_S]
+			var heavy: Array = [KEY_SHIFT]
+			if slice % 6 < 2: heavy.append(KEY_CTRL); heavy.append(KEY_S)
 			if slice % 6 < 3: heavy.append(KEY_O if slice / 6 % 2 == 0 else KEY_Y)
-			if slice % 2 == 0: heavy.append(KEY_CTRL); heavy.append(KEY_B)
+			if slice % 2 == 0: heavy.append(KEY_B)
 			return heavy
-		if slice < 210: return [KEY_S] if s.P["pos"].distance_to(s.B["pos"]) < 2.7 else []
+		if slice < 210: return [KEY_CTRL,KEY_S] if s.P["pos"].distance_to(s.B["pos"]) < 2.7 and slice % 6 < 2 else []
 	var wanted: Array = []
 	var distance: float = s.P["pos"].distance_to(s.B["pos"])
 	var cycle := slice % 180 # Thirty-second attack / recover / move journey.
@@ -99,14 +100,23 @@ func _policy(slice: int) -> Array:
 	elif not tired:
 		# Commit for >=166 ms; alternate head/body, hands and all five families.
 		var beat := slice % 6
-		if s.bstate in ["TELL", "HOLD", "ACTING"] and int(s.P["counter_t"]) == 0:
+		# The native hand owns startup. ACTING also includes its recovery;
+		# guarding throughout that VM state would discard every return opening.
+		var threat: bool = not s.B.get("pending", {}).is_empty()
+		if threat and int(s.P["counter_t"]) == 0:
 			wanted.append(KEY_SPACE)
 		elif beat < 3:
 			var row: String = scene.combat_input.ROWS[(slice / 6) % 10]
 			wanted.append(scene.combat_input.KEYS[row])
 			if slice / 6 % 3 == 1 or not s.bout.is_empty() and s.bout["kind"] == "scrap": wanted.append(KEY_C)
 			if cycle < 60: wanted.append(KEY_SHIFT)
-		elif s.bstate in ["TELL", "HOLD", "ACTING"]: wanted.append(KEY_SPACE)
+		elif threat: wanted.append(KEY_SPACE)
+	# Movement strokes have a neutral return. Holding a direction without the
+	# modifier now requests continuous body motion, not unlimited translation.
+	if wanted.has(KEY_W) or wanted.has(KEY_S) or wanted.has(KEY_A) or wanted.has(KEY_D):
+		if slice % 6 < 2: wanted.append(KEY_CTRL)
+		else:
+			for direction in [KEY_W,KEY_S,KEY_A,KEY_D]: wanted.erase(direction)
 	return wanted
 
 func _rig_ok(actor: Node3D) -> bool:
@@ -206,6 +216,9 @@ func _run() -> void:
 	_check("clock does not round a genuinely short tick forward", boundary.advance(Sim.DT - 0.000001) == 0 and boundary.advance(0.000001) == 1)
 	_check("clock retains hitch cap and rejects negative delta", boundary.advance(-1) == 0 and boundary.advance(2) == 30)
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
+	# Preserve the existing whole-body HUD/framing gate for the chase observer;
+	# the default eye camera has its own foundation checks and captures.
+	scene.fight_view.observer_view = true
 	await process_frame
 	scene.controls_menu.close(); scene.combat_input.reset_bindings()
 	_check("normal launch pauses before the bell", scene.fight_hud.entry.visible)

@@ -1,0 +1,36 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[PASS] automated audio remains silent
+[PASS] civilian hides every original primitive WHITLOCK
+[PASS] civilian geometry follows moving anchors WHITLOCK
+[PASS] cold gym has six fixtures and one emissive bulb
+[PASS] dressing cannot advance simulation
+[FAIL] native walk reaches (0.0, 10.0)
+[FAIL] native walk reaches (11.0, 10.0)
+[FAIL] native walk reaches (11.0, -14.0)
+[FAIL] native walk reaches (-30.0, -14.0)
+[FAIL] native walk reaches (-30.0, -24.0)
+[FAIL] native walk reaches (-34.0, -24.0)
+[PASS] library can be approached and interacted with
+[FAIL] native walk reaches (-30.0, -24.0)
+[FAIL] native walk reaches (-30.0, -14.0)
+[FAIL] native walk reaches (30.0, -14.0)
+[FAIL] native walk reaches (30.0, -22.0)
+[FAIL] native walk reaches (30.0, -14.0)
+[FAIL] native walk reaches (11.0, -14.0)
+[FAIL] native walk reaches (11.0, 18.0)
+[FAIL] native walk reaches (0.0, 18.0)
+[FAIL] native walk reaches (0.0, 32.0)
+[PASS] native walk reaches (4.0, 34.0)
+[PASS] harbour departures remain reachable
+[PASS] forty seated people and forty chairs
+[PASS] all three ringside roles are present
+[PASS] archive hides modern ringside roles
+[PASS] later venue removes crowd and stacks half the chairs
+[PASS] world restores empty gym and hides venue
+[PASS] physical sign language en
+[PASS] physical sign language fr_CA
+ENVIRONMENT 30 checks; 15 failures
+DRIVE :: RED
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

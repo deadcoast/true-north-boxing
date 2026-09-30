@@ -121,6 +121,9 @@ func _roster_deformation_cache() -> void:
 func _run() -> void:
 	root.size = Vector2i(1280,720)
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
+	# This fixture inspects the retained observer's silhouette shader, which
+	# the embodied camera deliberately does not apply to its own arms.
+	scene.fight_view.observer_view = true
 	scene.club_flow.set_process(false); await process_frame
 	_check("automated audio is silent", AudioServer.get_driver_name() == "Dummy" and AudioServer.is_bus_mute(0))
 	var ep: Node = scene.episode

@@ -1,0 +1,409 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+TRAVEL CONTACT MATRIX count=360 failures=0 examples=[]
+[PASS] scripted travel preserves physical eligibility and drawn contact with moving targets
+STYLE SIGNATURES delivery=[0.271, 0.5, 0.383, 0.114] return=[0.388, 0.282, 0.216, 0.463] steps=[0.04526, 0.04093, 0.03447, 0.03716]
+[PASS] four styles express distinct delivery
+[PASS] four styles express distinct recovery
+[PASS] four styles express distinct footwork cadence
+[PASS] BOXERPUNCHER ten punches keep authoritative contact and attached anatomy
+[PASS] BOXERPUNCHER delivers every stationary punch from a planted driving foot
+[PASS] BOXERPUNCHER delivery and return remain continuous
+[PASS] BOXERPUNCHER SLIP_L keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER SLIP_R keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER DUCK keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER WEAVE keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER LEAN keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX BOXERPUNCHER contacts=10 jump=0.15882010757923
+[PASS] OUTBOXER ten punches keep authoritative contact and attached anatomy
+[PASS] OUTBOXER delivers every stationary punch from a planted driving foot
+[PASS] OUTBOXER delivery and return remain continuous
+[PASS] OUTBOXER SLIP_L keeps collision-aligned continuous defense
+[PASS] OUTBOXER SLIP_R keeps collision-aligned continuous defense
+[PASS] OUTBOXER DUCK keeps collision-aligned continuous defense
+[PASS] OUTBOXER WEAVE keeps collision-aligned continuous defense
+[PASS] OUTBOXER LEAN keeps collision-aligned continuous defense
+[PASS] OUTBOXER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX OUTBOXER contacts=10 jump=0.1300268471241
+[PASS] SWARMER ten punches keep authoritative contact and attached anatomy
+[PASS] SWARMER delivers every stationary punch from a planted driving foot
+[PASS] SWARMER delivery and return remain continuous
+[PASS] SWARMER SLIP_L keeps collision-aligned continuous defense
+[PASS] SWARMER SLIP_R keeps collision-aligned continuous defense
+[PASS] SWARMER DUCK keeps collision-aligned continuous defense
+[PASS] SWARMER WEAVE keeps collision-aligned continuous defense
+[PASS] SWARMER LEAN keeps collision-aligned continuous defense
+[PASS] SWARMER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SWARMER contacts=10 jump=0.13639688491821
+[PASS] SLUGGER ten punches keep authoritative contact and attached anatomy
+[PASS] SLUGGER delivers every stationary punch from a planted driving foot
+[PASS] SLUGGER delivery and return remain continuous
+[PASS] SLUGGER SLIP_L keeps collision-aligned continuous defense
+[PASS] SLUGGER SLIP_R keeps collision-aligned continuous defense
+[PASS] SLUGGER DUCK keeps collision-aligned continuous defense
+[PASS] SLUGGER WEAVE keeps collision-aligned continuous defense
+[PASS] SLUGGER LEAN keeps collision-aligned continuous defense
+[PASS] SLUGGER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SLUGGER contacts=10 jump=0.188670322299
+THREE SOULS yuri_kowalchuk offense=7 verbs=["punch", "wait"] mirror=false wall=false jump=0.17870183289051 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[PASS] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+[PASS] yuri_kowalchuk scripted steps interpolate from the previous visible root
+THREE SOULS marta_okonkwo_tremblay offense=4 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.10040706396103 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] marta_okonkwo_tremblay scripted steps interpolate from the previous visible root
+[PASS] Marta retains Mirror counter state
+[PASS] Marta arms Mirror with the authored fifteen-degree left glove turn
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.12601916491985 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] sam_tagaq scripted steps interpolate from the previous visible root
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+[PASS] named recruit and encounter labels preserve build identity
+MODIFIER DETAIL variant=0 mid_chest=0.03145862978549
+MODIFIER MATRIX 0 contacts=10 max_jump=0.13804343342781
+[PASS] modifier matrix 0 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 0 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 0 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 0 completes recovery with differentiated loading
+[PASS] modifier matrix 0 keeps the whole working arm visible
+[PASS] modifier matrix 0 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 0 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 1 contacts=10 max_jump=0.1441086679697
+[PASS] modifier matrix 1 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 1 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 1 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 1 completes recovery with differentiated loading
+[PASS] modifier matrix 1 keeps the whole working arm visible
+[PASS] modifier matrix 1 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 1 keeps stationary punch drive planted through delivery
+MODIFIER DETAIL variant=2 mid_chest=-0.09948634945486
+MODIFIER MATRIX 2 contacts=10 max_jump=0.11576560884714
+[PASS] modifier matrix 2 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 2 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 2 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 2 completes recovery with differentiated loading
+[PASS] modifier matrix 2 keeps the whole working arm visible
+[PASS] modifier matrix 2 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 2 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 3 contacts=10 max_jump=0.12948623299599
+[PASS] modifier matrix 3 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 3 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 3 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 3 completes recovery with differentiated loading
+[PASS] modifier matrix 3 keeps the whole working arm visible
+[PASS] modifier matrix 3 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 3 keeps stationary punch drive planted through delivery
+MODIFIER DETAIL variant=4 mid_chest=-0.26717295387458
+MODIFIER MATRIX 4 contacts=10 max_jump=0.1229387447238
+[PASS] modifier matrix 4 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 4 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 4 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 4 completes recovery with differentiated loading
+[PASS] modifier matrix 4 keeps the whole working arm visible
+[PASS] modifier matrix 4 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 4 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 5 contacts=10 max_jump=0.12637607753277
+[PASS] modifier matrix 5 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 5 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 5 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 5 completes recovery with differentiated loading
+[PASS] modifier matrix 5 keeps the whole working arm visible
+[PASS] modifier matrix 5 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 5 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 6 contacts=10 max_jump=0.10438347607851
+[PASS] modifier matrix 6 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 6 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 6 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 6 completes recovery with differentiated loading
+[PASS] modifier matrix 6 keeps the whole working arm visible
+[PASS] modifier matrix 6 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 6 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 7 contacts=10 max_jump=0.12008430808783
+[PASS] modifier matrix 7 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 7 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 7 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 7 completes recovery with differentiated loading
+[PASS] modifier matrix 7 keeps the whole working arm visible
+[PASS] modifier matrix 7 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 7 keeps stationary punch drive planted through delivery
+SUSTAINED tired=false rows=["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT", "L_STRAIGHT", "L_STRAIGHT", "L_HOOK", "L_HOOK", "R_STRAIGHT", "R_STRAIGHT", "R_HOOK", "R_HOOK"] hits=8 blocks=4 jump=0.21275389194489
+[PASS] sustained false alternating and same-hand buffer preserves twelve commands
+[PASS] sustained false guard, impact and exhausted recovery stay connected
+SUSTAINED tired=true rows=["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT", "L_STRAIGHT", "L_STRAIGHT", "L_HOOK", "L_HOOK", "R_STRAIGHT", "R_STRAIGHT", "R_HOOK", "R_HOOK"] hits=8 blocks=4 jump=0.15027360618114
+[PASS] sustained true alternating and same-hand buffer preserves twelve commands
+[PASS] sustained true guard, impact and exhausted recovery stay connected
+FOOTWORK DETAIL BOXERPUNCHER forward first=0 at=7 width=0.37999996542931 lead=0.1440881639719 slip=0.0 reach=0.5305352807045 jump=0.15928810834885
+[PASS] BOXERPUNCHER forward leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER forward reverses and settles without sliding or crossing
+[PASS] BOXERPUNCHER forward transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER retreat first=1 at=7 width=0.37999996542931 lead=0.14408828318119 slip=0.0 reach=0.5305352807045 jump=0.15032529830933
+[PASS] BOXERPUNCHER retreat leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER retreat reverses and settles without sliding or crossing
+[PASS] BOXERPUNCHER retreat transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER left first=0 at=7 width=0.18098042905331 lead=0.3052950501442 slip=0.00000005960464 reach=0.53032702207565 jump=0.13504320383072
+[PASS] BOXERPUNCHER left leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER left reverses and settles without sliding or crossing
+[PASS] BOXERPUNCHER left transfers support through attached continuous anatomy
+FOOTWORK DETAIL BOXERPUNCHER right first=1 at=7 width=0.18999999761581 lead=0.35286927223206 slip=0.00000002980232 reach=0.53068381547928 jump=0.14725466072559
+[PASS] BOXERPUNCHER right leads with the travel-side foot promptly
+[PASS] BOXERPUNCHER right reverses and settles without sliding or crossing
+[PASS] BOXERPUNCHER right transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER forward first=0 at=7 width=0.37999996542931 lead=0.1440881639719 slip=0.0 reach=0.5305352807045 jump=0.15480591356754
+[PASS] OUTBOXER forward leads with the travel-side foot promptly
+[PASS] OUTBOXER forward reverses and settles without sliding or crossing
+[PASS] OUTBOXER forward transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER retreat first=1 at=7 width=0.37999996542931 lead=0.14408828318119 slip=0.0 reach=0.5305352807045 jump=0.1454601585865
+[PASS] OUTBOXER retreat leads with the travel-side foot promptly
+[PASS] OUTBOXER retreat reverses and settles without sliding or crossing
+[PASS] OUTBOXER retreat transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER left first=0 at=7 width=0.18098042905331 lead=0.3052950501442 slip=0.00000005960464 reach=0.53032702207565 jump=0.13762366771698
+[PASS] OUTBOXER left leads with the travel-side foot promptly
+[PASS] OUTBOXER left reverses and settles without sliding or crossing
+[PASS] OUTBOXER left transfers support through attached continuous anatomy
+FOOTWORK DETAIL OUTBOXER right first=1 at=7 width=0.18999999761581 lead=0.35286927223206 slip=0.00000002980232 reach=0.53068381547928 jump=0.14190450310707
+[PASS] OUTBOXER right leads with the travel-side foot promptly
+[PASS] OUTBOXER right reverses and settles without sliding or crossing
+[PASS] OUTBOXER right transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER forward first=0 at=7 width=0.37999996542931 lead=0.1440881639719 slip=0.0 reach=0.5305352807045 jump=0.14369489252567
+[PASS] SWARMER forward leads with the travel-side foot promptly
+[PASS] SWARMER forward reverses and settles without sliding or crossing
+[PASS] SWARMER forward transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER retreat first=1 at=7 width=0.37999996542931 lead=0.14408828318119 slip=0.0 reach=0.5305352807045 jump=0.14127905666828
+[PASS] SWARMER retreat leads with the travel-side foot promptly
+[PASS] SWARMER retreat reverses and settles without sliding or crossing
+[PASS] SWARMER retreat transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER left first=0 at=7 width=0.18098042905331 lead=0.3052950501442 slip=0.00000005960464 reach=0.53032702207565 jump=0.13539138436317
+[PASS] SWARMER left leads with the travel-side foot promptly
+[PASS] SWARMER left reverses and settles without sliding or crossing
+[PASS] SWARMER left transfers support through attached continuous anatomy
+FOOTWORK DETAIL SWARMER right first=1 at=7 width=0.18999999761581 lead=0.35286927223206 slip=0.00000002980232 reach=0.53068381547928 jump=0.14270353317261
+[PASS] SWARMER right leads with the travel-side foot promptly
+[PASS] SWARMER right reverses and settles without sliding or crossing
+[PASS] SWARMER right transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER forward first=0 at=7 width=0.37999996542931 lead=0.1440881639719 slip=0.0 reach=0.5305352807045 jump=0.14888541400433
+[PASS] SLUGGER forward leads with the travel-side foot promptly
+[PASS] SLUGGER forward reverses and settles without sliding or crossing
+[PASS] SLUGGER forward transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER retreat first=1 at=7 width=0.37999996542931 lead=0.14408828318119 slip=0.0 reach=0.5305352807045 jump=0.14116804301739
+[PASS] SLUGGER retreat leads with the travel-side foot promptly
+[PASS] SLUGGER retreat reverses and settles without sliding or crossing
+[PASS] SLUGGER retreat transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER left first=0 at=7 width=0.18098042905331 lead=0.3052950501442 slip=0.00000005960464 reach=0.53032702207565 jump=0.13489542901516
+[PASS] SLUGGER left leads with the travel-side foot promptly
+[PASS] SLUGGER left reverses and settles without sliding or crossing
+[PASS] SLUGGER left transfers support through attached continuous anatomy
+FOOTWORK DETAIL SLUGGER right first=1 at=7 width=0.18999999761581 lead=0.35286927223206 slip=0.00000002980232 reach=0.53068381547928 jump=0.14230324327946
+[PASS] SLUGGER right leads with the travel-side foot promptly
+[PASS] SLUGGER right reverses and settles without sliding or crossing
+[PASS] SLUGGER right transfers support through attached continuous anatomy
+BOUNDARY DETAIL circle width=0.37999996542931 lead=0.37999999523163 slip=0.0 jump=0.06527656316757
+[PASS] circle maintains planted stance under guard
+[PASS] circle keeps fixed continuous joints through the stop
+BOUNDARY DETAIL ropes width=0.37999996542931 lead=0.37999990582466 slip=0.0 jump=0.06014741584659
+[PASS] ropes maintains planted stance under guard
+[PASS] ropes keeps fixed continuous joints through the stop
+BOUNDARY DETAIL corner width=0.37999987602234 lead=0.37999987602234 slip=0.0 jump=0.06014743447304
+[PASS] corner maintains planted stance under guard
+[PASS] corner keeps fixed continuous joints through the stop
+[PASS] SLIP_L carries defense from planted support into guard and movement
+[PASS] SLIP_R carries defense from planted support into guard and movement
+[PASS] DUCK carries defense from planted support into guard and movement
+[PASS] WEAVE carries defense from planted support into guard and movement
+[PASS] LEAN carries defense from planted support into guard and movement
+[PASS] movement-defense replay identical and read-only at 30 Hz
+[PASS] pivots remain anchored and head clears torso at 30 Hz
+[PASS] body aim remains on visible crouching torso at 30 Hz
+[PASS] movement-defense replay identical and read-only at 60 Hz
+[PASS] pivots remain anchored and head clears torso at 60 Hz
+[PASS] body aim remains on visible crouching torso at 60 Hz
+[PASS] movement-defense replay identical and read-only at 144 Hz
+[PASS] pivots remain anchored and head clears torso at 144 Hz
+[PASS] body aim remains on visible crouching torso at 144 Hz
+ANATOMY LENGTHS L_UPPERCUT min [0.37999993562698, 0.35999992489815, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.3600001335144, 0.4300000667572, 0.42000004649162]
+[PASS] L_UPPERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_HOOKERCUT min [0.37999993562698, 0.35999992489815, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.36000007390976, 0.4300000667572, 0.42000004649162]
+[PASS] L_HOOKERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_HOOK min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] L_HOOK preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_FLARED min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] L_FLARED preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS L_STRAIGHT min [0.37999993562698, 0.35999992489815, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] L_STRAIGHT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_STRAIGHT min [0.37999993562698, 0.35999989509583, 0.42999994754791, 0.41999995708466] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_STRAIGHT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_FLARED min [0.37999990582466, 0.35999989509583, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.3600001335144, 0.4300000667572, 0.42000004649162]
+[PASS] R_FLARED preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_HOOK min [0.37999993562698, 0.35999992489815, 0.42999994754791, 0.41999992728233] max [0.3800000846386, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_HOOK preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_HOOKERCUT min [0.37999993562698, 0.35999992489815, 0.42999994754791, 0.41999992728233] max [0.38000005483627, 0.36000010371208, 0.4300000667572, 0.42000004649162]
+[PASS] R_HOOKERCUT preserves upper-arm forearm thigh and shin lengths
+ANATOMY LENGTHS R_UPPERCUT min [0.37999993562698, 0.35999989509583, 0.42999991774559, 0.41999992728233] max [0.3800000846386, 0.36000007390976, 0.4300000667572, 0.42000004649162]
+[PASS] R_UPPERCUT preserves upper-arm forearm thigh and shin lengths
+CONTACT MATRIX BOXERPUNCHER body=false cases=750 worst=0.44812893867493 failures=0 examples=[]
+[PASS] BOXERPUNCHER head fixed-arm contact matrix
+CONTACT MATRIX BOXERPUNCHER body=true cases=750 worst=0.37425962090492 failures=0 examples=[]
+[PASS] BOXERPUNCHER body fixed-arm contact matrix
+CONTACT MATRIX OUTBOXER body=false cases=750 worst=0.62491971254349 failures=0 examples=[]
+[PASS] OUTBOXER head fixed-arm contact matrix
+CONTACT MATRIX OUTBOXER body=true cases=750 worst=0.49424970149994 failures=0 examples=[]
+[PASS] OUTBOXER body fixed-arm contact matrix
+CONTACT MATRIX SWARMER body=false cases=750 worst=0.36465689539909 failures=0 examples=[]
+[PASS] SWARMER head fixed-arm contact matrix
+CONTACT MATRIX SWARMER body=true cases=750 worst=0.29004621505737 failures=0 examples=[]
+[PASS] SWARMER body fixed-arm contact matrix
+CONTACT MATRIX SLUGGER body=false cases=750 worst=0.42021328210831 failures=0 examples=[]
+[PASS] SLUGGER head fixed-arm contact matrix
+CONTACT MATRIX SLUGGER body=true cases=750 worst=0.34048801660538 failures=0 examples=[]
+[PASS] SLUGGER body fixed-arm contact matrix
+EDGE STRAIGHT L_STRAIGHT step=false angle=177.335015458979
+EDGE STRAIGHT R_STRAIGHT step=false angle=177.335397949573
+NATIVE CONTACT step=false body=false landed=10 gap=0.00000011205673
+[PASS] native [false, false] every punch contacts at edge range
+[PASS] native [false, false] connected fixed bones at five interpolation phases
+[PASS] native [false, false] step reach is gradual body travel
+[PASS] native false edge straights extend while close straights fold
+NATIVE CONTACT step=false body=true landed=10 gap=0.00000017285347
+[PASS] native [false, true] every punch contacts at edge range
+[PASS] native [false, true] connected fixed bones at five interpolation phases
+[PASS] native [false, true] step reach is gradual body travel
+EDGE STRAIGHT L_STRAIGHT step=true angle=177.335015458979
+EDGE STRAIGHT R_STRAIGHT step=true angle=153.185652214348
+NATIVE CONTACT step=true body=false landed=10 gap=0.0000000667572
+[PASS] native [true, false] every punch contacts at edge range
+[PASS] native [true, false] connected fixed bones at five interpolation phases
+[PASS] native [true, false] step reach is gradual body travel
+[PASS] native true edge straights extend while close straights fold
+NATIVE CONTACT step=true body=true landed=10 gap=0.00000002384186
+[PASS] native [true, true] every punch contacts at edge range
+[PASS] native [true, true] connected fixed bones at five interpolation phases
+[PASS] native [true, true] step reach is gradual body travel
+[PASS] hitstop suspends step-in travel and its remaining distance
+[PASS] feint cancels unspent step-in travel
+[PASS] native feint is emitted without a player contact
+[PASS] player feint preserves opponent recovery
+[PASS] player feint retains the cancelled hand for retraction
+[PASS] feint finishes its actual recovery without inventing a contact
+[PASS] S1 native jab preserves both fighters' motion at interrupt
+[PASS] S1 opponent windup and retraction hold through hitstop
+[PASS] S2 native jab preserves both fighters' motion at unbroken hit
+[PASS] S2 opponent windup and retraction hold through hitstop
+[PASS] authored body uppercut winds up toward the body
+VARIANT DETAIL delay max joint jump 0.20667284727097 contacts 1
+[PASS] delay feint has continuous whole-body transition
+[PASS] delay feint displays only the resolving hand at contact
+[PASS] delayed feint does not hold a false contact pose
+VARIANT DETAIL cancel max joint jump 0.19500131905079 contacts 1
+[PASS] cancel feint has continuous whole-body transition
+[PASS] cancel feint displays only the resolving hand at contact
+[PASS] false tell retracts its coil without a contact or neutral snap
+[PASS] native lifecycle replay is identical with 30 Hz renders
+[PASS] native lifecycle replay is identical with 60 Hz renders
+[PASS] native lifecycle replay is identical with 144 Hz renders
+[PASS] L_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] L_UPPERCUT visible contact matches the resolving tick
+[PASS] L_UPPERCUT keeps the elbow bent through delivery
+[PASS] L_UPPERCUT full rig holds through hitstop
+[PASS] L_UPPERCUT has no one-tick neutral snap
+[PASS] L_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] L_HOOKERCUT visible contact matches the resolving tick
+[PASS] L_HOOKERCUT keeps the elbow bent through delivery
+[PASS] L_HOOKERCUT full rig holds through hitstop
+[PASS] L_HOOKERCUT has no one-tick neutral snap
+[PASS] L_HOOK connects the ground, hips, trunk, elbow and fist
+[PASS] L_HOOK visible contact matches the resolving tick
+[PASS] L_HOOK keeps the elbow bent through delivery
+[PASS] L_HOOK full rig holds through hitstop
+[PASS] L_HOOK has no one-tick neutral snap
+[PASS] L_FLARED connects the ground, hips, trunk, elbow and fist
+[PASS] L_FLARED visible contact matches the resolving tick
+[PASS] L_FLARED full rig holds through hitstop
+[PASS] L_FLARED has no one-tick neutral snap
+[PASS] L_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[PASS] L_STRAIGHT visible contact matches the resolving tick
+[PASS] L_STRAIGHT shortens inside without changing bone lengths
+[PASS] L_STRAIGHT full rig holds through hitstop
+[PASS] L_STRAIGHT has no one-tick neutral snap
+[PASS] R_STRAIGHT connects the ground, hips, trunk, elbow and fist
+[PASS] R_STRAIGHT visible contact matches the resolving tick
+[PASS] R_STRAIGHT shortens inside without changing bone lengths
+[PASS] R_STRAIGHT full rig holds through hitstop
+[PASS] R_STRAIGHT has no one-tick neutral snap
+[PASS] R_FLARED connects the ground, hips, trunk, elbow and fist
+[PASS] R_FLARED visible contact matches the resolving tick
+[PASS] R_FLARED full rig holds through hitstop
+[PASS] R_FLARED has no one-tick neutral snap
+[PASS] R_HOOK connects the ground, hips, trunk, elbow and fist
+[PASS] R_HOOK visible contact matches the resolving tick
+[PASS] R_HOOK keeps the elbow bent through delivery
+[PASS] R_HOOK full rig holds through hitstop
+[PASS] R_HOOK has no one-tick neutral snap
+[PASS] R_HOOKERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] R_HOOKERCUT visible contact matches the resolving tick
+[PASS] R_HOOKERCUT keeps the elbow bent through delivery
+[PASS] R_HOOKERCUT full rig holds through hitstop
+[PASS] R_HOOKERCUT has no one-tick neutral snap
+[PASS] R_UPPERCUT connects the ground, hips, trunk, elbow and fist
+[PASS] R_UPPERCUT visible contact matches the resolving tick
+[PASS] R_UPPERCUT keeps the elbow bent through delivery
+[PASS] R_UPPERCUT full rig holds through hitstop
+[PASS] R_UPPERCUT has no one-tick neutral snap
+[PASS] SLIP_L keeps limbs fixed and attached through entry and exit
+[PASS] SLIP_L renders the same moving target used by collision
+[PASS] SLIP_L enters and exits without teleporting
+[PASS] SLIP_R keeps limbs fixed and attached through entry and exit
+[PASS] SLIP_R renders the same moving target used by collision
+[PASS] SLIP_R enters and exits without teleporting
+[PASS] DUCK keeps limbs fixed and attached through entry and exit
+[PASS] DUCK renders the same moving target used by collision
+[PASS] DUCK enters and exits without teleporting
+[PASS] WEAVE_L keeps limbs fixed and attached through entry and exit
+[PASS] WEAVE_L renders the same moving target used by collision
+[PASS] WEAVE_L enters and exits without teleporting
+[PASS] WEAVE_R keeps limbs fixed and attached through entry and exit
+[PASS] WEAVE_R renders the same moving target used by collision
+[PASS] WEAVE_R enters and exits without teleporting
+[PASS] LEAN keeps limbs fixed and attached through entry and exit
+[PASS] LEAN renders the same moving target used by collision
+[PASS] LEAN enters and exits without teleporting
+[PASS] stance feet plant while the other foot steps
+[PASS] extra render frames neither advance motion nor alter combat
+[PASS] SLIP_L native defense earns and delivers a counter
+[PASS] SLIP_L counter keeps the whole-body transition continuous
+[PASS] SLIP_R native defense earns and delivers a counter
+[PASS] SLIP_R counter keeps the whole-body transition continuous
+[PASS] DUCK native defense earns and delivers a counter
+[PASS] DUCK counter keeps the whole-body transition continuous
+[PASS] WEAVE_R native defense earns and delivers a counter
+[PASS] WEAVE_R counter keeps the whole-body transition continuous
+[PASS] LEAN native defense earns and delivers a counter
+[PASS] LEAN counter keeps the whole-body transition continuous
+[PASS] PERFECT_BLOCK native defense earns and delivers a counter
+[PASS] PERFECT_BLOCK counter keeps the whole-body transition continuous
+[PASS] step-out regathers actual support before the original counter expires
+[PASS] STEP_OUT native defense earns and delivers a counter
+[PASS] STEP_OUT counter keeps the whole-body transition continuous
+[PASS] step-out regathers actual support before the original counter expires
+[PASS] earned counter against a longer reach still misses beyond our actual reach
+[PASS] STEP_OUT_REACH_MISS counter keeps the whole-body transition continuous
+[PASS] range counter rejects stationary retreat credit
+[PASS] range counter rejects outside retreat credit
+[PASS] range counter rejects stopped retreat credit
+[PASS] active retreat eligibility survives save and deterministic hash
+[PASS] step-out grants the authored RFX-scaled window
+[PASS] restored retreat earns the same counter window
+[PASS] range counter rejects consumed retreat credit
+[PASS] range counter rejects approach retreat credit
+[PASS] range counter rejects circle retreat credit
+[PASS] range counter rejects reversed retreat credit
+SEQUENCE DETAIL guard 1.0 rows ["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT"] hits 4 jump=0.11496111750603
+[PASS] native covered jab-cross-hook-body sequence preserves all four inputs
+[PASS] alternating hands and returning guard have no whole-body snap
+[PASS] tired hands visibly recover for the authored recovery duration
+[PASS] live boss strings show the resolving hand on every contact
+BOXING MOTION VERDICT :: GREEN (334/334)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

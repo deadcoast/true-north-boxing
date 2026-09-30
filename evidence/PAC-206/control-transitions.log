@@ -1,0 +1,35 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[PASS] SLIP_L native defense earns and delivers a counter
+[PASS] SLIP_L counter keeps the whole-body transition continuous
+[PASS] SLIP_R native defense earns and delivers a counter
+[PASS] SLIP_R counter keeps the whole-body transition continuous
+[PASS] DUCK native defense earns and delivers a counter
+[PASS] DUCK counter keeps the whole-body transition continuous
+[PASS] WEAVE_R native defense earns and delivers a counter
+[PASS] WEAVE_R counter keeps the whole-body transition continuous
+[PASS] LEAN native defense earns and delivers a counter
+[PASS] LEAN counter keeps the whole-body transition continuous
+[PASS] PERFECT_BLOCK native defense earns and delivers a counter
+[PASS] PERFECT_BLOCK counter keeps the whole-body transition continuous
+COUNTER DETAIL STEP_OUT earned true landed false
+[FAIL] STEP_OUT native defense earns and delivers a counter
+[PASS] STEP_OUT counter keeps the whole-body transition continuous
+[PASS] range counter rejects stationary retreat credit
+[PASS] range counter rejects outside retreat credit
+[PASS] range counter rejects stopped retreat credit
+[PASS] active retreat eligibility survives save and deterministic hash
+[PASS] step-out grants the authored RFX-scaled window
+[PASS] restored retreat earns the same counter window
+[PASS] range counter rejects consumed retreat credit
+[PASS] range counter rejects approach retreat credit
+[PASS] range counter rejects circle retreat credit
+[PASS] range counter rejects reversed retreat credit
+SEQUENCE DETAIL guard 1.0 rows ["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT"] hits 4 jump=0.13001495599747
+[PASS] native covered jab-cross-hook-body sequence preserves all four inputs
+[PASS] alternating hands and returning guard have no whole-body snap
+[PASS] tired hands visibly recover for the authored recovery duration
+[PASS] live boss strings show the resolving hand on every contact
+TRANSITIONS VERDICT :: RED (27/28)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

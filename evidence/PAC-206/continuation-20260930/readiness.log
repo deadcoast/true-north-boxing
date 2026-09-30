@@ -1,0 +1,174 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+HARDWARE INPUTS []
+[PASS] controlled run has no external controller input
+[PASS] fixed clock aligns every 1/6 second boundary at 30 Hz
+[PASS] fixed clock aligns every 1/6 second boundary at 60 Hz
+[PASS] fixed clock aligns every 1/6 second boundary at 144 Hz
+[PASS] clock does not round a genuinely short tick forward
+[PASS] clock retains hitch cap and rejects negative delta
+[PASS] normal launch pauses before the bell
+[PASS] native Enter rings the first bell
+[PASS] rory-yuri / 30 Hz fixed anatomy throughout
+[PASS] rory-yuri / 30 Hz opponent stays clear of HUD
+[PASS] rory-yuri / 30 Hz authored tells remain visible
+[PASS] rory-yuri / 30 Hz repeated rendering is read-only
+[PASS] rory-yuri / 30 Hz exchanges include both offense and contact
+[PASS] rory-yuri / 30 Hz sustained fight time
+[PASS] rory-yuri / 30 Hz no input remains held
+SESSION {"case":"rory-yuri","commands":417,"events":{"block":13,"block_press":17,"boss_act":58,"boss_windup":39,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":3,"clinch_beat":12,"clinch_cue":12,"clinch_end":3,"directive":3,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":10,"feed":48,"footwork":105,"hit":30,"matchup":2,"perfect_block":4,"phase":1,"pi":1,"pi_count":1,"punch":21,"range_step":1,"recover":20,"reward_toast":1,"sealed":1,"seg_end":1,"segment_ko":1,"sensor":21,"taunt_b":6,"tell":24,"traits":2,"unbroken":5,"whiff":3,"xp":1},"fight_ticks":7716,"first_bad_camera":{},"hashes":417,"hz":30,"minimum_stamina":16.6933333333321,"modes":["FIGHT","EIGHT","OVER"],"recovered_stamina":138.616619740211,"samples":70,"wall_seconds":8.099272,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] rory-yuri / 60 Hz fixed anatomy throughout
+[PASS] rory-yuri / 60 Hz opponent stays clear of HUD
+[PASS] rory-yuri / 60 Hz authored tells remain visible
+[PASS] rory-yuri / 60 Hz repeated rendering is read-only
+[PASS] rory-yuri / 60 Hz exchanges include both offense and contact
+[PASS] rory-yuri / 60 Hz sustained fight time
+[PASS] rory-yuri / 60 Hz no input remains held
+SESSION {"case":"rory-yuri","commands":417,"events":{"block":13,"block_press":17,"boss_act":58,"boss_windup":39,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":3,"clinch_beat":12,"clinch_cue":12,"clinch_end":3,"directive":3,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":10,"feed":48,"footwork":105,"hit":30,"matchup":2,"perfect_block":4,"phase":1,"pi":1,"pi_count":1,"punch":21,"range_step":1,"recover":20,"reward_toast":1,"sealed":1,"seg_end":1,"segment_ko":1,"sensor":21,"taunt_b":6,"tell":24,"traits":2,"unbroken":5,"whiff":3,"xp":1},"fight_ticks":7720,"first_bad_camera":{},"hashes":417,"hz":60,"minimum_stamina":16.6933333333321,"modes":["FIGHT","EIGHT","OVER"],"recovered_stamina":138.616619740211,"samples":70,"wall_seconds":10.473029,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] rory-yuri identical state and native commands at 60 Hz
+[PASS] rory-yuri / 144 Hz fixed anatomy throughout
+[PASS] rory-yuri / 144 Hz opponent stays clear of HUD
+[PASS] rory-yuri / 144 Hz authored tells remain visible
+[PASS] rory-yuri / 144 Hz repeated rendering is read-only
+[PASS] rory-yuri / 144 Hz exchanges include both offense and contact
+[PASS] rory-yuri / 144 Hz sustained fight time
+[PASS] rory-yuri / 144 Hz no input remains held
+SESSION {"case":"rory-yuri","commands":417,"events":{"block":13,"block_press":17,"boss_act":58,"boss_windup":39,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":3,"clinch_beat":12,"clinch_cue":12,"clinch_end":3,"directive":3,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":10,"feed":48,"footwork":105,"hit":30,"matchup":2,"perfect_block":4,"phase":1,"pi":1,"pi_count":1,"punch":21,"range_step":1,"recover":20,"reward_toast":1,"sealed":1,"seg_end":1,"segment_ko":1,"sensor":21,"taunt_b":6,"tell":24,"traits":2,"unbroken":5,"whiff":3,"xp":1},"fight_ticks":7721,"first_bad_camera":{},"hashes":417,"hz":144,"minimum_stamina":16.6933333333321,"modes":["FIGHT","EIGHT","OVER"],"recovered_stamina":138.616619740211,"samples":70,"wall_seconds":18.106079,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] rory-yuri identical state and native commands at 144 Hz
+[PASS] priya-marta / 30 Hz fixed anatomy throughout
+[PASS] priya-marta / 30 Hz opponent stays clear of HUD
+[PASS] priya-marta / 30 Hz authored tells remain visible
+[PASS] priya-marta / 30 Hz repeated rendering is read-only
+[PASS] priya-marta / 30 Hz exchanges include both offense and contact
+[PASS] priya-marta / 30 Hz sustained fight time
+[PASS] priya-marta / 30 Hz no input remains held
+SESSION {"case":"priya-marta","commands":383,"events":{"block":10,"block_press":7,"boss_act":53,"boss_windup":32,"bout_end":1,"bout_start":1,"card_pinned":4,"directive":2,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":5,"feed":56,"footwork":127,"footwork_audio":46,"hit":28,"interrupt":1,"matchup":2,"perfect_block":4,"phase":1,"pi":1,"pi_count":1,"punch":17,"recover":24,"reward_toast":1,"sealed":1,"seg_end":1,"segment_ko":1,"sensor":21,"stance":16,"tell":23,"traits":2,"unbroken":2,"whiff":1,"xp":1},"fight_ticks":6980,"first_bad_camera":{},"hashes":383,"hz":30,"minimum_stamina":12.424209930489,"modes":["FIGHT","EIGHT","OVER"],"recovered_stamina":147.334769277362,"samples":64,"wall_seconds":7.383652,"zones":["CENTER","MID","ROPES"]}
+[PASS] priya-marta / 60 Hz fixed anatomy throughout
+[PASS] priya-marta / 60 Hz opponent stays clear of HUD
+[PASS] priya-marta / 60 Hz authored tells remain visible
+[PASS] priya-marta / 60 Hz repeated rendering is read-only
+[PASS] priya-marta / 60 Hz exchanges include both offense and contact
+[PASS] priya-marta / 60 Hz sustained fight time
+[PASS] priya-marta / 60 Hz no input remains held
+SESSION {"case":"priya-marta","commands":383,"events":{"block":10,"block_press":7,"boss_act":53,"boss_windup":32,"bout_end":1,"bout_start":1,"card_pinned":4,"directive":2,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":5,"feed":56,"footwork":127,"footwork_audio":46,"hit":28,"interrupt":1,"matchup":2,"perfect_block":4,"phase":1,"pi":1,"pi_count":1,"punch":17,"recover":24,"reward_toast":1,"sealed":1,"seg_end":1,"segment_ko":1,"sensor":21,"stance":16,"tell":23,"traits":2,"unbroken":2,"whiff":1,"xp":1},"fight_ticks":6984,"first_bad_camera":{},"hashes":383,"hz":60,"minimum_stamina":12.424209930489,"modes":["FIGHT","EIGHT","OVER"],"recovered_stamina":147.334769277362,"samples":64,"wall_seconds":9.322377,"zones":["CENTER","MID","ROPES"]}
+[PASS] priya-marta identical state and native commands at 60 Hz
+[PASS] priya-marta / 144 Hz fixed anatomy throughout
+[PASS] priya-marta / 144 Hz opponent stays clear of HUD
+[PASS] priya-marta / 144 Hz authored tells remain visible
+[PASS] priya-marta / 144 Hz repeated rendering is read-only
+[PASS] priya-marta / 144 Hz exchanges include both offense and contact
+[PASS] priya-marta / 144 Hz sustained fight time
+[PASS] priya-marta / 144 Hz no input remains held
+SESSION {"case":"priya-marta","commands":383,"events":{"block":10,"block_press":7,"boss_act":53,"boss_windup":32,"bout_end":1,"bout_start":1,"card_pinned":4,"directive":2,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"evade":5,"feed":56,"footwork":127,"footwork_audio":46,"hit":28,"interrupt":1,"matchup":2,"perfect_block":4,"phase":1,"pi":1,"pi_count":1,"punch":17,"recover":24,"reward_toast":1,"sealed":1,"seg_end":1,"segment_ko":1,"sensor":21,"stance":16,"tell":23,"traits":2,"unbroken":2,"whiff":1,"xp":1},"fight_ticks":6984,"first_bad_camera":{},"hashes":383,"hz":144,"minimum_stamina":12.424209930489,"modes":["FIGHT","EIGHT","OVER"],"recovered_stamina":147.334769277362,"samples":64,"wall_seconds":15.557345,"zones":["CENTER","MID","ROPES"]}
+[PASS] priya-marta identical state and native commands at 144 Hz
+[PASS] marcus-sam / 30 Hz fixed anatomy throughout
+[PASS] marcus-sam / 30 Hz opponent stays clear of HUD
+[PASS] marcus-sam / 30 Hz authored tells remain visible
+[PASS] marcus-sam / 30 Hz repeated rendering is read-only
+[PASS] marcus-sam / 30 Hz exchanges include both offense and contact
+[PASS] marcus-sam / 30 Hz sustained fight time
+[PASS] marcus-sam / 30 Hz no input remains held
+SESSION {"case":"marcus-sam","commands":546,"events":{"block":12,"block_press":4,"boss_act":103,"boss_windup":20,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":4,"clinch_beat":16,"clinch_cue":16,"clinch_end":4,"directive":3,"evade":5,"feed":58,"footwork":130,"gauge":21,"guard_break":1,"hit":21,"matchup":2,"perfect_block":3,"phase":2,"pi":1,"pi_count":1,"punch":27,"recover":49,"reward_toast":1,"sealed":1,"seg_end":1,"sensor":26,"tell":51,"traits":2,"unbroken":7,"whiff":6,"xp":1},"fight_ticks":10912,"first_bad_camera":{},"hashes":546,"hz":30,"minimum_stamina":14.1258333333313,"modes":["FIGHT","OVER"],"recovered_stamina":213.898970474407,"samples":91,"wall_seconds":10.487084,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] marcus-sam / 60 Hz fixed anatomy throughout
+[PASS] marcus-sam / 60 Hz opponent stays clear of HUD
+[PASS] marcus-sam / 60 Hz authored tells remain visible
+[PASS] marcus-sam / 60 Hz repeated rendering is read-only
+[PASS] marcus-sam / 60 Hz exchanges include both offense and contact
+[PASS] marcus-sam / 60 Hz sustained fight time
+[PASS] marcus-sam / 60 Hz no input remains held
+SESSION {"case":"marcus-sam","commands":546,"events":{"block":12,"block_press":4,"boss_act":103,"boss_windup":20,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":4,"clinch_beat":16,"clinch_cue":16,"clinch_end":4,"directive":3,"evade":5,"feed":58,"footwork":130,"gauge":21,"guard_break":1,"hit":21,"matchup":2,"perfect_block":3,"phase":2,"pi":1,"pi_count":1,"punch":27,"recover":49,"reward_toast":1,"sealed":1,"seg_end":1,"sensor":26,"tell":51,"traits":2,"unbroken":7,"whiff":6,"xp":1},"fight_ticks":10912,"first_bad_camera":{},"hashes":546,"hz":60,"minimum_stamina":14.1258333333313,"modes":["FIGHT","OVER"],"recovered_stamina":213.898970474407,"samples":91,"wall_seconds":14.185872,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] marcus-sam identical state and native commands at 60 Hz
+[PASS] marcus-sam / 144 Hz fixed anatomy throughout
+[PASS] marcus-sam / 144 Hz opponent stays clear of HUD
+[PASS] marcus-sam / 144 Hz authored tells remain visible
+[PASS] marcus-sam / 144 Hz repeated rendering is read-only
+[PASS] marcus-sam / 144 Hz exchanges include both offense and contact
+[PASS] marcus-sam / 144 Hz sustained fight time
+[PASS] marcus-sam / 144 Hz no input remains held
+SESSION {"case":"marcus-sam","commands":546,"events":{"block":12,"block_press":4,"boss_act":103,"boss_windup":20,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":4,"clinch_beat":16,"clinch_cue":16,"clinch_end":4,"directive":3,"evade":5,"feed":58,"footwork":130,"gauge":21,"guard_break":1,"hit":21,"matchup":2,"perfect_block":3,"phase":2,"pi":1,"pi_count":1,"punch":27,"recover":49,"reward_toast":1,"sealed":1,"seg_end":1,"sensor":26,"tell":51,"traits":2,"unbroken":7,"whiff":6,"xp":1},"fight_ticks":10913,"first_bad_camera":{},"hashes":546,"hz":144,"minimum_stamina":14.1258333333313,"modes":["FIGHT","OVER"],"recovered_stamina":213.898970474407,"samples":91,"wall_seconds":22.157576,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] marcus-sam identical state and native commands at 144 Hz
+[PASS] june-dual / 30 Hz fixed anatomy throughout
+[PASS] june-dual / 30 Hz opponent stays clear of HUD
+[PASS] june-dual / 30 Hz authored tells remain visible
+[PASS] june-dual / 30 Hz repeated rendering is read-only
+[PASS] june-dual / 30 Hz exchanges include both offense and contact
+[PASS] june-dual / 30 Hz sustained fight time
+[PASS] june-dual / 30 Hz no input remains held
+[PASS] june-dual / 30 Hz native corner send resumes next fighter
+SESSION {"case":"june-dual","commands":660,"events":{"block":26,"block_press":21,"boss_act":101,"boss_windup":50,"card_pinned":4,"clinch":3,"clinch_beat":12,"clinch_cue":12,"clinch_end":3,"coach_action":1,"corner_open":1,"crowd":7,"directive":1,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"enemy_corner":1,"evade":16,"feed":76,"flag":1,"footwork":134,"gauge":21,"guard_break":1,"hit":35,"matchup":2,"perfect_block":9,"phase":1,"pi":1,"pi_count":1,"punch":42,"range_step":1,"recover":43,"relay_open":1,"sealed":1,"seg_card":1,"seg_end":1,"segment_ko":1,"sensor":38,"tactics_live_b":1,"taunt_b":6,"tell":46,"traits":2,"unbroken":8,"whiff":6,"xp":1},"fight_ticks":12460,"first_bad_camera":{},"hashes":660,"hz":30,"minimum_stamina":14.628333333332,"modes":["FIGHT","EIGHT","CARD","CORNER"],"recovered_stamina":223.061666666661,"samples":110,"wall_seconds":12.529592,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] june-dual / 60 Hz fixed anatomy throughout
+[PASS] june-dual / 60 Hz opponent stays clear of HUD
+[PASS] june-dual / 60 Hz authored tells remain visible
+[PASS] june-dual / 60 Hz repeated rendering is read-only
+[PASS] june-dual / 60 Hz exchanges include both offense and contact
+[PASS] june-dual / 60 Hz sustained fight time
+[PASS] june-dual / 60 Hz no input remains held
+[PASS] june-dual / 60 Hz native corner send resumes next fighter
+SESSION {"case":"june-dual","commands":660,"events":{"block":26,"block_press":21,"boss_act":101,"boss_windup":50,"card_pinned":4,"clinch":3,"clinch_beat":12,"clinch_cue":12,"clinch_end":3,"coach_action":1,"corner_open":1,"crowd":7,"directive":1,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"enemy_corner":1,"evade":16,"feed":76,"flag":1,"footwork":134,"gauge":21,"guard_break":1,"hit":35,"matchup":2,"perfect_block":9,"phase":1,"pi":1,"pi_count":1,"punch":42,"range_step":1,"recover":43,"relay_open":1,"sealed":1,"seg_card":1,"seg_end":1,"segment_ko":1,"sensor":38,"tactics_live_b":1,"taunt_b":6,"tell":46,"traits":2,"unbroken":8,"whiff":6,"xp":1},"fight_ticks":12462,"first_bad_camera":{},"hashes":660,"hz":60,"minimum_stamina":14.628333333332,"modes":["FIGHT","EIGHT","CARD","CORNER"],"recovered_stamina":223.061666666661,"samples":110,"wall_seconds":16.010153,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] june-dual identical state and native commands at 60 Hz
+[PASS] june-dual / 144 Hz fixed anatomy throughout
+[PASS] june-dual / 144 Hz opponent stays clear of HUD
+[PASS] june-dual / 144 Hz authored tells remain visible
+[PASS] june-dual / 144 Hz repeated rendering is read-only
+[PASS] june-dual / 144 Hz exchanges include both offense and contact
+[PASS] june-dual / 144 Hz sustained fight time
+[PASS] june-dual / 144 Hz no input remains held
+[PASS] june-dual / 144 Hz native corner send resumes next fighter
+SESSION {"case":"june-dual","commands":660,"events":{"block":26,"block_press":21,"boss_act":101,"boss_windup":50,"card_pinned":4,"clinch":3,"clinch_beat":12,"clinch_cue":12,"clinch_end":3,"coach_action":1,"corner_open":1,"crowd":7,"directive":1,"drop":3,"eight_beat":6,"eight_survived":1,"eight_up":2,"enemy_corner":1,"evade":16,"feed":76,"flag":1,"footwork":134,"gauge":21,"guard_break":1,"hit":35,"matchup":2,"perfect_block":9,"phase":1,"pi":1,"pi_count":1,"punch":42,"range_step":1,"recover":43,"relay_open":1,"sealed":1,"seg_card":1,"seg_end":1,"segment_ko":1,"sensor":38,"tactics_live_b":1,"taunt_b":6,"tell":46,"traits":2,"unbroken":8,"whiff":6,"xp":1},"fight_ticks":12464,"first_bad_camera":{},"hashes":660,"hz":144,"minimum_stamina":14.628333333332,"modes":["FIGHT","EIGHT","CARD","CORNER"],"recovered_stamina":223.061666666661,"samples":110,"wall_seconds":27.760711,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] june-dual identical state and native commands at 144 Hz
+[PASS] ep1-scrap / 30 Hz fixed anatomy throughout
+[PASS] ep1-scrap / 30 Hz opponent stays clear of HUD
+[PASS] ep1-scrap / 30 Hz authored tells remain visible
+[PASS] ep1-scrap / 30 Hz repeated rendering is read-only
+[PASS] ep1-scrap / 30 Hz exchanges include both offense and contact
+[PASS] ep1-scrap / 30 Hz sustained fight time
+[PASS] ep1-scrap / 30 Hz no input remains held
+SESSION {"case":"ep1-scrap","commands":191,"events":{"block":4,"block_press":18,"boss_act":29,"boss_windup":31,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":2,"clinch_beat":8,"clinch_cue":8,"clinch_end":2,"drop":2,"evade":5,"feed":42,"flag":1,"footwork":34,"generic":1,"hit":26,"interrupt":2,"matchup":2,"perfect_block":9,"pi_count":1,"punch":19,"recover":8,"reward_toast":1,"sealed":1,"seg_end":1,"sensor":10,"survival_grab":1,"tell":11,"unbroken":5,"whiff":3,"xp":1},"fight_ticks":3804,"first_bad_camera":{},"hashes":191,"hz":30,"minimum_stamina":19.4133333333347,"modes":["FIGHT","OVER"],"recovered_stamina":51.186666666666,"samples":32,"wall_seconds":3.932733,"zones":["CENTER","MID"]}
+[PASS] ep1-scrap / 60 Hz fixed anatomy throughout
+[PASS] ep1-scrap / 60 Hz opponent stays clear of HUD
+[PASS] ep1-scrap / 60 Hz authored tells remain visible
+[PASS] ep1-scrap / 60 Hz repeated rendering is read-only
+[PASS] ep1-scrap / 60 Hz exchanges include both offense and contact
+[PASS] ep1-scrap / 60 Hz sustained fight time
+[PASS] ep1-scrap / 60 Hz no input remains held
+SESSION {"case":"ep1-scrap","commands":191,"events":{"block":4,"block_press":18,"boss_act":29,"boss_windup":31,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":2,"clinch_beat":8,"clinch_cue":8,"clinch_end":2,"drop":2,"evade":5,"feed":42,"flag":1,"footwork":34,"generic":1,"hit":26,"interrupt":2,"matchup":2,"perfect_block":9,"pi_count":1,"punch":19,"recover":8,"reward_toast":1,"sealed":1,"seg_end":1,"sensor":10,"survival_grab":1,"tell":11,"unbroken":5,"whiff":3,"xp":1},"fight_ticks":3806,"first_bad_camera":{},"hashes":191,"hz":60,"minimum_stamina":19.4133333333347,"modes":["FIGHT","OVER"],"recovered_stamina":51.186666666666,"samples":32,"wall_seconds":5.362514,"zones":["CENTER","MID"]}
+[PASS] ep1-scrap identical state and native commands at 60 Hz
+[PASS] ep1-scrap / 144 Hz fixed anatomy throughout
+[PASS] ep1-scrap / 144 Hz opponent stays clear of HUD
+[PASS] ep1-scrap / 144 Hz authored tells remain visible
+[PASS] ep1-scrap / 144 Hz repeated rendering is read-only
+[PASS] ep1-scrap / 144 Hz exchanges include both offense and contact
+[PASS] ep1-scrap / 144 Hz sustained fight time
+[PASS] ep1-scrap / 144 Hz no input remains held
+SESSION {"case":"ep1-scrap","commands":191,"events":{"block":4,"block_press":18,"boss_act":29,"boss_windup":31,"bout_end":1,"bout_start":1,"card_pinned":4,"clinch":2,"clinch_beat":8,"clinch_cue":8,"clinch_end":2,"drop":2,"evade":5,"feed":42,"flag":1,"footwork":34,"generic":1,"hit":26,"interrupt":2,"matchup":2,"perfect_block":9,"pi_count":1,"punch":19,"recover":8,"reward_toast":1,"sealed":1,"seg_end":1,"sensor":10,"survival_grab":1,"tell":11,"unbroken":5,"whiff":3,"xp":1},"fight_ticks":3806,"first_bad_camera":{},"hashes":191,"hz":144,"minimum_stamina":19.4133333333347,"modes":["FIGHT","OVER"],"recovered_stamina":51.186666666666,"samples":32,"wall_seconds":7.879169,"zones":["CENTER","MID"]}
+[PASS] ep1-scrap identical state and native commands at 144 Hz
+[PASS] fatigue-recovery / 30 Hz fixed anatomy throughout
+[PASS] fatigue-recovery / 30 Hz opponent stays clear of HUD
+[PASS] fatigue-recovery / 30 Hz authored tells remain visible
+[PASS] fatigue-recovery / 30 Hz repeated rendering is read-only
+[PASS] fatigue-recovery / 30 Hz exchanges include both offense and contact
+[PASS] fatigue-recovery / 30 Hz sustained fight time
+[PASS] fatigue-recovery / 30 Hz no input remains held
+[PASS] fatigue-recovery / 30 Hz gassed through real costs then recovered
+SESSION {"case":"fatigue-recovery","commands":390,"events":{"block":3,"boss_act":75,"boss_windup":15,"bout_start":1,"card_pinned":4,"clinch":1,"clinch_beat":4,"clinch_cue":4,"clinch_end":1,"directive":3,"drop":1,"eight_beat":3,"eight_survived":1,"eight_up":1,"evade":3,"feed":42,"flag":2,"footwork":113,"gauge":6,"hit":15,"matchup":2,"modifier_fallback":8,"phase":2,"power_open":3,"punch":11,"recover":37,"sealed":1,"sensor":14,"tell":37,"traits":2,"unbroken":1,"whiff":5},"fight_ticks":7496,"first_bad_camera":{},"hashes":390,"hz":30,"minimum_stamina":0.128333333333333,"modes":["FIGHT","EIGHT"],"recovered_stamina":133.035833333333,"samples":65,"wall_seconds":7.598818,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] fatigue-recovery / 60 Hz fixed anatomy throughout
+[PASS] fatigue-recovery / 60 Hz opponent stays clear of HUD
+[PASS] fatigue-recovery / 60 Hz authored tells remain visible
+[PASS] fatigue-recovery / 60 Hz repeated rendering is read-only
+[PASS] fatigue-recovery / 60 Hz exchanges include both offense and contact
+[PASS] fatigue-recovery / 60 Hz sustained fight time
+[PASS] fatigue-recovery / 60 Hz no input remains held
+[PASS] fatigue-recovery / 60 Hz gassed through real costs then recovered
+SESSION {"case":"fatigue-recovery","commands":390,"events":{"block":3,"boss_act":75,"boss_windup":15,"bout_start":1,"card_pinned":4,"clinch":1,"clinch_beat":4,"clinch_cue":4,"clinch_end":1,"directive":3,"drop":1,"eight_beat":3,"eight_survived":1,"eight_up":1,"evade":3,"feed":42,"flag":2,"footwork":113,"gauge":6,"hit":15,"matchup":2,"modifier_fallback":8,"phase":2,"power_open":3,"punch":11,"recover":37,"sealed":1,"sensor":14,"tell":37,"traits":2,"unbroken":1,"whiff":5},"fight_ticks":7496,"first_bad_camera":{},"hashes":390,"hz":60,"minimum_stamina":0.128333333333333,"modes":["FIGHT","EIGHT"],"recovered_stamina":133.035833333333,"samples":65,"wall_seconds":9.995206,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] fatigue-recovery identical state and native commands at 60 Hz
+[PASS] fatigue-recovery / 144 Hz fixed anatomy throughout
+[PASS] fatigue-recovery / 144 Hz opponent stays clear of HUD
+[PASS] fatigue-recovery / 144 Hz authored tells remain visible
+[PASS] fatigue-recovery / 144 Hz repeated rendering is read-only
+[PASS] fatigue-recovery / 144 Hz exchanges include both offense and contact
+[PASS] fatigue-recovery / 144 Hz sustained fight time
+[PASS] fatigue-recovery / 144 Hz no input remains held
+[PASS] fatigue-recovery / 144 Hz gassed through real costs then recovered
+SESSION {"case":"fatigue-recovery","commands":390,"events":{"block":3,"boss_act":75,"boss_windup":15,"bout_start":1,"card_pinned":4,"clinch":1,"clinch_beat":4,"clinch_cue":4,"clinch_end":1,"directive":3,"drop":1,"eight_beat":3,"eight_survived":1,"eight_up":1,"evade":3,"feed":42,"flag":2,"footwork":113,"gauge":6,"hit":15,"matchup":2,"modifier_fallback":8,"phase":2,"power_open":3,"punch":11,"recover":37,"sealed":1,"sensor":14,"tell":37,"traits":2,"unbroken":1,"whiff":5},"fight_ticks":7496,"first_bad_camera":{},"hashes":390,"hz":144,"minimum_stamina":0.128333333333333,"modes":["FIGHT","EIGHT"],"recovered_stamina":133.035833333333,"samples":65,"wall_seconds":16.216471,"zones":["CENTER","MID","ROPES","CORNER"]}
+[PASS] fatigue-recovery identical state and native commands at 144 Hz
+READINESS VERDICT :: GREEN (152/152)

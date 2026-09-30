@@ -24,6 +24,7 @@ var held: Dictionary = {}
 var since: Dictionary = {}
 var queue: Array[Dictionary] = []
 var sticks: Dictionary = {}
+var body_sticks: Dictionary = {}
 var mouse_vector := Vector2.ZERO
 var mouse_down := false
 var mouse_fired := false
@@ -97,7 +98,7 @@ func load_settings(path: String = SETTINGS) -> Error:
 func clear(wait_for_neutral: bool = false) -> void:
 	require_neutral = wait_for_neutral
 	body_blocked = wait_for_neutral; step_armed = not wait_for_neutral
-	held.clear(); since.clear(); queue.clear(); sticks.clear()
+	held.clear(); since.clear(); queue.clear(); sticks.clear(); body_sticks.clear()
 	mouse_down = false; mouse_fired = false; mouse_vector = Vector2.ZERO
 
 func down(action: String) -> bool:
@@ -117,6 +118,7 @@ func _punch(row: String, now: int, extra: Dictionary = {}) -> void:
 func handle_event(e: InputEvent, now: int, combat: bool = true) -> bool:
 	if e is InputEventKey and e.echo: return false
 	var consumed := false
+	var body_event := false
 	for action in actions:
 		if not InputMap.event_is_action(e, PREFIX + action): continue
 		var source := "%s:%d:%d" % [e.get_class(), e.device, e.axis if e is InputEventJoypadMotion else (e.button_index if e is InputEventJoypadButton or e is InputEventMouseButton else 0)]
@@ -124,6 +126,7 @@ func handle_event(e: InputEvent, now: int, combat: bool = true) -> bool:
 		var pressed := e.is_action_pressed(PREFIX + action)
 		if not held.has(action): held[action] = {}
 		held[action][source] = pressed
+		body_event = body_event or action in ["left", "right", "forward", "back"]
 		if down(action) and not was: since[action] = now
 		if not combat: continue
 		if action in ROWS:
@@ -140,6 +143,14 @@ func handle_event(e: InputEvent, now: int, combat: bool = true) -> bool:
 			queue.append({action: true}); consumed = true
 		elif action == "sprint": consumed = true # held footwork modifier; no legacy burst edge
 	if not combat: return false
+	if e is InputEventJoypadMotion and e.axis in [JOY_AXIS_LEFT_X, JOY_AXIS_LEFT_Y]:
+		var body_vector: Vector2 = body_sticks.get(e.device, Vector2.ZERO)
+		if e.axis == JOY_AXIS_LEFT_X: body_vector.x = e.axis_value
+		else: body_vector.y = e.axis_value
+		body_sticks[e.device] = body_vector
+		_observe_body_neutral()
+		return true
+	if body_event: _observe_body_neutral()
 	if e is InputEventJoypadMotion and e.axis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:
 		var v: Vector2 = sticks.get(e.device, {}).get("v", Vector2.ZERO)
 		if e.axis == JOY_AXIS_RIGHT_X: v.x = e.axis_value
@@ -202,16 +213,36 @@ func stick_sample(device: int, v: Vector2, now: int) -> void:
 
 func poll_hardware(now: int) -> void:
 	var connected := Input.get_connected_joypads()
+	for device in body_sticks.keys():
+		if device not in connected: body_sticks.erase(device)
+	for action in held:
+		for source in held[action].keys():
+			if str(source).begins_with("InputEventJoypad") and int(str(source).split(":")[1]) not in connected:
+				held[action].erase(source)
 	for device in sticks.keys():
 		if device not in connected: sticks.erase(device)
 	for device in connected:
+		body_sticks[device] = Vector2(Input.get_joy_axis(device, JOY_AXIS_LEFT_X), Input.get_joy_axis(device, JOY_AXIS_LEFT_Y))
 		stick_sample(device, Vector2(Input.get_joy_axis(device, JOY_AXIS_RIGHT_X), Input.get_joy_axis(device, JOY_AXIS_RIGHT_Y)), now)
 
-func take_intent() -> Dictionary:
+func _body_raw() -> Vector2:
 	var movement := Vector2(float(down("right")) - float(down("left")), float(down("back")) - float(down("forward")))
-	for device in Input.get_connected_joypads():
-		var pad := Vector2(Input.get_joy_axis(device, JOY_AXIS_LEFT_X), Input.get_joy_axis(device, JOY_AXIS_LEFT_Y))
-		if pad.length() > 0.2: movement += pad; break
+	var strongest := Vector2.ZERO
+	var devices := body_sticks.keys(); devices.sort()
+	for device in devices:
+		var pad: Vector2 = body_sticks[device]
+		if pad.length_squared() > strongest.length_squared(): strongest = pad
+	return movement + strongest
+
+func _observe_body_neutral() -> void:
+	# An actual neutral event can arrive between fixed ticks. Remember it even
+	# when the next event has already returned to the rim before take_intent.
+	var movement := _body_raw()
+	if movement.length() <= BodyControl.DEADZONE: body_blocked = false
+	if not body_blocked and BodyControl.radial(movement).length() < 0.20: step_armed = true
+
+func take_intent() -> Dictionary:
+	var movement := _body_raw()
 	# The body disk is anatomical x/right and y/up, explicitly converted from
 	# Godot's down-positive stick. Root travel has its own deliberate stroke.
 	var axis := BodyControl.radial(Vector2(movement.x, -movement.y))

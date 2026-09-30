@@ -80,6 +80,9 @@ func capture(label: String) -> void:
 
 func _run() -> void:
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
+	# Whole working-chain visibility is an observer assertion. Native body,
+	# support and punch execution stay unchanged by this camera choice.
+	scene.fight_view.observer_view = true
 	await process_frame
 	scene.controls_menu.close(); scene.begin_fight(false)
 	if "styles-film" in OS.get_cmdline_user_args():
@@ -115,6 +118,10 @@ func _run() -> void:
 	if "transitions-only" in OS.get_cmdline_user_args():
 		await transitions()
 		print("TRANSITIONS VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED", checks - failures.size(), checks])
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "lifecycle-only" in OS.get_cmdline_user_args():
+		await lifecycle()
+		print("LIFECYCLE VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED",checks-failures.size(),checks])
 		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
 	_style_signatures(); await _styles(); await _souls()
 	await _connected_combinations()
@@ -223,53 +230,73 @@ func _run() -> void:
 func transitions() -> void:
 	# Real key edges go through the same adapter as play. The opponent's isolated
 	# straight creates an observable evade/counter window; no counter flag is set.
-	for pair in [[KEY_Q, "SLIP_L"], [KEY_E, "SLIP_R"], [KEY_DOWN, "DUCK"], [KEY_V, "WEAVE_R"], [KEY_B, "LEAN"], [KEY_SPACE, "PERFECT_BLOCK"], [KEY_S, "STEP_OUT"]]:
-		fresh()
-		if pair[1] == "LEAN":
-			tests.place(scene.sim, 2.2); scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
-		if pair[1] == "STEP_OUT":
-			tests.place(scene.sim, float(scene.sim.contact_region(scene.sim.B, scene.sim.P, "R_STRAIGHT", false)["reach"]) - 0.03)
-			scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
-			scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]; scene._render(1)
-		key(pair[0], true)
-		var last := snapshot(); var jump := 0.0
-		for tick in 12:
-			native_step()
-			var now := snapshot()
-			for i in now.size(): jump = maxf(jump, now[i].origin.distance_to(last[i].origin))
-			last = now
-		key(pair[0], false)
-		scene.sim.bpending = {"row": "R_STRAIGHT", "body": false}; scene.sim._land_boss_punch(1.0)
-		var earned: bool = scene.sim.P["counter_t"] > 0
-		scene._consume_events(); key(KEY_W, pair[1] in ["LEAN", "STEP_OUT"]); key(KEY_K, true)
-		var landed := false
-		for tick in 100:
+	for pair in [[KEY_Q, "SLIP_L"], [KEY_E, "SLIP_R"], [KEY_DOWN, "DUCK"], [KEY_V, "WEAVE_R"], [KEY_B, "LEAN"], [KEY_SPACE, "PERFECT_BLOCK"], [KEY_S, "STEP_OUT"], [KEY_S, "STEP_OUT_REACH_MISS"]]:
+		fresh(); scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
+		if pair[1] == "LEAN": tests.place(scene.sim,2.2)
+		if str(pair[1]).begins_with("STEP_OUT"):
+			var player_reach: float = scene.sim.contact_region(scene.sim.P,scene.sim.B,"R_STRAIGHT",false)["reach"]
+			var opponent_reach: float = scene.sim.contact_region(scene.sim.B,scene.sim.P,"R_STRAIGHT",false)["reach"]
+			tests.place(scene.sim,(opponent_reach if pair[1]=="STEP_OUT_REACH_MISS" else minf(player_reach,opponent_reach))-0.03)
+		# Lower the opponent's actual hands to leave a head counter opening.
+		scene.sim.B["guard_body"] = true; scene.sim.B["guard_t"] = 100
+		# With high hands a slip can physically deflect the incoming glove.
+		# Exercise clean head evasion here from an actual low guard instead.
+		if str(pair[1]).begins_with("SLIP"): key(KEY_C,true); key(KEY_SPACE,true)
+		for i in 30: native_step()
+		scene.sim._boss_act({"kind":"punch","row":"R_STRAIGHT","mult":1.0,"body":false})
+		scene.sim.btimer = 100000
+		if str(pair[1]).begins_with("STEP_OUT"): key(KEY_CTRL,true)
+		key(pair[0],true)
+		var last := snapshot(); var jump := 0.0; var earned := false; var incoming := []
+		for i in 90:
 			var events := native_step()
-			if tick == 0: tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
-			var now := snapshot()
-			if pose_jump(last, now) >= 0.25:
-				print("COUNTER DISCONTINUITY ", pair[1], " tick=", tick, " attack=", scene.fight_view.attacks.get("P"), " positions=", scene.sim.P["pos"], " / ", scene.sim.B["pos"])
-				for part in now.size():
-					if last[part].origin.distance_to(now[part].origin) >= 0.25: print("COUNTER PART ", part, " from=", last[part].origin, " to=", now[part].origin)
-			for i in now.size(): jump = maxf(jump, now[i].origin.distance_to(last[i].origin))
-			last = now
+			earned = earned or scene.sim.P["counter_t"] > 0
 			for event in events:
-				if event.get("kind") == "hit" and event.get("on") == "B" and event.get("counter", false): landed = true
-		key(KEY_K, false)
-		if not (earned and landed): print("COUNTER DETAIL ", pair[1], " earned ", earned, " landed ", landed)
-		check(pair[1] + " native defense earns and delivers a counter", earned and landed)
-		check(pair[1] + " counter keeps the whole-body transition continuous", jump < 0.25)
+				if event.get("kind")=="boxing_contact": incoming.append(event)
+			jump = maxf(jump,pose_jump(last,snapshot())); last = snapshot()
+			if scene.sim.B["pending"].is_empty(): break
+		key(pair[0],false)
+		if str(pair[1]).begins_with("SLIP"): key(KEY_C,false); key(KEY_SPACE,false)
+		if str(pair[1]).begins_with("STEP_OUT"):
+			for settle in 80:
+				var body: Dictionary = scene.sim.P["body_control"]
+				if body["step"].is_empty() and body["gait"].is_empty() and float(body["recovery"])<=0: break
+				native_step(); jump=maxf(jump,pose_jump(last,snapshot())); last=snapshot()
+			check("step-out regathers actual support before the original counter expires",scene.sim.P["counter_t"]>0)
+		if pair[1]=="LEAN": key(KEY_CTRL,true)
+		key(KEY_W,pair[1]=="LEAN" or str(pair[1]).begins_with("STEP_OUT")); key(KEY_K,true)
+		var landed := false; var exchange := []
+		for tick in 100:
+			# Suppress a new tactical read, but keep the opponent's gloves physical.
+			tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"]=0
+			var events := native_step()
+			for event in events:
+				if event.get("kind") in ["boxing_contact","hit","whiff","block"]: exchange.append(event)
+				if event.get("kind")=="hit" and event.get("on")=="B" and event.get("counter",false): landed=true
+			jump=maxf(jump,pose_jump(last,snapshot())); last=snapshot()
+		key(KEY_K,false)
+		if pair[1]=="STEP_OUT_REACH_MISS":
+			check("earned counter cannot score through an unreachable target",earned and not landed and exchange.any(func(e):return e.get("kind")=="boxing_contact" and e.get("by")=="P" and e["contact"]["kind"]!="hit"))
+		else:
+			if not (earned and landed): print("COUNTER DETAIL ",pair[1]," earned=",earned," incoming=",incoming," reply=",exchange)
+			check(pair[1]+" native defense earns and delivers a counter",earned and landed)
+		check(pair[1]+" counter keeps the whole-body transition continuous",jump<0.25)
 	# No counter for stationary distance, starting already out of range, or
 	# stopping the retreat before the opponent commits. An origin is spent once.
 	for mode in ["stationary", "outside", "stopped", "consumed", "approach", "circle", "reversed"]:
 		fresh(); scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
 		var reach: float = scene.sim.contact_region(scene.sim.B, scene.sim.P, "R_STRAIGHT", false)["reach"]
 		tests.place(scene.sim, reach + (0.1 if mode in ["stationary", "outside", "approach"] else -0.03))
+		key(KEY_CTRL, true) # Native deliberate steps now require their modifier.
 		if mode == "circle": tests.place(scene.sim, reach - 0.0001); key(KEY_A, true)
 		key(KEY_S, mode not in ["stationary", "circle"])
 		for i in 12: native_step()
-		if mode == "stopped": key(KEY_S, false); native_step()
-		if mode == "reversed": key(KEY_S, false); key(KEY_W, true); native_step()
+		if mode == "stopped" or mode == "reversed":
+			# Releasing a stroke does not teleport an already committed foot home.
+			# Let that bounded step settle before testing stale retreat credit.
+			key(KEY_S, false)
+			for i in 70: native_step()
+			if mode == "reversed": key(KEY_W, true); native_step()
 		if mode == "approach": scene.sim.B["pos"] += (scene.sim.P["pos"] - scene.sim.B["pos"]).normalized() * 0.2
 		if mode == "consumed":
 			var restored = tests.make_sim(0, 731)
@@ -286,7 +313,7 @@ func transitions() -> void:
 	for tick in 12: native_step()
 	var covered: float = scene.player.get_meta("kinematics")["guard"]
 	var sequence := [KEY_J, KEY_K, KEY_U, KEY_O]
-	var issued := 0; var hits := 0; var last := snapshot(); var jump := 0.0; var rows := []
+	var issued := 0; var hits := 0; var contacts := 0; var last := snapshot(); var jump := 0.0; var rows := []
 	for tick in 420:
 		if issued < sequence.size() and rows.size() == issued and scene.sim.P["busy_t"] <= 3 and scene.sim.P["pending"].is_empty():
 			if issued > 0: key(sequence[issued - 1], false)
@@ -296,11 +323,12 @@ func transitions() -> void:
 			if event.get("kind") == "punch":
 				rows.append(event["row"]); tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
 			if event.get("kind") == "hit" and event.get("on") == "B": hits += 1
+			if event.get("kind") == "boxing_contact" and event.get("by") == "P": contacts += 1
 		var now := snapshot()
 		for i in now.size(): jump = maxf(jump, now[i].origin.distance_to(last[i].origin))
 		last = now
 	print("SEQUENCE DETAIL guard ", covered, " rows ", rows, " hits ", hits, " jump=", jump)
-	check("native covered jab-cross-hook-body sequence preserves all four inputs", covered > 0.99 and rows == ["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT"] and hits == 4)
+	check("native covered jab-cross-hook-body sequence preserves all four inputs", covered > 0.99 and rows == ["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT"] and contacts == 4)
 	check("alternating hands and returning guard have no whole-body snap", jump < 0.25 and float(scene.player.get_meta("kinematics")["guard"]) > 0.99)
 	fresh(); scene.sim.P["stamina"] = 10
 	step({"punch": "R_STRAIGHT"}); tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
@@ -315,7 +343,7 @@ func transitions() -> void:
 	fresh(); scene.sim = tests.make_sim(0, 731); tests.place(scene.sim, 1.35)
 	scene.sim.P["comp"] = 10000; scene.sim.P["comp_max"] = 10000
 	scene.fight_view.clock_sim = null; scene.prev_p = scene.sim.P["pos"]; scene.prev_b = scene.sim.B["pos"]
-	var contacts := 0; var aligned := true
+	contacts = 0; var aligned := true
 	for tick in 1000:
 		for event in step():
 			if event.get("kind") == "boss_act" and event.get("verb") == "punch":
@@ -466,8 +494,11 @@ func _souls() -> void:
 						offense += 1
 						var hand := 0 if str(event["row"]).begins_with("L_") else 1
 						var rig: Dictionary = scene.boss.get_meta("kinematics")
-						var gap: float = rig["wrists"][hand].distance_to(rig["contact_centers"][hand]) - float(rig["contact_radii"][hand])
-						aligned = aligned and (absf(gap) < 0.001 if float(rig["contact_hits"][hand]) > 0.5 else gap > 0.00001)
+						if event.has("contact"):
+							aligned = aligned and (scene.boss.position + Vector3(rig["wrists"][hand])).distance_to(event["contact"]["point"]) < 0.001
+						else:
+							var gap: float = rig["wrists"][hand].distance_to(rig["contact_centers"][hand]) - float(rig["contact_radii"][hand])
+							aligned = aligned and (absf(gap) < 0.001 if float(rig["contact_hits"][hand]) > 0.5 else gap > 0.00001)
 			if tick in [0, 24, 60, 126, 475, 540]: await capture("front-soul-" + name + "-%03d" % tick)
 			if "styles-film" in OS.get_cmdline_user_args() and tick % 2 == 1:
 				film_label.text = "Three Souls | " + name.replace("_", " ").capitalize()
@@ -577,10 +608,10 @@ func _connected_combinations() -> void:
 				previous = now
 				for event in events:
 					if event.get("kind") == "punch": expected = event["mods"].duplicate()
-					if event.get("kind") == "hit" and event.get("on") == "B":
+					if event.get("kind") == "boxing_contact" and event.get("by") == "P" and event["contact"]["kind"] != "miss":
 						count += 1
 						var r: Dictionary = scene.player.get_meta("kinematics"); var hand := 0 if n < 5 else 1
-						contact = contact and absf(r["wrists"][hand].distance_to(r["contact_centers"][hand]) - float(r["contact_radii"][hand])) < 0.001
+						contact = contact and (scene.player.position + Vector3(r["wrists"][hand])).distance_to(event["contact"]["point"]) < 0.001
 				var attack: Dictionary = scene.fight_view.attacks.get("P", {})
 				if attack.get("row", "") != "":
 					if float(attack.get("progress", 0)) >= .7 and float(attack.get("recovery", 0)) == 0:
@@ -592,7 +623,9 @@ func _connected_combinations() -> void:
 						prior_plant = world_plant; sampled_plant = true
 					retained = retained and attack.get("mods", []) == expected
 					if float(attack.get("recovery", 0)) > 0.1: recovery_seen = true
-					if half.is_empty() and float(attack.get("progress", 0)) >= 0.5 and float(attack.get("progress", 0)) < 1:
+					# Sample loading before the earliest active-contact threshold;
+					# a guard can now stop the physical hand before halfway delivery.
+					if half.is_empty() and float(attack.get("progress", 0)) >= 0.25 and float(attack.get("progress", 0)) < 0.3:
 						half = scene.player.get_meta("kinematics").duplicate(true)
 						skin_follows = skin_follows and _rib_skin_follows()
 				connected = connected and _anatomy_ok(scene.player.get_meta("kinematics")) and rigid_render(scene.player)
@@ -601,6 +634,7 @@ func _connected_combinations() -> void:
 			if variant < 2: half_poses[str(variant) + rows[n]] = half
 			else:
 				var base: Dictionary = half_poses[str(variant & 1) + rows[n]]
+				if absf(float(half.get("chest_turn",0))-float(base.get("chest_turn",0))) <= 0.01: print("LOAD DETAIL ",rows[n]," variant=",variant," base=",base.get("chest_turn")," modified=",half.get("chest_turn"))
 				distinct = distinct and absf(float(half.get("chest_turn", 0)) - float(base.get("chest_turn", 0))) > 0.01
 			if n == 5 and variant in [0, 2, 4]:
 				# Individual stroke phases are captured in the sustained run below.
@@ -625,8 +659,18 @@ func _connected_combinations() -> void:
 		var sequence := [0, 5, 2, 9, 0, 0, 2, 2, 5, 5, 7, 7]
 		var issued := 0; var fired := []; var hits := 0; var blocks := 0; var previous := snapshot(); var jump := 0.0; var fixed := true
 		for tick in 2400:
-			if issued < sequence.size() and fired.size() == issued and scene.sim.P["pending"].is_empty() and scene.sim.P["busy_t"] <= 3:
+			var can_issue: bool = issued < sequence.size() and fired.size() == issued and scene.sim.P["pending"].is_empty() and scene.sim.P["busy_t"] <= 3
+			if can_issue and scene.sim.P["pos"].distance_to(scene.sim.B["pos"]) > 1.4:
+				var next_cost: float = scene.sim.T["punch_matrix"][rows[sequence[issued]]]["stamina"]
+				# Exhaustion cannot borrow the effort for an entry. Recover through
+				# the normal clock; never refill the test fighter or shorten recovery.
+				can_issue = float(scene.sim.P["stamina"]) >= next_cost + 3.0
+				key(KEY_SPACE, can_issue)
+			if can_issue:
 				if issued > 0: key(codes[sequence[issued - 1]], false)
+				key(KEY_W, false); key(KEY_CTRL, false)
+				if scene.sim.P["pos"].distance_to(scene.sim.B["pos"]) > 1.4:
+					key(KEY_CTRL, true); key(KEY_W, true)
 				key(KEY_C, issued % 4 == 3); key(codes[sequence[issued]], true); issued += 1
 			# Isolate response choice without replacing actual resolution.
 			tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 100 if fired.size() % 3 == 0 else 0
@@ -636,7 +680,11 @@ func _connected_combinations() -> void:
 				if event.get("kind") == "punch": fired.append(event["row"])
 				if event.get("kind") == "hit" and event.get("on") == "B": hits += 1
 				if event.get("kind") == "block" and event.get("by") == "B": blocks += 1
-			jump = maxf(jump, pose_jump(previous, snapshot())); previous = snapshot()
+			var current := snapshot()
+			var delta := pose_jump(previous, current)
+			if delta > 0.25:
+				print("COMBINATION DISCONTINUITY tired=", tired, " tick=", tick, " jump=", delta, " attack=", scene.fight_view.attacks.get("P"), " events=", events)
+			jump = maxf(jump, delta); previous = current
 			fixed = fixed and _anatomy_ok(scene.player.get_meta("kinematics")) and rigid_render(scene.player)
 			if "capture" in OS.get_cmdline_user_args() and not tired and fired.size() in [2, 5, 6] and tick % 6 == 0 and scene.sim.P["busy_t"] > 0:
 				await capture("side-combination-%02d-%04d" % [fired.size(), tick])
@@ -677,21 +725,28 @@ func lifecycle() -> void:
 	# Whiffing opponent keeps moving while a real native player key release
 	# cancels the player's startup. Cancellation cannot own the other fighter.
 	fresh(Sim.BOSSES.find("yuri_kowalchuk")); tests.place(scene.sim, 2.8)
+	native_step()
 	force_tell("S1"); scene.sim.btimer = 1
-	step(); step()
+	native_step(); native_step()
 	key(KEY_U, true)
 	for i in 6: native_step()
+	var opponent_before: Dictionary = scene.sim.B["boxing"].duplicate(true)
 	key(KEY_U, false)
 	var events := native_step()
 	check("native feint is emitted without a player contact", tests.count_events(events, "feint") == 1 and tests.count_events(events, "hit", {"on": "B"}) == 0)
-	check("player feint preserves opponent recovery", scene.boss.get_meta("pose_row") == "R_HOOKERCUT" and float(scene.boss.get_meta("extension")) > 0.1)
+	check("player feint preserves opponent committed motion", scene.boss.get_meta("pose_row") == "R_HOOKERCUT" and scene.sim.B["boxing"]["action"]["id"] == opponent_before["action"]["id"] and int(scene.sim.B["boxing"]["clock"]) > int(opponent_before["clock"]))
 	check("player feint retains the cancelled hand for retraction", scene.player.get_meta("pose_row") == "L_HOOK")
 	var invented := 0
 	for i in 22: invented += tests.count_events(native_step(), "hit", {"on": "B"})
 	check("feint finishes its actual recovery without inventing a contact", invented == 0 and scene.player.get_meta("pose_row") == "" and scene.sim.P["busy_t"] == 0)
 	for string in ["S1", "S2"]:
-		fresh(Sim.BOSSES.find("yuri_kowalchuk")); force_tell(string)
-		for i in (24 if string == "S1" else 0): step()
+		fresh(Sim.BOSSES.find("yuri_kowalchuk"))
+		# Present a real head opening; clearing a Boolean guard alone no
+		# longer removes the gloves which physically cover the target.
+		scene.sim.B["guard_body"] = true; scene.sim.B["guard_t"] = 100
+		for i in 30: native_step()
+		force_tell(string)
+		for i in (24 if string == "S1" else 0): native_step()
 		key(KEY_J, true); var outcome := false; var held := true; var continuing := false
 		for i in 55:
 			tests.clear_defense(scene.sim.B); scene.sim.B["guard_t"] = 0
@@ -704,7 +759,9 @@ func lifecycle() -> void:
 			for event in events:
 				if event.get("kind") == ("interrupt" if string == "S1" else "unbroken"):
 					outcome = true
-					continuing = scene.boss.get_meta("pose_row") != "" and float(scene.player.get_meta("extension")) > 0.99
+					var contact: Dictionary = scene.sim.P["boxing"].get("contact",{})
+					continuing = scene.boss.get_meta("pose_row") != "" and contact.get("kind","")=="hit" and (scene.player.position+scene.player.get_meta("kinematics")["wrists"][0]).distance_to(contact["point"]) < 0.001 and pose_jump(before,snapshot(scene.boss)) < 0.25
+		if not outcome or not continuing: print("LIFECYCLE DETAIL ",string," outcome=",outcome," continuous=",continuing," contact=",scene.sim.P["boxing"].get("contact",{}))
 		check(string + " native jab preserves both fighters' motion at " + ("interrupt" if string == "S1" else "unbroken hit"), outcome and continuing)
 		check(string + " opponent windup and retraction hold through hitstop", held)
 	# Moira's authored low uppercut must wind up below the head, too.
@@ -940,9 +997,10 @@ func planted_movement() -> void:
 			var reach := 0.0; var jump := 0.0; var fixed := true; var weighted := false; var last_feet := []; var last_pose := snapshot()
 			var opposite: int = {KEY_W: KEY_S, KEY_S: KEY_W, KEY_A: KEY_D, KEY_D: KEY_A}[direction]
 			for tick in 180:
-				if tick == 0: key(direction, true)
-				if tick == 55: key(direction, false); key(opposite, true)
-				if tick == 110: key(opposite, false)
+				if tick == 0: key(KEY_CTRL, true); key(direction, true)
+				if tick == 20: key(direction, false)
+				if tick == 55: key(opposite, true)
+				if tick == 110: key(opposite, false); key(KEY_CTRL, false)
 				native_step()
 				var rig: Dictionary = scene.player.get_meta("kinematics")
 				var world := [scene.player.position + rig["feet"][0], scene.player.position + rig["feet"][1]]

@@ -30,6 +30,7 @@ var last_tick := -1
 var feet: Array = []
 var step := {}
 var guard := 0.0
+var guard_level := 0.0
 var previous_origin := Vector3.ZERO
 var foot_yaw: Array = []
 var lead_weight := 0.5
@@ -41,6 +42,16 @@ var knee_history: Array = []
 var knee_prior: Array = []
 var inside_extent := 1.0
 var travel_ticks := 0
+
+# Native simulation retains the solver's history as plain typed save data.
+func state() -> Dictionary:
+	var out := {}
+	for key in ["last_tick", "feet", "step", "guard", "guard_level", "previous_origin", "foot_yaw", "lead_weight", "support_shift", "elbow_tick", "elbow_history", "elbow_prior", "knee_history", "knee_prior", "inside_extent", "travel_ticks"]:
+		out[key] = get(key)
+	return out.duplicate(true)
+
+func restore_state(saved: Dictionary) -> void:
+	for key in saved: set(key, saved[key])
 
 static func ramp(value: float) -> float:
 	var x := clampf(value, 0, 1)
@@ -57,7 +68,7 @@ static func chain(row: String, progress: float, recovery: float, coil := 1.0, mo
 	var rotation := (0.20 if row == "L_STRAIGHT" else (0.80 if hook else 0.52)) * strength
 	var load := sin(clampf(progress, 0, 1) * PI) * ((0.32 if hook or upper else 0.13) + power * 0.16 + haymaker * 0.30)
 	# A haymaker spends more of its already-authored startup loading the rear
-	# side, then releases. Contact still occurs exactly at sim progress == 1.
+	# side, then releases. Native contact may intercept this path before its end.
 	var shaped := clampf(progress - delivery_bias * sin(progress * PI), 0, 1)
 	var delivery := clampf((shaped - haymaker * 0.16) / (1.0 - haymaker * 0.16), 0, 1)
 	var arm_return := 1.0 - ramp(recovery * return_rate)
@@ -108,6 +119,16 @@ static func contact_goal(shoulder: Vector3, desired: Vector3, target: Vector3, r
 	return goal
 
 static func constrain(rig: Dictionary) -> Dictionary:
+	# Poses are constrained at sampling, reaction and interpolation boundaries.
+	# Remove our previous correction first so those calls cannot accumulate
+	# chest lean or pelvis lowering. Authored/reaction edits remain intact.
+	var prior_lean: Vector3 = rig.get("delivery_lean", Vector3.ZERO)
+	var prior_lower := float(rig.get("support_lower", 0.0))
+	rig["pelvis"].y += prior_lower
+	rig["chest"] += Vector3.UP * prior_lower - prior_lean
+	for i in 2:
+		rig["hip_joints"][i].y += prior_lower
+		rig["shoulders"][i] += Vector3.UP * prior_lower - prior_lean
 	# Reconstruct the heel around the planted forefoot after interpolation;
 	# lerping ankle positions independently cuts across the pivot's arc.
 	var forward: Vector3 = rig["forward"].normalized()
@@ -124,24 +145,32 @@ static func constrain(rig: Dictionary) -> Dictionary:
 		rig["pelvis"].y -= lower; rig["chest"].y -= lower
 		for i in 2:
 			rig["hip_joints"][i].y -= lower; rig["shoulders"][i].y -= lower
+	rig["support_lower"] = lower
 	# Called AFTER every pose blend, including render interpolation. Endpoints
 	# and poles blend; independently interpolated cylinder transforms do not.
 	# A long step-in transfers the chest above its base. When the target surface
 	# lies outside arm reach, move the connected shoulder girdle; never bones.
 	var lean := Vector3.ZERO
+	var continuous_delivery := float(rig.get("continuous_delivery", 0.0)) > 0.5
 	for i in 2:
-		if float(rig["contact_hits"][i]) < 0.5: continue
-		var delta: Vector3 = rig["contact_centers"][i] - rig["shoulders"][i]
-		var reach := UPPER_ARM + FOREARM + float(rig["contact_radii"][i]) - 0.002
+		if not continuous_delivery and float(rig["contact_hits"][i]) < 0.5: continue
+		# With continuous delivery, the requested path drives the shoulder.
+		# Crossing a hit-region boundary cannot suddenly enable chest travel.
+		var goal: Vector3 = rig["delivery_targets"][i] if continuous_delivery else rig["contact_centers"][i]
+		var delta: Vector3 = goal - rig["shoulders"][i]
+		var reach := UPPER_ARM + FOREARM - 0.002 + (0.0 if continuous_delivery else float(rig["contact_radii"][i]))
 		var horizontal := Vector3(delta.x, 0, delta.z)
 		var available := sqrt(maxf(0.001, reach * reach - delta.y * delta.y))
 		var needed := maxf(0, horizontal.length() - available) * float(rig["contact_weights"][i])
 		if needed > lean.length(): lean = horizontal.normalized() * needed
 	rig["chest"] += lean
 	for i in 2: rig["shoulders"][i] += lean
+	rig["delivery_lean"] = lean
 	for i in 2:
 		var desired: Vector3 = rig["delivery_targets"][i]
-		var delivery := contact_goal(rig["shoulders"][i], desired, rig["contact_centers"][i], float(rig["contact_radii"][i]), float(rig["contact_hits"][i]) >= 0.5)
+		# Solve the requested arm pose continuously. The old hit/miss branch
+		# manufactured a different wrist endpoint before a punch had resolved.
+		var delivery := desired if continuous_delivery else contact_goal(rig["shoulders"][i], desired, rig["contact_centers"][i], float(rig["contact_radii"][i]), float(rig["contact_hits"][i]) >= 0.5)
 		var hand: Vector3 = rig["hand_goals"][i] + (delivery - desired) * float(rig["contact_weights"][i])
 		var pole: Vector3 = rig["arm_poles"][i]
 		if float(rig.get("knee_stability", 0)) > 0:
@@ -239,6 +268,7 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	var style := style_profile(fighter)
 	var at: Vector2 = fighter["pos"]; var delta: Vector2 = BodyControl.forward(fighter, other)
 	var forward := Vector3(delta.x, 0, delta.y).normalized()
+	if attack.has("forward"): forward = attack["forward"]
 	if forward.length_squared() < 0.1: forward = Vector3.FORWARD
 	var right := forward.cross(Vector3.UP)
 	var origin := Space.ground(at)
@@ -248,6 +278,7 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	var dt := maxi(0, tick - last_tick) if last_tick >= 0 else 1
 	var block := bool(fighter.get("blocking", false)) or int(fighter.get("guard_t", 0)) > 0
 	guard = move_toward(guard, 1.0 if block else 0.0, float(dt) / 6)
+	guard_level = move_toward(guard_level,1.0 if fighter.get("guard_body",false) else 0.0,float(dt)/10.0)
 	var row := str(attack.get("row", ""))
 	var progress := float(attack.get("progress", 0)); var recovery := float(attack.get("recovery", 0))
 	var mods: Array = attack.get("mods", [])
@@ -310,14 +341,15 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 		var shoulder := chest + (right * side * float(style["shoulder"]) + Vector3.UP * 0.11).rotated(Vector3.UP, chest_turn)
 		if active: shoulder += forward * float(motion["shoulder"]) * (0.07 if "STRAIGHT" in row or "FLARED" in row else 0.12 * compact) + Vector3.UP * float(motion["shoulder"]) * 0.035
 		var neutral: Vector3 = shoulder + right * side * 0.025 + forward * (0.21 + (float(style["guard"]) if i == 0 else 0.0)) + Vector3.UP * 0.08
-		var covered := head_offset + Vector3.UP * 1.57 + right * side * 0.20 + forward * 0.17
+		var covered := head_offset + Vector3.UP * lerpf(1.57,1.15,guard_level) + right * side * 0.20 + forward * 0.17
 		# A punch exits the sim's block immediately, but its glove leaves the
 		# covered position continuously. The other glove protects the chin as
 		# the working shoulder rolls; this is pose only, never free sim blocking.
 		var cover := maxf(guard, float(style["cover"]))
-		if active and "BLOCK_PUNCH" in mods: cover = maxf(cover, (1.0 - ramp(progress / 0.4)) * (1.0 - ramp(recovery)))
+		if active and "BLOCK_PUNCH" in mods: cover = maxf(cover, float(attack.get("guard_start", 1.0)) * (1.0 - ramp(progress / 0.4)) * (1.0 - ramp(recovery)))
 		if not active and row != "": cover = maxf(cover, float(motion["shoulder"]))
 		var hand: Vector3 = neutral.lerp(covered, ramp(cover))
+		var home := hand
 		# Marta's authored hands-down invitation is not a blocking state. Blend
 		# into/out of it on the same active clock, including hitstop.
 		hand -= Vector3.UP * 0.24 * float(fighter.get("motion_offer", 0)) * (1.0 - guard)
@@ -334,6 +366,22 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 			curve *= compact * float(style["arc"]) * (1.0 + (0.18 if "POWER" in mods else 0.0) + (0.32 if "HAYMAKER" in mods else 0.0)) * (1.0 - ramp(recovery * 2.0))
 			hand += -forward * float(motion["load"]) * 0.50
 			hand = hand.lerp(target, e) + curve * sin(e * PI)
+			if "STRAIGHT" in row and fighter.get("continuous_delivery",false):
+				# Establish the committed lane before extending. A diagonal from
+				# a resting low glove to the far chin drives every straight into
+				# the opponent's resting hand instead of delivering along its aim.
+				var align_lane := ramp((progress-0.08)/0.48) * (1.0-ramp(recovery*float(style["return"])))
+				hand.y = lerpf(hand.y,target.y,align_lane)
+				hand += right * (target-hand).dot(right) * align_lane
+			# A loaded glove folds in front of the shoulder. Passing through the
+			# shoulder reverses the IK axis and flips a deeply bent elbow.
+			var load_clearance := 0.18 * (1.0-ramp(progress/0.55)) * (1.0-ramp(recovery))
+			if load_clearance > 0 and fighter.get("continuous_delivery",false): hand += forward * maxf(0,load_clearance-(hand-shoulder).dot(forward))
+			if motion["upper"] and not "BODY" in mods:
+				# A rising head route stays in front of the chest until it rises
+				# into the head lane. Do not score a head-intent uppercut by sending
+				# its early delivery through the torso volume first.
+				hand -= forward * 0.20 * sin(e * PI) * (1.0 - ramp(recovery))
 			if motion["upper"] or recovery > 0:
 				# Rising punches sweep in front of the chest. A lateral/downward
 				# arc alone can route the wrist through the advancing shoulder,
@@ -345,6 +393,10 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 			var turnover := side * (0.15 if motion["upper"] else PI * 0.5)
 			pronation = turnover * 0.70 * float(motion["forearm"])
 			twist = pronation + turnover * 0.30 * float(motion["fist"])
+			if attack.has("return_from"):
+				hand = Vector3(attack["return_from"]).lerp(home, ramp(recovery * float(style["return"])))
+		if attack.has("start_wrists") and not attack.has("return_from"):
+			hand = Vector3(attack["start_wrists"][i]).lerp(hand,float(attack.get("launch_blend",1)))
 		var bend := right * side * 0.25 - Vector3.UP
 		if motion["hook"] and active:
 			var delivery_pole := right * side * 0.75 - Vector3.UP * (0.6 if motion["upper"] else 0.2)
@@ -375,7 +427,7 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 		leg_poles.append(knee_pole); knees.append(Vector3.ZERO)
 	last_tick = tick
 	var supported_knees := [knee_prior[0] - origin, knee_prior[1] - origin] if not knee_prior.is_empty() else hip_joints.duplicate()
-	var result := constrain({"knee_stability": 0.0 if knee_prior.is_empty() else 1.0, "support_knees": supported_knees, "support_elbows": support_elbows, "arm_stability": arm_stability, "hand_goals": wrists.duplicate(), "delivery_targets": delivery_targets, "contact_centers": contact_centers, "contact_radii": contact_radii, "contact_hits": contact_hits, "contact_weights": contact_weights, "arm_poles": arm_poles, "leg_poles": leg_poles, "hip_joints": hip_joints, "ankles": ankles, "forward": forward, "head": head_offset + Vector3.UP * 1.55, "pelvis": pelvis, "chest": chest, "hips_turn": hips_turn, "chest_turn": chest_turn, "shoulders": shoulders,
+	var result := constrain({"continuous_delivery": 1.0 if fighter.get("continuous_delivery", body_state.has("feet")) else 0.0, "knee_stability": 0.0 if knee_prior.is_empty() else 1.0, "support_knees": supported_knees, "support_elbows": support_elbows, "arm_stability": arm_stability, "hand_goals": wrists.duplicate(), "delivery_targets": delivery_targets, "contact_centers": contact_centers, "contact_radii": contact_radii, "contact_hits": contact_hits, "contact_weights": contact_weights, "arm_poles": arm_poles, "leg_poles": leg_poles, "hip_joints": hip_joints, "ankles": ankles, "forward": forward, "head": head_offset + Vector3.UP * 1.55, "pelvis": pelvis, "chest": chest, "hips_turn": hips_turn, "chest_turn": chest_turn, "shoulders": shoulders,
 		"elbows": elbows, "wrists": wrists, "twists": twists, "forearm_twists": forearm_twists, "feet": soles, "pivots": pivots, "knees": knees, "chain": motion, "guard": guard, "lead_weight": lead_weight, "support_shift": support_shift})
 
 	elbow_history = [origin + result["elbows"][0], origin + result["elbows"][1]]

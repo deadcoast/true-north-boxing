@@ -47,6 +47,9 @@ func frame_at(distance: float, angle: float, center := Vector2.ZERO) -> bool:
 
 func _run() -> void:
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
+	# These full-body/framing/clearance assertions specify the retained chase
+	# observer. drive_foundation exercises the default embodied camera.
+	scene.fight_view.observer_view = true
 	await process_frame
 	scene.controls_menu.close()
 	check("launch waits for a deliberate first bell", scene.fight_hud.entry.visible)

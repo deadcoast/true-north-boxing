@@ -1,0 +1,145 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+TRAVEL CONTACT MATRIX count=360 failures=0 examples=[]
+[PASS] scripted travel preserves physical eligibility and drawn contact with moving targets
+STYLE SIGNATURES delivery=[0.271, 0.5, 0.383, 0.114] return=[0.388, 0.282, 0.216, 0.463] steps=[0.04526, 0.04093, 0.03447, 0.03716]
+[PASS] four styles express distinct delivery
+[PASS] four styles express distinct recovery
+[PASS] four styles express distinct footwork cadence
+[PASS] BOXERPUNCHER ten punches keep authoritative contact and attached anatomy
+[PASS] BOXERPUNCHER delivers every stationary punch from a planted driving foot
+[PASS] BOXERPUNCHER delivery and return remain continuous
+[PASS] BOXERPUNCHER SLIP_L keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER SLIP_R keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER DUCK keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER WEAVE keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER LEAN keeps collision-aligned continuous defense
+[PASS] BOXERPUNCHER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX BOXERPUNCHER contacts=10 jump=0.15882010757923
+[PASS] OUTBOXER ten punches keep authoritative contact and attached anatomy
+[PASS] OUTBOXER delivers every stationary punch from a planted driving foot
+[PASS] OUTBOXER delivery and return remain continuous
+[PASS] OUTBOXER SLIP_L keeps collision-aligned continuous defense
+[PASS] OUTBOXER SLIP_R keeps collision-aligned continuous defense
+[PASS] OUTBOXER DUCK keeps collision-aligned continuous defense
+[PASS] OUTBOXER WEAVE keeps collision-aligned continuous defense
+[PASS] OUTBOXER LEAN keeps collision-aligned continuous defense
+[PASS] OUTBOXER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX OUTBOXER contacts=10 jump=0.1300268471241
+[PASS] SWARMER ten punches keep authoritative contact and attached anatomy
+[PASS] SWARMER delivers every stationary punch from a planted driving foot
+[PASS] SWARMER delivery and return remain continuous
+[PASS] SWARMER SLIP_L keeps collision-aligned continuous defense
+[PASS] SWARMER SLIP_R keeps collision-aligned continuous defense
+[PASS] SWARMER DUCK keeps collision-aligned continuous defense
+[PASS] SWARMER WEAVE keeps collision-aligned continuous defense
+[PASS] SWARMER LEAN keeps collision-aligned continuous defense
+[PASS] SWARMER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SWARMER contacts=10 jump=0.13639688491821
+[PASS] SLUGGER ten punches keep authoritative contact and attached anatomy
+[PASS] SLUGGER delivers every stationary punch from a planted driving foot
+[PASS] SLUGGER delivery and return remain continuous
+[PASS] SLUGGER SLIP_L keeps collision-aligned continuous defense
+[PASS] SLUGGER SLIP_R keeps collision-aligned continuous defense
+[PASS] SLUGGER DUCK keeps collision-aligned continuous defense
+[PASS] SLUGGER WEAVE keeps collision-aligned continuous defense
+[PASS] SLUGGER LEAN keeps collision-aligned continuous defense
+[PASS] SLUGGER GUARD keeps collision-aligned continuous defense
+STYLE MATRIX SLUGGER contacts=10 jump=0.188670322299
+SOUL JUMP yuri_kowalchuk tick=71 part=16 jump=0.33926999568939 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.0, 1.55, 0.9085), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, 1.2285), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=422 part=16 jump=0.3347886800766 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.16594, 1.55, 0.89854), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.224054, 1.55, 1.213219), "target_radius": 0.32, "contact_hit": true } events=[]
+SOUL JUMP yuri_kowalchuk tick=771 part=16 jump=0.33700436353683 attack={ "row": "", "progress": 0.0, "recovery": 0.0, "body": false, "mods": [], "target": (0.272998, 1.55, 0.87217), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.368588, 1.55, 1.177559), "target_radius": 0.32, "contact_hit": true } events=[]
+THREE SOULS yuri_kowalchuk offense=7 verbs=["punch", "wait"] mirror=false wall=false jump=0.33926999568939 fixed=true aligned=true
+[PASS] yuri_kowalchuk renders authored offense without changing the seeded simulation
+[FAIL] yuri_kowalchuk keeps fixed connected anatomy and resolved contact
+[PASS] yuri_kowalchuk scripted steps interpolate from the previous visible root
+THREE SOULS marta_okonkwo_tremblay offense=4 verbs=["counter_state", "punch", "move"] mirror=true wall=false jump=0.12447372823954 fixed=true aligned=true
+[PASS] marta_okonkwo_tremblay renders authored offense without changing the seeded simulation
+[PASS] marta_okonkwo_tremblay keeps fixed connected anatomy and resolved contact
+[PASS] marta_okonkwo_tremblay scripted steps interpolate from the previous visible root
+[PASS] Marta retains Mirror counter state
+[PASS] Marta arms Mirror with the authored fifteen-degree left glove turn
+THREE SOULS sam_tagaq offense=1 verbs=["move", "counter_state", "punch"] mirror=true wall=true jump=0.12601916491985 fixed=true aligned=true
+[PASS] sam_tagaq renders authored offense without changing the seeded simulation
+[PASS] sam_tagaq keeps fixed connected anatomy and resolved contact
+[PASS] sam_tagaq scripted steps interpolate from the previous visible root
+[PASS] Sam retains Wall Gauge
+[PASS] live roster swaps apply and reset named build breadth
+[PASS] named recruit and encounter labels preserve build identity
+MODIFIER DETAIL variant=0 mid_chest=0.03145862978549
+MODIFIER MATRIX 0 contacts=10 max_jump=0.13804343342781
+[PASS] modifier matrix 0 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 0 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 0 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 0 completes recovery with differentiated loading
+[PASS] modifier matrix 0 keeps the whole working arm visible
+[PASS] modifier matrix 0 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 0 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 1 contacts=10 max_jump=0.1441086679697
+[PASS] modifier matrix 1 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 1 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 1 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 1 completes recovery with differentiated loading
+[PASS] modifier matrix 1 keeps the whole working arm visible
+[PASS] modifier matrix 1 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 1 keeps stationary punch drive planted through delivery
+MODIFIER DETAIL variant=2 mid_chest=-0.09948634945486
+MODIFIER MATRIX 2 contacts=10 max_jump=0.11576560884714
+[PASS] modifier matrix 2 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 2 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 2 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 2 completes recovery with differentiated loading
+[PASS] modifier matrix 2 keeps the whole working arm visible
+[PASS] modifier matrix 2 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 2 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 3 contacts=10 max_jump=0.12948623299599
+[PASS] modifier matrix 3 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 3 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 3 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 3 completes recovery with differentiated loading
+[PASS] modifier matrix 3 keeps the whole working arm visible
+[PASS] modifier matrix 3 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 3 keeps stationary punch drive planted through delivery
+MODIFIER DETAIL variant=4 mid_chest=-0.26717295387458
+MODIFIER MATRIX 4 contacts=10 max_jump=0.1229387447238
+[PASS] modifier matrix 4 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 4 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 4 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 4 completes recovery with differentiated loading
+[PASS] modifier matrix 4 keeps the whole working arm visible
+[PASS] modifier matrix 4 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 4 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 5 contacts=10 max_jump=0.12637607753277
+[PASS] modifier matrix 5 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 5 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 5 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 5 completes recovery with differentiated loading
+[PASS] modifier matrix 5 keeps the whole working arm visible
+[PASS] modifier matrix 5 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 5 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 6 contacts=10 max_jump=0.10438347607851
+[PASS] modifier matrix 6 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 6 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 6 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 6 completes recovery with differentiated loading
+[PASS] modifier matrix 6 keeps the whole working arm visible
+[PASS] modifier matrix 6 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 6 keeps stationary punch drive planted through delivery
+MODIFIER MATRIX 7 contacts=10 max_jump=0.12008430808783
+[PASS] modifier matrix 7 retains executed modifiers through contact and recovery
+[PASS] modifier matrix 7 delivers all ten native punches on the resolved surface
+[PASS] modifier matrix 7 keeps fixed anatomy, continuous poses and hitstop
+[PASS] modifier matrix 7 completes recovery with differentiated loading
+[PASS] modifier matrix 7 keeps the whole working arm visible
+[PASS] modifier matrix 7 moves the visible ribcage with its shoulders
+[PASS] modifier matrix 7 keeps stationary punch drive planted through delivery
+SUSTAINED tired=false rows=["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT", "L_STRAIGHT", "L_STRAIGHT", "L_HOOK", "L_HOOK", "R_STRAIGHT", "R_STRAIGHT", "R_HOOK", "R_HOOK"] hits=8 blocks=4 jump=0.21275389194489
+[PASS] sustained false alternating and same-hand buffer preserves twelve commands
+[PASS] sustained false guard, impact and exhausted recovery stay connected
+COMBINATION DISCONTINUITY tired=true tick=1184 jump=0.28640252351761 attack={ "row": "R_STRAIGHT", "progress": 0.01388888888889, "recovery": 0.0, "body": false, "mods": ["BLOCK_PUNCH", "STEPPING"], "target": (0.0, 1.55, -0.63304), "range_bonus": 0.0, "preload": 0.0, "redirect": {  }, "redirect_weight": 0.0, "redirect_progress": 0.0, "target_center": (0.0, 1.55, -0.95304), "target_radius": 0.32, "contact_hit": true } events=[{ "row": "R_STRAIGHT", "mods": ["BLOCK_PUNCH", "STEPPING"], "stepping": true, "startup": 72, "kind": "punch", "tick": 1193 }]
+SUSTAINED tired=true rows=["L_STRAIGHT", "R_STRAIGHT", "L_HOOK", "R_UPPERCUT", "L_STRAIGHT", "L_STRAIGHT", "L_HOOK", "L_HOOK", "R_STRAIGHT", "R_STRAIGHT", "R_HOOK", "R_HOOK"] hits=8 blocks=4 jump=0.28640252351761
+[PASS] sustained true alternating and same-hand buffer preserves twelve commands
+[FAIL] sustained true guard, impact and exhausted recovery stay connected
+COMBINATIONS VERDICT :: RED (112/114)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

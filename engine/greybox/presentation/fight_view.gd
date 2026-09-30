@@ -46,6 +46,7 @@ var hold_ticks := 1
 var offers := {}
 var travels := {}
 var before_positions := {}
+var preparations := {}
 var player_depth: ShaderMaterial
 var observer_view := false
 var inspection_view := false
@@ -54,7 +55,7 @@ func _sync_clock(sim) -> void:
 	if clock_sim != sim or sim.tick < clock_tick:
 		clock_sim = sim; frozen_ticks = 0; strikes.clear(); reactions.clear()
 		motion_solvers.clear()
-		attacks.clear(); tell_clock.clear(); offers.clear(); travels.clear(); before_positions.clear(); hold_ticks = 1
+		attacks.clear(); tell_clock.clear(); offers.clear(); travels.clear(); before_positions.clear(); preparations.clear(); hold_ticks = 1
 	clock_tick = sim.tick
 
 func bump(root: Node3D, amount: float, sim) -> void:
@@ -148,19 +149,22 @@ func observe(event: Dictionary, tick: int) -> void:
 				travels[who] = {"tick": tick - frozen_ticks, "sim_tick": tick, "prior": remaining, "offset": remaining - delta}
 				before_positions[who] = fighter["pos"]
 	elif event.get("kind") == "boss_act" and event.get("verb") == "punch":
+		preparations.erase("B")
 		var gap := int(clock_sim.btimer) if clock_sim != null and not clock_sim.bqueue.is_empty() else 48
-		strikes["B"] = {"tick": tick - frozen_ticks, "row": event["row"], "body": event.get("body", false), "retract": clampi(gap / 2, 4, 24), "gap": gap}
+		strikes["B"] = {"tick": tick - frozen_ticks, "row": event["row"], "body": event.get("body", false), "retract": int(event.get("recovery", clampi(gap / 2, 4, 24))), "gap": gap}
 	elif event.get("kind") == "punch":
 		# The initiating sim step also consumes the first startup tick.
 		var remaining := 24
 		if clock_sim != null: remaining = maxi(4, int(clock_sim.P["busy_t"]) - int(clock_sim.P.get("pending", {}).get("t", 0)))
 		strikes["P"] = {"tick": tick - frozen_ticks + maxi(0, int(event.get("startup", 0)) - 1), "row": event["row"], "body": "BODY" in event.get("mods", []), "mods": event.get("mods", []).duplicate(), "range_bonus": float(clock_sim.P.get("pending", {}).get("range_bonus", 0)), "retract": remaining}
+		strikes["P"]["guard_start"] = event.get("guard_start", 1.0)
 	elif event.get("kind") == "hit":
 		reactions[str(event["on"])] = {"tick": tick - frozen_ticks, "weight": clampf(float(event.get("dmg", 6)) / 30, 0.15, 1.0), "body": event.get("body", false), "displacement": event.get("displacement", Vector2.ZERO), "sim_tick": tick}
 	elif event.get("kind") == "feint":
 		_cancel("P", tick - frozen_ticks, maxi(1, int(clock_sim.P["busy_t"])))
 	elif event.get("kind") == "interrupt":
 		_cancel("B", tick - frozen_ticks, mini(24, maxi(1, int(event.get("stagger", 24)))))
+		preparations.erase("B")
 	elif event.get("kind") == "tell":
 		tell_clock = {"at": tick - frozen_ticks, "ticks": event.get("ticks", 1), "string": event.get("string", "")}
 	elif event.get("kind") == "feint_b" and event.get("mode") == "delay":
@@ -169,8 +173,9 @@ func observe(event: Dictionary, tick: int) -> void:
 		# A fake tell has no punch/contact event. Release its coil instead of
 		# dropping the loaded torso to neutral in a single frame.
 		_cancel("B", tick - frozen_ticks, mini(24, maxi(1, int(clock_sim.btimer))))
+		preparations.erase("B")
 	elif event.get("kind") in ["drop", "matchup", "bout_end"]:
-		strikes.clear(); attacks.clear(); tell_clock.clear()
+		strikes.clear(); attacks.clear(); tell_clock.clear(); preparations.clear()
 
 func _cancel(who: String, tick: int, duration: int) -> void:
 	var attack: Dictionary = attacks.get(who, {}).duplicate(true)
@@ -215,6 +220,8 @@ func _travel(who: String, sim, previous := false) -> Vector2:
 	return (travel["offset"] as Vector2) * (1.0 - BoxingMotion.ramp(float(age) / 12.0))
 
 func displacement(who: String, sim, previous := false) -> Vector2:
+	var fighter: Dictionary = sim.P if who == "P" else sim.B
+	if fighter.has("boxing"): return Vector2.ZERO
 	var hit: Dictionary = reactions.get(who, {})
 	var travel := _travel(who, sim, previous)
 	if hit.is_empty() or (previous and sim.tick == int(hit.get("sim_tick", -1))): return travel
@@ -231,6 +238,9 @@ func position(from: Vector2, to: Vector2, who: String, sim, alpha: float) -> Vec
 func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String, alpha := 1.0) -> void:
 	_sync_clock(sim)
 	fighter = fighter.duplicate(); other = other.duplicate()
+	# Both boxers in a native body-control exchange use continuous delivery;
+	# the opponent's older action VM cannot reintroduce a hit/miss pose switch.
+	fighter["continuous_delivery"] = sim.P.has("body_control") or sim.B.has("body_control")
 	var physical_fighter := fighter.duplicate(); var physical_other := other.duplicate()
 	# Hit events carry the post-resolution shove. Eligibility on the contact
 	# frame belongs to the pre-shove positions, as does the frozen impact pose.
@@ -283,6 +293,15 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 		redirect = cancelled.get("redirect", {}); redirect_weight = float(cancelled.get("redirect_weight", 0))
 		redirect_progress = float(cancelled.get("redirect_progress", 0))
 		extension = pow(punch_progress, 3) * (1.0 - BoxingMotion.ramp(recovery))
+	elif not fighter.get("pending", {}).is_empty():
+		var pending: Dictionary = fighter["pending"]
+		row = str(pending["row"]); body_target = "BODY" in pending["mods"]
+		mods = pending["mods"]
+		var progress := 1.0 - float(pending["t"]) / maxf(1, float(pending["startup"]))
+		punch_progress = lerpf(0.22, 1.0, progress) if who == "B" else progress
+		load = sin(punch_progress * PI) * (1.2 if "HAYMAKER" in pending["mods"] else 0.5)
+		if who == "B": load = float(preparations.get("B", {}).get("load", 0.0)) * (1.0 - BoxingMotion.ramp(progress))
+		extension = pow(punch_progress, 3)
 	elif who == "B" and not strike.has("cancelled") and strike_age >= 0 and strike_age < retract_ticks:
 		# Contact owns the hand before the next VM action winds up. Split a short
 		# string gap into retraction and delivery, retaining both authored beats.
@@ -313,22 +332,22 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 			elif sim.bfeint == "delay":
 				punch_progress = 0.22 * BoxingMotion.ramp(1.0 - float(sim.btimer) / maxi(1, int(tell_clock.get("ticks", swing))))
 			else: punch_progress = clampf(1.0 - float(sim.btimer) / swing, 0, 1)
+			if sim.P.has("body_control"): punch_progress = minf(punch_progress, 0.22)
 			redirect_weight = BoxingMotion.ramp(punch_progress)
 			extension = pow(punch_progress, 3)
-	elif who == "B" and sim.bstate == "ACTING" and not sim.bqueue.is_empty() and sim.bqueue[0].get("kind") == "punch" and sim.btimer <= 18:
+		if who == "B" and sim.P.has("body_control") and row != "":
+			preparations["B"] = {"row":row, "body":body_target, "load":load, "progress":punch_progress}
+	elif who == "B" and sim.P.has("body_control") and sim.bstate == "ACTING" and preparations.has("B"):
+		var prepared: Dictionary = preparations["B"]
+		row = str(prepared["row"]); body_target = bool(prepared["body"])
+		load = float(prepared["load"]); punch_progress = float(prepared["progress"])
+		extension = pow(punch_progress, 3)
+	elif who == "B" and not sim.P.has("body_control") and sim.bstate == "ACTING" and not sim.bqueue.is_empty() and sim.bqueue[0].get("kind") == "punch" and sim.btimer <= 18:
 		row = str(sim.bqueue[0]["row"]); body_target = bool(sim.bqueue[0].get("body", false))
 		var delivery := mini(18, maxi(1, int(strike.get("gap", 36)) - retract_ticks))
 		var progress := clampf(1.0 - float(sim.btimer) / delivery, 0, 1)
 		punch_progress = progress
 		load = sin(progress * PI) * 0.65; extension = pow(progress, 3)
-	elif who == "P" and not fighter.get("pending", {}).is_empty():
-		var pending: Dictionary = fighter["pending"]
-		row = str(pending["row"]); body_target = "BODY" in pending["mods"]
-		mods = pending["mods"]
-		var progress := 1.0 - float(pending["t"]) / maxf(1, float(pending["startup"]))
-		punch_progress = progress
-		load = sin(progress * PI) * (1.2 if "HAYMAKER" in pending["mods"] else 0.5)
-		extension = pow(progress, 3)
 	elif strikes.has(who):
 		if who == "P" and not strike.has("cancelled") and strike_age >= 0 and strike_age < retract_ticks:
 			row = str(strike["row"]); body_target = bool(strike["body"])
@@ -351,6 +370,8 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	var target := Space.contact(region)
 	if not motion_solvers.has(who): motion_solvers[who] = BoxingMotion.new()
 	var attack := {"row": row, "progress": punch_progress, "recovery": recovery, "body": body_target, "mods": mods.duplicate(), "target": target, "range_bonus": range_bonus, "preload": load if windup or strike.has("cancelled") else 0.0, "redirect": redirect, "redirect_weight": redirect_weight, "redirect_progress": redirect_progress}
+	attack["guard_start"] = fighter.get("pending", {}).get("guard_start", strike.get("guard_start", 1.0))
+	if who == "B" and preparations.has("B"): attack["preload"] = load
 	attack["target_center"] = Space.ground(region["target"] - fighter["pos"]) + Vector3.UP * float(region["h"])
 	attack["target_radius"] = Space.GLOVE_RADIUS + (Space.BODY_RADIUS if body_target else Space.HEAD_RADIUS)
 	attack["contact_hit"] = region["result"] == "HIT"
@@ -376,10 +397,23 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	var reaction_offset := -forward * reaction * 0.06
 	rig["chest"] += reaction_offset
 	for i in 2: rig["shoulders"][i] += reaction_offset
-	root.set_meta("kinematics", BoxingMotion.constrain(rig.duplicate(true)))
+	var canonical: Dictionary = physical_fighter.get("boxing", {})
+	var physical_pose := canonical.has("rig")
+	if physical_pose:
+		# Native hands, targets and defensive surfaces share the saved fixed-tick
+		# pose. Presentation must never retarget a committed hand or apply a
+		# separate reaction offset to a colliding limb.
+		rig = canonical["rig"].duplicate(true)
+		attack = canonical.get("presentation",{}).duplicate(true)
+		row = str(attack.get("row",""))
+		punch_progress = float(attack.get("progress",0)); recovery = float(attack.get("recovery",0))
+		extension = pow(punch_progress,3) * (1.0 - BoxingMotion.ramp(recovery))
+		attacks[who] = attack
+		target = attack.get("target",Vector3.ZERO)
+	root.set_meta("kinematics", rig.duplicate(true) if physical_pose else BoxingMotion.constrain(rig.duplicate(true)))
 	if alpha < 1.0 and root.get_meta("previous_sim", -1) == sim.get_instance_id():
 		rig = _blend_rig(root.get_meta("previous_rig"), rig, alpha)
-	rig = BoxingMotion.constrain(rig)
+	if not physical_pose or alpha < 1.0: rig = BoxingMotion.constrain(rig)
 	root.set_meta("render_kinematics", rig); root.set_meta("contact_region", region); root.set_meta("contact_target", target)
 	head.position = rig["head"]
 	forward = (rig["forward"] as Vector3).normalized()
@@ -470,6 +504,8 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 		_inspection_frame(camera, player, opponent, tick, boundaries)
 		return
 	if not observer_view:
+		for part in boundaries:
+			if part is MeshInstance3D: part.material_override = null
 		_embodied_frame(camera, player, opponent, tick)
 		return
 	var tuning: Dictionary = clock_sim.T.get("camera", {}) if clock_sim != null else {}

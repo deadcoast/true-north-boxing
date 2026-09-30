@@ -1,0 +1,72 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 617.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5090
+
+[PASS] native right intent is body control, with no free root move
+[PASS] body, guard, target and punch remain independently expressible
+[PASS] held step strokes once without legacy teleport burst
+[PASS] repressing modifier at held rim does not manufacture a step
+[PASS] neutral return rearms the next deliberate step
+[PASS] keyboard neutral between fixed ticks rearms one step
+[PASS] controller rim reversal without neutral is not another step
+[PASS] controller neutral event between fixed ticks rearms one step
+[PASS] pause/resume requires neutral before a held body stroke returns
+[PASS] body control resumes after a deliberate neutral return
+[PASS] controller body disk and body targeting coexist without a timed dodge
+[PASS] radial deadzone preserves diagonal angle and uniform radius
+[PASS] continuous circular body sweep stays rooted
+[PASS] full body sweep has bounded continuous motion
+[PASS] visible head and canonical head coincide throughout sweep
+[PASS] fixed arm lengths survive the continuous body surface
+[PASS] guard remains active during live continuous body movement
+[PASS] rendered pov-body
+[PASS] rendered observer-body
+[PASS] continuous slip changes actual straight-punch geometry
+[PASS] threatened neutral-to-slip miss opens a real counter
+[PASS] unthreatened out-of-range body movement earns no counter
+[PASS] all native punch families stay rooted without a foot stroke
+[PASS] opponent punch families cannot teleport into native player range
+[PASS] entry punches share one bounded step without extra lunge or reach
+[PASS] retreat punches keep their committed exit without forward teleport
+[PASS] forward body compression cannot silently request a stepping punch
+[PASS] out-of-range rooted punches cannot close distance automatically
+[PASS] every opponent family commits startup before contact
+[PASS] opponent contact waits for its actual authored startup
+[PASS] native opponent commits the authored effort cost
+[PASS] hitstop freezes the opponent commitment clock
+[PASS] save restores the in-flight opponent punch
+[PASS] opponent commitment replays identically after restore
+[PASS] drop boundary cancels opponent startup
+[PASS] clinch boundary cancels opponent startup
+[PASS] neutral reset boundary cancels opponent startup
+[PASS] reapplying pose constraints cannot accumulate lean or lower the pelvis
+[PASS] bounded footwork moves real root by authored step length
+[PASS] step travels over time and never drags opponent
+[PASS] step finishes with no active or stale queued travel
+[PASS] rendered soles follow authoritative support feet
+[PASS] grounded support never slides or leaves both feet airborne
+[PASS] canonical footwork preserves both leg lengths
+[PASS] completed step gathers and restores settled support
+[PASS] render interpolation never changes authoritative body or support
+[PASS] rendered pov-angle
+[PASS] player POV follows its eye instead of chase distance
+[PASS] blocked ring exit shortens step without moving opponent
+[PASS] crowded entry can step outward instead of trapping the mover
+[PASS] committed action buffers at most one step
+[PASS] blocked step expires rather than executing later
+[PASS] hitstop freezes canonical body and step clock
+[PASS] new step during hitstop survives without advancing support
+[PASS] typed save restores in-flight body and footwork exactly
+[PASS] restored body exchange has exact replay continuation
+[PASS] knockdown cancels old body travel and buffered steps
+[PASS] exhausted footwork refuses travel instead of borrowing effort
+[PASS] 30/60/144 Hz partitioning preserves body/step outcomes
+[PASS] interior transformed encounter preserves body/step and current contact result
+[PASS] southpaw support mirrors lead/rear without mirroring anatomical input
+[PASS] rendered live-pov-600
+[PASS] rendered live-observer-600
+[PASS] rendered live-pov-1800
+[PASS] rendered live-observer-1800
+[PASS] live native exchange exercises both fighters, body control and real root travel
+[PASS] live exchange keeps finite embodied camera and anatomy
+[PASS] normal-speed film contains every 60 Hz frame of the 20-second exchange
+FOUNDATION VERDICT :: GREEN (68/68)
