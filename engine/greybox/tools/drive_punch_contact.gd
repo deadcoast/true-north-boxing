@@ -31,6 +31,10 @@ func strokes(s, n: int, intent := {}) -> Array:
 	return events
 
 func run() -> void:
+	if "exchanges-only" in OS.get_cmdline_user_args():
+		exchanges()
+		print("EXCHANGES :: %s (%d/%d)"%["GREEN" if failures.is_empty() else "RED",checks-failures.size(),checks])
+		quit(0 if failures.is_empty() else 1);return
 	guard_continuity()
 	if "guard-only" in OS.get_cmdline_user_args():
 		var report := FileAccess.open("user://guard-continuity.json",FileAccess.WRITE)
@@ -94,36 +98,7 @@ func run() -> void:
 			if not hits.is_empty():
 				check("guard covers its height and leaves the other lane open low=%s target_body=%s"%[low,body],hits[0]["contact"]["kind"] == ("guard" if low == body else "hit"))
 				samples.append({"case":"guard low=%s target_body=%s"%[low,body],"contact":hits[0]["contact"]})
-	for scenario in ["interrupt_opponent","interrupt_player","clash","trade"]:
-		var exchange = fresh()
-		# This symmetric baseline compares ordinary punch paths/timing. Learned
-		# compact routes intentionally change both; cover those exchanges in
-		# drive_northern_rising rather than silently redefining this regression.
-		exchange.P["boxing_training"] = {}
-		exchange.B["guard_body"] = true; exchange.B["guard_t"] = 100
-		strokes(exchange,30,{"block":true,"body":true})
-		for name in exchange.pattern["strings"]:
-			if exchange._interruptible(name): exchange.bstring = name; break
-		# The repaired low guard can now intercept a loading uppercut. Two
-		# rear straights cross the working gloves, testing an actual clash.
-		var player_row := "R_STRAIGHT" if scenario in ["interrupt_opponent","clash"] else ("R_HOOK" if scenario=="trade" else "R_UPPERCUT")
-		var boss_row := "L_STRAIGHT" if scenario=="interrupt_player" else ("R_HOOK" if scenario=="trade" else ("R_STRAIGHT" if scenario=="clash" else "R_UPPERCUT"))
-		exchange.btimer = exchange._boss_act({"kind":"punch","row":boss_row,"mult":1.0,"body":false})
-		exchange.step({"body_axis":Vector2.ZERO,"punch":player_row})
-		var events: Array = exchange.events.duplicate(true); events.append_array(strokes(exchange,160,{"body":true}))
-		var contacts: Array = events.filter(func(e):return e.get("kind")=="boxing_contact")
-		var hits: Array = events.filter(func(e):return e.get("kind")=="hit")
-		print("EXCHANGE ",scenario," contacts=",contacts," hits=",hits)
-		if scenario == "interrupt_opponent":
-			check("clean jab interrupts opponent startup without a phantom reply",tests.count_events(events,"interrupt")>0 and contacts.size()==1 and contacts[0]["by"]=="P")
-		elif scenario == "interrupt_player":
-			check("clean opponent jab interrupts player startup without a phantom reply",tests.count_events(events,"punch_interrupted",{"who":"P"})>0 and contacts.size()==1 and contacts[0]["by"]=="B")
-		elif scenario == "clash":
-			check("crossing attacking gloves physically deflect both punches",contacts.size()==2 and contacts[0]["contact"]["kind"]=="deflect" and contacts[1]["contact"]["kind"]=="deflect" and hits.is_empty())
-			check("glove deflections cannot damage untouched head or body",tests.count_events(events,"deflect")==2 and exchange.P["comp"]==exchange.P["comp_max"] and exchange.B["comp"]==exchange.B["comp_max"])
-		else:
-			check("two committed hooks can trade clean hits",contacts.size()==2 and tests.count_events(hits,"hit",{"on":"P"})==1 and tests.count_events(hits,"hit",{"on":"B"})==1)
-		samples.append({"case":scenario,"contacts":contacts,"hits":hits})
+	exchanges()
 	# Move the opponent after commitment. The original path must stay fixed,
 	# and a target which leaves it must not be hit by an aim update.
 	var s = fresh(1.8)
@@ -386,3 +361,38 @@ func continuations() -> void:
 				opponent.step({"body_axis":Vector2.RIGHT}); restored.step({"body_axis":Vector2.RIGHT})
 				exact = exact and opponent.hash_state()==restored.hash_state() and var_to_bytes(opponent.events)==var_to_bytes(restored.events)
 			check("restored overlapping hand return replays identically",exact)
+
+func exchanges() -> void:
+	for scenario in ["interrupt_opponent","interrupt_player","clash","covered_trade","trade"]:
+		var exchange = fresh(1.8 if scenario=="trade" else 1.5)
+		# This symmetric baseline compares ordinary punch paths/timing. Learned
+		# compact routes intentionally change both; cover those exchanges in
+		# drive_northern_rising rather than silently redefining this regression.
+		exchange.P["boxing_training"] = {}
+		exchange.B["guard_body"] = true; exchange.B["guard_t"] = 100
+		strokes(exchange,30,{"block":true,"body":true})
+		for name in exchange.pattern["strings"]:
+			if exchange._interruptible(name): exchange.bstring = name; break
+		# The repaired low guard can now intercept a loading uppercut. Two
+		# rear straights cross the working gloves, testing an actual clash.
+		var player_row := "R_STRAIGHT" if scenario in ["interrupt_opponent","clash"] else (("L_HOOK" if scenario=="trade" else "R_HOOK") if scenario in ["trade","covered_trade"] else "R_UPPERCUT")
+		var boss_row := "L_STRAIGHT" if scenario=="interrupt_player" else ("R_HOOK" if scenario in ["trade","covered_trade"] else ("R_STRAIGHT" if scenario=="clash" else "R_UPPERCUT"))
+		# Preserve the covered head/head attempt; test two clean hits through
+		# distinct head/body lanes without exempting either hand from collision.
+		exchange.btimer = exchange._boss_act({"kind":"punch","row":boss_row,"mult":1.0,"body":false})
+		exchange.step({"body_axis":Vector2.ZERO,"punch":player_row,"body":scenario=="trade"})
+		var events: Array = exchange.events.duplicate(true); events.append_array(strokes(exchange,160,{"body":true}))
+		var contacts: Array = events.filter(func(e):return e.get("kind")=="boxing_contact")
+		var hits: Array = events.filter(func(e):return e.get("kind")=="hit")
+		if scenario == "interrupt_opponent":
+			check("clean jab interrupts opponent startup without a phantom reply",tests.count_events(events,"interrupt")>0 and contacts.size()==1 and contacts[0]["by"]=="P")
+		elif scenario == "interrupt_player":
+			check("clean opponent jab interrupts player startup without a phantom reply",tests.count_events(events,"punch_interrupted",{"who":"P"})>0 and contacts.size()==1 and contacts[0]["by"]=="B")
+		elif scenario == "clash":
+			check("crossing attacking gloves physically deflect both punches",contacts.size()==2 and contacts[0]["contact"]["kind"]=="deflect" and contacts[1]["contact"]["kind"]=="deflect" and hits.is_empty())
+			check("glove deflections cannot damage untouched head or body",tests.count_events(events,"deflect")==2 and exchange.P["comp"]==exchange.P["comp_max"] and exchange.B["comp"]==exchange.B["comp_max"])
+		elif scenario == "covered_trade":
+			check("covered rear hooks meet the real lead gloves without clean damage",contacts.size()==2 and contacts[0]["by"]=="B" and contacts[0]["contact"]["kind"]=="deflect" and contacts[0]["contact"]["part"]=="glove0" and contacts[1]["contact"]["kind"]=="guard" and contacts[1]["contact"]["part"]=="glove0" and hits.is_empty())
+		else:
+			check("committed head and body hooks trade through their available lanes",contacts.size()==2 and tests.count_events(hits,"hit",{"on":"P"})==1 and tests.count_events(hits,"hit",{"on":"B"})==1)
+		samples.append({"case":scenario,"contacts":contacts,"hits":hits})

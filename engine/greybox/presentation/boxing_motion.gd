@@ -77,6 +77,17 @@ static func ramp(value: float) -> float:
 	var x := clampf(value, 0, 1)
 	return x * x * (3 - 2 * x)
 
+static func _remaining_return(at: float, total: float, elapsed: float, rate := 1.0) -> float:
+	var start := ramp(at / maxf(1,total) * rate)
+	if start >= 1.0-0.00001:return 1.0
+	return clampf((ramp((at+elapsed) / maxf(1,total) * rate)-start) / maxf(0.00001,1.0-start),0,1)
+
+static func _handoff(attack: Dictionary) -> float:
+	if attack.has("start_return"):
+		var returning: Dictionary=attack["start_return"]
+		return _remaining_return(returning["at"],returning["total"],attack.get("elapsed",0))
+	return ramp(float(attack.get("elapsed",0)) / maxf(1,float(attack.get("startup",1))*0.38))
+
 static func chain(row: String, progress: float, recovery: float, coil := 1.0, mods: Array = [], delivery_bias := 0.0, return_rate := 1.15, lead_hand := 0) -> Dictionary:
 	var active := 0.0 if row == "" else 1.0
 	var retract := 1.0 - ramp(recovery)
@@ -209,10 +220,40 @@ static func constrain(rig: Dictionary) -> Dictionary:
 		# manufactured a different wrist endpoint before a punch had resolved.
 		var delivery := desired if continuous_delivery else contact_goal(rig["shoulders"][i], desired, rig["contact_centers"][i], float(rig["contact_radii"][i]), float(rig["contact_hits"][i]) >= 0.5)
 		var hand: Vector3 = rig["hand_goals"][i] + (delivery - desired) * float(rig["contact_weights"][i])
+		# Carry the unsettled part of a shoulder-relative return through the
+		# final body solve; its settled part uses the guard anchor below.
+		hand += (lean-Vector3.UP*lower)*float(rig.get("return_weights",[0.0,0.0])[i])
+		if continuous_delivery:
+			# Plan the trajectory toward reachable extension before solving IK.
+			# Lerp toward an unreachable point used to hit the length clamp midway
+			# through delivery, snapping the elbow straight while the clock ran on.
+			var reachable: Vector3=rig["shoulders"][i]+(desired-Vector3(rig["shoulders"][i])).limit_length(UPPER_ARM+FOREARM-0.002)
+			hand+=(reachable-desired)*float(rig.get("delivery_weights",[0.0,0.0])[i])
 		if rig.has("guard_weights"):hand+=guard_shift*float(rig["guard_weights"][i])
-		if continuous_delivery: hand = _self_clear_hand(rig,hand,i)
+		var guard_home: Vector3=rig.get("guard_homes",rig.get("hand_homes",rig["hand_goals"]))[i]
+		if continuous_delivery:
+			if rig.has("guard_homes"):guard_home+=guard_shift
+			# Impact may consume the spare routing margin at the struck glove.
+			# Its future guard home still uses normal clearance; changing that
+			# reference at contact falsely shortens the opposite hand's return.
+			var home_rig:=rig
+			if float(rig.get("clearance_margin",0.003))<0.003:
+				home_rig=rig.duplicate();home_rig["clearance_margin"]=0.003
+			guard_home=_self_clear_hand(home_rig,guard_home,i)
+			# The home must fit the whole folded arm, not only the glove. A
+			# skull-clear wrist can still leave its forearm through the ribs;
+			# using that impossible home as the return limit forces a late jump.
+			guard_home=_clear_arm(home_rig,guard_home,rig["arm_poles"][i],i)["end"]
+		var return_reach := float(rig.get("return_reach",[0.0,0.0])[i])
+		if continuous_delivery and return_reach > 0:
+			# A returning glove may follow the world's recovery path only while
+			# its arm can keep folding. Bound reach in the final shoulder frame,
+			# accounting for a live guard change before enforcing that envelope.
+			if rig.has("guard_homes"):return_reach=maxf(return_reach,guard_home.distance_to(rig["shoulders"][i]))
+			hand=rig["shoulders"][i]+(hand-Vector3(rig["shoulders"][i])).limit_length(return_reach)
+		if continuous_delivery: hand = _self_clear_hand(rig,hand,i,return_reach,guard_home)
 		var pole: Vector3 = rig["arm_poles"][i]
-		if float(rig.get("knee_stability", 0)) > 0:
+		if float(rig.get("knee_stability", 0)) > 0 and float(rig.get("return_planes",[0.0,0.0])[i]) < 0.5:
 			# Contact lean can move the shoulder after the preliminary pole was
 			# chosen. Reproject history about the final shoulder and wrist, as for
 			# planted knees, so close inside punches cannot flip the elbow plane.
@@ -223,7 +264,7 @@ static func constrain(rig: Dictionary) -> Dictionary:
 			if prior.length_squared() > 0.000001 and wanted.length_squared() > 0.000001:
 				pole = prior.normalized().slerp(wanted.normalized(), minf(0.4, 0.18 / maxf(prior.angle_to(wanted), 0.0001)))
 		var arm := joint(rig["shoulders"][i], hand, pole, UPPER_ARM, FOREARM)
-		if continuous_delivery: arm = _clear_arm(rig,hand,pole,i)
+		if continuous_delivery: arm = _clear_arm(rig,hand,pole,i,return_reach,guard_home)
 		if not continuous_delivery and float(rig["arm_stability"][i]) > 0:
 			# Carry the covered elbow along the upper-arm sphere through root
 			# travel. Solve the forearm from it, rather than flipping IK branches.
@@ -236,11 +277,10 @@ static func constrain(rig: Dictionary) -> Dictionary:
 			# A covered elbow's historical plane may pull the solved wrist back
 			# through the skull. Re-solve that arm from the reachable clear goal.
 			for correction in 4:
-				var clear := _self_clear_hand(rig,arm["end"],i)
+				var clear := _self_clear_hand(rig,arm["end"],i,return_reach,guard_home)
 				if clear.distance_squared_to(arm["end"])<=0.00000001:break
-				arm = _clear_arm(rig,clear,pole,i)
-			if rig.has("guard_homes"):rig["hand_homes"][i]=_self_clear_hand(rig,Vector3(rig["guard_homes"][i])+guard_shift,i)
-			elif rig.has("hand_homes"):rig["hand_homes"][i]=_self_clear_hand(rig,rig["hand_homes"][i],i)
+				arm = _clear_arm(rig,clear,pole,i,return_reach,guard_home)
+			if rig.has("hand_homes"):rig["hand_homes"][i]=guard_home
 		rig["elbows"][i] = arm["joint"]; rig["wrists"][i] = arm["end"]
 		var knee_pole: Vector3 = rig["leg_poles"][i]
 		if float(rig.get("knee_stability", 0)) > 0:
@@ -258,7 +298,7 @@ static func constrain(rig: Dictionary) -> Dictionary:
 		rig["ankles"][i] = leg["end"]
 	return _attach_head(rig)
 
-static func _self_clear_hand(rig: Dictionary, hand: Vector3, index: int) -> Vector3:
+static func _self_clear_hand(rig: Dictionary, hand: Vector3, index: int, max_reach := 0.0, home := Vector3.INF) -> Vector3:
 	for iteration in 3:
 		# A wrist folded onto its shoulder makes the elbow's circle singular.
 		# Retain a real folded forearm instead of crossing that branch point.
@@ -267,7 +307,7 @@ static func _self_clear_hand(rig: Dictionary, hand: Vector3, index: int) -> Vect
 		if delta.length()<0.18:
 			var direction:=delta.normalized() if delta.length_squared()>0.000001 else Vector3(rig["forward"])
 			hand=shoulder+direction*0.18
-		hand = _head_clear_hand(rig,hand,index)
+		hand = _head_clear_hand(rig,hand,index,max_reach)
 		var correction := _torso_clearance(rig,hand,Space.GLOVE_RADIUS+float(rig.get("clearance_margin",0.003)),index)
 		if correction.length_squared()<0.00000001:break
 		# The protective/return lane stays in front and on this arm's side.
@@ -277,11 +317,23 @@ static func _self_clear_hand(rig: Dictionary, hand: Vector3, index: int) -> Vect
 		var outward:=forward.cross(Vector3.UP)*(-1.0 if index==0 else 1.0)
 		var direction:=(forward+outward*0.35).normalized()
 		var low:=0.0;var high:=0.8
+		if max_reach>0 and home.is_finite():
+			# Recover toward the known feasible guarding arm. A fixed outward
+			# ray can have no nearby exit once bounded by the shoulder sphere,
+			# making a glove beside its home drop around the bottom of the head.
+			direction=home-hand
+			high=1.0
+			for step in range(1,17):
+				high=step/16.0
+				var probe:=_head_clear_hand(rig,hand+direction*high,index,max_reach)
+				if _torso_clearance(rig,probe,Space.GLOVE_RADIUS+float(rig.get("clearance_margin",0.003)),index).length_squared()<=0.0000000001:break
+				low=high
 		for search in 14:
 			var middle:=(low+high)*0.5
-			if _torso_clearance(rig,hand+direction*middle,Space.GLOVE_RADIUS+float(rig.get("clearance_margin",0.003)),index).length_squared()>0.0000000001:low=middle
+			var probe:=_head_clear_hand(rig,hand+direction*middle,index,max_reach) if max_reach>0 else hand+direction*middle
+			if _torso_clearance(rig,probe,Space.GLOVE_RADIUS+float(rig.get("clearance_margin",0.003)),index).length_squared()>0.0000000001:low=middle
 			else:high=middle
-		hand+=direction*high
+		hand=_head_clear_hand(rig,hand+direction*high,index,max_reach) if max_reach>0 else hand+direction*high
 	return hand
 
 static func _torso_clearance(rig: Dictionary, point: Vector3, radius: float, index: int) -> Vector3:
@@ -316,7 +368,7 @@ static func _arm_gap(rig: Dictionary, arm: Dictionary, index: int) -> float:
 		gap=minf(gap,-correction.length())
 	return gap
 
-static func _clear_arm(rig: Dictionary, hand: Vector3, pole: Vector3, index: int) -> Dictionary:
+static func _clear_arm(rig: Dictionary, hand: Vector3, pole: Vector3, index: int, max_reach := 0.0, home := Vector3.INF) -> Dictionary:
 	var arm:=_clear_elbow(rig,hand,pole,index)
 	if _arm_gap(rig,arm,index)>=-0.00001:return arm
 	# A deeply rotated rear shoulder may have no clear elbow plane for the
@@ -326,12 +378,12 @@ static func _clear_arm(rig: Dictionary, hand: Vector3, pole: Vector3, index: int
 	var outward:=forward.cross(Vector3.UP)*(-1.0 if index==0 else 1.0)
 	var route:=outward-forward*0.5
 	for n in range(1,9):
-		var candidate:=_clear_elbow(rig,_self_clear_hand(rig,hand+route*(n*0.04),index),pole,index)
+		var candidate:=_clear_elbow(rig,_self_clear_hand(rig,hand+route*(n*0.04),index,max_reach,home),pole,index)
 		if _arm_gap(rig,candidate,index)>=-0.00001:
 			var low:=(n-1)*0.04;var high:=n*0.04
 			for refinement in 6:
 				var middle:=(low+high)*0.5
-				var probe:=_clear_elbow(rig,_self_clear_hand(rig,hand+route*middle,index),pole,index)
+				var probe:=_clear_elbow(rig,_self_clear_hand(rig,hand+route*middle,index,max_reach,home),pole,index)
 				if _arm_gap(rig,probe,index)>=-0.00001:high=middle;candidate=probe
 				else:low=middle
 			return candidate
@@ -368,12 +420,14 @@ static func _clear_elbow(rig: Dictionary, hand: Vector3, pole: Vector3, index: i
 				return candidate
 	return best
 
-static func _head_clear_hand(rig: Dictionary, hand: Vector3, index: int) -> Vector3:
+static func _head_clear_hand(rig: Dictionary, hand: Vector3, index: int, max_reach := 0.0) -> Vector3:
 	# The fighter's own skull is an obstacle during loading, delivery and
 	# return. Route around its anatomical side, never through its centre.
 	# This changes no opponent target and cannot follow an opponent's dodge.
 	var forward: Vector3=Vector3(rig["forward"]).normalized()
 	var outside:=forward.cross(Vector3.UP)*(-1.0 if index==0 else 1.0)
+	var shoulder: Vector3=rig["shoulders"][index]
+	if max_reach>0:hand=shoulder+(hand-shoulder).limit_length(max_reach)
 	var delta:=hand-Vector3(rig["head"])
 	# Small clearance also covers sub-tick contact correction against the
 	# moving head. Preserve a covering glove in front of the face: projecting
@@ -388,7 +442,22 @@ static func _head_clear_hand(rig: Dictionary, hand: Vector3, index: int) -> Vect
 	# straight sideways; branching at the head plane creates a discontinuity.
 	var route:=delta+(outside*0.15+forward)*penetration
 	var direction:=route.normalized() if route.length_squared()>0.000001 else outside
-	return Vector3(rig["head"])+direction*radius
+	var clear:=Vector3(rig["head"])+direction*radius
+	if max_reach<=0 or clear.distance_to(shoulder)<=max_reach:return clear
+	# Project onto the intersection of the shoulder's return envelope and
+	# the skull's clearance sphere. Sequential projections undo one another:
+	# clearing the head used to extend a hand that was already returning.
+	var axis: Vector3=rig["head"]-shoulder
+	var distance:=axis.length()
+	if distance<0.000001 or distance+max_reach<radius:return clear
+	axis/=distance
+	var along:=(max_reach*max_reach-radius*radius+distance*distance)/(2.0*distance)
+	var center:=shoulder+axis*along
+	var lane:=clear-center;lane-=axis*lane.dot(axis)
+	if lane.length_squared()<0.000001:
+		lane=outside+forward;lane-=axis*lane.dot(axis)
+	if lane.length_squared()<0.000001:lane=Vector3.UP.cross(axis)
+	return center+lane.normalized()*sqrt(maxf(0,max_reach*max_reach-along*along))
 
 static func _attach_head(rig: Dictionary) -> Dictionary:
 	if float(rig.get("continuous_delivery",0)) <= 0.5: return rig
@@ -469,7 +538,15 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	var style := style_profile(fighter)
 	var at: Vector2 = fighter["pos"]; var delta: Vector2 = BodyControl.forward(fighter, other)
 	var forward := Vector3(delta.x, 0, delta.y).normalized()
-	if attack.has("forward"): forward = attack["forward"]
+	# Loading a combination starts at its actual body facing and turns toward
+	# the committed direction. During return, regather around
+	# the support body's live facing so a pocket exit cannot snap the torso
+	# and both covering hands when the action expires.
+	if attack.has("forward"):
+		var committed: Vector3 = attack["forward"]
+		if attack.has("start_forward"):
+			committed = Vector3(attack["start_forward"]).slerp(committed, _handoff(attack))
+		forward = committed.slerp(forward, ramp(float(attack.get("recovery", 0))))
 	if forward.length_squared() < 0.1: forward = Vector3.FORWARD
 	var right := forward.cross(Vector3.UP)
 	var origin := Space.ground(at)
@@ -486,6 +563,7 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	var lead_hand := 1 if fighter.get("stance","orthodox") == "southpaw" else 0
 	var stance_sign := 1.0 if lead_hand == 0 else -1.0
 	var motion := chain(row, progress, recovery, float(style["coil"]), mods, float(style["delivery"]), float(style["return"]),lead_hand)
+	var curved_delivery: bool=motion["hook"] or motion["upper"] or "FLARED" in row
 	var technique: Dictionary = attack.get("technique",{})
 	if not technique.is_empty(): motion["load"] *= float(technique["load"])
 	var learned_guard := Techniques.guard_profile(fighter)
@@ -501,7 +579,9 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	motion["hips"] -= float(motion["side"]) * preload_weight * 0.20
 	motion["core"] -= float(motion["side"]) * preload_weight * 0.12
 	motion["load"] += preload_weight * 0.22
-	var transfer := ramp(float(attack.get("elapsed",0)) / maxf(1,float(attack.get("startup",1))*0.38))
+	# Keep the previous punch's recovery clock through a combination. A new
+	# short loading window must not accelerate the old torso and hand return.
+	var transfer := _handoff(attack)
 	if attack.has("start_chain"):
 		for channel in ["plant","drive","hips","core","load"]:
 			motion[channel] = lerpf(float(attack["start_chain"][channel]),float(motion[channel]),transfer)
@@ -569,11 +649,14 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 	impact_head=impact_head.limit_length(0.14); impact_trunk=impact_trunk.limit_length(0.08)
 	var pelvis := Vector3.UP * (0.79 - crouch - spring) + head_offset * Vector3(0.30, 0, 0.30) + drive + support_shift
 	var chest := pelvis + Vector3.UP * 0.39 + head_offset * Vector3(0.48, 0.25, 0.48) + impact_trunk
-	var delivery_targets := []; var contact_centers := []; var contact_radii := []; var contact_hits := []; var contact_weights := []
+	var delivery_targets := []; var contact_centers := []; var contact_radii := []; var contact_hits := []; var contact_weights := [];var delivery_weights:=[]
 	var support_elbows := []; var arm_stability := []; var hand_homes := []; var shoulder_offsets := []
 	var guard_weights:=[];var guard_body_weights:=[];var guard_reference:=[]
 	var arm_poles: Array = []; var leg_poles: Array = []; var hip_joints: Array = []; var ankles: Array = []
 	var shoulders: Array = []; var elbows: Array = []; var wrists: Array = []; var twists: Array = []; var forearm_twists: Array = []; var knees: Array = []; var pivots: Array = []
+	var return_weights := [0.0,0.0]
+	var return_planes := [0.0,0.0]
+	var return_reach := [0.0,0.0]
 	for i in 2:
 		var side := -1.0 if i == 0 else 1.0
 		var active := row.begins_with("L_") if i == 0 else row.begins_with("R_")
@@ -582,7 +665,9 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 		if active: shoulder_offset = forward * float(motion["shoulder"]) * (0.07 if "STRAIGHT" in row or "FLARED" in row else 0.12 * compact) + Vector3.UP * float(motion["shoulder"]) * 0.035
 		if attack.has("start_shoulders"):
 			var release := transfer
-			if not active and attack.has("returning"): release = ramp(float(attack.get("elapsed",0))/int(attack["returning"]["duration"]))
+			if not active and attack.has("returning"):
+				var returning: Dictionary=attack["returning"]
+				release = _remaining_return(returning["at"],returning["total"],attack.get("elapsed",0),returning["rate"]) if returning.has("at") else ramp(float(attack.get("elapsed",0))/int(returning["duration"]))
 			shoulder_offset = Vector3(attack["start_shoulders"][i]).lerp(shoulder_offset,release)
 		shoulder_offsets.append(shoulder_offset); shoulder += shoulder_offset
 		var neutral: Vector3 = shoulder + right * side * 0.025 + forward * (0.21 + (float(style["guard"]) if i == lead_hand else 0.0)) + Vector3.UP * 0.08
@@ -593,14 +678,31 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 		# The previous 0.17m high guard embedded the gloves in the head; merely
 		# spreading those hands sideways left a clean straight through the gap.
 		var low_forward:=0.34 if fighter.get("continuous_delivery",false) else 0.17
-		var covered := head_offset + Vector3.UP * lerpf(1.57,1.15,guard_level) + right * side * lerpf(0.20,0.16,guard_level) + forward * lerpf(0.29,low_forward,guard_level)
+		# Body cover belongs to the rotating ribcage. Keeping a low glove in
+		# the facing frame while a hook turns the chest sends its other forearm
+		# across the torso and forces an abrupt elbow detour. High cover stays
+		# with the head; lower cover follows the chest continuously.
+		var cover_turn:=chest_turn*guard_level if fighter.get("continuous_delivery",false) else 0.0
+		var cover_offset:=right*side*lerpf(0.20,0.16,guard_level)+forward*lerpf(0.29,low_forward,guard_level)
+		var covered := head_offset + Vector3.UP * lerpf(1.57,1.15,guard_level) + cover_offset.rotated(Vector3.UP,cover_turn)
 		# Held high/low guard stays with the covering hand as the working hand
 		# leaves it. The committed trajectory below owns the attacking glove;
 		# actual arm position determines whether either hand can brace contact.
-		var cover := maxf(guard, float(style["cover"]))
+		# Resting cover is the beginning of the guard stroke, not a threshold
+		# the input must exceed. max(guard, resting_cover) stalls a raised home
+		# for several ticks, then compresses its movement into the end of the
+		# guard clock. Travel from that home immediately on the same clock.
+		var cover := lerpf(float(style["cover"]),1.0,guard) if fighter.get("continuous_delivery",false) else maxf(guard,float(style["cover"]))
 		if active and "BLOCK_PUNCH" in mods: cover = maxf(cover, float(attack.get("guard_start", 1.0)) * (1.0 - ramp(progress / 0.4)) * (1.0 - ramp(recovery)))
 		if not active and row != "": cover = maxf(cover, float(motion["shoulder"]))
 		var hand: Vector3 = neutral.lerp(covered, ramp(cover))
+		if fighter.get("continuous_delivery",false):
+			# Raise cover around the shoulder, keeping the folded arm's reach.
+			# A straight chord between low neutral and high cover can pass close
+			# to the shoulder and whip the elbow around an almost folded axis.
+			var from_arm:=neutral-shoulder;var to_arm:=covered-shoulder
+			if from_arm.length_squared()>0.000001 and to_arm.length_squared()>0.000001:
+				hand=shoulder+from_arm.normalized().slerp(to_arm.normalized(),ramp(cover))*lerpf(from_arm.length(),to_arm.length(),ramp(cover))
 		var home := hand
 		hand_homes.append(home)
 		var anchor_body := guard_level*ramp(cover)
@@ -622,8 +724,29 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 			# Recovery folds the elbow toward the ribs, instead of playing the
 			# outgoing hook/uppercut arc backwards. Every arc closes at contact.
 			curve *= compact * float(style["arc"]) * (1.0 + (0.18 if "POWER" in mods else 0.0) + (0.32 if "HAYMAKER" in mods else 0.0)) * (1.0 - ramp(recovery * 2.0))
+			if fighter.get("continuous_delivery",false) and attack.has("start_arms"):
+				hand = shoulder + Vector3(attack["start_arms"][i])
+				# This arm is already shoulder-relative; applying the live guard's
+				# head/rib anchor again would steer it when the other hand lowers.
+				anchor_weight = 0.0
 			hand += -forward * float(motion["load"]) * (0.22 if not technique.is_empty() else 0.50)
-			hand = hand.lerp(target, e) + curve * sin(e * PI)
+			var load_clearance := 0.18 * (1.0-ramp(e/0.55)) * (1.0-ramp(recovery))
+			if curved_delivery and fighter.get("continuous_delivery",false):
+				# The arc controls direction, not extra arm length. Interpolate
+				# directions through the outside/rising control point on a sphere;
+				# normalizing a Cartesian curve can pass through zero and flip.
+				var from_arm:=hand-shoulder
+				# The source direction must remain defined even while the live
+				# guard crosses shoulder height. This is a curve control point,
+				# not a clearance imposed on the delivered glove.
+				from_arm+=forward*maxf(0,0.18-from_arm.dot(forward))
+				var to_arm:=(target-shoulder).limit_length(UPPER_ARM+FOREARM-0.002)
+				var control:=(from_arm+to_arm)*0.5+curve
+				control+=forward*maxf(0,0.18-control.dot(forward))
+				var first:=from_arm.normalized().slerp(control.normalized(),e)
+				var last:=control.normalized().slerp(to_arm.normalized(),e)
+				hand=shoulder+first.slerp(last,e)*lerpf(from_arm.length(),to_arm.length(),e)
+			else: hand = hand.lerp(target, e) + curve * sin(e * PI)
 			if not technique.is_empty() and str(technique["id"]) in ["compact","probe","shovel"]:
 				# Fold toward the committed inside lane before extending upward.
 				# The aim was fixed at launch; this cannot steer around a later guard.
@@ -632,12 +755,17 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 				# Establish the committed lane before extending. A diagonal from
 				# a resting low glove to the far chin drives every straight into
 				# the opponent's resting hand instead of delivering along its aim.
-				var align_lane := ramp((progress-0.08)/0.48) * (1.0-ramp(recovery*float(style["return"])))
+				# A body straight changes level during its load, before the arm
+				# extends. From an actual high launch hand, late alignment sweeps
+				# down through the opponent's high forearm instead of the body lane.
+				var align_lane := (ramp(progress/0.24) if "BODY" in mods else ramp((progress-0.08)/0.48)) * (1.0-ramp(recovery*float(style["return"])))
 				hand.y = lerpf(hand.y,target.y,align_lane)
 				hand += right * (target-hand).dot(right) * align_lane
 			# A loaded glove folds in front of the shoulder. Passing through the
 			# shoulder reverses the IK axis and flips a deeply bent elbow.
-			var load_clearance := 0.18 * (1.0-ramp(progress/0.55)) * (1.0-ramp(recovery))
+			# The arm can still be loading well into the overall punch clock.
+			# Release shoulder clearance as that arm actually extends, not while
+			# a delayed hook is still coiled beside the shoulder's IK singularity.
 			if load_clearance > 0 and fighter.get("continuous_delivery",false): hand += forward * maxf(0,load_clearance-(hand-shoulder).dot(forward))
 			if motion["upper"] and not "BODY" in mods:
 				# A rising head route stays in front of the chest until it rises
@@ -665,10 +793,23 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 			hand = Vector3(attack["start_wrists"][i]).lerp(hand,float(attack.get("launch_blend",1)))
 			anchor_weight*=float(attack.get("launch_blend",1))
 		var returning: Dictionary = attack.get("returning",{})
+		var folded := 0.0
 		if not returning.is_empty() and i == int(returning["hand"]) and not active:
-			var folded := ramp(float(attack.get("elapsed",0))/int(returning["duration"]))
-			hand = (Vector3(returning["from"])-origin).lerp(home,folded)
-			hand += right * side * 0.12 * sin(PI * folded)
+			folded = _remaining_return(returning["at"],returning["total"],attack.get("elapsed",0),returning["rate"]) if returning.has("at") else ramp(float(attack.get("elapsed",0))/int(returning["duration"]))
+			# Continue the existing recovery path toward the moving guard. Its
+			# retained clock prevents a stalled glove as the shoulder withdraws;
+			# adding the full shoulder retreat again would double that motion.
+			# Older saved handoffs retain their shoulder-relative fallback.
+			var legacy_arm: bool=returning.has("arm") and not returning.has("at")
+			var return_start: Vector3 = shoulder+Vector3(returning["arm"]) if legacy_arm else Vector3(returning["from"])-origin
+			if legacy_arm:return_weights[i]=1.0-folded
+			elif returning.has("arm"):return_reach[i]=Vector3(returning["arm"]).length()
+			hand = return_start.lerp(home,folded)
+			# A nearly settled opposite hand must not restart a full outside
+			# return loop just because the next punch has begun. Scale clearance
+			# to the actual return still owed at the handover.
+			var return_arc := float(returning.get("arc",minf(0.12,(Vector3(returning["from"])-origin).distance_to(home)*0.25)))
+			hand += right * side * return_arc * sin(PI * folded)
 			anchor_weight=folded
 			twist = lerpf(float(returning["twist"]),twist,folded)
 			pronation = lerpf(float(returning["pronation"]),pronation,folded)
@@ -676,10 +817,25 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 		if motion["hook"] and active:
 			var delivery_pole := right * side * 0.75 - Vector3.UP * (0.6 if motion["upper"] else 0.2)
 			bend = bend.lerp(delivery_pole, float(motion["upper_arm"]))
+		if not returning.is_empty() and i == int(returning["hand"]) and returning.has("elbow") and not active:
+			# Fold toward the guarding plane throughout return. Retaining an
+			# inward contact plane until the glove is home causes a late detour.
+			var axis := (hand-shoulder).normalized()
+			var from: Vector3=returning["elbow"]
+			from-=axis*from.dot(axis)
+			var to:=bend-axis*bend.dot(axis)
+			if from.length_squared()>0.000001 and to.length_squared()>0.000001:
+				# The glove may already be home while the torso/elbow still unload.
+				# Continue that body's phase instead of snapping to the final plane.
+				bend=from.normalized().slerp(to.normalized(),transfer)
+				return_planes[i]=1.0
 		delivery_targets.append(attack.get("target", hand)); contact_centers.append(attack.get("target_center", hand))
 		contact_radii.append(float(attack.get("target_radius", 0.32))); contact_hits.append(1.0 if attack.get("contact_hit", false) else 0.0)
 		contact_weights.append(float(motion["upper_arm"]) if active else 0.0)
-		if not elbow_prior.is_empty():
+		var delivery_weight:=float(motion["upper_arm"]) if active and not curved_delivery and not attack.has("return_from") else 0.0
+		if attack.has("start_wrists"):delivery_weight*=float(attack.get("launch_blend",1.0))
+		delivery_weights.append(delivery_weight)
+		if not elbow_prior.is_empty() and return_planes[i]<0.5:
 			var prior: Vector3 = elbow_prior[i] - origin - shoulder
 			var axis := (hand - shoulder).normalized()
 			prior -= axis * prior.dot(axis)
@@ -722,10 +878,12 @@ func sample(fighter: Dictionary, other: Dictionary, tick: int, attack: Dictionar
 		# Release the standing knee plane gradually so the back knee can fold.
 		for i in 2: supported_knees[i] = Vector3(supported_knees[i]).lerp(hip_joints[i]+forward*0.2-Vector3.UP*0.3,count_weight)
 	var carry_lean: Vector3 = attack.get("start_lean",Vector3.ZERO)
-	var result := constrain({"carry_lean":carry_lean,"transfer":transfer if attack.has("start_lean") else 1.0,"spring":spring,"shoulder_offsets":shoulder_offsets,"continuous_delivery": 1.0 if fighter.get("continuous_delivery", body_state.has("feet")) else 0.0, "knee_stability": 0.0 if knee_prior.is_empty() else 1.0, "support_knees": supported_knees, "support_elbows": support_elbows, "arm_stability": arm_stability, "hand_goals": wrists.duplicate(), "delivery_targets": delivery_targets, "contact_centers": contact_centers, "contact_radii": contact_radii, "contact_hits": contact_hits, "contact_weights": contact_weights, "arm_poles": arm_poles, "leg_poles": leg_poles, "hip_joints": hip_joints, "ankles": ankles, "forward": forward, "head_goal": head_offset + Vector3.UP * 1.55 + punch_head, "head": head_offset + Vector3.UP * 1.55 + punch_head, "pelvis": pelvis, "chest": chest, "hips_turn": hips_turn, "chest_turn": chest_turn, "shoulders": shoulders,
+	var result := constrain({"return_reach":return_reach,"return_planes":return_planes,"return_weights":return_weights,"carry_lean":carry_lean,"transfer":transfer if attack.has("start_lean") else 1.0,"spring":spring,"shoulder_offsets":shoulder_offsets,"continuous_delivery": 1.0 if fighter.get("continuous_delivery", body_state.has("feet")) else 0.0, "knee_stability": 0.0 if knee_prior.is_empty() else 1.0, "support_knees": supported_knees, "support_elbows": support_elbows, "arm_stability": arm_stability, "hand_goals": wrists.duplicate(), "delivery_targets": delivery_targets, "contact_centers": contact_centers, "contact_radii": contact_radii, "contact_hits": contact_hits, "contact_weights": contact_weights, "arm_poles": arm_poles, "leg_poles": leg_poles, "hip_joints": hip_joints, "ankles": ankles, "forward": forward, "head_goal": head_offset + Vector3.UP * 1.55 + punch_head, "head": head_offset + Vector3.UP * 1.55 + punch_head, "pelvis": pelvis, "chest": chest, "hips_turn": hips_turn, "chest_turn": chest_turn, "shoulders": shoulders,
 		"elbows": elbows, "wrists": wrists, "twists": twists, "forearm_twists": forearm_twists, "feet": soles, "pivots": pivots, "knees": knees, "chain": motion, "guard": guard, "lead_weight": lead_weight, "support_shift": support_shift})
 
+	result["guard_level"]=guard_level
 	result["guard_weights"]=guard_weights;result["guard_body_weights"]=guard_body_weights;result["guard_reference"]=guard_reference
+	result["delivery_weights"]=delivery_weights
 	result["guard_homes"]=hand_homes.duplicate();result["hand_homes"]=hand_homes
 	# Head orientation follows the actual trunk, with neck counter-rotation to
 	# retain vision. It never rotates the root, steers a punch or moves a target

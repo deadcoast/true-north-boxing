@@ -4,6 +4,7 @@ extends RefCounted
 const Motion := preload("res://presentation/boxing_motion.gd")
 const Space := preload("res://presentation/rig_space.gd")
 const Techniques := preload("res://sim/boxing_techniques.gd")
+const BodyControl := preload("res://sim/body_control.gd")
 const EPS := 0.00001
 
 static func transition(fighter: Dictionary, row: String) -> Dictionary:
@@ -40,18 +41,30 @@ static func transition(fighter: Dictionary, row: String) -> Dictionary:
 	if absf(float(rig["chain"]["hips"])) > (0.42 if same else 0.72): return {"allowed":false,"reason":"body_rotation"}
 	return {"allowed":recovery >= required,"reason":"same_hand_reload" if same else "weight_transfer","recovery":recovery}
 
-static func begin(fighter: Dictionary, other: Dictionary, row: String, mods: Array, startup: int, recovery: int, target: Vector3, reach: float) -> void:
-	var state: Dictionary = fighter.get("boxing", {})
-	var preceding: Dictionary = state.get("action",{}).duplicate(true)
+static func aim(fighter: Dictionary, other: Dictionary, row: String, mods: Array, target: Vector3, reach: float) -> Dictionary:
+	# A tell loads the same physical lane that commitment will freeze. The
+	# old tactical-region surface described a different lateral/height point.
 	var origin := Space.ground(fighter["pos"])
-	var forward := (Space.ground(other["pos"]) - origin).normalized()
+	var facing := BodyControl.forward(fighter,other)
+	var forward := Vector3(facing.x,0,facing.y).normalized()
 	if forward.length_squared() < 0.1: forward = Vector3.FORWARD
 	var offset := target - origin
 	var horizontal := Vector3(offset.x, 0, offset.z)
 	var radius := Space.BODY_RADIUS if "BODY" in mods else Space.HEAD_RADIUS
 	var technique := Techniques.route(fighter,other,row,mods)
+	if not technique.is_empty(): reach = float(technique["reach"])
+	var distance := minf(horizontal.length(), reach * Space.GROUND_SCALE)
+	var endpoint := horizontal.normalized() * maxf(0.08, distance - radius - Space.GLOVE_RADIUS + 0.05)
+	endpoint.y = offset.y
+	return {"target":endpoint,"target_center":offset,"forward":forward,"technique":technique}
+
+static func begin(fighter: Dictionary, other: Dictionary, row: String, mods: Array, startup: int, recovery: int, target: Vector3, reach: float) -> void:
+	var state: Dictionary = fighter.get("boxing", {})
+	var preceding: Dictionary = state.get("action",{}).duplicate(true)
+	var origin := Space.ground(fighter["pos"])
+	var lane := aim(fighter,other,row,mods,target,reach)
+	var technique: Dictionary = lane["technique"]
 	if not technique.is_empty():
-		reach = float(technique["reach"])
 		var onset := maxi(1,roundi(startup*float(technique["startup"])))
 		fighter["busy_t"] += onset-startup
 		startup = onset; fighter["pending"]["startup"] = onset; fighter["pending"]["t"] = onset
@@ -63,9 +76,6 @@ static func begin(fighter: Dictionary, other: Dictionary, row: String, mods: Arr
 		fighter["pending"]["stamina_cost"] = cost*float(technique["effort"])
 	# Commit the aim once. Range comes from anatomy and actual root travel;
 	# subsequent opponent movement cannot rewrite this endpoint or facing.
-	var distance := minf(horizontal.length(), reach * Space.GROUND_SCALE)
-	var endpoint := horizontal.normalized() * maxf(0.08, distance - radius - Space.GLOVE_RADIUS + 0.05)
-	endpoint.y = offset.y
 	var prepared: Dictionary = state.get("preparation", {})
 	var evasion: Dictionary = state.get("evasion",{})
 	var evade_axis: Vector2 = evasion.get("axis",Vector2.ZERO)
@@ -77,21 +87,33 @@ static func begin(fighter: Dictionary, other: Dictionary, row: String, mods: Arr
 		"startup":startup, "recovery_ticks":maxi(1,recovery), "return_t":0, "age":0, "phase":"flight", "progress":0.0,
 		"start_progress":float(prepared.get("progress",0)) if matches else 0.0,
 		"preload":float(prepared.get("preload",0)) if matches else 0.0,
-		"target":endpoint, "target_center":offset, "forward":forward,
+		"target":lane["target"], "target_center":lane["target_center"], "forward":lane["forward"],
 		"technique":technique,
 		"rising_counter":rising_counter,
 		"guard_start":float(fighter.get("pending",{}).get("guard_start",0)), "would_hit":false,
 		"reference":other.get("boxing",{}).get("volumes",[]).duplicate(true), "defender_origin":other["pos"]}
 	state["preparation"] = {}
-	if state.has("rig"): state["action"]["start_wrists"] = state["rig"]["wrists"].duplicate()
+	if state.has("rig"):
+		state["action"]["start_wrists"] = state["rig"]["wrists"].duplicate()
+		# The loaded arm travels with its shoulder. A later guard-height input
+		# belongs to the covering hand, not the start of an in-flight curve.
+		state["action"]["start_arms"] = prepared["start_arms"].duplicate() if matches and prepared.has("start_arms") else [
+			state["rig"]["wrists"][0]-state["rig"]["shoulders"][0],state["rig"]["wrists"][1]-state["rig"]["shoulders"][1]]
 	if not preceding.is_empty() and preceding.get("phase","") == "recovery" and state.has("rig"):
+		state["action"]["start_forward"] = state["rig"]["forward"]
+		state["action"]["start_return"] = {"at":int(preceding["return_t"]),"total":int(preceding["recovery_ticks"])}
 		state["action"]["start_chain"] = state["rig"]["chain"].duplicate()
 		state["action"]["start_shoulders"] = state["rig"].get("shoulder_offsets",[Vector3.ZERO,Vector3.ZERO]).duplicate()
 		state["action"]["start_spring"] = state["rig"].get("spring",0.0)
 		state["action"]["start_lean"] = state["rig"].get("delivery_lean",Vector3.ZERO)
 		var old_hand := 0 if str(preceding["row"]).begins_with("L_") else 1
 		if old_hand != (0 if row.begins_with("L_") else 1):
+			var remaining: float = Vector3(state["rig"]["wrists"][old_hand]).distance_to(state["rig"].get("hand_homes",state["rig"]["wrists"])[old_hand])
 			state["action"]["returning"] = {"hand":old_hand,"from":origin+state["rig"]["wrists"][old_hand],
+				"arm":state["rig"]["wrists"][old_hand]-state["rig"]["shoulders"][old_hand],
+				"elbow":state["rig"]["elbows"][old_hand]-state["rig"]["shoulders"][old_hand],
+				"at":int(preceding["return_t"]),"total":int(preceding["recovery_ticks"]),"rate":float(Motion.style_profile(fighter)["return"]),
+				"arc":minf(0.12,remaining*0.25),
 				"twist":state["rig"]["twists"][old_hand],"pronation":state["rig"]["forearm_twists"][old_hand],
 				"duration":maxi(1,int(preceding["recovery_ticks"])-int(preceding["return_t"]))}
 	fighter["boxing"] = state
@@ -126,13 +148,20 @@ static func sample(fighter: Dictionary, other: Dictionary, head: Dictionary, tic
 		if not action.is_empty():
 			attack = action.duplicate(true)
 			attack["recovery"] = float(action["return_t"]) / int(action["recovery_ticks"])
-			attack["launch_blend"] = Motion.ramp((float(action["progress"]) - float(action.get("start_progress",0))) / 0.2)
+			# A matching tell has already travelled through its preparation.
+			# Blending from the launch snapshot again stalls that motion, then
+			# races to catch up with the advancing delivery over a few ticks.
+			attack["launch_blend"] = 1.0 if float(action.get("start_progress",0))>0 else Motion.ramp(float(action["progress"]) / 0.2)
 			attack["elapsed"] = int(action["age"])
-			attack["preload"] *= 1.0 - Motion.ramp(float(action["progress"]))
+			# Motion applies preload release once, on the shared punch progress.
+			# Applying it here too drops the load as a tell becomes committed.
 	if action.is_empty() and not preparation.is_empty():
 		preparation = preparation.duplicate(true)
 		var prior: Dictionary = state.get("preparation",{})
 		var same: bool = prior.get("row","") == preparation["row"]
+		if same and prior.has("start_arms"): preparation["start_arms"] = prior["start_arms"].duplicate()
+		elif state.has("rig"):
+			preparation["start_arms"] = [state["rig"]["wrists"][0]-state["rig"]["shoulders"][0],state["rig"]["wrists"][1]-state["rig"]["shoulders"][1]]
 		preparation["progress"] = move_toward(float(prior.get("progress",0)) if same else 0,float(preparation["progress"]),ticks*0.025)
 		preparation["preload"] = move_toward(float(prior.get("preload",0)) if same else 0,float(preparation["preload"]),ticks*0.08)
 		state["preparation"] = preparation.duplicate(true); attack = preparation.duplicate(true)
@@ -303,6 +332,21 @@ static func finish(fighter: Dictionary, contact_result: Dictionary) -> void:
 	# swept impact keep real surfaces separated without pushing the glove
 	# away merely to restore that spare margin.
 	rig["clearance_margin"]=0.0001
+	# These are evaluated poses, not new authored hand requests. Preserve both
+	# arms at the impact instant; rerunning the other hand from its old goal
+	# and pole can move that elbow when only the striking glove hit something.
+	for i in 2:
+		rig["hand_goals"][i]=rig["wrists"][i]
+		if rig.has("delivery_weights"):rig["delivery_weights"][i]=0.0
+		if rig.has("guard_weights"):rig["guard_weights"][i]=0.0
+		if rig.has("return_weights"):rig["return_weights"][i]=0.0
+		if rig.has("return_planes"):rig["return_planes"][i]=0.0
+		# The struck glove owns an evaluated endpoint. Its opposite arm is
+		# still returning: fractional body interpolation and the fixed-length
+		# arm solve must keep that hand inside its existing return envelope.
+		if rig.has("return_reach") and i==hand:rig["return_reach"][i]=0.0
+		rig["arm_poles"][i]=rig["elbows"][i]-rig["shoulders"][i]
+		rig["support_elbows"][i]=rig["elbows"][i]
 	var point: Vector3 = contact_result["point"] - Vector3(state["origin"])
 	# Contact corrects the glove to the swept surface; it must retain the
 	# already constrained elbow plane. The authored pole predates the final
@@ -320,6 +364,14 @@ static func finish(fighter: Dictionary, contact_result: Dictionary) -> void:
 	# another bend after the simulation has already adjudicated the contact.
 	rig=Motion.constrain(rig);state["rig"]=rig
 	action["return_from"] = rig["wrists"][hand]
+	# Swept contact can stop the pose before the tick's guard stroke ends.
+	# Continue from that visible stroke on release from hitstop; retaining
+	# the end-of-tick solver guard makes the covering arm skip the remainder
+	# of this tick and a full next tick at once.
+	state["solver"]["guard"] = rig["guard"]
+	if rig.has("guard_level"):state["solver"]["guard_level"] = rig["guard_level"]
 	state["volumes"] = volumes(fighter,rig)
-	state["solver"]["elbow_history"][hand] = Vector3(state["origin"]) + rig["elbows"][hand]
+	for i in 2:
+		state["solver"]["elbow_history"][i] = Vector3(state["origin"]) + rig["elbows"][i]
+		state["solver"]["knee_history"][i] = Vector3(state["origin"]) + rig["knees"][i]
 	state["contact"] = contact_result.duplicate(true)

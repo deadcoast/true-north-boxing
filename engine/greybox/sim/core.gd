@@ -1362,11 +1362,20 @@ func _boxing_tick(boss_ticks: int) -> void:
 				var row: String = item["row"]
 				var duration := maxi(1,ms(float(pattern.get("strings",{}).get(bstring,{}).get("tell",{}).get("ms",700))))
 				var amount := clampf(1.0 - float(btimer)/duration,0,1)
-				var reg := contact_region(B,P,row,bool(item.get("body",false)))
-				preparation = {"row":row,"mods":["BODY"] if item.get("body",false) else [],"progress":0.22 * amount,"preload":amount,"target":RigSpace.contact(reg),"target_center":RigSpace.ground(reg["target"] - B["pos"]) + Vector3.UP * float(reg["h"])}
+				preparation = {"row":row,"mods":["BODY"] if item.get("body",false) else [],"progress":0.22 * amount,"preload":amount}
 				break
 	elif bstate == "ACTING" and B["pending"].is_empty() and not bqueue.is_empty():
 		preparation = B["boxing"].get("preparation",{})
+	if not preparation.is_empty():
+		# Waiting behind a queued step is still preparation. Follow the actual
+		# supported body and physical lane until begin freezes the commitment;
+		# retaining the last tell's local coordinates makes that handoff snap.
+		preparation = preparation.duplicate(true)
+		var row: String = preparation["row"];var mods: Array = preparation["mods"]
+		var reg := contact_region(B,P,row,"BODY" in mods)
+		var surface: Dictionary = P["boxing"]["volumes"][1 if "BODY" in mods else 0]
+		var target: Vector3 = (Vector3(surface["a"])+Vector3(surface["b"]))*0.5
+		preparation.merge(PunchContact.aim(B,P,row,mods,target,float(reg["reach"])),true)
 	B["motion_offer"] = move_toward(float(B.get("motion_offer",0)),1.0 if hands_down_t > 0 else 0.0,boss_ticks/12.0)
 	var motif := str(pattern.get("strings",{}).get(bstring,{}).get("tell",{}).get("motif",""))
 	B["motion_gear"] = move_toward(float(B.get("motion_gear",0)),1.0 if bstate in ["TELL","HOLD"] and motif.begins_with("glove_micro_turn") else 0.0,boss_ticks/12.0)

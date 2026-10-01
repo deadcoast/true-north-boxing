@@ -279,25 +279,6 @@ func transitions() -> void:
 		key(pair[0],false)
 		if pair[1]=="WEAVE_R":key(KEY_A,false);key(KEY_W,false)
 		if str(pair[1]).begins_with("SLIP"): key(KEY_C,false); key(KEY_SPACE,false)
-		if "counter-probe" in OS.get_cmdline_user_args():
-			var successes:=[]
-			for wait_ticks in [0,6,12,18]:
-				for row in ["L_STRAIGHT","R_STRAIGHT","L_HOOK","R_HOOK","L_UPPERCUT","R_UPPERCUT"]:
-					for enter in [false,true]:
-						var probe=tests.make_sim(0,947);probe.restore(scene.sim.snapshot())
-						var hits:=false;var outcome:=""
-						for t in wait_ticks+100:
-							tests.clear_defense(probe.B);probe.B["guard_t"]=0;probe.events.clear()
-							var intent:={"body_axis":Vector2.ZERO}
-							if t==wait_ticks:
-								intent["punch"]=row
-								if enter:intent["move"]=Vector2(0,-1)
-							probe.step(intent)
-							for e in probe.events:
-								if e.get("kind")=="hit" and e.get("on")=="B" and e.get("counter",false):hits=true
-								if e.get("kind")=="boxing_contact" and e.get("by")=="P":outcome=str(e["contact"]["kind"])
-						if hits:successes.append([wait_ticks,row,enter,outcome])
-			print("COUNTER PROBE ",pair[1]," earned=",earned," choices=",successes)
 		if pair[1]=="SLIP_L":
 			# His missed rear hand occupies this side of the pocket on the
 			# first return ticks. Let that lane clear inside the earned window.
@@ -309,6 +290,41 @@ func transitions() -> void:
 				if body["step"].is_empty() and body["gait"].is_empty() and float(body["recovery"])<=0: break
 				native_step(); jump=maxf(jump,pose_jump(last,snapshot())); last=snapshot()
 			check("step-out regathers actual support before the original counter expires",scene.sim.P["counter_t"]>0)
+		if "counter-probe" in OS.get_cmdline_user_args() and str(pair[1]).begins_with("STEP_OUT"):
+			var successes:=[]
+			for wait_ticks in [0,6,12,18]:
+				for row in ["L_STRAIGHT","R_STRAIGHT","L_HOOK","R_HOOK","L_UPPERCUT","R_UPPERCUT"]:
+					for enter in [false,true]:
+						var probe=tests.make_sim(0,947);probe.restore(scene.sim.snapshot())
+						var hits:=false;var outcome:=""
+						for t in wait_ticks+100:
+							tests.clear_defense(probe.B);probe.B["guard_t"]=0;probe.events.clear()
+							var intent:={"body_axis":Vector2.ZERO}
+							if t==0 and enter:intent["pocket_step"]=Vector2(0,1)
+							if t==wait_ticks:
+								intent["punch"]=row
+								if enter:intent["move"]=Vector2(0,-1)
+							probe.step(intent)
+							for e in probe.events:
+								if e.get("kind")=="hit" and e.get("on")=="B" and e.get("counter",false):hits=true
+								if e.get("kind")=="boxing_contact" and e.get("by")=="P":outcome=str(e["contact"]["kind"])
+						if hits:successes.append([wait_ticks,row,enter,outcome])
+			print("COUNTER PROBE ",pair[1]," earned=",earned," remaining=",scene.sim.P["counter_t"]," choices=",successes)
+		if pair[1]=="STEP_OUT":
+			# Preserve the original rear-straight attempt. Re-entry restores
+			# range, but the opponent's lead glove still occupies this lane.
+			var blocked_reply=tests.make_sim(0,947);blocked_reply.restore(scene.sim.snapshot())
+			var contacts:=[];var endpoint_exact:=true;var counter_earned:=false
+			for i in 100:
+				tests.clear_defense(blocked_reply.B);blocked_reply.B["guard_t"]=0;blocked_reply.events.clear()
+				blocked_reply.step({"body_axis":Vector2.ZERO,"pocket_step":Vector2(0,1),"punch":"R_STRAIGHT"} if i==0 else {"body_axis":Vector2.ZERO})
+				counter_earned=counter_earned or blocked_reply.P["pending"].get("counter",false)
+				for event in blocked_reply.events:
+					if event.get("kind")=="boxing_contact" and event.get("by")=="P":
+						contacts.append(event["contact"])
+						endpoint_exact=endpoint_exact and Vector3(event["contact"]["point"]).distance_to(Space.ground(blocked_reply.P["pos"])+Vector3(blocked_reply.P["boxing"]["rig"]["wrists"][1]))<0.001
+			print("STEP-OUT COUNTER SURFACE earned=",counter_earned," endpoint=",endpoint_exact," contacts=",contacts)
+			check("step-out rear counter stops on the physical lead glove",counter_earned and contacts.size()==1 and contacts[0]["kind"]=="deflect" and contacts[0]["part"]=="glove0" and endpoint_exact)
 		if pair[1]=="LEAN": key(KEY_CTRL,true)
 		if pair[1] in ["SLIP_R","DUCK"]:
 			# Preserve negative path proofs: a counter cannot ignore a covered
@@ -329,19 +345,37 @@ func transitions() -> void:
 				# the separate retreat case below still proves unreachable misses.
 				# The outside return clears the duck reply's old glove interception;
 				# its committed straight still misses the recovering head physically.
-				var expected := ("guard" if delay==0 else "deflect") if pair[1]=="SLIP_R" else "miss"
-				var part := "glove0" if pair[1]=="SLIP_R" else "none"
+				var expected := "deflect" if pair[1]=="SLIP_R" and delay==12 else "miss"
+				var part := "glove0" if expected=="deflect" else "none"
 				print("COUNTER SURFACE ",pair[1]," delay=",delay," contacts=",reply_contacts)
-				check(str(pair[1])+" rear counter respects its physical "+expected+" at delay "+str(delay),reply_contacts.size()==1 and reply_contacts[0]["contact"]["kind"]==expected and reply_contacts[0]["contact"]["part"]==part and (pair[1]!="DUCK" or missed_clear))
+				check(str(pair[1])+" rear counter respects its physical "+expected+" at delay "+str(delay),reply_contacts.size()==1 and reply_contacts[0]["contact"]["kind"]==expected and reply_contacts[0]["contact"]["part"]==part and (expected!="miss" or missed_clear))
 			# The low guard closes the rising lane too. Let the extended rear
 			# glove retract, then deliver above that guard within the same window.
 			for i in 12:
 				native_step(); jump=maxf(jump,pose_jump(last,snapshot())); last=snapshot()
 			check(str(pair[1])+" retains its earned counter while the occupied lane clears",scene.sim.P["counter_t"]>0)
+		if pair[1]=="WEAVE_R":
+			# The immediate rising reply meets the returning rear glove. Keep
+			# that physical failure, then wait six real ticks for the same lane.
+			var immediate=tests.make_sim(0,947);immediate.restore(scene.sim.snapshot())
+			var contacts:=[];var clean_hit:=false;var exact:=true
+			for i in 100:
+				tests.clear_defense(immediate.B);immediate.B["guard_t"]=0;immediate.events.clear()
+				immediate.step({"body_axis":Vector2.ZERO,"punch":"L_UPPERCUT"} if i==0 else {"body_axis":Vector2.ZERO})
+				for event in immediate.events:
+					if event.get("kind")=="hit" and event.get("on")=="B":clean_hit=true
+					if event.get("kind")=="boxing_contact" and event.get("by")=="P":
+						contacts.append(event["contact"])
+						exact=exact and Vector3(event["contact"]["point"]).distance_to(Space.ground(immediate.P["pos"])+Vector3(immediate.P["boxing"]["rig"]["wrists"][0]))<0.001
+			check("immediate weave uppercut counter stops on the returning rear glove",earned and not clean_hit and exact and contacts.size()==1 and contacts[0]["kind"]=="deflect" and contacts[0]["part"]=="glove1")
+			for i in 6:
+				native_step();jump=maxf(jump,pose_jump(last,snapshot()));last=snapshot()
+			check("weave counter window survives waiting for the real glove to clear",scene.sim.P["counter_t"]>0)
 		# A dip or block leaves the compact rising lane available before the
 		# straight lane. Counter status never grants reach or ignores a glove.
-		var reply_key := KEY_Y if pair[1] in ["DUCK","WEAVE_R","PERFECT_BLOCK"] else (KEY_J if str(pair[1]).begins_with("SLIP") else KEY_K)
-		# The positive range counter re-enters; the negative case stays at the
+		var reply_key := KEY_Y if pair[1] in ["DUCK","WEAVE_R","PERFECT_BLOCK"] else (KEY_J if str(pair[1]).begins_with("SLIP") or pair[1]=="STEP_OUT" else KEY_K)
+		# Re-enter with the lead straight through the available lane. The
+		# positive range counter re-enters; the negative case stays at the
 		# range created by its retreat and must miss despite earning a counter.
 		key(KEY_W,pair[1] in ["LEAN","STEP_OUT"]); key(reply_key,true)
 		var landed := false; var exchange := []
