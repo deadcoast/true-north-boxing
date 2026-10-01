@@ -627,7 +627,7 @@ func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_ESCAPE:
 		controls_menu.open(); return
 	if controls_menu.opened or sim == null: return
-	if e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F2 and e.ctrl_pressed:
+	if "boxing-inspect" in OS.get_cmdline_user_args() and e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F2 and e.ctrl_pressed:
 		fight_view.inspection_view = not fight_view.inspection_view
 		fight_view.orbit = Vector3.ZERO; fight_view.last_tick = -1
 		return
@@ -1677,7 +1677,11 @@ func _hud() -> void:
 		if str(sim.bout.get("district", "")) != "": head += "   in %s (rep %d) [BACKSPACE flee]" % [sim.district_label(str(sim.bout["district"])), sim.rep_of(str(sim.bout["district"]))]   # PAC-101
 	var mode_line := ""
 	match sim.mode:
-		"EIGHT": mode_line = "\n>>> STANDING EIGHT: ENTER / A on the beat  (%d to go)" % int(sim.eight.get("beats_left", 0))
+		"EIGHT":
+			var count_name: String = (sim.pname() if sim.eight.get("who","P") == "P" else sim.boss_label).replace("_"," ").to_upper()
+			if sim.eight.get("phase","") == "rise": mode_line = "\n>>> %s IS RISING" % count_name
+			elif sim.eight.get("who","P") == "B": mode_line = "\n>>> REFEREE COUNT: %s (%d to go)" % [count_name,int(sim.eight.get("beats_left",0))]
+			else: mode_line = "\n>>> STANDING EIGHT: ENTER / A on the beat  (%d to go)" % int(sim.eight.get("beats_left",0))
 		"CARD": mode_line = "\n>>> %s (%.1fs, ENTER/1 to skip)" % ["TIED ON THE LADDER - GOLDEN DROP: any dressed fighter, condition carried, no clock, first DROP wins" if sim.r6 else "SEGMENT CARD", sim.card_t / float(TNBSim.TICK_HZ)]
 		"CORNER": mode_line = _corner_menu() + _their_corner()
 		"CLASH": mode_line = "\n>>> MANIFEST CLASH - the fight waits: SPACE / Q / E (block or slip) on the enemy's exchange, a punch on yours - pure timing"   # PAC-086

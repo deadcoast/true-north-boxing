@@ -91,7 +91,7 @@
   "hitstop_ms": {"normal": 40, "power": 70, "counter": 120, "flash_or_hissatsu": 200}
  },
  "camera": {
-  "chase_behind_m": 1.8, "above_head_m": 0.6, "pitch_deg": 12, "fov_deg": 55,
+  "chase_behind_m": 1.8, "above_head_m": 1.04, "shoulder_offset_m": 0.9, "pitch_deg": 12, "fov_deg": 55,
   "player_frame_height_pct": 35, "windup_alpha_pct": 40
  }
 }

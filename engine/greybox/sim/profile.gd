@@ -41,6 +41,7 @@ static func intent(s, ext: Dictionary) -> Dictionary:
 	# ---- the count: rise on the beat, as often as the heart allows ----
 	if s.mode == "EIGHT":
 		var e: Dictionary = s.eight
+		if e.get("who","P") != "P" or e.get("phase","count") == "rise": return inp
 		var beat_id: int = int(e.get("beats_left", 0))
 		if absi(int(e["timer_t"])) <= int(e["window_t"]) / 2 and int(m["beat_done"]) != beat_id:
 			m["beat_done"] = beat_id

@@ -1,0 +1,216 @@
+{
+  "created_utc": "2026-09-30T13:18:25.894437+00:00",
+  "status": "NOT_ACCEPTED",
+  "scope": "PAC-209 learned Northern Rising mechanics integrated in the existing native match; not whole-foundation acceptance",
+  "runtime_changes": [
+    "Rory default learned guard, techniques and signature compositions; explicit boxing_training card field equips either fighter without rewriting archetype, stats or roster",
+    "Raised bent lead forearm, rear jaw glove and supported thumb-up rest, mirrored by stance",
+    "Compact/probe inside preparation; rangy forward-up commitment; shovel body route; ordinary jab cross and hook remain their own families",
+    "Route-specific startup, recovery and effort; proficiency improves preparation/economy without changing reach or introducing input chance",
+    "Conditional Northern Rising, Northern Ladder and Rising Exit recognized only through real evasion/contact/feet and manual punches, without automatic hits or motion"
+  ],
+  "checks": {
+    "learned_mechanics": {
+      "passed": 68,
+      "total": 68,
+      "run": "techniques-mirrored"
+    },
+    "contact_regression": {
+      "passed": 187,
+      "total": 187,
+      "run": "contact-baseline"
+    },
+    "motion_regression": {
+      "passed": 338,
+      "total": 338,
+      "run": "motion-final"
+    },
+    "gameplay_render": {
+      "passed": 71,
+      "total": 71,
+      "run": "gameplay-final"
+    },
+    "rendered_learned_mechanics": {
+      "passed": 80,
+      "total": 80,
+      "run": "rendered-mirrored",
+      "captures": 12
+    }
+  },
+  "film": {
+    "seconds": 20,
+    "fps": 60,
+    "resolution": [
+      1280,
+      720
+    ],
+    "frames": 1200,
+    "camera": "existing documented behind/above chase",
+    "inputs": "automated native keyboard strokes against the live opponent; normal resource depletion",
+    "observations": [
+      {
+        "early_links": 15,
+        "peak_joint_travel_m": 0.136331856250763,
+        "peak_tick": 821
+      },
+      {
+        "close_glove_ticks": 0,
+        "live_ticks": 2400,
+        "longest_close_glove_run_ticks": 0,
+        "minimum_eye_glove_clearance_m": 1.81237076282501,
+        "mode": "FIGHT",
+        "opponent_punches": 22,
+        "player_punches": 20
+      }
+    ],
+    "resolved_learned_routes": {
+      "rangy": 7,
+      "shovel": 2,
+      "probe": 1
+    },
+    "note": "Compact and the three complete signatures are exercised in the dedicated real-contact scenarios; the live clip does not show all three completed signatures."
+  },
+  "signature_results": [
+    {
+      "case": "ladder",
+      "stance": "orthodox",
+      "completed": [
+        {
+          "id": "northern_ladder",
+          "tick": 101
+        }
+      ]
+    },
+    {
+      "case": "exit",
+      "stance": "orthodox",
+      "completed": [
+        {
+          "id": "rising_exit",
+          "tick": 94
+        }
+      ]
+    },
+    {
+      "case": "counter",
+      "stance": "orthodox",
+      "completed": [
+        {
+          "id": "northern_rising",
+          "tick": 167
+        }
+      ]
+    },
+    {
+      "case": "blocked",
+      "stance": "orthodox",
+      "completed": []
+    },
+    {
+      "case": "wall",
+      "stance": "orthodox",
+      "completed": []
+    },
+    {
+      "case": "stagger",
+      "stance": "orthodox",
+      "completed": []
+    },
+    {
+      "case": "ladder",
+      "stance": "southpaw",
+      "completed": [
+        {
+          "id": "northern_ladder",
+          "tick": 101
+        }
+      ]
+    },
+    {
+      "case": "exit",
+      "stance": "southpaw",
+      "completed": [
+        {
+          "id": "rising_exit",
+          "tick": 94
+        }
+      ]
+    },
+    {
+      "case": "counter",
+      "stance": "southpaw",
+      "completed": [
+        {
+          "id": "northern_rising",
+          "tick": 167
+        }
+      ]
+    },
+    {
+      "case": "blocked",
+      "stance": "southpaw",
+      "completed": []
+    },
+    {
+      "case": "wall",
+      "stance": "southpaw",
+      "completed": []
+    },
+    {
+      "case": "stagger",
+      "stance": "southpaw",
+      "completed": []
+    }
+  ],
+  "visual_review": {
+    "inspected": [
+      "orthodox and southpaw resting guard",
+      "compact and rangy extensions in observer diagnostics",
+      "normal chase frames and 12-frame contact sheet",
+      "largest sampled joint movement near movie frame 410"
+    ],
+    "finding": "Raised lead forearm and rear jaw glove are visible, with compact fold and longer extended rise; observed torso remains connected to collar and pelvis in reviewed frames. This is bounded inspection, not a blanket clipping or feel pass."
+  },
+  "regression_fixture_changes": [
+    "Original ordinary low-home returning-glove regression now explicitly unequipped; unchanged assertion retained",
+    "Original symmetric clash/interrupt/trade fixture now explicitly unequipped because learned compact preparation and timing intentionally differ; unchanged assertions retained",
+    "New learned-loadout checks cover physical body jab interruption, high/low body defense, live signatures in both stances and blocked/wall/stagger negative cases"
+  ],
+  "warnings": [
+    "Headless contact and full motion retain 4 and 2 ObjectDB exit leaks respectively; rendered runs have no stderr errors"
+  ],
+  "remaining": [
+    "Whole boxing foundation is NOT_ACCEPTED; no human acceptance has been inferred",
+    "Player projected scale versus the approximately 35% camera target remains unresolved; physical chase dimensions preserved",
+    "Comprehensive moving-mesh clearance, subjective speed/feel and technique coverage beyond Northern Rising remain open",
+    "Proficiency is explicit equipped training data; broader progression acquisition and composition sandbox have not been implemented by this change"
+  ],
+  "source_sha256": {
+    "engine/greybox/sim/boxing_techniques.gd": "8e5bf24672f92fff16280b94c007ef07371e016f4ce90273d1b055a3c4cd119d",
+    "engine/greybox/sim/boxing_techniques.v1.json": "f83b320003ef27573ffe3138715207ec7eb9311c2e8dc3aa4ead06e9b6ae6998",
+    "engine/greybox/sim/core.gd": "f135187a735c2f98e042f7044bdb5f354098394bd1615c025c27b52a20c960f1",
+    "engine/greybox/sim/punch_contact.gd": "160843b56265e8163d362eb96d388baef6d8231db8a30faf12ad421046338652",
+    "engine/greybox/presentation/boxing_motion.gd": "89b7fc67cc1efebd5f605d7f6263e1e1c2d4d0fd06117d3f9fe958562dec0db7",
+    "engine/greybox/tools/drive_foundation.gd": "5224f68b078dc3bb0c0198126993a25b1f5dd45a14f4f41cc405dfc05afa9e5a",
+    "engine/greybox/tools/drive_northern_rising.gd": "5845a989d52315f4bb92aad2fc55b9801e6a6594dd960c9148dc0da3b1f04308",
+    "engine/greybox/tools/drive_punch_contact.gd": "d6dc9c8f4df6ab8e2503fa836a84a4802f6bd6483b2cb809c103db53d7185050",
+    "engine/greybox/tools/drive_boxing_motion.gd": "367691fa02f66810b8375b5505b2641c1c08153f93c21754bb2f5850a6ce710d"
+  },
+  "film_source_sha256_at_launch": {
+    "engine/greybox/sim/core.gd": "f135187a735c2f98e042f7044bdb5f354098394bd1615c025c27b52a20c960f1",
+    "engine/greybox/sim/punch_contact.gd": "160843b56265e8163d362eb96d388baef6d8231db8a30faf12ad421046338652",
+    "engine/greybox/presentation/boxing_motion.gd": "89b7fc67cc1efebd5f605d7f6263e1e1c2d4d0fd06117d3f9fe958562dec0db7",
+    "engine/greybox/sim/boxing_techniques.gd": "8e5bf24672f92fff16280b94c007ef07371e016f4ce90273d1b055a3c4cd119d",
+    "engine/greybox/sim/boxing_techniques.v1.json": "f83b320003ef27573ffe3138715207ec7eb9311c2e8dc3aa4ead06e9b6ae6998",
+    "engine/greybox/tools/drive_foundation.gd": "5224f68b078dc3bb0c0198126993a25b1f5dd45a14f4f41cc405dfc05afa9e5a",
+    "engine/greybox/tools/drive_punch_contact.gd": "d6dc9c8f4df6ab8e2503fa836a84a4802f6bd6483b2cb809c103db53d7185050",
+    "engine/greybox/tools/drive_boxing_motion.gd": "367691fa02f66810b8375b5505b2641c1c08153f93c21754bb2f5850a6ce710d"
+  },
+  "preserved_failures": [
+    "techniques-first and techniques-lanes 47/50: blocked rising paths before compact inside-fold repair",
+    "motion-first 337/338: new raised home differs from old low-home obstruction fixture",
+    "contact-final 184/187: learned timing/route differs from symmetric ordinary fixture",
+    "techniques-counterplay / transitions-base: inferred Variant bool parser failure and cascade; corrected explicit boolean"
+  ],
+  "launcher": "Play True North Boxing.cmd -> tools/play_boxing.ps1 -> engine/greybox/main.tscn; verified source launcher"
+}

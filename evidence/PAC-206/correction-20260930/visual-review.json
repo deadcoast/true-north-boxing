@@ -1,0 +1,138 @@
+[
+	{
+		"chest": "(0.0, 1.155, 0.0)",
+		"delivery_lean": "(0.0, 0.0, 0.0)",
+		"face_direction": "(-0.0, 0.0, -1.0)",
+		"forward": "(-0.0, 0.0, -1.0)",
+		"framing": {
+			"fov_deg": 55.0,
+			"opponent_foot_y_pct": 95.0484212239583,
+			"pitch_deg": 12.0000020414777,
+			"player_visible_head_to_bottom_pct": 49.3169996473524
+		},
+		"head": "(0.0, 1.55, 0.0)",
+		"pelvis": "(0.0, 0.765, 0.0)",
+		"player_rotation": "(0.0, 0.0, 0.0)",
+		"pose_extreme": 0.284999966621399,
+		"scenario": "neutral"
+	},
+	{
+		"chest": "(0.30162, 1.155, 0.0684)",
+		"delivery_lean": "(0.0, 0.0, 0.0)",
+		"face_direction": "(-0.0, 0.0, -1.0)",
+		"forward": "(-0.0, 0.0, -1.0)",
+		"framing": {
+			"fov_deg": 55.0,
+			"opponent_foot_y_pct": 95.0484212239583,
+			"pitch_deg": 12.0000020414777,
+			"player_visible_head_to_bottom_pct": 49.3169996473524
+		},
+		"head": "(0.299, 1.55, 0.0)",
+		"pelvis": "(0.1581, 0.765, 0.0684)",
+		"player_rotation": "(0.0, 0.0, 0.0)",
+		"pose_extreme": 0.592104732990265,
+		"scenario": "slip"
+	},
+	{
+		"chest": "(-0.0304, 0.747, -0.07096)",
+		"delivery_lean": "(0.0, 0.0, 0.0)",
+		"face_direction": "(-0.0, 0.0, -1.0)",
+		"forward": "(-0.0, 0.0, -1.0)",
+		"framing": {
+			"fov_deg": 55.0,
+			"opponent_foot_y_pct": 95.0484212239583,
+			"pitch_deg": 12.0000020414777,
+			"player_visible_head_to_bottom_pct": 27.2697363959418
+		},
+		"head": "(-0.0, 1.07, -0.052)",
+		"pelvis": "(-0.0304, 0.477, -0.046)",
+		"player_rotation": "(0.0, 0.0, 0.0)",
+		"pose_extreme": 0.698800623416901,
+		"scenario": "dip"
+	},
+	{
+		"chest": "(0.0304, 1.087, 0.24841)",
+		"delivery_lean": "(0.0, 0.0, 0.0)",
+		"face_direction": "(-0.0, 0.0, -1.0)",
+		"forward": "(-0.0, 0.0, -1.0)",
+		"framing": {
+			"fov_deg": 55.0,
+			"opponent_foot_y_pct": 95.0484212239583,
+			"pitch_deg": 12.0000020414777,
+			"player_visible_head_to_bottom_pct": 40.9494654337565
+		},
+		"head": "(0.0, 1.47, 0.2795)",
+		"pelvis": "(0.0304, 0.717, 0.11425)",
+		"player_rotation": "(0.0, 0.0, 0.0)",
+		"pose_extreme": 0.567164778709412,
+		"scenario": "pull"
+	},
+	{
+		"chest": "(-0.004833, 1.147257, -0.058519)",
+		"delivery_lean": "(-0.004833, 0.0, -0.013414)",
+		"face_direction": "(-0.0, 0.0, -1.0)",
+		"forward": "(0.0, 0.0, -1.0)",
+		"framing": {
+			"fov_deg": 55.0,
+			"opponent_foot_y_pct": 95.0484212239583,
+			"pitch_deg": 12.0000020414777,
+			"player_visible_head_to_bottom_pct": 48.9232211642795
+		},
+		"head": "(0.0, 1.542257, 0.0)",
+		"pelvis": "(0.0, 0.757257, -0.045106)",
+		"player_rotation": "(0.0, 0.0, 0.0)",
+		"pose_extreme": 0.295526087284088,
+		"scenario": "cross"
+	},
+	{
+		"chest": "(-0.005282, 1.135825, -0.05041)",
+		"delivery_lean": "(-0.005282, 0.0, -0.014444)",
+		"face_direction": "(-0.0, 0.0, -1.0)",
+		"forward": "(0.0, 0.0, -1.0)",
+		"framing": {
+			"fov_deg": 55.0,
+			"opponent_foot_y_pct": 95.0484212239583,
+			"pitch_deg": 12.0000020414777,
+			"player_visible_head_to_bottom_pct": 48.3430820041233
+		},
+		"head": "(0.0, 1.530825, 0.0)",
+		"pelvis": "(0.0, 0.745825, -0.035967)",
+		"player_rotation": "(0.0, 0.0, 0.0)",
+		"pose_extreme": 0.307015866041183,
+		"scenario": "hook"
+	},
+	{
+		"chest": "(-0.010833, 1.091422, -0.07067)",
+		"delivery_lean": "(-0.010833, 0.0, -0.030805)",
+		"face_direction": "(-0.0, 0.0, -1.0)",
+		"forward": "(0.0, 0.0, -1.0)",
+		"framing": {
+			"fov_deg": 55.0,
+			"opponent_foot_y_pct": 95.0484212239583,
+			"pitch_deg": 12.0000020414777,
+			"player_visible_head_to_bottom_pct": 46.1039521959093
+		},
+		"head": "(0.0, 1.486422, 0.0)",
+		"pelvis": "(0.0, 0.701422, -0.039864)",
+		"player_rotation": "(0.0, 0.0, 0.0)",
+		"pose_extreme": 0.357861071825027,
+		"scenario": "upper"
+	},
+	{
+		"chest": "(-0.016085, 1.147257, -0.108206)",
+		"delivery_lean": "(-0.016085, 0.0, -0.0631)",
+		"face_direction": "(-0.0, 0.0, -1.0)",
+		"forward": "(0.0, 0.0, -1.0)",
+		"framing": {
+			"fov_deg": 55.0,
+			"opponent_foot_y_pct": 85.1832411024306,
+			"pitch_deg": 12.0000020414777,
+			"player_visible_head_to_bottom_pct": 48.9232211642795
+		},
+		"head": "(0.0, 1.542257, 0.0)",
+		"pelvis": "(0.0, 0.757257, -0.045106)",
+		"player_rotation": "(0.0, 0.0, 0.0)",
+		"pose_extreme": 0.311953753232956,
+		"scenario": "reach"
+	}
+]

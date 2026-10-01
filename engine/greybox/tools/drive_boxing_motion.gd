@@ -230,25 +230,46 @@ func _run() -> void:
 func transitions() -> void:
 	# Real key edges go through the same adapter as play. The opponent's isolated
 	# straight creates an observable evade/counter window; no counter flag is set.
-	for pair in [[KEY_Q, "SLIP_L"], [KEY_E, "SLIP_R"], [KEY_DOWN, "DUCK"], [KEY_V, "WEAVE_R"], [KEY_B, "LEAN"], [KEY_SPACE, "PERFECT_BLOCK"], [KEY_S, "STEP_OUT"], [KEY_S, "STEP_OUT_REACH_MISS"]]:
+	for pair in [[KEY_A, "SLIP_L"], [KEY_D, "SLIP_R"], [KEY_W, "DUCK"], [KEY_D, "WEAVE_R"], [KEY_S, "LEAN"], [KEY_SPACE, "PERFECT_BLOCK"], [KEY_S, "STEP_OUT"], [KEY_S, "STEP_OUT_REACH_MISS"]]:
 		fresh(); scene.sim.bstate = "ACTING"; scene.sim.bqueue = []; scene.sim.btimer = 100000
-		if pair[1] == "LEAN": tests.place(scene.sim,2.2)
+		# Preserve this original low-home/returning-glove regression. The newly
+		# equipped raised guard has a different launch lane; its real exchanges
+		# are exercised separately by drive_northern_rising.gd.
+		scene.sim.P["boxing_training"] = {}
+		if pair[1] == "LEAN": tests.place(scene.sim,1.8)
 		if str(pair[1]).begins_with("STEP_OUT"):
-			var player_reach: float = scene.sim.contact_region(scene.sim.P,scene.sim.B,"R_STRAIGHT",false)["reach"]
-			var opponent_reach: float = scene.sim.contact_region(scene.sim.B,scene.sim.P,"R_STRAIGHT",false)["reach"]
-			tests.place(scene.sim,(opponent_reach if pair[1]=="STEP_OUT_REACH_MISS" else minf(player_reach,opponent_reach))-0.03)
+			# Start inside actual arm reach. The old numeric region edge relied
+			# on disconnected shoulder travel to manufacture an incoming threat.
+			tests.place(scene.sim,1.8)
 		# Lower the opponent's actual hands to leave a head counter opening.
 		scene.sim.B["guard_body"] = true; scene.sim.B["guard_t"] = 100
 		# With high hands a slip can physically deflect the incoming glove.
 		# Exercise clean head evasion here from an actual low guard instead.
 		if str(pair[1]).begins_with("SLIP"): key(KEY_C,true); key(KEY_SPACE,true)
 		for i in 30: native_step()
+		if pair[1] == "LEAN" or str(pair[1]).begins_with("STEP_OUT"):
+			var threat = tests.make_sim(0,947); threat.restore(scene.sim.snapshot())
+			threat._boss_act({"kind":"punch","row":"R_STRAIGHT","mult":1.0,"body":false}); threat.btimer = 100000
+			var threatened := false
+			for i in 60:
+				threat.step({"body_axis":Vector2.ZERO})
+				for event in threat.events:
+					if event.get("kind")=="boxing_contact" and event.get("by")=="B" and event["contact"]["kind"]!="miss": threatened = true
+				threat.events.clear()
+			check(str(pair[1])+" starts from a physically threatening punch",threatened)
 		scene.sim._boss_act({"kind":"punch","row":"R_STRAIGHT","mult":1.0,"body":false})
 		scene.sim.btimer = 100000
 		if str(pair[1]).begins_with("STEP_OUT"): key(KEY_CTRL,true)
 		key(pair[0],true)
 		var last := snapshot(); var jump := 0.0; var earned := false; var incoming := []
 		for i in 90:
+			if pair[1]=="WEAVE_R":
+				# Continuous right-to-dip-to-left input, as the foundation defines
+				# weaving. The legacy V shortcut finishes a canned dodge before
+				# this straight arrives and is not a continuous body-control test.
+				if i==6:key(KEY_W,true)
+				if i==15:key(KEY_D,false)
+				if i==21:key(KEY_A,true)
 			var events := native_step()
 			earned = earned or scene.sim.P["counter_t"] > 0
 			for event in events:
@@ -256,7 +277,32 @@ func transitions() -> void:
 			jump = maxf(jump,pose_jump(last,snapshot())); last = snapshot()
 			if scene.sim.B["pending"].is_empty(): break
 		key(pair[0],false)
+		if pair[1]=="WEAVE_R":key(KEY_A,false);key(KEY_W,false)
 		if str(pair[1]).begins_with("SLIP"): key(KEY_C,false); key(KEY_SPACE,false)
+		if "counter-probe" in OS.get_cmdline_user_args():
+			var successes:=[]
+			for wait_ticks in [0,6,12,18]:
+				for row in ["L_STRAIGHT","R_STRAIGHT","L_HOOK","R_HOOK","L_UPPERCUT","R_UPPERCUT"]:
+					for enter in [false,true]:
+						var probe=tests.make_sim(0,947);probe.restore(scene.sim.snapshot())
+						var hits:=false;var outcome:=""
+						for t in wait_ticks+100:
+							tests.clear_defense(probe.B);probe.B["guard_t"]=0;probe.events.clear()
+							var intent:={"body_axis":Vector2.ZERO}
+							if t==wait_ticks:
+								intent["punch"]=row
+								if enter:intent["move"]=Vector2(0,-1)
+							probe.step(intent)
+							for e in probe.events:
+								if e.get("kind")=="hit" and e.get("on")=="B" and e.get("counter",false):hits=true
+								if e.get("kind")=="boxing_contact" and e.get("by")=="P":outcome=str(e["contact"]["kind"])
+						if hits:successes.append([wait_ticks,row,enter,outcome])
+			print("COUNTER PROBE ",pair[1]," earned=",earned," choices=",successes)
+		if pair[1]=="SLIP_L":
+			# His missed rear hand occupies this side of the pocket on the
+			# first return ticks. Let that lane clear inside the earned window.
+			for i in 12:
+				native_step(); jump=maxf(jump,pose_jump(last,snapshot())); last=snapshot()
 		if str(pair[1]).begins_with("STEP_OUT"):
 			for settle in 80:
 				var body: Dictionary = scene.sim.P["body_control"]
@@ -264,7 +310,35 @@ func transitions() -> void:
 				native_step(); jump=maxf(jump,pose_jump(last,snapshot())); last=snapshot()
 			check("step-out regathers actual support before the original counter expires",scene.sim.P["counter_t"]>0)
 		if pair[1]=="LEAN": key(KEY_CTRL,true)
-		key(KEY_W,pair[1]=="LEAN" or str(pair[1]).begins_with("STEP_OUT")); key(KEY_K,true)
+		if pair[1] in ["SLIP_R","DUCK"]:
+			# Preserve the obstructed straight as a negative path proof. An earned
+			# counter window does not let that glove ignore the returning arm.
+			for delay in ([0,12] if pair[1]=="SLIP_R" else [0]):
+				var blocked_reply = tests.make_sim(0,947); blocked_reply.restore(scene.sim.snapshot())
+				var reply_contacts := []
+				for i in 100+delay:
+					tests.clear_defense(blocked_reply.B); blocked_reply.B["guard_t"] = 0
+					blocked_reply.events.clear()
+					blocked_reply.step({"body_axis":Vector2.ZERO,"punch":"R_STRAIGHT"} if i == delay else {"body_axis":Vector2.ZERO})
+					reply_contacts.append_array(blocked_reply.events.filter(func(e):return e.get("kind")=="boxing_contact" and e.get("by")=="P"))
+				# The repaired covering arms occupy this lane instead of passing
+				# through their torso. A counter must stop on that actual glove;
+				# the separate retreat case below still proves unreachable misses.
+				var expected := "guard" if pair[1]=="SLIP_R" and delay==0 else "deflect"
+				var part := "glove0" if pair[1]=="SLIP_R" else "glove1"
+				print("COUNTER SURFACE ",pair[1]," delay=",delay," contacts=",reply_contacts)
+				check(str(pair[1])+" rear counter respects its physical "+expected+" at delay "+str(delay),reply_contacts.size()==1 and reply_contacts[0]["contact"]["kind"]==expected and reply_contacts[0]["contact"]["part"]==part)
+			# The low guard closes the rising lane too. Let the extended rear
+			# glove retract, then deliver above that guard within the same window.
+			for i in 12:
+				native_step(); jump=maxf(jump,pose_jump(last,snapshot())); last=snapshot()
+			check(str(pair[1])+" retains its earned counter while the occupied lane clears",scene.sim.P["counter_t"]>0)
+		# A dip or block leaves the compact rising lane available before the
+		# straight lane. Counter status never grants reach or ignores a glove.
+		var reply_key := KEY_Y if pair[1] in ["DUCK","WEAVE_R","PERFECT_BLOCK"] else (KEY_J if str(pair[1]).begins_with("SLIP") else KEY_K)
+		# The positive range counter re-enters; the negative case stays at the
+		# range created by its retreat and must miss despite earning a counter.
+		key(KEY_W,pair[1] in ["LEAN","STEP_OUT"]); key(reply_key,true)
 		var landed := false; var exchange := []
 		for tick in 100:
 			# Suppress a new tactical read, but keep the opponent's gloves physical.
@@ -274,7 +348,7 @@ func transitions() -> void:
 				if event.get("kind") in ["boxing_contact","hit","whiff","block"]: exchange.append(event)
 				if event.get("kind")=="hit" and event.get("on")=="B" and event.get("counter",false): landed=true
 			jump=maxf(jump,pose_jump(last,snapshot())); last=snapshot()
-		key(KEY_K,false)
+		key(reply_key,false)
 		if pair[1]=="STEP_OUT_REACH_MISS":
 			check("earned counter cannot score through an unreachable target",earned and not landed and exchange.any(func(e):return e.get("kind")=="boxing_contact" and e.get("by")=="P" and e["contact"]["kind"]!="hit"))
 		else:
@@ -657,7 +731,7 @@ func _connected_combinations() -> void:
 		key(KEY_SPACE, true)
 		for i in 8: native_step()
 		var sequence := [0, 5, 2, 9, 0, 0, 2, 2, 5, 5, 7, 7]
-		var issued := 0; var fired := []; var hits := 0; var blocks := 0; var previous := snapshot(); var jump := 0.0; var fixed := true
+		var issued := 0; var fired := []; var resolved := []; var contact_ids := {}; var hits := 0; var blocks := 0; var previous := snapshot(); var jump := 0.0; var fixed := true
 		for tick in 2400:
 			var can_issue: bool = issued < sequence.size() and fired.size() == issued and scene.sim.P["pending"].is_empty() and scene.sim.P["busy_t"] <= 3
 			if can_issue and scene.sim.P["pos"].distance_to(scene.sim.B["pos"]) > 1.4:
@@ -678,6 +752,8 @@ func _connected_combinations() -> void:
 			var events := native_step()
 			for event in events:
 				if event.get("kind") == "punch": fired.append(event["row"])
+				if event.get("kind") == "boxing_contact" and event.get("by")=="P":
+					resolved.append(event["contact"]["row"]);contact_ids[event["contact"]["attack_id"]]=true
 				if event.get("kind") == "hit" and event.get("on") == "B": hits += 1
 				if event.get("kind") == "block" and event.get("by") == "B": blocks += 1
 			var current := snapshot()
@@ -691,7 +767,10 @@ func _connected_combinations() -> void:
 			if fired.size() == sequence.size() and scene.sim.P["busy_t"] == 0: break
 		var expected := sequence.map(func(n): return rows[n])
 		print("SUSTAINED tired=", tired, " rows=", fired, " hits=", hits, " blocks=", blocks, " jump=", jump)
-		check("sustained %s alternating and same-hand buffer preserves twelve commands" % tired, fired == expected and hits + blocks == sequence.size() and hits > 0 and blocks > 0)
+		# Input preservation means every commanded punch executes and resolves
+		# exactly once. A moving target may legitimately make a punch miss; the
+		# buffer must not manufacture twelve hits to satisfy this check.
+		check("sustained %s alternating and same-hand buffer preserves and resolves twelve commands" % tired, fired == expected and resolved == expected and contact_ids.size()==sequence.size() and hits > 0 and blocks > 0)
 		check("sustained %s guard, impact and exhausted recovery stay connected" % tired, fixed and jump < 0.25 and scene.sim.P["busy_t"] == 0)
 
 func _working_chain_visible() -> bool:
@@ -1097,8 +1176,8 @@ func planted_movement() -> void:
 				var head: Vector3 = scene.player.get_meta("head").position
 				clear = clear and top.y <= head.y - Space.HEAD_RADIUS - 0.02
 			scene._render(1)
-			var region: Dictionary = scene.sim.contact_region(scene.sim.B, scene.sim.P, "L_STRAIGHT", true)
-			var expected := Space.ground(region["target"] - scene.sim.P["pos"]) + Vector3.UP * float(region["h"])
+			var surface: Dictionary = scene.sim.P["boxing"]["volumes"][1]
+			var expected: Vector3 = (Vector3(surface["a"]) + Vector3(surface["b"])) * 0.5 - scene.player.position
 			var body: Node3D = scene.player.get_meta("mesh")
 			body_agrees = body_agrees and absf(body.position.x - expected.x) < 0.0001 and absf(body.position.z - expected.z) < 0.0001 and expected.y >= body.position.y - body.scale.y * 0.285 and expected.y <= body.position.y + body.scale.y * 0.285
 			unchanged = unchanged and hash_before == scene.sim.hash_state()

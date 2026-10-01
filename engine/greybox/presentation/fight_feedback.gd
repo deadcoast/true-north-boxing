@@ -89,6 +89,7 @@ func sync_audio(paused: bool) -> void:
 
 static func timing_state(sim) -> Dictionary:
 	if sim.mode == "EIGHT" and not sim.eight.is_empty():
+		if sim.eight.get("who","P") != "P" or sim.eight.get("phase","count") == "rise": return {}
 		var remaining := float(sim.eight["timer_t"])
 		return {"phase": clampf(remaining / 144.0, -0.3, 1), "open": absf(remaining) <= float(sim.eight["window_t"]), "locked": bool(sim.eight["rise_prev"]), "label": "RISE", "count": "%d beats to stand" % int(sim.eight["beats_left"])}
 	if not sim.clinch.is_empty():

@@ -1,0 +1,86 @@
+{
+  "recorded_at": "2026-09-30T12:43:15.750882+00:00",
+  "status": "FOUNDATION_NOT_ACCEPTED",
+  "scope": "PAC-208 shared physical recovery, continuation, off-hand return and grounded support in the existing game",
+  "implementation": [
+    "Native recovery starts at earliest physical contact, removing unused outgoing wait. Separate stagger clocks remain blocking.",
+    "The same state-based continuation decision serves player and opponent: phase, hand return, trunk rotation, support and fatigue. Same-hand reuse remains legal after reload.",
+    "One fresh 50 ms player follow-up has accepted, buffered, replaced and expired events. No input queue grows.",
+    "Body load, individual shoulder motion, spring and bounded reach correction carry into the next punch. The preceding hand retains its independent world-space return.",
+    "A supported recovering fighter can make an actual covered pocket exit before idle.",
+    "Punch load feeds the planted foot pivot and weight transfer. No additional root displacement.",
+    "The normal launcher resolves to the edited engine/greybox source."
+  ],
+  "checks": {
+    "physical_contact_and_continuation": {
+      "passed": 187,
+      "total": 187,
+      "failures": []
+    },
+    "motion_regression": {
+      "passed": 338,
+      "total": 338,
+      "log": "motion-complete/run.log"
+    },
+    "rendered_foundation": {
+      "passed": 71,
+      "total": 71,
+      "failures": []
+    }
+  },
+  "rendered_exchange": [
+    {
+      "early_links": 15,
+      "peak_joint_travel_m": 0.152418076992035,
+      "peak_tick": 1405
+    },
+    {
+      "close_glove_ticks": 0,
+      "live_ticks": 2400,
+      "longest_close_glove_run_ticks": 0,
+      "minimum_eye_glove_clearance_m": 1.84077571392059,
+      "mode": "FIGHT",
+      "opponent_punches": 22,
+      "player_punches": 20
+    }
+  ],
+  "video": {
+    "path": "gameplay-20s.mp4",
+    "frames": 1200,
+    "fps": 60,
+    "seconds": 20,
+    "camera": "production behind-and-above chase for every movie frame",
+    "sha256": "748748bb1ee3425434ca6e74ebe5f79557b26b7fd67bebc632b9a1d670864828"
+  },
+  "visual_inspection": {
+    "inspected": "12 evenly spaced final movie frames, live chase and labelled side diagnostic at tick 600, and movie frame 702 at the maximum reported joint travel.",
+    "observed": "Connected torso and shoulder geometry at sampled transitions; opponent-facing behind-player gameplay composition; supported stance and bent returning elbows in side diagnostic.",
+    "boundary": "This is rendered-sample inspection, not complete clipping clearance, motion capture quality, player feel or foundation acceptance."
+  },
+  "retained_failures": [
+    "links-first: 31/32; hook-to-uppercut launch jumped 8.32 cm. Fixed by carrying shoulder roll, spring and reach correction.",
+    "motion-final: 336/337; immediate duck-to-straight intercepted the actual returning glove after support changed. Retained as a negative path check; delayed counter in the same window succeeds.",
+    "duck-counter: 35/36; immediate rising alternative also met the opponents low guard. No collision bypass added.",
+    "contact-final: 162/187; external-lock discrimination missed the existing one-tick busy/pending offset. Fixed, then 187/187.",
+    "gameplay-final: duplicate local variable in new travel instrumentation prevented script loading. Fixed, then full 1200-frame capture completed."
+  ],
+  "open_limits": [
+    "Whole boxing foundation remains NOT_ACCEPTED; PAC-206 and PAC-208 remain DOING and PAC-207 remains REVIEW.",
+    "The camera still retains the previously recorded composition discrepancy: neutral visible player extent about 49 percent versus the approximate 35 percent target. This turn preserves the documented chase rig.",
+    "Style-specific learned technique implementation, including Northern Rising variants and signatures, remains unfinished.",
+    "All self-contact/crowding cases, complete visual quality and sustained player feel have not been established by these checks.",
+    "Headless drivers still report ObjectDB instances at shutdown; final rendered run stderr is empty."
+  ],
+  "source_sha256": {
+    "engine/greybox/sim/core.gd": "4288e19e80b0e66e97f4c79a83946244b8a9b0a81ea239c9e52a03b00c57f93e",
+    "engine/greybox/sim/punch_contact.gd": "643f345858ba6c16bbeb0bde8f483fc01d2d1336272fe5bb332cd6762574cdef",
+    "engine/greybox/sim/body_control.gd": "90bf4ce3b31b582bba8951f6b90a69a565bce4e410326058eda3078339f4fb17",
+    "engine/greybox/presentation/boxing_motion.gd": "1b6653364be5bffbec7d3a8257024ddb9f2ed349e22f9784e21c300177e19288",
+    "engine/greybox/presentation/fight_view.gd": "f2eeed408a6f3f42a11633c277bf5f256634b84a202019bb172880eab423afac",
+    "engine/greybox/tools/drive_punch_contact.gd": "cde32b3fea030d3d8025680b47bc758686cf4aad3a4d1d04da6b879db7cc2c8a",
+    "engine/greybox/tools/drive_boxing_motion.gd": "53bb8b293030e1096f9a0c1005c78c72f980fcbf58946c3c23b4495a19620cf5",
+    "engine/greybox/tools/drive_foundation.gd": "0217cb6fb8479d7ba2aecfbd379e92708cda8ab89f8c30e4d3e931f2335dd197",
+    "tools/play_boxing.ps1": "f9d1672548715fa37a00be3b71951bfe3c8305cc0b69ee746d18f89f3a102f22"
+  },
+  "retained_history": "verification-history.zip"
+}

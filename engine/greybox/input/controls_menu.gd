@@ -29,7 +29,7 @@ func setup(input_adapter: RefCounted) -> void:
 	var title := Label.new(); title.text = "TWO HANDS  /  CONTROLS"; title.add_theme_font_size_override("font_size", 24); box.add_child(title)
 	var description := Label.new()
 	description.autowrap_mode = TextServer.AUTOWRAP_WORD
-	description.text = "WASD / left stick: move the body. Up dips; down pulls; left/right slip.\nHold Ctrl / left-stick click and stroke a direction to step. Return to centre for another step.\nMouse: hold left button and flick. Alt + punch: haymaker. Space / RT: guard; C / LT: body target.\nChords: Back selects left hand; A / B / X / Y / D-pad Up select punches. H / LB retains specials.\nCtrl+F2: inspect both boxers and their feet; press again to return to your eyes."
+	description.text = "WASD / left stick: move the body. Up dips; down pulls; left/right slip.\nHold Ctrl / left-stick click and stroke a direction to step. Return to centre for another step.\nMouse: hold left button and flick. Alt + punch: haymaker. Space / RT: guard; C / LT: body target.\nChords: Back selects left hand; A / B / X / Y / D-pad Up select punches. H / LB retains specials."
 	box.add_child(description)
 	var preset := OptionButton.new(); preset_choice = preset; preset.add_item("Stick flicks + keyboard / mouse"); preset.add_item("Accessible button chords + keyboard / mouse")
 	preset.select(1 if adapter.preset == "chords" else 0); box.add_child(preset)

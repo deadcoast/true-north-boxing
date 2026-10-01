@@ -5,7 +5,7 @@ const Space := preload("res://presentation/rig_space.gd")
 const BoxingMotion := preload("res://presentation/boxing_motion.gd")
 const FighterVisuals := preload("res://presentation/fighter_visuals.gd")
 const CHASE := 1.8
-const HEAD_CLEARANCE := 0.6
+const HEAD_CLEARANCE := 1.04
 const FOV := 55.0
 const WINDUP_ALPHA := 0.4
 const PLAYER_DEPTH := """shader_type spatial;
@@ -21,11 +21,28 @@ uniform vec3 aura;
 uniform bool foreground_only = false;
 uniform vec3 clear_origin;
 uniform vec3 clear_normal;
+uniform bool opponent_mask = false;
+uniform vec3 opponent_min;
+uniform vec3 opponent_max;
+uniform sampler2D scene_depth : hint_depth_texture, repeat_disable, filter_nearest;
 varying vec3 world_position;
 void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz; }
 void fragment() {
     vec2 edge = min(SCREEN_UV - clear_window.xy, clear_window.zw - SCREEN_UV);
     float inside = smoothstep(0.0, 0.025, min(edge.x, edge.y));
+    if (opponent_mask) {
+        float depth = textureLod(scene_depth, SCREEN_UV, 0.0).r;
+        #if CURRENT_RENDERER == RENDERER_COMPATIBILITY
+        vec3 ndc = vec3(SCREEN_UV, depth) * 2.0 - 1.0;
+        #else
+        vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
+        #endif
+        vec4 scene = INV_VIEW_MATRIX * INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
+        vec3 opaque = scene.xyz / scene.w;
+        // Depth is copied after opaque geometry, before the transparent player.
+        // Reveal the actual opponent surface, not a ghost inside a rectangle.
+        inside = all(greaterThanEqual(opaque, opponent_min)) && all(lessThanEqual(opaque, opponent_max)) ? 1.0 : 0.0;
+    }
     if (foreground_only) { inside *= step(0.0, dot(world_position - clear_origin, clear_normal)); }
     ALBEDO = tint.rgb;
     EMISSION = aura;
@@ -48,8 +65,10 @@ var travels := {}
 var before_positions := {}
 var preparations := {}
 var player_depth: ShaderMaterial
-var observer_view := false
+# Retained for older diagnostic drivers; gameplay always uses the chase rig.
+var observer_view := true
 var inspection_view := false
+var inspection_label: Label
 
 func _sync_clock(sim) -> void:
 	if clock_sim != sim or sim.tick < clock_tick:
@@ -132,7 +151,11 @@ static func make_fighter(parent: Node3D, color: Color, at: Vector3) -> Node3D:
 static func _link(mesh: Node3D, start: Vector3, end: Vector3) -> void:
 	var vector := end - start
 	mesh.position = (start + end) * 0.5
-	mesh.quaternion = Quaternion(Vector3.UP, vector.normalized())
+	var direction := vector.normalized()
+	var axis := Vector3.UP.cross(direction)
+	# The from/to quaternion snaps very small tilts to identity. Preserve those
+	# tilts so a connected mesh continues to meet its actual joint endpoints.
+	mesh.quaternion = Quaternion(axis.normalized(), atan2(axis.length(), direction.y)) if axis.length_squared() > 0.000000000001 else (Quaternion.IDENTITY if direction.y >= 0 else Quaternion(Vector3.RIGHT, PI))
 	mesh.scale = Vector3(1, maxf(0.01, vector.length()), 1)
 
 func observe(event: Dictionary, tick: int) -> void:
@@ -205,6 +228,7 @@ static func _blend_rig(from: Dictionary, to: Dictionary, weight: float) -> Dicti
 	# replacement punch still reaches its pose on the unchanged VM contact tick.
 	var out := to.duplicate(true)
 	for channel in to:
+		if not from.has(channel): continue # Older saved rigs predate articulated heads.
 		if to[channel] is Vector3 or to[channel] is float:
 			out[channel] = lerp(from[channel], to[channel], weight)
 		elif to[channel] is Array:
@@ -420,28 +444,21 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	var facing := atan2(forward.x, forward.z)
 	# Faces look down -Z; the boxing torso and boots face +Z. Keep the eyes on
 	# the opponent through slips and weaving without adding a second pose clock.
-	if root.get_meta("cast_key", "") != "": head.rotation.y = facing + PI
+	var head_frame := Basis.looking_at(rig.get("head_forward",forward),rig.get("head_up",Vector3.UP),true)
+	head.basis = head_frame * (Basis(Vector3.UP,PI) if root.get_meta("cast_key", "") != "" else Basis.IDENTITY)
 	var collar: Vector3 = (rig["shoulders"][0] + rig["shoulders"][1]) * 0.5
-	# Same 40% lateral / full retreat path as the body contact region, sampled
-	# from the interpolated head so the skin and aim point travel together.
-	var right := forward.cross(Vector3.UP)
-	var torso_origin := forward * head.position.dot(forward) + right * head.position.dot(right) * 0.4
-	var body_height := 1.10 + minf(0, head.position.y - Sim.HEAD_H)
-	var torso_top := torso_origin + Vector3.UP * minf(float(head.position.y) - Space.HEAD_RADIUS - 0.025, maxf(body_height + 0.02, collar.y - 0.06))
-	var torso_bottom := torso_origin + Vector3.UP * minf(body_height - 0.02, maxf(body_height - 0.16, float(rig["pelvis"].y) + 0.02))
+	# One connected trunk spans the hips and shoulder girdle. Its collision
+	# surface uses these same anchors; do not hold a second torso under the head
+	# and stretch the shirt across to a separately moving chest.
+	var torso_top := collar
+	var torso_bottom: Vector3 = rig["pelvis"] + Vector3.UP * 0.04
 	_link(root.get_meta("abdomen"), rig["pelvis"], torso_bottom)
 	_link(body, torso_bottom, torso_top)
 	body.scale.y /= 0.57
 	body.rotate_object_local(Vector3.UP, facing + float(rig["chest_turn"]))
-	# Carry the upper ribs and waist with their connected joints while retaining
-	# the authoritative central striking band. Tilting the whole short torso
-	# instead moves that band away from the collision surface on power punches.
-	var rib_top := Vector3(collar.x, torso_top.y, collar.z)
-	var waist_bottom := Vector3(rig["pelvis"].x, torso_bottom.y, rig["pelvis"].z)
-	FighterVisuals.torso_pose(root, rib_top - torso_top, waist_bottom - torso_bottom)
-	_link(root.get_meta("abdomen"), rig["pelvis"], waist_bottom)
-	_link(root.get_meta("neck"), rib_top, head.position - Vector3.UP * 0.12)
-	for i in 2: _link(root.get_meta("clavicles")[i], rib_top, rig["shoulders"][i])
+	FighterVisuals.torso_pose(root, Vector3.ZERO, Vector3.ZERO)
+	_link(root.get_meta("neck"), collar, head.position - head_frame.y * 0.12)
+	for i in 2: _link(root.get_meta("clavicles")[i], collar, rig["shoulders"][i])
 	var hips: Node3D = root.get_meta("hips")
 	hips.position = rig["pelvis"]; hips.rotation.y = facing + float(rig["hips_turn"])
 	hips.scale = Vector3(float(profile["bulk"]), 1, 1)
@@ -477,7 +494,7 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 			child.position = gloves[int(child.get_meta("hand_index"))].position
 			if kind == "wraps": child.position.y -= 0.13
 			else: glove_color = child.get_meta("color")
-		elif kind == "mouthguard": child.position = head.position + forward * 0.17 - Vector3.UP * 0.08
+		elif kind == "mouthguard": child.position = head.position + head_frame*Vector3(0,-0.08,0.17); child.basis=head_frame
 	# Source materials stay opaque. The camera applies state-aware clearance
 	# per anatomical group, so shared skin cannot fade the working arm.
 	if who == "P":
@@ -498,21 +515,18 @@ func pose(root: Node3D, fighter: Dictionary, other: Dictionary, sim, who: String
 	root.set_meta("extension", extension)
 
 func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, boundaries: Array = []) -> void:
-	player.get_meta("head").visible = observer_view or inspection_view
-	player.get_meta("neck").visible = observer_view or inspection_view
+	player.get_meta("head").visible = true
+	player.get_meta("neck").visible = true
+	if is_instance_valid(inspection_label): inspection_label.visible = inspection_view
 	if inspection_view:
 		_inspection_frame(camera, player, opponent, tick, boundaries)
-		return
-	if not observer_view:
-		for part in boundaries:
-			if part is MeshInstance3D: part.material_override = null
-		_embodied_frame(camera, player, opponent, tick)
 		return
 	var tuning: Dictionary = clock_sim.T.get("camera", {}) if clock_sim != null else {}
 	var chase_base := float(tuning.get("chase_behind_m", CHASE))
 	var clearance := float(tuning.get("above_head_m", HEAD_CLEARANCE))
 	var windup_alpha := float(tuning.get("windup_alpha_pct", WINDUP_ALPHA * 100.0)) / 100.0
 	camera.fov = float(tuning.get("fov_deg", FOV))
+	camera.near = 0.05
 	var wanted := (player.position - opponent.position).normalized()
 	if wanted.length_squared() < 0.1: wanted = Vector3(0, 0, 1)
 	if orbit == Vector3.ZERO or tick < last_tick: orbit = wanted
@@ -522,18 +536,27 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	var angle := atan2(orbit.x, orbit.z)
 	angle = rotate_toward(angle, atan2(wanted.x, wanted.z), deg_to_rad(70.0) * elapsed)
 	orbit = Vector3(sin(angle), 0, cos(angle)); last_tick = tick
-	# The capped orbit can lag behind close circling. Subtracting fighter
-	# distance assumes they remain collinear with it and can crowd the HUD.
-	# Solve the chase ray against the minimum opponent framing radius instead.
-	var separation := player.position - opponent.position
-	var along := separation.dot(orbit)
-	var chase := maxf(chase_base, -along + sqrt(maxf(0, along * along + 2.8 * 2.8 - separation.length_squared())))
-	camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + clearance)
-	# At close contact a stale orbit can cross the opponent: use the current
-	# chase direction for safety. Ordinary circling stays rate-limited.
-	if camera.position.distance_to(opponent.position + Vector3.UP) < 1.9:
-		orbit = wanted; camera.position = player.position + orbit * chase + Vector3.UP * (Sim.HEAD_H + clearance)
-	camera.look_at(opponent.position + Vector3.UP)
+	# first.md permits off-center staging: stay behind/above the same physical
+	# fighter, with the opponent facing the screen. Never move or scale a body
+	# to make its image fit. The original 0.6m elevation put the player's head
+	# over the opponent's head instead of the documented small lower silhouette.
+	var shoulder := Vector3(orbit.z, 0, -orbit.x) * float(tuning.get("shoulder_offset_m", 0.9))
+	camera.position = player.position + orbit * chase_base + shoulder + Vector3.UP * (Sim.HEAD_H + clearance)
+	var look := opponent.position - camera.position; look.y = 0
+	look = look.normalized()
+	var pitch := deg_to_rad(float(tuning.get("pitch_deg", 12.0)))
+	camera.look_at(camera.position + look * cos(pitch) - Vector3.UP * sin(pitch))
+	# Keep the entire opponent in frame at inside range. Fit a standing envelope,
+	# not the animated head, so ducks/pulls remain visible and do not pump zoom.
+	var aspect := camera.get_viewport().get_visible_rect().size.aspect()
+	var tangent := tan(deg_to_rad(camera.fov * 0.5))
+	for height in [-0.08, 1.95]:
+		for side in [-0.60, 0.60]:
+			for reach in [-0.40, 0.40]:
+				var point := camera.to_local(opponent.position + Vector3.UP * height + camera.global_basis.x * side + orbit * reach)
+				var depth := maxf(0.1, -point.z)
+				tangent = maxf(tangent, maxf(absf(point.y), absf(point.x) / aspect) / (depth * 0.96))
+	camera.fov = rad_to_deg(2.0 * atan(tangent))
 	# D2: clear a soft window through the player's silhouette over the enemy.
 	# Arms remain full opacity when punching; they are the action being shown.
 	var size := camera.get_viewport().get_visible_rect().size
@@ -541,34 +564,21 @@ func frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, bounda
 	var bottom := camera.unproject_position(opponent.position)
 	var half_width := absf(bottom.y - top.y) * 0.36
 	var window := Vector4((top.x - half_width) / size.x, top.y / size.y, (top.x + half_width) / size.x, bottom.y / size.y)
-	_player_visibility(player, window, windup_alpha, bool(opponent.get_meta("windup", false)))
+	_player_visibility(player, window, windup_alpha, bool(opponent.get_meta("windup", false)), _visible_bounds(opponent))
 	# The fixed chase may sit outside the ropes at a corner. Clear only the
 	# foreground boundaries over the opponent; keep the far side of the ring.
 	# Per-fragment depth: a long rope's center can be behind the opponent while
 	# its near end crosses the camera. Object-center classification is insufficient.
 	_clear_window(boundaries, window, 1.0, true, opponent.position, camera.position - opponent.position)
 
-func _embodied_frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int) -> void:
-	# Eye anchor derives from the same posed head used by contact. Dampen vertical
-	# bob only; range and lateral shifts remain situated in the actual world.
-	var head: Vector3 = player.get_meta("head").position
-	var forward: Vector3 = player.get_meta("render_kinematics", {}).get("forward", Vector3.FORWARD)
-	var eye := player.position + Vector3(head.x, lerpf(Sim.HEAD_H, head.y, 0.7), head.z)
-	eye += forward * 0.055 + Vector3.UP * 0.045
-	var focus: Vector3 = opponent.position + opponent.get_meta("head").position - Vector3.UP * 0.15
-	var wanted := (focus - eye).normalized()
-	var elapsed := maxf(0, float(tick - last_tick) / Sim.TICK_HZ) if last_tick >= 0 else 0.0
-	if orbit == Vector3.ZERO or tick < last_tick: orbit = wanted
-	var angle := orbit.angle_to(wanted)
-	if angle > 0.00001: orbit = orbit.slerp(wanted, minf(1, deg_to_rad(220) * elapsed / angle)).normalized()
-	camera.position = eye; camera.near = 0.035; camera.fov = 76.0
-	camera.look_at(eye + orbit, Vector3.UP); last_tick = tick
-	# Actual arms, without an independently animated or enlarged viewmodel.
-	# Restore materials after returning from the observer's transparency mask.
-	for part in player.get_children() + player.get_meta("cast_parts", []):
-		if part is MeshInstance3D: part.material_override = null
-
 func _inspection_frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick: int, boundaries: Array) -> void:
+	if not is_instance_valid(inspection_label):
+		inspection_label = Label.new(); camera.get_viewport().add_child(inspection_label)
+		inspection_label.text = "DIAGNOSTIC SIDE VIEW - NOT THE GAMEPLAY CAMERA"
+		inspection_label.position = Vector2(24, 148)
+		inspection_label.add_theme_color_override("font_color", Color(1, 0.75, 0.3))
+		inspection_label.z_index = 100
+	inspection_label.visible = true
 	var forward := (opponent.position - player.position).normalized()
 	if forward.length_squared() < 0.01: forward = Vector3.FORWARD
 	var side := forward.cross(Vector3.UP)
@@ -582,7 +592,7 @@ func _inspection_frame(camera: Camera3D, player: Node3D, opponent: Node3D, tick:
 	# Foreground ropes are cleared, never the boxer being inspected.
 	_clear_window(boundaries, Vector4(0, 0, 1, 1), 1.0, true, center, camera.position - center)
 
-func _player_visibility(player: Node3D, window: Vector4, windup_alpha: float, windup: bool) -> void:
+func _player_visibility(player: Node3D, window: Vector4, windup_alpha: float, windup: bool, opponent_bounds: AABB) -> void:
 	var groups := {"body": [], "head": [], "left": [], "right": []}
 	for field in FighterVisuals.ANCHORS:
 		var value = player.get_meta(field)
@@ -601,9 +611,45 @@ func _player_visibility(player: Node3D, window: Vector4, windup_alpha: float, wi
 	for group in groups:
 		var working: bool = (group == "left" and row.begins_with("L_")) or (group == "right" and row.begins_with("R_"))
 		var alpha := windup_alpha if windup and group != "head" and not working else 1.0
-		# Wind-up is 40%, including the clearance window, never 40% * 8%.
-		# Only the working chain bypasses clearance; neutral body remains legible.
-		_clear_window(groups[group], window, alpha, false, Vector3.ZERO, Vector3.ZERO, 1.0 if working else windup_alpha, true)
+		# Keep the player legible outside the opponent: below shoulders is 40%
+		# during tells, head stays solid, and the striking chain stays opaque.
+		# The actual opponent pixels take precedence over the idle silhouette.
+		_clear_window(groups[group], window, alpha, false, Vector3.ZERO, Vector3.ZERO, 1.0 if working else 0.0, true, opponent_bounds)
+
+func _visible_bounds(actor: Node3D) -> AABB:
+	var bounds := AABB(); var started := false
+	for part in actor.get_children() + actor.get_meta("cast_parts", []):
+		if not part is MeshInstance3D or part.layers == 0 or not part.is_visible_in_tree(): continue
+		var box: AABB = part.global_transform * _skin_bounds(part)
+		bounds = bounds.merge(box) if started else box; started = true
+	bounds = bounds.grow(0.01)
+	# The skin AABB can extend a few millimetres below the canvas. Do not
+	# classify the opaque ring floor as the opponent and cut away our legs.
+	var top := bounds.end
+	bounds.position.y = maxf(bounds.position.y, actor.global_position.y + 0.015)
+	bounds.size = top - bounds.position
+	return bounds
+
+static func _skin_bounds(part: MeshInstance3D) -> AABB:
+	# ArrayMesh's culling box includes the full inactive blend shapes. The
+	# old torso morphs extend one metre and must not enlarge a readability mask.
+	if part.get_blend_shape_count() == 0: return part.get_aabb()
+	var weights := PackedFloat32Array()
+	for i in part.get_blend_shape_count(): weights.append(part.get_blend_shape_value(i))
+	var cached: Dictionary = part.get_meta("read_bounds", {})
+	if cached.get("mesh") == part.mesh and cached.get("weights") == weights: return cached["box"]
+	var base: PackedVector3Array = part.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var vertices := base.duplicate()
+	var morphs: Array = part.mesh.surface_get_blend_shape_arrays(0)
+	for i in weights.size():
+		if is_zero_approx(weights[i]): continue
+		var morph: PackedVector3Array = morphs[i][Mesh.ARRAY_VERTEX]
+		for j in vertices.size():
+			vertices[j] += (morph[j] - base[j] if part.mesh.blend_shape_mode == Mesh.BLEND_SHAPE_MODE_NORMALIZED else morph[j]) * weights[i]
+	var bounds := AABB(vertices[0], Vector3.ZERO)
+	for vertex in vertices: bounds = bounds.expand(vertex)
+	part.set_meta("read_bounds", {"mesh":part.mesh,"weights":weights,"box":bounds})
+	return bounds
 
 static func _visibility_group(field: String, index: int) -> String:
 	if field == "head": return "head"
@@ -611,7 +657,7 @@ static func _visibility_group(field: String, index: int) -> String:
 	if field == "joints" and index % 3 < 2: return "left" if index < 3 else "right"
 	return "body"
 
-func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only := false, origin := Vector3.ZERO, normal := Vector3.ZERO, window_alpha := 0.08, self_depth := false) -> void:
+func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only := false, origin := Vector3.ZERO, normal := Vector3.ZERO, window_alpha := 0.08, self_depth := false, opponent_bounds := AABB()) -> void:
 	# Every surface with the same source material receives the same window.
 	# Share its shader and update uniforms once, rather than repeating six
 	# render-server writes for every eyelid, seam and limb on every frame.
@@ -645,3 +691,6 @@ func _clear_window(parts: Array, window: Vector4, alpha: float, foreground_only 
 		part.material_override.set_shader_parameter("foreground_only", foreground_only)
 		part.material_override.set_shader_parameter("clear_origin", origin)
 		part.material_override.set_shader_parameter("clear_normal", normal)
+		part.material_override.set_shader_parameter("opponent_mask", opponent_bounds.has_volume())
+		part.material_override.set_shader_parameter("opponent_min", opponent_bounds.position)
+		part.material_override.set_shader_parameter("opponent_max", opponent_bounds.end)

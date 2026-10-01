@@ -60,18 +60,24 @@ func _process(_d: float) -> bool:
 		10:
 			var rx2 := RegEx.new(); rx2.compile("ENEMY ZONE 19\\.[2-5]s \\| weathered 0 \\(-0\\.0s\\)")
 			_check("after the hold: the HUD's ENEMY ZONE line on fight time, nothing weathered yet", rx2.search(hud) != null and s.freeze_t == 0, s.bzone_line())
-			_key(KEY_E, true, false)
+			# Launch a real threatened exchange; an out-of-range legacy hit
+			# call cannot award weathering merely because a dodge flag is set.
+			s.P["pos"] = Vector2(0,0.75); s.B["pos"] = Vector2(0,-0.75)
+			for fighter in [s.P,s.B]: fighter.erase("body_control"); fighter.erase("boxing")
+			_key(KEY_C,true,false); _key(KEY_SPACE,true,false)
+			for i in 30: s.step(main_node._intent())
+			s._boss_act({"kind":"punch","row":"R_STRAIGHT","mult":1.0,"body":false}); s.btimer = 1<<30
+			_key(KEY_D,true,false)
 		12:
-			# Slip entry now moves through the same six-tick curve as collision.
-			# Let the native dodge enter before the isolated incoming straight;
-			# two headless render frames are not six simulation ticks.
-			_fight(s, 6)
-			var slipping: bool = str(s.P["dodge"]) != ""
-			s.bpending = {"row": "L_STRAIGHT", "mult": 1.0, "body": false}; s._land_boss_punch(1.0); main_node._consume_events()
+			for i in 90:
+				s.step(main_node._intent()); main_node._consume_events()
+				if s.B["pending"].is_empty(): break
+			var slipping: bool = Vector2(s.P["body_control"]["axis"]).x > 0.5
+			_key(KEY_D,false,false); _key(KEY_C,false,false); _key(KEY_SPACE,false,false)
 			if not slipping: fails.append("the slip was not live when his straight came")
 		14:
 			var rx3 := RegEx.new(); rx3.compile("\\| weathered 1 \\(-1\\.0s\\) \\| damage to you halved")
-			_check("E (the slip) as his straight comes: WEATHERED - 1 s off his Zone, the toast, the HUD's line", int(s.btform.get("weathered", 0)) == 1 and hud.contains("WEATHERED  -1.0s") and hud.contains("- the damage to you halved") and rx3.search(hud) != null and main_node.weathered_seen == 1, s.bzone_line())
+			_check("continuous slip evades the committed straight: WEATHERED - 1 s off his Zone, the toast, the HUD's line", int(s.btform.get("weathered", 0)) == 1 and hud.contains("WEATHERED  -1.0s") and hud.contains("- the damage to you halved") and rx3.search(hud) != null and main_node.weathered_seen == 1, s.bzone_line())
 			_quiet(s); _fight(s, int(s.btform.get("t", 0)) + 5)
 		16:
 			var ft: Dictionary = s.rewards.get("feats", {}).get("stood_in_the_storm", {})

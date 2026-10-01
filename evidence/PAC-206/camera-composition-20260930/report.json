@@ -1,0 +1,501 @@
+{
+  "date_utc": "2026-09-30T14:25:06.465261+00:00",
+  "pac": "PAC-206",
+  "nodule": "NDL-013",
+  "foundation_status": "NOT_ACCEPTED",
+  "scope": "Implement the documented behind/above player-relative boxing camera, readable opponent and approximately 35 percent partial player. No simulation, animation, input or character data edited in this pass.",
+  "authority": [
+    "docs/register-commands_docs/BOXING_USER_DIRECTION_2026-09-29.md",
+    "docs/NorthPaw-game_docs/first.md: fixed behind/above; low-alpha silhouette, small stature or off-center staging; nothing may block opponent reads",
+    "docs/NorthPaw-game_docs/NP_03_COMBAT_ENGINE.md: full opponent, approximately 35 percent player, 40 percent below-shoulder tell alpha, opaque punching chain; numbers are launch-tuning baselines",
+    "Latest explicit user rejection of first-person and side-view gameplay overrides conflicting first-person foundation prose"
+  ],
+  "changes": [
+    "Keep 1.8m rear chase and 12 degree downward pitch; tune head clearance from 0.6m to 1.04m and add 0.9m shoulder offset. This yields a behind/above off-center view with 36.30 percent neutral player at 1.6 tactical spacing.",
+    "55 degree base FOV expands only as required by a fixed standing opponent envelope; it does not follow duck/slip head animation. Close-range full-body fit tested down to 0.72 tactical units. Tactical ground distances convert to model metres through the existing 0.65 scale; anatomy and collision remain unchanged.",
+    "Use opaque scene depth to reveal real opponent pixels through the idle player silhouette, eliminating double-exposed faces/chests. Retain player self-depth, 40 percent below-shoulder alpha during tells, and fully opaque striking chains.",
+    "Use current skin bounds rather than the full inactive torso blendshape culling box. Exclude canvas from the mask. Cache by mesh and active blend weights.",
+    "Normal launcher uses the working source. Side-view camera remains explicitly gated by boxing-inspect plus Ctrl+F2 and visibly labeled diagnostic."
+  ],
+  "shader_reference": "https://docs.godotengine.org/en/stable/tutorials/shaders/advanced_postprocessing.html#depth-texture",
+  "source_sha256": {
+    "engine/greybox/presentation/fight_view.gd": "78c852aefe8a999dd59b4db5bd543717f8153ff70574f5b97941081328e43da9",
+    "engine/greybox/combat_tuning.v1.json": "6de33fe256d9c1c34f6501e481c89b7e251ed19b8a48a4f3ab3baa600f7324dd",
+    "engine/greybox/tools/drive_foundation.gd": "377b1a36dd2e3660ab125d8ca6b605041609d354a10c5db0842f118fae4ddc5f",
+    "engine/greybox/sim/core.gd": "87001ec30bc48f2ee4b4268f8ae25710243a70fe3633d4fbb7ebb207c66b6119",
+    "engine/greybox/sim/body_control.gd": "3dcefe68202eacae40c2e112c4ea0b3928397c9cc27deb30895cf400248a1b8c",
+    "engine/greybox/sim/punch_contact.gd": "160843b56265e8163d362eb96d388baef6d8231db8a30faf12ad421046338652",
+    "engine/greybox/sim/boxing_techniques.gd": "8e5bf24672f92fff16280b94c007ef07371e016f4ce90273d1b055a3c4cd119d",
+    "engine/greybox/presentation/boxing_motion.gd": "89b7fc67cc1efebd5f605d7f6263e1e1c2d4d0fd06117d3f9fe958562dec0db7",
+    "engine/greybox/presentation/fighter_visuals.gd": "ef922ddc3ca43d9cb63dbdc09d63948a0e72ea332be1cffc0d8447083af235f2",
+    "engine/greybox/main.gd": "2a357d35f265c672daa3ecad1df7ce0f79c9c64dc60440563898f7c4e330d761"
+  },
+  "camera_review": {
+    "checks": 86,
+    "failures": [],
+    "samples": [
+      {
+        "case": "range-0.72-angle-0",
+        "changed_pixels_pct": 0.0,
+        "fov": 82.7893218994141,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.9448328018188,
+        "opponent_pixels": 3936,
+        "player_height_pct": 39.3498441908095
+      },
+      {
+        "case": "range-0.72-angle-90",
+        "changed_pixels_pct": 0.0,
+        "fov": 82.7893218994141,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.9448328018188,
+        "opponent_pixels": 3970,
+        "player_height_pct": 39.3498441908095
+      },
+      {
+        "case": "range-0.72-angle-180",
+        "changed_pixels_pct": 0.0,
+        "fov": 82.7893218994141,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.9448328018188,
+        "opponent_pixels": 3930,
+        "player_height_pct": 39.3498441908095
+      },
+      {
+        "case": "range-0.72-angle-270",
+        "changed_pixels_pct": 0.0,
+        "fov": 82.7893218994141,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.9448328018188,
+        "opponent_pixels": 3947,
+        "player_height_pct": 39.3498441908095
+      },
+      {
+        "case": "range-1.20-angle-0",
+        "changed_pixels_pct": 0.0,
+        "fov": 75.4305572509766,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.5890049934387,
+        "opponent_pixels": 4196,
+        "player_height_pct": 37.7527957492405
+      },
+      {
+        "case": "range-1.20-angle-90",
+        "changed_pixels_pct": 0.0,
+        "fov": 75.430549621582,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.5890228748322,
+        "opponent_pixels": 4250,
+        "player_height_pct": 37.7527915106879
+      },
+      {
+        "case": "range-1.20-angle-180",
+        "changed_pixels_pct": 0.0,
+        "fov": 75.430549621582,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.5890228748322,
+        "opponent_pixels": 4187,
+        "player_height_pct": 37.7527915106879
+      },
+      {
+        "case": "range-1.20-angle-270",
+        "changed_pixels_pct": 0.0,
+        "fov": 75.430549621582,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.5890228748322,
+        "opponent_pixels": 4225,
+        "player_height_pct": 37.7527915106879
+      },
+      {
+        "case": "range-1.60-angle-0",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4421,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "range-1.60-angle-90",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605642318726,
+        "opponent_pixels": 4483,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "range-1.60-angle-180",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605642318726,
+        "opponent_pixels": 4409,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "range-1.60-angle-270",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7469940185547,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4455,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "range-2.50-angle-0",
+        "changed_pixels_pct": 0.019739439399921,
+        "fov": 58.4634170532227,
+        "mean_channel_error": 2.70933465810807e-05,
+        "opponent_lowest_pct": 95.9787428379059,
+        "opponent_pixels": 5066,
+        "player_height_pct": 32.6347732543945
+      },
+      {
+        "case": "range-2.50-angle-90",
+        "changed_pixels_pct": 0.0195236235845373,
+        "fov": 58.4634170532227,
+        "mean_channel_error": 8.57508180198238e-05,
+        "opponent_lowest_pct": 95.9787309169769,
+        "opponent_pixels": 5122,
+        "player_height_pct": 32.6347732543945
+      },
+      {
+        "case": "range-2.50-angle-180",
+        "changed_pixels_pct": 0.0198098256735341,
+        "fov": 58.4634094238281,
+        "mean_channel_error": 1.7867687788516e-05,
+        "opponent_lowest_pct": 95.9787487983704,
+        "opponent_pixels": 5048,
+        "player_height_pct": 32.6347732543945
+      },
+      {
+        "case": "range-2.50-angle-270",
+        "changed_pixels_pct": 0.0196425063838146,
+        "fov": 58.4634094238281,
+        "mean_channel_error": 2.61900128046297e-05,
+        "opponent_lowest_pct": 95.9787428379059,
+        "opponent_pixels": 5091,
+        "player_height_pct": 32.6347732543945
+      },
+      {
+        "case": "slip",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4263,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "duck",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 3925,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "lean",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4249,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "weave",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4247,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "tell",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4421,
+        "player_height_pct": 36.3010109795464
+      },
+      {
+        "case": "body-21",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4421,
+        "player_height_pct": 37.448844909668
+      },
+      {
+        "case": "body-22",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4421,
+        "player_height_pct": 35.0543128119575
+      },
+      {
+        "case": "body-23",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4421,
+        "player_height_pct": 22.7909511990017
+      },
+      {
+        "case": "body-24",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4421,
+        "player_height_pct": 29.4807391696506
+      },
+      {
+        "case": "body-25",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605761528015,
+        "opponent_pixels": 4421,
+        "player_height_pct": 25.5594974093967
+      },
+      {
+        "case": "corner",
+        "changed_pixels_pct": 0.0,
+        "fov": 69.7470016479492,
+        "mean_channel_error": 0.0,
+        "opponent_lowest_pct": 96.3605642318726,
+        "opponent_pixels": 4483,
+        "player_height_pct": 36.3010109795464
+      }
+    ]
+  },
+  "live_main_process_review": {
+    "actions": {
+      "block": 30,
+      "block_press": 6,
+      "boss_act": 25,
+      "boss_windup": 23,
+      "boxing_contact": 43,
+      "card_pinned": 8,
+      "deflect": 17,
+      "evade": 5,
+      "feed": 19,
+      "flag": 5,
+      "footwork": 43,
+      "hit": 1,
+      "matchup": 2,
+      "punch": 20,
+      "punch_intent": 33,
+      "recover": 9,
+      "sealed": 2,
+      "sensor": 16,
+      "tell": 9,
+      "unbroken": 1,
+      "whiff": 7
+    },
+    "body_and_step": {
+      "body": 0.99999988079071,
+      "step": true
+    },
+    "checks": 4,
+    "clock_ratio": 1.00571370368828,
+    "failures": [],
+    "frame_p95_ms": 16.687,
+    "frame_p99_ms": 16.808,
+    "frames": 1170,
+    "mean_fps": 60.0023877873298,
+    "mode": "FIGHT",
+    "scope": "20 seconds through main._process at a 60 FPS cap, real keyboard events, Compatibility renderer, audio Dummy; not a player-feel approval",
+    "simulation_ticks": 2414,
+    "wall_seconds": 20.002379,
+    "worst_frame_ms": 17.061
+  },
+  "live_hardware": "Godot 4.7.2, Compatibility OpenGL, NVIDIA GeForce RTX 5090, 1280x720, audio Dummy, 60 FPS cap; hidden window forced to render. Measurements are for this machine and run.",
+  "rendered_foundation": {
+    "checks": 157,
+    "failures": [],
+    "samples": [
+      {
+        "axis": "(1.0, 0.0)",
+        "head": "(0.019933, 1.55, 0.0)",
+        "support": 0.989999999478459,
+        "tick": 1
+      },
+      {
+        "axis": "(-0.0, 1.0)",
+        "head": "(0.019746, 1.072382, -0.051742)",
+        "support": 0.85041598379612,
+        "tick": 91
+      },
+      {
+        "axis": "(-1.0, -0.0)",
+        "head": "(-0.297516, 1.5183, -0.003434)",
+        "support": 0.85041598379612,
+        "tick": 181
+      },
+      {
+        "axis": "(0.0, -1.0)",
+        "head": "(-0.019746, 1.470397, 0.278113)",
+        "support": 0.85041598379612,
+        "tick": 271
+      },
+      {
+        "axis": "(1.0, 0.0)",
+        "head": "(0.297516, 1.544717, 0.018458)",
+        "support": 0.85041598379612,
+        "tick": 361
+      },
+      {
+        "axis": "(0.0, 1.0)",
+        "head": "(0.019746, 1.072382, -0.051742)",
+        "support": 0.85041598379612,
+        "tick": 451
+      },
+      {
+        "axis": "(-1.0, -0.0)",
+        "head": "(-0.297516, 1.5183, -0.003434)",
+        "support": 0.85041598379612,
+        "tick": 541
+      },
+      {
+        "axis": "(-0.0, -1.0)",
+        "head": "(-0.019746, 1.470397, 0.278113)",
+        "support": 0.85041598379612,
+        "tick": 631
+      },
+      {
+        "early_links": 15,
+        "peak_joint_travel_m": 0.194989740848541,
+        "peak_tick": 784
+      },
+      {
+        "close_glove_ticks": 0,
+        "live_ticks": 2400,
+        "longest_close_glove_run_ticks": 0,
+        "minimum_eye_glove_clearance_m": 2.08788119316101,
+        "mode": "FIGHT",
+        "opponent_punches": 20,
+        "player_punches": 20
+      },
+      {
+        "opponent_body_peak": 0.756213009357452,
+        "opponent_body_ticks": 192,
+        "opponent_completed_steps": [
+          0.479999980540015,
+          0.480000061681494,
+          0.400000010966323,
+          0.42461451375857,
+          0.480000067618676,
+          0.480000091833062,
+          0.480000091833062,
+          0.480000065406784,
+          0.400000145076774,
+          0.479999966919422,
+          0.479999991017394,
+          0.399999997927807,
+          0.444029428996146,
+          0.480000009294599,
+          0.480000145384111,
+          0.39999941654969,
+          0.45415866462281,
+          0.479999940609559
+        ]
+      }
+    ],
+    "scope": "native body/support/chase camera and committed-contact integration; whole-foundation and player-feel acceptance remain open"
+  },
+  "headless_regressions": {
+    "drive_shared_boxing_control": {
+      "checks": 88,
+      "failures": 0,
+      "log_sha256": "a0c3b7fb1a397b2ee41f657658b21a2dcd1207f25e09e139efc2bd100a5454d5",
+      "exit_warning": null
+    },
+    "drive_punch_contact": {
+      "checks": 187,
+      "failures": 0,
+      "log_sha256": "ca25521f36a31b7e5d22a3d051d3353a5dd34b80e0c9a440fa2ac5966a2c86e4",
+      "exit_warning": "2 ObjectDB instances leaked at exit"
+    },
+    "drive_northern_rising": {
+      "checks": 68,
+      "failures": 0,
+      "log_sha256": "bd4735e5d0fd0f689e45976a17e339cbdc01ebf4202c028e51076d33f676179a",
+      "exit_warning": null
+    },
+    "drive_boxing_motion": {
+      "checks": 341,
+      "failures": 0,
+      "log_sha256": "487de641566407653c7f5ce9876c0c45ba90c845e2afd33de245fcaf82572ce0",
+      "exit_warning": "2 ObjectDB instances leaked at exit"
+    }
+  },
+  "visual_inspection": {
+    "inspected": "40 chronologically sampled gameplay frames spanning the 20 seconds; neutral, close, corner, slip, duck and pull poses; full-size frames 270 and 390. Earlier failed overlap and floor-mask captures inspected and retained.",
+    "observed": "Behind/above view and complete opponent remain visible; no double-exposed opponent face/chest in the inspected poses. Player working arms visible; below-shoulder tell fade remains.",
+    "limits": "Frame review is not a claim to have watched every movie frame at playback speed or to have accepted the full boxing model."
+  },
+  "failures_retained": [
+    "Initial 40 percent rectangular reveal still superimposed faces/chests.",
+    "First depth-mask bounds included canvas, visibly cutting player lower body.",
+    "Driver type-inference parse error corrected with explicit float.",
+    "Review-2 framing inspected inactive morph extents; runtime and review now use current skin bounds. Initial corner fixture placed opponent outside legal ring; corrected fixture is inside.",
+    "Legacy contact and motion drivers still emit two ObjectDB exit leaks each; no script/runtime errors in selected final runs."
+  ],
+  "remaining": [
+    "Overall connected foundation acceptance, boxing authenticity and player feel remain open.",
+    "No input-to-photon latency measurement or broad hardware performance claim.",
+    "This correction does not establish that every possible fighter pose is free of clipping or that punch pacing and all style combinations are finished."
+  ],
+  "video": {
+    "duration_seconds": 20,
+    "frames": 1200,
+    "fps": 60,
+    "dimensions": [
+      1280,
+      720
+    ],
+    "production_camera_only": true,
+    "note": "Encoded deterministic native-key exchange; separate live-main-process run above establishes wall-clock performance."
+  },
+  "pose_grid_order": [
+    "neutral at 1.60",
+    "opponent duck",
+    "opponent slip",
+    "player pull",
+    "legal ring corner",
+    "close spacing 0.72"
+  ],
+  "archive": {
+    "entries": 327,
+    "integrity": "verified"
+  },
+  "artifacts": {
+    "gameplay-20s.mp4": {
+      "bytes": 3199100,
+      "sha256": "2b5ebfcb08bc682905d55f329918ecc10034bb75c92b91734c9daef16055f210"
+    },
+    "gameplay-frame.png": {
+      "bytes": 100843,
+      "sha256": "51511a9f0f590dfc8576728073f7eb832f8e0ded41565d41e2973434be39b759"
+    },
+    "gameplay-poses.png": {
+      "bytes": 307768,
+      "sha256": "4f8f8c21a6042a57482bb0ce5d7f8eec563a7c148845a5786de3a962fd774fc9"
+    },
+    "verification-history.zip": {
+      "bytes": 15727368,
+      "sha256": "ef551de408ae72761d970661abd05f34872ce94565a00be86dc23f52f24d8497"
+    }
+  }
+}

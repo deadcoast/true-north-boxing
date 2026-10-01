@@ -1,0 +1,177 @@
+{
+  "date_utc": "2026-09-30T13:57:32.899236+00:00",
+  "scope": "Shared player, opponent and delegated-fighter body control and supported footwork in the existing playable match",
+  "foundation_acceptance": "NOT_ACCEPTED",
+  "task": "PAC-206",
+  "requirement": "OGM-025",
+  "git_head": "826f4658c723249735d6be8422110bf4da7a843e",
+  "working_tree_changes_preserved": true,
+  "design_authority": [
+    "docs/boxing-foundations/START_HERE.md",
+    "docs/boxing-foundations/Boxing_Styles.md",
+    "docs/boxing-foundations/True_North_Boxing_Foundation.md",
+    "docs/NorthPaw-game_docs/NP_03_COMBAT_ENGINE.md",
+    "User correction: behind-and-above gameplay camera; foundation overview is not absolute"
+  ],
+  "changes": [
+    "Authored native slips, ducks, pulls and weaves feed continuous body intent, support and effort on both fighters; head and torso queries no longer add a second legacy offset.",
+    "Opponent authored moves, neutral approach, orbit and range decisions request bounded physical steps with stamina cost, planted support and recovery instead of direct root translation.",
+    "Native player legacy move/sprint commands cannot add free travel. Existing delegated profile decisions translate to supported steps, preserving their range bands, defense requests and clinch cue taps.",
+    "Opponent punches begun during entry carry the shared STEPPING modifier and telegraph; no second lunge.",
+    "AI holds a small range tolerance instead of spending full step cost on centimetre shuffles.",
+    "Zero opponent clock preserves queued intent; old tween snapshots migrate only remaining distance capped at one step; interrupted steps cannot resume after a count or clinch."
+  ],
+  "verification": [
+    {
+      "driver": "drive_shared_boxing_control",
+      "passed": 88,
+      "checks": 88,
+      "log": "delivery-verified/drive_shared_boxing_control.log"
+    },
+    {
+      "driver": "drive_punch_contact",
+      "passed": 187,
+      "checks": 187,
+      "log": "delivery-verified/drive_punch_contact.log"
+    },
+    {
+      "driver": "drive_northern_rising",
+      "passed": 68,
+      "checks": 68,
+      "log": "delivery-verified/drive_northern_rising.log"
+    },
+    {
+      "driver": "drive_boxing_motion",
+      "passed": 341,
+      "checks": 341,
+      "log": "delivery-verified/drive_boxing_motion.log"
+    },
+    {
+      "driver": "drive_foundation GPU with opponent-review and rising-film",
+      "passed": 91,
+      "checks": 91,
+      "log": "render-delivery/run.log"
+    }
+  ],
+  "warnings": [
+    {
+      "driver": "drive_punch_contact",
+      "message": "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+    },
+    {
+      "driver": "drive_boxing_motion",
+      "message": "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+    }
+  ],
+  "live_metrics": [
+    {
+      "early_links": 15,
+      "peak_joint_travel_m": 0.194989740848541,
+      "peak_tick": 784
+    },
+    {
+      "close_glove_ticks": 0,
+      "live_ticks": 2400,
+      "longest_close_glove_run_ticks": 0,
+      "minimum_eye_glove_clearance_m": 1.8159713602066,
+      "mode": "FIGHT",
+      "opponent_punches": 20,
+      "player_punches": 20
+    },
+    {
+      "opponent_body_peak": 0.756213009357452,
+      "opponent_body_ticks": 192,
+      "opponent_completed_steps": [
+        0.479999980540015,
+        0.480000061681494,
+        0.400000010966323,
+        0.42461451375857,
+        0.480000067618676,
+        0.480000091833062,
+        0.480000091833062,
+        0.480000065406784,
+        0.400000145076774,
+        0.479999966919422,
+        0.479999991017394,
+        0.399999997927807,
+        0.444029428996146,
+        0.480000009294599,
+        0.480000145384111,
+        0.39999941654969,
+        0.45415866462281,
+        0.479999940609559
+      ]
+    }
+  ],
+  "visual_review": {
+    "inspected": "Gameplay and diagnostic captures of opponent slip, duck, pull, weave and mid-step; live gameplay/observer frames; nine adjacent film frames around maximum measured joint displacement.",
+    "observed": "Both trunks join physical hips and shoulders in inspected poses. Both face transforms follow fighter facing. AI feet and knees participate in defense and bounded travel. Gameplay remains behind and above the player.",
+    "failure_remaining": "The foreground player silhouette still overlaps the opponent too heavily. Camera/player composition and presentation readability are not accepted.",
+    "bounds": "Recorded 20 seconds at 60 fps, 1200 frames; scripted native inputs through the existing match. Selected frames were inspected. This is not human playtesting or whole-game acceptance."
+  },
+  "previous_attempts_retained": [
+    "Initial driver Variant type parse failure.",
+    "Initial shared-control 56/58 and 57/58 runs; corrected step clock milliseconds and isolation/default-approach fixture setup.",
+    "Rejected numeric-green count fixture with timer_t script error; replaced fabricated EIGHT state with actual _drop entry.",
+    "Initial full motion 337/338: immediate weave counter met returning glove. Kept this as a required deflection assertion and verified a delayed real counter inside the earned window.",
+    "First rendered run showed 1cm range shuffles at full effort cost. Added a tactical range band; final film steps range from approximately 0.40 to 0.48 tactical metres.",
+    "Source audit caught delegated old movement intents after disabling native free travel; translated them and verified four profile movement/replay paths plus clinch taps."
+  ],
+  "remaining": [
+    "Player silhouette overlap and documented composition target remain unresolved.",
+    "Full connected boxing foundation and player-feel acceptance remain open.",
+    "ObjectDB cleanup warnings in some verification processes are retained; no script/runtime errors in selected final runs."
+  ],
+  "source_sha256": {
+    "engine/greybox/sim/core.gd": "87001ec30bc48f2ee4b4268f8ae25710243a70fe3633d4fbb7ebb207c66b6119",
+    "engine/greybox/sim/body_control.gd": "3dcefe68202eacae40c2e112c4ea0b3928397c9cc27deb30895cf400248a1b8c",
+    "engine/greybox/sim/punch_contact.gd": "160843b56265e8163d362eb96d388baef6d8231db8a30faf12ad421046338652",
+    "engine/greybox/presentation/boxing_motion.gd": "89b7fc67cc1efebd5f605d7f6263e1e1c2d4d0fd06117d3f9fe958562dec0db7",
+    "engine/greybox/presentation/fight_view.gd": "f2eeed408a6f3f42a11633c277bf5f256634b84a202019bb172880eab423afac",
+    "engine/greybox/sim/boxing_techniques.gd": "8e5bf24672f92fff16280b94c007ef07371e016f4ce90273d1b055a3c4cd119d",
+    "engine/greybox/sim/boxing_techniques.v1.json": "f83b320003ef27573ffe3138715207ec7eb9311c2e8dc3aa4ead06e9b6ae6998",
+    "engine/greybox/tools/drive_shared_boxing_control.gd": "ea4267ef240968e6405bf3ba0ecf671d6ad1dee0ac7eebf4456b77e6240257af",
+    "engine/greybox/tools/drive_punch_contact.gd": "d6dc9c8f4df6ab8e2503fa836a84a4802f6bd6483b2cb809c103db53d7185050",
+    "engine/greybox/tools/drive_boxing_motion.gd": "ff19ec534706f974548550204082754d0044e50bc66e67a4a3bf875638566b4d",
+    "engine/greybox/tools/drive_northern_rising.gd": "5845a989d52315f4bb92aad2fc55b9801e6a6594dd960c9148dc0da3b1f04308",
+    "engine/greybox/tools/drive_foundation.gd": "89bcc87f1a23d07d9f1a7d1b01856c372ebaa3f6b13ed19f7373eaba1263ba55"
+  },
+  "film": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "60/1",
+        "nb_frames": "1200"
+      }
+    ],
+    "format": {
+      "duration": "20.000000"
+    }
+  },
+  "history_archive_members": 202,
+  "artifacts": {
+    "gameplay-20s.mp4": {
+      "sha256": "465928b5003890385a2baf407a17b1bcaad303c550f87f0421b548f92d8dcbaf",
+      "bytes": 3252816
+    },
+    "gameplay-frame.png": {
+      "sha256": "3b5eb2b76d8d68fdcd4723086cfc2693a74d5910cbaa57e84e55886556e20f5d",
+      "bytes": 113736
+    },
+    "opponent-controls.png": {
+      "sha256": "84f493e3c0f3f24af09960039cb3c4f8dde5e02b57b345f2ef9ca2e8ddcd324b",
+      "bytes": 728863
+    },
+    "peak-continuity.png": {
+      "sha256": "15ae554834792838df887a7fd909b4bc6fb30791e345846bea8a0ae448606efa",
+      "bytes": 251254
+    },
+    "verification-history.zip": {
+      "sha256": "e49738db9f228aaf9a57125f16647f18a35bf49a0386879e4324f5072f8c66cf",
+      "bytes": 9401932
+    }
+  }
+}

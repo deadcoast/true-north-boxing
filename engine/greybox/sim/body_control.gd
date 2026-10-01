@@ -43,24 +43,43 @@ static func _support(fighter: Dictionary, dt: float) -> void:
 		var error0 := Vector2(feet[0]).distance_to(wanted[0])
 		var error1 := Vector2(feet[1]).distance_to(wanted[1])
 		if maxf(error0, error1) > (0.025 if moving else 0.09):
-			var index := 0 if error0 > error1 else 1
+			# Equal placement errors must choose a stance role. Always choosing
+			# the right foot made mirrored angle recoveries load opposite legs.
+			var index := (0 if lead > 0 else 1) if absf(error0-error1)<0.00001 else (0 if error0 > error1 else 1)
 			if moving and absf(error0 - error1) < 0.025:
-				index = 0 if Vector2(state["step"]["direction"]).dot(wanted[0] - wanted[1]) >= 0 else 1
+				var opening := Vector2(state["step"]["direction"]).dot(wanted[0] - wanted[1])
+				index = (0 if lead > 0 else 1) if absf(opening)<0.00001 else (0 if opening > 0 else 1)
 			var punch: Dictionary = fighter.get("pending", {})
 			if not punch.is_empty() and not "STEPPING" in punch.get("mods", []):
 				var driving := 0 if str(punch["row"]).begins_with("L_") else 1
 				if index == driving: index = 1 - index
-			gait = {"index": index, "from": feet[index], "to": wanted[index], "elapsed": 0.0, "duration": 0.16}
+			var start_weight := float(state["weight_lead"])
+			var load_seconds := maxf(0.025,absf(start_weight-(0.12 if index==0 else 0.88))/6.0)
+			gait = {"index": index, "from": feet[index], "to": wanted[index], "elapsed": 0.0, "duration": load_seconds+0.135, "load_seconds": load_seconds, "start_weight": start_weight}
 			state["gait"] = gait
 	var body_axis: Vector2 = state["axis"]
-	var balanced := clampf(0.5 - body_axis.x * 0.18 + body_axis.y * 0.08, 0.25, 0.75)
+	# The saved weight field indexes the anatomical left foot. A dip transfers
+	# toward the lead foot, which is the right foot for a southpaw.
+	var balanced := clampf(0.5 - body_axis.x * 0.18 + body_axis.y * 0.08 * lead, 0.25, 0.75)
+	# The previous fixed-tick pose supplies the load already in the body. Feed
+	# it into the planted support, rather than drawing a trunk rotation above
+	# feet which never pivot or receive that weight. No root displacement here.
+	var boxing: Dictionary = fighter.get("boxing",{})
+	var action: Dictionary = boxing.get("action",{})
+	var chain: Dictionary = boxing.get("rig",{}).get("chain",{})
+	var driving := -1 if action.is_empty() else (0 if str(action["row"]).begins_with("L_") else 1)
+	var punch_drive := float(chain.get("drive",0))
+	var punch_load := float(chain.get("load",0))
+	if driving >= 0:
+		balanced = clampf(balanced + (1 if driving == 1 else -1) * (punch_drive * 0.12 - punch_load * 0.10),0.25,0.75)
 	if not gait.is_empty():
 		var index: int = gait["index"]
 		gait["elapsed"] += dt
 		var age := float(gait["elapsed"])
 		# Load the stationary leg before lifting. Only the airborne foot can
 		# retarget; the support foot remains exactly fixed in world space.
-		var phase := clampf((age - 0.025) / (float(gait["duration"]) - 0.025), 0, 1)
+		var load_seconds := float(gait.get("load_seconds",0.025))
+		var phase := clampf((age - load_seconds) / (float(gait["duration"]) - load_seconds), 0, 1)
 		var destination: Vector2 = Vector2(gait["to"]).move_toward(wanted[index], dt * 3.0)
 		var side := -1.0 if index == 0 else 1.0
 		var separation := destination - Vector2(feet[1 - index])
@@ -69,13 +88,21 @@ static func _support(fighter: Dictionary, dt: float) -> void:
 		feet[index] = Vector2(gait["from"]).lerp(destination, _smooth(phase))
 		state["foot_lift"][index] = sin(phase * PI) * 0.045
 		state["planted"][index] = phase <= 0 or phase >= 1
-		state["weight_lead"] = lerpf(balanced, 0.12 if index == 0 else 0.88, _smooth(age / 0.025) * (1 - _smooth((phase - 0.8) / 0.2)))
+		# Keep weight over the planted leg until the other sole lands. The old
+		# last-20%-of-flight blend loaded an airborne foot and moved the pelvis
+		# over five centimetres in one tick. Grounded recovery below owns the
+		# return, at its normal bounded speed. A new gather starts from the
+		# existing load rather than assuming the body is already balanced.
+		state["weight_lead"] = lerpf(float(gait.get("start_weight",balanced)), 0.12 if index == 0 else 0.88, _smooth(age / load_seconds))
 		if phase >= 1:
 			state["foot_lift"][index] = 0.0; state["planted"][index] = true; state["gait"] = {}
 	else:
 		state["weight_lead"] = move_toward(float(state["weight_lead"]), balanced, dt * 4.0)
 	for index in 2:
-		state["foot_yaw"][index] = rotate_toward(float(state["foot_yaw"][index]), facing.angle(), dt * 4.0)
+		var pivot := 0.0
+		if index == driving and bool(state["planted"][index]):
+			pivot = (1 if index == 0 else -1) * float(chain.get("plant",0)) * (0.65 if bool(chain.get("hook",false)) else 0.38)
+		state["foot_yaw"][index] = rotate_toward(float(state["foot_yaw"][index]), facing.angle()+pivot, dt * 4.0)
 	# Support is available from stance/weight, rather than an animation flag.
 	state["support"] = (1.0 if state["gait"].is_empty() else 0.72) * (1 - body_axis.length() * 0.15)
 
@@ -100,8 +127,18 @@ static func offsets(fighter: Dictionary) -> Dictionary:
 	var torso := Vector3(head.x * 0.4, head.y, head.z)
 	return {"head": head, "torso": torso}
 
+static func defense_axis(kind: String, side: int, phase: float) -> Vector2:
+	# An authored AI decision produces intent, not a second displacement applied
+	# directly to the head. The ordinary response/support/effort solver follows it.
+	match kind:
+		"SLIP": return Vector2(float(side)*0.35/SLIP_M,0)
+		"DUCK": return Vector2(0,0.40/DIP_M)
+		"LEAN": return Vector2(0,-0.30/PULL_M)
+		"WEAVE": return Vector2(float(side)*cos(phase*PI)*0.40/SLIP_M,sin(phase*PI)*0.25/DIP_M).limit_length(1.0)
+	return Vector2.ZERO
+
 static func advance(fighter: Dictionary, other: Dictionary, axis: Vector2,
-		step_request: Vector2, dt: float, can_step: bool, ring_half: float) -> Dictionary:
+		step_request: Vector2, dt: float, can_step: bool, ring_half: float, step_distance := STEP_M) -> Dictionary:
 	var toward: Vector2 = other["pos"] - fighter["pos"]
 	var state: Dictionary = fighter.get("body_control", {})
 	if state.is_empty():
@@ -109,6 +146,9 @@ static func advance(fighter: Dictionary, other: Dictionary, axis: Vector2,
 			"facing": toward.normalized() if toward.length_squared() > 0.000001 else Vector2(0, -1),
 			"step": {}, "queued": {}, "recovery": 0.0, "effort": 0.0, "support": 1.0}
 		fighter["body_control"] = state
+	if dt <= 0:
+		_support(fighter,0.0)
+		return {}
 	# Facing is actor-owned and bounded; camera tracking cannot rotate this state.
 	if toward.length_squared() > 0.000001:
 		var facing: Vector2 = state["facing"]
@@ -127,7 +167,7 @@ static func advance(fighter: Dictionary, other: Dictionary, axis: Vector2,
 	state["recovery"] = maxf(0, float(state["recovery"]) - dt)
 	var outcome := {}
 	if step_request.is_finite() and step_request.length() > 0.01:
-		state["queued"] = {"direction": step_request.normalized(), "remaining": STEP_BUFFER_SECONDS}
+		state["queued"] = {"direction": step_request.normalized(), "remaining": STEP_BUFFER_SECONDS,"distance":clampf(step_distance,0.01,STEP_M)}
 		outcome = {"outcome": "buffered", "reason": "action_or_support"}
 	if not state["queued"].is_empty():
 		if can_step and state["step"].is_empty() and state.get("gait", {}).is_empty() and float(state["recovery"]) <= 0:
@@ -139,7 +179,7 @@ static func advance(fighter: Dictionary, other: Dictionary, axis: Vector2,
 				var right := Vector2(-facing.y, facing.x)
 				var direction := right * local.x + facing * local.y
 				var duration := STEP_SECONDS / lerpf(0.8, 1.15, float(fighter["stats"]["SPD"]) / 99.0) / effort_scale
-				state["step"] = {"direction": direction, "elapsed": 0.0, "duration": duration, "travel": 0.0}
+				state["step"] = {"direction": direction, "elapsed": 0.0, "duration": duration, "travel": 0.0,"distance":state["queued"].get("distance",STEP_M)}
 				state["queued"] = {}; fighter["stamina"] -= STEP_COST
 				outcome = {"outcome": "accepted", "reason": "supported_step", "direction": local}
 		else:
@@ -151,7 +191,7 @@ static func advance(fighter: Dictionary, other: Dictionary, axis: Vector2,
 		var before_t := clampf(float(step["elapsed"]) / float(step["duration"]), 0, 1)
 		step["elapsed"] = minf(float(step["duration"]), float(step["elapsed"]) + dt)
 		var after_t := clampf(float(step["elapsed"]) / float(step["duration"]), 0, 1)
-		var amount := (after_t * after_t * (3 - 2 * after_t) - before_t * before_t * (3 - 2 * before_t)) * STEP_M
+		var amount := (after_t * after_t * (3 - 2 * after_t) - before_t * before_t * (3 - 2 * before_t)) * float(step.get("distance",STEP_M))
 		var before: Vector2 = fighter["pos"]
 		var candidate: Vector2 = before + Vector2(step["direction"]) * amount
 		candidate = candidate.clamp(Vector2(-ring_half, -ring_half), Vector2(ring_half, ring_half))
@@ -162,7 +202,7 @@ static func advance(fighter: Dictionary, other: Dictionary, axis: Vector2,
 		fighter["pos"] = candidate
 		step["travel"] += before.distance_to(candidate)
 		if after_t >= 1:
-			outcome = {"outcome": "completed", "reason": "shortened" if float(step["travel"]) < STEP_M - 0.005 else "landed", "travel": step["travel"]}
+			outcome = {"outcome": "completed", "reason": "shortened" if float(step["travel"]) < float(step.get("distance",STEP_M)) - 0.005 else "landed", "travel": step["travel"]}
 			state["step"] = {}; state["recovery"] = STEP_RECOVERY_SECONDS
 	_support(fighter, dt)
 	return outcome

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "fighter_defaults": {
+    "RORY": {"guard": "rising_guard", "learned": {"compact_rising": 0.7, "rangy_rising": 0.7}, "signatures": ["northern_rising", "northern_ladder", "rising_exit"]}
+  },
+  "guards": {
+    "rising_guard": {"turn": -0.30, "lead_forward": 0.37, "lead_side": 0.22, "lead_height": 1.43, "rear_forward": 0.12, "rear_side": 0.19, "rear_height": 1.48}
+  },
+  "routes": {
+    "compact": {"skill": "compact_rising", "drop": 0.10, "load": 0.45, "reach": 1.65, "startup": 0.78, "recovery": 0.90, "effort": 0.92},
+    "probe": {"skill": "compact_rising", "drop": 0.12, "load": 0.50, "reach": 1.65, "startup": 0.70, "recovery": 0.94, "effort": 0.95},
+    "rangy": {"skill": "rangy_rising", "drop": 0.23, "load": 0.80, "reach": 2.05, "startup": 1.04, "recovery": 1.24, "effort": 1.15},
+    "shovel": {"skill": "compact_rising", "drop": 0.10, "load": 0.50, "reach": 1.65, "startup": 0.83, "recovery": 1.00, "effort": 1.00}
+  }
+}

@@ -47,14 +47,30 @@ func advance(s, intent: Dictionary) -> Array:
 
 func capture(label: String) -> void:
 	if not "capture" in OS.get_cmdline_user_args(): return
-	await process_frame; await RenderingServer.frame_post_draw
+	await process_frame; RenderingServer.force_draw(false)
 	check("rendered " + label, root.get_texture().get_image().save_png("user://foundation-" + label + ".png") == OK)
 
 func _run() -> void:
 	root.size = Vector2i(1280, 720)
+	if "capture" in OS.get_cmdline_user_args(): RenderingServer.viewport_set_update_mode(root.get_viewport_rid(), RenderingServer.VIEWPORT_UPDATE_ALWAYS)
 	scene = load("res://main.tscn").instantiate(); root.add_child(scene); scene.set_process(false)
 	await process_frame; await process_frame
 	scene.controls_menu.close(); scene.fight_hud.entry.hide(); scene.combat_input.reset_bindings()
+	if "live-review" in OS.get_cmdline_user_args():
+		await realtime_review()
+		scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "camera-review" in OS.get_cmdline_user_args():
+		await camera_review()
+		if not "record" in OS.get_cmdline_user_args():
+			scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "opponent-review" in OS.get_cmdline_user_args():
+		await opponent_visual_review()
+		if not "record" in OS.get_cmdline_user_args():
+			scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1); return
+	if "visual-review" in OS.get_cmdline_user_args():
+		await visual_review()
+		if not "record" in OS.get_cmdline_user_args():
+			scene.queue_free(); await process_frame; quit(); return
 	scene.sim = fresh()
 	key(KEY_D, true)
 	var intent: Dictionary = scene._intent()
@@ -200,7 +216,7 @@ func _run() -> void:
 	check("render interpolation never changes authoritative body or support", s.hash_state() == sim_hash)
 	await capture("pov-angle")
 	var camera_offset: Vector3 = scene.cam.position - scene.player.position
-	check("player POV follows its eye instead of chase distance", Vector2(camera_offset.x, camera_offset.z).length() < 0.4 and not scene.player.get_meta("head").visible)
+	check("production camera stays behind and above with authored pitch and full-opponent framing", absf(camera_offset.dot(scene.fight_view.orbit)-float(s.T["camera"]["chase_behind_m"])) < 0.0001 and absf(camera_offset.y-Sim.HEAD_H-float(s.T["camera"]["above_head_m"])) < 0.0001 and absf(rad_to_deg(scene.cam.rotation.x)+float(s.T["camera"]["pitch_deg"])) < 0.001 and scene.cam.fov >= float(s.T["camera"]["fov_deg"]) and scene.player.get_meta("head").visible)
 	s = fresh(); s.P["pos"] = Vector2(3.48, 0); s.B["pos"] = Vector2(3.48, -2)
 	other_origin = s.B["pos"]
 	for i in 100: s.step({"body_axis":Vector2.ZERO, "pocket_step":Vector2.RIGHT} if i == 0 else {"body_axis":Vector2.ZERO})
@@ -228,7 +244,7 @@ func _run() -> void:
 	check("restored body exchange has exact replay continuation", s.hash_state() == restored.hash_state())
 	s = fresh(); s.step({"body_axis":Vector2.ZERO,"pocket_step":Vector2.LEFT})
 	s._drop(true); s.step({})
-	check("knockdown cancels old body travel and buffered steps", not s.P.has("body_control") and not s.P.has("frozen_step"))
+	check("knockdown cancels old body travel and buffered steps", s.P.get("body_control",{}).get("step",{}).is_empty() and s.P.get("body_control",{}).get("queued",{}).is_empty() and not s.P.has("frozen_step"))
 	s = fresh(); s.P["stamina"] = 0; s.step({"body_axis":Vector2.ZERO,"pocket_step":Vector2.LEFT})
 	check("exhausted footwork refuses travel instead of borrowing effort", s.P["body_control"]["step"].is_empty())
 	var hashes := []
@@ -261,6 +277,11 @@ func _run() -> void:
 	# A live opponent, native key edges and the actual match/view. This is
 	# integration footage, not boxing authenticity or player-feel acceptance.
 	s = tests.make_sim(0, 947); scene.sim = s; scene.combat_input.clear()
+	if "southpaw-film" in OS.get_cmdline_user_args():
+		# Use the existing match/input path with both anatomical stances reversed.
+		# Authored punch tuning remains unchanged in this gameplay recording.
+		for fighter in [s.P,s.B]:
+			fighter["stance"]="southpaw";fighter.erase("boxing");fighter.erase("body_control")
 	var recording := "record" in OS.get_cmdline_user_args()
 	var frames_saved := 0
 	if recording:
@@ -269,26 +290,90 @@ func _run() -> void:
 	var held := {}; var thrown := 0; var opponent_thrown := 0; var finite := true
 	var eye_clearance := INF; var close_glove_ticks := 0; var longest_close_run := 0; var close_run := 0
 	var used_body := false; var moved_root := false; origin = s.P["pos"]
+	var rising_film := "rising-film" in OS.get_cmdline_user_args()
+	var guard_film := "guard-film" in OS.get_cmdline_user_args()
+	var combination_film := "combination-film" in OS.get_cmdline_user_args() or rising_film or guard_film
+	var combo_stage := 0; var pressed_until := -1; var punch_key := KEY_J
+	var early_links := 0; var exchange_events := []
+	var previous_joints := {}; var peak_joint_travel := 0.0; var peak_tick := 0
+	var opponent_body_peak := 0.0; var opponent_body_ticks := 0; var opponent_steps := []
+	var recording_resumes := []; var unobscured_frames := 0
 	for i in 2400:
-		if recording: scene.fight_view.inspection_view = i >= 1200
+		if recording: scene.fight_view.inspection_view = false
+		if recording and scene.controls_menu.opened:
+			# This deterministic input replay does not measure desktop focus or
+			# real-time pacing. Resume the normal focus-loss pause explicitly and
+			# replay held keys, retaining the interruption in the evidence.
+			recording_resumes.append({"tick":i,"at":"input"})
+			scene.controls_menu.close(); held.clear()
 		var wanted := []
 		if i % 240 < 55: wanted.append(KEY_SPACE)
 		if i % 240 >= 15 and i % 240 < 55: wanted.append(KEY_D if i % 480 < 240 else KEY_A)
 		if i % 400 >= 120 and i % 400 < 124:
 			wanted.append(KEY_CTRL); wanted.append(KEY_W if i % 800 < 400 else KEY_S)
 		if i % 90 >= 60 and i % 90 < 75: wanted.append([KEY_J,KEY_K,KEY_U,KEY_O][int(i/90)%4])
+		if combination_film:
+			wanted = []
+			var phase := i % 480
+			if phase == 0: combo_stage = 0
+			if phase < 55:
+				wanted.append(KEY_SPACE)
+				if phase > 12: wanted.append(KEY_A if int(i/480)%2 == 0 else KEY_D)
+			var sequence := [KEY_J,KEY_K,KEY_U,KEY_O] if int(i/480)%2 == 0 else [KEY_J,KEY_J,KEY_Y,KEY_K]
+			if rising_film: sequence = [KEY_Y,KEY_O,KEY_U,KEY_K] if int(i/480)%2 == 0 else [KEY_J,KEY_Y,KEY_O,KEY_I]
+			var action: Dictionary = s.P.get("boxing",{}).get("action",{})
+			var previous_left: bool = str(action.get("row","R_")).begins_with("L_")
+			var next_left: bool = sequence[mini(combo_stage,3)] in [KEY_J,KEY_U,KEY_Y]
+			var recovered: bool = action.get("phase","") == "recovery" and float(action["return_t"])/int(action["recovery_ticks"]) >= (0.70 if previous_left == next_left else 0.34)
+			if phase == 65 or (combo_stage > 0 and combo_stage < 4 and recovered and i > pressed_until+1):
+				punch_key = sequence[combo_stage]; pressed_until = i + 12; combo_stage += 1
+			if i < pressed_until: wanted.append(punch_key)
+			if phase > 320: wanted.append(KEY_SPACE)
+			if rising_film:
+				# Deliberate native entry/exit strokes put the same upper inputs
+				# inside and outside; the fixture never relocates either fighter.
+				if phase == 0 and int(i/480)%2 == 0 and s.P["pos"].distance_to(s.B["pos"]) > 1.5:
+					wanted.append(KEY_CTRL); wanted.append(KEY_W)
+				if phase == 325 and s.P["pos"].distance_to(s.B["pos"]) < 1.7:
+					wanted.append(KEY_CTRL); wanted.append(KEY_S); wanted.append(KEY_D)
+				if int(i/480)==2 and phase>55 and phase<280: wanted.append(KEY_C)
+			elif phase in [325,420]:
+				wanted.append(KEY_CTRL); wanted.append(KEY_S if phase == 325 else KEY_W)
+		if guard_film:
+			# Exercise the unchanged production camera and native keyboard with
+			# held guard through whole combinations, including low/high changes.
+			wanted.append(KEY_SPACE)
+			if int(i/480)%2 == 1: wanted.append(KEY_C)
+			if i%480 > 65 and i%480 < 110: wanted.append(KEY_D if int(i/480)%2 == 0 else KEY_A)
 		if s.mode == "EIGHT" and i % 30 == 0: wanted.append(KEY_ENTER)
-		for code in [KEY_SPACE,KEY_D,KEY_A,KEY_CTRL,KEY_W,KEY_S,KEY_J,KEY_K,KEY_U,KEY_O,KEY_ENTER]:
+		for code in [KEY_SPACE,KEY_D,KEY_A,KEY_CTRL,KEY_W,KEY_S,KEY_C,KEY_J,KEY_K,KEY_U,KEY_O,KEY_Y,KEY_I,KEY_ENTER]:
 			var on: bool = code in wanted
 			if on != bool(held.get(code,false)): key(code,on); held[code] = on
 		var emitted := advance(s,scene._intent())
+		var opponent_axis: Vector2 = s.B.get("body_control",{}).get("axis",Vector2.ZERO)
+		opponent_body_peak = maxf(opponent_body_peak,opponent_axis.length())
+		if opponent_axis.length() > 0.1: opponent_body_ticks += 1
 		used_body = used_body or Vector2(s.P.get("body_control",{}).get("axis",Vector2.ZERO)).length() > 0.5
 		moved_root = moved_root or s.P["pos"].distance_to(origin) > 0.2
 		for event in emitted:
+			if event.get("kind")=="footwork" and event.get("who")=="B" and event.get("outcome")=="completed": opponent_steps.append(event["travel"])
 			if event.get("kind") == "punch": thrown += 1
+			if event.get("kind") in ["punch","boxing_contact","punch_intent","footwork","boxing_signature"]: exchange_events.append(event)
+			if event.get("kind") == "punch_intent" and event.get("outcome") == "accepted" and event.get("reason") in ["same_hand_reload","weight_transfer"]: early_links += 1
 			if event.get("kind") == "boss_act" and event.get("verb") == "punch": opponent_thrown += 1
 		var rig: Dictionary = scene.player.get_meta("render_kinematics")
 		finite = finite and Vector3(rig["head"]).is_finite() and scene.cam.position.is_finite()
+		if combination_film:
+			for actor in [scene.player,scene.boss]:
+				var posed: Dictionary = actor.get_meta("render_kinematics")
+				var points := [actor.position+posed["head"],actor.position+posed["pelvis"]]
+				for field in ["shoulders","elbows","wrists","knees","feet"]:
+					for point in posed[field]: points.append(actor.position+point)
+				var prior_points: Array = previous_joints.get(actor,points)
+				for j in points.size():
+					var distance: float = points[j].distance_to(prior_points[j])
+					if distance > peak_joint_travel: peak_joint_travel = distance; peak_tick = i
+				previous_joints[actor] = points
 		if not scene.fight_view.inspection_view:
 			var nearest := INF
 			for fighter in [scene.player, scene.boss]:
@@ -310,26 +395,233 @@ func _run() -> void:
 					if cross is Vector3:
 						obstructors.append({"fighter":"P" if fighter == scene.player else "B", "anchor":part.get_meta("rig_anchor", str(part.name)), "index":part.get_meta("rig_index",-1), "distance":scene.cam.global_position.distance_to(part.global_transform * cross), "position":str(part.global_position)})
 			obstructors.sort_custom(func(a,b): return a["distance"] < b["distance"])
-			print("POV SIGHTLINE ", obstructors.slice(0,6), " camera=", scene.cam.global_position, " head=", rig["head"], " shoulders=", rig["shoulders"], " wrists=",rig["wrists"])
+			print("CHASE SIGHTLINE ", obstructors.slice(0,6), " camera=", scene.cam.global_position, " head=", rig["head"], " shoulders=", rig["shoulders"], " wrists=",rig["wrists"])
 		if recording and i % 2 == 1:
 			scene._hud()
-			await process_frame; await RenderingServer.frame_post_draw
+			await process_frame
+			if scene.controls_menu.opened:
+				recording_resumes.append({"tick":i,"at":"draw"})
+				scene.controls_menu.close(); held.clear()
+			RenderingServer.force_draw(false)
+			if not scene.controls_menu.opened and not scene.fight_hud.entry.visible: unobscured_frames += 1
 			if root.get_texture().get_image().save_png("user://foundation-film/frame-%04d.png" % frames_saved) == OK: frames_saved += 1
 		if i in [600,1800]:
-			scene._hud(); await capture("live-pov-%d"%i)
+			scene._hud(); await capture("live-chase-%d"%i)
 			scene.fight_view.inspection_view = true; scene._render(1); await capture("live-observer-%d"%i)
-			scene.fight_view.inspection_view = false; scene.fight_view.orbit = Vector3.ZERO
+			scene.fight_view.inspection_view = false; scene.fight_view.orbit = Vector3.ZERO; scene._render(1)
 	for code in held:
 		if held[code]: key(code,false)
 	check("live native exchange exercises both fighters, body control and real root travel", thrown >= 5 and opponent_thrown >= 2 and used_body and moved_root)
-	check("live exchange keeps finite embodied camera and anatomy", finite)
-	check("embodied eye stays outside both fighters' glove volumes", eye_clearance > 0)
-	if recording: check("normal-speed film contains every 60 Hz frame of the 20-second exchange", frames_saved == 1200)
+	check("live exchange keeps finite production camera and anatomy", finite)
+	check("chase camera stays outside both fighters' glove volumes", eye_clearance > 0)
+	if recording:
+		check("normal-speed film contains every 60 Hz frame of the 20-second exchange", frames_saved == 1200)
+		check("recorded playfield is not covered by a pause or entry menu",unobscured_frames == frames_saved)
+		samples.append({"recording_focus_pause_resumes":recording_resumes,"unobscured_frames":unobscured_frames,"pacing_scope":"deterministic 120 Hz simulation replay encoded at 60 fps, not real-time performance evidence"})
+	if combination_film:
+		check("live keyboard exchange uses recovery continuations",early_links >= 6)
+		check("live linked exchange keeps bounded joint travel",peak_joint_travel < 0.25)
+		samples.append({"early_links":early_links,"peak_joint_travel_m":peak_joint_travel,"peak_tick":peak_tick})
 	samples.append({"live_ticks":2400,"player_punches":thrown,"opponent_punches":opponent_thrown,"mode":s.mode,"minimum_eye_glove_clearance_m":eye_clearance,"close_glove_ticks":close_glove_ticks,"longest_close_glove_run_ticks":longest_close_run})
-	var report := {"checks":checks,"failures":failures,"samples":samples,"scope":"native body/support/POV and committed-contact integration; whole-foundation and player-feel acceptance remain open"}
+	samples.append({"opponent_body_peak":opponent_body_peak,"opponent_body_ticks":opponent_body_ticks,"opponent_completed_steps":opponent_steps})
+	if combination_film:
+		var exchange_file := FileAccess.open("user://exchange-events.json",FileAccess.WRITE)
+		exchange_file.store_string(JSON.stringify(exchange_events,"\t")); exchange_file.close()
+	var report := {"checks":checks,"failures":failures,"samples":samples,"scope":"native body/support/chase camera and committed-contact integration; whole-foundation and player-feel acceptance remain open"}
 	var file := FileAccess.open("user://foundation.json",FileAccess.WRITE); file.store_string(JSON.stringify(report,"\t")); file.close()
 	print("FOUNDATION VERDICT :: %s (%d/%d)" % ["GREEN" if failures.is_empty() else "RED",checks-failures.size(),checks])
 	scene.queue_free(); await process_frame; quit(0 if failures.is_empty() else 1)
+
+func realtime_review() -> void:
+	# Exercise main._process and its real clock. Offline movie encoding cannot
+	# establish responsiveness or whether the interactive game runs in slow motion.
+	scene.sim=tests.make_sim(0,947);scene.combat_input.clear()
+	scene.prev_p=scene.sim.P["pos"];scene.prev_b=scene.sim.B["pos"]
+	scene.clock.acc=0.0;scene.set_process(true);Engine.max_fps=60
+	var began:=Time.get_ticks_usec();var previous:=began;var frames:=[];var held:={}
+	var peaks:={"body":0.0,"step":false};var start: Vector2=scene.sim.P["pos"]
+	while Time.get_ticks_usec()-began<20000000:
+		var elapsed:=float(Time.get_ticks_usec()-began)/1000000.0
+		var phase:=fmod(elapsed,4.0);var wanted:=[]
+		if phase<0.7: wanted=[KEY_SPACE,KEY_D if int(elapsed/4)%2==0 else KEY_A]
+		elif phase<2.5 and fmod(phase,0.4)<0.10: wanted=[[KEY_J,KEY_K,KEY_U,KEY_O][int(phase/0.4)%4]]
+		elif phase>2.7 and phase<2.85: wanted=[KEY_CTRL,KEY_S,KEY_D]
+		elif phase>3.2: wanted=[KEY_SPACE,KEY_W]
+		if scene.sim.mode=="EIGHT" and fmod(elapsed,0.3)<0.1: wanted.append(KEY_ENTER)
+		for code in [KEY_SPACE,KEY_D,KEY_A,KEY_CTRL,KEY_W,KEY_S,KEY_J,KEY_K,KEY_U,KEY_O,KEY_ENTER]:
+			var on: bool=code in wanted
+			if on!=bool(held.get(code,false)): key(code,on);held[code]=on
+		await process_frame
+		var now:=Time.get_ticks_usec()
+		if elapsed>0.5: frames.append(float(now-previous)/1000.0)
+		previous=now
+		peaks["body"]=maxf(peaks["body"],Vector2(scene.sim.P.get("body_control",{}).get("axis",Vector2.ZERO)).length())
+		peaks["step"]=peaks["step"] or scene.sim.P["pos"].distance_to(start)>0.1
+	var seconds:=float(Time.get_ticks_usec()-began)/1000000.0
+	scene.set_process(false)
+	for code in held:
+		if held[code]: key(code,false)
+	frames.sort()
+	var total:=0.0
+	for duration in frames: total+=duration
+	var report:={"wall_seconds":seconds,"simulation_ticks":scene.sim.tick,"clock_ratio":scene.sim.tick/(seconds*120.0),"frames":frames.size(),"mean_fps":1000.0*frames.size()/total,"frame_p95_ms":frames[int(frames.size()*0.95)],"frame_p99_ms":frames[int(frames.size()*0.99)],"worst_frame_ms":frames[-1],"actions":scene.fx_counts,"body_and_step":peaks,"mode":scene.sim.mode,"scope":"20 seconds through main._process at a 60 FPS cap, real keyboard events, Compatibility renderer, audio Dummy; not a player-feel approval"}
+	check("real-time native match advances at wall-clock speed",float(report["clock_ratio"])>0.97 and float(report["clock_ratio"])<1.03)
+	check("real-time native match sustains the 60 FPS target",float(report["mean_fps"])>58.0 and float(report["frame_p99_ms"])<33.34)
+	check("real-time keyboard input exercises physical body, steps and punches",peaks["body"]>0.5 and peaks["step"] and int(scene.fx_counts.get("punch",0))>=5)
+	await capture("real-time-end")
+	report["checks"]=checks;report["failures"]=failures
+	var file:=FileAccess.open("user://realtime-review.json",FileAccess.WRITE)
+	file.store_string(JSON.stringify(report,"\t"));file.close()
+	print("REALTIME REVIEW :: ",JSON.stringify(report))
+
+func camera_review() -> void:
+	# Compare rendered opponent pixels against the same scene with only the
+	# player hidden. A white ID render identifies real opponent surfaces; this
+	# catches ghosting, an incorrectly sampled depth texture and floor cutouts.
+	var measurements := []
+	var white := StandardMaterial3D.new()
+	white.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED; white.albedo_color = Color.WHITE
+	var cases := []
+	for spacing in [0.72, 1.2, 1.6, 2.5]:
+		for facing in [0.0, PI * 0.5, PI, PI * 1.5]:
+			cases.append({"name":"range-%.2f-angle-%d" % [spacing, rad_to_deg(facing)], "spacing":spacing, "facing":facing, "axis":Vector2.ZERO})
+	for maneuver in ["SLIP", "DUCK", "LEAN", "WEAVE", "TELL"]:
+		cases.append({"name":maneuver.to_lower(), "spacing":1.6, "facing":0.0, "axis":Vector2.ZERO, "maneuver":maneuver})
+	for axis in [Vector2.LEFT, Vector2.RIGHT, Vector2.DOWN, Vector2.UP, Vector2(0.7,0.7)]:
+		cases.append({"name":"body-%d" % cases.size(), "spacing":1.6, "facing":0.0, "axis":axis})
+	cases.append({"name":"corner", "spacing":1.6, "facing":PI*0.5, "axis":Vector2.ZERO, "corner":true})
+	for item in cases:
+		var s = fresh(item["spacing"])
+		var delta: Vector2 = (s.B["pos"]-s.P["pos"]).rotated(item["facing"])
+		s.P["pos"] = Vector2(1.8,3.0) if item.get("corner",false) else Vector2.ZERO
+		s.B["pos"] = s.P["pos"]+delta
+		advance(s,{"body_axis":item["axis"]})
+		var maneuver := str(item.get("maneuver",""))
+		if maneuver in ["SLIP","DUCK","LEAN","WEAVE"]: s._set_dodge(s.B,maneuver,1)
+		for i in 24: advance(s,{"body_axis":item["axis"]})
+		if maneuver=="TELL": s.bstate="TELL"; s.btimer=90
+		scene.fight_view.orbit=Vector3.ZERO; scene.fight_view.inspection_view=false
+		scene._render(1); scene._hud()
+		var state_hash: int=s.hash_state()
+		var bounds_ok:=true; var lowest:=0.0
+		var parts:=[]; var original:=[]
+		for part in scene.boss.get_children()+scene.boss.get_meta("cast_parts",[]):
+			if not part is MeshInstance3D or part.layers==0 or not part.is_visible_in_tree(): continue
+			parts.append(part); original.append({"layers":part.layers,"material":part.material_override})
+			var box: AABB=scene.fight_view._skin_bounds(part)
+			for j in 8:
+				var point: Vector3=part.global_transform*box.get_endpoint(j)
+				var screen: Vector2=scene.cam.unproject_position(point)/Vector2(root.size)
+				bounds_ok=bounds_ok and not scene.cam.is_position_behind(point) and screen.x>0.01 and screen.x<0.99 and screen.y>0.01 and screen.y<0.99
+				lowest=maxf(lowest,screen.y)
+		var head: Vector3=scene.player.position+scene.player.get_meta("render_kinematics")["head"]+Vector3.UP*0.204
+		var player_height: float=100.0*(1.0-scene.cam.unproject_position(head).y/root.size.y)
+		var camera_copy: Transform3D=scene.cam.transform; var fov_copy: float=scene.cam.fov
+		scene.player.visible=false
+		await process_frame; RenderingServer.force_draw(false)
+		var reference: Image=root.get_texture().get_image()
+		var cull: int=scene.cam.cull_mask
+		scene.cam.cull_mask=2
+		for part in parts: part.layers=2;part.material_override=white
+		await process_frame; RenderingServer.force_draw(false)
+		var mask: Image=root.get_texture().get_image()
+		for j in parts.size(): parts[j].layers=original[j]["layers"]; parts[j].material_override=original[j]["material"]
+		scene.cam.cull_mask=cull;scene.player.visible=true
+		await process_frame; RenderingServer.force_draw(false)
+		var composed: Image=root.get_texture().get_image()
+		var pixels:=0;var changed:=0;var error_sum:=0.0
+		for y in range(200,root.size.y-30,2):
+			for x in range(200,root.size.x-200,2):
+				var interior:=true
+				for offset in [Vector2i.ZERO,Vector2i(-2,0),Vector2i(2,0),Vector2i(0,-2),Vector2i(0,2)]:
+					var m:=mask.get_pixel(x+offset.x,y+offset.y)
+					interior=interior and minf(m.r,minf(m.g,m.b))>0.98
+				if not interior: continue
+				var a:=composed.get_pixel(x,y);var b:=reference.get_pixel(x,y)
+				var error:=maxf(absf(a.r-b.r),maxf(absf(a.g-b.g),absf(a.b-b.b)))
+				pixels+=1;error_sum+=error
+				changed+=1 if error>0.025 else 0
+		var changed_pct:=100.0*changed/maxi(1,pixels)
+		check(item["name"]+" opponent skin, boots and guard stay in frame",bounds_ok)
+		check(item["name"]+" opponent reads have no player ghost overlay",pixels>1000 and changed_pct<0.5)
+		check(item["name"]+" presentation leaves the physical fight unchanged",s.hash_state()==state_hash and scene.cam.transform==camera_copy and scene.cam.fov==fov_copy)
+		if is_equal_approx(float(item["spacing"]),1.6) and item["axis"]==Vector2.ZERO and maneuver=="":
+			check(item["name"]+" neutral player is approximately 35 percent of the frame",absf(player_height-float(s.T["camera"]["player_frame_height_pct"]))<4.0)
+		if "capture" in OS.get_cmdline_user_args() and (maneuver!="" or item["name"] in ["range-0.72-angle-0","range-1.60-angle-0","range-2.50-angle-0","corner","body-21","body-22","body-23","body-24"]):
+			composed.save_png("user://camera-%s.png"%item["name"])
+		measurements.append({"case":item["name"],"player_height_pct":player_height,"opponent_lowest_pct":lowest*100.0,"fov":scene.cam.fov,"opponent_pixels":pixels,"changed_pixels_pct":changed_pct,"mean_channel_error":error_sum/maxi(1,pixels)})
+	var file:=FileAccess.open("user://camera-review.json",FileAccess.WRITE)
+	file.store_string(JSON.stringify({"checks":checks,"failures":failures,"samples":measurements},"\t"));file.close()
+	print("CAMERA REVIEW :: %d/%d; inspect captures"%[checks-failures.size(),checks])
+
+func opponent_visual_review() -> void:
+	var measurements := []
+	for maneuver in ["SLIP","DUCK","LEAN","WEAVE","STEP"]:
+		var s = fresh()
+		advance(s,{"body_axis":Vector2.ZERO})
+		if maneuver == "STEP": s.btimer=s._boss_act({"kind":"move","dir":"lateral","dist":0.48,"guard":true})
+		else: s._set_dodge(s.B,maneuver,1)
+		var peak := -1.0; var chosen := {}
+		for i in 70:
+			advance(s,{"body_axis":Vector2.ZERO})
+			var body: Dictionary = s.B["body_control"]
+			var amount: float = maxf(body["foot_lift"][0],body["foot_lift"][1]) if maneuver=="STEP" else Vector2(body["axis"]).length()
+			if amount > peak: peak=amount;chosen=s.snapshot()
+		s.restore(chosen);scene.sim=s;scene.fight_view.orbit=Vector3.ZERO
+		scene.fight_view.inspection_view=false;scene._render(1);scene._hud()
+		var connected := true;var facing := true
+		for actor in [scene.player,scene.boss]:
+			var rig: Dictionary=actor.get_meta("render_kinematics")
+			var collar: Vector3=(rig["shoulders"][0]+rig["shoulders"][1])*0.5
+			var torso: MeshInstance3D=actor.get_meta("mesh")
+			connected=connected and (torso.transform*Vector3(0,0.285,0)).distance_to(collar)<0.0001 and (torso.transform*Vector3(0,-0.285,0)).distance_to(rig["pelvis"]+Vector3.UP*0.04)<0.0001
+			facing=facing and (-actor.get_meta("head").basis.z).dot(rig["forward"])>0.999
+		check(maneuver+" rendered trunks join the physical hips and shoulders",connected)
+		check(maneuver+" both faces follow physical fighter facing",facing)
+		await capture("opponent-%s-chase"%maneuver.to_lower())
+		scene.fight_view.inspection_view=true;scene._render(1)
+		await capture("opponent-%s-diagnostic"%maneuver.to_lower())
+		measurements.append({"maneuver":maneuver,"peak":peak,"body":s.B["body_control"],"head":s.B["boxing"]["rig"]["head"]})
+	scene.fight_view.inspection_view=false
+	var file:=FileAccess.open("user://opponent-visual-review.json",FileAccess.WRITE)
+	file.store_string(JSON.stringify({"checks":checks,"failures":failures,"samples":measurements},"\t"));file.close()
+	print("OPPONENT VISUAL CAPTURES :: %d/%d; inspect rendered images"%[checks-failures.size(),checks])
+
+func visual_review() -> void:
+	# Render the actual match at representative body/punch extremes before
+	# deciding whether the skeleton and its visible skin are connected.
+	var measurements := []
+	for scenario in ["neutral", "slip", "dip", "pull", "cross", "hook", "upper", "reach"]:
+		var s = fresh(2.5 if scenario == "reach" else 1.6)
+		var worst := -1.0; var worst_snapshot := {}; var worst_rig := {}
+		for i in 90:
+			var intent := {"body_axis": Vector2.ZERO}
+			if scenario == "slip": intent["body_axis"] = Vector2.RIGHT
+			if scenario == "dip": intent["body_axis"] = Vector2.DOWN
+			if scenario == "pull": intent["body_axis"] = Vector2.UP
+			if i == 20:
+				if scenario in ["cross", "reach"]: intent["punch"] = "R_STRAIGHT"
+				if scenario == "hook": intent["punch"] = "R_HOOK"
+				if scenario == "upper": intent["punch"] = "R_UPPERCUT"
+			advance(s, intent)
+			var rig: Dictionary = scene.player.get_meta("render_kinematics")
+			var collar: Vector3 = (rig["shoulders"][0] + rig["shoulders"][1]) * 0.5
+			var gap := collar.distance_to(rig["head"]) + (Vector3(rig["head"]) - Vector3.UP * 1.55).length()
+			if gap > worst:
+				worst = gap; worst_snapshot = s.snapshot(); worst_rig = rig.duplicate(true)
+		s.restore(worst_snapshot); scene.sim = s; scene.fight_view.orbit = Vector3.ZERO
+		scene.fight_view.inspection_view = false; scene._render(1); scene._hud()
+		var player_top: Vector2 = scene.cam.unproject_position(scene.player.position + worst_rig["head"] + Vector3.UP * 0.204)
+		var opponent_foot: Vector2 = scene.cam.unproject_position(scene.boss.position)
+		var framing := {"player_visible_head_to_bottom_pct":clampf(1.0-player_top.y/root.size.y,0,1)*100.0,"opponent_foot_y_pct":opponent_foot.y/root.size.y*100.0,"pitch_deg":-rad_to_deg(scene.cam.rotation.x),"fov_deg":scene.cam.fov}
+		await capture("review-%s-chase" % scenario)
+		scene.fight_view.inspection_view = true; scene._render(1)
+		await capture("review-%s-diagnostic" % scenario)
+		scene.fight_view.inspection_view = false
+		measurements.append({"scenario":scenario,"pose_extreme":worst,"head":str(worst_rig["head"]),"chest":str(worst_rig["chest"]),"pelvis":str(worst_rig["pelvis"]),"delivery_lean":str(worst_rig["delivery_lean"]),"forward":str(worst_rig["forward"]),"face_direction":str(-scene.player.get_meta("head").global_basis.z),"player_rotation":str(scene.player.rotation),"framing":framing})
+	var file := FileAccess.open("user://visual-review.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify(measurements,"\t")); file.close()
+	print("VISUAL REVIEW CAPTURED :: inspect images; this is not acceptance")
 
 func opponent_clock() -> void:
 	var committed := true; var timed := true; var charged := true

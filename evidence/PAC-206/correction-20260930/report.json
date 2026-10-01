@@ -1,0 +1,180 @@
+{
+  "status": "FOUNDATION_NOT_ACCEPTED",
+  "created_utc": "2026-09-30T12:14:28.913247+00:00",
+  "head": "826f4658c723249735d6be8422110bf4da7a843e",
+  "scope": "User-directed camera and connected-body correction within PAC-206 and PAC-207; no completed boxing-model claim",
+  "governing_direction": [
+    "Latest explicit user rejection of first-person and side-on gameplay cameras",
+    "docs/register-commands_docs/BOXING_USER_DIRECTION_2026-09-29.md",
+    "docs/register-commands_docs/BOXING_FOUNDATION.md",
+    "docs/NorthPaw-game_docs/NP_03_COMBAT_ENGINE.md",
+    "docs/boxing-foundations/Boxing_Styles.md"
+  ],
+  "changes": [
+    "Removed first-person camera path; production uses tuned 1.8m chase, 0.6m clearance, 12-degree pitch, 55-degree FOV. Diagnostic side view requires boxing-inspect launch flag and is labeled.",
+    "Torso skin and physical target share pelvis/collar endpoints. Native reach respects neck attachment; uppercut load carries head downward with spine.",
+    "Native punches commit aim at current physical target volumes; legacy hypothetical geometry remains separate. Low guard narrows to cover actual body aim.",
+    "Finite tilted torso sweep accounts for rotating rim; tiny mesh-link tilts preserved.",
+    "Opaque lower HUD panel removed from opponent leg sightline."
+  ],
+  "verification": {
+    "physical_contact": {
+      "passed": 149,
+      "total": 149,
+      "log": "drive_punch_contact-verified/run.log"
+    },
+    "motion": {
+      "passed": 337,
+      "total": 337,
+      "log": "drive_boxing_motion-verified/run.log"
+    },
+    "rendered_foundation": {
+      "passed": 85,
+      "total": 85,
+      "log": "gameplay-complete/stdout.log",
+      "includes": "16 diagnostic capture-save checks; remaining integration checks and rendered exchange"
+    },
+    "native_weathering_compatibility": {
+      "passed": 7,
+      "total": 7,
+      "log": "bzone-correct-invocation/run.log",
+      "required_args": "-- boss=16"
+    },
+    "rendered_pose_scenarios": [
+      "neutral",
+      "slip",
+      "dip",
+      "pull",
+      "cross",
+      "hook",
+      "upper",
+      "reach"
+    ],
+    "film": {
+      "seconds": 20,
+      "fps": 60,
+      "frames": 1200,
+      "resolution": [
+        1280,
+        720
+      ],
+      "camera": "production chase throughout",
+      "method": "2400 fixed simulation ticks; 1200 GPU frames encoded at normal 60fps playback; not a physical latency measurement"
+    },
+    "visual_review": "Inspected sampled gameplay frames/contact sheet and selected before/after pose captures. No comprehensive motion-feel or mesh-interpenetration acceptance."
+  },
+  "camera_measurement": {
+    "fov_deg": 55.0,
+    "opponent_foot_y_pct": 95.0484212239583,
+    "pitch_deg": 12.0000020414777,
+    "player_visible_head_to_bottom_pct": 49.3169996473524
+  },
+  "open_defects": [
+    "Foreground composition remains too large: neutral visible head-to-frame-bottom portion is 49.3 percent against roughly 35 percent target. Physical rig settings are restored, not full camera acceptance.",
+    "Close-range, corner and all-viewport framing still require complete composition qualification.",
+    "Complete self/inter-fighter clipping, motion quality, combination feel and pacing remain unaccepted. Authored startup/recovery tuning was not recalibrated in this correction.",
+    "Remaining connected foundation packages and specialized technique composition remain open; no future style abilities or world features were added.",
+    "Two ObjectDB exit leaks recur in headless motion/contact/compatibility drivers."
+  ],
+  "failed_history": [
+    "First diagnostic used invalid R_UPPER key; corrected to R_UPPERCUT and retained initial stderr.",
+    "Initial full motion pass failed 8 checks. Subsequent failed counter/aim/guard trials retained.",
+    "Target-center trajectory experiment changed impact timing/slip/clash behavior and was reverted; success criteria were not relaxed.",
+    "Torso endpoint precision failures fixed in mesh axis rotation.",
+    "Counter fixtures formerly depended on disconnected overreach. Positive scenarios now verify a real incoming threat; negative range counter stays outside range.",
+    "Wrong bzone welcome invocation failed; correct boss=16 invocation passed.",
+    "gameplay-final recording stalled at 373 frames while hidden; stopped and preserved as incomplete. Capture now explicitly forces viewport draws.",
+    "Intermediate visual-review dip/pull labels were reversed; corrected in visual-final and source. Production keyboard mapping was unchanged."
+  ],
+  "source_sha256": {
+    "engine/greybox/input/controls_menu.gd": "9f10371ade8902c75fb8f7bda8bdfb188d951a725f6e3e927643752617288dee",
+    "engine/greybox/main.gd": "2a357d35f265c672daa3ecad1df7ce0f79c9c64dc60440563898f7c4e330d761",
+    "engine/greybox/presentation/boxing_motion.gd": "01467390f7b16e29035a34ee38d770b85a6834d5b1b73c9b3bdcc5b13940f5ab",
+    "engine/greybox/presentation/fight_hud.gd": "8088c10b891446206103b209e8ca691c669ee0c0ab243c28c1850a157b863e95",
+    "engine/greybox/presentation/fight_view.gd": "f2eeed408a6f3f42a11633c277bf5f256634b84a202019bb172880eab423afac",
+    "engine/greybox/sim/core.gd": "a97b933f2541ba037a6d9601268b76596ecaa48f3cf0eb08151d54927cb5ff28",
+    "engine/greybox/sim/punch_contact.gd": "d03799836344288d698f2c452746340bbe73b284265dd5c1e96855c52ad3c5eb",
+    "engine/greybox/tools/drive_boxing_motion.gd": "3678b844d4a963313ee1e9c3bc0274d68b843c199d7efb8bb33782ac5de7cedb",
+    "engine/greybox/tools/drive_bzone.gd": "1ed4525f8e9eedbaa34921c3f48e97d70428c55c4517cd5fd4a95663e51e3791",
+    "engine/greybox/tools/drive_foundation.gd": "41f8ab7430998e2b0e8e022d7a30d4d11a6c28fa686303839e58b9113deff3e0",
+    "engine/greybox/tools/drive_punch_contact.gd": "809255993e754d1e846673fc71d1482bd2379195c0bb0a25401dcd11bb3543e6"
+  },
+  "retained_log_paths": [
+    "before-body\\stderr.log",
+    "before-body\\stdout.log",
+    "before-body\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "before-body\\user\\Godot\\app_userdata\\TNB Greybox\\visual-review.json",
+    "bzone\\run.log",
+    "bzone\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "bzone-correct-invocation\\run.log",
+    "bzone-correct-invocation\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "connected-body\\stderr.log",
+    "connected-body\\stdout.log",
+    "connected-body\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "connected-body\\user\\Godot\\app_userdata\\TNB Greybox\\visual-review.json",
+    "contact\\run.log",
+    "contact\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "contact\\user\\Godot\\app_userdata\\TNB Greybox\\punch-contact.json",
+    "contact-diagnostic\\run.log",
+    "contact-diagnostic\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "contact-diagnostic\\user\\Godot\\app_userdata\\TNB Greybox\\punch-contact.json",
+    "contact-linked\\run.log",
+    "contact-linked\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "contact-linked\\user\\Godot\\app_userdata\\TNB Greybox\\punch-contact.json",
+    "drive_boxing_motion-aim\\run.log",
+    "drive_boxing_motion-aim\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_boxing_motion-final\\run.log",
+    "drive_boxing_motion-final\\user\\Godot\\app_userdata\\TNB Greybox\\boxing-motion-trace.json",
+    "drive_boxing_motion-final\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_boxing_motion-posture\\run.log",
+    "drive_boxing_motion-posture\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_boxing_motion-through\\run.log",
+    "drive_boxing_motion-through\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_boxing_motion-verified\\run.log",
+    "drive_boxing_motion-verified\\user\\Godot\\app_userdata\\TNB Greybox\\boxing-motion-trace.json",
+    "drive_boxing_motion-verified\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_punch_contact-aim\\run.log",
+    "drive_punch_contact-aim\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_punch_contact-aim\\user\\Godot\\app_userdata\\TNB Greybox\\punch-contact.json",
+    "drive_punch_contact-final\\run.log",
+    "drive_punch_contact-final\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_punch_contact-final\\user\\Godot\\app_userdata\\TNB Greybox\\punch-contact.json",
+    "drive_punch_contact-posture\\run.log",
+    "drive_punch_contact-posture\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_punch_contact-posture\\user\\Godot\\app_userdata\\TNB Greybox\\punch-contact.json",
+    "drive_punch_contact-through\\run.log",
+    "drive_punch_contact-through\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_punch_contact-through\\user\\Godot\\app_userdata\\TNB Greybox\\punch-contact.json",
+    "drive_punch_contact-verified\\run.log",
+    "drive_punch_contact-verified\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "drive_punch_contact-verified\\user\\Godot\\app_userdata\\TNB Greybox\\punch-contact.json",
+    "gameplay\\source-hashes.json",
+    "gameplay\\source.diff",
+    "gameplay\\stderr.log",
+    "gameplay\\stdout.log",
+    "gameplay\\user\\Godot\\app_userdata\\TNB Greybox\\foundation.json",
+    "gameplay\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "gameplay-complete\\stderr.log",
+    "gameplay-complete\\stdout.log",
+    "gameplay-complete\\user\\Godot\\app_userdata\\TNB Greybox\\foundation.json",
+    "gameplay-complete\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "gameplay-complete\\user\\Godot\\app_userdata\\TNB Greybox\\visual-review.json",
+    "gameplay-final\\stderr.log",
+    "gameplay-final\\stdout.log",
+    "gameplay-final\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "transitions-threat\\run.log",
+    "transitions-threat\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "visual-final\\stderr.log",
+    "visual-final\\stdout.log",
+    "visual-final\\user\\Godot\\app_userdata\\TNB Greybox\\logs\\godot.log",
+    "visual-final\\user\\Godot\\app_userdata\\TNB Greybox\\visual-review.json"
+  ],
+  "artifacts": [
+    "gameplay-20s.mp4",
+    "gameplay-frame.png",
+    "connected-uppercut-diagnostic.png",
+    "detached-reach-before.png",
+    "visual-review.json",
+    "verification-history.zip"
+  ]
+}

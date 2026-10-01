@@ -68,9 +68,16 @@ func setup(scene: Node) -> void:
 	score = _label("", 24, surface); score.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	score.anchor_left = 0.31; score.anchor_right = 0.69; score.offset_top = 22
 	var lower := _panel(surface); lower.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	lower.anchor_top = 1; lower.anchor_bottom = 1; lower.anchor_right = 1; lower.offset_top = -112
+	# The opponent's feet are part of the tell. Keep the middle of the fight
+	# visible instead of covering it with a full-width opaque footer.
+	var lower_style := StyleBoxEmpty.new()
+	lower_style.content_margin_left = 18; lower_style.content_margin_right = 18
+	lower_style.content_margin_bottom = 10
+	lower.add_theme_stylebox_override("panel", lower_style)
+	lower.anchor_top = 1; lower.anchor_bottom = 1; lower.anchor_right = 1; lower.offset_top = -60
 	var bottom := VBoxContainer.new(); bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE; lower.add_child(bottom)
-	cue = _label("", 21, bottom); cue.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER; cue.add_theme_color_override("font_color", GOLD)
+	cue = _label("", 21, surface); cue.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER; cue.add_theme_color_override("font_color", GOLD)
+	cue.anchor_left = 0.30; cue.anchor_right = 0.70; cue.offset_top = 155
 	message = _label("", 14, bottom); message.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	var actions := HBoxContainer.new(); actions.mouse_filter = Control.MOUSE_FILTER_IGNORE; bottom.add_child(actions)
 	hint = _label("", 14, actions); hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -140,11 +147,19 @@ func update(sim, practice: bool, feed_text: String) -> void:
 	elif owner_scene.fight_feedback.interrupt_active(sim): cue.text = "INTERRUPTED • Follow up"
 	elif int(sim.P["counter_t"]) > 0: cue.text = "COUNTER WINDOW"
 	elif float(sim.P["stamina"]) < 15: cue.text = "GASSED • Make space and recover"
-	if sim.mode == "EIGHT": cue.text = "STANDING EIGHT • Enter / A on the beat • %d to go" % int(sim.eight.get("beats_left", 0))
+	if sim.mode == "EIGHT":
+		var count_name: String = (sim.pname() if sim.eight.get("who","P") == "P" else sim.boss_label).replace("_"," ").to_upper()
+		if sim.eight.get("phase","") == "rise": cue.text = "%s IS RISING" % count_name
+		elif sim.eight.get("who","P") == "B": cue.text = "REFEREE COUNT • %s • %d to go" % [count_name,int(sim.eight.get("beats_left",0))]
+		else: cue.text = "STANDING EIGHT • Enter / A on the beat • %d to go" % int(sim.eight.get("beats_left", 0))
 	elif sim.mode == "CLASH": cue.text = "CLASH • Block or slip their exchange; punch on yours"
 	elif sim.mode == "OVER": cue.text = "BOUT OVER • F5 to fight again"
+	elif sim.mode == "CARD": cue.text = "SEGMENT OVER"
 	elif sim.mode == "CORNER": cue.text = "YOUR CORNER • Choose two actions, then send your fighter"
-	var want_details: bool = sim.mode in ["CORNER", "CARD", "OVER"] or owner_scene.formation_open or owner_scene.show_formation
+	# Let the scored knockdown finish on the canvas before the result panel
+	# covers the fighters. Clock results and manual detail controls are unchanged.
+	var falling: bool = sim.mode in ["CARD","OVER"] and sim.P.get("boxing",{}).has("count_down") and int(sim.P["boxing"].get("count_age",0)) < 90
+	var want_details: bool = (sim.mode in ["CORNER", "CARD", "OVER"] and not falling) or owner_scene.formation_open or owner_scene.show_formation
 	if want_details != auto_details: show_details = want_details
 	auto_details = want_details
 	details.visible = show_details and not entry.visible and not (owner_scene.club_flow != null and owner_scene.club_flow.enabled)

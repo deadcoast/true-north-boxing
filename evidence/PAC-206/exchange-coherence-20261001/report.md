@@ -1,0 +1,58 @@
+# Sustained boxing exchange repair - 2026-10-01
+
+**NOT_ACCEPTED. PAC-206 remains DOING; OGM-025 remains PACED_REQUIREMENT.**
+
+This continues the user's rejected boxing foundation. The supplied foundation/style direction and September 29 user correction remain authoritative. No camera mode, campaign feature or count animation was added. The gameplay camera remains behind and above the player. The side camera in the second recording is explicitly labelled inspection only.
+
+## Reproduced failures and changes
+
+The corrected baseline driver kept the real opponent AI active in eight seeded 90-second exchanges. It found a glove up to 0.260713 m inside its own finite torso, a forearm up to 0.233456 m inside the torso, 0.045495 m forearm/head penetration, and an elbow movement of 0.312662 m in one simulation step. The baseline clipping image is an actual rendered saved failure. These measurements concern the rig's physical volumes, not arbitrary triangle intersections.
+
+- Low guard was authored inside the torso. Its native home now sits forward of the body. Guard homes follow the final attached head/collar through body motion and punch delivery; they no longer stay behind while the chest moves.
+- The arm solve checks skull and finite torso clearance, preserves bone lengths, searches a nearby elbow plane and folds an obstructed hand around its own side. The old native covered-elbow adjustment could move the wrist after solving it; that path remains only in legacy presentation.
+- Distant targets formerly reached the chest-lean cap too abruptly. Available trunk reach is now bounded before phase weighting. Support moves at a bounded world rate without changing foot lift/landing timing or delaying input.
+- A descending uppercut preparation and the upward lift of a low straight could score before their forward/upward delivery. Contact uses the actual direction of those committed paths; terminal misses still resolve.
+- Correcting only the glove to a swept contact while retaining the end-of-tick chest made the glove conflict with its own body. Contact now uses the connected pose at the same swept instant, retains its elbow plane, and saves that exact return endpoint. A small spare glove routing margin is released at impact; actual anatomy and the forearm sampling allowance remain enforced.
+- Northern Rising's lead guard advances from 0.34 to 0.37 so its asymmetric raised lead remains ahead of the rear glove after jaw clearance. Signature fixtures now use an explicit visible hands-down invitation for positive cases and retain both high- and low-guard obstruction negatives. Mirrored counters mirror both fighters and the incoming hand.
+
+The straight-glove clash fixture now uses two rear straights whose actual gloves intersect. The old uppercuts encountered the newly exposed low guard first. The committed-target relocation fixture moves the whole target, including planted support, instead of moving only its root. Exact surface correspondence, fixed anatomy, actual misses and blocked signature assertions were retained. Negative counter cases assert the actual newly exposed glove/guard surface rather than a miss through a previously buried hand.
+
+## Current-source checks
+
+Godot 4.7.2, Dummy audio, isolated APPDATA for every run. All final run logs are in verification-history.zip; the 141-file SHA-256 manifest matches the source used for final checks and capture.
+
+| Check | Result | Scope |
+| --- | --- | --- |
+| Sustained native exchanges | 64/64 | Eight 90-second exchanges, both fighters, actual AI, ordinary orthodox and equipped southpaw across four existing body profiles |
+| Physical contact | 443/443 | Sweeps, guards, misses, committed aim, restore, actual rendered glove correspondence |
+| Native motion | 342/342 | Punch/modifier matrices, combinations, counter rules, planted drive, anatomy and rendering |
+| Stance coherence | 278/278 | Mirroring, stance-relative movement, support and restore |
+| Head motion | 153/153 | Articulated head, impacts and rendered interpolation |
+| Head attachment | 128/128 | Fixed connected neck and self-skull glove clearance |
+| Northern Rising | 70/70 | Actual learned guard and techniques, mirrored counters, obstruction negatives and restore |
+
+The exchange gates fail above 1 mm for measured own-body penetration, limb-length error, resolved contact endpoint error or repeated-constrain drift. The final matrix had no measured forearm/head, forearm/torso or glove/torso penetration; maximum bone error was 0.000000194 m, contact endpoint error 0.000000123 m, and repeated elbow drift 0.000000295 m. There were 1,329 resolved contacts. These finite seeded checks do not establish all possible poses are free of clipping.
+
+Measured step p95 was 940-983 microseconds during concurrently running checks. The measurement times only simulation step(), excludes diagnostic sampling and rendering, and is not gameplay FPS or input-latency qualification. Geometry repair added work relative to baseline; no performance acceptance is claimed.
+
+## Rendered review
+
+[Gameplay recording](gameplay.mp4) and [labelled side inspection](inspection.mp4) each contain 720 frames, 1280x720, 30 fps, 24 simulated seconds. Capture hashes confirmed rendering did not mutate simulation state. Both are generated from main.tscn and the final source; camera settings are unchanged. The footage uses scripted commands against the real AI, not human play.
+
+Viewed actual chase/side frames and the 24-frame inspection sheet. The sampled head remains attached and the large baseline glove-through-torso failure is absent in the inspected frames. The motion still reads mechanically in places. The scripted repeated burst exhausts the player; the late footage shows that fatigue and does not establish a balanced or enjoyable exchange. The film predates no subsequent source change.
+
+## Remaining core defects and acceptance limits
+
+- The matrix still records a 0.214635 m elbow movement and 0.180945 m wrist movement within a single tick. The worst elbow is the opponent returning L_STRAIGHT, OUTBOXER with learned guard, tick 1537. Its wrist return approaches its own head and the constraint solve changes the elbow route abruptly. The adjacent worst wrist event is tick 1536. Restorable snapshots and before/after rigs are retained. This is a motion continuity defect, not accepted quality.
+- Matrix head movement peaks at 0.054887 m and pelvis at 0.047656 m per tick. The separate production film records a 0.194281 m wrist step. Passing clearance does not prove smoothness.
+- Only sampled primitive volumes are measured; all mesh intersections, all guard/return transitions, all specialist techniques, real-time feel and complete connected-foundation acceptance remain open.
+- Two ObjectDB instances are reported at exit in the contact/motion drivers. The assertions pass, but that diagnostic is retained. The entire legacy/release/package suite was not run this pass.
+- PACER validation retains the existing PAC-010 older-than-48-hours warning. This pass does not advance that row or accept its work.
+
+## Rejected attempts and reproduction
+
+The archive retains failed baseline indexing, a GDScript type error, torso-cap projection flips, head-route branching, the broad elbow-circle search, slow step-loading experiment, contact endpoint drift, and reduced forearm allowance that exposed millimetre penetration. None of their failed results is replaced by a green summary. The slow step-loading experiment was reverted.
+
+From the repository root, set APPDATA to a fresh directory and invoke Godot with `--headless --audio-driver Dummy --path engine/greybox -s tools/drive_boxing_exchange.gd -- welcome`. The same driver accepts `-- welcome film` for GPU main-scene capture and `-- welcome inspect` with BOXING_WORST pointing to a saved worst-state JSON. Other final drivers use their matching `tools/drive_*.gd` path with `-- welcome`.
+
+The archive contains baseline and all intermediate/final logs, metrics, saved worst states, available intermediate source copies and the final source files. Full raw frame sequences remain under .PACER/exchange-coherence-20261001/final-film; encoded footage is provided here. Source/local changes from earlier work are preserved. No commit, package promotion, user approval or foundation completion is claimed.
