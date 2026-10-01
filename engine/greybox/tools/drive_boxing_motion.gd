@@ -311,23 +311,28 @@ func transitions() -> void:
 			check("step-out regathers actual support before the original counter expires",scene.sim.P["counter_t"]>0)
 		if pair[1]=="LEAN": key(KEY_CTRL,true)
 		if pair[1] in ["SLIP_R","DUCK"]:
-			# Preserve the obstructed straight as a negative path proof. An earned
-			# counter window does not let that glove ignore the returning arm.
+			# Preserve negative path proofs: a counter cannot ignore a covered
+			# lane or chase a head which leaves the committed path on recovery.
 			for delay in ([0,12] if pair[1]=="SLIP_R" else [0]):
 				var blocked_reply = tests.make_sim(0,947); blocked_reply.restore(scene.sim.snapshot())
-				var reply_contacts := []
+				var reply_contacts := []; var missed_clear := false
 				for i in 100+delay:
 					tests.clear_defense(blocked_reply.B); blocked_reply.B["guard_t"] = 0
 					blocked_reply.events.clear()
 					blocked_reply.step({"body_axis":Vector2.ZERO,"punch":"R_STRAIGHT"} if i == delay else {"body_axis":Vector2.ZERO})
 					reply_contacts.append_array(blocked_reply.events.filter(func(e):return e.get("kind")=="boxing_contact" and e.get("by")=="P"))
+					for event in blocked_reply.events:
+						if event.get("kind")=="boxing_contact" and event.get("by")=="P" and event["contact"]["kind"]=="miss":
+							missed_clear=Vector3(event["contact"]["point"]).distance_to(blocked_reply.B["boxing"]["volumes"][0]["a"])>Space.HEAD_RADIUS+Space.GLOVE_RADIUS
 				# The repaired covering arms occupy this lane instead of passing
 				# through their torso. A counter must stop on that actual glove;
 				# the separate retreat case below still proves unreachable misses.
-				var expected := "guard" if pair[1]=="SLIP_R" and delay==0 else "deflect"
-				var part := "glove0" if pair[1]=="SLIP_R" else "glove1"
+				# The outside return clears the duck reply's old glove interception;
+				# its committed straight still misses the recovering head physically.
+				var expected := ("guard" if delay==0 else "deflect") if pair[1]=="SLIP_R" else "miss"
+				var part := "glove0" if pair[1]=="SLIP_R" else "none"
 				print("COUNTER SURFACE ",pair[1]," delay=",delay," contacts=",reply_contacts)
-				check(str(pair[1])+" rear counter respects its physical "+expected+" at delay "+str(delay),reply_contacts.size()==1 and reply_contacts[0]["contact"]["kind"]==expected and reply_contacts[0]["contact"]["part"]==part)
+				check(str(pair[1])+" rear counter respects its physical "+expected+" at delay "+str(delay),reply_contacts.size()==1 and reply_contacts[0]["contact"]["kind"]==expected and reply_contacts[0]["contact"]["part"]==part and (pair[1]!="DUCK" or missed_clear))
 			# The low guard closes the rising lane too. Let the extended rear
 			# glove retract, then deliver above that guard within the same window.
 			for i in 12:
